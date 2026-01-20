@@ -1,0 +1,80 @@
+---
+type Variant = 'info' | 'warning' | 'tip' | 'error';
+
+interface Props {
+  variant?: Variant;
+  title?: string;
+}
+
+const { variant = 'info', title } = Astro.props;
+
+const variantStyles = {
+  info: 'callout-info',
+  warning: 'callout-warning',
+  tip: 'callout-tip',
+  error: 'callout-error',
+};
+
+const icons = {
+  info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+  warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+  tip: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
+  error: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+};
+---
+
+<aside
+  class={`callout ${variantStyles[variant]}`}
+  role={variant === 'error' || variant === 'warning' ? 'alert' : undefined}
+  aria-live={variant === 'tip' || variant === 'info' ? 'polite' : undefined}
+>
+  <div class="callout-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d={icons[variant]} />
+    </svg>
+  </div>
+  <div class="callout-content">
+    {title && <strong class="callout-title">{title}</strong>}
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    @apply relative flex gap-4 my-6 p-5 rounded-xl;
+    @apply border-l-4;
+  }
+
+  .callout-icon svg {
+    @apply w-5 h-5 mt-0.5;
+  }
+
+  .callout-content {
+    @apply flex-1 text-sm leading-relaxed;
+  }
+
+  .callout-title {
+    @apply block mb-1;
+  }
+
+  /* Variants */
+  .callout-info {
+    @apply bg-crystal-50/50 border-crystal-400 text-crystal-900;
+  }
+  .callout-info .callout-icon { @apply text-crystal-500; }
+
+  .callout-warning {
+    @apply bg-amber-50/50 border-amber-400 text-amber-900;
+  }
+  .callout-warning .callout-icon { @apply text-amber-500; }
+
+  .callout-tip {
+    @apply bg-emerald-50/50 border-emerald-400 text-emerald-900;
+  }
+  .callout-tip .callout-icon { @apply text-emerald-500; }
+
+  .callout-error {
+    @apply bg-red-50/50 border-red-400 text-red-900;
+  }
+  .callout-error .callout-icon { @apply text-red-500; }
+</style>

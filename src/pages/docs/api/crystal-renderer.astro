@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+
+const svgOptions = [
+  { option: 'width', type: 'int', default: '400', description: 'SVG width in pixels' },
+  { option: 'height', type: 'int', default: '400', description: 'SVG height in pixels' },
+  { option: 'elevation', type: 'float', default: '30', description: 'View elevation in degrees' },
+  { option: 'azimuth', type: 'float', default: '-45', description: 'View azimuth in degrees' },
+  { option: 'zoom', type: 'float', default: '1.0', description: 'Zoom factor' },
+  { option: 'face_color', type: 'str', default: '"#0ea5e9"', description: 'Face fill color (hex)' },
+  { option: 'edge_color', type: 'str', default: '"#0369a1"', description: 'Edge stroke color' },
+  { option: 'edge_width', type: 'float', default: '1.5', description: 'Edge stroke width' },
+  { option: 'opacity', type: 'float', default: '0.85', description: 'Face opacity (0-1)' },
+  { option: 'gradient', type: 'bool', default: 'True', description: 'Apply lighting gradient' },
+  { option: 'show_axes', type: 'bool', default: 'False', description: 'Show crystallographic axes' },
+  { option: 'show_labels', type: 'bool', default: 'False', description: 'Show Miller index labels' },
+  { option: 'title', type: 'str', default: 'None', description: 'Title text below crystal' },
+];
+
+const stlOptions = [
+  { option: 'scale', type: 'float', default: '10.0', description: 'Scale factor (output size)' },
+  { option: 'binary', type: 'bool', default: 'True', description: 'Use binary format' },
+  { option: 'units', type: 'str', default: '"mm"', description: 'Units: "mm", "cm", "in"' },
+];
+
+const gltfOptions = [
+  { option: 'scale', type: 'float', default: '1.0', description: 'Scale factor' },
+  { option: 'color', type: 'tuple', default: '(0.05, 0.65, 0.91)', description: 'Base color RGB (0-1)' },
+  { option: 'metallic', type: 'float', default: '0.0', description: 'Metallic factor (0-1)' },
+  { option: 'roughness', type: 'float', default: '0.3', description: 'Roughness factor (0-1)' },
+  { option: 'opacity', type: 'float', default: '1.0', description: 'Opacity (0-1)' },
+  { option: 'binary', type: 'bool', default: 'auto', description: 'Use GLB format' },
+];
+---
+
+<BaseLayout
+  title="crystal-renderer API"
+  description="API reference for the crystal-renderer package - render crystals to SVG, STL, and glTF."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={[
+      { label: 'Docs', href: '/docs' },
+      { label: 'API Reference', href: '/docs' },
+      { label: 'crystal-renderer' }
+    ]} />
+
+    <article class="prose prose-slate max-w-none">
+      <h1>crystal-renderer</h1>
+
+      <p class="lead">
+        Render crystal geometry to SVG for visualization, STL for 3D printing,
+        and glTF for web/AR/VR applications.
+      </p>
+
+      <CodeBlock code="pip install crystal-renderer" lang="bash" />
+
+      <h2>SVG Rendering</h2>
+
+      <APISignature
+        name="generate_svg"
+        signature="generate_svg(geometry, output, **options) → str | None"
+      />
+
+      <p>Render crystal geometry to SVG format.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import generate_svg
+
+# Save to file
+generate_svg(geom, "crystal.svg")
+
+# Get SVG string
+svg_string = generate_svg(geom, None)
+
+# With options
+generate_svg(geom, "crystal.svg",
+    width=400,
+    height=400,
+    elevation=30,
+    azimuth=-45,
+    face_color="#0ea5e9",
+    edge_color="#0369a1",
+    edge_width=1.5,
+    opacity=0.85,
+    gradient=True,
+    show_axes=False,
+    show_labels=False
+)`}
+      />
+
+      <h4>SVG Options</h4>
+
+      <PropsTable
+        columns={[
+          { key: 'option', header: 'Option', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'default', header: 'Default', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={svgOptions}
+      />
+
+      <APISignature
+        name="generate_cdl_svg"
+        signature="generate_cdl_svg(cdl, output, **options) → str | None"
+      />
+
+      <p>Convenience function to render directly from a CDL string.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import generate_cdl_svg
+
+# One-liner from CDL to SVG
+generate_cdl_svg("cubic[m3m]:{111}", "diamond.svg")
+
+# With options
+generate_cdl_svg(
+    "cubic[m3m]:{111}@1.0 + {100}@1.3",
+    "truncated.svg",
+    face_color="#8b5cf6"
+)`}
+      />
+
+      <h2>3D Export</h2>
+
+      <APISignature
+        name="export_stl"
+        signature="export_stl(geometry, output, **options) → None"
+      />
+
+      <p>Export crystal geometry to STL format for 3D printing.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import export_stl
+
+# Basic export
+export_stl(geom, "crystal.stl")
+
+# With options
+export_stl(geom, "crystal.stl",
+    scale=20.0,      # Scale to 20mm
+    binary=True,     # Binary format (smaller)
+    units="mm"       # Unit metadata
+)`}
+      />
+
+      <h4>STL Options</h4>
+
+      <PropsTable
+        columns={[
+          { key: 'option', header: 'Option', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'default', header: 'Default', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={stlOptions}
+      />
+
+      <APISignature
+        name="export_gltf"
+        signature="export_gltf(geometry, output, **options) → None"
+      />
+
+      <p>Export crystal geometry to glTF 2.0 format for web, AR, and VR applications.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import export_gltf
+
+# Basic export
+export_gltf(geom, "crystal.gltf")
+
+# With material properties
+export_gltf(geom, "crystal.gltf",
+    color=(0.05, 0.65, 0.91),  # RGB (0-1)
+    metallic=0.0,
+    roughness=0.3,
+    opacity=0.85
+)
+
+# Binary format (single file)
+export_gltf(geom, "crystal.glb")  # Auto-detects from extension`}
+      />
+
+      <h4>glTF Options</h4>
+
+      <PropsTable
+        columns={[
+          { key: 'option', header: 'Option', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'default', header: 'Default', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={gltfOptions}
+      />
+
+      <APISignature
+        name="export_gemcad"
+        signature="export_gemcad(geometry, output) → None"
+      />
+
+      <p>Export to GEMCAD .asc format for gem cutting design.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import export_gemcad
+
+export_gemcad(geom, "crystal.asc")`}
+      />
+
+      <h2>Batch Rendering</h2>
+
+      <APISignature
+        name="render_batch"
+        signature="render_batch(items, output_dir, **options) → list[str]"
+      />
+
+      <p>Render multiple crystals efficiently.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import render_batch
+from mineral_database import list_presets, get_preset
+
+# Prepare items
+items = []
+for name in list_presets():
+    preset = get_preset(name)
+    items.append({
+        'name': name,
+        'cdl': preset.cdl
+    })
+
+# Render all to SVG
+output_files = render_batch(
+    items,
+    output_dir="./crystals",
+    format="svg",
+    width=300,
+    height=300
+)
+
+print(f"Generated {len(output_files)} files")`}
+      />
+
+      <h2>View Utilities</h2>
+
+      <APISignature
+        name="create_camera"
+        signature="create_camera(elevation, azimuth, distance) → Camera"
+      />
+
+      <p>Create a camera for consistent view angles.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import create_camera, generate_svg
+
+camera = create_camera(
+    elevation=35,   # degrees from horizontal
+    azimuth=-45,    # rotation around vertical
+    distance=5.0   # distance from origin
+)
+
+# Use same camera for multiple renders
+generate_svg(geom1, "crystal1.svg", camera=camera)
+generate_svg(geom2, "crystal2.svg", camera=camera)`}
+      />
+
+      <APISignature
+        name="project_to_2d"
+        signature="project_to_2d(geometry, camera) → ProjectedGeometry"
+      />
+
+      <p>Project 3D geometry to 2D for custom rendering.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_renderer import project_to_2d, create_camera
+
+camera = create_camera(elevation=30, azimuth=-45)
+projected = project_to_2d(geom, camera)
+
+# Access 2D data
+for face in projected.faces:
+    print(face.vertices_2d)   # [(x, y), ...]
+    print(face.depth)         # Z-order for painting
+    print(face.brightness)    # Lighting intensity`}
+      />
+    </article>
+
+    <PageNav
+      prev={{ label: 'mineral-database API', href: '/docs/api/mineral-database' }}
+      next={{ label: 'CLI Reference', href: '/docs/cli' }}
+    />
+  </div>
+</BaseLayout>

@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+
+const crystalDescriptionAttrs = [
+  { name: 'system', type: 'CrystalSystem', description: 'Crystal system enum' },
+  { name: 'point_group', type: 'str', description: 'Point group symbol' },
+  { name: 'forms', type: 'list[Form]', description: 'List of crystal forms' },
+  { name: 'twin_law', type: 'str | None', description: 'Optional twin law name' },
+  { name: 'modifiers', type: 'dict[str, Any]', description: 'Optional modifiers (elongate, etc.)' },
+];
+
+const formAttrs = [
+  { name: 'miller_indices', type: 'MillerIndex', description: 'Miller indices for this form' },
+  { name: 'distance', type: 'float', description: 'Distance from origin (default 1.0)' },
+];
+---
+
+<BaseLayout
+  title="cdl-parser API"
+  description="API reference for the cdl-parser package - parse and validate CDL expressions."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={[
+      { label: 'Docs', href: '/docs' },
+      { label: 'API Reference', href: '/docs' },
+      { label: 'cdl-parser' }
+    ]} />
+
+    <article class="prose prose-slate max-w-none">
+      <h1>cdl-parser</h1>
+
+      <p class="lead">
+        Parse and validate Crystal Description Language (CDL) expressions.
+        Zero external dependencies.
+      </p>
+
+      <CodeBlock code="pip install cdl-parser" lang="bash" />
+
+      <h2>Functions</h2>
+
+      <APISignature
+        name="parse_cdl"
+        signature="parse_cdl(expression: str) → CrystalDescription"
+      />
+
+      <p>Parse a CDL expression string into a structured <code>CrystalDescription</code> object.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import parse_cdl
+
+desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
+
+print(desc.system)      # CrystalSystem.CUBIC
+print(desc.point_group) # "m3m"
+print(desc.forms)       # [Form({111}, 1.0), Form({100}, 1.3)]`}
+      />
+
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><code>expression</code> - CDL expression string</li>
+      </ul>
+
+      <p><strong>Returns:</strong> <code>CrystalDescription</code> object</p>
+
+      <p><strong>Raises:</strong> <code>CDLParseError</code> if the expression is invalid</p>
+
+      <APISignature
+        name="validate_cdl"
+        signature="validate_cdl(expression: str) → ValidationResult"
+      />
+
+      <p>Validate a CDL expression without fully parsing it. Returns detailed error information.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import validate_cdl
+
+result = validate_cdl("cubic[m3m]:{111}")
+print(result.is_valid)  # True
+
+result = validate_cdl("invalid[xyz]:{abc}")
+print(result.is_valid)  # False
+print(result.errors)    # [ValidationError(...)]`}
+      />
+
+      <APISignature
+        name="tokenize"
+        signature="tokenize(expression: str) → list[Token]"
+      />
+
+      <p>Tokenize a CDL expression into a list of tokens. Useful for syntax highlighting.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import tokenize
+
+tokens = tokenize("cubic[m3m]:{111}")
+for token in tokens:
+    print(f"{token.type}: {token.value}")
+# SYSTEM: cubic
+# LBRACKET: [
+# POINT_GROUP: m3m
+# ...`}
+      />
+
+      <h2>Classes</h2>
+
+      <h3 id="CrystalDescription"><code>CrystalDescription</code></h3>
+
+      <p>Represents a parsed CDL expression.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={crystalDescriptionAttrs}
+      />
+
+      <h3 id="Form"><code>Form</code></h3>
+
+      <p>Represents a single crystal form (set of Miller indices with distance).</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={formAttrs}
+      />
+
+      <h3 id="MillerIndex"><code>MillerIndex</code></h3>
+
+      <p>Represents Miller indices (hkl or hkil for hexagonal/trigonal).</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import MillerIndex
+
+# 3-index notation
+mi = MillerIndex(1, 1, 1)
+print(mi)  # {111}
+
+# 4-index notation (Miller-Bravais)
+mi = MillerIndex(1, 0, -1, 0)
+print(mi)  # {10-10}
+
+# Convert between notations
+mi_3 = mi.to_3index()
+mi_4 = mi.to_4index()`}
+      />
+
+      <h3 id="CrystalSystem"><code>CrystalSystem</code></h3>
+
+      <p>Enum of the seven crystal systems.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import CrystalSystem
+
+CrystalSystem.CUBIC
+CrystalSystem.HEXAGONAL
+CrystalSystem.TRIGONAL
+CrystalSystem.TETRAGONAL
+CrystalSystem.ORTHORHOMBIC
+CrystalSystem.MONOCLINIC
+CrystalSystem.TRICLINIC`}
+      />
+
+      <h2>Exceptions</h2>
+
+      <h3 id="CDLParseError"><code>CDLParseError</code></h3>
+
+      <p>Raised when parsing fails. Contains detailed error information.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import parse_cdl, CDLParseError
+
+try:
+    parse_cdl("invalid")
+except CDLParseError as e:
+    print(e.message)    # Error message
+    print(e.line)       # Line number (1-based)
+    print(e.column)     # Column number (1-based)
+    print(e.context)    # Surrounding text`}
+      />
+
+      <h2>Constants</h2>
+
+      <h3><code>POINT_GROUPS</code></h3>
+
+      <p>Dictionary mapping crystal systems to valid point groups.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import POINT_GROUPS
+
+print(POINT_GROUPS[CrystalSystem.CUBIC])
+# ['m3m', '432', '-43m', 'm3', '23']`}
+      />
+    </article>
+
+    <PageNav
+      prev={{ label: 'Back to Docs', href: '/docs' }}
+      next={{ label: 'crystal-geometry', href: '/docs/api/crystal-geometry' }}
+    />
+  </div>
+</BaseLayout>

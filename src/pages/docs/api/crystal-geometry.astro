@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+
+const geometryAttrs = [
+  { name: 'vertices', type: 'np.ndarray', description: 'Nx3 array of vertex coordinates' },
+  { name: 'faces', type: 'list[Face]', description: 'List of Face objects' },
+  { name: 'normals', type: 'np.ndarray', description: 'Nx3 array of face normals' },
+  { name: 'face_miller_indices', type: 'list[MillerIndex]', description: 'Miller indices for each face' },
+  { name: 'center', type: 'tuple[float, float, float]', description: 'Centroid of the geometry' },
+  { name: 'bounds', type: 'tuple[tuple, tuple]', description: 'Bounding box (min, max)' },
+];
+
+const faceAttrs = [
+  { name: 'vertex_indices', type: 'list[int]', description: 'Indices into vertices array (CCW order)' },
+  { name: 'normal', type: 'tuple[float, float, float]', description: 'Outward-facing normal vector' },
+  { name: 'miller_index', type: 'MillerIndex', description: 'Miller indices for this face' },
+  { name: 'area', type: 'float', description: 'Surface area of the face' },
+  { name: 'centroid', type: 'tuple[float, float, float]', description: 'Center point of the face' },
+];
+---
+
+<BaseLayout
+  title="crystal-geometry API"
+  description="API reference for the crystal-geometry package - 3D geometry generation using half-space intersection."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={[
+      { label: 'Docs', href: '/docs' },
+      { label: 'API Reference', href: '/docs' },
+      { label: 'crystal-geometry' }
+    ]} />
+
+    <article class="prose prose-slate max-w-none">
+      <h1>crystal-geometry</h1>
+
+      <p class="lead">
+        Generate 3D crystal geometry from CDL descriptions using half-space intersection
+        and crystallographic symmetry operations.
+      </p>
+
+      <CodeBlock code="pip install crystal-geometry" lang="bash" />
+
+      <h2>Functions</h2>
+
+      <APISignature
+        name="cdl_to_geometry"
+        signature="cdl_to_geometry(description: CrystalDescription) → CrystalGeometry"
+      />
+
+      <p>Convert a parsed CDL description into 3D geometry.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import parse_cdl
+from crystal_geometry import cdl_to_geometry
+
+desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
+geom = cdl_to_geometry(desc)
+
+print(f"Vertices: {len(geom.vertices)}")  # 14
+print(f"Faces: {len(geom.faces)}")        # 14`}
+      />
+
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><code>description</code> - Parsed <code>CrystalDescription</code> from cdl-parser</li>
+      </ul>
+
+      <p><strong>Returns:</strong> <code>CrystalGeometry</code> object with vertices, faces, and normals</p>
+
+      <APISignature
+        name="apply_symmetry"
+        signature="apply_symmetry(planes: list[Plane], point_group: str) → list[Plane]"
+      />
+
+      <p>Apply point group symmetry operations to generate all equivalent planes.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import apply_symmetry, Plane
+
+# Single {111} plane
+planes = [Plane(normal=(1, 1, 1), distance=1.0)]
+
+# Apply m3m symmetry -> 8 equivalent planes
+all_planes = apply_symmetry(planes, "m3m")
+print(len(all_planes))  # 8`}
+      />
+
+      <APISignature
+        name="halfspace_intersection"
+        signature="halfspace_intersection(planes: list[Plane]) → CrystalGeometry"
+      />
+
+      <p>Compute the convex polyhedron defined by the intersection of half-spaces.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import halfspace_intersection, Plane
+
+# Define a cube with 6 planes
+planes = [
+    Plane(normal=(1, 0, 0), distance=1.0),
+    Plane(normal=(-1, 0, 0), distance=1.0),
+    Plane(normal=(0, 1, 0), distance=1.0),
+    Plane(normal=(0, -1, 0), distance=1.0),
+    Plane(normal=(0, 0, 1), distance=1.0),
+    Plane(normal=(0, 0, -1), distance=1.0),
+]
+
+geom = halfspace_intersection(planes)
+print(len(geom.vertices))  # 8
+print(len(geom.faces))     # 6`}
+      />
+
+      <APISignature
+        name="apply_twin"
+        signature="apply_twin(geometry: CrystalGeometry, twin_law: str) → CrystalGeometry"
+      />
+
+      <p>Apply a twin law to create twinned crystal geometry.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import cdl_to_geometry, apply_twin
+
+geom = cdl_to_geometry(desc)
+twinned = apply_twin(geom, "spinel_law")`}
+      />
+
+      <p><strong>Supported twin laws:</strong></p>
+      <ul>
+        <li><code>spinel_law</code> - Cubic {'{111}'} contact twin</li>
+        <li><code>dauphine</code> - Quartz 180° rotation about c-axis</li>
+        <li><code>brazil</code> - Quartz reflection twin</li>
+        <li><code>japan_law</code> - Quartz {'{11-22}'} contact twin</li>
+        <li><code>carlsbad</code> - Feldspar twin</li>
+      </ul>
+
+      <h2>Classes</h2>
+
+      <h3 id="CrystalGeometry"><code>CrystalGeometry</code></h3>
+
+      <p>Container for 3D crystal geometry data.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={geometryAttrs}
+      />
+
+      <h4>Methods</h4>
+
+      <CodeBlock
+        lang="python"
+        code={`# Transform the geometry
+geom.translate(dx, dy, dz)
+geom.scale(factor)
+geom.rotate(axis, angle)
+
+# Get geometry info
+volume = geom.volume()
+surface_area = geom.surface_area()
+
+# Export to different formats
+geom.to_mesh()     # Returns vertices, faces arrays
+geom.to_trimesh()  # Returns trimesh.Trimesh object`}
+      />
+
+      <h3 id="Face"><code>Face</code></h3>
+
+      <p>Represents a single crystal face.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={faceAttrs}
+      />
+
+      <h3 id="Plane"><code>Plane</code></h3>
+
+      <p>Represents a half-space boundary plane.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import Plane
+
+# Create from normal and distance
+plane = Plane(normal=(1, 1, 1), distance=1.0)
+
+# Create from Miller indices
+plane = Plane.from_miller(h=1, k=1, l=1, distance=1.0)`}
+      />
+
+      <h2>Symmetry Operations</h2>
+
+      <APISignature
+        name="get_symmetry_matrices"
+        signature="get_symmetry_matrices(point_group: str) → list[np.ndarray]"
+      />
+
+      <p>Get the 3x3 rotation/reflection matrices for a point group.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import get_symmetry_matrices
+
+matrices = get_symmetry_matrices("m3m")
+print(len(matrices))  # 48 operations
+
+matrices = get_symmetry_matrices("-3m")
+print(len(matrices))  # 12 operations`}
+      />
+
+      <h2>Unit Cells</h2>
+
+      <APISignature
+        name="get_unit_cell"
+        signature="get_unit_cell(system: CrystalSystem, a: float, b: float, c: float, alpha: float, beta: float, gamma: float) → UnitCell"
+      />
+
+      <p>Create a unit cell with specified parameters.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import get_unit_cell
+from cdl_parser import CrystalSystem
+
+# Quartz unit cell
+cell = get_unit_cell(
+    system=CrystalSystem.TRIGONAL,
+    a=4.913, b=4.913, c=5.405,
+    alpha=90, beta=90, gamma=120
+)
+
+# Get transformation matrix
+transform = cell.cartesian_matrix()`}
+      />
+    </article>
+
+    <PageNav
+      prev={{ label: 'cdl-parser API', href: '/docs/api/cdl-parser' }}
+      next={{ label: 'mineral-database API', href: '/docs/api/mineral-database' }}
+    />
+  </div>
+</BaseLayout>
