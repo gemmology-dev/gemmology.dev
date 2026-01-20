@@ -1,0 +1,65 @@
+---
+interface Column {
+  key: string;
+  header: string;
+  mono?: boolean;
+}
+
+interface Props {
+  columns: Column[];
+  rows: Record<string, string>[];
+}
+
+const { columns, rows } = Astro.props;
+---
+
+<div class="props-table-wrapper">
+  <table class="props-table">
+    <thead>
+      <tr>
+        {columns.map(col => (
+          <th scope="col">{col.header}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr>
+          {columns.map(col => (
+            <td class={col.mono ? 'mono' : ''}>
+              {col.mono ? <code>{row[col.key]}</code> : row[col.key]}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .props-table-wrapper {
+    @apply my-6 overflow-x-auto rounded-xl border border-slate-200;
+  }
+
+  .props-table {
+    @apply w-full text-sm;
+  }
+
+  .props-table th {
+    @apply px-4 py-3 text-left font-semibold text-slate-700;
+    @apply bg-gradient-to-r from-crystal-50 to-slate-50;
+    @apply border-b border-slate-200;
+  }
+
+  .props-table td {
+    @apply px-4 py-3 border-b border-slate-100;
+  }
+
+  .props-table tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .props-table td.mono code {
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono text-slate-700;
+  }
+</style>

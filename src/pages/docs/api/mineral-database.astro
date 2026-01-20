@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+
+const presetAttrs = [
+  { name: 'name', type: 'str', description: 'Mineral name' },
+  { name: 'cdl', type: 'str', description: 'CDL expression' },
+  { name: 'system', type: 'str', description: 'Crystal system' },
+  { name: 'point_group', type: 'str', description: 'Point group symbol' },
+  { name: 'formula', type: 'str | None', description: 'Chemical formula' },
+  { name: 'hardness', type: 'float | None', description: 'Mohs hardness' },
+  { name: 'specific_gravity', type: 'tuple[float, float] | None', description: 'SG range' },
+  { name: 'ri_range', type: 'tuple[float, float] | None', description: 'Refractive index range' },
+  { name: 'birefringence', type: 'float | None', description: 'Maximum birefringence' },
+  { name: 'optic_sign', type: 'str | None', description: '"+" or "-" or None (isotropic)' },
+  { name: 'optic_character', type: 'str | None', description: '"uniaxial" or "biaxial" or None' },
+  { name: 'dispersion', type: 'float | None', description: 'Dispersion value' },
+  { name: 'colors', type: 'list[str]', description: 'Common colors' },
+  { name: 'cleavage', type: 'str | None', description: 'Cleavage description' },
+  { name: 'varieties', type: 'list[str]', description: 'Named varieties' },
+];
+---
+
+<BaseLayout
+  title="mineral-database API"
+  description="API reference for the mineral-database package - query mineral presets with CDL definitions."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={[
+      { label: 'Docs', href: '/docs' },
+      { label: 'API Reference', href: '/docs' },
+      { label: 'mineral-database' }
+    ]} />
+
+    <article class="prose prose-slate max-w-none">
+      <h1>mineral-database</h1>
+
+      <p class="lead">
+        SQLite database of 94+ mineral presets with CDL definitions, crystal system data,
+        and gemmological properties.
+      </p>
+
+      <CodeBlock code="pip install mineral-database" lang="bash" />
+
+      <h2>Functions</h2>
+
+      <APISignature
+        name="get_preset"
+        signature="get_preset(name: str) → MineralPreset | None"
+      />
+
+      <p>Get a mineral preset by name (case-insensitive).</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_preset
+
+preset = get_preset("quartz")
+if preset:
+    print(preset.name)         # "Quartz"
+    print(preset.cdl)          # "trigonal[-3m]:{10-10}@1.0 + ..."
+    print(preset.system)       # "trigonal"
+    print(preset.hardness)     # 7.0
+    print(preset.ri_range)     # (1.544, 1.553)`}
+      />
+
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><code>name</code> - Mineral name (case-insensitive)</li>
+      </ul>
+
+      <p><strong>Returns:</strong> <code>MineralPreset</code> or <code>None</code> if not found</p>
+
+      <APISignature
+        name="list_presets"
+        signature="list_presets() → list[str]"
+      />
+
+      <p>List all available preset names.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import list_presets
+
+names = list_presets()
+print(len(names))  # 94
+print(names[:5])   # ['Alexandrite', 'Almandine', 'Amazonite', ...]`}
+      />
+
+      <APISignature
+        name="search"
+        signature="search(query: str, limit: int = 10) → list[MineralPreset]"
+      />
+
+      <p>Search presets by name, formula, or properties.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import search
+
+# Search by name
+results = search("beryl")
+for r in results:
+    print(r.name)  # Beryl, Emerald, Aquamarine, ...
+
+# Search by chemical formula
+results = search("SiO2")
+
+# Search by crystal system
+results = search("cubic")`}
+      />
+
+      <APISignature
+        name="get_by_system"
+        signature="get_by_system(system: str) → list[MineralPreset]"
+      />
+
+      <p>Get all presets for a specific crystal system.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_by_system
+
+cubic_minerals = get_by_system("cubic")
+print(len(cubic_minerals))  # 18
+
+# Valid systems: cubic, hexagonal, trigonal, tetragonal,
+#                orthorhombic, monoclinic, triclinic`}
+      />
+
+      <APISignature
+        name="get_by_hardness"
+        signature="get_by_hardness(min_h: float, max_h: float) → list[MineralPreset]"
+      />
+
+      <p>Get presets within a hardness range.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_by_hardness
+
+# Get gems suitable for rings (hardness 7+)
+durable = get_by_hardness(7.0, 10.0)
+for m in durable:
+    print(f"{m.name}: {m.hardness}")`}
+      />
+
+      <APISignature
+        name="get_by_ri"
+        signature="get_by_ri(ri: float, tolerance: float = 0.01) → list[MineralPreset]"
+      />
+
+      <p>Find minerals matching a measured refractive index.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_by_ri
+
+# Find minerals with RI around 1.54
+matches = get_by_ri(1.54, tolerance=0.01)
+for m in matches:
+    print(f"{m.name}: {m.ri_range}")`}
+      />
+
+      <h2>Classes</h2>
+
+      <h3 id="MineralPreset"><code>MineralPreset</code></h3>
+
+      <p>Complete mineral data including CDL and gemmological properties.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={presetAttrs}
+      />
+
+      <h4>Methods</h4>
+
+      <CodeBlock
+        lang="python"
+        code={`# Check if preset matches identification criteria
+preset.matches_ri(1.544)           # True if RI in range
+preset.matches_sg(2.65)            # True if SG in range
+preset.matches_hardness(7.0)       # True if hardness matches
+
+# Export to different formats
+preset.to_dict()                   # Dictionary representation
+preset.to_json()                   # JSON string`}
+      />
+
+      <h2>Database Information</h2>
+
+      <APISignature
+        name="get_db_info"
+        signature="get_db_info() → dict"
+      />
+
+      <p>Get database metadata.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_db_info
+
+info = get_db_info()
+print(info)
+# {
+#   'version': '1.0.0',
+#   'preset_count': 94,
+#   'systems': {'cubic': 18, 'hexagonal': 12, ...},
+#   'last_updated': '2025-01-15'
+# }`}
+      />
+
+      <h2>Custom Database</h2>
+
+      <p>Load a custom SQLite database with additional presets:</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import MineralDatabase
+
+# Load custom database
+db = MineralDatabase("/path/to/custom.db")
+
+# Use same API
+preset = db.get_preset("custom_mineral")
+all_presets = db.list_presets()`}
+      />
+
+      <h2>Included Presets</h2>
+
+      <p>The database includes 94 mineral presets organized by crystal system:</p>
+
+      <div class="not-prose mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Cubic (18)</h4>
+          <p class="text-sm text-slate-600 mt-1">Diamond, Spinel, Garnet group, Pyrite, Fluorite...</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Hexagonal (12)</h4>
+          <p class="text-sm text-slate-600 mt-1">Beryl varieties, Apatite, Zincite...</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Trigonal (15)</h4>
+          <p class="text-sm text-slate-600 mt-1">Quartz varieties, Corundum, Tourmaline, Calcite...</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Tetragonal (8)</h4>
+          <p class="text-sm text-slate-600 mt-1">Zircon, Rutile, Cassiterite, Vesuvianite...</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Orthorhombic (14)</h4>
+          <p class="text-sm text-slate-600 mt-1">Topaz, Peridot, Chrysoberyl, Tanzanite...</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+          <h4 class="font-semibold text-slate-900">Monoclinic (12)</h4>
+          <p class="text-sm text-slate-600 mt-1">Orthoclase, Jadeite, Spodumene, Malachite...</p>
+        </div>
+      </div>
+    </article>
+
+    <PageNav
+      prev={{ label: 'crystal-geometry API', href: '/docs/api/crystal-geometry' }}
+      next={{ label: 'crystal-renderer API', href: '/docs/api/crystal-renderer' }}
+    />
+  </div>
+</BaseLayout>

@@ -1,0 +1,309 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Breadcrumb, CodeBlock, PageNav, Callout } from '../../components/docs';
+---
+
+<BaseLayout
+  title="Optical Properties"
+  description="Learn about refractive index, birefringence, pleochroism, dispersion, and other optical properties of gemstones."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={[
+      { label: 'Learn', href: '/learn' },
+      { label: 'Optical Properties' }
+    ]} />
+
+    <article class="prose prose-slate max-w-none">
+      <h1>Optical Properties of Gemstones</h1>
+
+      <p class="lead">
+        Optical properties are the most important diagnostic features for gem identification.
+        The refractometer, polariscope, and dichroscope are essential tools for measuring
+        these properties.
+      </p>
+
+      <h2>Refractive Index (RI)</h2>
+
+      <p>
+        The refractive index measures how much light slows down when entering a gemstone.
+        It's calculated as the ratio of light speed in vacuum to speed in the material.
+      </p>
+
+      <h3>Measuring RI</h3>
+
+      <p>
+        A standard gemmological refractometer can measure RI values from approximately
+        1.35 to 1.81 (limited by the contact liquid). Gems with higher RI require
+        alternative methods.
+      </p>
+
+      <h3>RI Values by Gemstone</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Gemstone</th>
+            <th>RI Range</th>
+            <th>Optic Character</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diamond</td>
+            <td>2.417</td>
+            <td>Isotropic</td>
+          </tr>
+          <tr>
+            <td>Corundum</td>
+            <td>1.762-1.770</td>
+            <td>Uniaxial -</td>
+          </tr>
+          <tr>
+            <td>Spinel</td>
+            <td>1.712-1.736</td>
+            <td>Isotropic</td>
+          </tr>
+          <tr>
+            <td>Tourmaline</td>
+            <td>1.624-1.644</td>
+            <td>Uniaxial -</td>
+          </tr>
+          <tr>
+            <td>Topaz</td>
+            <td>1.609-1.617</td>
+            <td>Biaxial +</td>
+          </tr>
+          <tr>
+            <td>Quartz</td>
+            <td>1.544-1.553</td>
+            <td>Uniaxial +</td>
+          </tr>
+          <tr>
+            <td>Beryl</td>
+            <td>1.570-1.590</td>
+            <td>Uniaxial -</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Birefringence</h2>
+
+      <p>
+        Birefringence is the difference between maximum and minimum RI values in
+        anisotropic (non-cubic) crystals. Light entering the stone splits into two
+        rays traveling at different speeds.
+      </p>
+
+      <h3>Calculating Birefringence</h3>
+
+      <CodeBlock
+        lang="text"
+        code={`Birefringence = RI(max) - RI(min)
+
+Example (Quartz): 1.553 - 1.544 = 0.009`}
+      />
+
+      <h3>Diagnostic Birefringence Values</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Birefringence</th>
+            <th>Gemstones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>None (0.000)</td>
+            <td>Diamond, Spinel, Garnet (isotropic)</td>
+          </tr>
+          <tr>
+            <td>Low (0.004-0.010)</td>
+            <td>Quartz (0.009), Beryl (0.006)</td>
+          </tr>
+          <tr>
+            <td>Medium (0.010-0.020)</td>
+            <td>Topaz (0.010), Tourmaline (0.018)</td>
+          </tr>
+          <tr>
+            <td>High (0.020-0.050)</td>
+            <td>Peridot (0.036), Zircon (0.059)</td>
+          </tr>
+          <tr>
+            <td>Very High (&gt;0.050)</td>
+            <td>Calcite (0.172), Sphene (0.134)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <Callout variant="info" title="Doubling Effect">
+        <p>
+          High birefringence causes visible "doubling" of back facet edges when viewed
+          through the table. This is diagnostic for zircon, sphene, and peridot.
+        </p>
+      </Callout>
+
+      <h2>Optic Character and Sign</h2>
+
+      <p>
+        The polariscope and conoscope reveal a gem's optic character:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Character</th>
+            <th>Crystal Systems</th>
+            <th>RI Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Isotropic</td>
+            <td>Cubic</td>
+            <td>Single RI (n)</td>
+          </tr>
+          <tr>
+            <td>Uniaxial</td>
+            <td>Hexagonal, Trigonal, Tetragonal</td>
+            <td>Two values (ω, ε)</td>
+          </tr>
+          <tr>
+            <td>Biaxial</td>
+            <td>Orthorhombic, Monoclinic, Triclinic</td>
+            <td>Three values (α, β, γ)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Optic Sign</h3>
+
+      <ul>
+        <li><strong>Uniaxial +</strong>: ε &gt; ω (quartz, zircon)</li>
+        <li><strong>Uniaxial -</strong>: ε &lt; ω (corundum, tourmaline, beryl)</li>
+        <li><strong>Biaxial +</strong>: β closer to α (topaz)</li>
+        <li><strong>Biaxial -</strong>: β closer to γ (peridot)</li>
+      </ul>
+
+      <h2>Pleochroism</h2>
+
+      <p>
+        Pleochroism is the absorption of different colours in different crystal directions.
+        Viewed with a dichroscope, anisotropic coloured gems show different colours.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Gemstone</th>
+            <th>Pleochroism</th>
+            <th>Colours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ruby</td>
+            <td>Strong</td>
+            <td>Purple-red / Orange-red</td>
+          </tr>
+          <tr>
+            <td>Sapphire (blue)</td>
+            <td>Strong</td>
+            <td>Violet-blue / Green-blue</td>
+          </tr>
+          <tr>
+            <td>Tourmaline</td>
+            <td>Strong</td>
+            <td>Variable (often dark/light)</td>
+          </tr>
+          <tr>
+            <td>Tanzanite</td>
+            <td>Strong (trichroic)</td>
+            <td>Blue / Purple / Bronze</td>
+          </tr>
+          <tr>
+            <td>Peridot</td>
+            <td>Weak</td>
+            <td>Yellow-green / Green</td>
+          </tr>
+          <tr>
+            <td>Aquamarine</td>
+            <td>Weak</td>
+            <td>Near colourless / Blue</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Dispersion</h2>
+
+      <p>
+        Dispersion is the separation of white light into spectral colours ("fire").
+        It's measured as the difference in RI between red (B) and violet (G) wavelengths.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Gemstone</th>
+            <th>Dispersion (B-G)</th>
+            <th>Fire Quality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diamond</td>
+            <td>0.044</td>
+            <td>Strong</td>
+          </tr>
+          <tr>
+            <td>Sphene</td>
+            <td>0.051</td>
+            <td>Very strong</td>
+          </tr>
+          <tr>
+            <td>Demantoid garnet</td>
+            <td>0.057</td>
+            <td>Very strong</td>
+          </tr>
+          <tr>
+            <td>Zircon</td>
+            <td>0.039</td>
+            <td>Strong</td>
+          </tr>
+          <tr>
+            <td>Spinel</td>
+            <td>0.020</td>
+            <td>Moderate</td>
+          </tr>
+          <tr>
+            <td>Quartz</td>
+            <td>0.013</td>
+            <td>Low</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Absorption Spectrum</h2>
+
+      <p>
+        The absorption spectrum shows which wavelengths of light are absorbed by a gem.
+        Viewed through a spectroscope, absorption bands appear as dark lines or bands.
+      </p>
+
+      <h3>Diagnostic Spectra</h3>
+
+      <ul>
+        <li><strong>Ruby</strong>: Lines at 694nm (doublet), 668nm, 659nm</li>
+        <li><strong>Emerald</strong>: Line at 683nm (Cr), bands in red/yellow</li>
+        <li><strong>Blue sapphire</strong>: Bands at 450nm, 460nm, 470nm</li>
+        <li><strong>Almandine garnet</strong>: Bands at 505nm, 520nm, 575nm</li>
+        <li><strong>Zircon</strong>: Fine lines throughout spectrum (uranium)</li>
+      </ul>
+    </article>
+
+    <PageNav
+      prev={{ label: 'Physical Properties', href: '/learn/physical-properties' }}
+      next={{ label: 'Inclusions', href: '/learn/inclusions' }}
+    />
+  </div>
+</BaseLayout>

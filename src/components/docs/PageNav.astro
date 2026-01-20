@@ -1,0 +1,61 @@
+---
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  prev?: NavLink;
+  next?: NavLink;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="page-nav" aria-label="Page navigation">
+  {prev ? (
+    <a href={prev.href} class="nav-link prev">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+      </svg>
+      <span>{prev.label}</span>
+    </a>
+  ) : <span class="nav-spacer" />}
+
+  {next && (
+    <a href={next.href} class="nav-link next">
+      <span>{next.label}</span>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+  )}
+</nav>
+
+<style>
+  .page-nav {
+    @apply flex justify-between items-center mt-16 pt-8;
+    @apply border-t border-slate-200;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-2 px-5 py-3 rounded-lg;
+    @apply text-sm font-medium transition-all;
+  }
+
+  .nav-link.prev {
+    @apply text-slate-600 border border-slate-200;
+    @apply hover:border-crystal-300 hover:text-crystal-700 hover:bg-crystal-50;
+    @apply focus-visible:outline-2 focus-visible:outline-crystal-500 focus-visible:outline-offset-2;
+  }
+
+  .nav-link.next {
+    @apply text-white bg-crystal-700;
+    @apply hover:bg-crystal-800 hover:shadow-lg hover:shadow-crystal-500/25;
+    @apply focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2;
+  }
+
+  .icon {
+    @apply w-4 h-4;
+  }
+</style>
