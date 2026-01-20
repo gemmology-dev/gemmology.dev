@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Gallery } from '../../components/gallery/Gallery';
+---
+
+<BaseLayout
+  title="Crystal Gallery"
+  description="Explore 50+ mineral presets with FGA-accurate crystallographic data and interactive visualizations."
+>
+  <div class="bg-gradient-to-b from-crystal-50 to-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-slate-900">Crystal Gallery</h1>
+        <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+          Explore our collection of 50+ mineral presets with FGA-accurate crystallographic data.
+          Click any crystal to view detailed properties and open in the playground.
+        </p>
+      </div>
+
+      <Gallery client:load />
+    </div>
+  </div>
+</BaseLayout>
