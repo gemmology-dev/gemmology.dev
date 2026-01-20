@@ -57,7 +57,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: gemmology.dev
+          projectName: gemmology-dev
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
@@ -86,7 +86,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: gemmology.dev
+          projectName: gemmology-dev
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
