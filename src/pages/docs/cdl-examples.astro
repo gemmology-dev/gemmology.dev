@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeBlock from '../../components/docs/CodeBlock.astro';
+
+const examples = [
+  {
+    category: 'Gemstones',
+    items: [
+      { name: 'Diamond', cdl: 'cubic[m3m]:{111}@1.0', description: 'Classic octahedral habit' },
+      { name: 'Ruby/Sapphire', cdl: 'trigonal[-3m]:{10-10}@1.0 + {0001}@1.2 + {10-11}@0.8', description: 'Hexagonal prism with pinacoid and rhombohedron' },
+      { name: 'Emerald', cdl: 'hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.5', description: 'Beryl structure with prism and pinacoid' },
+      { name: 'Spinel', cdl: 'cubic[m3m]:{111}@1.0 + {110}@1.5', description: 'Octahedron modified by dodecahedron' },
+      { name: 'Garnet', cdl: 'cubic[m3m]:{110}@1.0 + {211}@1.2', description: 'Rhombic dodecahedron with trapezohedron' },
+      { name: 'Zircon', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {101}@0.9 + {100}@1.3', description: 'Tetragonal bipyramid with prism' },
+      { name: 'Topaz', cdl: 'orthorhombic[mmm]:{110}@1.0 + {120}@1.1 + {011}@0.9', description: 'Orthorhombic prism habit' },
+    ],
+  },
+  {
+    category: 'Quartz Varieties',
+    items: [
+      { name: 'Alpha Quartz', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8', description: 'Standard low quartz' },
+      { name: 'Dauphine Twin', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 twin:dauphine', description: 'Common quartz twin law' },
+      { name: 'Japan Law Twin', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 twin:japan_law', description: 'Heart-shaped twin' },
+      { name: 'Amethyst Scepter', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.6 + {01-11}@0.7', description: 'Well-developed rhombohedra' },
+    ],
+  },
+  {
+    category: 'Cubic System',
+    items: [
+      { name: 'Cube', cdl: 'cubic[m3m]:{100}@1.0', description: 'Hexahedron - pyrite, galena, halite' },
+      { name: 'Octahedron', cdl: 'cubic[m3m]:{111}@1.0', description: 'Diamond, magnetite, spinel' },
+      { name: 'Dodecahedron', cdl: 'cubic[m3m]:{110}@1.0', description: 'Rhombic dodecahedron - garnet' },
+      { name: 'Cube-Octahedron', cdl: 'cubic[m3m]:{100}@1.0 + {111}@1.2', description: 'Truncated cube' },
+      { name: 'Cubo-Octahedron', cdl: 'cubic[m3m]:{100}@1.0 + {111}@1.0', description: 'Equal development' },
+      { name: 'Pyritohedron', cdl: 'cubic[m3]:{210}@1.0', description: 'Pentagonal dodecahedron' },
+    ],
+  },
+  {
+    category: 'Hexagonal/Trigonal',
+    items: [
+      { name: 'Hex Prism', cdl: 'hexagonal[6/mmm]:{10-10}@1.0', description: 'Basic hexagonal prism' },
+      { name: 'Hex Bipyramid', cdl: 'hexagonal[6/mmm]:{10-11}@1.0', description: 'Pointed termination' },
+      { name: 'Beryl', cdl: 'hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.2 + {10-11}@1.5', description: 'Prism with pinacoid and bipyramid' },
+      { name: 'Tourmaline', cdl: 'trigonal[3m]:{10-10}@1.0 + {10-11}@0.8 + {01-11}@0.9 + {0001}@1.3', description: 'Hemimorphic prism' },
+      { name: 'Calcite Scalenohedron', cdl: 'trigonal[-3m]:{21-31}@1.0', description: '"Dogtooth" calcite' },
+      { name: 'Calcite Rhomb', cdl: 'trigonal[-3m]:{10-11}@1.0', description: 'Rhombohedral cleavage' },
+    ],
+  },
+  {
+    category: 'Tetragonal',
+    items: [
+      { name: 'Tetragonal Prism', cdl: 'tetragonal[4/mmm]:{100}@1.0', description: 'Square prism' },
+      { name: 'Tetragonal Bipyramid', cdl: 'tetragonal[4/mmm]:{101}@1.0', description: 'Pointed form' },
+      { name: 'Vesuvianite', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {100}@1.2 + {101}@0.9', description: 'Complex prismatic' },
+      { name: 'Rutile', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {101}@0.8 + {100}@1.5', description: 'Prismatic with pyramids' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="CDL Examples"
+  description="Common CDL patterns for gemstones, minerals, and crystal habits."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center gap-2 text-sm text-slate-500">
+        <li><a href="/docs" class="hover:text-crystal-600">Docs</a></li>
+        <li>/</li>
+        <li class="text-slate-900 font-medium">CDL Examples</li>
+      </ol>
+    </nav>
+
+    <article class="prose prose-slate max-w-none">
+      <h1>CDL Examples</h1>
+
+      <p class="lead text-xl text-slate-600">
+        Ready-to-use CDL expressions for common gemstones, minerals, and crystal habits.
+        Click any example to open it in the Playground.
+      </p>
+
+      {examples.map((section) => (
+        <section class="mt-12">
+          <h2 class="text-2xl font-bold text-slate-900 mb-6">{section.category}</h2>
+
+          <div class="not-prose grid gap-4">
+            {section.items.map((item) => (
+              <a
+                href={`/playground?cdl=${encodeURIComponent(item.cdl)}`}
+                class="group block p-4 rounded-xl border border-slate-200 bg-white hover:border-crystal-300 hover:shadow-md transition-all"
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
+                      {item.name}
+                    </h3>
+                    <p class="mt-1 text-sm text-slate-500">{item.description}</p>
+                  </div>
+                  <svg class="w-5 h-5 text-slate-400 group-hover:text-crystal-500 transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+                <code class="mt-3 block text-xs font-mono text-slate-600 bg-slate-50 px-3 py-2 rounded-lg overflow-x-auto">
+                  {item.cdl}
+                </code>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <h2>Building Your Own</h2>
+
+      <p>Combine these patterns to create custom crystal morphologies:</p>
+
+      <CodeBlock lang="text" code={`# Start with a base form
+cubic[m3m]:{111}@1.0
+
+# Add a modifying form
+cubic[m3m]:{111}@1.0 + {100}@1.3
+
+# Adjust relative development
+# Lower @distance = larger faces
+cubic[m3m]:{111}@0.8 + {100}@1.5  # More octahedron
+cubic[m3m]:{111}@1.5 + {100}@0.8  # More cube`} />
+
+      <div class="mt-12 p-6 bg-crystal-50 rounded-xl border border-crystal-200">
+        <h3 class="text-lg font-semibold text-crystal-900 mt-0">Try These Examples</h3>
+        <p class="text-crystal-700 mb-4">
+          Open the CDL Playground to experiment with these expressions and customize them.
+        </p>
+        <a href="/playground" class="inline-flex items-center gap-2 px-4 py-2 bg-crystal-600 text-white rounded-lg hover:bg-crystal-700 transition-colors">
+          Open Playground
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

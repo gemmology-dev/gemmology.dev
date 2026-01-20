@@ -129,3 +129,72 @@
   @apply bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 bg-[length:200%_100%];
   animation: shimmer 1.5s infinite;
 }
+
+/* Documentation prose enhancements */
+.prose h1 {
+  @apply mb-4;
+}
+
+.prose h2 {
+  @apply mt-12 mb-6 pb-3 border-b border-slate-200;
+}
+
+.prose h3 {
+  @apply mt-8 mb-4;
+}
+
+.prose h3 code {
+  @apply text-lg bg-transparent px-0;
+}
+
+.prose .lead {
+  @apply text-xl text-slate-600 mb-8;
+}
+
+/* Prose inline code styling (not code blocks) */
+.prose :not(pre) > code,
+.prose :not(.expressive-code) > code {
+  @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
+}
+
+/* Reset prose styles inside expressive-code blocks */
+.prose .expressive-code code {
+  all: unset;
+}
+
+/* Apply expressive-code theme colors with high specificity */
+.prose .expressive-code pre {
+  background-color: var(--ec-codeBg, #282c34) !important;
+}
+
+.prose .expressive-code pre code {
+  color: var(--ec-codeFg, #abb2bf) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  /* Re-apply block padding after all:unset reset */
+  padding: var(--ec-codePadBlk, 1rem) 0 !important;
+}
+
+/* Preserve Shiki syntax highlighting colors on spans */
+.prose .expressive-code pre code span {
+  background: transparent !important;
+  border-radius: 0 !important;
+  /* Do NOT override color - let Shiki's inline styles apply */
+}
+
+/* Prose table styling */
+.prose table {
+  @apply w-full my-6;
+}
+
+.prose th {
+  @apply text-left bg-gradient-to-r from-crystal-50 to-slate-50 px-4 py-3 font-semibold text-slate-700 border-b border-slate-200;
+}
+
+.prose td {
+  @apply px-4 py-3 border-b border-slate-100;
+}
+
+.prose tr:last-child td {
+  @apply border-b-0;
+}

@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeBlock from '../../components/docs/CodeBlock.astro';
+---
+
+<BaseLayout
+  title="CLI Options"
+  description="Complete command-line options reference for crystal-renderer CLI."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center gap-2 text-sm text-slate-500">
+        <li><a href="/docs" class="hover:text-crystal-600">Docs</a></li>
+        <li>/</li>
+        <li class="text-slate-900 font-medium">CLI Options</li>
+      </ol>
+    </nav>
+
+    <article class="prose prose-slate max-w-none">
+      <h1>CLI Options</h1>
+
+      <p class="lead text-xl text-slate-600">
+        Complete reference for all command-line flags and options available in the
+        <code>crystal-render</code> command.
+      </p>
+
+      <h2>Basic Usage</h2>
+
+      <CodeBlock lang="bash" code={`crystal-render [OPTIONS] <CDL_EXPRESSION> [OUTPUT_FILE]`} />
+
+      <h2>Input Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>CDL_EXPRESSION</code></td>
+            <td>CDL expression to render (positional argument)</td>
+            <td>Required</td>
+          </tr>
+          <tr>
+            <td><code>-p, --preset NAME</code></td>
+            <td>Use a preset from mineral database instead of CDL</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td><code>-f, --file PATH</code></td>
+            <td>Read CDL expression from file</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td><code>--list-presets</code></td>
+            <td>List all available mineral presets</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Output Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>OUTPUT_FILE</code></td>
+            <td>Output file path (positional argument)</td>
+            <td><code>crystal.svg</code></td>
+          </tr>
+          <tr>
+            <td><code>--format FORMAT</code></td>
+            <td>Output format: <code>svg</code>, <code>stl</code>, <code>gltf</code>, <code>gemcad</code></td>
+            <td>Inferred from extension</td>
+          </tr>
+          <tr>
+            <td><code>--stdout</code></td>
+            <td>Write output to stdout instead of file</td>
+            <td><code>false</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>View Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--elevation DEGREES</code></td>
+            <td>View elevation angle (0-90)</td>
+            <td><code>30</code></td>
+          </tr>
+          <tr>
+            <td><code>--azimuth DEGREES</code></td>
+            <td>View azimuth angle (-180 to 180)</td>
+            <td><code>-45</code></td>
+          </tr>
+          <tr>
+            <td><code>--zoom FACTOR</code></td>
+            <td>Zoom factor (0.5-5.0)</td>
+            <td><code>1.0</code></td>
+          </tr>
+          <tr>
+            <td><code>--ortho</code></td>
+            <td>Use orthographic projection</td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code>--perspective</code></td>
+            <td>Use perspective projection</td>
+            <td><code>false</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>SVG Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--width PIXELS</code></td>
+            <td>SVG width</td>
+            <td><code>400</code></td>
+          </tr>
+          <tr>
+            <td><code>--height PIXELS</code></td>
+            <td>SVG height</td>
+            <td><code>400</code></td>
+          </tr>
+          <tr>
+            <td><code>--face-color COLOR</code></td>
+            <td>Face fill color (hex or name)</td>
+            <td><code>#0ea5e9</code></td>
+          </tr>
+          <tr>
+            <td><code>--edge-color COLOR</code></td>
+            <td>Edge stroke color</td>
+            <td><code>#0369a1</code></td>
+          </tr>
+          <tr>
+            <td><code>--edge-width PIXELS</code></td>
+            <td>Edge stroke width</td>
+            <td><code>1.5</code></td>
+          </tr>
+          <tr>
+            <td><code>--opacity VALUE</code></td>
+            <td>Face opacity (0.0-1.0)</td>
+            <td><code>0.85</code></td>
+          </tr>
+          <tr>
+            <td><code>--gradient</code></td>
+            <td>Apply lighting gradient to faces</td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code>--no-gradient</code></td>
+            <td>Use flat shading</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Display Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--axes</code></td>
+            <td>Show crystallographic axes</td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td><code>--grid</code></td>
+            <td>Show reference grid</td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td><code>--labels</code></td>
+            <td>Show face labels (Miller indices)</td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td><code>--title TEXT</code></td>
+            <td>Add title below crystal</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3D Export Options</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--scale FACTOR</code></td>
+            <td>Scale factor for STL/glTF output</td>
+            <td><code>10.0</code></td>
+          </tr>
+          <tr>
+            <td><code>--units UNIT</code></td>
+            <td>STL units: <code>mm</code>, <code>cm</code>, <code>in</code></td>
+            <td><code>mm</code></td>
+          </tr>
+          <tr>
+            <td><code>--binary</code></td>
+            <td>Use binary STL format</td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code>--ascii</code></td>
+            <td>Use ASCII STL format</td>
+            <td><code>false</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Examples</h2>
+
+      <h3>Basic rendering</h3>
+
+      <CodeBlock lang="bash" code={`# Render octahedron to SVG
+crystal-render "cubic[m3m]:{111}" diamond.svg
+
+# Render preset to SVG
+crystal-render --preset quartz quartz.svg`} />
+
+      <h3>Custom styling</h3>
+
+      <CodeBlock lang="bash" code={`# Purple garnet with larger size
+crystal-render "cubic[m3m]:{110}@1.0 + {211}@1.2" garnet.svg \\
+  --width 600 --height 600 \\
+  --face-color "#8b5cf6" --edge-color "#6d28d9"
+
+# With crystallographic axes
+crystal-render --preset beryl beryl.svg --axes --labels`} />
+
+      <h3>3D export</h3>
+
+      <CodeBlock lang="bash" code={`# Export for 3D printing (20mm scale)
+crystal-render --preset diamond diamond.stl --scale 20 --units mm
+
+# Export for web visualization
+crystal-render --preset zircon zircon.gltf`} />
+
+      <h3>View angles</h3>
+
+      <CodeBlock lang="bash" code={`# Top-down view
+crystal-render --preset quartz quartz-top.svg --elevation 90 --azimuth 0
+
+# Side view
+crystal-render --preset quartz quartz-side.svg --elevation 0 --azimuth 0
+
+# Isometric view
+crystal-render --preset quartz quartz-iso.svg --elevation 35 --azimuth -45`} />
+
+      <h3>Batch processing</h3>
+
+      <CodeBlock lang="bash" code={`# Render all presets
+crystal-render --list-presets | while read name; do
+  crystal-render --preset "$name" "output/$name.svg"
+done`} />
+
+      <div class="mt-12 flex gap-4">
+        <a href="/docs/cli" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          CLI Basics
+        </a>
+        <a href="/docs/api/crystal-renderer" class="inline-flex items-center gap-2 px-4 py-2 bg-crystal-600 text-white rounded-lg hover:bg-crystal-700 transition-colors">
+          Renderer API
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
