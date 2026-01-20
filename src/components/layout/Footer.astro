@@ -1,0 +1,98 @@
+---
+const links = {
+  product: [
+    { href: '/gallery', label: 'Crystal Gallery' },
+    { href: '/playground', label: 'CDL Playground' },
+    { href: '/docs', label: 'Documentation' },
+    { href: '/learn', label: 'Learn' },
+  ],
+  developers: [
+    { href: 'https://pypi.org/project/cdl-parser/', label: 'cdl-parser' },
+    { href: 'https://pypi.org/project/crystal-geometry/', label: 'crystal-geometry' },
+    { href: 'https://pypi.org/project/mineral-database/', label: 'mineral-database' },
+    { href: 'https://pypi.org/project/crystal-renderer/', label: 'crystal-renderer' },
+  ],
+  resources: [
+    { href: '/docs/cdl', label: 'CDL Specification' },
+    { href: '/docs/api', label: 'API Reference' },
+    { href: '/docs/cli', label: 'CLI Reference' },
+    { href: 'https://github.com/gemmology-dev', label: 'GitHub' },
+  ],
+};
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <!-- Brand -->
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="flex items-center gap-2 text-slate-900 font-semibold">
+          <svg class="h-6 w-6 text-crystal-600" viewBox="0 0 32 32" fill="none">
+            <path d="M16 2L28 10V22L16 30L4 22V10L16 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M16 2L16 30" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+            <path d="M4 10L28 22" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+            <path d="M28 10L4 22" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+          </svg>
+          gemmology.dev
+        </a>
+        <p class="mt-3 text-sm text-slate-600">
+          Crystal structure visualization and gemmological reference for FGA students and professionals.
+        </p>
+      </div>
+
+      <!-- Product -->
+      <div>
+        <h3 class="font-semibold text-slate-900 text-sm">Product</h3>
+        <ul class="mt-4 space-y-2">
+          {links.product.map(({ href, label }) => (
+            <li>
+              <a href={href} class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Developers -->
+      <div>
+        <h3 class="font-semibold text-slate-900 text-sm">Packages</h3>
+        <ul class="mt-4 space-y-2">
+          {links.developers.map(({ href, label }) => (
+            <li>
+              <a href={href} target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="font-semibold text-slate-900 text-sm">Resources</h3>
+        <ul class="mt-4 space-y-2">
+          {links.resources.map(({ href, label }) => (
+            <li>
+              <a href={href} class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-slate-500">
+        &copy; {currentYear} gemmology.dev. Open source under MIT license.
+      </p>
+      <p class="text-sm text-slate-500">
+        Built for the <a href="https://gem-a.com" target="_blank" rel="noopener noreferrer" class="text-crystal-600 hover:text-crystal-700">FGA</a> community
+      </p>
+    </div>
+  </div>
+</footer>

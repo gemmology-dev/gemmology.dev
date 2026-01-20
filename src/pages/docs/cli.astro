@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="CLI Reference"
+  description="Command-line interface reference for generating crystal visualizations."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center gap-2 text-sm text-slate-500">
+        <li><a href="/docs" class="hover:text-crystal-600">Docs</a></li>
+        <li>/</li>
+        <li class="text-slate-900 font-medium">CLI Reference</li>
+      </ol>
+    </nav>
+
+    <article class="prose prose-slate max-w-none">
+      <h1>Command Line Interface</h1>
+
+      <p class="lead text-xl text-slate-600">
+        Generate crystal visualizations directly from your terminal using the
+        <code>gemmology</code> CLI tool.
+      </p>
+
+      <h2>Installation</h2>
+
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>pip install gemmology-plugin</code></pre>
+
+      <p>This installs the <code>gemmology</code> command along with all required packages.</p>
+
+      <h2>Basic Usage</h2>
+
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code><span class="text-slate-500"># Generate from CDL</span>
+gemmology --cdl "cubic[m3m]:{'{'}111{'}'}" -o octahedron.svg
+
+<span class="text-slate-500"># Use a preset</span>
+gemmology --preset diamond -o diamond.svg
+
+<span class="text-slate-500"># Generate twin</span>
+gemmology --twin japan -o japan_twin.svg</code></pre>
+
+      <h2>Options</h2>
+
+      <h3>Input Options</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--cdl &lt;expr&gt;</code></td>
+            <td>CDL expression to render</td>
+          </tr>
+          <tr>
+            <td><code>--preset &lt;name&gt;</code></td>
+            <td>Use a mineral preset from the database</td>
+          </tr>
+          <tr>
+            <td><code>--twin &lt;law&gt;</code></td>
+            <td>Generate a twin using specified twin law</td>
+          </tr>
+          <tr>
+            <td><code>--habit &lt;name&gt;</code></td>
+            <td>Use a named crystal habit</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Output Options</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-o, --output &lt;file&gt;</code></td>
+            <td>Output file path</td>
+          </tr>
+          <tr>
+            <td><code>--format &lt;fmt&gt;</code></td>
+            <td>Output format: <code>svg</code>, <code>stl</code>, <code>gltf</code>, <code>gemcad</code></td>
+          </tr>
+          <tr>
+            <td><code>--size &lt;px&gt;</code></td>
+            <td>SVG size in pixels (default: 400)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>View Options</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--elev &lt;deg&gt;</code></td>
+            <td>Elevation angle in degrees (default: 30)</td>
+          </tr>
+          <tr>
+            <td><code>--azim &lt;deg&gt;</code></td>
+            <td>Azimuth angle in degrees (default: -45)</td>
+          </tr>
+          <tr>
+            <td><code>--no-grid</code></td>
+            <td>Disable grid background</td>
+          </tr>
+          <tr>
+            <td><code>--no-axes</code></td>
+            <td>Disable crystallographic axes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Info Panel Options</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--info-fga</code></td>
+            <td>Add FGA-style info panel with properties</td>
+          </tr>
+          <tr>
+            <td><code>--info-basic</code></td>
+            <td>Add basic info panel (name, system, CDL)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Examples</h2>
+
+      <h3>Generate Diamond Preset</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset diamond -o diamond.svg</code></pre>
+
+      <h3>Custom CDL with View Angles</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --cdl "cubic[m3m]:{'{'}111{'}'}@1.0 + {'{'}100{'}'}@1.3" \
+  --elev 45 --azim -30 -o truncated.svg</code></pre>
+
+      <h3>Export to STL for 3D Printing</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset quartz --format stl -o quartz.stl</code></pre>
+
+      <h3>Generate with FGA Info Panel</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset ruby --info-fga --no-grid -o ruby.svg</code></pre>
+
+      <h3>Generate Japan Law Twin</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --twin japan --elev 20 --azim -60 -o japan_twin.svg</code></pre>
+
+      <h2>Available Presets</h2>
+
+      <p>List all available presets:</p>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --list-presets</code></pre>
+
+      <p>Get details about a specific preset:</p>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset-info diamond</code></pre>
+
+      <h2>Available Twin Laws</h2>
+
+      <p>List all available twin laws:</p>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --list-twins</code></pre>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 not-prose my-8 text-sm">
+        {[
+          'spinel_law',
+          'japan',
+          'brazil',
+          'dauphine',
+          'carlsbad',
+          'manebach',
+          'baveno',
+          'albite',
+          'pericline',
+          'iron_cross',
+          'staurolite_60',
+          'staurolite_90',
+          'fluorite',
+          'gypsum_swallow',
+          'chrysoberyl',
+          'rutile_geniculated'
+        ].map((twin) => (
+          <code class="bg-slate-100 px-2 py-1 rounded">{twin}</code>
+        ))}
+      </div>
+
+      <h2>Programmatic Usage</h2>
+
+      <p>The CLI is a thin wrapper around the Python packages. For programmatic use:</p>
+
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code><span class="text-green-400">from</span> cdl_parser <span class="text-green-400">import</span> parse_cdl
+<span class="text-green-400">from</span> crystal_geometry <span class="text-green-400">import</span> cdl_to_geometry
+<span class="text-green-400">from</span> crystal_renderer <span class="text-green-400">import</span> generate_svg
+<span class="text-green-400">from</span> mineral_database <span class="text-green-400">import</span> get_preset
+
+<span class="text-slate-500"># From CDL</span>
+desc = parse_cdl(<span class="text-yellow-400">"cubic[m3m]:{'{'}111{'}'}"</span>)
+geom = cdl_to_geometry(desc)
+svg = generate_svg(geom, elevation=<span class="text-cyan-400">30</span>, azimuth=<span class="text-cyan-400">-45</span>)
+
+<span class="text-slate-500"># From preset</span>
+preset = get_preset(<span class="text-yellow-400">"diamond"</span>)
+desc = parse_cdl(preset.cdl)
+geom = cdl_to_geometry(desc)
+svg = generate_svg(geom)</code></pre>
+
+      <div class="mt-12 p-6 bg-slate-50 rounded-xl border border-slate-200">
+        <h3 class="text-lg font-semibold text-slate-900 mt-0">Need help?</h3>
+        <pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm mt-4"><code>gemmology --help</code></pre>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .prose code {
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .prose table {
+    @apply w-full;
+  }
+
+  .prose th {
+    @apply text-left bg-slate-50;
+  }
+
+  .prose th, .prose td {
+    @apply px-4 py-2 border border-slate-200;
+  }
+</style>

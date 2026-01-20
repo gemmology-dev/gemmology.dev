@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="CDL Specification"
+  description="Complete Crystal Description Language (CDL) specification for defining crystal morphology."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center gap-2 text-sm text-slate-500">
+        <li><a href="/docs" class="hover:text-crystal-600">Docs</a></li>
+        <li>/</li>
+        <li class="text-slate-900 font-medium">CDL Specification</li>
+      </ol>
+    </nav>
+
+    <article class="prose prose-slate max-w-none">
+      <h1>Crystal Description Language (CDL)</h1>
+
+      <p class="lead text-xl text-slate-600">
+        CDL is a domain-specific language for describing crystal morphology using crystallographic
+        notation. It combines crystal systems, point groups, and Miller indices to precisely
+        define crystal forms.
+      </p>
+
+      <h2>Syntax Overview</h2>
+
+      <p>A CDL expression follows this general format:</p>
+
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6 overflow-x-auto"><code><span class="text-cyan-400">system</span>[<span class="text-yellow-400">point_group</span>]:{<span class="text-green-400">hkl</span>}@<span class="text-orange-400">distance</span> + {<span class="text-green-400">hkl</span>}@<span class="text-orange-400">distance</span> ...</code></pre>
+
+      <h3>Components</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>system</code></td>
+            <td>Crystal system</td>
+            <td><code>cubic</code>, <code>hexagonal</code>, <code>trigonal</code></td>
+          </tr>
+          <tr>
+            <td><code>[point_group]</code></td>
+            <td>Point group symmetry</td>
+            <td><code>[m3m]</code>, <code>[6/mmm]</code>, <code>[-3m]</code></td>
+          </tr>
+          <tr>
+            <td><code>{'{'}hkl{'}'}</code></td>
+            <td>Miller indices</td>
+            <td><code>{'{'}111{'}'}</code>, <code>{'{'}10-10{'}'}</code></td>
+          </tr>
+          <tr>
+            <td><code>@distance</code></td>
+            <td>Distance from origin</td>
+            <td><code>@1.0</code>, <code>@0.8</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Crystal Systems</h2>
+
+      <p>CDL supports all seven crystal systems:</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 not-prose my-8">
+        {['cubic', 'hexagonal', 'trigonal', 'tetragonal', 'orthorhombic', 'monoclinic', 'triclinic'].map((system) => (
+          <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
+            <code class="text-crystal-600 font-semibold">{system}</code>
+          </div>
+        ))}
+      </div>
+
+      <h2>Point Groups</h2>
+
+      <p>Point groups define the symmetry operations applied to Miller indices. Each crystal system has specific valid point groups:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Point Groups</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cubic</td>
+            <td><code>m3m</code>, <code>432</code>, <code>-43m</code>, <code>m3</code>, <code>23</code></td>
+          </tr>
+          <tr>
+            <td>Hexagonal</td>
+            <td><code>6/mmm</code>, <code>622</code>, <code>6mm</code>, <code>-62m</code>, <code>6/m</code>, <code>6</code>, <code>-6</code></td>
+          </tr>
+          <tr>
+            <td>Trigonal</td>
+            <td><code>-3m</code>, <code>32</code>, <code>3m</code>, <code>-3</code>, <code>3</code></td>
+          </tr>
+          <tr>
+            <td>Tetragonal</td>
+            <td><code>4/mmm</code>, <code>422</code>, <code>4mm</code>, <code>-42m</code>, <code>4/m</code>, <code>4</code>, <code>-4</code></td>
+          </tr>
+          <tr>
+            <td>Orthorhombic</td>
+            <td><code>mmm</code>, <code>222</code>, <code>mm2</code></td>
+          </tr>
+          <tr>
+            <td>Monoclinic</td>
+            <td><code>2/m</code>, <code>2</code>, <code>m</code></td>
+          </tr>
+          <tr>
+            <td>Triclinic</td>
+            <td><code>-1</code>, <code>1</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Miller Indices</h2>
+
+      <p>Miller indices define crystal planes. Use curly braces with comma-separated values:</p>
+
+      <ul>
+        <li><strong>Three indices</strong>: <code>{'{'}h,k,l{'}'}</code> for most systems</li>
+        <li><strong>Four indices</strong>: <code>{'{'}h,k,i,l{'}'}</code> for hexagonal/trigonal (Miller-Bravais)</li>
+        <li><strong>Negative values</strong>: Use minus sign, e.g., <code>{'{'}10-10{'}'}</code></li>
+      </ul>
+
+      <h3>Common Forms</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Indices</th>
+            <th>Form Name</th>
+            <th>System</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>{'{'}111{'}'}</code></td>
+            <td>Octahedron</td>
+            <td>Cubic</td>
+          </tr>
+          <tr>
+            <td><code>{'{'}100{'}'}</code></td>
+            <td>Cube</td>
+            <td>Cubic</td>
+          </tr>
+          <tr>
+            <td><code>{'{'}110{'}'}</code></td>
+            <td>Rhombic dodecahedron</td>
+            <td>Cubic</td>
+          </tr>
+          <tr>
+            <td><code>{'{'}10-10{'}'}</code></td>
+            <td>Hexagonal prism</td>
+            <td>Hexagonal/Trigonal</td>
+          </tr>
+          <tr>
+            <td><code>{'{'}0001{'}'}</code></td>
+            <td>Basal pinacoid</td>
+            <td>Hexagonal/Trigonal</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Combining Forms</h2>
+
+      <p>Use <code>+</code> to combine multiple crystal forms:</p>
+
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6 overflow-x-auto"><code><span class="text-slate-500"># Truncated octahedron</span>
+cubic[m3m]:{'{'}111{'}'}@1.0 + {'{'}100{'}'}@1.3
+
+<span class="text-slate-500"># Quartz with prism and rhombohedra</span>
+trigonal[-3m]:{'{'}10-10{'}'}@1.0 + {'{'}10-11{'}'}@0.8 + {'{'}01-11{'}'}@0.9</code></pre>
+
+      <p>The <code>@distance</code> value controls how "developed" each form is. Smaller distances result in larger face areas.</p>
+
+      <h2>Examples</h2>
+
+      <h3>Diamond (Octahedron)</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>cubic[m3m]:{'{'}111{'}'}</code></pre>
+
+      <h3>Fluorite (Cube with Octahedron)</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>cubic[m3m]:{'{'}100{'}'}@1.0 + {'{'}111{'}'}@1.2</code></pre>
+
+      <h3>Beryl (Hexagonal Prism with Pinacoid)</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>hexagonal[6/mmm]:{'{'}10-10{'}'}@1.0 + {'{'}0001{'}'}@1.5</code></pre>
+
+      <h3>Quartz</h3>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>trigonal[-3m]:{'{'}10-10{'}'}@1.0 + {'{'}10-11{'}'}@0.8 + {'{'}01-11{'}'}@0.9</code></pre>
+
+      <h2>Extensions</h2>
+
+      <h3>Twin Laws</h3>
+      <p>Add twin laws with the <code>twin:</code> modifier:</p>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>cubic[m3m]:{'{'}111{'}'} twin:spinel_law</code></pre>
+
+      <h3>Modifications</h3>
+      <p>Apply modifications like elongation or flattening:</p>
+      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>tetragonal[4/mmm]:{'{'}110{'}'}@1.0 --elongate=1.5</code></pre>
+
+      <div class="mt-12 p-6 bg-crystal-50 rounded-xl border border-crystal-200">
+        <h3 class="text-lg font-semibold text-crystal-900 mt-0">Try it yourself</h3>
+        <p class="text-crystal-700 mb-4">Open the CDL Playground to experiment with these expressions.</p>
+        <a href="/playground" class="inline-flex items-center gap-2 px-4 py-2 bg-crystal-600 text-white rounded-lg hover:bg-crystal-700 transition-colors">
+          Open Playground
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .prose code {
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .prose table {
+    @apply w-full;
+  }
+
+  .prose th {
+    @apply text-left bg-slate-50;
+  }
+
+  .prose th, .prose td {
+    @apply px-4 py-2 border border-slate-200;
+  }
+</style>

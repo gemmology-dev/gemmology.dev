@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: theme('colors.crystal.600');
+    --color-primary-hover: theme('colors.crystal.700');
+    --color-background: theme('colors.white');
+    --color-surface: theme('colors.slate.50');
+    --color-text: theme('colors.slate.900');
+    --color-text-muted: theme('colors.slate.600');
+    --color-border: theme('colors.slate.200');
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-crystal-200 text-crystal-900;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-crystal-600 text-white hover:bg-crystal-700;
+  }
+
+  .btn-secondary {
+    @apply btn bg-slate-100 text-slate-900 hover:bg-slate-200;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-slate-100;
+  }
+
+  .card {
+    @apply rounded-xl border border-slate-200 bg-white p-6 shadow-sm;
+  }
+
+  .card-hover {
+    @apply card transition-all hover:border-crystal-300 hover:shadow-md;
+  }
+
+  .input {
+    @apply rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-crystal-500 focus:outline-none focus:ring-2 focus:ring-crystal-500/20;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-crystal {
+    @apply badge bg-crystal-100 text-crystal-700;
+  }
+
+  .prose-cdl code {
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-crystal-600 to-gem-sapphire bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-crystal-50 via-white to-slate-50;
+  }
+
+  /* Crystal SVG container styles */
+  .crystal-svg-container {
+    @apply relative overflow-hidden rounded-lg bg-slate-50;
+  }
+
+  .crystal-svg-container svg {
+    @apply w-full h-full;
+  }
+
+  /* Monaco editor overrides */
+  .monaco-editor {
+    @apply rounded-lg;
+  }
+
+  .monaco-editor .margin {
+    @apply bg-slate-50;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  @apply bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 bg-[length:200%_100%];
+  animation: shimmer 1.5s infinite;
+}

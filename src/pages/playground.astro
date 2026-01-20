@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Playground } from '../components/playground/Playground';
+
+// Get CDL from query string if present
+const url = new URL(Astro.request.url);
+const initialCDL = url.searchParams.get('cdl') || undefined;
+---
+
+<BaseLayout
+  title="CDL Playground"
+  description="Interactive Crystal Description Language editor with live preview, syntax highlighting, and multi-format export."
+>
+  <div class="h-[calc(100vh-4rem)]">
+    <Playground client:load initialCDL={initialCDL} />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Make playground take full height */
+  :global(main) {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const sections = [
+  {
+    title: 'Getting Started',
+    items: [
+      { href: '/docs/installation', label: 'Installation', description: 'Install gemmology packages via pip' },
+      { href: '/docs/quickstart', label: 'Quick Start', description: 'Generate your first crystal visualization' },
+    ],
+  },
+  {
+    title: 'CDL Language',
+    items: [
+      { href: '/docs/cdl', label: 'CDL Specification', description: 'Complete Crystal Description Language reference' },
+      { href: '/docs/cdl-examples', label: 'CDL Examples', description: 'Common patterns and recipes' },
+    ],
+  },
+  {
+    title: 'API Reference',
+    items: [
+      { href: '/docs/api/cdl-parser', label: 'cdl-parser', description: 'Parse and validate CDL expressions' },
+      { href: '/docs/api/crystal-geometry', label: 'crystal-geometry', description: '3D geometry generation' },
+      { href: '/docs/api/mineral-database', label: 'mineral-database', description: 'Query mineral presets' },
+      { href: '/docs/api/crystal-renderer', label: 'crystal-renderer', description: 'Render crystals to SVG, STL, glTF' },
+    ],
+  },
+  {
+    title: 'CLI Reference',
+    items: [
+      { href: '/docs/cli', label: 'Command Line', description: 'Generate crystals from the terminal' },
+      { href: '/docs/cli-options', label: 'CLI Options', description: 'Complete list of command-line flags' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Documentation"
+  description="Complete documentation for gemmology.dev packages, CDL language, and CLI tools."
+>
+  <div class="bg-gradient-to-b from-slate-50 to-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-bold text-slate-900">Documentation</h1>
+        <p class="mt-4 text-lg text-slate-600">
+          Everything you need to create crystal visualizations with gemmology.dev packages.
+        </p>
+      </div>
+
+      <div class="mt-16 space-y-16">
+        {sections.map((section) => (
+          <section>
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">{section.title}</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              {section.items.map((item) => (
+                <a
+                  href={item.href}
+                  class="group block p-6 rounded-xl border border-slate-200 bg-white hover:border-crystal-300 hover:shadow-md transition-all"
+                >
+                  <h3 class="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
+                    {item.label}
+                  </h3>
+                  <p class="mt-1 text-sm text-slate-600">{item.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <!-- Quick Reference -->
+      <section class="mt-16 p-8 rounded-2xl bg-slate-900 text-white">
+        <h2 class="text-xl font-bold mb-4">Quick Reference</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Installation</h3>
+            <pre class="bg-slate-800 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code>pip install cdl-parser crystal-geometry mineral-database crystal-renderer</code></pre>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Start</h3>
+            <pre class="bg-slate-800 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code><span class="text-green-400">from</span> cdl_parser <span class="text-green-400">import</span> parse_cdl
+<span class="text-green-400">from</span> crystal_geometry <span class="text-green-400">import</span> cdl_to_geometry
+<span class="text-green-400">from</span> crystal_renderer <span class="text-green-400">import</span> generate_svg
+
+desc = parse_cdl(<span class="text-yellow-400">"cubic[m3m]:{111}"</span>)
+geom = cdl_to_geometry(desc)
+svg = generate_svg(geom)</code></pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
