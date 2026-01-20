@@ -1,23 +1,21 @@
 ---
-import { Code } from 'astro-expressive-code/components';
+import { Code } from 'astro:components';
 
 interface Props {
   code: string;
-  lang?: 'python' | 'bash' | 'typescript' | 'json' | 'text' | 'javascript' | 'html' | 'css' | 'shell';
+  lang?: 'python' | 'bash' | 'typescript' | 'json' | 'text' | 'javascript' | 'html' | 'css' | 'shell' | 'cdl';
   title?: string;
-  frame?: 'code' | 'terminal' | 'none' | 'auto';
-  showLineNumbers?: boolean;
 }
 
-const { code, lang = 'text', title, frame = 'auto', showLineNumbers = false } = Astro.props;
+const { code, lang = 'text', title } = Astro.props;
 ---
 
 <div class="code-block-wrapper">
+  {title && <div class="code-title">{title}</div>}
   <Code
     code={code.trim()}
     lang={lang}
-    title={title}
-    frame={frame}
+    theme="one-dark-pro"
   />
 </div>
 
@@ -26,12 +24,15 @@ const { code, lang = 'text', title, frame = 'auto', showLineNumbers = false } = 
     @apply my-6;
   }
 
-  /* Style overrides for expressive-code to match crystal theme */
-  .code-block-wrapper :global(.expressive-code) {
-    @apply rounded-xl overflow-hidden;
+  .code-title {
+    @apply bg-slate-800 text-slate-300 text-sm px-4 py-2 rounded-t-xl border-b border-slate-700;
   }
 
-  .code-block-wrapper :global(.expressive-code .frame) {
-    @apply !rounded-xl;
+  .code-block-wrapper :global(pre) {
+    @apply !rounded-xl !my-0 !p-4;
+  }
+
+  .code-title + :global(pre) {
+    @apply !rounded-t-none;
   }
 </style>
