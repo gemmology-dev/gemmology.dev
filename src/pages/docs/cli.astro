@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeBlock from '../../components/docs/CodeBlock.astro';
 ---
 
 <BaseLayout
@@ -26,20 +27,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       <h2>Installation</h2>
 
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>pip install gemmology-plugin</code></pre>
+      <CodeBlock lang="bash" code={`pip install gemmology-plugin`} />
 
       <p>This installs the <code>gemmology</code> command along with all required packages.</p>
 
       <h2>Basic Usage</h2>
 
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code><span class="text-slate-500"># Generate from CDL</span>
-gemmology --cdl "cubic[m3m]:{'{'}111{'}'}" -o octahedron.svg
+      <CodeBlock lang="bash" code={`# Generate from CDL
+gemmology --cdl "cubic[m3m]:{111}" -o octahedron.svg
 
-<span class="text-slate-500"># Use a preset</span>
+# Use a preset
 gemmology --preset diamond -o diamond.svg
 
-<span class="text-slate-500"># Generate twin</span>
-gemmology --twin japan -o japan_twin.svg</code></pre>
+# Generate twin
+gemmology --twin japan -o japan_twin.svg`} />
 
       <h2>Options</h2>
 
@@ -150,33 +151,33 @@ gemmology --twin japan -o japan_twin.svg</code></pre>
       <h2>Examples</h2>
 
       <h3>Generate Diamond Preset</h3>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset diamond -o diamond.svg</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --preset diamond -o diamond.svg`} />
 
       <h3>Custom CDL with View Angles</h3>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --cdl "cubic[m3m]:{'{'}111{'}'}@1.0 + {'{'}100{'}'}@1.3" \
-  --elev 45 --azim -30 -o truncated.svg</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --cdl "cubic[m3m]:{111}@1.0 + {100}@1.3" \\
+  --elev 45 --azim -30 -o truncated.svg`} />
 
       <h3>Export to STL for 3D Printing</h3>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset quartz --format stl -o quartz.stl</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --preset quartz --format stl -o quartz.stl`} />
 
       <h3>Generate with FGA Info Panel</h3>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset ruby --info-fga --no-grid -o ruby.svg</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --preset ruby --info-fga --no-grid -o ruby.svg`} />
 
       <h3>Generate Japan Law Twin</h3>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --twin japan --elev 20 --azim -60 -o japan_twin.svg</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --twin japan --elev 20 --azim -60 -o japan_twin.svg`} />
 
       <h2>Available Presets</h2>
 
       <p>List all available presets:</p>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --list-presets</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --list-presets`} />
 
       <p>Get details about a specific preset:</p>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --preset-info diamond</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --preset-info diamond`} />
 
       <h2>Available Twin Laws</h2>
 
       <p>List all available twin laws:</p>
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code>gemmology --list-twins</code></pre>
+      <CodeBlock lang="bash" code={`gemmology --list-twins`} />
 
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2 not-prose my-8 text-sm">
         {[
@@ -205,48 +206,26 @@ gemmology --twin japan -o japan_twin.svg</code></pre>
 
       <p>The CLI is a thin wrapper around the Python packages. For programmatic use:</p>
 
-      <pre class="bg-slate-900 text-slate-100 rounded-xl p-6"><code><span class="text-green-400">from</span> cdl_parser <span class="text-green-400">import</span> parse_cdl
-<span class="text-green-400">from</span> crystal_geometry <span class="text-green-400">import</span> cdl_to_geometry
-<span class="text-green-400">from</span> crystal_renderer <span class="text-green-400">import</span> generate_svg
-<span class="text-green-400">from</span> mineral_database <span class="text-green-400">import</span> get_preset
+      <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
+from crystal_geometry import cdl_to_geometry
+from crystal_renderer import generate_svg
+from mineral_database import get_preset
 
-<span class="text-slate-500"># From CDL</span>
-desc = parse_cdl(<span class="text-yellow-400">"cubic[m3m]:{'{'}111{'}'}"</span>)
+# From CDL
+desc = parse_cdl("cubic[m3m]:{111}")
 geom = cdl_to_geometry(desc)
-svg = generate_svg(geom, elevation=<span class="text-cyan-400">30</span>, azimuth=<span class="text-cyan-400">-45</span>)
+svg = generate_svg(geom, elevation=30, azimuth=-45)
 
-<span class="text-slate-500"># From preset</span>
-preset = get_preset(<span class="text-yellow-400">"diamond"</span>)
+# From preset
+preset = get_preset("diamond")
 desc = parse_cdl(preset.cdl)
 geom = cdl_to_geometry(desc)
-svg = generate_svg(geom)</code></pre>
+svg = generate_svg(geom)`} />
 
       <div class="mt-12 p-6 bg-slate-50 rounded-xl border border-slate-200">
         <h3 class="text-lg font-semibold text-slate-900 mt-0">Need help?</h3>
-        <pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm mt-4"><code>gemmology --help</code></pre>
+        <CodeBlock lang="bash" code={`gemmology --help`} />
       </div>
     </article>
   </div>
 </BaseLayout>
-
-<style>
-  .prose code {
-    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
-  }
-
-  .prose pre code {
-    @apply bg-transparent p-0;
-  }
-
-  .prose table {
-    @apply w-full;
-  }
-
-  .prose th {
-    @apply text-left bg-slate-50;
-  }
-
-  .prose th, .prose td {
-    @apply px-4 py-2 border border-slate-200;
-  }
-</style>

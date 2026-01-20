@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeBlock from '../../components/docs/CodeBlock.astro';
+---
+
+<BaseLayout
+  title="Quick Start"
+  description="Generate your first crystal visualization in 5 lines of Python."
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center gap-2 text-sm text-slate-500">
+        <li><a href="/docs" class="hover:text-crystal-600">Docs</a></li>
+        <li>/</li>
+        <li class="text-slate-900 font-medium">Quick Start</li>
+      </ol>
+    </nav>
+
+    <article class="prose prose-slate max-w-none">
+      <h1>Quick Start</h1>
+
+      <p class="lead text-xl text-slate-600">
+        Generate your first crystal visualization in just 5 lines of Python code.
+      </p>
+
+      <h2>Your First Crystal</h2>
+
+      <p>Create a simple diamond (octahedron) SVG:</p>
+
+      <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
+from crystal_geometry import cdl_to_geometry
+from crystal_renderer import generate_svg
+
+desc = parse_cdl("cubic[m3m]:{111}")
+geom = cdl_to_geometry(desc)
+generate_svg(geom, "diamond.svg")`} />
+
+      <p>This creates <code>diamond.svg</code> - an octahedral crystal commonly seen in natural diamonds.</p>
+
+      <h2>Understanding the Code</h2>
+
+      <h3>Step 1: Parse the CDL expression</h3>
+
+      <CodeBlock lang="python" code={`desc = parse_cdl("cubic[m3m]:{111}")`} />
+
+      <p>The CDL expression breaks down as:</p>
+      <ul>
+        <li><code>cubic</code> - Crystal system</li>
+        <li><code>[m3m]</code> - Point group (highest cubic symmetry)</li>
+        <li><code>{'{'}111{'}'}</code> - Miller indices for octahedral form</li>
+      </ul>
+
+      <h3>Step 2: Generate 3D geometry</h3>
+
+      <CodeBlock lang="python" code={`geom = cdl_to_geometry(desc)`} />
+
+      <p>This computes vertices and faces using half-space intersection, applying the symmetry operations from the point group.</p>
+
+      <h3>Step 3: Render to SVG</h3>
+
+      <CodeBlock lang="python" code={`generate_svg(geom, "diamond.svg")`} />
+
+      <p>Projects the 3D geometry to 2D and creates an SVG file with proper face ordering for realistic rendering.</p>
+
+      <h2>Combining Crystal Forms</h2>
+
+      <p>Most real crystals show multiple forms. Use <code>+</code> to combine them:</p>
+
+      <CodeBlock lang="python" code={`# Fluorite: cube with octahedron corners
+desc = parse_cdl("cubic[m3m]:{100}@1.0 + {111}@1.4")
+geom = cdl_to_geometry(desc)
+generate_svg(geom, "fluorite.svg")`} />
+
+      <p>The <code>@distance</code> value controls form development - lower values produce larger faces.</p>
+
+      <h2>Using Mineral Presets</h2>
+
+      <p>For common minerals, use the built-in presets:</p>
+
+      <CodeBlock lang="python" code={`from mineral_database import get_preset
+from crystal_geometry import cdl_to_geometry
+from crystal_renderer import generate_svg
+
+# Get quartz preset
+preset = get_preset("quartz")
+geom = cdl_to_geometry(preset.cdl)
+generate_svg(geom, "quartz.svg")
+
+# List all available presets
+from mineral_database import list_presets
+print(list_presets())  # 94 minerals`} />
+
+      <h2>Customizing Output</h2>
+
+      <h3>View angle</h3>
+
+      <CodeBlock lang="python" code={`generate_svg(geom, "crystal.svg",
+    elevation=30,   # degrees from horizontal
+    azimuth=-45     # rotation around vertical axis
+)`} />
+
+      <h3>Size and styling</h3>
+
+      <CodeBlock lang="python" code={`generate_svg(geom, "crystal.svg",
+    figsize=(6, 6),      # inches
+    face_color="#0ea5e9", # fill color
+    edge_color="#0369a1", # stroke color
+    show_axes=True        # crystallographic axes
+)`} />
+
+      <h2>Exporting to Other Formats</h2>
+
+      <CodeBlock lang="python" code={`from crystal_renderer import export_stl, export_gltf
+
+# Export for 3D printing
+export_stl(geom, "crystal.stl")
+
+# Export for web/AR/VR
+export_gltf(geom, "crystal.gltf")`} />
+
+      <h2>Try it Interactively</h2>
+
+      <div class="mt-8 p-6 bg-crystal-50 rounded-xl border border-crystal-200">
+        <h3 class="text-lg font-semibold text-crystal-900 mt-0">CDL Playground</h3>
+        <p class="text-crystal-700 mb-4">
+          Experiment with CDL expressions directly in your browser - no installation needed.
+        </p>
+        <a href="/playground" class="inline-flex items-center gap-2 px-4 py-2 bg-crystal-600 text-white rounded-lg hover:bg-crystal-700 transition-colors">
+          Open Playground
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="mt-12 flex gap-4">
+        <a href="/docs/installation" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          Installation
+        </a>
+        <a href="/docs/cdl" class="inline-flex items-center gap-2 px-4 py-2 bg-crystal-600 text-white rounded-lg hover:bg-crystal-700 transition-colors">
+          CDL Specification
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

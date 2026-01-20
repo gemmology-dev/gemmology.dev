@@ -1,0 +1,37 @@
+---
+import { Code } from 'astro-expressive-code/components';
+
+interface Props {
+  code: string;
+  lang?: 'python' | 'bash' | 'typescript' | 'json' | 'text' | 'javascript' | 'html' | 'css' | 'shell';
+  title?: string;
+  frame?: 'code' | 'terminal' | 'none' | 'auto';
+  showLineNumbers?: boolean;
+}
+
+const { code, lang = 'text', title, frame = 'auto', showLineNumbers = false } = Astro.props;
+---
+
+<div class="code-block-wrapper">
+  <Code
+    code={code.trim()}
+    lang={lang}
+    title={title}
+    frame={frame}
+  />
+</div>
+
+<style>
+  .code-block-wrapper {
+    @apply my-6;
+  }
+
+  /* Style overrides for expressive-code to match crystal theme */
+  .code-block-wrapper :global(.expressive-code) {
+    @apply rounded-xl overflow-hidden;
+  }
+
+  .code-block-wrapper :global(.expressive-code .frame) {
+    @apply !rounded-xl;
+  }
+</style>

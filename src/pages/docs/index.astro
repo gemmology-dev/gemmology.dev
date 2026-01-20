@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeBlock from '../../components/docs/CodeBlock.astro';
 
 const sections = [
   {
@@ -75,17 +76,17 @@ const sections = [
         <div class="grid md:grid-cols-2 gap-8">
           <div>
             <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Installation</h3>
-            <pre class="bg-slate-800 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code>pip install cdl-parser crystal-geometry mineral-database crystal-renderer</code></pre>
+            <CodeBlock lang="bash" code={`pip install cdl-parser crystal-geometry mineral-database crystal-renderer`} />
           </div>
           <div>
             <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Start</h3>
-            <pre class="bg-slate-800 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code><span class="text-green-400">from</span> cdl_parser <span class="text-green-400">import</span> parse_cdl
-<span class="text-green-400">from</span> crystal_geometry <span class="text-green-400">import</span> cdl_to_geometry
-<span class="text-green-400">from</span> crystal_renderer <span class="text-green-400">import</span> generate_svg
+            <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
+from crystal_geometry import cdl_to_geometry
+from crystal_renderer import generate_svg
 
-desc = parse_cdl(<span class="text-yellow-400">"cubic[m3m]:{111}"</span>)
+desc = parse_cdl("cubic[m3m]:{111}")
 geom = cdl_to_geometry(desc)
-svg = generate_svg(geom)</code></pre>
+svg = generate_svg(geom)`} />
           </div>
         </div>
       </section>
