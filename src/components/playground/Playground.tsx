@@ -4,7 +4,12 @@ import { CDLPreview } from './CDLPreview';
 import { PresetSelector } from './PresetSelector';
 import { ExportPanel } from './ExportPanel';
 import { ViewControls } from '../crystal/ViewControls';
+import { Crystal3DViewer } from '../crystal/Crystal3DViewer';
+import { ViewerToggle } from '../crystal/ViewerToggle';
 import { useCDLValidation } from '../../hooks/useCDLValidation';
+
+// API URL from environment (defaults to production if not set)
+const API_URL = import.meta.env.PUBLIC_API_URL || 'https://api.gemmology.dev';
 
 // Sample presets (in real app, would come from mineral-database)
 const SAMPLE_PRESETS = [
@@ -33,9 +38,14 @@ export function Playground({ initialCDL }: PlaygroundProps) {
   const [elevation, setElevation] = useState(30);
   const [azimuth, setAzimuth] = useState(-45);
 
+  // 3D viewer state
+  const [viewerMode, setViewerMode] = useState<'2d' | '3d'>('2d');
+  const [gltfData, setGltfData] = useState<object | null>(null);
+  const [gltfLoading, setGltfLoading] = useState(false);
+
   const { validation, validate } = useCDLValidation({ debounceMs: 500 });
 
-  // Generate preview SVG (mock implementation - would call backend API in production)
+  // Generate preview SVG using the render API
   const generatePreview = useCallback(async (code: string) => {
     if (!code.trim()) {
       setSvgContent(null);
@@ -46,59 +56,122 @@ export function Playground({ initialCDL }: PlaygroundProps) {
     setPreviewError(null);
 
     try {
-      // In production, this would call an API endpoint
-      // For now, generate a placeholder SVG based on the CDL
-      await new Promise((resolve) => setTimeout(resolve, 300)); // Simulate API delay
+      const response = await fetch(`${API_URL}/api/render`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cdl: code,
+          elev: elevation,
+          azim: azimuth,
+        }),
+      });
 
-      // Generate a simple octahedron SVG as placeholder
-      const svg = `
-        <svg viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="face1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.8" />
-              <stop offset="100%" style="stop-color:#0284c7;stop-opacity:0.9" />
-            </linearGradient>
-            <linearGradient id="face2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:0.7" />
-              <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0.8" />
-            </linearGradient>
-          </defs>
-          <polygon points="0,-100 -80,0 0,100" fill="url(#face2)" stroke="#0369a1" stroke-width="1.5" opacity="0.6"/>
-          <polygon points="0,-100 0,100 80,0" fill="url(#face1)" stroke="#0369a1" stroke-width="1.5" opacity="0.7"/>
-          <polygon points="0,-100 -80,0 80,0" fill="url(#face1)" stroke="#0369a1" stroke-width="2"/>
-          <polygon points="0,100 -80,0 80,0" fill="url(#face2)" stroke="#0369a1" stroke-width="2"/>
-          <text x="0" y="130" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">${code.split(':')[0] || 'crystal'}</text>
-        </svg>
-      `;
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to render crystal');
+      }
 
+      const svg = await response.text();
       setSvgContent(svg);
     } catch (err) {
       setPreviewError(err instanceof Error ? err.message : 'Failed to generate preview');
     } finally {
       setPreviewLoading(false);
     }
+  }, [elevation, azimuth]);
+
+  // Fetch glTF data for 3D viewer
+  const fetchGltfData = useCallback(async (code: string) => {
+    if (!code.trim()) {
+      setGltfData(null);
+      return;
+    }
+
+    setGltfLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/api/export/gltf`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cdl: code, scale: 1 }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch 3D model');
+      }
+
+      const data = await response.json();
+      setGltfData(data);
+    } catch (err) {
+      console.error('glTF fetch error:', err);
+      setGltfData(null);
+    } finally {
+      setGltfLoading(false);
+    }
   }, []);
 
-  // Validate and generate preview when code changes
+  // Validate and generate preview when code or view angles change
   useEffect(() => {
     validate(cdlCode);
     generatePreview(cdlCode);
-  }, [cdlCode, validate, generatePreview]);
+  }, [cdlCode, elevation, azimuth, validate, generatePreview]);
+
+  // Fetch glTF when switching to 3D mode or when code changes while in 3D mode
+  useEffect(() => {
+    if (viewerMode === '3d' && validation.isValid) {
+      fetchGltfData(cdlCode);
+    }
+  }, [viewerMode, cdlCode, validation.isValid, fetchGltfData]);
 
   const handlePresetSelect = useCallback((preset: { cdl: string }) => {
     setCdlCode(preset.cdl);
   }, []);
 
-  const handleExport = useCallback((format: 'svg' | 'stl' | 'gltf' | 'gemcad') => {
-    // In production, would call API to generate export format
-    console.log(`Exporting as ${format}...`);
-    alert(`Export to ${format.toUpperCase()} would be triggered here. This requires a backend API.`);
-  }, []);
+  const handleExport = useCallback(async (format: 'svg' | 'stl' | 'gltf' | 'gemcad') => {
+    if (format === 'svg') {
+      // SVG is handled by ExportPanel directly from svgContent
+      return;
+    }
+
+    if (format === 'gemcad') {
+      // GEMCAD export not yet implemented
+      alert('GEMCAD export is not yet available.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/export/${format}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cdl: cdlCode }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to export as ${format.toUpperCase()}`);
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `crystal.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : `Failed to export as ${format.toUpperCase()}`);
+    }
+  }, [cdlCode]);
 
   const handleViewChange = useCallback((newElevation: number, newAzimuth: number) => {
     setElevation(newElevation);
     setAzimuth(newAzimuth);
-    // In production, would regenerate preview with new view angles
+  }, []);
+
+  const handleViewerModeChange = useCallback((mode: '2d' | '3d') => {
+    setViewerMode(mode);
   }, []);
 
   return (
@@ -161,26 +234,61 @@ export function Playground({ initialCDL }: PlaygroundProps) {
 
         {/* Preview panel */}
         <div className="w-1/2 flex flex-col">
-          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 text-sm font-medium text-slate-700">
-            Preview
-          </div>
-          <div className="flex-1 p-4">
-            <CDLPreview
-              svgContent={svgContent}
-              loading={previewLoading}
-              error={previewError}
-              className="h-full"
+          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span className="text-sm font-medium text-slate-700">Preview</span>
+            <ViewerToggle
+              mode={viewerMode}
+              onModeChange={handleViewerModeChange}
+              disabled={!validation.isValid}
             />
           </div>
-          <div className="px-4 pb-4">
-            <ViewControls
-              elevation={elevation}
-              azimuth={azimuth}
-              onElevationChange={(e) => handleViewChange(e, azimuth)}
-              onAzimuthChange={(a) => handleViewChange(elevation, a)}
-              onReset={() => handleViewChange(30, -45)}
-            />
+
+          <div className="flex-1 p-4 relative">
+            {viewerMode === '2d' ? (
+              <CDLPreview
+                svgContent={svgContent}
+                loading={previewLoading}
+                error={previewError}
+                className="h-full"
+              />
+            ) : (
+              <div className="h-full relative">
+                {gltfLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-10">
+                    <div className="flex items-center gap-3 text-slate-500">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      <span>Loading 3D model...</span>
+                    </div>
+                  </div>
+                )}
+                <Crystal3DViewer
+                  gltfData={gltfData}
+                  autoRotate={true}
+                  className="h-full rounded-lg"
+                />
+              </div>
+            )}
           </div>
+
+          {/* View controls only shown in 2D mode */}
+          {viewerMode === '2d' && (
+            <div className="px-4 pb-4">
+              <ViewControls
+                elevation={elevation}
+                azimuth={azimuth}
+                onElevationChange={(e) => handleViewChange(e, azimuth)}
+                onAzimuthChange={(a) => handleViewChange(elevation, a)}
+                onReset={() => handleViewChange(30, -45)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
