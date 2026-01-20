@@ -157,6 +157,19 @@
   @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
 }
 
+/* Reset code styling inside code blocks (Astro built-in Code component) */
+.prose pre code,
+.code-block-wrapper pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.prose pre code .line,
+.code-block-wrapper pre code .line {
+  background: transparent !important;
+}
+
 /* Reset prose styles inside expressive-code blocks */
 .prose .expressive-code code {
   all: unset;
