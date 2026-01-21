@@ -1,0 +1,121 @@
+---
+import { marked } from 'marked';
+import { Callout } from '../docs';
+import DataTable from './DataTable.astro';
+import PropertyList from './PropertyList.astro';
+import CrystalDemo from './CrystalDemo.astro';
+import ComparisonBlock from './ComparisonBlock.astro';
+
+interface Item {
+  name: string;
+  value?: string;
+  description?: string;
+  examples?: string[];
+}
+
+interface Table {
+  caption?: string;
+  headers: string[];
+  rows: string[][];
+}
+
+interface CalloutData {
+  type: 'info' | 'warning' | 'tip' | 'error';
+  title?: string;
+  text: string;
+}
+
+interface Crystal {
+  cdl: string;
+  caption?: string;
+  interactive?: boolean;
+}
+
+interface Comparison {
+  items: Array<{ title: string; points: string[]; variant?: 'default' | 'success' | 'warning' | 'danger' }>;
+}
+
+interface Subsection {
+  title: string;
+  content?: string;
+  items?: Item[];
+  table?: Table;
+}
+
+interface Section {
+  title: string;
+  id?: string;
+  content?: string;
+  callout?: CalloutData;
+  items?: Item[];
+  table?: Table;
+  crystal?: Crystal;
+  comparison?: Comparison;
+  subsections?: Subsection[];
+}
+
+interface Props {
+  section: Section;
+}
+
+const { section } = Astro.props;
+const sectionId = section.id || section.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+// Configure marked for safe rendering
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
+
+// Helper to render markdown synchronously
+const renderMarkdown = (text: string) => marked.parse(text);
+---
+
+<section id={sectionId} class="mb-12">
+  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">{section.title}</h2>
+
+  {section.callout && (
+    <Callout variant={section.callout.type} title={section.callout.title}>
+      <Fragment set:html={renderMarkdown(section.callout.text)} />
+    </Callout>
+  )}
+
+  {section.content && (
+    <div class="prose prose-slate dark:prose-invert max-w-none mb-6" set:html={renderMarkdown(section.content)} />
+  )}
+
+  {section.crystal && (
+    <CrystalDemo
+      cdl={section.crystal.cdl}
+      caption={section.crystal.caption}
+      interactive={section.crystal.interactive ?? true}
+    />
+  )}
+
+  {section.items && (
+    <PropertyList items={section.items} />
+  )}
+
+  {section.table && (
+    <DataTable
+      headers={section.table.headers}
+      rows={section.table.rows}
+      caption={section.table.caption}
+    />
+  )}
+
+  {section.comparison && (
+    <ComparisonBlock items={section.comparison.items} />
+  )}
+
+  {section.subsections && section.subsections.map(sub => (
+    <div class="ml-0 mt-8 pl-4 border-l-2 border-slate-200 dark:border-slate-700">
+      <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-3">{sub.title}</h3>
+      {sub.content && (
+        <div class="prose prose-slate dark:prose-invert max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
+      )}
+      {sub.items && <PropertyList items={sub.items} />}
+      {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
+    </div>
+  ))}
+</section>
