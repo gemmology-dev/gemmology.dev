@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { CrystalCard } from '../crystal/CrystalCard';
 import { MineralModal } from './MineralModal';
 import type { Mineral } from '../../lib/db';
+import { mineralSlug } from '../../lib/slug';
 
 interface GalleryGridProps {
   minerals: Mineral[];
@@ -57,14 +58,11 @@ export function GalleryGrid({ minerals, loading }: GalleryGridProps) {
     );
   }
 
-  const generateSlug = (name: string) =>
-    name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-');
-
   return (
     <>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {minerals.map((mineral) => {
-          const slug = generateSlug(mineral.name);
+          const slug = mineralSlug(mineral.name);
           return (
             <CrystalCard
               key={mineral.id}

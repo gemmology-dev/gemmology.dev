@@ -3,11 +3,16 @@ import { GalleryGrid } from './GalleryGrid';
 import { FilterBar } from './FilterBar';
 import { useCrystalDB, useFilters } from '../../hooks/useCrystalDB';
 
-export function Gallery() {
+interface GalleryProps {
+  initialSystem?: string;
+  initialSearch?: string;
+}
+
+export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps) {
   const { minerals, loading, error, search, filterBySystem } = useCrystalDB();
   const { systems, loading: filtersLoading } = useFilters();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
 
   const handleSearchChange = useCallback(
     (query: string) => {
@@ -36,6 +41,28 @@ export function Gallery() {
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery, search]);
+
+  // Apply initial filters from URL on mount
+  useEffect(() => {
+    if (initialSystem) {
+      filterBySystem(initialSystem);
+    } else if (initialSearch) {
+      search(initialSearch);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Sync URL state when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedSystem) params.set('system', selectedSystem);
+    if (searchQuery) params.set('search', searchQuery);
+
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, '', newUrl);
+  }, [selectedSystem, searchQuery]);
 
   if (error) {
     return (

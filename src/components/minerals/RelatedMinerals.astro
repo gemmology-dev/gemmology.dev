@@ -3,6 +3,7 @@
  * RelatedMinerals - Shows minerals from the same crystal system
  */
 import type { Mineral } from '../../lib/db';
+import { mineralSlug } from '../../lib/slug';
 
 interface Props {
   minerals: Mineral[];
@@ -22,7 +23,7 @@ const { minerals, currentSystem } = Astro.props;
 
   <div class="divide-y divide-slate-100">
     {minerals.map((mineral) => {
-      const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-');
+      const slug = mineralSlug(mineral.name);
       const svgPath = `/crystals/${slug}.svg`;
 
       return (
