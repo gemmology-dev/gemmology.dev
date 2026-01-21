@@ -35,3 +35,7 @@ yarn-error.log*
 public/sql.js/
 public/minerals.db
 # Note: public/crystals/*.svg are committed (placeholder crystals)
+
+# Synced content from gemmology-knowledge
+.cache/
+src/content/learn/
