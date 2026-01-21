@@ -36,15 +36,15 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
     <article>
       <header class="mb-10">
-        <h1 class="text-4xl font-bold text-slate-900 dark:text-slate-100">{data.title}</h1>
-        <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+        <h1 class="text-4xl font-bold text-slate-900">{data.title}</h1>
+        <p class="mt-4 text-lg text-slate-600 leading-relaxed">
           {data.description}
         </p>
 
         {data.tags && data.tags.length > 0 && (
           <div class="mt-4 flex flex-wrap gap-2">
             {data.tags.map(tag => (
-              <span class="text-xs px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+              <span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600">
                 {tag}
               </span>
             ))}
@@ -52,15 +52,15 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
         )}
       </header>
 
-      <div class="prose prose-slate dark:prose-invert max-w-none">
+      <div class="prose prose-slate max-w-none">
         {data.sections.map(section => (
           <SectionRenderer section={section} />
         ))}
       </div>
 
       {data.related && data.related.length > 0 && (
-        <aside class="mt-16 p-6 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Related Topics</h3>
+        <aside class="mt-16 p-6 rounded-xl bg-slate-50 border border-slate-200">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Related Topics</h3>
           <div class="flex flex-wrap gap-3">
             {data.related.map(slug => {
               const related = allEntries.find(e => e.id === slug);
@@ -68,7 +68,7 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
               return (
                 <a
                   href={`/learn/${slug}`}
-                  class="px-4 py-2 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-crystal-300 hover:text-crystal-600 transition-colors text-sm"
+                  class="px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-crystal-300 hover:text-crystal-600 transition-colors text-sm"
                 >
                   {related.data.title}
                 </a>
