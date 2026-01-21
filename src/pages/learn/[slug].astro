@@ -21,8 +21,27 @@ interface Props {
 const { entry, allEntries } = Astro.props;
 const { data } = entry;
 
-// Build navigation - sort by order
-const sorted = [...allEntries].sort((a, b) => a.data.order - b.data.order);
+// Build navigation - sort by category, then difficulty (matching index page)
+const categoryOrder = ['fundamentals', 'identification', 'advanced'];
+const difficultyOrder = ['beginner', 'intermediate', 'advanced'];
+
+const sorted = [...allEntries].sort((a, b) => {
+  // First sort by category
+  const aCatIndex = categoryOrder.indexOf(a.data.category);
+  const bCatIndex = categoryOrder.indexOf(b.data.category);
+  const aCat = aCatIndex !== -1 ? aCatIndex : categoryOrder.length;
+  const bCat = bCatIndex !== -1 ? bCatIndex : categoryOrder.length;
+  if (aCat !== bCat) return aCat - bCat;
+
+  // Then sort by difficulty within category
+  const aDiffIndex = difficultyOrder.indexOf(a.data.difficulty || 'intermediate');
+  const bDiffIndex = difficultyOrder.indexOf(b.data.difficulty || 'intermediate');
+  if (aDiffIndex !== bDiffIndex) return aDiffIndex - bDiffIndex;
+
+  // Finally by order as tiebreaker
+  return a.data.order - b.data.order;
+});
+
 const currentIndex = sorted.findIndex(e => e.id === entry.id);
 const prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
 const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
