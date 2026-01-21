@@ -57,20 +57,27 @@ export function GalleryGrid({ minerals, loading }: GalleryGridProps) {
     );
   }
 
+  const generateSlug = (name: string) =>
+    name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-');
+
   return (
     <>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {minerals.map((mineral) => (
-          <CrystalCard
-            key={mineral.id}
-            name={mineral.name}
-            system={mineral.system}
-            svgPath={`/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '_')}.svg`}
-            chemistry={mineral.chemistry}
-            hardness={mineral.hardness}
-            onClick={() => handleCardClick(mineral)}
-          />
-        ))}
+        {minerals.map((mineral) => {
+          const slug = generateSlug(mineral.name);
+          return (
+            <CrystalCard
+              key={mineral.id}
+              name={mineral.name}
+              system={mineral.system}
+              svgPath={`/crystals/${slug}.svg`}
+              chemistry={mineral.chemistry}
+              hardness={mineral.hardness}
+              href={`/minerals/${slug}`}
+              onClick={() => handleCardClick(mineral)}
+            />
+          );
+        })}
       </div>
 
       {selectedMineral && (

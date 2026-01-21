@@ -28,7 +28,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
     };
   }, [handleKeyDown]);
 
-  const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '_')}.svg`;
+  const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-')}.svg`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
