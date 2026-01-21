@@ -53,9 +53,9 @@ interface FGAInfoPanelProps {
     hardness?: string;
     sg?: string;
     ri?: string;
-    birefringence?: string;
+    birefringence?: string | number;
     pleochroism?: string;
-    dispersion?: string;
+    dispersion?: string | number;
     lustre?: string;
     cleavage?: string;
     fracture?: string;

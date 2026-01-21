@@ -4,21 +4,31 @@ let db: Database | null = null;
 let dbPromise: Promise<Database> | null = null;
 
 export interface Mineral {
-  id: number;
+  id: string;
   name: string;
   system: string;
   cdl: string;
-  chemistry?: string;
+  point_group: string;
+  chemistry: string;
   hardness?: string;
+  description?: string;
   sg?: string;
   ri?: string;
-  birefringence?: string;
-  pleochroism?: string;
-  dispersion?: string;
+  birefringence?: number;
+  optical_character?: string;
+  dispersion?: number;
   lustre?: string;
   cleavage?: string;
   fracture?: string;
-  category?: string;
+  pleochroism?: string;
+  twin_law?: string;
+  phenomenon?: string;
+  note?: string;
+  localities_json?: string;
+  forms_json?: string;
+  colors_json?: string;
+  treatments_json?: string;
+  inclusions_json?: string;
 }
 
 export async function getDB(): Promise<Database> {
@@ -46,8 +56,9 @@ export async function getDB(): Promise<Database> {
 export async function getAllMinerals(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(`
-    SELECT id, name, system, cdl, chemistry, hardness, sg, ri,
-           birefringence, pleochroism, dispersion, lustre, cleavage, fracture, category
+    SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
+           sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
+           fracture, pleochroism, twin_law, phenomenon, note
     FROM minerals
     ORDER BY name ASC
   `);
@@ -91,7 +102,7 @@ export async function searchMinerals(query: string): Promise<Mineral[]> {
      WHERE LOWER(name) LIKE ?
         OR LOWER(chemistry) LIKE ?
         OR LOWER(system) LIKE ?
-        OR LOWER(category) LIKE ?
+        OR LOWER(description) LIKE ?
      ORDER BY
        CASE WHEN LOWER(name) LIKE ? THEN 0 ELSE 1 END,
        name ASC
@@ -130,23 +141,9 @@ export async function getMineralsBySystem(system: string): Promise<Mineral[]> {
   });
 }
 
-export async function getMineralsByCategory(category: string): Promise<Mineral[]> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT * FROM minerals WHERE LOWER(category) = ? ORDER BY name ASC`,
-    [category.toLowerCase()]
-  );
-
-  if (result.length === 0) return [];
-
-  const columns = result[0].columns;
-  return result[0].values.map((row) => {
-    const mineral: Record<string, unknown> = {};
-    columns.forEach((col, i) => {
-      mineral[col] = row[i];
-    });
-    return mineral as Mineral;
-  });
+export async function getMineralsByCategory(_category: string): Promise<Mineral[]> {
+  // Category column doesn't exist in the database - return all minerals
+  return getAllMinerals();
 }
 
 export async function getCrystalSystems(): Promise<string[]> {
@@ -160,11 +157,6 @@ export async function getCrystalSystems(): Promise<string[]> {
 }
 
 export async function getCategories(): Promise<string[]> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT DISTINCT category FROM minerals WHERE category IS NOT NULL ORDER BY category`
-  );
-
-  if (result.length === 0) return [];
-  return result[0].values.map((row) => row[0] as string);
+  // Category column doesn't exist in the database
+  return [];
 }
