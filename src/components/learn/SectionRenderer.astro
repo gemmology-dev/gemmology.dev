@@ -72,7 +72,7 @@ const renderMarkdown = (text: string) => marked.parse(text);
 ---
 
 <section id={sectionId} class="mb-12">
-  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">{section.title}</h2>
+  <h2 class="text-2xl font-bold text-slate-900 mb-4">{section.title}</h2>
 
   {section.callout && (
     <Callout variant={section.callout.type} title={section.callout.title}>
@@ -81,7 +81,7 @@ const renderMarkdown = (text: string) => marked.parse(text);
   )}
 
   {section.content && (
-    <div class="prose prose-slate dark:prose-invert max-w-none mb-6" set:html={renderMarkdown(section.content)} />
+    <div class="prose prose-slate max-w-none mb-6" set:html={renderMarkdown(section.content)} />
   )}
 
   {section.crystal && (
@@ -109,10 +109,10 @@ const renderMarkdown = (text: string) => marked.parse(text);
   )}
 
   {section.subsections && section.subsections.map(sub => (
-    <div class="ml-0 mt-8 pl-4 border-l-2 border-slate-200 dark:border-slate-700">
-      <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-3">{sub.title}</h3>
+    <div class="ml-0 mt-8 pl-4 border-l-2 border-slate-200">
+      <h3 class="text-xl font-semibold text-slate-800 mb-3">{sub.title}</h3>
       {sub.content && (
-        <div class="prose prose-slate dark:prose-invert max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
+        <div class="prose prose-slate max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
       )}
       {sub.items && <PropertyList items={sub.items} />}
       {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
