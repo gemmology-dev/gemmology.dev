@@ -1,0 +1,64 @@
+---
+/**
+ * RelatedMinerals - Shows minerals from the same crystal system
+ */
+import type { Mineral } from '../../lib/db';
+
+interface Props {
+  minerals: Mineral[];
+  currentSystem: string;
+}
+
+const { minerals, currentSystem } = Astro.props;
+---
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+  <div class="px-6 py-4 border-b border-slate-100">
+    <h2 class="text-lg font-semibold text-slate-900">Related Minerals</h2>
+    <p class="text-sm text-slate-500 mt-1">
+      Other minerals in the {currentSystem} system
+    </p>
+  </div>
+
+  <div class="divide-y divide-slate-100">
+    {minerals.map((mineral) => {
+      const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      const svgPath = `/crystals/${slug}.svg`;
+
+      return (
+        <a
+          href={`/minerals/${slug}`}
+          class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+        >
+          <div class="w-12 h-12 flex-shrink-0 bg-slate-100 rounded-lg p-1">
+            <img
+              src={svgPath}
+              alt={mineral.name}
+              class="w-full h-full object-contain"
+              loading="lazy"
+              onerror="this.src='/crystals/placeholder.svg'"
+            />
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-medium text-slate-900 truncate">{mineral.name}</div>
+            {mineral.chemistry && (
+              <div class="text-sm text-slate-500 font-mono truncate">{mineral.chemistry}</div>
+            )}
+          </div>
+          <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      );
+    })}
+  </div>
+
+  <div class="px-6 py-4 bg-slate-50 border-t border-slate-100">
+    <a
+      href={`/gallery?system=${currentSystem.toLowerCase()}`}
+      class="text-sm text-sky-600 hover:text-sky-700 font-medium"
+    >
+      View all {currentSystem} minerals &rarr;
+    </a>
+  </div>
+</div>

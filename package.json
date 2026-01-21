@@ -11,6 +11,7 @@
     "prebuild": "npm run copy-db"
   },
   "dependencies": {
+    "@gemmology/mineral-data": "file:../mineral-database/npm-package",
     "@astrojs/node": "^8.3.4",
     "@astrojs/react": "^4.1.0",
     "@astrojs/sitemap": "^3.1.0",

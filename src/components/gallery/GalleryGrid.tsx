@@ -70,7 +70,8 @@ export function GalleryGrid({ minerals, loading }: GalleryGridProps) {
               key={mineral.id}
               name={mineral.name}
               system={mineral.system}
-              svgPath={`/crystals/${slug}.svg`}
+              svgContent={mineral.model_svg || undefined}
+              svgPath={mineral.model_svg ? undefined : `/crystals/${slug}.svg`}
               chemistry={mineral.chemistry}
               hardness={mineral.hardness}
               href={`/minerals/${slug}`}

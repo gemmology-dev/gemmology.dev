@@ -2,6 +2,8 @@
 
 Crystal structure visualization and gemmological reference for FGA students and professionals.
 
+**Live site**: [https://gemmology.dev](https://gemmology.dev)
+
 ## Features
 
 - **Crystal Gallery**: 50+ mineral presets with FGA-accurate crystallographic data
@@ -55,7 +57,14 @@ src/
 
 ## Deployment
 
-The site is automatically deployed to [Cloudflare Pages](https://pages.cloudflare.com/) on push to main.
+The site is deployed to [Cloudflare Pages](https://pages.cloudflare.com/):
+
+| Environment | URL |
+|-------------|-----|
+| Production | [gemmology.dev](https://gemmology.dev) |
+| Pages subdomain | [gemmology-dev.pages.dev](https://gemmology-dev.pages.dev) |
+
+Automatic deployments occur on push to `main`. Pull requests get preview deployments.
 
 ### Manual Deployment
 

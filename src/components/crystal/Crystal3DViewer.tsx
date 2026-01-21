@@ -4,7 +4,7 @@
  */
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage, Environment, Center } from '@react-three/drei';
+import { OrbitControls, Center, Edges } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 
@@ -90,16 +90,18 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
 
   return (
     <mesh ref={meshRef} geometry={geometry}>
-      <meshPhysicalMaterial
-        color="#0ea5e9"
-        metalness={0.1}
-        roughness={0.2}
+      {/* Flat-shaded faces matching SVG style */}
+      <meshBasicMaterial
+        color="#7dd3fc"
         transparent
         opacity={0.85}
         side={THREE.DoubleSide}
-        envMapIntensity={0.5}
-        clearcoat={0.3}
-        clearcoatRoughness={0.2}
+      />
+      {/* Dark edges matching SVG outline style */}
+      <Edges
+        threshold={15}
+        color="#0369a1"
+        lineWidth={1.5}
       />
     </mesh>
   );
@@ -169,8 +171,6 @@ export function Crystal3DViewer({
             enableDamping
             dampingFactor={0.05}
           />
-
-          <Environment preset="studio" />
         </Suspense>
       </Canvas>
 
