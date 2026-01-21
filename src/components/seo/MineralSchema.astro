@@ -1,0 +1,89 @@
+---
+/**
+ * MineralSchema - JSON-LD structured data for mineral pages
+ * Improves SEO and enables rich results in search engines
+ */
+import type { Mineral } from '../../lib/db';
+
+interface Props {
+  mineral: Mineral;
+}
+
+const { mineral } = Astro.props;
+
+const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+const url = `https://gemmology.dev/minerals/${slug}`;
+const imageUrl = `https://gemmology.dev/crystals/${slug}.svg`;
+
+// Build the JSON-LD schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Thing",
+  "name": mineral.name,
+  "description": `${mineral.name} crystal structure and gemmological properties. ${mineral.system} system${mineral.chemistry ? ` with chemical composition ${mineral.chemistry}` : ''}.`,
+  "identifier": mineral.id,
+  "url": url,
+  "image": imageUrl,
+  "additionalProperty": [
+    mineral.system && {
+      "@type": "PropertyValue",
+      "name": "Crystal System",
+      "value": mineral.system
+    },
+    mineral.hardness && {
+      "@type": "PropertyValue",
+      "name": "Mohs Hardness",
+      "value": mineral.hardness
+    },
+    mineral.sg && {
+      "@type": "PropertyValue",
+      "name": "Specific Gravity",
+      "value": mineral.sg
+    },
+    mineral.ri && {
+      "@type": "PropertyValue",
+      "name": "Refractive Index",
+      "value": mineral.ri
+    },
+    mineral.chemistry && {
+      "@type": "PropertyValue",
+      "name": "Chemical Formula",
+      "value": mineral.chemistry
+    },
+    mineral.cdl && {
+      "@type": "PropertyValue",
+      "name": "CDL Notation",
+      "value": mineral.cdl
+    },
+  ].filter(Boolean),
+};
+
+// BreadcrumbList for navigation
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://gemmology.dev"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Gallery",
+      "item": "https://gemmology.dev/gallery"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": mineral.name,
+      "item": url
+    }
+  ]
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

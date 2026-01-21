@@ -1,0 +1,82 @@
+---
+/**
+ * MineralHero - Hero section for mineral detail pages
+ * Shows name, chemistry, system badge, and crystal preview
+ */
+import type { Mineral } from '../../lib/db';
+import { Badge } from '../ui/Badge';
+
+interface Props {
+  mineral: Mineral;
+}
+
+const { mineral } = Astro.props;
+
+// Generate SVG path for the mineral
+const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}.svg`;
+
+// System colors
+const systemColors: Record<string, string> = {
+  cubic: 'bg-purple-100 text-purple-800',
+  hexagonal: 'bg-blue-100 text-blue-800',
+  trigonal: 'bg-cyan-100 text-cyan-800',
+  tetragonal: 'bg-green-100 text-green-800',
+  orthorhombic: 'bg-yellow-100 text-yellow-800',
+  monoclinic: 'bg-orange-100 text-orange-800',
+  triclinic: 'bg-red-100 text-red-800',
+};
+
+const systemColor = systemColors[mineral.system?.toLowerCase()] || 'bg-slate-100 text-slate-800';
+---
+
+<div class="bg-gradient-to-b from-white to-slate-50 border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <!-- Crystal SVG Preview -->
+      <div class="w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
+        <div class="w-full h-full bg-white rounded-2xl shadow-lg p-4 flex items-center justify-center">
+          <img
+            src={svgPath}
+            alt={`${mineral.name} crystal structure`}
+            class="max-w-full max-h-full object-contain"
+            loading="eager"
+            onerror="this.src='/crystals/placeholder.svg'"
+          />
+        </div>
+      </div>
+
+      <!-- Mineral Info -->
+      <div class="flex-1 text-center lg:text-left">
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-4">
+          <span class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${systemColor}`}>
+            {mineral.system}
+          </span>
+          {mineral.category && (
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-700">
+              {mineral.category}
+            </span>
+          )}
+        </div>
+
+        <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 mb-3">
+          {mineral.name}
+        </h1>
+
+        {mineral.chemistry && (
+          <p class="text-xl text-slate-600 font-mono mb-4">
+            {mineral.chemistry}
+          </p>
+        )}
+
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-slate-500">
+          <a href="/" class="hover:text-sky-600">Home</a>
+          <span class="mx-2">/</span>
+          <a href="/gallery" class="hover:text-sky-600">Gallery</a>
+          <span class="mx-2">/</span>
+          <span class="text-slate-700">{mineral.name}</span>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

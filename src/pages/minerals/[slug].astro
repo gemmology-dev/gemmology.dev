@@ -1,0 +1,100 @@
+---
+/**
+ * Individual Mineral Detail Page
+ * Generated statically for all 94+ minerals in the database
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MineralHero from '../../components/minerals/MineralHero.astro';
+import QuickFacts from '../../components/minerals/QuickFacts.astro';
+import PropertyTable from '../../components/minerals/PropertyTable.astro';
+import CrystalStructureCard from '../../components/minerals/CrystalStructureCard.astro';
+import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
+import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
+import MineralSchema from '../../components/seo/MineralSchema.astro';
+import { getAllMinerals, getMineralsBySystem, type Mineral } from '../../lib/db-server';
+
+export async function getStaticPaths() {
+  const minerals = await getAllMinerals();
+
+  return minerals.map((mineral) => ({
+    params: {
+      slug: mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, ''),
+    },
+    props: { mineral },
+  }));
+}
+
+interface Props {
+  mineral: Mineral;
+}
+
+const { mineral } = Astro.props;
+
+// Get related minerals from the same crystal system
+const relatedMinerals = (await getMineralsBySystem(mineral.system))
+  .filter((m) => m.id !== mineral.id)
+  .slice(0, 6);
+
+// Generate page metadata
+const title = `${mineral.name} Crystal Structure`;
+const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
+const canonicalUrl = `https://gemmology.dev/minerals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`;
+---
+
+<BaseLayout title={title} description={description}>
+  <MineralSchema mineral={mineral} slot="head" />
+
+  <main class="min-h-screen bg-slate-50">
+    <!-- Hero Section -->
+    <MineralHero mineral={mineral} />
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Left Column: Crystal Structure & Properties -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Quick Facts -->
+          <QuickFacts mineral={mineral} />
+
+          <!-- Crystal Structure -->
+          <CrystalStructureCard mineral={mineral} />
+
+          <!-- Physical Properties -->
+          <PropertyTable
+            title="Physical Properties"
+            properties={[
+              { label: 'Crystal System', value: mineral.system },
+              { label: 'Hardness (Mohs)', value: mineral.hardness },
+              { label: 'Specific Gravity', value: mineral.sg },
+              { label: 'Cleavage', value: mineral.cleavage },
+              { label: 'Fracture', value: mineral.fracture },
+              { label: 'Lustre', value: mineral.lustre },
+            ]}
+          />
+
+          <!-- Optical Properties -->
+          <PropertyTable
+            title="Optical Properties"
+            properties={[
+              { label: 'Refractive Index', value: mineral.ri },
+              { label: 'Birefringence', value: mineral.birefringence },
+              { label: 'Pleochroism', value: mineral.pleochroism },
+              { label: 'Dispersion', value: mineral.dispersion },
+            ]}
+          />
+        </div>
+
+        <!-- Right Column: Actions & Related -->
+        <div class="space-y-8">
+          <!-- Open in Playground -->
+          <PlaygroundLink mineral={mineral} />
+
+          <!-- Related Minerals -->
+          {relatedMinerals.length > 0 && (
+            <RelatedMinerals minerals={relatedMinerals} currentSystem={mineral.system} />
+          )}
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

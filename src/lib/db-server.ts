@@ -1,46 +1,10 @@
-import type { Database, SqlJsStatic } from 'sql.js';
-
-// sql.js needs to be loaded via script tag to work properly with WASM
-type InitSqlJs = (config?: { locateFile?: (file: string) => string }) => Promise<SqlJsStatic>;
-
-declare global {
-  interface Window {
-    initSqlJs?: InitSqlJs;
-  }
-}
-
-let sqlJsLoadPromise: Promise<InitSqlJs> | null = null;
-
-async function getInitSqlJs(): Promise<InitSqlJs> {
-  // Return cached if already loaded
-  if (window.initSqlJs) {
-    return window.initSqlJs;
-  }
-
-  // Only load once
-  if (sqlJsLoadPromise) {
-    return sqlJsLoadPromise;
-  }
-
-  sqlJsLoadPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = '/sql.js/sql-wasm.js';
-    script.onload = () => {
-      if (window.initSqlJs) {
-        resolve(window.initSqlJs);
-      } else {
-        reject(new Error('initSqlJs not found after script load'));
-      }
-    };
-    script.onerror = () => reject(new Error('Failed to load sql.js'));
-    document.head.appendChild(script);
-  });
-
-  return sqlJsLoadPromise;
-}
-
-let db: Database | null = null;
-let dbPromise: Promise<Database> | null = null;
+/**
+ * Server-side database access for Static Site Generation (SSG)
+ * Uses sql.js in Node.js mode - no browser APIs required
+ */
+import initSqlJs, { type Database } from 'sql.js';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export interface Mineral {
   id: string;
@@ -68,29 +32,34 @@ export interface Mineral {
   colors_json?: string;
   treatments_json?: string;
   inclusions_json?: string;
-  // Pre-generated 3D models
   model_svg?: string;
   model_stl?: Uint8Array;
   model_gltf?: string;
   models_generated_at?: string;
 }
 
+let db: Database | null = null;
+let dbPromise: Promise<Database> | null = null;
+
 export async function getDB(): Promise<Database> {
   if (db) return db;
   if (dbPromise) return dbPromise;
 
   dbPromise = (async () => {
-    const initSqlJs = await getInitSqlJs();
-    const SQL = await initSqlJs({
-      locateFile: (file: string) => `/sql.js/${file}`,
-    });
+    const SQL = await initSqlJs();
 
-    const response = await fetch('/minerals.db');
-    if (!response.ok) {
-      throw new Error(`Failed to load database: ${response.status}`);
+    // Try to find the database file
+    let dbPath: string;
+    try {
+      // Try npm package first
+      const mineralData = await import('@gemmology/mineral-data');
+      dbPath = mineralData.dbPath;
+    } catch {
+      // Fallback to public directory
+      dbPath = join(process.cwd(), 'public', 'minerals.db');
     }
 
-    const buffer = await response.arrayBuffer();
+    const buffer = readFileSync(dbPath);
     db = new SQL.Database(new Uint8Array(buffer));
     return db;
   })();
@@ -103,7 +72,7 @@ export async function getAllMinerals(): Promise<Mineral[]> {
   const result = database.exec(`
     SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
-           fracture, pleochroism, twin_law, phenomenon, note, model_svg
+           fracture, pleochroism, twin_law, phenomenon, note
     FROM minerals
     ORDER BY name ASC
   `);
@@ -187,7 +156,6 @@ export async function getMineralsBySystem(system: string): Promise<Mineral[]> {
 }
 
 export async function getMineralsByCategory(_category: string): Promise<Mineral[]> {
-  // Category column doesn't exist in the database - return all minerals
   return getAllMinerals();
 }
 
@@ -202,70 +170,5 @@ export async function getCrystalSystems(): Promise<string[]> {
 }
 
 export async function getCategories(): Promise<string[]> {
-  // Category column doesn't exist in the database
   return [];
-}
-
-// Pre-generated model query functions
-
-export async function getModelSVG(mineralId: string): Promise<string | null> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT model_svg FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
-  );
-
-  if (result.length === 0 || result[0].values.length === 0) return null;
-  return result[0].values[0][0] as string | null;
-}
-
-export async function getModelSTL(mineralId: string): Promise<Blob | null> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT model_stl FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
-  );
-
-  if (result.length === 0 || result[0].values.length === 0) return null;
-  const stlData = result[0].values[0][0];
-  if (!stlData) return null;
-
-  // Convert to Blob for download
-  return new Blob([stlData as Uint8Array], { type: 'application/sla' });
-}
-
-export async function getModelGLTF(mineralId: string): Promise<object | null> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT model_gltf FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
-  );
-
-  if (result.length === 0 || result[0].values.length === 0) return null;
-  const gltfStr = result[0].values[0][0] as string | null;
-  if (!gltfStr) return null;
-
-  try {
-    return JSON.parse(gltfStr);
-  } catch {
-    return null;
-  }
-}
-
-export async function getMineralWithModels(mineralId: string): Promise<Mineral | null> {
-  const database = await getDB();
-  const result = database.exec(
-    `SELECT * FROM minerals WHERE id = ? OR LOWER(name) = ? LIMIT 1`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
-  );
-
-  if (result.length === 0 || result[0].values.length === 0) return null;
-
-  const columns = result[0].columns;
-  const row = result[0].values[0];
-  const mineral: Record<string, unknown> = {};
-  columns.forEach((col, i) => {
-    mineral[col] = row[i];
-  });
-  return mineral as Mineral;
 }

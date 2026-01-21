@@ -1,0 +1,16 @@
+# Robots.txt for gemmology.dev
+# https://gemmology.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://gemmology.dev/sitemap-index.xml
+
+# Disallow API endpoints (served by separate worker)
+Disallow: /api/
+
+# Allow all crawlers to access static assets
+Allow: /crystals/
+Allow: /og-images/
+Allow: /favicon.svg

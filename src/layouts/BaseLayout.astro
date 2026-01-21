@@ -6,6 +6,9 @@ import Footer from '../components/layout/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
   noHeader?: boolean;
   noFooter?: boolean;
 }
@@ -13,9 +16,21 @@ interface Props {
 const {
   title,
   description = 'Crystal structure visualization and gemmological reference for FGA students and professionals.',
+  image,
+  canonical,
+  type = 'website',
   noHeader = false,
   noFooter = false
 } = Astro.props;
+
+// Generate canonical URL
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
+
+// Default OG image
+const ogImage = image || new URL('/og-default.jpg', Astro.site).href;
+
+// Full title
+const fullTitle = `${title} | gemmology.dev`;
 ---
 
 <!doctype html>
@@ -24,22 +39,43 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <title>{title} | gemmology.dev</title>
+
+    <title>{fullTitle}</title>
 
     <!-- Open Graph -->
-    <meta property="og:title" content={`${title} | gemmology.dev`} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content="gemmology.dev" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | gemmology.dev`} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Additional SEO -->
+    <meta name="author" content="gemmology.dev" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0ea5e9" />
+
+    <!-- Slot for additional head content (e.g., JSON-LD) -->
+    <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col">
     {!noHeader && <Header />}
