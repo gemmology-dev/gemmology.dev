@@ -2,7 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from './cn';
 
 type IconBoxSize = 'sm' | 'md' | 'lg';
-type IconBoxVariant = 'crystal' | 'ruby' | 'sapphire' | 'emerald' | 'amethyst' | 'slate';
+type IconBoxVariant = 'crystal' | 'ruby' | 'sapphire' | 'emerald' | 'amethyst' | 'topaz' | 'slate';
 
 interface IconBoxProps extends HTMLAttributes<HTMLDivElement> {
   size?: IconBoxSize;
@@ -22,6 +22,7 @@ const variantStyles: Record<IconBoxVariant, string> = {
   sapphire: 'bg-blue-100 text-blue-600',
   emerald: 'bg-green-100 text-green-600',
   amethyst: 'bg-purple-100 text-purple-600',
+  topaz: 'bg-amber-100 text-amber-600',
   slate: 'bg-slate-100 text-slate-600',
 };
 
