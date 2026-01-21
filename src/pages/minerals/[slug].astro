@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
   return minerals.map((mineral) => ({
     params: {
-      slug: mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, ''),
+      slug: mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-'),
     },
     props: { mineral },
   }));
@@ -38,7 +38,7 @@ const relatedMinerals = (await getMineralsBySystem(mineral.system))
 // Generate page metadata
 const title = `${mineral.name} Crystal Structure`;
 const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
-const canonicalUrl = `https://gemmology.dev/minerals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`;
+const canonicalUrl = `https://gemmology.dev/minerals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-')}`;
 ---
 
 <BaseLayout title={title} description={description}>
