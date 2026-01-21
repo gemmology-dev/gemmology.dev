@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+import { Container } from '../../../components/ui-astro';
 
 const svgOptions = [
   { option: 'width', type: 'int', default: '400', description: 'SVG width in pixels' },
@@ -38,7 +39,7 @@ const gltfOptions = [
   title="crystal-renderer API"
   description="API reference for the crystal-renderer package - render crystals to SVG, STL, and glTF."
 >
-  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+  <Container size="md" padding="lg">
     <Breadcrumb items={[
       { label: 'Docs', href: '/docs' },
       { label: 'API Reference', href: '/docs' },
@@ -297,5 +298,5 @@ for face in projected.faces:
       prev={{ label: 'mineral-database API', href: '/docs/api/mineral-database' }}
       next={{ label: 'CLI Reference', href: '/docs/cli' }}
     />
-  </div>
+  </Container>
 </BaseLayout>

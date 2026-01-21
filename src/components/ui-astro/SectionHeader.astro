@@ -1,0 +1,43 @@
+---
+/**
+ * SectionHeader - Astro version of the React SectionHeader component
+ * Consistent section title and description pattern.
+ */
+import Badge from './Badge.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  badge?: string;
+  align?: 'center' | 'left';
+  class?: string;
+}
+
+const { title, description, badge, align = 'center', class: className } = Astro.props;
+
+const containerClasses = [
+  'mb-12',
+  align === 'center' && 'text-center',
+  className,
+].filter(Boolean).join(' ');
+
+const descriptionClasses = [
+  'mt-4 text-lg text-slate-600',
+  align === 'center' && 'max-w-2xl mx-auto',
+].filter(Boolean).join(' ');
+---
+
+<div class={containerClasses}>
+  {badge && (
+    <Badge variant="crystal" class="mb-4">
+      {badge}
+    </Badge>
+  )}
+  <h2 class="text-3xl font-bold text-slate-900">{title}</h2>
+  {description && (
+    <p class={descriptionClasses}>
+      {description}
+    </p>
+  )}
+  <slot />
+</div>

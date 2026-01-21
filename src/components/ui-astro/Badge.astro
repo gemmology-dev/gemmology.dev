@@ -1,5 +1,8 @@
-import type { HTMLAttributes, ReactNode } from 'react';
-import { cn } from './cn';
+---
+/**
+ * Badge - Astro version of the React Badge component
+ * Small labels for categorization, status, and metadata.
+ */
 
 type BadgeVariant =
   | 'default'
@@ -20,11 +23,13 @@ type BadgeVariant =
 
 type BadgeSize = 'sm' | 'md';
 
-interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+interface Props {
   variant?: BadgeVariant;
   size?: BadgeSize;
-  children: ReactNode;
+  class?: string;
 }
+
+const { variant = 'default', size = 'sm', class: className } = Astro.props;
 
 const variantStyles: Record<BadgeVariant, string> = {
   default: 'bg-slate-100 text-slate-700',
@@ -49,24 +54,14 @@ const sizeStyles: Record<BadgeSize, string> = {
   md: 'px-2.5 py-1 text-sm',
 };
 
-export function Badge({
-  variant = 'default',
-  size = 'sm',
-  children,
+const classes = [
+  'inline-flex items-center rounded-full font-medium',
+  variantStyles[variant],
+  sizeStyles[size],
   className,
-  ...props
-}: BadgeProps) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center rounded-full font-medium',
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </span>
-  );
-}
+].filter(Boolean).join(' ');
+---
+
+<span class={classes}>
+  <slot />
+</span>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
+import { Container, Card } from '../../../components/ui-astro';
 
 const presetAttrs = [
   { name: 'name', type: 'str', description: 'Mineral name' },
@@ -25,7 +26,7 @@ const presetAttrs = [
   title="mineral-database API"
   description="API reference for the mineral-database package - query mineral presets with CDL definitions."
 >
-  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+  <Container size="md" padding="lg">
     <Breadcrumb items={[
       { label: 'Docs', href: '/docs' },
       { label: 'API Reference', href: '/docs' },
@@ -235,30 +236,30 @@ all_presets = db.list_presets()`}
       <p>The database includes 94 mineral presets organized by crystal system:</p>
 
       <div class="not-prose mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Cubic (18)</h4>
           <p class="text-sm text-slate-600 mt-1">Diamond, Spinel, Garnet group, Pyrite, Fluorite...</p>
-        </div>
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        </Card>
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Hexagonal (12)</h4>
           <p class="text-sm text-slate-600 mt-1">Beryl varieties, Apatite, Zincite...</p>
-        </div>
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        </Card>
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Trigonal (15)</h4>
           <p class="text-sm text-slate-600 mt-1">Quartz varieties, Corundum, Tourmaline, Calcite...</p>
-        </div>
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        </Card>
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Tetragonal (8)</h4>
           <p class="text-sm text-slate-600 mt-1">Zircon, Rutile, Cassiterite, Vesuvianite...</p>
-        </div>
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        </Card>
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Orthorhombic (14)</h4>
           <p class="text-sm text-slate-600 mt-1">Topaz, Peridot, Chrysoberyl, Tanzanite...</p>
-        </div>
-        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+        </Card>
+        <Card padding="sm" class="bg-slate-50">
           <h4 class="font-semibold text-slate-900">Monoclinic (12)</h4>
           <p class="text-sm text-slate-600 mt-1">Orthoclase, Jadeite, Spodumene, Malachite...</p>
-        </div>
+        </Card>
       </div>
     </article>
 
@@ -266,5 +267,5 @@ all_presets = db.list_presets()`}
       prev={{ label: 'crystal-geometry API', href: '/docs/api/crystal-geometry' }}
       next={{ label: 'crystal-renderer API', href: '/docs/api/crystal-renderer' }}
     />
-  </div>
+  </Container>
 </BaseLayout>

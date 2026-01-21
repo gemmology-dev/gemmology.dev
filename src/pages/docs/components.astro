@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Button } from '../../components/ui/Button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/ui/Card';
+import { Badge } from '../../components/ui/Badge';
+import { IconBox } from '../../components/ui/IconBox';
+import { SectionHeader } from '../../components/ui/SectionHeader';
+import { Container } from '../../components/ui/Container';
+import { Link } from '../../components/ui/Link';
+import { DifficultyBadge } from '../../components/ui/DifficultyBadge';
+import { Table, DataTable, PropertyTable } from '../../components/ui/Table';
+
+// Example icon for demos
+const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>`;
+---
+
+<BaseLayout
+  title="UI Components"
+  description="Complete reference for gemmology.dev UI component library."
+>
+  <div class="bg-gradient-to-b from-slate-50 to-white">
+    <Container size="xl" padding="md">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-bold text-slate-900">UI Component Library</h1>
+        <p class="mt-4 text-lg text-slate-600">
+          A unified set of React components for consistent styling across gemmology.dev.
+          All components are available from <code class="bg-slate-100 px-1.5 py-0.5 rounded text-sm">@/components/ui</code>.
+        </p>
+      </div>
+
+      <div class="mt-16 space-y-24">
+        <!-- Button -->
+        <section id="button">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Button</h2>
+          <p class="text-slate-600 mb-6">Primary interaction element with multiple variants and sizes.</p>
+
+          <Card padding="lg">
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Variants</h3>
+                <div class="flex flex-wrap gap-3">
+                  <Button variant="primary">Primary</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="outline">Outline</Button>
+                  <Button variant="ghost">Ghost</Button>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Sizes</h3>
+                <div class="flex flex-wrap items-center gap-3">
+                  <Button size="sm">Small</Button>
+                  <Button size="md">Medium</Button>
+                  <Button size="lg">Large</Button>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">States</h3>
+                <div class="flex flex-wrap gap-3">
+                  <Button disabled>Disabled</Button>
+                  <Button loading>Loading</Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { Button } from '@/components/ui';
+
+<Button variant="primary" size="md">Click me</Button>
+<Button variant="outline" disabled>Disabled</Button>
+<Button loading>Submitting...</Button>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Card -->
+        <section id="card">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Card</h2>
+          <p class="text-slate-600 mb-6">Container component with optional hover effects and subcomponents.</p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <Card padding="md">
+              <CardHeader>
+                <CardTitle>Basic Card</CardTitle>
+                <CardDescription>This is a basic card with header and content.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-slate-600">Card content goes here.</p>
+              </CardContent>
+            </Card>
+
+            <Card hover padding="md">
+              <CardHeader>
+                <CardTitle>Hover Card</CardTitle>
+                <CardDescription>This card has hover effects.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-slate-600">Hover over me to see the effect.</p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm">Action</Button>
+              </CardFooter>
+            </Card>
+          </div>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui';
+
+<Card hover padding="md">
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>Content</CardContent>
+  <CardFooter>Footer</CardFooter>
+</Card>
+
+// As a link
+<Card as="a" href="/page" hover>Clickable card</Card>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Badge -->
+        <section id="badge">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Badge</h2>
+          <p class="text-slate-600 mb-6">Small labels for categorization, status, and metadata.</p>
+
+          <Card padding="lg">
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Basic Variants</h3>
+                <div class="flex flex-wrap gap-2">
+                  <Badge variant="default">Default</Badge>
+                  <Badge variant="crystal">Crystal</Badge>
+                  <Badge variant="ruby">Ruby</Badge>
+                  <Badge variant="sapphire">Sapphire</Badge>
+                  <Badge variant="emerald">Emerald</Badge>
+                  <Badge variant="amethyst">Amethyst</Badge>
+                  <Badge variant="outline">Outline</Badge>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Crystal System Variants</h3>
+                <div class="flex flex-wrap gap-2">
+                  <Badge variant="cubic">Cubic</Badge>
+                  <Badge variant="hexagonal">Hexagonal</Badge>
+                  <Badge variant="trigonal">Trigonal</Badge>
+                  <Badge variant="tetragonal">Tetragonal</Badge>
+                  <Badge variant="orthorhombic">Orthorhombic</Badge>
+                  <Badge variant="monoclinic">Monoclinic</Badge>
+                  <Badge variant="triclinic">Triclinic</Badge>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Sizes</h3>
+                <div class="flex flex-wrap items-center gap-2">
+                  <Badge size="sm">Small</Badge>
+                  <Badge size="md">Medium</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        <!-- IconBox -->
+        <section id="iconbox">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">IconBox</h2>
+          <p class="text-slate-600 mb-6">Styled container for icons with color variants.</p>
+
+          <Card padding="lg">
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Variants</h3>
+                <div class="flex flex-wrap gap-4">
+                  <IconBox variant="crystal"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox variant="ruby"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox variant="sapphire"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox variant="emerald"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox variant="amethyst"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox variant="slate"><Fragment set:html={exampleIcon} /></IconBox>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Sizes</h3>
+                <div class="flex flex-wrap items-center gap-4">
+                  <IconBox size="sm"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox size="md"><Fragment set:html={exampleIcon} /></IconBox>
+                  <IconBox size="lg"><Fragment set:html={exampleIcon} /></IconBox>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { IconBox } from '@/components/ui';
+
+<IconBox variant="crystal" size="md">
+  <CrystalIcon />
+</IconBox>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- DifficultyBadge -->
+        <section id="difficulty-badge">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">DifficultyBadge</h2>
+          <p class="text-slate-600 mb-6">Specialized badge for indicating content difficulty levels.</p>
+
+          <Card padding="lg">
+            <div class="flex flex-wrap gap-4">
+              <DifficultyBadge level="beginner" />
+              <DifficultyBadge level="intermediate" />
+              <DifficultyBadge level="advanced" />
+            </div>
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { DifficultyBadge } from '@/components/ui';
+
+<DifficultyBadge level="beginner" />
+<DifficultyBadge level="intermediate" size="md" />
+<DifficultyBadge level="advanced" />`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Container -->
+        <section id="container">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Container</h2>
+          <p class="text-slate-600 mb-6">Layout wrapper with consistent max-width and padding.</p>
+
+          <Card padding="lg">
+            <div class="space-y-4">
+              <div class="border border-dashed border-slate-300 rounded-lg p-4">
+                <code class="text-sm text-slate-600">size="sm" → max-w-3xl</code>
+              </div>
+              <div class="border border-dashed border-slate-300 rounded-lg p-4">
+                <code class="text-sm text-slate-600">size="md" → max-w-4xl</code>
+              </div>
+              <div class="border border-dashed border-slate-300 rounded-lg p-4">
+                <code class="text-sm text-slate-600">size="lg" → max-w-6xl</code>
+              </div>
+              <div class="border border-dashed border-slate-300 rounded-lg p-4">
+                <code class="text-sm text-slate-600">size="xl" → max-w-7xl (default)</code>
+              </div>
+            </div>
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { Container } from '@/components/ui';
+
+<Container size="xl" padding="md">
+  Content with max-w-7xl and medium padding
+</Container>
+
+<Container size="sm" padding="lg" as="section">
+  Section with max-w-3xl and large padding
+</Container>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- SectionHeader -->
+        <section id="section-header">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">SectionHeader</h2>
+          <p class="text-slate-600 mb-6">Consistent section title and description pattern.</p>
+
+          <Card padding="lg">
+            <SectionHeader
+              title="Example Section"
+              description="This is a description of the section content."
+              badge="Featured"
+              client:load
+            />
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { SectionHeader } from '@/components/ui';
+
+<SectionHeader
+  title="Section Title"
+  description="Optional description"
+  badge="Optional Badge"
+  align="center"
+/>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Link -->
+        <section id="link">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Link</h2>
+          <p class="text-slate-600 mb-6">Styled anchor element with variants and arrow option.</p>
+
+          <Card padding="lg">
+            <div class="space-y-4">
+              <div class="flex flex-wrap gap-4">
+                <Link href="#" variant="default">Default Link</Link>
+                <Link href="#" variant="primary">Primary Link</Link>
+                <Link href="#" variant="muted">Muted Link</Link>
+              </div>
+              <div class="flex flex-wrap gap-4">
+                <Link href="#" variant="primary" withArrow>With Arrow</Link>
+                <Link href="https://example.com" variant="default" external>External Link</Link>
+              </div>
+            </div>
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { Link } from '@/components/ui';
+
+<Link href="/page" variant="primary" withArrow>
+  Go to page
+</Link>
+
+<Link href="https://example.com" external>
+  External site
+</Link>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Table -->
+        <section id="table">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Table</h2>
+          <p class="text-slate-600 mb-6">Unified table component with multiple variants.</p>
+
+          <Card padding="lg">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">DataTable</h3>
+            <DataTable
+              headers={['Property', 'Value', 'Description']}
+              rows={[
+                ['variant', 'string', 'Visual style variant'],
+                ['size', 'sm | md | lg', 'Component size'],
+                ['disabled', 'boolean', 'Disable interactions'],
+              ]}
+              client:load
+            />
+          </Card>
+
+          <Card padding="lg" className="mt-6">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">PropertyTable</h3>
+            <PropertyTable
+              title="Crystal Properties"
+              properties={[
+                { label: 'System', value: 'Cubic' },
+                { label: 'Point Group', value: 'm3m' },
+                { label: 'Hardness', value: '10' },
+              ]}
+              client:load
+            />
+          </Card>
+
+          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300"><code>{`import { Table, DataTable, PropertyTable } from '@/components/ui';
+
+// Simple data table
+<DataTable
+  headers={['Name', 'Type', 'Description']}
+  rows={[['prop', 'string', 'A property']]}
+/>
+
+// Key-value property table
+<PropertyTable
+  title="Properties"
+  properties={[{ label: 'Key', value: 'Value' }]}
+/>`}</code></pre>
+          </div>
+        </section>
+
+        <!-- Design Tokens -->
+        <section id="design-tokens">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Design Tokens</h2>
+          <p class="text-slate-600 mb-6">Core color palette and typography scale.</p>
+
+          <Card padding="lg">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Crystal Palette</h3>
+            <div class="flex flex-wrap gap-2">
+              {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => (
+                <div class="text-center">
+                  <div class={`w-12 h-12 rounded-lg bg-crystal-${shade}`}></div>
+                  <span class="text-xs text-slate-500 mt-1">{shade}</span>
+                </div>
+              ))}
+            </div>
+
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-3">Gem Colors</h3>
+            <div class="flex flex-wrap gap-2">
+              <div class="text-center">
+                <div class="w-12 h-12 rounded-lg bg-gem-ruby"></div>
+                <span class="text-xs text-slate-500 mt-1">Ruby</span>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 rounded-lg bg-gem-sapphire"></div>
+                <span class="text-xs text-slate-500 mt-1">Sapphire</span>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 rounded-lg bg-gem-emerald"></div>
+                <span class="text-xs text-slate-500 mt-1">Emerald</span>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 rounded-lg bg-gem-amethyst"></div>
+                <span class="text-xs text-slate-500 mt-1">Amethyst</span>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 rounded-lg bg-gem-topaz"></div>
+                <span class="text-xs text-slate-500 mt-1">Topaz</span>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        <!-- Usage Guidelines -->
+        <section id="guidelines">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">Usage Guidelines</h2>
+          <p class="text-slate-600 mb-6">Best practices for using the component library.</p>
+
+          <Card padding="lg" className="bg-slate-50">
+            <div class="prose prose-slate max-w-none">
+              <h3>Import from the barrel export</h3>
+              <pre><code>import {'{'} Button, Card, Badge {'}'} from '@/components/ui';</code></pre>
+
+              <h3>Use components instead of raw Tailwind</h3>
+              <ul>
+                <li><strong>Buttons:</strong> Use <code>&lt;Button variant="primary"&gt;</code> not <code>.btn-primary</code></li>
+                <li><strong>Cards:</strong> Use <code>&lt;Card&gt;</code> not raw border/shadow classes</li>
+                <li><strong>Badges:</strong> Use <code>&lt;Badge variant="crystal"&gt;</code> with the variant prop</li>
+                <li><strong>Icons:</strong> Use <code>&lt;IconBox&gt;</code> not manual flexbox containers</li>
+                <li><strong>Sections:</strong> Use <code>&lt;SectionHeader&gt;</code> for centered titles</li>
+                <li><strong>Layout:</strong> Use <code>&lt;Container&gt;</code> for max-width and padding</li>
+              </ul>
+
+              <h3>Use the cn utility for custom classes</h3>
+              <pre><code>import {'{'} cn {'}'} from '@/components/ui';
+className={'{'}cn('base-class', conditional && 'conditional-class', className){'}'}</code></pre>
+            </div>
+          </Card>
+        </section>
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

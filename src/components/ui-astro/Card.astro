@@ -1,0 +1,44 @@
+---
+/**
+ * Card - Astro version of the React Card component
+ * Container component with optional hover effects.
+ */
+
+type CardPadding = 'none' | 'sm' | 'md' | 'lg';
+
+interface Props {
+  hover?: boolean;
+  padding?: CardPadding;
+  href?: string;
+  class?: string;
+}
+
+const { hover = false, padding = 'md', href, class: className } = Astro.props;
+
+const paddingStyles: Record<CardPadding, string> = {
+  none: '',
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+};
+
+const baseClasses = [
+  'rounded-xl border border-slate-200 bg-white shadow-sm',
+  paddingStyles[padding],
+  hover && 'transition-all hover:border-crystal-300 hover:shadow-md',
+  href && 'cursor-pointer block',
+  className,
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'div';
+---
+
+{href ? (
+  <a href={href} class={baseClasses}>
+    <slot />
+  </a>
+) : (
+  <div class={baseClasses}>
+    <slot />
+  </div>
+)}

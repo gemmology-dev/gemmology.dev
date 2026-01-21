@@ -58,6 +58,10 @@ export default {
       typography: {
         DEFAULT: {
           css: {
+            maxWidth: 'none',
+            p: {
+              maxWidth: 'none',
+            },
             code: {
               backgroundColor: '#f1f5f9',
               padding: '0.2em 0.4em',
@@ -66,6 +70,85 @@ export default {
             },
             'code::before': { content: '""' },
             'code::after': { content: '""' },
+            // Elegant list styling - dividers between items, no indent
+            'ul': {
+              listStyle: 'none',
+              paddingLeft: '0',
+              paddingInlineStart: '0',
+              marginLeft: '0',
+              marginInlineStart: '0',
+              marginTop: '0',
+              marginBottom: '0',
+            },
+            'ul > li': {
+              paddingTop: '0.5em',
+              paddingBottom: '0.5em',
+              paddingLeft: '0',
+              marginLeft: '0',
+              borderBottom: '1px solid #e2e8f0',
+            },
+            'ul > li:last-child': {
+              borderBottom: 'none',
+            },
+            'ul > li::before': {
+              content: 'none',
+            },
+            'ul ul': {
+              marginTop: '0.5em',
+              marginLeft: '0',
+              paddingLeft: '0',
+              borderLeft: '2px solid #e2e8f0',
+            },
+            'ul ul > li': {
+              borderBottom: 'none',
+              paddingTop: '0.25em',
+              paddingBottom: '0.25em',
+              paddingLeft: '1em',
+            },
+            'ol': {
+              listStyle: 'none',
+              paddingLeft: '0',
+              counterReset: 'item',
+            },
+            'ol > li': {
+              position: 'relative',
+              paddingLeft: '2em',
+              counterIncrement: 'item',
+            },
+            'ol > li::before': {
+              content: 'counter(item)',
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '1.5em',
+              height: '1.5em',
+              fontSize: '0.75em',
+              fontWeight: '600',
+              color: '#0369a1',
+              backgroundColor: '#e0f2fe',
+              borderRadius: '0.25em',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          },
+        },
+        lg: {
+          css: {
+            maxWidth: 'none',
+            p: {
+              maxWidth: 'none',
+            },
+            'ul': {
+              paddingLeft: '0',
+              paddingInlineStart: '0',
+              marginLeft: '0',
+              marginInlineStart: '0',
+            },
+            'ul > li': {
+              paddingLeft: '0',
+              marginLeft: '0',
+            },
           },
         },
       },
