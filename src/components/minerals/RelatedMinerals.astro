@@ -22,7 +22,7 @@ const { minerals, currentSystem } = Astro.props;
 
   <div class="divide-y divide-slate-100">
     {minerals.map((mineral) => {
-      const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-');
       const svgPath = `/crystals/${slug}.svg`;
 
       return (
