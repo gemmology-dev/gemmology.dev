@@ -34,4 +34,4 @@ yarn-error.log*
 # Generated files
 public/sql.js/
 public/minerals.db
-public/crystals/*.svg
+# Note: public/crystals/*.svg are committed (placeholder crystals)
