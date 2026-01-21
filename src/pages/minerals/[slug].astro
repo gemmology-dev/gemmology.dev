@@ -12,13 +12,14 @@ import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getMineralsBySystem, type Mineral } from '../../lib/db-server';
+import { mineralSlug } from '../../lib/slug';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
 
   return minerals.map((mineral) => ({
     params: {
-      slug: mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-'),
+      slug: mineralSlug(mineral.name),
     },
     props: { mineral },
   }));
@@ -38,7 +39,7 @@ const relatedMinerals = (await getMineralsBySystem(mineral.system))
 // Generate page metadata
 const title = `${mineral.name} Crystal Structure`;
 const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
-const canonicalUrl = `https://gemmology.dev/minerals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '').replace(/\//g, '-')}`;
+const canonicalUrl = `https://gemmology.dev/minerals/${mineralSlug(mineral.name)}`;
 ---
 
 <BaseLayout title={title} description={description}>

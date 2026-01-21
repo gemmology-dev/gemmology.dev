@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Gallery } from '../../components/gallery/Gallery';
+
+const url = Astro.url;
+const initialSystem = url.searchParams.get('system') || '';
+const initialSearch = url.searchParams.get('search') || '';
 ---
 
 <BaseLayout
@@ -17,7 +21,11 @@ import { Gallery } from '../../components/gallery/Gallery';
         </p>
       </div>
 
-      <Gallery client:load />
+      <Gallery
+        client:load
+        initialSystem={initialSystem}
+        initialSearch={initialSearch}
+      />
     </div>
   </div>
 </BaseLayout>

@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import expressiveCode from 'astro-expressive-code';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-// Sitemap temporarily disabled due to build error
-// import sitemap from '@astrojs/sitemap';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://gemmology.dev',
@@ -22,7 +21,7 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    // sitemap(), // Temporarily disabled - see https://github.com/withastro/astro/issues
+    sitemap(),
   ],
   vite: {
     optimizeDeps: {
