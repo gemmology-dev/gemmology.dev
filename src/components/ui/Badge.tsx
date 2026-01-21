@@ -8,6 +8,7 @@ type BadgeVariant =
   | 'sapphire'
   | 'emerald'
   | 'amethyst'
+  | 'topaz'
   | 'outline'
   // Crystal system variants
   | 'cubic'
@@ -33,6 +34,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   sapphire: 'bg-blue-100 text-blue-700',
   emerald: 'bg-green-100 text-green-700',
   amethyst: 'bg-purple-100 text-purple-700',
+  topaz: 'bg-amber-100 text-amber-700',
   outline: 'border border-slate-300 text-slate-700 bg-transparent',
   // Crystal system colors
   cubic: 'bg-amber-100 text-amber-700',
