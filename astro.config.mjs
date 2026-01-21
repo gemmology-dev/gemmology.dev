@@ -21,12 +21,7 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    sitemap({
-      filter: (page) => !page.includes('/_'),
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
-    }),
+    sitemap(),
   ],
   vite: {
     optimizeDeps: {
