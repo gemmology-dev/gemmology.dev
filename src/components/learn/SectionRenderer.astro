@@ -5,6 +5,8 @@ import DataTable from './DataTable.astro';
 import PropertyList from './PropertyList.astro';
 import CrystalDemo from './CrystalDemo.astro';
 import ComparisonBlock from './ComparisonBlock.astro';
+import CrystalSystemCard from './CrystalSystemCard.astro';
+import { detectCrystalSystem, type CrystalSystem } from './icons';
 
 interface Item {
   name: string;
@@ -40,6 +42,8 @@ interface Subsection {
   content?: string;
   items?: Item[];
   table?: Table;
+  system?: CrystalSystem;
+  cdl?: string;
 }
 
 interface Section {
@@ -71,8 +75,8 @@ marked.setOptions({
 const renderMarkdown = (text: string) => marked.parse(text);
 ---
 
-<section id={sectionId} class="mb-12">
-  <h2 class="text-2xl font-bold text-slate-900 mb-4">{section.title}</h2>
+<section id={sectionId} class="mb-16">
+  <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200">{section.title}</h2>
 
   {section.callout && (
     <Callout variant={section.callout.type} title={section.callout.title}>
@@ -108,14 +112,37 @@ const renderMarkdown = (text: string) => marked.parse(text);
     <ComparisonBlock items={section.comparison.items} />
   )}
 
-  {section.subsections && section.subsections.map(sub => (
-    <div class="ml-0 mt-8 pl-4 border-l-2 border-slate-200">
-      <h3 class="text-xl font-semibold text-slate-800 mb-3">{sub.title}</h3>
-      {sub.content && (
-        <div class="prose prose-slate max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
-      )}
-      {sub.items && <PropertyList items={sub.items} />}
-      {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
-    </div>
-  ))}
+  {section.subsections && section.subsections.map(sub => {
+    // Check if this subsection is a crystal system
+    const detectedSystem = sub.system || detectCrystalSystem(sub.title);
+
+    if (detectedSystem) {
+      // Render as a crystal system card
+      return (
+        <CrystalSystemCard
+          system={detectedSystem}
+          title={sub.title}
+          content={sub.content}
+          items={sub.items}
+          cdl={sub.cdl}
+        />
+      );
+    } else {
+      // Render as a regular subsection with improved styling
+      return (
+        <div class="mt-8 rounded-xl border border-slate-200 bg-white overflow-hidden">
+          <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <h3 class="text-lg font-semibold text-slate-800">{sub.title}</h3>
+          </div>
+          <div class="p-4">
+            {sub.content && (
+              <div class="prose prose-slate max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
+            )}
+            {sub.items && <PropertyList items={sub.items} />}
+            {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
+          </div>
+        </div>
+      );
+    }
+  })}
 </section>

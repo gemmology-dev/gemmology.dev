@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Breadcrumb, PageNav } from '../../components/docs';
 import { SectionRenderer } from '../../components/learn';
+import { Container, Card, Badge } from '../../components/ui-astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('learn');
@@ -28,7 +29,7 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+  <Container size="md" padding="md">
     <Breadcrumb items={[
       { label: 'Learn', href: '/learn' },
       { label: data.title }
@@ -44,38 +45,42 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
         {data.tags && data.tags.length > 0 && (
           <div class="mt-4 flex flex-wrap gap-2">
             {data.tags.map(tag => (
-              <span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600">
-                {tag}
-              </span>
+              <Badge variant="default">{tag}</Badge>
             ))}
           </div>
         )}
       </header>
 
-      <div class="prose prose-slate max-w-none">
+      <div class="prose prose-slate prose-lg max-w-none
+                  prose-headings:text-slate-900
+                  prose-p:text-slate-600 prose-p:leading-relaxed
+                  prose-strong:text-slate-900 prose-strong:font-semibold
+                  prose-a:text-crystal-600 prose-a:no-underline hover:prose-a:underline">
         {data.sections.map(section => (
           <SectionRenderer section={section} />
         ))}
       </div>
 
       {data.related && data.related.length > 0 && (
-        <aside class="mt-16 p-6 rounded-xl bg-slate-50 border border-slate-200">
+        <Card padding="md" class="mt-16 bg-slate-50 border-slate-200">
           <h3 class="text-lg font-semibold text-slate-900 mb-4">Related Topics</h3>
           <div class="flex flex-wrap gap-3">
             {data.related.map(slug => {
               const related = allEntries.find(e => e.id === slug);
               if (!related) return null;
               return (
-                <a
+                <Card
                   href={`/learn/${slug}`}
-                  class="px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-crystal-300 hover:text-crystal-600 transition-colors text-sm"
+                  hover
+                  padding="none"
+                  class="px-4 py-2 text-sm text-slate-700"
                 >
                   {related.data.title}
-                </a>
+                </Card>
               );
             })}
           </div>
-        </aside>
+        </Card>
       )}
     </article>
 
@@ -83,5 +88,5 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
       prev={prev ? { label: prev.data.title, href: `/learn/${prev.id}` } : currentIndex === 0 ? { label: 'Back to Learn', href: '/learn' } : undefined}
       next={next ? { label: next.data.title, href: `/learn/${next.id}` } : undefined}
     />
-  </div>
+  </Container>
 </BaseLayout>

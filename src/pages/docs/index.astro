@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
+import { Card } from '../../components/ui/Card';
+import { Container } from '../../components/ui/Container';
+import { SectionHeader } from '../../components/ui/SectionHeader';
 
 const sections = [
   {
@@ -41,7 +44,7 @@ const sections = [
   description="Complete documentation for gemmology.dev packages, CDL language, and CLI tools."
 >
   <div class="bg-gradient-to-b from-slate-50 to-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <Container size="xl" padding="md">
       <div class="max-w-3xl">
         <h1 class="text-4xl font-bold text-slate-900">Documentation</h1>
         <p class="mt-4 text-lg text-slate-600">
@@ -55,15 +58,12 @@ const sections = [
             <h2 class="text-2xl font-bold text-slate-900 mb-6">{section.title}</h2>
             <div class="grid sm:grid-cols-2 gap-4">
               {section.items.map((item) => (
-                <a
-                  href={item.href}
-                  class="group block p-6 rounded-xl border border-slate-200 bg-white hover:border-crystal-300 hover:shadow-md transition-all"
-                >
+                <Card as="a" href={item.href} hover padding="md" className="group block">
                   <h3 class="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
                     {item.label}
                   </h3>
                   <p class="mt-1 text-sm text-slate-600">{item.description}</p>
-                </a>
+                </Card>
               ))}
             </div>
           </section>
@@ -71,7 +71,7 @@ const sections = [
       </div>
 
       <!-- Quick Reference -->
-      <section class="mt-16 p-8 rounded-2xl bg-slate-900 text-white">
+      <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800">
         <h2 class="text-xl font-bold mb-4">Quick Reference</h2>
         <div class="grid md:grid-cols-2 gap-8">
           <div>
@@ -89,7 +89,7 @@ geom = cdl_to_geometry(desc)
 svg = generate_svg(geom)`} />
           </div>
         </div>
-      </section>
-    </div>
+      </Card>
+    </Container>
   </div>
 </BaseLayout>

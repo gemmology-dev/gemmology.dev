@@ -1,4 +1,9 @@
 ---
+/**
+ * DataTable - Displays tabular data
+ * Updated to use consistent styling with Astro UI
+ */
+
 interface Props {
   headers: string[];
   rows: string[][];
@@ -8,21 +13,21 @@ interface Props {
 const { headers, rows, caption } = Astro.props;
 ---
 
-<div class="overflow-x-auto my-6">
-  <table class="min-w-full divide-y divide-slate-200">
-    {caption && (
-      <caption class="text-sm text-slate-500 mb-2 text-left">{caption}</caption>
-    )}
-    <thead class="bg-slate-50">
+<div class="overflow-x-auto my-6 rounded-xl border border-slate-200">
+  {caption && (
+    <div class="text-sm text-slate-500 px-4 py-2 text-left bg-slate-50 border-b border-slate-200">{caption}</div>
+  )}
+  <table class="min-w-full divide-y divide-slate-200 !m-0">
+    <thead class="bg-gradient-to-r from-crystal-50 to-slate-50">
       <tr>
         {headers.map(header => (
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider border-b border-slate-200">
             {header}
           </th>
         ))}
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-slate-200">
+    <tbody class="bg-white divide-y divide-slate-100">
       {rows.map(row => (
         <tr class="hover:bg-slate-50 transition-colors">
           {row.map((cell, i) => (

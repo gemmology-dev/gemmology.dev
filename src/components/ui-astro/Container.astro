@@ -1,0 +1,43 @@
+---
+/**
+ * Container - Astro version of the React Container component
+ * Layout wrapper with consistent max-width and padding.
+ */
+
+type ContainerSize = 'sm' | 'md' | 'lg' | 'xl';
+type ContainerPadding = 'none' | 'sm' | 'md' | 'lg';
+
+interface Props {
+  size?: ContainerSize;
+  padding?: ContainerPadding;
+  as?: 'div' | 'section' | 'article' | 'main';
+  class?: string;
+}
+
+const { size = 'xl', padding = 'md', as: Tag = 'div', class: className } = Astro.props;
+
+const sizeStyles: Record<ContainerSize, string> = {
+  sm: 'max-w-3xl',
+  md: 'max-w-4xl',
+  lg: 'max-w-6xl',
+  xl: 'max-w-7xl',
+};
+
+const paddingStyles: Record<ContainerPadding, string> = {
+  none: '',
+  sm: 'px-4 py-8',
+  md: 'px-4 sm:px-6 lg:px-8 py-12',
+  lg: 'px-4 sm:px-6 lg:px-8 py-24',
+};
+
+const classes = [
+  'mx-auto',
+  sizeStyles[size],
+  paddingStyles[padding],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

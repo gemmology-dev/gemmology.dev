@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Card, CardTitle, CardDescription } from '../components/ui/Card';
+import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
+import { IconBox } from '../components/ui/IconBox';
+import { SectionHeader } from '../components/ui/SectionHeader';
+import { Container } from '../components/ui/Container';
+import { Link } from '../components/ui/Link';
 
 const features = [
   {
@@ -8,28 +14,28 @@ const features = [
     description: 'Explore 50+ mineral presets with FGA-accurate crystallographic data and interactive visualizations.',
     href: '/gallery',
     icon: 'gallery',
-    color: 'crystal',
+    variant: 'crystal' as const,
   },
   {
     title: 'CDL Playground',
     description: 'Write Crystal Description Language code with live preview, syntax highlighting, and multi-format export.',
     href: '/playground',
     icon: 'code',
-    color: 'sapphire',
+    variant: 'sapphire' as const,
   },
   {
     title: 'Documentation',
     description: 'Complete API reference, CLI documentation, and CDL specification for developers.',
     href: '/docs',
     icon: 'docs',
-    color: 'emerald',
+    variant: 'emerald' as const,
   },
   {
     title: 'Learn',
     description: 'FGA curriculum-aligned content covering crystal systems, optical properties, and identification.',
     href: '/learn',
     icon: 'learn',
-    color: 'amethyst',
+    variant: 'amethyst' as const,
   },
 ];
 
@@ -42,6 +48,14 @@ const crystalSystems = [
   { name: 'Monoclinic', examples: 'Gypsum, Orthoclase' },
   { name: 'Triclinic', examples: 'Plagioclase, Kyanite' },
 ];
+
+// Icon paths for feature cards
+const iconPaths: Record<string, string> = {
+  gallery: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z',
+  code: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  docs: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  learn: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+};
 ---
 
 <BaseLayout title="Crystal Visualization">
@@ -52,7 +66,7 @@ const crystalSystems = [
       <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+    <Container size="xl" padding="lg" class="lg:py-32">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight">
@@ -64,15 +78,17 @@ const crystalSystems = [
             FGA-accurate crystallographic data with interactive 3D-style projections.
           </p>
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="/playground" class="btn-primary">
-              Open Playground
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
-            <a href="/gallery" class="btn-secondary">
-              Browse Gallery
-            </a>
+            <Button variant="primary" size="lg">
+              <a href="/playground" class="inline-flex items-center gap-2">
+                Open Playground
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </Button>
+            <Button variant="secondary" size="lg">
+              <a href="/gallery">Browse Gallery</a>
+            </Button>
           </div>
         </div>
 
@@ -111,60 +127,44 @@ const crystalSystems = [
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   </section>
 
   <!-- Features Section -->
   <section class="py-24 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-slate-900">Everything you need for crystal visualization</h2>
-        <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-          A comprehensive toolkit for FGA students, gemmologists, and crystal enthusiasts.
-        </p>
-      </div>
+    <Container size="xl" padding="none" class="px-4 sm:px-6 lg:px-8">
+      <SectionHeader
+        title="Everything you need for crystal visualization"
+        description="A comprehensive toolkit for FGA students, gemmologists, and crystal enthusiasts."
+        client:load
+      />
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((feature) => (
           <a href={feature.href} class="group">
-            <div class="card-hover h-full">
-              <div class={`w-12 h-12 rounded-lg bg-${feature.color === 'crystal' ? 'crystal' : feature.color === 'sapphire' ? 'blue' : feature.color === 'emerald' ? 'green' : 'purple'}-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                {feature.icon === 'gallery' && (
-                  <svg class="w-6 h-6 text-crystal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                )}
-                {feature.icon === 'code' && (
-                  <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
-                )}
-                {feature.icon === 'docs' && (
-                  <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                )}
-                {feature.icon === 'learn' && (
-                  <svg class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                )}
-              </div>
-              <h3 class="text-lg font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">{feature.title}</h3>
+            <Card hover padding="md" className="h-full">
+              <IconBox variant={feature.variant} className="mb-4 group-hover:scale-110">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[feature.icon]} />
+                </svg>
+              </IconBox>
+              <h3 class="text-lg font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
+                {feature.title}
+              </h3>
               <p class="mt-2 text-sm text-slate-600">{feature.description}</p>
-            </div>
+            </Card>
           </a>
         ))}
       </div>
-    </div>
+    </Container>
   </section>
 
   <!-- CDL Example Section -->
   <section class="py-24 bg-slate-50">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <Container size="xl" padding="none" class="px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <span class="badge-crystal mb-4">Crystal Description Language</span>
+          <Badge variant="crystal" className="mb-4">Crystal Description Language</Badge>
           <h2 class="text-3xl font-bold text-slate-900 mt-2">Describe crystals with precision</h2>
           <p class="mt-4 text-lg text-slate-600">
             CDL is a domain-specific language for defining crystal morphology.
@@ -181,15 +181,12 @@ const crystalSystems = [
             <p class="mt-3 text-sm text-slate-500">Truncated octahedron with cube faces</p>
           </div>
 
-          <a href="/playground" class="inline-flex items-center gap-2 mt-6 text-crystal-600 hover:text-crystal-700 font-medium">
+          <Link href="/playground" variant="primary" withArrow className="mt-6">
             Try it in the playground
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
+          </Link>
         </div>
 
-        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-lg">
+        <Card padding="lg" className="shadow-lg">
           <h3 class="font-semibold text-slate-900 mb-4">CDL Syntax Reference</h3>
           <div class="space-y-4 text-sm">
             <div class="flex items-start gap-3">
@@ -213,35 +210,34 @@ const crystalSystems = [
               <span class="text-slate-600">Combine multiple crystal forms</span>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
-    </div>
+    </Container>
   </section>
 
   <!-- Crystal Systems Section -->
   <section class="py-24 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-slate-900">Seven Crystal Systems</h2>
-        <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-          Comprehensive coverage of all crystal systems with accurate symmetry operations.
-        </p>
-      </div>
+    <Container size="xl" padding="none" class="px-4 sm:px-6 lg:px-8">
+      <SectionHeader
+        title="Seven Crystal Systems"
+        description="Comprehensive coverage of all crystal systems with accurate symmetry operations."
+        client:load
+      />
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {crystalSystems.map((system) => (
-          <div class="bg-slate-50 rounded-xl p-5 border border-slate-100 hover:border-crystal-200 hover:bg-crystal-50/50 transition-colors">
+          <Card hover padding="sm" className="p-5 bg-slate-50 border-slate-100 hover:bg-crystal-50/50">
             <h3 class="font-semibold text-slate-900">{system.name}</h3>
             <p class="mt-1 text-sm text-slate-500">{system.examples}</p>
-          </div>
+          </Card>
         ))}
       </div>
-    </div>
+    </Container>
   </section>
 
   <!-- CTA Section -->
   <section class="py-24 bg-gradient-to-br from-crystal-600 to-crystal-800">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+    <Container size="xl" padding="none" class="px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl font-bold text-white">Ready to visualize crystals?</h2>
       <p class="mt-4 text-lg text-crystal-100 max-w-2xl mx-auto">
         Start with the interactive playground or explore our gallery of 50+ mineral presets.
@@ -260,6 +256,6 @@ const crystalSystems = [
           View on GitHub
         </a>
       </div>
-    </div>
+    </Container>
   </section>
 </BaseLayout>

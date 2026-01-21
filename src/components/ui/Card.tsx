@@ -1,12 +1,20 @@
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import { cn } from './cn';
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {
+type CardElement = 'div' | 'article' | 'section' | 'a';
+
+type CardBaseProps = {
   children: ReactNode;
   hover?: boolean;
   padding?: 'none' | 'sm' | 'md' | 'lg';
-}
+  as?: CardElement;
+};
+
+type CardProps = CardBaseProps &
+  (
+    | ({ as?: 'div' | 'article' | 'section' } & HTMLAttributes<HTMLDivElement>)
+    | ({ as: 'a'; href: string } & AnchorHTMLAttributes<HTMLAnchorElement>)
+  );
 
 const paddingStyles = {
   none: '',
@@ -19,23 +27,22 @@ export function Card({
   children,
   hover = false,
   padding = 'md',
+  as: Tag = 'div',
   className,
   ...props
 }: CardProps) {
   return (
-    <div
-      className={twMerge(
-        clsx(
-          'rounded-xl border border-slate-200 bg-white shadow-sm',
-          paddingStyles[padding],
-          hover && 'transition-all hover:border-crystal-300 hover:shadow-md cursor-pointer',
-          className
-        )
+    <Tag
+      className={cn(
+        'rounded-xl border border-slate-200 bg-white shadow-sm',
+        paddingStyles[padding],
+        hover && 'transition-all hover:border-crystal-300 hover:shadow-md cursor-pointer',
+        className
       )}
-      {...props}
+      {...(props as any)}
     >
       {children}
-    </div>
+    </Tag>
   );
 }
 
@@ -45,7 +52,7 @@ interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 export function CardHeader({ children, className, ...props }: CardHeaderProps) {
   return (
-    <div className={twMerge('mb-4', className)} {...props}>
+    <div className={cn('mb-4', className)} {...props}>
       {children}
     </div>
   );
@@ -58,7 +65,7 @@ interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
 
 export function CardTitle({ children, as: Tag = 'h3', className, ...props }: CardTitleProps) {
   return (
-    <Tag className={twMerge('text-lg font-semibold text-slate-900', className)} {...props}>
+    <Tag className={cn('text-lg font-semibold text-slate-900', className)} {...props}>
       {children}
     </Tag>
   );
@@ -70,7 +77,7 @@ interface CardDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
 
 export function CardDescription({ children, className, ...props }: CardDescriptionProps) {
   return (
-    <p className={twMerge('text-sm text-slate-600', className)} {...props}>
+    <p className={cn('text-sm text-slate-600', className)} {...props}>
       {children}
     </p>
   );
@@ -82,7 +89,7 @@ interface CardContentProps extends HTMLAttributes<HTMLDivElement> {
 
 export function CardContent({ children, className, ...props }: CardContentProps) {
   return (
-    <div className={twMerge('', className)} {...props}>
+    <div className={cn(className)} {...props}>
       {children}
     </div>
   );
@@ -94,7 +101,7 @@ interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
 
 export function CardFooter({ children, className, ...props }: CardFooterProps) {
   return (
-    <div className={twMerge('mt-4 pt-4 border-t border-slate-100', className)} {...props}>
+    <div className={cn('mt-4 pt-4 border-t border-slate-100', className)} {...props}>
       {children}
     </div>
   );

@@ -1,4 +1,10 @@
 ---
+/**
+ * ComparisonBlock - Displays side-by-side comparisons
+ * Updated to use Astro UI Card component
+ */
+import Card from '../ui-astro/Card.astro';
+
 interface ComparisonItem {
   title: string;
   points: string[];
@@ -31,20 +37,28 @@ const textClasses = {
   warning: 'text-amber-800',
   danger: 'text-red-800',
 };
+
+const gridCols = items.length === 2
+  ? 'sm:grid-cols-2'
+  : items.length === 3
+    ? 'sm:grid-cols-3'
+    : 'sm:grid-cols-2 lg:grid-cols-4';
 ---
 
-<div class={`grid gap-6 my-8 ${items.length === 2 ? 'sm:grid-cols-2' : items.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
+<div class={`grid gap-6 my-8 ${gridCols}`}>
   {items.map(item => {
     const variant = item.variant || 'default';
     return (
-      <div class={`p-6 rounded-xl border ${variantClasses[variant]}`}>
+      <Card padding="md" class={variantClasses[variant]}>
         <h4 class={`font-semibold ${titleClasses[variant]}`}>{item.title}</h4>
-        <ul class={`mt-3 space-y-2 text-sm ${textClasses[variant]}`}>
-          {item.points.map(point => (
-            <li>{point}</li>
+        <ul class={`mt-3 text-sm ${textClasses[variant]}`}>
+          {item.points.map((point, i) => (
+            <li class={`py-2 ${i < item.points.length - 1 ? 'border-b border-current/10' : ''}`}>
+              {point}
+            </li>
           ))}
         </ul>
-      </div>
+      </Card>
     );
   })}
 </div>

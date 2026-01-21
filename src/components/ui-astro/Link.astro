@@ -1,0 +1,52 @@
+---
+/**
+ * Link - Astro version of the React Link component
+ * Styled anchor element with variants and arrow option.
+ */
+
+type LinkVariant = 'default' | 'primary' | 'muted';
+
+interface Props {
+  href: string;
+  variant?: LinkVariant;
+  withArrow?: boolean;
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = 'default', withArrow = false, external = false, class: className } = Astro.props;
+
+const variantStyles: Record<LinkVariant, string> = {
+  default: 'text-slate-700 hover:text-slate-900',
+  primary: 'text-crystal-600 hover:text-crystal-700',
+  muted: 'text-slate-500 hover:text-slate-700',
+};
+
+const classes = [
+  'inline-flex items-center gap-2 font-medium transition-colors',
+  withArrow && 'group',
+  variantStyles[variant],
+  className,
+].filter(Boolean).join(' ');
+
+const externalProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={href} class={classes} {...externalProps}>
+  <slot />
+  {withArrow && (
+    <svg
+      class="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 7l5 5m0 0l-5 5m5-5H6"
+      />
+    </svg>
+  )}
+</a>
