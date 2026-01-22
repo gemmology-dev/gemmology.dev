@@ -12,7 +12,8 @@ interface Props {
 
 const { mineral } = Astro.props;
 
-// Generate SVG path for the mineral
+// Use SVG from database if available, otherwise fallback to file path
+const hasSvgContent = mineral.model_svg && mineral.model_svg.trim().length > 0;
 const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}.svg`;
 
 // System colors
@@ -35,13 +36,20 @@ const systemColor = systemColors[mineral.system?.toLowerCase()] || 'bg-slate-100
       <!-- Crystal SVG Preview -->
       <div class="w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
         <div class="w-full h-full bg-white rounded-2xl shadow-lg p-4 flex items-center justify-center">
-          <img
-            src={svgPath}
-            alt={`${mineral.name} crystal structure`}
-            class="max-w-full max-h-full object-contain"
-            loading="eager"
-            onerror="this.src='/crystals/placeholder.svg'"
-          />
+          {hasSvgContent ? (
+            <div
+              class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+              set:html={mineral.model_svg}
+            />
+          ) : (
+            <img
+              src={svgPath}
+              alt={`${mineral.name} crystal structure`}
+              class="max-w-full max-h-full object-contain"
+              loading="eager"
+              onerror="this.src='/crystals/placeholder.svg'"
+            />
+          )}
         </div>
       </div>
 
