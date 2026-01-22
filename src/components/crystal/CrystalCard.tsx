@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Badge } from '../ui/Badge';
 import { clsx } from 'clsx';
+import { sanitizeSvg } from '../../lib/sanitize-svg';
 
 interface CrystalCardProps {
   name: string;
@@ -26,6 +27,9 @@ export function CrystalCard({
   className,
 }: CrystalCardProps) {
   const [imageError, setImageError] = useState(false);
+
+  // Sanitize SVG content to prevent XSS
+  const sanitizedSvg = useMemo(() => (svgContent ? sanitizeSvg(svgContent) : ''), [svgContent]);
 
   const systemColors: Record<string, 'crystal' | 'ruby' | 'sapphire' | 'emerald' | 'default'> = {
     cubic: 'crystal',
@@ -63,9 +67,9 @@ export function CrystalCard({
       <div className="aspect-square bg-slate-50 p-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle,#e2e8f0_1px,transparent_1px)] bg-[size:16px_16px] opacity-50" />
         <div className="relative w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform">
-          {svgContent ? (
+          {sanitizedSvg ? (
             <div
-              dangerouslySetInnerHTML={{ __html: svgContent }}
+              dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
               className="w-full h-full [&>svg]:w-full [&>svg]:h-full  [&_[id^=grid3d]]:hidden [&_[id^=pane3d]]:hidden [&_[id^=axis3d]]:hidden [&_[id^=line2d]]:hidden [&_[id^=xtick]]:hidden [&_[id^=text]]:hidden [&_[id^=Line3D]]:hidden"
             />
           ) : svgPath && !imageError ? (

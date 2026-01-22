@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import type { Mineral } from '../../lib/db';
 import { getModelSVG, getModelSTL, getModelGLTF } from '../../lib/db';
 import { mineralSlug } from '../../lib/slug';
+import { sanitizeSvg } from '../../lib/sanitize-svg';
 
 interface MineralModalProps {
   mineral: Mineral;
@@ -27,7 +28,8 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
       setIsLoadingSvg(true);
       try {
         const svg = await getModelSVG(mineral.id);
-        setSvgContent(svg);
+        // Sanitize SVG to prevent XSS
+        setSvgContent(svg ? sanitizeSvg(svg) : null);
       } catch (error) {
         console.error('Failed to load SVG from database:', error);
       } finally {

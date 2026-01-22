@@ -210,7 +210,7 @@ export function HeroCrystal3D({
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
           <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
-          <Center position={[0, 0.9, 0]}>
+          <Center position={[0, 0.15, 0]}>
             {gltfData ? (
               <RotatingCrystal gltfData={gltfData} rotationSpeed={rotationSpeed} scale={scale} />
             ) : (

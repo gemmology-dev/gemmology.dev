@@ -1,6 +1,7 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { ViewControls } from './ViewControls';
 import { clsx } from 'clsx';
+import { sanitizeSvg } from '../../lib/sanitize-svg';
 
 interface CrystalViewerProps {
   svgContent: string;
@@ -75,6 +76,9 @@ export function CrystalViewer({
     transformStyle: 'preserve-3d' as const,
   };
 
+  // Sanitize SVG content to prevent XSS
+  const sanitizedSvg = useMemo(() => sanitizeSvg(svgContent), [svgContent]);
+
   return (
     <div className={clsx('relative', className)}>
       <div
@@ -92,7 +96,7 @@ export function CrystalViewer({
         <div
           className="w-full h-full flex items-center justify-center"
           style={transformStyle}
-          dangerouslySetInnerHTML={{ __html: svgContent }}
+          dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
         />
       </div>
 

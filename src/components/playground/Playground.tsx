@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { CDLEditor } from './CDLEditor';
 import { CDLPreview } from './CDLPreview';
 import { PresetSelector } from './PresetSelector';
@@ -7,6 +7,7 @@ import { ViewControls } from '../crystal/ViewControls';
 import { Crystal3DViewer } from '../crystal/Crystal3DViewer';
 import { ViewerToggle } from '../crystal/ViewerToggle';
 import { useCDLValidation } from '../../hooks/useCDLValidation';
+import { sanitizeSvg } from '../../lib/sanitize-svg';
 
 // API URL from environment (defaults to production if not set)
 const API_URL = import.meta.env.PUBLIC_API_URL || 'https://api.gemmology.dev';
@@ -31,6 +32,9 @@ interface PlaygroundProps {
 }
 
 export function Playground({ initialCDL }: PlaygroundProps) {
+  // Track if we've initialized from URL to avoid overwriting user edits
+  const hasInitialized = useRef(false);
+
   const [cdlCode, setCdlCode] = useState(initialCDL || DEFAULT_CDL);
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
@@ -44,6 +48,20 @@ export function Playground({ initialCDL }: PlaygroundProps) {
   const [gltfLoading, setGltfLoading] = useState(false);
 
   const { validation, validate } = useCDLValidation({ debounceMs: 500 });
+
+  // Read CDL from URL on client-side mount (handles Astro hydration issues)
+  useEffect(() => {
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    // Check URL for CDL parameter on client side
+    // This is needed because Astro's SSG doesn't pass URL params to component props
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCDL = urlParams.get('cdl');
+    if (urlCDL) {
+      setCdlCode(urlCDL);
+    }
+  }, []);
 
   // Generate preview SVG using the render API
   const generatePreview = useCallback(async (code: string) => {
@@ -72,7 +90,8 @@ export function Playground({ initialCDL }: PlaygroundProps) {
       }
 
       const svg = await response.text();
-      setSvgContent(svg);
+      // Sanitize SVG to prevent XSS attacks
+      setSvgContent(sanitizeSvg(svg));
     } catch (err) {
       setPreviewError(err instanceof Error ? err.message : 'Failed to generate preview');
     } finally {
