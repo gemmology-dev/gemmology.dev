@@ -4,6 +4,7 @@
  */
 import type { Mineral } from '../../lib/db';
 import { mineralSlug } from '../../lib/slug';
+import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
 
 interface Props {
   minerals: Mineral[];
@@ -25,20 +26,29 @@ const { minerals, currentSystem } = Astro.props;
     {minerals.map((mineral) => {
       const slug = mineralSlug(mineral.name);
       const svgPath = `/crystals/${slug}.svg`;
+      const hasSvg = isValidSvg(mineral.model_svg);
+      const cleanedSvg = hasSvg ? cleanCrystalSvg(mineral.model_svg!) : '';
 
       return (
         <a
           href={`/minerals/${slug}`}
           class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
         >
-          <div class="w-12 h-12 flex-shrink-0 bg-slate-100 rounded-lg p-1">
-            <img
-              src={svgPath}
-              alt={mineral.name}
-              class="w-full h-full object-contain"
-              loading="lazy"
-              onerror="this.src='/crystals/placeholder.svg'"
-            />
+          <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden">
+            {hasSvg ? (
+              <div
+                class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                set:html={cleanedSvg}
+              />
+            ) : (
+              <img
+                src={svgPath}
+                alt={mineral.name}
+                class="w-full h-full object-contain"
+                loading="lazy"
+                onerror="this.src='/crystals/placeholder.svg'"
+              />
+            )}
           </div>
           <div class="flex-1 min-w-0">
             <div class="font-medium text-slate-900 truncate">{mineral.name}</div>

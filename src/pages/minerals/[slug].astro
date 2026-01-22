@@ -11,7 +11,7 @@ import CrystalStructureCard from '../../components/minerals/CrystalStructureCard
 import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
-import { getAllMinerals, getMineralWithModels, getMineralsBySystem, type Mineral } from '../../lib/db-server';
+import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, type Mineral } from '../../lib/db-server';
 import { mineralSlug } from '../../lib/slug';
 
 export async function getStaticPaths() {
@@ -39,8 +39,8 @@ interface Props {
 
 const { mineral } = Astro.props;
 
-// Get related minerals from the same crystal system
-const relatedMinerals = (await getMineralsBySystem(mineral.system))
+// Get related minerals from the same crystal system (with SVG for thumbnails)
+const relatedMinerals = (await getMineralsBySystemWithSvg(mineral.system))
   .filter((m) => m.id !== mineral.id)
   .slice(0, 6);
 
