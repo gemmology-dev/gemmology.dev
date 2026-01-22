@@ -11,13 +11,21 @@ import CrystalStructureCard from '../../components/minerals/CrystalStructureCard
 import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
-import { getAllMinerals, getMineralsBySystem, type Mineral } from '../../lib/db-server';
+import { getAllMinerals, getMineralWithModels, getMineralsBySystem, type Mineral } from '../../lib/db-server';
 import { mineralSlug } from '../../lib/slug';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
 
-  return minerals.map((mineral) => ({
+  // Fetch full mineral data with models for each mineral
+  const mineralsWithModels = await Promise.all(
+    minerals.map(async (mineral) => {
+      const fullMineral = await getMineralWithModels(mineral.name);
+      return fullMineral || mineral;
+    })
+  );
+
+  return mineralsWithModels.map((mineral) => ({
     params: {
       slug: mineralSlug(mineral.name),
     },

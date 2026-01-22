@@ -107,6 +107,28 @@ export async function getMineralByName(name: string): Promise<Mineral | null> {
   return mineral as Mineral;
 }
 
+export async function getMineralWithModels(name: string): Promise<Mineral | null> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
+            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
+            fracture, pleochroism, twin_law, phenomenon, note,
+            model_svg, model_gltf
+     FROM minerals WHERE name = ? LIMIT 1`,
+    [name]
+  );
+
+  if (result.length === 0 || result[0].values.length === 0) return null;
+
+  const columns = result[0].columns;
+  const row = result[0].values[0];
+  const mineral: Record<string, unknown> = {};
+  columns.forEach((col, i) => {
+    mineral[col] = row[i];
+  });
+  return mineral as Mineral;
+}
+
 export async function searchMinerals(query: string): Promise<Mineral[]> {
   const database = await getDB();
   const searchTerm = `%${query.toLowerCase()}%`;
