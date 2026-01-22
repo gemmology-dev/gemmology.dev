@@ -177,6 +177,28 @@ export async function getMineralsBySystem(system: string): Promise<Mineral[]> {
   });
 }
 
+export async function getMineralsBySystemWithSvg(system: string): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
+            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
+            fracture, pleochroism, twin_law, phenomenon, note, model_svg
+     FROM minerals WHERE LOWER(system) = ? ORDER BY name ASC`,
+    [system.toLowerCase()]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
 export async function getMineralsByCategory(_category: string): Promise<Mineral[]> {
   return getAllMinerals();
 }

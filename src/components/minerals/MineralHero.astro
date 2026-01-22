@@ -5,6 +5,7 @@
  */
 import type { Mineral } from '../../lib/db';
 import { Badge } from '../ui/Badge';
+import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
 
 interface Props {
   mineral: Mineral;
@@ -13,7 +14,8 @@ interface Props {
 const { mineral } = Astro.props;
 
 // Use SVG from database if available, otherwise fallback to file path
-const hasSvgContent = mineral.model_svg && mineral.model_svg.trim().length > 0;
+const hasSvgContent = isValidSvg(mineral.model_svg);
+const cleanedSvg = hasSvgContent ? cleanCrystalSvg(mineral.model_svg!) : '';
 const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}.svg`;
 
 // System colors
@@ -39,7 +41,7 @@ const systemColor = systemColors[mineral.system?.toLowerCase()] || 'bg-slate-100
           {hasSvgContent ? (
             <div
               class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
-              set:html={mineral.model_svg}
+              set:html={cleanedSvg}
             />
           ) : (
             <img
