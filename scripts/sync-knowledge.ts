@@ -5,7 +5,7 @@
  */
 
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -28,6 +28,44 @@ function error(message: string) {
   console.error(`[sync-knowledge] ERROR: ${message}`);
 }
 
+/**
+ * Recursively copy YAML files from source to destination,
+ * preserving subdirectory structure (e.g., equipment/, species/, origin/)
+ */
+function copyYamlFilesRecursive(sourceDir: string, destDir: string, relativePath: string = ''): number {
+  let count = 0;
+  const currentSource = join(sourceDir, relativePath);
+  const currentDest = join(destDir, relativePath);
+
+  if (!existsSync(currentSource)) {
+    return 0;
+  }
+
+  const entries = readdirSync(currentSource);
+
+  for (const entry of entries) {
+    const sourcePath = join(currentSource, entry);
+    const destPath = join(currentDest, entry);
+    const stat = statSync(sourcePath);
+
+    if (stat.isDirectory()) {
+      // Recurse into subdirectory
+      count += copyYamlFilesRecursive(sourceDir, destDir, join(relativePath, entry));
+    } else if (entry.endsWith('.yaml') || entry.endsWith('.yml')) {
+      // Copy YAML file
+      if (!existsSync(currentDest)) {
+        mkdirSync(currentDest, { recursive: true });
+      }
+      cpSync(sourcePath, destPath);
+      const displayPath = relativePath ? `${relativePath}/${entry}` : entry;
+      log(`  Copied: ${displayPath}`);
+      count++;
+    }
+  }
+
+  return count;
+}
+
 function syncFromLocal(): boolean {
   const localSource = join(LOCAL_KNOWLEDGE_DIR, 'docs', 'learn');
 
@@ -43,20 +81,15 @@ function syncFromLocal(): boolean {
     mkdirSync(CONTENT_DEST, { recursive: true });
   }
 
-  // Copy YAML files
-  const files = readdirSync(localSource).filter(f => f.endsWith('.yaml') || f.endsWith('.yml'));
+  // Copy YAML files recursively (handles flat files and subdirectories)
+  const fileCount = copyYamlFilesRecursive(localSource, CONTENT_DEST);
 
-  if (files.length === 0) {
+  if (fileCount === 0) {
     log('No YAML files found in local source');
     return false;
   }
 
-  for (const file of files) {
-    cpSync(join(localSource, file), join(CONTENT_DEST, file));
-    log(`  Copied: ${file}`);
-  }
-
-  log(`Synced ${files.length} files from local gemmology-knowledge`);
+  log(`Synced ${fileCount} files from local gemmology-knowledge`);
   return true;
 }
 
@@ -95,20 +128,15 @@ function syncFromGit(): boolean {
     mkdirSync(CONTENT_DEST, { recursive: true });
   }
 
-  // Copy YAML files
-  const files = readdirSync(CONTENT_SOURCE).filter(f => f.endsWith('.yaml') || f.endsWith('.yml'));
+  // Copy YAML files recursively (handles flat files and subdirectories)
+  const fileCount = copyYamlFilesRecursive(CONTENT_SOURCE, CONTENT_DEST);
 
-  if (files.length === 0) {
+  if (fileCount === 0) {
     log('No YAML files found in source');
     return false;
   }
 
-  for (const file of files) {
-    cpSync(join(CONTENT_SOURCE, file), join(CONTENT_DEST, file));
-    log(`  Copied: ${file}`);
-  }
-
-  log(`Synced ${files.length} files from gemmology-knowledge`);
+  log(`Synced ${fileCount} files from gemmology-knowledge`);
   return true;
 }
 

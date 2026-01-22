@@ -75,7 +75,16 @@ const learnCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     order: z.number(),
-    category: z.enum(['fundamentals', 'identification', 'advanced']),
+    category: z.enum([
+      'fundamentals',  // Core science: crystallography, properties, chemistry
+      'equipment',     // All testing instruments & techniques
+      'species',       // Gem families and individual species
+      'identification', // Identification methods: inclusions, synthetics, treatments
+      'phenomena',     // Optical phenomena (star, cat's eye, etc.)
+      'origin',        // Geographic origin determination
+      'market',        // Grading, valuation, professional practice
+      'care',          // Durability, cleaning, storage, settings
+    ]),
     difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
     icon: z.string().optional(),
     related: z.array(z.string()).optional(),

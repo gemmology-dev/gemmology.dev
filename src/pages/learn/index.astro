@@ -19,15 +19,19 @@ const topics = learnEntries
     difficulty: entry.data.difficulty as 'beginner' | 'intermediate' | 'advanced' | undefined,
   }));
 
-// Category styles using existing IconBox variants
-type IconBoxVariant = 'emerald' | 'sapphire' | 'amethyst' | 'ruby' | 'topaz';
-const categoryStyles: { variant: IconBoxVariant; icon: string }[] = [
-  { variant: 'emerald', icon: 'cube' },
-  { variant: 'sapphire', icon: 'search' },
-  { variant: 'amethyst', icon: 'sparkles' },
-  { variant: 'ruby', icon: 'gem' },
-  { variant: 'topaz', icon: 'star' },
-];
+// Category styles using existing IconBox variants - mapped to 8 categories
+type IconBoxVariant = 'emerald' | 'sapphire' | 'amethyst' | 'ruby' | 'topaz' | 'crystal';
+const categoryStyleMap: Record<string, { variant: IconBoxVariant; icon: string }> = {
+  fundamentals: { variant: 'emerald', icon: 'cube' },
+  equipment: { variant: 'sapphire', icon: 'microscope' },
+  species: { variant: 'ruby', icon: 'gem' },
+  identification: { variant: 'amethyst', icon: 'search' },
+  phenomena: { variant: 'topaz', icon: 'sparkles' },
+  origin: { variant: 'crystal', icon: 'map' },
+  market: { variant: 'emerald', icon: 'scale' },
+  care: { variant: 'sapphire', icon: 'shield' },
+};
+const defaultStyle: { variant: IconBoxVariant; icon: string } = { variant: 'crystal', icon: 'cube' };
 
 // Helper to format category name for display
 function formatCategoryName(category: string): string {
@@ -48,7 +52,7 @@ function generateCategoryDescription(categoryTopics: typeof topics): string {
 
 // Automatically discover categories from the content and group topics
 const categorySet = new Set(topics.map(t => t.category).filter(Boolean));
-const categoryOrder = ['fundamentals', 'identification', 'advanced']; // Preferred order
+const categoryOrder = ['fundamentals', 'equipment', 'species', 'identification', 'phenomena', 'origin', 'market', 'care'];
 const sortedCategories = [...categorySet].sort((a, b) => {
   const aIndex = categoryOrder.indexOf(a);
   const bIndex = categoryOrder.indexOf(b);
@@ -61,8 +65,8 @@ const sortedCategories = [...categorySet].sort((a, b) => {
 // Difficulty sort order
 const difficultyOrder = ['beginner', 'intermediate', 'advanced'];
 
-const groupedTopics = sortedCategories.map((category, index) => {
-  const style = categoryStyles[index % categoryStyles.length];
+const groupedTopics = sortedCategories.map((category) => {
+  const style = categoryStyleMap[category] || defaultStyle;
   const categoryTopics = topics
     .filter(t => t.category === category)
     .sort((a, b) => {
@@ -93,6 +97,9 @@ const iconPaths: Record<string, string> = {
   star: 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z',
   shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
   document: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  microscope: 'M9 3h6m-6 0v6m6-6v6m-3 0v3m0 0a6 6 0 100 12 6 6 0 000-12zm0 0V9m-3 12h6',
+  map: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7',
+  book: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
 };
 ---
 
