@@ -22,7 +22,7 @@ const { entry, allEntries } = Astro.props;
 const { data } = entry;
 
 // Build navigation - sort by category, then difficulty (matching index page)
-const categoryOrder = ['fundamentals', 'identification', 'advanced'];
+const categoryOrder = ['fundamentals', 'equipment', 'species', 'identification', 'phenomena', 'origin', 'market', 'care'];
 const difficultyOrder = ['beginner', 'intermediate', 'advanced'];
 
 const sorted = [...allEntries].sort((a, b) => {
