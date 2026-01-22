@@ -36,7 +36,7 @@ export function Container({
   return (
     <Tag
       className={cn(
-        'mx-auto',
+        'w-full mx-auto',
         sizeStyles[size],
         paddingStyles[padding],
         className
