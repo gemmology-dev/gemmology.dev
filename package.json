@@ -2,6 +2,7 @@
   "name": "gemmology.dev",
   "type": "module",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "sync": "tsx scripts/sync-knowledge.ts",
     "dev": "npm run sync && astro dev",

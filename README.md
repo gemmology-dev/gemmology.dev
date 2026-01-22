@@ -1,5 +1,7 @@
 # gemmology.dev
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Crystal structure visualization and gemmological reference for FGA students and professionals.
 
 **Live site**: [https://gemmology.dev](https://gemmology.dev)
@@ -88,4 +90,4 @@ Required secrets in GitHub:
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) for details.
