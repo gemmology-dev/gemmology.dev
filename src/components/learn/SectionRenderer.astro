@@ -7,6 +7,7 @@ import CrystalDemo from './CrystalDemo.astro';
 import ComparisonBlock from './ComparisonBlock.astro';
 import CrystalSystemCard from './CrystalSystemCard.astro';
 import { detectCrystalSystem, type CrystalSystem } from './icons';
+import { addMineralLinks } from '../../lib/mineral-linker';
 
 interface Item {
   name: string;
@@ -71,21 +72,38 @@ marked.setOptions({
   gfm: true,
 });
 
-// Helper to render markdown synchronously
-const renderMarkdown = (text: string) => marked.parse(text);
+// Helper to render markdown with mineral auto-linking
+const renderMarkdown = async (text: string) => {
+  const html = await marked.parse(text);
+  return addMineralLinks(html);
+};
+
+// Pre-render all markdown content with mineral links
+const sectionContent = section.content ? await renderMarkdown(section.content) : null;
+const calloutContent = section.callout?.text ? await renderMarkdown(section.callout.text) : null;
+
+// Pre-render subsection content
+const subsectionContent = section.subsections
+  ? await Promise.all(
+      section.subsections.map(async (sub) => ({
+        ...sub,
+        renderedContent: sub.content ? await renderMarkdown(sub.content) : null,
+      }))
+    )
+  : null;
 ---
 
 <section id={sectionId} class="mb-16">
   <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200">{section.title}</h2>
 
-  {section.callout && (
+  {section.callout && calloutContent && (
     <Callout variant={section.callout.type} title={section.callout.title}>
-      <Fragment set:html={renderMarkdown(section.callout.text)} />
+      <Fragment set:html={calloutContent} />
     </Callout>
   )}
 
-  {section.content && (
-    <div class="prose prose-slate max-w-none mb-6" set:html={renderMarkdown(section.content)} />
+  {sectionContent && (
+    <div class="prose prose-slate max-w-none mb-6" set:html={sectionContent} />
   )}
 
   {section.crystal && (
@@ -112,7 +130,7 @@ const renderMarkdown = (text: string) => marked.parse(text);
     <ComparisonBlock items={section.comparison.items} />
   )}
 
-  {section.subsections && section.subsections.map(sub => {
+  {subsectionContent && subsectionContent.map(sub => {
     // Check if this subsection is a crystal system
     const detectedSystem = sub.system || detectCrystalSystem(sub.title);
 
@@ -135,8 +153,8 @@ const renderMarkdown = (text: string) => marked.parse(text);
             <h3 class="text-lg font-semibold text-slate-800">{sub.title}</h3>
           </div>
           <div class="p-4">
-            {sub.content && (
-              <div class="prose prose-slate max-w-none mb-4" set:html={renderMarkdown(sub.content)} />
+            {sub.renderedContent && (
+              <div class="prose prose-slate max-w-none mb-4" set:html={sub.renderedContent} />
             )}
             {sub.items && <PropertyList items={sub.items} />}
             {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}

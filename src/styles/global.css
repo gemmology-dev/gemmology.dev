@@ -212,3 +212,12 @@
 .prose tr:last-child td {
   @apply border-b-0;
 }
+
+/* Mineral auto-links in prose content */
+.prose a.mineral-link {
+  @apply text-crystal-600 no-underline border-b border-dotted border-crystal-400 hover:border-solid hover:border-crystal-600 transition-colors;
+}
+
+.prose a.mineral-link:hover {
+  @apply text-crystal-700;
+}
