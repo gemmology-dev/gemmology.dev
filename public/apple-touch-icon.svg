@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="#e0f2fe"/>
+
+  <!-- Crystal hexagon -->
+  <g transform="translate(30, 30)">
+    <path d="M60 0L120 30V90L60 120L0 90V30L60 0Z" stroke="#0ea5e9" stroke-width="4" fill="#bae6fd"/>
+    <path d="M60 0L60 120" stroke="#0ea5e9" stroke-width="2.5" opacity="0.6"/>
+    <path d="M0 30L120 90" stroke="#0ea5e9" stroke-width="2.5" opacity="0.6"/>
+    <path d="M120 30L0 90" stroke="#0ea5e9" stroke-width="2.5" opacity="0.6"/>
+  </g>
+</svg>
