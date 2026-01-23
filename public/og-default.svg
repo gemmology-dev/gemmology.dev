@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff"/>
+      <stop offset="100%" style="stop-color:#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="crystal-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8"/>
+      <stop offset="100%" style="stop-color:#0ea5e9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="200" fill="#bae6fd" opacity="0.3"/>
+  <circle cx="1100" cy="530" r="300" fill="#bae6fd" opacity="0.2"/>
+
+  <!-- Main crystal (scaled hexagon) -->
+  <g transform="translate(250, 165)">
+    <path d="M150 0L300 75V225L150 300L0 225V75L150 0Z" stroke="#0ea5e9" stroke-width="4" fill="#e0f2fe"/>
+    <path d="M150 0L150 300" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+    <path d="M0 75L300 225" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+    <path d="M300 75L0 225" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- Text content -->
+  <text x="650" y="260" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="700" fill="#0f172a">gemmology.dev</text>
+  <text x="650" y="340" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#64748b">Crystal Structure Visualization</text>
+  <text x="650" y="380" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#64748b">&amp; Gemmological Reference</text>
+
+  <!-- CDL code snippet -->
+  <rect x="650" y="420" width="400" height="50" rx="8" fill="#1e293b"/>
+  <text x="670" y="452" font-family="JetBrains Mono, monospace" font-size="18" fill="#94a3b8">
+    <tspan fill="#67e8f9">cubic</tspan><tspan fill="#94a3b8">[m3m]:{</tspan><tspan fill="#86efac">111</tspan><tspan fill="#94a3b8">}</tspan>
+  </text>
+</svg>

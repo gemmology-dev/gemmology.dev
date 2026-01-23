@@ -1,0 +1,201 @@
+---
+/**
+ * LearnMoreSection - Cross-links mineral pages to related learn content
+ * Improves topical authority and user navigation
+ */
+import { Card, Badge } from '../../components/ui-astro';
+import type { Mineral } from '../../lib/db';
+
+interface Props {
+  mineral: Mineral;
+}
+
+const { mineral } = Astro.props;
+
+// Mineral name to species mapping
+const mineralToSpecies: Record<string, string> = {
+  // Corundum varieties
+  'ruby': 'species/corundum',
+  'sapphire': 'species/corundum',
+  'padparadscha': 'species/corundum',
+
+  // Beryl varieties
+  'emerald': 'species/beryl',
+  'aquamarine': 'species/beryl',
+  'morganite': 'species/beryl',
+  'heliodor': 'species/beryl',
+  'goshenite': 'species/beryl',
+
+  // Quartz varieties
+  'amethyst': 'species/quartz',
+  'citrine': 'species/quartz',
+  'smoky quartz': 'species/quartz',
+  'rose quartz': 'species/quartz',
+  'rock crystal': 'species/quartz',
+  'chalcedony': 'species/quartz',
+  'agate': 'species/quartz',
+  'jasper': 'species/quartz',
+  'carnelian': 'species/quartz',
+  'chrysoprase': 'species/quartz',
+  "tiger's eye": 'species/quartz',
+
+  // Garnet varieties
+  'pyrope': 'species/garnet',
+  'almandine': 'species/garnet',
+  'spessartine': 'species/garnet',
+  'grossular': 'species/garnet',
+  'andradite': 'species/garnet',
+  'uvarovite': 'species/garnet',
+  'tsavorite': 'species/garnet',
+  'demantoid': 'species/garnet',
+  'rhodolite': 'species/garnet',
+  'hessonite': 'species/garnet',
+  'mali garnet': 'species/garnet',
+
+  // Tourmaline varieties
+  'tourmaline': 'species/tourmaline',
+  'rubellite': 'species/tourmaline',
+  'indicolite': 'species/tourmaline',
+  'paraiba': 'species/tourmaline',
+  'watermelon tourmaline': 'species/tourmaline',
+  'chrome tourmaline': 'species/tourmaline',
+
+  // Feldspar varieties
+  'orthoclase': 'species/feldspar',
+  'moonstone': 'species/feldspar',
+  'labradorite': 'species/feldspar',
+  'amazonite': 'species/feldspar',
+  'sunstone': 'species/feldspar',
+  'andesine': 'species/feldspar',
+
+  // Chrysoberyl varieties
+  'chrysoberyl': 'species/chrysoberyl',
+  'alexandrite': 'species/chrysoberyl',
+  "cat's eye chrysoberyl": 'species/chrysoberyl',
+
+  // Olivine
+  'peridot': 'species/olivine',
+  'olivine': 'species/olivine',
+
+  // Direct species matches
+  'diamond': 'species/diamond',
+  'spinel': 'species/spinel',
+  'topaz': 'species/topaz',
+  'zircon': 'species/zircon',
+  'opal': 'species/opal',
+  'tanzanite': 'species/zoisite',
+  'pearl': 'species/pearl',
+  'coral': 'species/coral',
+  'amber': 'species/amber',
+  'jet': 'species/jet',
+  'jadeite': 'species/pyroxene',
+  'nephrite': 'species/amphibole',
+};
+
+// Crystal system to learn content
+const systemToLearn: Record<string, string[]> = {
+  'cubic': ['fundamentals/crystal-systems'],
+  'hexagonal': ['fundamentals/crystal-systems'],
+  'trigonal': ['fundamentals/crystal-systems'],
+  'tetragonal': ['fundamentals/crystal-systems'],
+  'orthorhombic': ['fundamentals/crystal-systems'],
+  'monoclinic': ['fundamentals/crystal-systems'],
+  'triclinic': ['fundamentals/crystal-systems'],
+  'amorphous': ['fundamentals/crystal-systems'],
+};
+
+// Minerals with notable phenomena
+const phenomenaMinerals: Record<string, string[]> = {
+  'moonstone': ['phenomena/adularescence'],
+  'labradorite': ['phenomena/labradorescence'],
+  'opal': ['phenomena/play-of-colour'],
+  'alexandrite': ['phenomena/colour-change'],
+  'star ruby': ['phenomena/asterism'],
+  'star sapphire': ['phenomena/asterism'],
+  "cat's eye chrysoberyl": ['phenomena/chatoyancy'],
+  "tiger's eye": ['phenomena/chatoyancy'],
+  'sunstone': ['phenomena/aventurescence'],
+};
+
+// Build the related learn content links
+const relatedLinks: Array<{ slug: string; label: string; category: string }> = [];
+const mineralNameLower = mineral.name.toLowerCase();
+
+// Add species link
+if (mineralToSpecies[mineralNameLower]) {
+  const speciesSlug = mineralToSpecies[mineralNameLower];
+  const speciesName = speciesSlug.replace('species/', '').charAt(0).toUpperCase() +
+                      speciesSlug.replace('species/', '').slice(1);
+  relatedLinks.push({
+    slug: speciesSlug,
+    label: speciesName,
+    category: 'Species'
+  });
+}
+
+// Add crystal system link
+if (mineral.system && systemToLearn[mineral.system.toLowerCase()]) {
+  systemToLearn[mineral.system.toLowerCase()].forEach(slug => {
+    relatedLinks.push({
+      slug,
+      label: 'Crystal Systems',
+      category: 'Fundamentals'
+    });
+  });
+}
+
+// Add phenomena links
+if (phenomenaMinerals[mineralNameLower]) {
+  phenomenaMinerals[mineralNameLower].forEach(slug => {
+    const phenomenaName = slug.replace('phenomena/', '')
+      .split('-')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    relatedLinks.push({
+      slug,
+      label: phenomenaName,
+      category: 'Phenomena'
+    });
+  });
+}
+
+// Always add optical properties for gemstones with RI
+if (mineral.ri) {
+  relatedLinks.push({
+    slug: 'fundamentals/optical-properties',
+    label: 'Optical Properties',
+    category: 'Fundamentals'
+  });
+}
+
+// Add physical properties if hardness data exists
+if (mineral.hardness) {
+  relatedLinks.push({
+    slug: 'fundamentals/physical-properties',
+    label: 'Physical Properties',
+    category: 'Fundamentals'
+  });
+}
+
+// Dedupe by slug
+const uniqueLinks = relatedLinks.filter((link, index, self) =>
+  index === self.findIndex(l => l.slug === link.slug)
+).slice(0, 6); // Limit to 6 links
+---
+
+{uniqueLinks.length > 0 && (
+  <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-lg font-semibold text-slate-900 mb-4">Learn More</h3>
+    <div class="flex flex-wrap gap-3">
+      {uniqueLinks.map(link => (
+        <a
+          href={`/learn/${link.slug}`}
+          class="group flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-slate-50 hover:border-crystal-300 hover:bg-crystal-50 transition-colors"
+        >
+          <span class="text-xs font-medium text-slate-500 uppercase">{link.category}</span>
+          <span class="text-sm font-medium text-slate-700 group-hover:text-crystal-700">{link.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+)}

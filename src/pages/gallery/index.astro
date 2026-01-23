@@ -6,11 +6,15 @@ import { Container, SectionHeader } from '../../components/ui-astro';
 const url = Astro.url;
 const initialSystem = url.searchParams.get('system') || '';
 const initialSearch = url.searchParams.get('search') || '';
+
+// Always point to base gallery URL as canonical to prevent duplicate content from filters
+const canonicalURL = 'https://gemmology.dev/gallery';
 ---
 
 <BaseLayout
   title="Crystal Gallery"
   description="Explore 50+ mineral presets with FGA-accurate crystallographic data and interactive visualizations."
+  canonical={canonicalURL}
 >
   <div class="bg-gradient-to-b from-crystal-50 to-white">
     <Container size="xl" padding="md">

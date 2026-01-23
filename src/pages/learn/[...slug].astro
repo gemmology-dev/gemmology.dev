@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Breadcrumb, PageNav } from '../../components/docs';
 import { SectionRenderer } from '../../components/learn';
 import { Container, Card, Badge } from '../../components/ui-astro';
+import LearnSchema from '../../components/seo/LearnSchema.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('learn');
@@ -114,6 +115,15 @@ breadcrumbItems.push({ label: data.title });
 ---
 
 <BaseLayout title={data.title} description={data.description}>
+  <LearnSchema
+    slot="head"
+    title={data.title}
+    description={data.description}
+    category={data.category}
+    subcategory={data.subcategory}
+    difficulty={data.difficulty}
+    slug={entry.id}
+  />
   <Container size="md" padding="md">
     <Breadcrumb items={breadcrumbItems} />
 

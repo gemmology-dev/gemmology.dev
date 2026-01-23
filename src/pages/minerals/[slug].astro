@@ -10,6 +10,7 @@ import PropertyTable from '../../components/minerals/PropertyTable.astro';
 import CrystalStructureCard from '../../components/minerals/CrystalStructureCard.astro';
 import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
+import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, type Mineral } from '../../lib/db-server';
 import { mineralSlug } from '../../lib/slug';
@@ -103,6 +104,11 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineralSlug(mineral.name)
             <RelatedMinerals minerals={relatedMinerals} currentSystem={mineral.system} />
           )}
         </div>
+      </div>
+
+      <!-- Learn More Section -->
+      <div class="mt-12">
+        <LearnMoreSection mineral={mineral} />
       </div>
     </div>
   </main>

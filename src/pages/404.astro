@@ -1,0 +1,42 @@
+---
+/**
+ * 404 Not Found Page
+ * Provides helpful navigation when users land on non-existent pages
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Container, Button, Card } from '../components/ui-astro';
+
+const popularPages = [
+  { title: 'Crystal Gallery', href: '/gallery', description: 'Explore 94+ mineral crystal structures' },
+  { title: 'Learn Gemmology', href: '/learn', description: 'FGA curriculum and educational content' },
+  { title: 'CDL Playground', href: '/playground', description: 'Interactive crystal visualization' },
+  { title: 'Documentation', href: '/docs', description: 'API reference and guides' },
+];
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+  <Container size="md" padding="lg" class="min-h-[60vh] flex flex-col items-center justify-center text-center">
+    <h1 class="text-6xl font-bold text-slate-300 mb-4">404</h1>
+    <h2 class="text-2xl font-semibold text-slate-900 mb-4">Page Not Found</h2>
+    <p class="text-slate-600 mb-8 max-w-md">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+
+    <div class="flex gap-4 mb-12">
+      <Button href="/" variant="primary">Go Home</Button>
+      <Button href="/gallery" variant="secondary">Browse Gallery</Button>
+    </div>
+
+    <div class="w-full max-w-2xl">
+      <h3 class="text-lg font-semibold text-slate-900 mb-4">Popular Pages</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {popularPages.map(page => (
+          <Card href={page.href} hover padding="md">
+            <h4 class="font-medium text-slate-900">{page.title}</h4>
+            <p class="text-sm text-slate-600 mt-1">{page.description}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </Container>
+</BaseLayout>
