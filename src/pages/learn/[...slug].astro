@@ -21,7 +21,15 @@ interface Props {
 const { entry, allEntries } = Astro.props;
 const { data } = entry;
 
-// Build navigation - sort by category, then difficulty (matching index page)
+// Helper to format category/subcategory names for display
+function formatCategoryName(name: string): string {
+  return name
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+// Build navigation - sort by category, then subcategory, then order/difficulty
 const categoryOrder = ['fundamentals', 'equipment', 'species', 'identification', 'phenomena', 'origin', 'market', 'care'];
 const difficultyOrder = ['beginner', 'intermediate', 'advanced'];
 
@@ -33,26 +41,81 @@ const sorted = [...allEntries].sort((a, b) => {
   const bCat = bCatIndex !== -1 ? bCatIndex : categoryOrder.length;
   if (aCat !== bCat) return aCat - bCat;
 
-  // Then sort by difficulty within category
+  // Then group by subcategory (items without subcategory come first)
+  const aSubcat = a.data.subcategory || '';
+  const bSubcat = b.data.subcategory || '';
+  if (aSubcat !== bSubcat) {
+    if (!aSubcat) return -1;  // No subcategory comes first
+    if (!bSubcat) return 1;
+    return aSubcat.localeCompare(bSubcat);
+  }
+
+  // Within same subcategory, sort by order first
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+
+  // Then by difficulty as tiebreaker
   const aDiffIndex = difficultyOrder.indexOf(a.data.difficulty || 'intermediate');
   const bDiffIndex = difficultyOrder.indexOf(b.data.difficulty || 'intermediate');
-  if (aDiffIndex !== bDiffIndex) return aDiffIndex - bDiffIndex;
-
-  // Finally by order as tiebreaker
-  return a.data.order - b.data.order;
+  return aDiffIndex - bDiffIndex;
 });
 
+// For navigation: prefer staying within same subcategory
 const currentIndex = sorted.findIndex(e => e.id === entry.id);
-const prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
-const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const currentSubcategory = data.subcategory;
+
+// Find prev/next within subcategory context
+let prev = null;
+let next = null;
+
+if (currentSubcategory) {
+  // Filter to same subcategory for navigation
+  const subcatEntries = sorted.filter(e => e.data.subcategory === currentSubcategory);
+  const subcatIndex = subcatEntries.findIndex(e => e.id === entry.id);
+
+  if (subcatIndex > 0) {
+    prev = subcatEntries[subcatIndex - 1];
+  } else if (subcatIndex === 0) {
+    // At start of subcategory - link back to category or previous entry
+    prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+  }
+
+  if (subcatIndex < subcatEntries.length - 1) {
+    next = subcatEntries[subcatIndex + 1];
+  } else if (subcatIndex === subcatEntries.length - 1) {
+    // At end of subcategory - link to next entry outside subcategory
+    next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+  }
+} else {
+  // No subcategory - use standard navigation
+  prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+  next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+}
+
+// Build breadcrumb items
+const breadcrumbItems: Array<{ label: string; href?: string }> = [
+  { label: 'Learn', href: '/learn' },
+  { label: formatCategoryName(data.category), href: `/learn#${data.category}` },
+];
+
+if (data.subcategory) {
+  // Find the first/overview entry in this subcategory for the link
+  const subcatOverview = sorted.find(e =>
+    e.data.category === data.category &&
+    e.data.subcategory === data.subcategory &&
+    e.data.order === 1
+  );
+  breadcrumbItems.push({
+    label: formatCategoryName(data.subcategory),
+    href: subcatOverview ? `/learn/${subcatOverview.id}` : undefined,
+  });
+}
+
+breadcrumbItems.push({ label: data.title });
 ---
 
 <BaseLayout title={data.title} description={data.description}>
   <Container size="md" padding="md">
-    <Breadcrumb items={[
-      { label: 'Learn', href: '/learn' },
-      { label: data.title }
-    ]} />
+    <Breadcrumb items={breadcrumbItems} />
 
     <article>
       <header class="mb-10">

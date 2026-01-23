@@ -85,6 +85,7 @@ const learnCollection = defineCollection({
       'market',        // Grading, valuation, professional practice
       'care',          // Durability, cleaning, storage, settings
     ]),
+    subcategory: z.string().optional(),  // Groups related files (e.g., "inclusions")
     difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
     icon: z.string().optional(),
     related: z.array(z.string()).optional(),
