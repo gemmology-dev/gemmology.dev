@@ -16,6 +16,7 @@ const topics = learnEntries
     href: `/learn/${entry.id}`,
     icon: entry.data.icon || 'cube',
     category: entry.data.category,
+    subcategory: entry.data.subcategory,
     difficulty: entry.data.difficulty as 'beginner' | 'intermediate' | 'advanced' | undefined,
   }));
 
@@ -65,24 +66,70 @@ const sortedCategories = [...categorySet].sort((a, b) => {
 // Difficulty sort order
 const difficultyOrder = ['beginner', 'intermediate', 'advanced'];
 
-const groupedTopics = sortedCategories.map((category) => {
+// Type for subcategory groups
+interface SubcategoryGroup {
+  key: string;
+  title: string;
+  topics: typeof topics;
+}
+
+// Type for category groups
+interface CategoryGroup {
+  key: string;
+  title: string;
+  description: string;
+  variant: IconBoxVariant;
+  icon: string;
+  directTopics: typeof topics;          // Topics without subcategory
+  subcategories: SubcategoryGroup[];    // Grouped subcategory topics
+}
+
+const groupedTopics: CategoryGroup[] = sortedCategories.map((category) => {
   const style = categoryStyleMap[category] || defaultStyle;
-  const categoryTopics = topics
-    .filter(t => t.category === category)
+  const categoryTopics = topics.filter(t => t.category === category);
+
+  // Separate direct topics from subcategory topics
+  const directTopics = categoryTopics
+    .filter(t => !t.subcategory)
     .sort((a, b) => {
       const aIndex = difficultyOrder.indexOf(a.difficulty || 'intermediate');
       const bIndex = difficultyOrder.indexOf(b.difficulty || 'intermediate');
       return aIndex - bIndex;
     });
+
+  // Group subcategory topics
+  const subcategorySet = new Set(
+    categoryTopics.filter(t => t.subcategory).map(t => t.subcategory!)
+  );
+  const subcategories: SubcategoryGroup[] = [...subcategorySet].map(subcategory => {
+    const subcatTopics = categoryTopics
+      .filter(t => t.subcategory === subcategory)
+      .sort((a, b) => {
+        // Sort by order within subcategory
+        const orderDiff = (learnEntries.find(e => e.id === a.href.replace('/learn/', ''))?.data.order ?? 0) -
+                          (learnEntries.find(e => e.id === b.href.replace('/learn/', ''))?.data.order ?? 0);
+        if (orderDiff !== 0) return orderDiff;
+        const aIndex = difficultyOrder.indexOf(a.difficulty || 'intermediate');
+        const bIndex = difficultyOrder.indexOf(b.difficulty || 'intermediate');
+        return aIndex - bIndex;
+      });
+    return {
+      key: subcategory,
+      title: formatCategoryName(subcategory),
+      topics: subcatTopics,
+    };
+  });
+
   return {
     key: category,
     title: formatCategoryName(category),
     description: generateCategoryDescription(categoryTopics),
     variant: style.variant,
     icon: style.icon,
-    topics: categoryTopics,
+    directTopics,
+    subcategories,
   };
-}).filter(group => group.topics.length > 0);
+}).filter(group => group.directTopics.length > 0 || group.subcategories.length > 0);
 
 // Icon SVG paths (shared with topic cards)
 const iconPaths: Record<string, string> = {
@@ -138,37 +185,83 @@ const iconPaths: Record<string, string> = {
                 </div>
               </div>
 
-              <!-- Topics Grid -->
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {group.topics.map((topic, topicIndex) => (
-                  <a
-                    href={topic.href}
-                    class="group animate-slide-up"
-                    style={`animation-delay: ${groupIndex * 100 + topicIndex * 50}ms`}
-                  >
-                    <Card hover padding="md" className="h-full">
-                      <div class="flex items-start gap-3">
-                        <IconBox variant={group.variant} size="sm" className="shrink-0 group-hover:scale-105 transition-transform">
-                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[topic.icon] || iconPaths.cube} />
-                          </svg>
-                        </IconBox>
-                        <div class="flex-1 min-w-0">
-                          <CardTitle className="text-base leading-tight group-hover:text-crystal-600 transition-colors">
-                            {topic.title}
-                          </CardTitle>
-                          <CardDescription className="mt-1.5 line-clamp-2">
-                            {topic.description}
-                          </CardDescription>
-                          {topic.difficulty && (
-                            <DifficultyBadge level={topic.difficulty} className="mt-2" />
-                          )}
+              <!-- Direct Topics Grid -->
+              {group.directTopics.length > 0 && (
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {group.directTopics.map((topic, topicIndex) => (
+                    <a
+                      href={topic.href}
+                      class="group animate-slide-up"
+                      style={`animation-delay: ${groupIndex * 100 + topicIndex * 50}ms`}
+                    >
+                      <Card hover padding="md" className="h-full">
+                        <div class="flex items-start gap-3">
+                          <IconBox variant={group.variant} size="sm" className="shrink-0 group-hover:scale-105 transition-transform">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[topic.icon] || iconPaths.cube} />
+                            </svg>
+                          </IconBox>
+                          <div class="flex-1 min-w-0">
+                            <CardTitle className="text-base leading-tight group-hover:text-crystal-600 transition-colors">
+                              {topic.title}
+                            </CardTitle>
+                            <CardDescription className="mt-1.5 line-clamp-2">
+                              {topic.description}
+                            </CardDescription>
+                            {topic.difficulty && (
+                              <DifficultyBadge level={topic.difficulty} className="mt-2" />
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </a>
-                ))}
-              </div>
+                      </Card>
+                    </a>
+                  ))}
+                </div>
+              )}
+
+              <!-- Subcategory Groups -->
+              {group.subcategories.map((subcat, subcatIndex) => (
+                <div class="mt-8 first:mt-0">
+                  <!-- Subcategory Header -->
+                  <div class="flex items-center gap-3 mb-4 ml-1">
+                    <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200"></div>
+                    <h3 class="text-lg font-semibold text-slate-700">{subcat.title}</h3>
+                    <span class="text-sm text-slate-400">({subcat.topics.length} topics)</span>
+                  </div>
+
+                  <!-- Subcategory Topics Grid -->
+                  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100">
+                    {subcat.topics.map((topic, topicIndex) => (
+                      <a
+                        href={topic.href}
+                        class="group animate-slide-up"
+                        style={`animation-delay: ${groupIndex * 100 + subcatIndex * 75 + topicIndex * 50}ms`}
+                      >
+                        <Card hover padding="md" className="h-full">
+                          <div class="flex items-start gap-3">
+                            <IconBox variant={group.variant} size="sm" className="shrink-0 group-hover:scale-105 transition-transform">
+                              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[topic.icon] || iconPaths.cube} />
+                              </svg>
+                            </IconBox>
+                            <div class="flex-1 min-w-0">
+                              <CardTitle className="text-base leading-tight group-hover:text-crystal-600 transition-colors">
+                                {topic.title}
+                              </CardTitle>
+                              <CardDescription className="mt-1.5 line-clamp-2">
+                                {topic.description}
+                              </CardDescription>
+                              {topic.difficulty && (
+                                <DifficultyBadge level={topic.difficulty} className="mt-2" />
+                              )}
+                            </div>
+                          </div>
+                        </Card>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </section>
           ))}
         </div>
