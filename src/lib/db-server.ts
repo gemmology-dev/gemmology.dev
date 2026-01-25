@@ -48,15 +48,23 @@ export async function getDB(): Promise<Database> {
   dbPromise = (async () => {
     const SQL = await initSqlJs();
 
-    // Try to find the database file
+    // Prefer local database (contains enriched data) over npm package
+    const localDbPath = join(process.cwd(), 'public', 'minerals.db');
     let dbPath: string;
+
     try {
-      // Try npm package first
-      const mineralData = await import('@gemmology/mineral-data');
-      dbPath = mineralData.dbPath;
+      // Check if local enriched database exists
+      readFileSync(localDbPath);
+      dbPath = localDbPath;
     } catch {
-      // Fallback to public directory
-      dbPath = join(process.cwd(), 'public', 'minerals.db');
+      // Fallback to npm package
+      try {
+        const mineralData = await import('@gemmology/mineral-data');
+        dbPath = mineralData.dbPath;
+      } catch {
+        // Last resort: try src/data location
+        dbPath = join(process.cwd(), 'src', 'data', 'minerals.db');
+      }
     }
 
     const buffer = readFileSync(dbPath);
