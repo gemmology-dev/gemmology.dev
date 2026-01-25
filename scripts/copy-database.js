@@ -9,21 +9,21 @@ const projectRoot = join(__dirname, '..');
 // Use require to resolve the npm package path
 const require = createRequire(import.meta.url);
 
-// Prefer local database over npm package (for latest enriched data)
-const localDbPath = join(projectRoot, 'src', 'data', 'minerals.db');
+// Use npm package as the primary source (v1.1.0+ has enriched FGA data)
 let dbSource;
 
-if (existsSync(localDbPath)) {
-  dbSource = localDbPath;
-  console.log('Using local src/data/minerals.db (enriched database)');
-} else {
-  // Fallback to npm package
-  try {
-    const mineralData = require('@gemmology/mineral-data');
-    dbSource = mineralData.dbPath;
-    console.log('Using @gemmology/mineral-data package');
-  } catch (e) {
-    console.error('Error: minerals.db not found in src/data/ or npm package');
+try {
+  const mineralData = require('@gemmology/mineral-data');
+  dbSource = mineralData.dbPath;
+  console.log('Using @gemmology/mineral-data package (v1.1.0+)');
+} catch (e) {
+  // Fallback to local database for development
+  const localDbPath = join(projectRoot, 'src', 'data', 'minerals.db');
+  if (existsSync(localDbPath)) {
+    dbSource = localDbPath;
+    console.log('Using local src/data/minerals.db (fallback)');
+  } else {
+    console.error('Error: @gemmology/mineral-data not installed and no local database');
     process.exit(1);
   }
 }
