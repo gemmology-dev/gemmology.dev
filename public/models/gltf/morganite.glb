@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "morganite"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "morganite",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3",
+      "min": [
+        -0.2309401035308838,
+        -0.20000000298023224,
+        -0.44999998807907104
+      ],
+      "max": [
+        0.2309401035308838,
+        0.20000000298023224,
+        0.44999998807907104
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 84,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 192,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 192,
+      "byteLength": 192,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 384,
+      "byteLength": 168,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 552,
+      "uri": "data:application/octet-stream;base64,BYFbPc3MTD5mZua+jOwVPozsFT5mZua+kHvsvc3MTD5mZua+kHvsPc3MTL5mZua+BYFbvc3MTL5mZua+kHtsPmZm5qRmZua+kHtsvs3MTKNmZua+jOwVvozsFb5mZua+BYFbPc3MTD5mZuY+jOwVPozsFT5mZuY+kHvsvc3MTD5mZuY+kHvsPc3MTL5mZuY+BYFbvc3MTL5mZuY+kHtsPs3MTCNmZuY+kHtsvmZm5iRmZuY+jOwVvozsFb5mZuY+6V1rPqqZWz/pXeu+L8IgPy/CID/pXeu+17PdvgAAQD8AAAC/17PdPgAAQL8AAAC/6V1rvqqZW7/pXeu+17NdPwAAYKUAAAC/17NdvwAAICUAAAC/L8Igvy/CIL/pXeu+6V1rPqqZWz/pXes+L8IgPy/CID/pXes+17PdvgAAQD8AAAA/17PdPgAAQL8AAAA/6V1rvqqZW7/pXes+17NdPwAAYKUAAAA/17NdvwAAICUAAAA/L8Igvy/CIL/pXes+BwAGAAIABwACAAAABwAAAAEABwABAAUABwAFAAMABwADAAQACwANAAkACwAJAAgACwAIAAoACwAKAA4ACwAOAA8ACwAPAAwACQABAAAACQAAAAgACAAAAAIACAACAAoABAADAAsABAALAAwABQABAAkABQAJAA0ADgAGAAcADgAHAA8ACgACAAYACgAGAA4ACwADAAUACwAFAA0ABwAEAAwABwAMAA8A"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

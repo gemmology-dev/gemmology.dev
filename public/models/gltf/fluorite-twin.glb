@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "fluorite-twin"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "fluorite-twin",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC3",
+      "min": [
+        -0.9237604141235352,
+        -0.9237604141235352,
+        -0.9237604141235352
+      ],
+      "max": [
+        0.9237604141235352,
+        0.9237604141235352,
+        0.9237604141235352
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 120,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 216,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 216,
+      "byteLength": 216,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 432,
+      "byteLength": 240,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 672,
+      "uri": "data:application/octet-stream;base64,kHvsvgrXoyWQe2y/kHtsv83MzCWQe+y++G8vpKxcMT+sXDG/CtejJZB77L6Qe2y/zczMJZB7bL+Qe+y+rFwxP9ZaKqWsXDG/rFwxP6xcMb/DOlKjrFwxv6xcMT/DOlKjkHvsvpB7bL+PwvUlkHtsv5B77L6PwvUlWUmWo6xcMb+sXDE/rFwxv9ZaKqWsXDE/kHvsPpB7bD+PwvWlkHtsP5B77D6PwvWlkHtsP83MzKWQe+w+kHvsPgrXo6WQe2w/CtejpZB77D6Qe2w/zczMpZB7bD+Qe+w+ZBf8vmQX/L14lFy/eJRcv2QX/L1kF/y+ccScJPMENT/zBDW/ZBf8vWQX/L54lFy/ZBf8vXiUXL9kF/y+8wQ1PxuOV6XzBDW/8wQ1P/MENb+pJusk8wQ1v/MENT9xxJykZBf8vniUXL9kF/y9eJRcv2QX/L5kF/y9KvgSpfMENb/zBDU/8wQ1v/9cMCXzBDU/ZBf8PniUXD9kF/w9eJRcP2QX/D5kF/w9eJRcP2QX/D1kF/w+ZBf8PmQX/D14lFw/ZBf8PWQX/D54lFw/ZBf8PXiUXD9kF/w+AgAAAAEAAgABAAcAEAARAAcAEAAHAAsACAAJAAEACAABAAAACAAAAAMACAADAAQACgAGAA4ACgAOAA8ACwAJAAgACwAIAAoABgAEAAMABgADAAUABQACAAwABQAMAA0ADwAOAA0ADwANAAwADwAMABEADwARABAACgAIAAQACgAEAAYABgAFAA0ABgANAA4ACAAJAAEACAABAAAACAAAAAMACAADAAQAEQAMAAIAEQACAAcABQADAAAABQAAAAIABwABAAkABwAJAAsACwAKAA8ACwAPABAADwAOAA0ADwANAAwADwAMABEADwARABAA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "garnet-trapezohedron"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "garnet-trapezohedron",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 26,
+      "type": "VEC3",
+      "min": [
+        -1.2247449159622192,
+        -1.2247449159622192,
+        -1.2247449159622192
+      ],
+      "max": [
+        1.2247449159622192,
+        1.2247449159622192,
+        1.2247449159622192
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 26,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 144,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 312,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 312,
+      "byteLength": 312,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 624,
+      "byteLength": 288,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 912,
+      "uri": "data:application/octet-stream;base64,7AVRvwAAAADsBVG/ccQcv3HEHD9xxBy/AAAAAAAAAABxxJy/AAAAAOwFUT/sBVG/ccScvwAAAAAAAAAA7AVRv+wFUT8AAAAA7AVRvwAAAADsBVE/AAAAAOwFUb/sBVE/ccQcv3HEHL9xxBw/AAAAAAAAAABxxJw/ccQcv3HEHD9xxBw/7AVRP+wFUb8AAAAAAAAAAHHEnL8AAAAAccQcP3HEHL9xxBw/ccQcP3HEHL9xxBy/AAAAAOwFUb/sBVG/7AVRPwAAAADsBVG/ccScPwAAAAAAAAAA7AVRPwAAAADsBVE/ccQcv3HEHL9xxBy/7AVRv+wFUb8AAAAAAAAAAHHEnD8AAAAA7AVRP+wFUT8AAAAAccQcP3HEHD9xxBy/AAAAAOwFUT/sBVE/ccQcP3HEHD9xxBw/8wQ1vzrNkyPzBDW/Os0TvzrNEz86zRO/ccQcJHHEnKMAAIC/AAAAAPMENT/zBDW/AACAv3HEnKNxxJwj8wQ1v/MENT8AAAAA8wQ1vwAAAADzBDU/Os0TpPMENb/zBDU/Os0TvzrNE786zRM/ccScI3HEnKMAAIA/Os0TvzrNEz86zRM/8wQ1P/MENb86zZOjqSZrpAAAgL8AAAAAOs0TPzrNE786zRM/Os0TPzrNE786zRO/AAAAAPMENb/zBDW/8wQ1PzrNk6TzBDW/AACAP3HEnCNxxJyj8wQ1PzrNEyTzBDU/Os0TvzrNE786zRO/8wQ1v/MENb8AAAAAccScowAAgD8AAAAA8wQ1P/MENT86zZMjOs0TPzrNEz86zRO/17NdJPMENT/zBDU/Os0TPzrNEz86zRM/AgAAAAEAAgABAAMABQABAAAABQAAAAQACQAGAAgACQAIAAcACgAFAAQACgAEAAYACwANAAcACwAHAAwADwAOAAsADwALAAwADgAPAAIADgACABAAEQALAA4AEQAOABAAEgANAAsAEgALABEABAAAABMABAATABQADwAMABQADwAUABMADwATAAAADwAAAAIABgAEABQABgAUAAgADAAHAAgADAAIABQAFgAXAAMAFgADABUAGQAWABUAGQAVABgAFQADAAEAFQABAAUAFQAFAAoAFQAKABgAGAAJABIAGAASABkAEQAQABcAEQAXABYAGAAKAAYAGAAGAAkAEgARABYAEgAWABkACQAHAA0ACQANABIAFwAQAAIAFwACAAMA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

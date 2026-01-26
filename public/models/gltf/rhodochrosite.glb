@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "rhodochrosite"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "rhodochrosite",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 10,
+      "type": "VEC3",
+      "min": [
+        -0.6928203105926514,
+        -0.800000011920929,
+        -0.3464101552963257
+      ],
+      "max": [
+        0.6928203105926514,
+        0.800000011920929,
+        0.3464101552963257
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 10,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 48,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 120,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 120,
+      "byteLength": 120,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 240,
+      "byteLength": 96,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 336,
+      "uri": "data:application/octet-stream;base64,rFyxpM3MTAqsXLG+rFwxP83MzL6Qe+y9kHvspM3MTL+Qe+w9rFyxvpqZGb9ry2QjkHvsJM3MTD+Qe+y9rFwxv83MTCSClpUjrFwxv83MzD6Qe+w9rFwxP83MTKSClpWjrFwxpJqZmaSsXLE+rFyxPpqZGT9ry2Sj0V/9vSVJkr3RX32/YpcnP4+Ewb5ilye/ayMRJY+EQb9ilyc/jDcMv5voIb+MNwy/tJDHpY+EQT9ilye/UVNSv5voIb6MNwy/Ypcnv4+EwT5ilyc/UVNSP5voIT6MNww/0V/9PSVJkj3RX30/jDcMP5voIT+MNww/AgADAAAAAgAAAAEABAAAAAUABAAFAAYAAgABAAcAAgAHAAgABwABAAAABwAAAAQABwAEAAkABQAAAAMACAAJAAQACAAEAAYACAAHAAkABQADAAIABQACAAgABQAIAAYA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}
