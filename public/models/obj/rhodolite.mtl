@@ -1,0 +1,9 @@
+# Material file for rhodolite
+
+newmtl crystal_material
+Ka 0.1 0.1 0.1
+Kd 0.8 0.8 0.9
+Ks 0.9 0.9 0.9
+Ns 100.0
+d 0.9
+illum 2

@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "sapphire"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "sapphire",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC3",
+      "min": [
+        -1.6039015054702759,
+        -0.9260129332542419,
+        -1.9246817827224731
+      ],
+      "max": [
+        1.6039015054702759,
+        0.9260129332542419,
+        1.9246817827224731
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 60,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 144,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 144,
+      "byteLength": 144,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 288,
+      "byteLength": 120,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 408,
+      "uri": "data:application/octet-stream;base64,pUzNPy8Pbb/PgUQlVxNXI7eewKT5W/a/kFMePS8Pbb+e+AIl3c/gvmCxQr8vHbC+VxNXI35+qST5W/Y/QT9SP4Tr2z4zdOCj3c/gPmCxQj8vHbA+FfF9voTr277jFYQ/QT9Sv4Tr274zdOAjpUzNvy8PbT+DJM8kFfF9PoTr2z7jFYS/kFMevS8PbT+e+AKl17NdPwAAAL9ZC44kaxg6JeedE6UAAIC/JyQ3vrCVer+Afcs9tBL5vh+0V7+emGy+YdgMJeedkyQAAIA/vh5CP4/xJD+Afcu9tBL5Ph+0Vz+emGw+N37pvv01Sr+E7NE+vh5Cv4/xJL+Afcs917NdvwAAAD8GEdWkN37pPv01Sj+E7NG+JyQ3PrCVej+Afcu9AQAAAAIAAQACAAMABAAAAAUABAAFAAYACAAHAAQACAAEAAkACgAFAAAACgAAAAEABwACAAAABwAAAAQACQABAAMACQADAAgACAADAAIACAACAAcACwAGAAUACwAFAAoACwAKAAEACwABAAkACQAEAAYACQAGAAsA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

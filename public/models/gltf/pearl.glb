@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "pearl"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "pearl",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3",
+      "min": [
+        -0.8485281467437744,
+        -0.9899494647979736,
+        -0.8485281467437744
+      ],
+      "max": [
+        0.8485281467437744,
+        0.9899494647979736,
+        0.8485281467437744
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 108,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 240,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 240,
+      "byteLength": 240,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 480,
+      "byteLength": 216,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 696,
+      "uri": "data:application/octet-stream;base64,JDnZPlRtfb8AAAAA2+oiPwwfR78kOVm+2+oiPwwfR78kOVk+JDlZP8PQEL8AAAAAJDnZvlRtfb8AAAAA2+oivwwfR78kOVm+2+oivwwfR78kOVk+JDlZv8PQEL8AAAAAJDnZPlRtfT8AAAAA2+oiPwwfRz8kOVm+2+oiPwwfRz8kOVk+JDlZP8PQED8AAAAAJDnZvlRtfT8AAAAA2+oivwwfRz8kOVm+2+oivwwfRz8kOVk+JDlZv8PQED8AAAAAVstxJMPQEL4kOVm/VstxJMPQED4kOVm/VstxJMPQEL4kOVk/VstxJMPQED4kOVk/m+ihPunccr8u+eSkOs0TPzrNE786zRO/Os0TPzrNE786zRM/6dxyP5voob4u+WSkm+ihvunccr8u+eSkOs0TvzrNE786zRO/Os0TvzrNE786zRM/6dxyv5voob4u+WQkm+ihPunccj8u+eQkOs0TPzrNEz86zRO/Os0TPzrNEz86zRM/6dxyP5vooT4u+WSkm+ihvunccj/juislOs0TvzrNEz86zRO/Os0TvzrNEz86zRM/6dxyv5vooT4u+eQkLvlkpJvoob7p3HK/LvlkpJvooT7p3HK/LvlkJJvoob7p3HI/LvlkJJvooT7p3HI/AgAAAAEAAgABAAMABQAEAAYABQAGAAcACQAIAAoACQAKAAsADwAOAAwADwAMAA0AEAABAAAAEAAAAAQAEAAEAAUADQAMAAgADQAIAAkADQAJABEABgAEAAAABgAAAAIABgACABIAEwAKAAgAEwAIAAwAEwAMAA4AEwASAAIAEwACAAMAEwADAAsAEwALAAoADgAPAAcADgAHAAYADgAGABIADgASABMACQALAAMACQADAAEACQABABAACQAQABEAEQAQAAUAEQAFAAcAEQAHAA8AEQAPAA0A"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

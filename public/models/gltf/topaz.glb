@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "topaz"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "topaz",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3",
+      "min": [
+        -1.4142135381698608,
+        -0.8944271802902222,
+        -0.6000000238418579
+      ],
+      "max": [
+        1.4142135381698608,
+        0.8944271802902222,
+        0.6000000238418579
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 84,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 192,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 192,
+      "byteLength": 192,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 384,
+      "byteLength": 168,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 552,
+      "uri": "data:application/octet-stream;base64,8wS1P35ZBCSamRm/8wS1P35ZBCSamRk/uBCFP+zQv76amRm/uBCFP+zQv76amRk/8wS1v35ZBCSamRm/8wS1v35ZBCSamRk/uBCFv+zQv76amRm/uBCFv+zQv76amRk/uBCFP+zQvz6amRm/uBCFP+zQvz6amRk/uBCFv+zQvz6amRm/uBCFv+zQvz6amRk/AAAAAC75ZL+amRm/AAAAAC75ZL+amRk/AAAAAC75ZD+amRm/AAAAAC75ZD+amRk/7AVRPzrNkyQ6zRO/7AVRPzrNkyQ6zRM/KogFP/9DOb82XOe+KogFP/9DOb82XOc+7AVRvzrNkyQ6zRO/7AVRvzrNkyQ6zRM/KogFv/9DOb82XOe+KogFv/9DOb82XOc+KogFP/9DOT82XOe+KogFP/9DOT82XOc+KogFv/9DOT82XOe+KogFv/9DOT82XOc+AAAAAIN0X7+W1Pm+AAAAAIN0X7+W1Pk+AAAAAIN0Xz+W1Pm+AAAAAIN0Xz+W1Pk+AgAAAAEAAgABAAMABwAFAAQABwAEAAYAAQAAAAgAAQAIAAkACwAKAAQACwAEAAUADAACAAMADAADAA0ADQAHAAYADQAGAAwADgAKAAsADgALAA8ADwAJAAgADwAIAA4ABAAKAA4ABAAOAAgABAAIAAAABAAAAAIABAACAAwABAAMAAYABwANAAMABwADAAEABwABAAkABwAJAA8ABwAPAAsABwALAAUA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}

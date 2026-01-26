@@ -1,0 +1,110 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "crystal-renderer"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "celestine"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "celestine",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3",
+      "min": [
+        -0.55901700258255,
+        -1.1180340051651,
+        -0.4472135901451111
+      ],
+      "max": [
+        0.55901700258255,
+        1.1180340051651,
+        0.4472135901451111
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 108,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 240,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 240,
+      "byteLength": 240,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 480,
+      "byteLength": 216,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 696,
+      "uri": "data:application/octet-stream;base64,YwxqI70bj7/aglq8RrcxvtdbRb9di7i+RrcxPtdbRb9di7i+AAAAAO4kL78u+eS+Ywxqo70bjz/aglq8RrcxPtdbRT9di7i+RrcxvtdbRT9di7i+AAAAAO4kLz8u+eS+YwxqI70bj7/aglo8RrcxvtdbRb9di7g+RrcxPtdbRb9di7g+AAAAAO4kL78u+eQ+Ywxqo70bjz/aglo8RrcxPtdbRT9di7g+RrcxvtdbRT9di7g+AAAAAO4kLz8u+eQ+vRsPPwAAAADjuiu+vRsPPwAAAADjuis+vRsPvwAAAADjuis+vRsPvwAAAADjuiu+AAAAAHswar9AzM6+kOQPv9ua975IxCu/kOQPP9ua975IxCu/Nl3Fo7iOi757Tna/AAAAAHswaj9AzM6+kOQPP9ua9z5IxCu/kOQPv9ua9z5IxCu/Nl3Fo7iOiz57Tna/AAAAAHswar9AzM4+kOQPv9ua975IxCs/kOQPP9ua975IxCs/Nl3FI7iOi757TnY/AAAAAHswaj9AzM4+kOQPP9ua9z5IxCs/kOQPv9ua9z5IxCs/Nl3FI7iOiz57TnY/prBtPwAAAADrJr6+prBtPwAAAADrJr4+prBtvwAAAADrJr4+prBtvwAAAADrJr6+AwACAAAAAwAAAAEABwAGAAQABwAEAAUACQAIAAoACQAKAAsADQAMAA4ADQAOAA8AEAAFAAQAEAAEAAwAEAAMAA0AEAANABEAEwABAAAAEwAAAAgAEwAIAAkAEwAJABIAEgAOAAwAEgAMAAQAEgAEAAYAEgAGABMAEQAKAAgAEQAIAAAAEQAAAAIAEQACABAAEAACAAMAEAADAAcAEAAHAAUADQAPAAsADQALAAoADQAKABEAEgAJAAsAEgALAA8AEgAPAA4ABgAHAAMABgADAAEABgABABMA"
+    }
+  ],
+  "materials": [
+    {
+      "name": "crystal_material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.7,
+          0.9,
+          0.8
+        ],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.3
+      },
+      "alphaMode": "OPAQUE"
+    }
+  ]
+}
