@@ -12,6 +12,8 @@ Crystal structure visualization and gemmological reference for FGA students and 
 - **CDL Playground**: Interactive Crystal Description Language editor with live preview
 - **Documentation**: Complete API reference, CLI documentation, and CDL specification
 - **Learn**: FGA curriculum-aligned content on crystallography and gemmology
+- **Quiz System**: Practice and exam modes with questions generated from 91 YAML learn files
+- **Calculator Tools**: 8 gemmological calculators for SG, RI, birefringence, and more
 
 ## Tech Stack
 
@@ -49,11 +51,20 @@ src/
 │   ├── crystal/      # Crystal visualization components
 │   ├── gallery/      # Gallery page components
 │   ├── playground/   # CDL Playground components
+│   ├── quiz/         # Quiz and exam components
+│   ├── calculator/   # Gemmological calculator components
+│   ├── auth/         # Authentication and protected routes
 │   └── layout/       # Layout components (Header, Footer)
-├── hooks/            # React hooks (useCrystalDB, useCDLValidation)
+├── hooks/            # React hooks (useCrystalDB, useQuiz, useExam, etc.)
 ├── layouts/          # Astro layouts
-├── lib/              # Utilities (db.ts, monaco-cdl.ts)
-├── pages/            # Astro pages
+├── lib/
+│   ├── quiz/         # Quiz system (question generation, scoring)
+│   ├── calculator/   # Calculation formulas and gem data
+│   └── ...           # Other utilities (db.ts, monaco-cdl.ts)
+├── pages/
+│   ├── quiz/         # Quiz entry point
+│   ├── tools/        # Calculator tools
+│   └── ...           # Other pages
 └── styles/           # Global CSS
 ```
 
@@ -80,6 +91,33 @@ npx wrangler pages deploy dist --project-name=gemmology-dev
 Required secrets in GitHub:
 - `CLOUDFLARE_API_TOKEN` - Cloudflare API token with Pages edit permission
 - `CLOUDFLARE_ACCOUNT_ID` - Cloudflare account ID
+
+## Interactive Learning Features
+
+### Quiz System (`/quiz`)
+
+Generate and take quizzes from the gemmology knowledge base:
+
+- **Practice Mode**: Immediate feedback, explanations, and "learn more" links
+- **Exam Mode**: Timed assessments with question flagging and detailed results
+- **8 Categories**: Fundamentals, Equipment, Gem Species, Identification, Phenomena, Origin, Market & Grading, Care & Durability
+- **4 Question Types**: Multiple choice, true/false, matching, fill-in-the-blank
+- **Progress Tracking**: localStorage persistence for quiz history and category mastery
+
+### Calculator Tools (`/tools/calculator`)
+
+8 gemmological calculators:
+
+| Calculator | Description |
+|------------|-------------|
+| Specific Gravity | Hydrostatic weighing with gem matching |
+| RI Lookup | Compare measured RI against 15 common gems |
+| Birefringence | Calculate from max/min RI readings |
+| Critical Angle | Total internal reflection angle |
+| Carat Estimator | Weight from dimensions (9 cut shapes) |
+| Weight Converter | Carat ↔ Gram ↔ Milligram |
+| Length Converter | mm ↔ inches |
+| Temperature Converter | °C ↔ °F |
 
 ## Related Packages
 
