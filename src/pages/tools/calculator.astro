@@ -1,0 +1,15 @@
+---
+/**
+ * Calculator page.
+ * Protected by LockGate - requires authentication to access.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedCalculator } from '../../components/auth/ProtectedCalculator';
+---
+
+<BaseLayout
+  title="Calculators"
+  description="Gemmological calculators for specific gravity, refractive index, birefringence, carat weight estimation, and unit conversions."
+>
+  <ProtectedCalculator client:load />
+</BaseLayout>
