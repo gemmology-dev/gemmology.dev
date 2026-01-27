@@ -1,0 +1,32 @@
+---
+/**
+ * Quiz hub page.
+ * Protected by LockGate - requires authentication to access.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedQuiz } from '../../components/auth/ProtectedQuiz';
+import type { LearnEntry } from '../../lib/quiz';
+
+// Get all learn entries for question generation
+const learnEntries = await getCollection('learn');
+
+// Transform to LearnEntry format expected by quiz system
+const entries: LearnEntry[] = learnEntries.map(entry => ({
+  id: entry.id,
+  data: {
+    title: entry.data.title,
+    description: entry.data.description,
+    category: entry.data.category,
+    difficulty: entry.data.difficulty,
+    sections: entry.data.sections,
+  },
+}));
+---
+
+<BaseLayout
+  title="Quiz"
+  description="Test your gemmology knowledge with interactive quizzes covering crystallography, optical properties, treatments, and more."
+>
+  <ProtectedQuiz client:load learnEntries={entries} />
+</BaseLayout>
