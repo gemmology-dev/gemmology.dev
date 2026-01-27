@@ -13,7 +13,6 @@ import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, type Mineral } from '../../lib/db-server';
-import { mineralSlug } from '../../lib/slug';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
@@ -26,9 +25,10 @@ export async function getStaticPaths() {
     })
   );
 
+  // Use mineral.id (preset ID) for URL slug - matches SVG filenames
   return mineralsWithModels.map((mineral) => ({
     params: {
-      slug: mineralSlug(mineral.name),
+      slug: mineral.id,
     },
     props: { mineral },
   }));
@@ -48,7 +48,7 @@ const relatedMinerals = (await getMineralsBySystemWithSvg(mineral.system))
 // Generate page metadata
 const title = `${mineral.name} Crystal Structure`;
 const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
-const canonicalUrl = `https://gemmology.dev/minerals/${mineralSlug(mineral.name)}`;
+const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
 ---
 
 <BaseLayout title={title} description={description}>

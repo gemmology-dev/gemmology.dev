@@ -3,7 +3,6 @@
  * RelatedMinerals - Shows minerals from the same crystal system
  */
 import type { Mineral } from '../../lib/db';
-import { mineralSlug } from '../../lib/slug';
 import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
 
 interface Props {
@@ -24,14 +23,14 @@ const { minerals, currentSystem } = Astro.props;
 
   <div class="divide-y divide-slate-100">
     {minerals.map((mineral) => {
-      const slug = mineralSlug(mineral.name);
-      const svgPath = `/crystals/${slug}.svg`;
+      // Use mineral.id for both URL and SVG path (matches preset IDs)
+      const svgPath = `/crystals/${mineral.id}.svg`;
       const hasSvg = isValidSvg(mineral.model_svg);
       const cleanedSvg = hasSvg ? cleanCrystalSvg(mineral.model_svg!) : '';
 
       return (
         <a
-          href={`/minerals/${slug}`}
+          href={`/minerals/${mineral.id}`}
           class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
         >
           <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden">

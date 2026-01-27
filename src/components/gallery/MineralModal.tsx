@@ -5,7 +5,6 @@ import { ViewerToggle } from '../crystal/ViewerToggle';
 import { Button } from '../ui/Button';
 import type { Mineral } from '../../lib/db';
 import { getModelSVG, getModelSTL, getModelGLTF } from '../../lib/db';
-import { mineralSlug } from '../../lib/slug';
 import { sanitizeSvg } from '../../lib/sanitize-svg';
 
 interface MineralModalProps {
@@ -84,7 +83,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${mineralSlug(mineral.name)}.svg`;
+      a.download = `${mineral.id}.svg`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -96,7 +95,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
       const url = URL.createObjectURL(stl);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${mineralSlug(mineral.name)}.stl`;
+      a.download = `${mineral.id}.stl`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -109,14 +108,14 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${mineralSlug(mineral.name)}.gltf`;
+      a.download = `${mineral.id}.gltf`;
       a.click();
       URL.revokeObjectURL(url);
     }
   };
 
   // Fallback SVG path for older database without pre-generated models
-  const fallbackSvgPath = `/crystals/${mineralSlug(mineral.name)}.svg`;
+  const fallbackSvgPath = `/crystals/${mineral.id}.svg`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -220,7 +219,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    window.location.href = `/minerals/${mineralSlug(mineral.name)}`;
+                    window.location.href = `/minerals/${mineral.id}`;
                   }}
                 >
                   View Full Details
