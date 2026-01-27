@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Gallery } from '../../components/gallery/Gallery';
-import { Container, SectionHeader } from '../../components/ui-astro';
+import { ProtectedGallery } from '../../components/auth/ProtectedGallery';
 
 const url = Astro.url;
 const initialSystem = url.searchParams.get('system') || '';
@@ -16,18 +15,9 @@ const canonicalURL = 'https://gemmology.dev/gallery';
   description="Explore 50+ mineral presets with FGA-accurate crystallographic data and interactive visualizations."
   canonical={canonicalURL}
 >
-  <div class="bg-gradient-to-b from-crystal-50 to-white">
-    <Container size="xl" padding="md">
-      <SectionHeader
-        title="Crystal Gallery"
-        description="Explore our collection of 50+ mineral presets with FGA-accurate crystallographic data. Click any crystal to view detailed properties and open in the playground."
-      />
-
-      <Gallery
-        client:load
-        initialSystem={initialSystem}
-        initialSearch={initialSearch}
-      />
-    </Container>
-  </div>
+  <ProtectedGallery
+    client:load
+    initialSystem={initialSystem}
+    initialSearch={initialSearch}
+  />
 </BaseLayout>
