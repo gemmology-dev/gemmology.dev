@@ -18,7 +18,7 @@
     "@astrojs/react": "^4.1.0",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^5.1.0",
-    "@gemmology/mineral-data": "^1.2.9",
+    "@gemmology/mineral-data": "^1.2.10",
     "@monaco-editor/react": "^4.6.0",
     "@react-three/drei": "^9.105.0",
     "@react-three/fiber": "^8.16.0",
