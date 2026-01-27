@@ -105,14 +105,12 @@ function RotatingCrystal({ gltfData, rotationSpeed, scale }: RotatingCrystalProp
   return (
     <group ref={groupRef} scale={scale}>
       <mesh geometry={geometry}>
-        {/* Standard material with proper lighting response for 3D depth */}
-        <meshStandardMaterial
+        {/* Flat-shaded faces matching SVG style */}
+        <meshBasicMaterial
           color="#7dd3fc"
           transparent
-          opacity={0.9}
+          opacity={0.85}
           side={THREE.DoubleSide}
-          roughness={0.3}
-          metalness={0.1}
         />
         {/* Dark edges matching SVG outline style */}
         <Edges
@@ -202,16 +200,15 @@ export function HeroCrystal3D({
   return (
     <div className={`w-full h-full ${className}`}>
       <Canvas
-        camera={{ position: [2.5, 1.5, 2.5], fov: 35 }}
+        camera={{ position: [2, 0.8, 2], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={<LoadingFallback rotationSpeed={rotationSpeed} />}>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 8, 5]} intensity={1.2} />
-          <directionalLight position={[-4, 2, -2]} intensity={0.4} />
-          <directionalLight position={[0, -3, 3]} intensity={0.2} />
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[5, 5, 5]} intensity={0.8} />
+          <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
           <Center position={[0, 0.15, 0]}>
             {gltfData ? (
