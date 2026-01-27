@@ -1,13 +1,12 @@
 /**
  * Auto-link mineral names in text content
- * Converts mineral names to links to /minerals/{slug} pages
+ * Converts mineral names to links to /minerals/{id} pages
  */
 import { getAllMinerals } from './db-server';
-import { mineralSlug } from './slug';
 
 interface MineralLink {
   name: string;
-  slug: string;
+  id: string;
   pattern: RegExp;
 }
 
@@ -27,7 +26,7 @@ export async function initMineralLinks(): Promise<MineralLink[]> {
   mineralLinks = minerals
     .map(m => ({
       name: m.name,
-      slug: mineralSlug(m.name),
+      id: m.id, // Use mineral.id (preset ID) for URL
       // Word boundary match, case insensitive
       // Negative lookbehind for [ to avoid matching already-linked text
       // Negative lookahead for ] to avoid matching link text
@@ -87,7 +86,7 @@ export async function addMineralLinks(html: string): Promise<string> {
 
       replaced = true;
       linkedMinerals.add(lowerName);
-      return `<a href="/minerals/${mineral.slug}" class="mineral-link">${match}</a>`;
+      return `<a href="/minerals/${mineral.id}" class="mineral-link">${match}</a>`;
     });
   }
 

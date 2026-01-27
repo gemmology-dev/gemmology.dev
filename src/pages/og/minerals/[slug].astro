@@ -1,0 +1,404 @@
+---
+/**
+ * Open Graph Image Template for Mineral Pages
+ * Generates 1200×630 social media preview cards
+ * Shows: crystal SVG, name, system badge, CDL code, chemistry
+ */
+import { getAllMinerals, getMineralWithModels, type Mineral } from '../../../lib/db-server';
+import { cleanCrystalSvg, isValidSvg } from '../../../lib/svg-utils';
+
+export async function getStaticPaths() {
+  const minerals = await getAllMinerals();
+
+  // Fetch minerals with SVG models
+  const mineralsWithModels = await Promise.all(
+    minerals.map(async (m) => {
+      const withModels = await getMineralWithModels(m.name);
+      return withModels || m;
+    })
+  );
+
+  // Use mineral.id for URL slug (matches preset IDs)
+  return mineralsWithModels.map((mineral) => ({
+    params: { slug: mineral.id },
+    props: { mineral },
+  }));
+}
+
+interface Props {
+  mineral: Mineral;
+}
+
+const { mineral } = Astro.props;
+
+// Process SVG
+const hasSvg = isValidSvg(mineral.model_svg);
+const safeSvg = hasSvg ? cleanCrystalSvg(mineral.model_svg) : '';
+
+// Crystal system colors (RGB for inline styles)
+const systemColors: Record<string, string> = {
+  cubic: '#a855f7',        // purple-500
+  hexagonal: '#3b82f6',    // blue-500
+  trigonal: '#06b6d4',     // cyan-500
+  tetragonal: '#22c55e',   // green-500
+  orthorhombic: '#eab308', // yellow-500
+  monoclinic: '#f97316',   // orange-500
+  triclinic: '#ef4444',    // red-500
+};
+
+const systemColor = systemColors[mineral.system?.toLowerCase()] || '#64748b';
+
+// Format CDL with basic syntax highlighting
+const cdlCode = mineral.cdl || '';
+const cdlParts = cdlCode.match(/^([^:]+):(.+)$/);
+const systemPart = cdlParts?.[1] || cdlCode;
+const formsPart = cdlParts?.[2] || '';
+
+// Dynamic CDL font sizing based on length
+const cdlLength = cdlCode.length;
+const cdlFontSize = cdlLength > 80 ? '16px' : cdlLength > 60 ? '18px' : '20px';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, height=630">
+  <title>{mineral.name} - Gemmology OG</title>
+  <style>
+    /* Font declarations */
+    @font-face {
+      font-family: 'Inter';
+      src: url('/fonts/Inter-Variable.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: block;
+    }
+
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 1120px;
+      height: 550px;
+      background: white;
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 48px;
+      padding: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* Left column - Crystal SVG */
+    .crystal-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 16px;
+      padding: 0;
+      border: 2px solid #e2e8f0;
+      overflow: hidden;
+      width: 400px;
+      height: 454px;
+    }
+
+    .crystal-svg {
+      width: 260px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .crystal-svg svg {
+      width: 260px !important;
+      height: 260px !important;
+      max-width: 260px;
+      max-height: 260px;
+    }
+
+    .no-svg {
+      width: 280px;
+      height: 280px;
+      background: #cbd5e1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 48px;
+      font-weight: 700;
+    }
+
+    /* Right column - Info */
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0;
+      height: 454px;
+    }
+
+    .title-section {
+      height: 95px;
+      min-height: 95px;
+      margin-bottom: 0;
+    }
+
+    .mineral-name {
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      height: 67px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .divider {
+      height: 3px;
+      width: 120px;
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+      border-radius: 2px;
+      margin-bottom: 0;
+    }
+
+    .badge-section {
+      height: 58px;
+      min-height: 58px;
+      margin-bottom: 0;
+    }
+
+    .system-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: white;
+    }
+
+    .cdl-section {
+      height: 140px;
+      min-height: 140px;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cdl-label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .cdl-code {
+      font-family: 'JetBrains Mono', 'Courier New', Consolas, monospace;
+      color: #1e293b;
+      line-height: 1.6;
+      background: #f1f5f9;
+      padding: 16px 20px;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      max-height: 100px;
+    }
+
+    .cdl-system {
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    .cdl-forms {
+      color: #0891b2;
+    }
+
+    .chemistry-section {
+      height: 161px;
+      min-height: 161px;
+      margin-bottom: 0;
+      padding-top: 24px;
+    }
+
+    .chemistry {
+      font-size: 22px;
+      color: #475569;
+      font-style: italic;
+      margin-top: 0;
+      height: 32px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Footer branding */
+    .footer {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      font-size: 16px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .footer strong {
+      color: #3b82f6;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: Crystal SVG -->
+    <div class="crystal-container">
+      {hasSvg ? (
+        <div class="crystal-svg" set:html={safeSvg}></div>
+      ) : (
+        <div class="no-svg">{mineral.name.substring(0, 2).toUpperCase()}</div>
+      )}
+    </div>
+
+    <!-- Right: Info -->
+    <div class="info-container">
+      <div class="title-section">
+        <h1 class="mineral-name" style="font-size: 56px;">{mineral.name}</h1>
+        <div class="divider"></div>
+      </div>
+
+      <div class="badge-section">
+        {mineral.system && (
+          <span class="system-badge" style={`background-color: ${systemColor}`}>
+            {mineral.system}
+          </span>
+        )}
+      </div>
+
+      <div class="cdl-section">
+        {cdlCode && (
+          <>
+            <div class="cdl-label">Crystal Description</div>
+            <div class="cdl-code" style={`font-size: ${cdlFontSize}`}>
+              {cdlParts ? (
+                <>
+                  <span class="cdl-system">{systemPart}:</span>
+                  <span class="cdl-forms">{formsPart}</span>
+                </>
+              ) : (
+                <span>{cdlCode}</span>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div class="chemistry-section">
+        {mineral.chemistry && (
+          <div class="chemistry">{mineral.chemistry}</div>
+        )}
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <strong>gemmology</strong>.dev
+    </div>
+  </div>
+
+  <script>
+    // Mark fonts as loaded when ready
+    document.fonts.ready.then(() => {
+      document.body.setAttribute('data-fonts-loaded', 'true');
+    });
+  </script>
+
+  <script>
+    // Container-responsive font sizing with precise measurement
+    (function() {
+      const titleElement = document.querySelector('.mineral-name');
+      if (!titleElement) {
+        document.body.setAttribute('data-og-ready', 'true');
+        return;
+      }
+
+      // Get the actual info container width (right column of grid)
+      // Grid layout: container(1120px) = left(400px) + gap(48px) + right(672px)
+      const infoContainer = document.querySelector('.info-container');
+      const containerWidth = infoContainer ? infoContainer.offsetWidth : 672;
+
+      // Use 75% instead of 80% for extra safety margin
+      // This accounts for sub-pixel rendering differences between Canvas and browser
+      const targetWidth = containerWidth * 0.75;
+      const text = titleElement.textContent;
+
+      // Use Canvas for accurate text measurement
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      let fontSize = 56; // Start at max size
+      const minFontSize = 28;
+      const maxFontSize = 56;
+
+      // Binary search for optimal font size
+      while (fontSize > minFontSize) {
+        // Match exact font declaration from CSS
+        ctx.font = `700 ${fontSize}px Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`;
+        const metrics = ctx.measureText(text);
+
+        // Correct letter-spacing calculation for -0.02em
+        // Negative letter-spacing reduces width by pulling characters closer
+        // Formula: (characterCount - 1) * (0.02 * fontSize)
+        const letterSpacingReduction = (text.length - 1) * (0.02 * fontSize);
+        const textWidth = metrics.width - letterSpacingReduction;
+
+        if (textWidth <= targetWidth) break;
+        fontSize -= 2;
+      }
+
+      // Ensure within bounds
+      fontSize = Math.max(minFontSize, Math.min(maxFontSize, fontSize));
+      titleElement.style.fontSize = fontSize + 'px';
+
+      // Mark as ready for screenshot
+      document.body.setAttribute('data-og-ready', 'true');
+    })();
+  </script>
+</body>
+</html>

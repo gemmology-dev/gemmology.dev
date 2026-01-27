@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import { CrystalCard } from '../crystal/CrystalCard';
 import { MineralModal } from './MineralModal';
 import type { Mineral } from '../../lib/db';
-import { mineralSlug } from '../../lib/slug';
 
 interface GalleryGridProps {
   minerals: Mineral[];
@@ -62,17 +61,17 @@ export function GalleryGrid({ minerals, loading }: GalleryGridProps) {
     <>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {minerals.map((mineral) => {
-          const slug = mineralSlug(mineral.name);
+          // Use mineral.id (preset ID) for both page URLs and SVG paths
           return (
             <CrystalCard
               key={mineral.id}
               name={mineral.name}
               system={mineral.system}
               svgContent={mineral.model_svg || undefined}
-              svgPath={mineral.model_svg ? undefined : `/crystals/${slug}.svg`}
+              svgPath={mineral.model_svg ? undefined : `/crystals/${mineral.id}.svg`}
               chemistry={mineral.chemistry}
               hardness={mineral.hardness}
-              href={`/minerals/${slug}`}
+              href={`/minerals/${mineral.id}`}
               onClick={() => handleCardClick(mineral)}
             />
           );
