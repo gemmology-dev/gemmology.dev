@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Playground } from '../components/playground/Playground';
+import { ProtectedPlayground } from '../components/auth/ProtectedPlayground';
 
 // Get CDL from query string if present
 const url = new URL(Astro.request.url);
@@ -12,7 +12,7 @@ const initialCDL = url.searchParams.get('cdl') || undefined;
   description="Interactive Crystal Description Language editor with live preview, syntax highlighting, and multi-format export."
 >
   <div class="h-[calc(100vh-4rem)]">
-    <Playground client:load initialCDL={initialCDL} />
+    <ProtectedPlayground client:load initialCDL={initialCDL} />
   </div>
 </BaseLayout>
 
