@@ -1,0 +1,356 @@
+---
+/**
+ * Open Graph Image Template for Learn Pages
+ * Generates 1200×630 social media preview cards
+ * Shows: title, category badge, difficulty badge, description
+ */
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('learn');
+
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, description, category, difficulty } = entry.data;
+
+// Category colors (RGB for inline styles)
+const categoryColors: Record<string, string> = {
+  fundamentals: '#3b82f6',    // blue-500
+  equipment: '#10b981',        // emerald-500
+  species: '#a855f7',          // purple-500
+  identification: '#f59e0b',   // amber-500
+  phenomena: '#ec4899',        // pink-500
+  origin: '#14b8a6',           // teal-500
+  market: '#8b5cf6',           // violet-500
+  care: '#06b6d4',             // cyan-500
+};
+
+const categoryColor = categoryColors[category] || '#64748b';
+
+// Difficulty colors
+const difficultyColors: Record<string, string> = {
+  beginner: '#22c55e',      // green-500
+  intermediate: '#3b82f6',  // blue-500
+  advanced: '#a855f7',      // purple-500
+};
+
+const difficultyColor = difficulty ? difficultyColors[difficulty] : '#64748b';
+
+// Truncate description to fit
+const maxDescLength = 180;
+const truncatedDesc = description.length > maxDescLength
+  ? description.slice(0, maxDescLength - 3) + '...'
+  : description;
+
+// Truncate title if too long
+const maxTitleLength = 60;
+const truncatedTitle = title.length > maxTitleLength
+  ? title.slice(0, maxTitleLength - 3) + '...'
+  : title;
+
+// Category display names
+const categoryNames: Record<string, string> = {
+  fundamentals: 'Fundamentals',
+  equipment: 'Equipment',
+  species: 'Species',
+  identification: 'Identification',
+  phenomena: 'Phenomena',
+  origin: 'Origin',
+  market: 'Market',
+  care: 'Care & Durability',
+};
+
+const categoryName = categoryNames[category] || category;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, height=630">
+  <title>{title} - Gemmology OG</title>
+  <style>
+    /* Font declarations */
+    @font-face {
+      font-family: 'Inter';
+      src: url('/fonts/Inter-Variable.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: block;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 1120px;
+      height: 550px;
+      background: white;
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 48px;
+      padding: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* Left column - Decorative gradient */
+    .decoration-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .decoration-gradient {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+    }
+
+    .decoration-shape {
+      width: 240px;
+      height: 240px;
+      border-radius: 24px;
+      transform: rotate(45deg);
+      opacity: 0.4;
+      border: 8px solid white;
+      position: relative;
+      z-index: 1;
+    }
+
+    .decoration-inner {
+      position: absolute;
+      inset: 40px;
+      border-radius: 16px;
+      transform: rotate(-45deg);
+      border: 6px solid white;
+    }
+
+    /* Right column - Content */
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0;
+      height: 454px;
+    }
+
+    .title-section {
+      height: 85px;
+      min-height: 85px;
+      margin-bottom: 0;
+    }
+
+    .article-title {
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      height: 58px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .divider {
+      height: 3px;
+      width: 100px;
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+      border-radius: 2px;
+      margin-bottom: 0;
+    }
+
+    .badges-section {
+      height: 60px;
+      min-height: 60px;
+      margin-bottom: 0;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+    }
+
+    .badge {
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      text-transform: capitalize;
+    }
+
+    .category-badge {
+      background: var(--category-color);
+    }
+
+    .difficulty-badge {
+      background: var(--difficulty-color);
+    }
+
+    .description-section {
+      height: 309px;
+      min-height: 309px;
+      margin-bottom: 0;
+    }
+
+    .description {
+      font-size: 20px;
+      color: #475569;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 96px;
+    }
+
+    /* Footer branding */
+    .footer {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      font-size: 16px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .footer strong {
+      color: #3b82f6;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: Decorative Element -->
+    <div class="decoration-container">
+      <div class="decoration-gradient" style={`background: linear-gradient(135deg, ${categoryColor} 0%, ${categoryColor}99 100%)`}></div>
+      <div class="decoration-shape" style={`background-color: ${categoryColor}`}>
+        <div class="decoration-inner"></div>
+      </div>
+    </div>
+
+    <!-- Right: Content -->
+    <div class="content-container">
+      <div class="title-section">
+        <h1 class="article-title" style="font-size: 48px;">{truncatedTitle}</h1>
+        <div class="divider"></div>
+      </div>
+
+      <div class="badges-section">
+        <div class="badges">
+          <span
+            class="badge category-badge"
+            style={`--category-color: ${categoryColor}; background: ${categoryColor}`}
+          >
+            {categoryName}
+          </span>
+          {difficulty && (
+            <span
+              class="badge difficulty-badge"
+              style={`--difficulty-color: ${difficultyColor}; background: ${difficultyColor}`}
+            >
+              {difficulty}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div class="description-section">
+        <p class="description">{truncatedDesc}</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <strong>gemmology</strong>.dev
+    </div>
+  </div>
+
+  <script>
+    // Mark fonts as loaded when ready
+    document.fonts.ready.then(() => {
+      document.body.setAttribute('data-fonts-loaded', 'true');
+    });
+  </script>
+
+  <script>
+    // Container-responsive font sizing with precise measurement
+    (function() {
+      const titleElement = document.querySelector('.article-title');
+      if (!titleElement) {
+        document.body.setAttribute('data-og-ready', 'true');
+        return;
+      }
+
+      // Get the actual content container width (right column of grid)
+      // Grid layout: container(1120px) = left(360px) + gap(48px) + right(712px)
+      const contentContainer = document.querySelector('.content-container');
+      const containerWidth = contentContainer ? contentContainer.offsetWidth : 712;
+
+      // Use 75% instead of 80% for extra safety margin
+      // This accounts for sub-pixel rendering differences between Canvas and browser
+      const targetWidth = containerWidth * 0.75;
+      const text = titleElement.textContent;
+
+      // Use Canvas for accurate text measurement
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      let fontSize = 48; // Start at max size
+      const minFontSize = 24;
+      const maxFontSize = 48;
+
+      // Binary search for optimal font size
+      while (fontSize > minFontSize) {
+        // Match exact font declaration from CSS
+        ctx.font = `700 ${fontSize}px Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`;
+        const metrics = ctx.measureText(text);
+
+        // Correct letter-spacing calculation for -0.02em
+        // Negative letter-spacing reduces width by pulling characters closer
+        // Formula: (characterCount - 1) * (0.02 * fontSize)
+        const letterSpacingReduction = (text.length - 1) * (0.02 * fontSize);
+        const textWidth = metrics.width - letterSpacingReduction;
+
+        if (textWidth <= targetWidth) break;
+        fontSize -= 2;
+      }
+
+      // Ensure within bounds
+      fontSize = Math.max(minFontSize, Math.min(maxFontSize, fontSize));
+      titleElement.style.fontSize = fontSize + 'px';
+
+      // Mark as ready for screenshot
+      document.body.setAttribute('data-og-ready', 'true');
+    })();
+  </script>
+</body>
+</html>

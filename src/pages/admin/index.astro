@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AdminPanel } from '../../components/admin/AdminPanel';
+---
+
+<BaseLayout
+  title="Admin Panel"
+  description="Manage invite codes and access requests."
+>
+  <AdminPanel client:load />
+</BaseLayout>

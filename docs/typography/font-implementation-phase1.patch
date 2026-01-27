@@ -1,0 +1,196 @@
+# Phase 1 Implementation: Google Fonts Alpine Aesthetic
+
+## Files to Modify
+
+### 1. tailwind.config.mjs
+
+```diff
+  fontFamily: {
+-   sans: ['Inter', 'system-ui', 'sans-serif'],
++   sans: ['Work Sans', 'system-ui', 'sans-serif'],
++   display: ['Crimson Pro', 'Georgia', 'serif'],
+    mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+  },
+```
+
+### 2. src/layouts/BaseLayout.astro
+
+Replace line 53:
+```diff
+- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
++ <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+```
+
+Better yet, use preconnect optimization:
+```html
+<!-- Fonts (optimized loading) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+```
+
+### 3. src/styles/global.css
+
+Add after line 23 (in @layer base, body):
+```css
+body {
+  @apply bg-white text-slate-900 antialiased;
+  font-feature-settings: 'liga' 1, 'kern' 1, 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display font features */
+.font-display {
+  font-feature-settings: 'liga' 1, 'kern' 1, 'ss01' 1;
+  letter-spacing: -0.02em; /* Tighter for large display text */
+}
+
+/* Headings use display font */
+h1, h2, h3 {
+  @apply font-display;
+}
+
+h1 {
+  @apply text-slate-950;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+h2 {
+  @apply text-slate-900;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h3 {
+  @apply font-sans font-semibold text-slate-900;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* Uppercase text (nav, badges) gets wider tracking */
+.tracking-wide-caps {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+```
+
+### 4. Update hero sections (src/pages/index.astro)
+
+Line 106-109:
+```diff
+- <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight">
++ <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-950 tracking-tight">
+    Crystal Structure
+    <span class="gradient-text block">Visualization</span>
+  </h1>
+```
+
+Line 180:
+```diff
+- <h2 class="text-3xl font-bold text-slate-900 mt-2">Describe crystals with precision</h2>
++ <h2 class="text-3xl font-display font-bold text-slate-950 mt-2">Describe crystals with precision</h2>
+```
+
+Line 234:
+```diff
+- <h2 class="text-3xl font-bold text-white">Seven Crystal Systems</h2>
++ <h2 class="text-3xl font-display font-bold text-white">Seven Crystal Systems</h2>
+```
+
+Line 252:
+```diff
+- <h2 class="text-3xl font-bold text-white">Ready to visualize crystals?</h2>
++ <h2 class="text-3xl font-display font-bold text-white">Ready to visualize crystals?</h2>
+```
+
+### 5. Update SectionHeader component (src/components/ui/SectionHeader.tsx)
+
+```diff
+  <h2 className={cn(
+-   "text-3xl font-bold text-slate-900 text-center",
++   "text-3xl font-display font-bold text-slate-950 text-center",
+    className
+  )}>
+```
+
+### 6. Global prose adjustments (global.css, line 134+)
+
+```diff
+.prose h1 {
+- @apply mb-4;
++ @apply mb-4 font-display text-slate-950;
+}
+
+.prose h2 {
+- @apply mt-12 mb-6 pb-3 border-b border-slate-200;
++ @apply mt-12 mb-6 pb-3 border-b border-slate-200 font-display text-slate-950;
+}
+
+.prose h3 {
+- @apply mt-8 mb-4;
++ @apply mt-8 mb-4 font-sans font-semibold text-slate-900;
+}
+```
+
+## Quick Migration Script
+
+Create `scripts/update-fonts.sh`:
+
+```bash
+#!/bin/bash
+# Quick find-replace for font updates
+
+# Update h1 tags
+find src -name "*.astro" -type f -exec sed -i '' 's/text-4xl sm:text-5xl lg:text-6xl font-bold/text-4xl sm:text-5xl lg:text-6xl font-display font-bold/g' {} +
+
+# Update h2 tags
+find src -name "*.astro" -type f -exec sed -i '' 's/text-3xl font-bold text-slate-900/text-3xl font-display font-bold text-slate-950/g' {} +
+
+# Update large text
+find src -name "*.astro" -type f -exec sed -i '' 's/text-2xl font-bold text-slate-900/text-2xl font-display font-bold text-slate-950/g' {} +
+
+echo "Font classes updated! Now manually update:"
+echo "1. tailwind.config.mjs"
+echo "2. BaseLayout.astro (fonts link)"
+echo "3. global.css (font features)"
+```
+
+## Performance Optimization
+
+Add to `<head>` in BaseLayout.astro:
+```html
+<!-- Preload critical fonts -->
+<link
+  rel="preload"
+  href="https://fonts.gstatic.com/s/crimsonpro/v23/q5uDsoa5M_tv7IihmnkabARboYF6CsKj.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="https://fonts.gstatic.com/s/worksans/v18/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nWNigDp6_cOyA.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+```
+
+## Testing After Changes
+
+1. **Visual hierarchy**: Hero H1 should feel premium/editorial
+2. **Readability**: Body text should be comfortable
+3. **Performance**: Check Lighthouse font metrics
+4. **Contrast**: Ensure WCAG AA compliance (should be fine)
+5. **Mobile**: Typography should scale gracefully
+
+## Rollback Plan
+
+If something breaks:
+```bash
+git checkout tailwind.config.mjs src/layouts/BaseLayout.astro src/styles/global.css
+```
+
+Then manually revert specific components.
