@@ -1,0 +1,15 @@
+---
+/**
+ * Measurement & Calculation tools page.
+ * Protected by LockGate - requires authentication to access.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedMeasurement } from '../../components/auth/ProtectedMeasurement';
+---
+
+<BaseLayout
+  title="Measurement & Calculation"
+  description="Gemmological measurement and calculation tools including SG, RI, birefringence, dispersion, critical angle, carat estimation, and density."
+>
+  <ProtectedMeasurement client:load />
+</BaseLayout>

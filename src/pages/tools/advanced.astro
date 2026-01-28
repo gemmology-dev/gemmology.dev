@@ -1,0 +1,14 @@
+---
+/**
+ * Advanced Analysis tools page.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedAdvanced } from '../../components/auth/ProtectedAdvanced';
+---
+
+<BaseLayout
+  title="Advanced Analysis"
+  description="Advanced gemmological analysis including treatment detection, origin determination, and cut proportion evaluation."
+>
+  <ProtectedAdvanced client:load />
+</BaseLayout>
