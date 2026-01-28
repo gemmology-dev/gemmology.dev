@@ -161,15 +161,16 @@ export function TreatmentDetection() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      {/* Treatment types overview — responsive grid */}
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Common Treatment Types</h4>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Common Treatment Types</h4>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {TREATMENT_TYPES.map(type => (
             <div key={type.name} className="p-3 rounded-lg border border-slate-200 bg-slate-50">
-              <div className="flex items-start justify-between mb-1">
-                <h5 className="font-semibold text-slate-900 text-sm">{type.name}</h5>
-                <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+              <div className="flex items-start justify-between gap-1 mb-1">
+                <h5 className="font-semibold text-slate-900 text-xs">{type.name}</h5>
+                <span className={`shrink-0 text-xs px-1.5 py-0.5 rounded font-medium ${
                   type.detectability === 'Easy' ? 'bg-green-100 text-green-700' :
                   type.detectability === 'Moderate' ? 'bg-blue-100 text-blue-700' :
                   type.detectability === 'Difficult' ? 'bg-amber-100 text-amber-700' :
@@ -178,87 +179,87 @@ export function TreatmentDetection() {
                   {type.detectability}
                 </span>
               </div>
-              <p className="text-xs text-slate-700 mb-1">{type.description}</p>
-              <p className="text-xs text-slate-600">
-                <strong>Purpose:</strong> {type.purpose}
-              </p>
+              <p className="text-xs text-slate-600">{type.purpose}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="border-t border-slate-200 pt-6">
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Detection Indicators</h4>
+      {/* Detection indicators — filter bar + results table */}
+      <div>
+        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Detection Indicators</h4>
 
-        <div className="flex flex-col sm:flex-row gap-3 mb-4">
-          <input
-            type="text"
-            placeholder="Search treatment or gem..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
-          />
-          <select
-            value={selectedGem}
-            onChange={(e) => setSelectedGem(e.target.value)}
-            className="px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
-          >
-            {uniqueGems.map(gem => (
-              <option key={gem} value={gem}>
-                {gem === 'all' ? 'All Gems' : gem}
-              </option>
-            ))}
-          </select>
+        <div className="flex flex-wrap gap-2 items-end mb-3">
+          <div className="flex-1 min-w-[180px]">
+            <input
+              type="text"
+              placeholder="Search treatment or gem..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+            />
+          </div>
+          <div className="w-40 shrink-0">
+            <select
+              value={selectedGem}
+              onChange={(e) => setSelectedGem(e.target.value)}
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+            >
+              {uniqueGems.map(gem => (
+                <option key={gem} value={gem}>
+                  {gem === 'all' ? 'All Gems' : gem}
+                </option>
+              ))}
+            </select>
+          </div>
+          <span className="text-xs text-slate-400 shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
         </div>
 
-        <div className="space-y-3">
-          {filteredTreatments.map((treatment, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-slate-200 bg-white hover:border-crystal-300 transition-colors">
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <h5 className="font-semibold text-slate-900">{treatment.treatment}</h5>
-                  <p className="text-xs text-slate-500">{treatment.gems}</p>
-                </div>
-                <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                  treatment.permanence.startsWith('Permanent') ? 'bg-green-100 text-green-700' :
-                  'bg-amber-100 text-amber-700'
-                }`}>
-                  {treatment.permanence.startsWith('Permanent') ? 'Permanent' : 'Temporary'}
-                </span>
-              </div>
-
-              <div className="grid gap-2 text-xs">
-                <div>
-                  <strong className="text-slate-700">Visual Indicators:</strong>
-                  <p className="text-slate-600 mt-0.5">{treatment.visualIndicators}</p>
-                </div>
-                <div>
-                  <strong className="text-slate-700">Instrumental Tests:</strong>
-                  <p className="text-slate-600 mt-0.5">{treatment.instrumentalTests}</p>
-                </div>
-                <div>
-                  <strong className="text-slate-700">Disclosure:</strong>
-                  <p className="text-slate-600 mt-0.5">{treatment.disclosure}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-lg border border-slate-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200">
+                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Treatment</th>
+                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Visual</th>
+                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider hidden lg:table-cell">Instrumental</th>
+                <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTreatments.map((treatment, idx) => (
+                <tr key={idx} className={`border-b border-slate-100 last:border-0 ${idx % 2 === 0 ? '' : 'bg-slate-50/50'}`}>
+                  <td className="px-3 py-2">
+                    <p className="font-medium text-slate-900 text-xs">{treatment.treatment}</p>
+                    <p className="text-xs text-slate-500">{treatment.gems}</p>
+                  </td>
+                  <td className="px-3 py-2 text-xs text-slate-600">{treatment.visualIndicators}</td>
+                  <td className="px-3 py-2 text-xs text-slate-600 hidden lg:table-cell">{treatment.instrumentalTests}</td>
+                  <td className="px-3 py-2 text-center">
+                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                      treatment.permanence.startsWith('Permanent') ? 'bg-green-100 text-green-700' :
+                      'bg-amber-100 text-amber-700'
+                    }`}>
+                      {treatment.permanence.startsWith('Permanent') ? 'Permanent' : 'Temporary'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {filteredTreatments.length === 0 && (
+            <p className="text-center text-slate-500 text-sm py-4">No treatments found matching your criteria.</p>
+          )}
         </div>
-
-        {filteredTreatments.length === 0 && (
-          <p className="text-center text-slate-500 text-sm py-4">No treatments found matching your criteria.</p>
-        )}
       </div>
 
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-red-900 mb-2">⚠️ Important Disclosure Requirements</h4>
-        <ul className="text-sm text-red-800 space-y-1">
-          <li>• All treatments must be disclosed to buyers in most markets</li>
-          <li>• Undisclosed treatments can result in legal liability</li>
-          <li>• Some treatments (fracture filling, dyeing) drastically reduce value</li>
-          <li>• Standard treatments (heat in corundum) may not require disclosure in some markets</li>
-          <li>• When in doubt, always disclose - transparency builds trust</li>
-        </ul>
+      {/* Disclosure requirements — inline warning */}
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+        <span className="font-semibold">Disclosure:</span>
+        <span>All treatments must be disclosed to buyers</span>
+        <span>•</span>
+        <span>Fracture filling &amp; dyeing drastically reduce value</span>
+        <span>•</span>
+        <span>When in doubt, always disclose</span>
       </div>
     </div>
   );
