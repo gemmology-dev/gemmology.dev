@@ -1,9 +1,9 @@
 /**
- * Main Calculator component with tabbed interface.
- * Combines all gemmological calculators in one place.
+ * Main Calculator component with grid layout.
+ * Shows all gemmological calculators in expandable cards.
  */
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { SGCalculator } from './SGCalculator';
 import { BirefringenceCalc } from './BirefringenceCalc';
 import { CriticalAngleCalc } from './CriticalAngleCalc';
@@ -12,9 +12,9 @@ import { LengthConverter } from './LengthConverter';
 import { TemperatureConverter } from './TemperatureConverter';
 import { CaratEstimator } from './CaratEstimator';
 import { RICalculator } from './RICalculator';
-import { cn } from '../ui/cn';
+import { CalculatorCard } from './CalculatorCard';
 
-type CalculatorTab =
+type CalculatorId =
   | 'sg'
   | 'ri-lookup'
   | 'birefringence'
@@ -24,23 +24,13 @@ type CalculatorTab =
   | 'length'
   | 'temperature';
 
-interface Tab {
-  id: CalculatorTab;
+interface CalculatorConfig {
+  id: CalculatorId;
   label: string;
-  icon: string;
+  iconPath: string;
   description: string;
+  component: ReactNode;
 }
-
-const TABS: Tab[] = [
-  { id: 'sg', label: 'Specific Gravity', icon: 'scale', description: 'Calculate SG from hydrostatic weighing' },
-  { id: 'ri-lookup', label: 'RI Lookup', icon: 'search', description: 'Find gems by refractive index' },
-  { id: 'birefringence', label: 'Birefringence', icon: 'layers', description: 'Calculate birefringence from RI values' },
-  { id: 'critical-angle', label: 'Critical Angle', icon: 'arrow-right', description: 'Calculate TIR critical angle' },
-  { id: 'carat-estimate', label: 'Carat Estimate', icon: 'cube', description: 'Estimate weight from dimensions' },
-  { id: 'weight', label: 'Weight', icon: 'weight', description: 'Convert ct/g/mg' },
-  { id: 'length', label: 'Length', icon: 'ruler', description: 'Convert mm/inches' },
-  { id: 'temperature', label: 'Temperature', icon: 'thermometer', description: 'Convert °C/°F' },
-];
 
 const ICON_PATHS: Record<string, string> = {
   scale: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3',
@@ -53,131 +43,108 @@ const ICON_PATHS: Record<string, string> = {
   thermometer: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
 };
 
+const CALCULATORS: CalculatorConfig[] = [
+  {
+    id: 'sg',
+    label: 'Specific Gravity',
+    iconPath: ICON_PATHS.scale,
+    description: 'Calculate SG from hydrostatic weighing',
+    component: <SGCalculator />,
+  },
+  {
+    id: 'ri-lookup',
+    label: 'RI Lookup',
+    iconPath: ICON_PATHS.search,
+    description: 'Find gems by refractive index',
+    component: <RICalculator />,
+  },
+  {
+    id: 'birefringence',
+    label: 'Birefringence',
+    iconPath: ICON_PATHS.layers,
+    description: 'Calculate birefringence from RI values',
+    component: <BirefringenceCalc />,
+  },
+  {
+    id: 'critical-angle',
+    label: 'Critical Angle',
+    iconPath: ICON_PATHS['arrow-right'],
+    description: 'Calculate TIR critical angle',
+    component: <CriticalAngleCalc />,
+  },
+  {
+    id: 'carat-estimate',
+    label: 'Carat Estimate',
+    iconPath: ICON_PATHS.cube,
+    description: 'Estimate weight from dimensions',
+    component: <CaratEstimator />,
+  },
+  {
+    id: 'weight',
+    label: 'Weight Converter',
+    iconPath: ICON_PATHS.weight,
+    description: 'Convert ct/g/mg',
+    component: <WeightConverter />,
+  },
+  {
+    id: 'length',
+    label: 'Length Converter',
+    iconPath: ICON_PATHS.ruler,
+    description: 'Convert mm/inches',
+    component: <LengthConverter />,
+  },
+  {
+    id: 'temperature',
+    label: 'Temperature Converter',
+    iconPath: ICON_PATHS.thermometer,
+    description: 'Convert °C/°F',
+    component: <TemperatureConverter />,
+  },
+];
+
 interface CalculatorProps {
-  defaultTab?: CalculatorTab;
+  /** Default expanded calculator (null = none expanded) */
+  defaultExpanded?: CalculatorId | null;
 }
 
-export function Calculator({ defaultTab = 'sg' }: CalculatorProps) {
-  const [activeTab, setActiveTab] = useState<CalculatorTab>(defaultTab);
+export function Calculator({ defaultExpanded = 'sg' }: CalculatorProps) {
+  const [expandedCalc, setExpandedCalc] = useState<CalculatorId | null>(defaultExpanded);
 
-  const renderCalculator = () => {
-    switch (activeTab) {
-      case 'sg':
-        return <SGCalculator />;
-      case 'ri-lookup':
-        return <RICalculator />;
-      case 'birefringence':
-        return <BirefringenceCalc />;
-      case 'critical-angle':
-        return <CriticalAngleCalc />;
-      case 'carat-estimate':
-        return <CaratEstimator />;
-      case 'weight':
-        return <WeightConverter />;
-      case 'length':
-        return <LengthConverter />;
-      case 'temperature':
-        return <TemperatureConverter />;
-      default:
-        return null;
-    }
+  const handleToggle = (id: CalculatorId) => {
+    setExpandedCalc(prev => (prev === id ? null : id));
   };
 
-  const activeTabInfo = TABS.find(t => t.id === activeTab);
-
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      {/* Mobile: Dropdown selector */}
-      <div className="lg:hidden">
-        <label htmlFor="calculator-select" className="sr-only">
-          Select calculator
-        </label>
-        <select
-          id="calculator-select"
-          value={activeTab}
-          onChange={(e) => setActiveTab(e.target.value as CalculatorTab)}
-          className={cn(
-            'w-full px-4 py-3 rounded-lg border-2 border-slate-200',
-            'bg-white text-slate-700 font-medium',
-            'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500',
-            'appearance-none cursor-pointer',
-            'bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20fill%3D%27none%27%20viewBox%3D%270%200%2024%2024%27%20stroke%3D%27%236b7280%27%3E%3Cpath%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%272%27%20d%3D%27M19%209l-7%207-7-7%27%2F%3E%3C%2Fsvg%3E")]',
-            'bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10'
-          )}
-        >
-          {TABS.map(tab => (
-            <option key={tab.id} value={tab.id}>
-              {tab.label}
-            </option>
-          ))}
-        </select>
+    <div className="space-y-6">
+      {/* Introduction */}
+      <div className="text-sm text-slate-600 mb-4">
+        <p>
+          Select a calculator below to expand it. These tools help with common gemmological
+          calculations and conversions.
+        </p>
       </div>
 
-      {/* Desktop: Sidebar tabs */}
-      <div className="hidden lg:block lg:w-64 flex-shrink-0">
-        <div className="lg:sticky lg:top-4">
-          <nav
-            role="tablist"
-            aria-label="Calculator tools"
-            aria-orientation="vertical"
-            className="flex flex-col gap-2"
+      {/* Calculator grid */}
+      <div className="grid gap-4 md:grid-cols-2">
+        {CALCULATORS.map(calc => (
+          <CalculatorCard
+            key={calc.id}
+            id={calc.id}
+            title={calc.label}
+            description={calc.description}
+            iconPath={calc.iconPath}
+            expanded={expandedCalc === calc.id}
+            onToggle={() => handleToggle(calc.id)}
           >
-            {TABS.map(tab => (
-              <button
-                key={tab.id}
-                role="tab"
-                id={`tab-${tab.id}`}
-                aria-selected={activeTab === tab.id}
-                aria-controls={`panel-${tab.id}`}
-                onClick={() => setActiveTab(tab.id)}
-                className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all whitespace-nowrap',
-                  'border-2 focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2',
-                  activeTab === tab.id
-                    ? 'border-crystal-500 bg-crystal-50 text-crystal-700'
-                    : 'border-transparent hover:bg-slate-50 text-slate-600'
-                )}
-              >
-                <svg
-                  className="w-5 h-5 flex-shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={ICON_PATHS[tab.icon]} />
-                </svg>
-                <span className="font-medium text-sm">{tab.label}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
+            {calc.component}
+          </CalculatorCard>
+        ))}
       </div>
 
-      {/* Calculator content */}
-      <div className="flex-1 min-w-0">
-        <div
-          role="tabpanel"
-          id={`panel-${activeTab}`}
-          aria-labelledby={`tab-${activeTab}`}
-          className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
-        >
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
-            <h2 className="text-lg font-semibold text-slate-900">
-              {activeTabInfo?.label}
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">
-              {activeTabInfo?.description}
-            </p>
-          </div>
-
-          {/* Calculator body */}
-          <div className="p-6">
-            {renderCalculator()}
-          </div>
-        </div>
-      </div>
+      {/* Tip */}
+      <p className="text-xs text-slate-500 text-center">
+        Tip: Click on any calculator header to expand or collapse it.
+      </p>
     </div>
   );
 }
