@@ -94,8 +94,12 @@ export function QuizResults({
             <h3 className="font-semibold text-slate-900">Score by Category</h3>
           </div>
           <div className="p-4 space-y-3">
-            {results.breakdown.map((breakdown) => (
-              <CategoryScoreBar key={breakdown.category} breakdown={breakdown} />
+            {results.breakdown.map((breakdown, index) => (
+              <CategoryScoreBar
+                key={breakdown.category}
+                breakdown={breakdown}
+                animationDelay={index * 100}
+              />
             ))}
           </div>
         </div>
@@ -131,13 +135,20 @@ export function QuizResults({
 
 interface CategoryScoreBarProps {
   breakdown: CategoryBreakdown;
+  animationDelay?: number;
 }
 
-function CategoryScoreBar({ breakdown }: CategoryScoreBarProps) {
+function CategoryScoreBar({ breakdown, animationDelay = 0 }: CategoryScoreBarProps) {
   const label = CATEGORY_LABELS[breakdown.category] || breakdown.category;
 
   return (
-    <div className="space-y-1">
+    <div
+      className="space-y-1 animate-slide-in-up opacity-0"
+      style={{
+        animationDelay: `${animationDelay}ms`,
+        animationFillMode: 'forwards',
+      }}
+    >
       <div className="flex items-center justify-between text-sm">
         <span className="text-slate-600">{label}</span>
         <span className="font-medium text-slate-900">
@@ -147,10 +158,13 @@ function CategoryScoreBar({ breakdown }: CategoryScoreBarProps) {
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
           className={cn(
-            'h-full rounded-full transition-all',
+            'h-full rounded-full transition-all duration-700 ease-out',
             breakdown.percentage >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
           )}
-          style={{ width: `${breakdown.percentage}%` }}
+          style={{
+            width: `${breakdown.percentage}%`,
+            transitionDelay: `${animationDelay + 200}ms`,
+          }}
         />
       </div>
     </div>
