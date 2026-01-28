@@ -41,10 +41,17 @@ export function QuestionNav({
         <QuestionLegend />
       </div>
 
+      {/* Mobile: horizontal scroll with snap, Desktop: grid */}
       <div
         role="group"
         aria-labelledby="question-nav-heading"
-        className="grid grid-cols-5 sm:grid-cols-10 gap-2"
+        className={cn(
+          // Mobile: horizontal scroll with snap
+          'flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 -mx-4 px-4',
+          'scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent',
+          // Desktop: grid layout
+          'sm:grid sm:grid-cols-10 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
+        )}
       >
         {Array.from({ length: totalQuestions }, (_, index) => {
           const answered = isAnswered(index);
@@ -65,6 +72,9 @@ export function QuestionNav({
               aria-label={`Question ${index + 1}${statusText}`}
               aria-current={isCurrent ? 'true' : undefined}
               className={cn(
+                // Mobile: fixed size with snap
+                'snap-center shrink-0',
+                // Base styles
                 'relative w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium transition-all',
                 'focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-crystal-500',
                 // Current question
@@ -103,7 +113,8 @@ export function QuestionNav({
 
 function QuestionLegend() {
   return (
-    <div className="flex items-center gap-3 text-xs text-slate-500" aria-hidden="true">
+    // Hide on mobile, show on desktop
+    <div className="hidden sm:flex items-center gap-3 text-xs text-slate-500" aria-hidden="true">
       <div className="flex items-center gap-1">
         <span className="w-3 h-3 rounded bg-emerald-100 border border-emerald-200" />
         <span>Answered</span>

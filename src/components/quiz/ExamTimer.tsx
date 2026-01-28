@@ -52,7 +52,8 @@ export function ExamTimer({
       role="timer"
       aria-label="Exam timer"
       className={cn(
-        'flex items-center gap-3 px-4 py-2 rounded-lg',
+        // Responsive padding: smaller on mobile
+        'flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg',
         !isExpired && !isWarning && !isCritical && 'bg-slate-100 text-slate-700',
         isWarning && 'bg-amber-100 text-amber-700',
         isCritical && 'bg-red-100 text-red-700 animate-pulse',
@@ -60,8 +61,14 @@ export function ExamTimer({
         className
       )}
     >
-      {/* Timer icon - decorative */}
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      {/* Timer icon - decorative, hidden on mobile */}
+      <svg
+        className="w-4 h-4 sm:w-5 sm:h-5 hidden sm:block"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -70,16 +77,16 @@ export function ExamTimer({
         />
       </svg>
 
-      {/* Time display - visual */}
-      <div className="font-mono text-lg font-semibold" aria-hidden="true">
+      {/* Time display - visual, responsive font size */}
+      <div className="font-mono text-base sm:text-lg font-semibold" aria-hidden="true">
         {hours > 0 && (
           <>
             <span>{formatTime(hours)}</span>
-            <span className="mx-1">:</span>
+            <span className="mx-0.5 sm:mx-1">:</span>
           </>
         )}
         <span>{formatTime(minutes)}</span>
-        <span className="mx-1">:</span>
+        <span className="mx-0.5 sm:mx-1">:</span>
         <span>{formatTime(seconds)}</span>
       </div>
 
