@@ -3,6 +3,8 @@
  */
 
 export { Calculator } from './Calculator';
+export { MeasurementTools } from './MeasurementTools';
+export { ConversionTools } from './ConversionTools';
 export { SGCalculator } from './SGCalculator';
 export { BirefringenceCalc } from './BirefringenceCalc';
 export { CriticalAngleCalc } from './CriticalAngleCalc';
@@ -11,6 +13,9 @@ export { LengthConverter } from './LengthConverter';
 export { TemperatureConverter } from './TemperatureConverter';
 export { CaratEstimator } from './CaratEstimator';
 export { RICalculator } from './RICalculator';
+export { DispersionCalculator } from './DispersionCalculator';
+export { DensityEstimator } from './DensityEstimator';
+export { PricePerCaratConverter } from './PricePerCaratConverter';
 
 // Validation
 export {

@@ -1,0 +1,15 @@
+---
+/**
+ * Unit Conversions tools page.
+ * Protected by LockGate - requires authentication to access.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedConversions } from '../../components/auth/ProtectedConversions';
+---
+
+<BaseLayout
+  title="Unit Conversions"
+  description="Unit conversion tools for weight, length, temperature, and price calculations."
+>
+  <ProtectedConversions client:load />
+</BaseLayout>

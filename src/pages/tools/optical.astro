@@ -1,0 +1,14 @@
+---
+/**
+ * Optical Properties tools page.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedOptical } from '../../components/auth/ProtectedOptical';
+---
+
+<BaseLayout
+  title="Optical Properties"
+  description="Optical property tools including dichroscope, polariscope, refractometer simulator, and pleochroism reference."
+>
+  <ProtectedOptical client:load />
+</BaseLayout>
