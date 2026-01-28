@@ -205,12 +205,19 @@ export function ExamResults({
             <h3 className="font-semibold text-slate-900">Score by Category</h3>
           </div>
           <div className="p-4 space-y-3">
-            {results.breakdown.map(breakdown => {
+            {results.breakdown.map((breakdown, index) => {
               const label = CATEGORY_LABELS[breakdown.category] || breakdown.category;
               const isWeak = breakdown.percentage < 70;
 
               return (
-                <div key={breakdown.category} className="space-y-1">
+                <div
+                  key={breakdown.category}
+                  className="space-y-1 animate-slide-in-up opacity-0"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationFillMode: 'forwards',
+                  }}
+                >
                   <div className="flex items-center justify-between text-sm">
                     <span className={cn('text-slate-600', isWeak && 'text-amber-700 font-medium')}>
                       {label}
@@ -225,10 +232,13 @@ export function ExamResults({
                   <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                     <div
                       className={cn(
-                        'h-full rounded-full transition-all',
+                        'h-full rounded-full transition-all duration-700 ease-out',
                         breakdown.percentage >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
                       )}
-                      style={{ width: `${breakdown.percentage}%` }}
+                      style={{
+                        width: `${breakdown.percentage}%`,
+                        transitionDelay: `${index * 100 + 200}ms`,
+                      }}
                     />
                   </div>
                 </div>

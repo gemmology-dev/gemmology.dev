@@ -19,3 +19,6 @@ export {
   validateRI,
   validateRIRange,
 } from './ValidationMessage';
+
+// Result display
+export { ResultCard, ResultInline, ResultGroup } from './ResultCard';

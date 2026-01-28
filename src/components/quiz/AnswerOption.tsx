@@ -54,12 +54,13 @@ export function AnswerOption({
       aria-label={buildAriaLabel()}
       aria-pressed={isSelected}
       className={cn(
-        'w-full flex items-start gap-3 p-4 rounded-lg border-2 text-left transition-all',
+        'w-full flex items-start gap-3 p-4 rounded-lg border-2 text-left',
+        'transform transition-all duration-200 ease-out',
         'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
         // Default state
-        !isAnswered && !isSelected && 'border-slate-200 bg-white hover:border-crystal-300 hover:bg-crystal-50',
-        // Selected state (before submission)
-        !isAnswered && isSelected && 'border-crystal-500 bg-crystal-50',
+        !isAnswered && !isSelected && 'border-slate-200 bg-white hover:border-crystal-300 hover:bg-crystal-50 active:scale-[0.98]',
+        // Selected state (before submission) - subtle scale up
+        !isAnswered && isSelected && 'border-crystal-500 bg-crystal-50 scale-[1.01] shadow-md',
         // Correct answer (after submission)
         showCorrect && 'border-emerald-500 bg-emerald-50',
         // Incorrect selection (after submission)
