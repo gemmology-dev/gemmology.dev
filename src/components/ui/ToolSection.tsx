@@ -13,6 +13,7 @@ const ACCENT_CLASSES: Record<Accent, {
   iconBg: string;
   iconText: string;
   headerBg: string;
+  headerBorder: string;
   titleText: string;
   strip: string;
 }> = {
@@ -21,6 +22,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-emerald-100',
     iconText: 'text-emerald-600',
     headerBg: 'bg-emerald-50',
+    headerBorder: 'border-emerald-200',
     titleText: 'text-emerald-800',
     strip: 'bg-emerald-500',
   },
@@ -29,6 +31,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-blue-100',
     iconText: 'text-blue-600',
     headerBg: 'bg-blue-50',
+    headerBorder: 'border-blue-200',
     titleText: 'text-blue-800',
     strip: 'bg-blue-500',
   },
@@ -37,6 +40,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-purple-100',
     iconText: 'text-purple-600',
     headerBg: 'bg-purple-50',
+    headerBorder: 'border-purple-200',
     titleText: 'text-purple-800',
     strip: 'bg-purple-500',
   },
@@ -45,6 +49,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-rose-100',
     iconText: 'text-rose-600',
     headerBg: 'bg-rose-50',
+    headerBorder: 'border-rose-200',
     titleText: 'text-rose-800',
     strip: 'bg-rose-500',
   },
@@ -53,6 +58,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-amber-100',
     iconText: 'text-amber-600',
     headerBg: 'bg-amber-50',
+    headerBorder: 'border-amber-200',
     titleText: 'text-amber-800',
     strip: 'bg-amber-500',
   },
@@ -61,6 +67,7 @@ const ACCENT_CLASSES: Record<Accent, {
     iconBg: 'bg-cyan-100',
     iconText: 'text-cyan-600',
     headerBg: 'bg-cyan-50',
+    headerBorder: 'border-cyan-200',
     titleText: 'text-cyan-800',
     strip: 'bg-cyan-500',
   },
@@ -88,12 +95,12 @@ export function ToolSection({
   return (
     <section
       id={`tool-${id}`}
-      className={`rounded-xl border ${colors.border} bg-white shadow-sm overflow-hidden`}
+      className={`rounded-xl border ${colors.border} bg-white shadow-sm`}
     >
       {/* Colored accent strip + sticky header */}
-      <div className="sticky top-16 z-10">
-        <div className={`h-1 ${colors.strip}`} />
-        <div className={`flex items-center gap-4 px-5 py-3 ${colors.headerBg} border-b border-slate-100`}>
+      <div className="sticky top-16 z-10 rounded-t-xl">
+        <div className={`h-1.5 ${colors.strip} rounded-t-xl`} />
+        <div className={`flex items-center gap-4 px-5 py-3.5 ${colors.headerBg} border-b ${colors.headerBorder}`}>
           <div className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg ${colors.iconBg}`}>
             <svg
               className={`w-5 h-5 ${colors.iconText}`}
@@ -106,7 +113,7 @@ export function ToolSection({
             </svg>
           </div>
           <div className="min-w-0">
-            <h3 className={`font-semibold text-sm ${colors.titleText}`}>{title}</h3>
+            <h3 className={`font-semibold text-base ${colors.titleText}`}>{title}</h3>
             <p className="text-xs text-slate-500 truncate">{description}</p>
           </div>
         </div>
