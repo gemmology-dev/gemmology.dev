@@ -1,0 +1,14 @@
+---
+/**
+ * Lab Equipment tools page.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedLab } from '../../components/auth/ProtectedLab';
+---
+
+<BaseLayout
+  title="Lab Equipment"
+  description="Lab equipment reference including Chelsea filter, spectroscope line calculator, and heavy liquid SG separation."
+>
+  <ProtectedLab client:load />
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+/**
+ * Gem Identification tools page.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ProtectedIdentification } from '../../components/auth/ProtectedIdentification';
+---
+
+<BaseLayout
+  title="Gem Identification"
+  description="Gem identification tools including side-by-side comparison, Mohs hardness reference, and cleavage/fracture guide."
+>
+  <ProtectedIdentification client:load />
+</BaseLayout>
