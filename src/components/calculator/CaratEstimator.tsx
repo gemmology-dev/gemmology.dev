@@ -37,8 +37,13 @@ export function CaratEstimator() {
   const [length, setLength] = useState('');
   const [width, setWidth] = useState('');
   const [depth, setDepth] = useState('');
-  const [sg, setSg] = useState('3.52');
+  const [sgSource, setSgSource] = useState<'preset' | 'custom'>('preset');
+  const [sgPreset, setSgPreset] = useState('3.52');
+  const [sgCustom, setSgCustom] = useState('');
   const [shape, setShape] = useState<Shape>('round-brilliant');
+
+  // Get the effective SG value
+  const sg = sgSource === 'custom' ? sgCustom : sgPreset;
 
   const result = useMemo(() => {
     const l = parseFloat(length);
@@ -140,24 +145,37 @@ export function CaratEstimator() {
           </label>
           <select
             id="sg-select"
-            value={sg}
-            onChange={(e) => setSg(e.target.value)}
+            value={sgSource === 'custom' ? 'custom' : sgPreset}
+            onChange={(e) => {
+              if (e.target.value === 'custom') {
+                setSgSource('custom');
+              } else {
+                setSgSource('preset');
+                setSgPreset(e.target.value);
+              }
+            }}
             className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
           >
             {COMMON_SG.map(item => (
               <option key={item.value} value={item.value}>{item.label}</option>
             ))}
+            <option value="custom">Custom SG...</option>
           </select>
-          <input
-            type="number"
-            step="0.01"
-            min="1"
-            max="10"
-            value={sg}
-            onChange={(e) => setSg(e.target.value)}
-            placeholder="Custom SG"
-            className="w-full mt-2 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-sm"
-          />
+          {/* Custom SG input - only shown when "Custom" is selected */}
+          {sgSource === 'custom' && (
+            <input
+              type="number"
+              step="0.01"
+              min="1"
+              max="10"
+              value={sgCustom}
+              onChange={(e) => setSgCustom(e.target.value)}
+              placeholder="Enter custom SG (e.g., 3.50)"
+              aria-label="Custom specific gravity value"
+              autoFocus
+              className="w-full mt-2 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-sm"
+            />
+          )}
         </div>
       </div>
 
