@@ -27,7 +27,7 @@ export function ExamResults({
   onNewExam,
 }: ExamResultsProps) {
   const [showReview, setShowReview] = useState(false);
-  const [reviewFilter, setReviewFilter] = useState<'all' | 'incorrect' | 'correct'>('all');
+  const [reviewFilter, setReviewFilter] = useState<'all' | 'incorrect' | 'correct' | 'flagged'>('all');
 
   const grade = getGrade(results.percentage);
   const feedback = getFeedback(results.percentage);
@@ -42,10 +42,12 @@ export function ExamResults({
   const filteredResults = results.results.filter(r => {
     if (reviewFilter === 'incorrect') return !r.isCorrect;
     if (reviewFilter === 'correct') return r.isCorrect;
+    if (reviewFilter === 'flagged') return r.wasFlagged;
     return true;
   });
 
   const incorrectCount = results.results.filter(r => !r.isCorrect).length;
+  const flaggedCount = results.results.filter(r => r.wasFlagged).length;
 
   if (showReview) {
     return (
@@ -64,11 +66,12 @@ export function ExamResults({
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-2 border-b border-slate-200 pb-2">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
           {[
             { value: 'all' as const, label: `All (${results.results.length})` },
             { value: 'incorrect' as const, label: `Incorrect (${incorrectCount})` },
             { value: 'correct' as const, label: `Correct (${results.score})` },
+            ...(flaggedCount > 0 ? [{ value: 'flagged' as const, label: `Flagged (${flaggedCount})` }] : []),
           ].map(tab => (
             <button
               key={tab.value}
@@ -284,7 +287,7 @@ interface QuestionReviewCardProps {
 }
 
 function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps) {
-  const { question, userAnswer, isCorrect } = result;
+  const { question, userAnswer, isCorrect, wasFlagged } = result;
   const correctAnswer = Array.isArray(question.correctAnswer)
     ? question.correctAnswer[0]
     : question.correctAnswer;
@@ -303,9 +306,22 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
           isCorrect ? 'bg-emerald-50' : 'bg-red-50'
         )}
       >
-        <span className="text-sm font-medium text-slate-700">
-          Question {questionNumber}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-slate-700">
+            Question {questionNumber}
+          </span>
+          {wasFlagged && (
+            <span
+              className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-700"
+              title="You flagged this question for review"
+            >
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fillRule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clipRule="evenodd" />
+              </svg>
+              Flagged
+            </span>
+          )}
+        </div>
         <span
           className={cn(
             'px-2 py-1 text-xs font-medium rounded-full',

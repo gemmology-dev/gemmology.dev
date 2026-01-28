@@ -26,6 +26,7 @@ export function calculateResults(
   for (const question of state.questions) {
     const userAnswer = state.answers.get(question.id) || null;
     const isCorrect = userAnswer !== null && checkAnswer(question, userAnswer);
+    const wasFlagged = state.flaggedQuestions.has(question.id);
 
     if (isCorrect) score++;
 
@@ -33,6 +34,7 @@ export function calculateResults(
       question,
       userAnswer,
       isCorrect,
+      wasFlagged,
     });
   }
 

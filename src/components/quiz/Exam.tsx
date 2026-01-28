@@ -90,6 +90,16 @@ export function Exam({
   const unansweredCount = questions.length - answeredCount;
   const isFlagged = isQuestionFlagged(currentQuestion.id);
 
+  // Calculate pacing indicator
+  const timeUsed = timeLimit - timeRemaining;
+  const suggestedTimePerQuestion = timeLimit / questions.length;
+  const expectedQuestionIndex = Math.floor(timeUsed / suggestedTimePerQuestion);
+  const actualQuestionIndex = state.currentIndex;
+  // Consider "on pace" if within 1 question of expected, or ahead
+  const isPacingOk = actualQuestionIndex >= expectedQuestionIndex - 1;
+  // Calculate how many questions ahead/behind
+  const pacingDiff = actualQuestionIndex - expectedQuestionIndex;
+
   return (
     <div className="max-w-4xl mx-auto space-y-4">
       {/* Header bar */}
@@ -101,6 +111,31 @@ export function Exam({
             isRunning={isTimerRunning}
             isExpired={isTimeExpired}
           />
+
+          {/* Pacing indicator - hidden on mobile, shows on sm+ */}
+          <div
+            className={cn(
+              'hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
+              isPacingOk
+                ? 'bg-emerald-100 text-emerald-700'
+                : 'bg-amber-100 text-amber-700'
+            )}
+            title={pacingDiff >= 0
+              ? `${pacingDiff} question${pacingDiff !== 1 ? 's' : ''} ahead of suggested pace`
+              : `${Math.abs(pacingDiff)} question${Math.abs(pacingDiff) !== 1 ? 's' : ''} behind suggested pace`
+            }
+          >
+            {isPacingOk ? (
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+            <span>{isPacingOk ? 'On pace' : 'Behind pace'}</span>
+          </div>
 
           {/* Quick stats */}
           <QuestionNavCompact

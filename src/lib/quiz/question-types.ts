@@ -129,6 +129,8 @@ export interface QuestionResult {
   isCorrect: boolean;
   /** Time taken to answer in milliseconds */
   timeTaken?: number;
+  /** Whether the question was flagged for review (exam mode) */
+  wasFlagged?: boolean;
 }
 
 /** Final results after completing a quiz */
