@@ -37,8 +37,20 @@ export function ExamTimer({
   const isWarning = timeRemaining <= 300 && timeRemaining > 60; // Last 5 minutes
   const isCritical = timeRemaining <= 60; // Last minute
 
+  // Build screen reader friendly time string
+  const getSpokenTime = () => {
+    if (isExpired) return "Time's up!";
+    const parts: string[] = [];
+    if (hours > 0) parts.push(`${hours} hour${hours !== 1 ? 's' : ''}`);
+    if (minutes > 0) parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`);
+    if (seconds > 0 || parts.length === 0) parts.push(`${seconds} second${seconds !== 1 ? 's' : ''}`);
+    return `${parts.join(' ')} remaining`;
+  };
+
   return (
     <div
+      role="timer"
+      aria-label="Exam timer"
       className={cn(
         'flex items-center gap-3 px-4 py-2 rounded-lg',
         !isExpired && !isWarning && !isCritical && 'bg-slate-100 text-slate-700',
@@ -48,8 +60,8 @@ export function ExamTimer({
         className
       )}
     >
-      {/* Timer icon */}
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      {/* Timer icon - decorative */}
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -58,8 +70,8 @@ export function ExamTimer({
         />
       </svg>
 
-      {/* Time display */}
-      <div className="font-mono text-lg font-semibold">
+      {/* Time display - visual */}
+      <div className="font-mono text-lg font-semibold" aria-hidden="true">
         {hours > 0 && (
           <>
             <span>{formatTime(hours)}</span>
@@ -71,9 +83,18 @@ export function ExamTimer({
         <span>{formatTime(seconds)}</span>
       </div>
 
+      {/* Screen reader announcement - uses assertive for critical time */}
+      <div
+        aria-live={isCritical ? 'assertive' : 'polite'}
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {getSpokenTime()}
+      </div>
+
       {/* Status text */}
       {isExpired && (
-        <span className="text-sm font-medium">Time's up!</span>
+        <span className="text-sm font-medium" aria-hidden="true">Time's up!</span>
       )}
 
       {/* Pause/Resume button (optional) */}
@@ -81,6 +102,7 @@ export function ExamTimer({
         <button
           type="button"
           onClick={isRunning ? onPause : onResume}
+          aria-label={isRunning ? 'Pause timer' : 'Resume timer'}
           className={cn(
             'p-1 rounded hover:bg-black/10 transition-colors',
             'focus:outline-none focus:ring-2 focus:ring-offset-2',
@@ -91,7 +113,7 @@ export function ExamTimer({
           title={isRunning ? 'Pause' : 'Resume'}
         >
           {isRunning ? (
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -99,7 +121,7 @@ export function ExamTimer({
               />
             </svg>
           ) : (
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
@@ -125,15 +147,20 @@ export function ExamTimerCompact({ timeRemaining, className }: ExamTimerCompactP
   const seconds = timeRemaining % 60;
   const isCritical = timeRemaining <= 60;
 
+  // Screen reader friendly format
+  const spokenTime = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''} remaining`;
+
   return (
     <span
+      role="timer"
+      aria-label={spokenTime}
       className={cn(
         'font-mono text-sm font-medium',
         isCritical ? 'text-red-600' : 'text-slate-600',
         className
       )}
     >
-      {minutes}:{seconds.toString().padStart(2, '0')}
+      <span aria-hidden="true">{minutes}:{seconds.toString().padStart(2, '0')}</span>
     </span>
   );
 }
