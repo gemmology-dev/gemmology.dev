@@ -90,20 +90,35 @@ export function Calculator({ defaultTab = 'sg' }: CalculatorProps) {
       {/* Tab navigation - sidebar on desktop, horizontal on mobile */}
       <div className="lg:w-64 flex-shrink-0">
         <div className="lg:sticky lg:top-4">
-          <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+          <nav
+            role="tablist"
+            aria-label="Calculator tools"
+            aria-orientation="vertical"
+            className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0"
+          >
             {TABS.map(tab => (
               <button
                 key={tab.id}
+                role="tab"
+                id={`tab-${tab.id}`}
+                aria-selected={activeTab === tab.id}
+                aria-controls={`panel-${tab.id}`}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all whitespace-nowrap',
-                  'border-2',
+                  'border-2 focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2',
                   activeTab === tab.id
                     ? 'border-crystal-500 bg-crystal-50 text-crystal-700'
                     : 'border-transparent hover:bg-slate-50 text-slate-600'
                 )}
               >
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                  className="w-5 h-5 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={ICON_PATHS[tab.icon]} />
                 </svg>
                 <span className="font-medium text-sm">{tab.label}</span>
@@ -115,7 +130,12 @@ export function Calculator({ defaultTab = 'sg' }: CalculatorProps) {
 
       {/* Calculator content */}
       <div className="flex-1 min-w-0">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div
+          role="tabpanel"
+          id={`panel-${activeTab}`}
+          aria-labelledby={`tab-${activeTab}`}
+          className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+        >
           {/* Header */}
           <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
             <h2 className="text-lg font-semibold text-slate-900">
