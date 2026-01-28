@@ -87,14 +87,40 @@ export function Calculator({ defaultTab = 'sg' }: CalculatorProps) {
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      {/* Tab navigation - sidebar on desktop, horizontal on mobile */}
-      <div className="lg:w-64 flex-shrink-0">
+      {/* Mobile: Dropdown selector */}
+      <div className="lg:hidden">
+        <label htmlFor="calculator-select" className="sr-only">
+          Select calculator
+        </label>
+        <select
+          id="calculator-select"
+          value={activeTab}
+          onChange={(e) => setActiveTab(e.target.value as CalculatorTab)}
+          className={cn(
+            'w-full px-4 py-3 rounded-lg border-2 border-slate-200',
+            'bg-white text-slate-700 font-medium',
+            'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500',
+            'appearance-none cursor-pointer',
+            'bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20fill%3D%27none%27%20viewBox%3D%270%200%2024%2024%27%20stroke%3D%27%236b7280%27%3E%3Cpath%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%272%27%20d%3D%27M19%209l-7%207-7-7%27%2F%3E%3C%2Fsvg%3E")]',
+            'bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10'
+          )}
+        >
+          {TABS.map(tab => (
+            <option key={tab.id} value={tab.id}>
+              {tab.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Desktop: Sidebar tabs */}
+      <div className="hidden lg:block lg:w-64 flex-shrink-0">
         <div className="lg:sticky lg:top-4">
           <nav
             role="tablist"
             aria-label="Calculator tools"
             aria-orientation="vertical"
-            className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0"
+            className="flex flex-col gap-2"
           >
             {TABS.map(tab => (
               <button
