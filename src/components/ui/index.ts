@@ -19,3 +19,6 @@ export { Link } from './Link';
 // Data Display Components
 export { Table, DataTable, PropertyTable } from './Table';
 export { DifficultyBadge } from './DifficultyBadge';
+
+// Accessibility Components
+export { LiveRegion, Announcer } from './LiveRegion';

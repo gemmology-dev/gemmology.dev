@@ -36,11 +36,23 @@ export function AnswerOption({
   const showIncorrect = isAnswered && isSelected && !isCorrect;
   const showMissed = isAnswered && isCorrect && !isSelected;
 
+  // Build accessible label with full context
+  const buildAriaLabel = () => {
+    const parts = [`Option ${label}: ${text}`];
+    if (isSelected) parts.push('selected');
+    if (showCorrect) parts.push('correct answer');
+    if (showIncorrect) parts.push('incorrect');
+    if (showMissed) parts.push('this was the correct answer');
+    return parts.join(', ');
+  };
+
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled || isAnswered}
+      aria-label={buildAriaLabel()}
+      aria-pressed={isSelected}
       className={cn(
         'w-full flex items-start gap-3 p-4 rounded-lg border-2 text-left transition-all',
         'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
@@ -91,9 +103,9 @@ export function AnswerOption({
         {text}
       </span>
 
-      {/* Status icon */}
+      {/* Status icon - decorative, state is conveyed via aria-label */}
       {isAnswered && (
-        <span className="flex-shrink-0 pt-1">
+        <span className="flex-shrink-0 pt-1" aria-hidden="true">
           {showCorrect && (
             <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
