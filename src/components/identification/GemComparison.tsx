@@ -1,6 +1,7 @@
 /**
  * Gem Comparison Tool
  * Side-by-side property comparison (2-4 gems)
+ * Full-width layout: gem selector pills on top, comparison table stretches full width below.
  */
 
 import { useState } from 'react';
@@ -34,6 +35,17 @@ const GEM_DATABASE: GemData[] = [
   { name: 'Alexandrite', ri_low: 1.745, ri_high: 1.755, sg: 3.71, hardness: 8.5, dispersion: 0.015, system: 'Orthorhombic', pleochroism: 'Very Strong' },
 ];
 
+const PROPERTIES = [
+  { key: 'ri_low' as const, label: 'RI (Low)', format: (g: GemData) => g.ri_low.toFixed(3) },
+  { key: 'ri_high' as const, label: 'RI (High)', format: (g: GemData) => g.ri_high.toFixed(3) },
+  { key: 'birefringence' as const, label: 'Birefringence', format: (g: GemData) => (g.ri_high - g.ri_low).toFixed(3) },
+  { key: 'sg' as const, label: 'Specific Gravity', format: (g: GemData) => g.sg.toFixed(2) },
+  { key: 'hardness' as const, label: 'Hardness (Mohs)', format: (g: GemData) => String(g.hardness) },
+  { key: 'dispersion' as const, label: 'Dispersion', format: (g: GemData) => g.dispersion.toFixed(3) },
+  { key: 'system' as const, label: 'Crystal System', format: (g: GemData) => g.system },
+  { key: 'pleochroism' as const, label: 'Pleochroism', format: (g: GemData) => g.pleochroism },
+];
+
 export function GemComparison() {
   const [selected, setSelected] = useState<string[]>(['Diamond', 'Ruby']);
 
@@ -52,135 +64,73 @@ export function GemComparison() {
   const selectedGems = selected.map(name => GEM_DATABASE.find(g => g.name === name)!);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="text-sm text-slate-600">
-          Select 2-4 gems to compare their optical and physical properties side-by-side.
-        </p>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-slate-900">
-            Selected Gems ({selected.length}/4)
-          </h4>
-          {selected.length > 1 && (
-            <button
-              onClick={() => setSelected(['Diamond'])}
-              className="text-xs text-crystal-600 hover:text-crystal-700 font-medium"
-            >
-              Clear all
-            </button>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
+    <div className="space-y-5">
+      {/* Gem selector + counter — horizontal bar */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <div className="flex flex-wrap gap-2 flex-1">
           {GEM_DATABASE.map(gem => (
             <button
               key={gem.name}
               onClick={() => handleToggleGem(gem.name)}
               disabled={!selected.includes(gem.name) && selected.length >= 4}
-              className={`px-3 py-1.5 rounded-lg border-2 text-sm font-medium transition-all ${
+              className={`px-3 py-1 rounded-full border text-xs font-semibold transition-all ${
                 selected.includes(gem.name)
-                  ? 'bg-crystal-500 border-crystal-500 text-white'
-                  : 'bg-white border-slate-200 text-slate-700 hover:border-crystal-300'
-              } disabled:opacity-40 disabled:cursor-not-allowed`}
+                  ? 'bg-amber-500 border-amber-500 text-white shadow-sm'
+                  : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300 hover:text-amber-700'
+              } disabled:opacity-35 disabled:cursor-not-allowed`}
             >
               {gem.name}
             </button>
           ))}
         </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-xs text-slate-500">{selected.length}/4</span>
+          {selected.length > 1 && (
+            <button
+              onClick={() => setSelected(['Diamond'])}
+              className="text-xs text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Comparison Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm border-collapse">
+      {/* Comparison table — stretches full width */}
+      <div className="overflow-x-auto rounded-lg border border-slate-200">
+        <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b-2 border-slate-200">
-              <th className="px-4 py-3 text-left font-semibold text-slate-700 sticky left-0 bg-slate-50">Property</th>
+            <tr className="bg-slate-50">
+              <th className="px-4 py-3 text-left font-semibold text-slate-600 text-xs uppercase tracking-wider sticky left-0 bg-slate-50 border-b border-slate-200">Property</th>
               {selectedGems.map(gem => (
-                <th key={gem.name} className="px-4 py-3 text-center font-semibold text-slate-900 border-l border-slate-200">
+                <th key={gem.name} className="px-4 py-3 text-center font-semibold text-slate-900 border-l border-slate-200 border-b border-slate-200">
                   {gem.name}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">RI (Low)</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {gem.ri_low.toFixed(3)}
+          <tbody>
+            {PROPERTIES.map((prop, i) => (
+              <tr key={prop.key} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
+                <td className="px-4 py-2.5 font-medium text-slate-600 text-xs sticky left-0 bg-inherit border-b border-slate-100">
+                  {prop.label}
                 </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">RI (High)</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {gem.ri_high.toFixed(3)}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Birefringence</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {(gem.ri_high - gem.ri_low).toFixed(3)}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Specific Gravity</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {gem.sg.toFixed(2)}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Hardness (Mohs)</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {gem.hardness}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Dispersion</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center font-mono text-slate-900 border-l border-slate-100">
-                  {gem.dispersion.toFixed(3)}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Crystal System</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center text-slate-900 border-l border-slate-100">
-                  {gem.system}
-                </td>
-              ))}
-            </tr>
-            <tr className="hover:bg-slate-50">
-              <td className="px-4 py-3 font-medium text-slate-700 bg-white sticky left-0">Pleochroism</td>
-              {selectedGems.map(gem => (
-                <td key={gem.name} className="px-4 py-3 text-center text-slate-900 border-l border-slate-100">
-                  {gem.pleochroism}
-                </td>
-              ))}
-            </tr>
+                {selectedGems.map(gem => (
+                  <td key={gem.name} className="px-4 py-2.5 text-center font-mono text-sm text-slate-900 border-l border-slate-100 border-b border-slate-100">
+                    {prop.format(gem)}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Comparison Tips</h4>
-        <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Compare RI to separate gems with similar appearance</li>
-          <li>• SG and hardness help distinguish gems of similar RI</li>
-          <li>• Birefringence and pleochroism indicate crystal system</li>
-          <li>• Dispersion affects brilliance and fire in well-cut stones</li>
-        </ul>
+      {/* Tips — compact inline */}
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
+        <span>• Compare RI to separate similar-looking gems</span>
+        <span>• SG + hardness distinguish gems with similar RI</span>
+        <span>• Dispersion indicates fire in well-cut stones</span>
       </div>
     </div>
   );
