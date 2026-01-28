@@ -11,3 +11,11 @@ export { LengthConverter } from './LengthConverter';
 export { TemperatureConverter } from './TemperatureConverter';
 export { CaratEstimator } from './CaratEstimator';
 export { RICalculator } from './RICalculator';
+
+// Validation
+export {
+  ValidationMessage,
+  validateNumber,
+  validateRI,
+  validateRIRange,
+} from './ValidationMessage';

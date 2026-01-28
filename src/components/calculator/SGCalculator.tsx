@@ -6,16 +6,36 @@
 import { useState, useMemo } from 'react';
 import { calculateSG, findGemsBySG } from '../../lib/calculator/conversions';
 import { cn } from '../ui/cn';
+import { ValidationMessage, validateNumber } from './ValidationMessage';
 
 export function SGCalculator() {
   const [weightInAir, setWeightInAir] = useState('');
   const [weightInWater, setWeightInWater] = useState('');
+  const [touched, setTouched] = useState({ air: false, water: false });
+
+  // Validation
+  const airError = touched.air
+    ? validateNumber(weightInAir, { positive: true, label: 'Weight in air' })
+    : null;
+  const waterError = touched.water
+    ? validateNumber(weightInWater, { label: 'Weight in water' })
+    : null;
+
+  // Check if water weight is greater than or equal to air weight
+  const rangeError = useMemo(() => {
+    const air = parseFloat(weightInAir);
+    const water = parseFloat(weightInWater);
+    if (!isNaN(air) && !isNaN(water) && water >= air && touched.water) {
+      return 'Weight in water must be less than weight in air';
+    }
+    return null;
+  }, [weightInAir, weightInWater, touched.water]);
 
   const result = useMemo(() => {
     const air = parseFloat(weightInAir);
     const water = parseFloat(weightInWater);
 
-    if (isNaN(air) || isNaN(water) || air <= 0) {
+    if (isNaN(air) || isNaN(water) || air <= 0 || water >= air) {
       return null;
     }
 
@@ -46,8 +66,18 @@ export function SGCalculator() {
             min="0"
             value={weightInAir}
             onChange={(e) => setWeightInAir(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, air: true }))}
             placeholder="e.g., 3.52"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!airError}
+            aria-describedby={airError ? 'weight-air-error' : undefined}
+            className={cn(
+              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
+              airError ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
+            )}
+          />
+          <ValidationMessage
+            message={airError || ''}
+            visible={!!airError}
           />
         </div>
 
@@ -62,8 +92,18 @@ export function SGCalculator() {
             min="0"
             value={weightInWater}
             onChange={(e) => setWeightInWater(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, water: true }))}
             placeholder="e.g., 2.52"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!(waterError || rangeError)}
+            aria-describedby={waterError || rangeError ? 'weight-water-error' : undefined}
+            className={cn(
+              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
+              (waterError || rangeError) ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
+            )}
+          />
+          <ValidationMessage
+            message={rangeError || waterError || ''}
+            visible={!!(waterError || rangeError)}
           />
         </div>
       </div>

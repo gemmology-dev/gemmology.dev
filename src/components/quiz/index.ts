@@ -16,3 +16,12 @@ export { ExamTimer, ExamTimerCompact } from './ExamTimer';
 export { QuestionNav, QuestionNavCompact } from './QuestionNav';
 export { Exam } from './Exam';
 export { ExamResults } from './ExamResults';
+
+// Loading & error states
+export { QuestionSkeleton, QuestionSkeletonCompact } from './QuestionSkeleton';
+export {
+  QuizError,
+  NetworkError,
+  NoQuestionsError,
+  QuizErrorBoundary,
+} from './QuizErrorBoundary';

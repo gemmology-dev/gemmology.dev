@@ -5,16 +5,24 @@
 
 import { useState, useMemo } from 'react';
 import { calculateBirefringence, classifyBirefringence } from '../../lib/calculator/conversions';
+import { cn } from '../ui/cn';
+import { ValidationMessage, validateRI, validateRIRange } from './ValidationMessage';
 
 export function BirefringenceCalc() {
   const [riMax, setRiMax] = useState('');
   const [riMin, setRiMin] = useState('');
+  const [touched, setTouched] = useState({ max: false, min: false });
+
+  // Validation
+  const maxError = touched.max ? validateRI(riMax) : null;
+  const minError = touched.min ? validateRI(riMin) : null;
+  const rangeError = touched.max && touched.min ? validateRIRange(riMax, riMin) : null;
 
   const result = useMemo(() => {
     const max = parseFloat(riMax);
     const min = parseFloat(riMin);
 
-    if (isNaN(max) || isNaN(min)) {
+    if (isNaN(max) || isNaN(min) || max < min) {
       return null;
     }
 
@@ -46,8 +54,18 @@ export function BirefringenceCalc() {
             max="3"
             value={riMax}
             onChange={(e) => setRiMax(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, max: true }))}
             placeholder="e.g., 1.553"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!(maxError || rangeError)}
+            aria-describedby={maxError || rangeError ? 'ri-max-error' : undefined}
+            className={cn(
+              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
+              (maxError || rangeError) ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
+            )}
+          />
+          <ValidationMessage
+            message={rangeError || maxError || ''}
+            visible={!!(maxError || rangeError)}
           />
         </div>
 
@@ -63,8 +81,18 @@ export function BirefringenceCalc() {
             max="3"
             value={riMin}
             onChange={(e) => setRiMin(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, min: true }))}
             placeholder="e.g., 1.544"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!minError}
+            aria-describedby={minError ? 'ri-min-error' : undefined}
+            className={cn(
+              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
+              minError ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
+            )}
+          />
+          <ValidationMessage
+            message={minError || ''}
+            visible={!!minError}
           />
         </div>
       </div>
