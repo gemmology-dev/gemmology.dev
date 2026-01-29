@@ -165,13 +165,13 @@ function GemMatchCard({ gem }: { gem: GemReference }) {
           <span className="text-slate-500">SG:</span>{' '}
           <span className="font-mono text-slate-700">{formatSG(gem.sg)}</span>
         </div>
-        {gem.birefringence != null && (
+        {typeof gem.birefringence === 'number' && !isNaN(gem.birefringence) && (
           <div>
             <span className="text-slate-500">Biref:</span>{' '}
             <span className="font-mono text-slate-700">{gem.birefringence.toFixed(3)}</span>
           </div>
         )}
-        {gem.dispersion != null && (
+        {typeof gem.dispersion === 'number' && !isNaN(gem.dispersion) && (
           <div>
             <span className="text-slate-500">Disp:</span>{' '}
             <span className="font-mono text-slate-700">{gem.dispersion.toFixed(3)}</span>

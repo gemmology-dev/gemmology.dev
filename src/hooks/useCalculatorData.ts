@@ -23,6 +23,13 @@ import {
 
 // Convert Mineral to GemReference format for compatibility
 function mineralToGemRef(mineral: Mineral): GemReference {
+  // Helper to ensure numeric values (database may return strings or null)
+  const toNumber = (val: unknown): number | undefined => {
+    if (val === null || val === undefined) return undefined;
+    const num = typeof val === 'number' ? val : parseFloat(String(val));
+    return isNaN(num) ? undefined : num;
+  };
+
   return {
     name: mineral.name,
     ri: mineral.ri_min && mineral.ri_max
@@ -35,8 +42,8 @@ function mineralToGemRef(mineral: Mineral): GemReference {
         ? mineral.sg_min
         : [mineral.sg_min, mineral.sg_max]
       : 0,
-    birefringence: mineral.birefringence ?? undefined,
-    dispersion: mineral.dispersion ?? undefined,
+    birefringence: toNumber(mineral.birefringence),
+    dispersion: toNumber(mineral.dispersion),
     hardness: mineral.hardness ?? '',
   };
 }
