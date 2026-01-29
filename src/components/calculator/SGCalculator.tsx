@@ -1,10 +1,12 @@
 /**
  * Specific Gravity Calculator component.
  * Uses hydrostatic weighing method: SG = Weight in air / (Weight in air - Weight in water)
+ * Matches against minerals in the database with fallback to hardcoded reference data.
  */
 
-import { useState, useMemo } from 'react';
-import { calculateSG, findGemsBySG } from '../../lib/calculator/conversions';
+import { useState, useMemo, useEffect } from 'react';
+import { calculateSG, type GemReference } from '../../lib/calculator/conversions';
+import { useCalculatorData } from '../../hooks/useCalculatorData';
 import { cn } from '../ui/cn';
 import { ValidationMessage, validateNumber } from './ValidationMessage';
 
@@ -12,6 +14,9 @@ export function SGCalculator() {
   const [weightInAir, setWeightInAir] = useState('');
   const [weightInWater, setWeightInWater] = useState('');
   const [touched, setTouched] = useState({ air: false, water: false });
+  const [matchingGems, setMatchingGems] = useState<GemReference[]>([]);
+
+  const { findBySG, dbAvailable } = useCalculatorData();
 
   // Validation
   const airError = touched.air
@@ -31,7 +36,8 @@ export function SGCalculator() {
     return null;
   }, [weightInAir, weightInWater, touched.water]);
 
-  const result = useMemo(() => {
+  // Calculate SG
+  const sg = useMemo(() => {
     const air = parseFloat(weightInAir);
     const water = parseFloat(weightInWater);
 
@@ -39,11 +45,18 @@ export function SGCalculator() {
       return null;
     }
 
-    const sg = calculateSG(air, water);
-    const matchingGems = findGemsBySG(sg);
-
-    return { sg, matchingGems };
+    return calculateSG(air, water);
   }, [weightInAir, weightInWater]);
+
+  // Fetch matching gems when SG changes
+  useEffect(() => {
+    if (sg === null) {
+      setMatchingGems([]);
+      return;
+    }
+
+    findBySG(sg).then(setMatchingGems);
+  }, [sg, findBySG]);
 
   return (
     <div className="space-y-6">
@@ -108,18 +121,21 @@ export function SGCalculator() {
         </div>
       </div>
 
-      {result && (
+      {sg !== null && (
         <div className="p-4 rounded-lg bg-crystal-50 border border-crystal-200">
           <div className="text-center mb-4">
-            <p className="text-sm text-slate-500">Specific Gravity</p>
-            <p className="text-3xl font-bold text-crystal-700">{result.sg.toFixed(2)}</p>
+            <p className="text-sm text-slate-500">
+              Specific Gravity
+              {dbAvailable && <span className="ml-1 text-xs text-green-600">(DB)</span>}
+            </p>
+            <p className="text-3xl font-bold text-crystal-700">{sg.toFixed(2)}</p>
           </div>
 
-          {result.matchingGems.length > 0 && (
+          {matchingGems.length > 0 && (
             <div className="border-t border-crystal-200 pt-4 mt-4">
               <p className="text-sm font-medium text-slate-700 mb-2">Possible Matches:</p>
               <div className="flex flex-wrap gap-2">
-                {result.matchingGems.map(gem => (
+                {matchingGems.map(gem => (
                   <span
                     key={gem.name}
                     className="px-2 py-1 text-xs font-medium rounded-full bg-white text-slate-700 border border-slate-200"

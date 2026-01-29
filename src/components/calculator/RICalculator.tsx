@@ -1,26 +1,32 @@
 /**
  * RI Lookup Calculator component.
  * Look up gems by refractive index value.
+ * Uses database with fallback to hardcoded reference data.
  */
 
-import { useState, useMemo } from 'react';
-import { findGemsByRI, COMMON_GEMS, type GemReference } from '../../lib/calculator/conversions';
+import { useState, useEffect } from 'react';
+import { COMMON_GEMS, type GemReference } from '../../lib/calculator/conversions';
+import { useCalculatorData } from '../../hooks/useCalculatorData';
 
 export function RICalculator() {
   const [ri, setRi] = useState('');
   const [tolerance, setTolerance] = useState('0.01');
+  const [results, setResults] = useState<GemReference[] | null>(null);
 
-  const results = useMemo(() => {
+  const { findByRI, dbAvailable, fallbackGems } = useCalculatorData();
+
+  // Fetch matching gems when RI or tolerance changes
+  useEffect(() => {
     const riValue = parseFloat(ri);
     const tolValue = parseFloat(tolerance);
 
     if (isNaN(riValue) || riValue < 1) {
-      return null;
+      setResults(null);
+      return;
     }
 
-    const matches = findGemsByRI(riValue, isNaN(tolValue) ? 0.01 : tolValue);
-    return matches;
-  }, [ri, tolerance]);
+    findByRI(riValue, isNaN(tolValue) ? 0.01 : tolValue).then(setResults);
+  }, [ri, tolerance, findByRI]);
 
   const formatRI = (ri: number | [number, number]) => {
     if (Array.isArray(ri)) {
@@ -102,8 +108,11 @@ export function RICalculator() {
 
       {/* Reference table */}
       <div className="border rounded-lg overflow-hidden">
-        <div className="px-4 py-2 bg-slate-50 border-b">
+        <div className="px-4 py-2 bg-slate-50 border-b flex items-center justify-between">
           <h4 className="text-sm font-medium text-slate-700">Common Gem RI Reference</h4>
+          {dbAvailable && (
+            <span className="text-xs text-green-600">Database connected</span>
+          )}
         </div>
         <div className="max-h-64 overflow-y-auto">
           <table className="w-full text-sm">
@@ -115,7 +124,7 @@ export function RICalculator() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {COMMON_GEMS.map(gem => (
+              {fallbackGems.map(gem => (
                 <tr key={gem.name} className="hover:bg-slate-50">
                   <td className="px-4 py-2 text-slate-900">{gem.name}</td>
                   <td className="px-4 py-2 text-slate-600 font-mono text-xs">{formatRI(gem.ri)}</td>
