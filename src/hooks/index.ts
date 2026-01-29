@@ -5,3 +5,6 @@ export { useCDLValidation } from './useCDLValidation';
 export { useLocalStorage, STORAGE_KEYS } from './useLocalStorage';
 export { useQuiz } from './useQuiz';
 export { useExam } from './useExam';
+
+// Calculator hooks
+export { useCalculatorData } from './useCalculatorData';

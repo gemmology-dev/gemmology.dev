@@ -73,6 +73,36 @@ export interface Mineral {
   model_stl?: Uint8Array;
   model_gltf?: string;
   models_generated_at?: string;
+  // Calculator-optimized numeric columns
+  ri_min?: number;
+  ri_max?: number;
+  sg_min?: number;
+  sg_max?: number;
+  // Heat treatment temperatures (Celsius)
+  heat_treatment_temp_min?: number;
+  heat_treatment_temp_max?: number;
+}
+
+// Reference table types
+export interface CutShapeFactor {
+  id: string;
+  name: string;
+  factor: number;
+  description?: string;
+}
+
+export interface VolumeShapeFactor {
+  id: string;
+  name: string;
+  factor: number;
+}
+
+export interface GemmologicalThreshold {
+  category: string;
+  level: string;
+  min_value?: number;
+  max_value?: number;
+  description?: string;
 }
 
 export async function getDB(): Promise<Database> {
@@ -268,4 +298,194 @@ export async function getMineralWithModels(mineralId: string): Promise<Mineral |
     mineral[col] = row[i];
   });
   return mineral as Mineral;
+}
+
+// =============================================================================
+// Calculator-optimized query functions
+// =============================================================================
+
+/**
+ * Find minerals matching an RI value within tolerance.
+ * Uses numeric ri_min/ri_max columns for efficient searching.
+ */
+export async function findMineralsByRI(ri: number, tolerance: number = 0.01): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT * FROM minerals
+     WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
+       AND (ri_min - ? <= ? AND ri_max + ? >= ?)
+     ORDER BY ABS((ri_min + ri_max) / 2 - ?) ASC
+     LIMIT 20`,
+    [tolerance, ri, tolerance, ri, ri]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Find minerals matching an SG value within tolerance.
+ * Uses numeric sg_min/sg_max columns for efficient searching.
+ */
+export async function findMineralsBySG(sg: number, tolerance: number = 0.05): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT * FROM minerals
+     WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
+       AND (sg_min - ? <= ? AND sg_max + ? >= ?)
+     ORDER BY ABS((sg_min + sg_max) / 2 - ?) ASC
+     LIMIT 20`,
+    [tolerance, sg, tolerance, sg, sg]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get all cut shape factors for carat estimation.
+ */
+export async function getCutShapeFactors(): Promise<CutShapeFactor[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, factor, description FROM cut_shape_factors ORDER BY name`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const factor: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      factor[col] = row[i];
+    });
+    return factor as CutShapeFactor;
+  });
+}
+
+/**
+ * Get all volume shape factors for rough estimation.
+ */
+export async function getVolumeShapeFactors(): Promise<VolumeShapeFactor[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, factor FROM volume_shape_factors ORDER BY name`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const factor: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      factor[col] = row[i];
+    });
+    return factor as VolumeShapeFactor;
+  });
+}
+
+/**
+ * Get classification thresholds for a category.
+ */
+export async function getThresholds(category: string): Promise<GemmologicalThreshold[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT category, level, min_value, max_value, description
+     FROM gemmological_thresholds
+     WHERE category = ?
+     ORDER BY COALESCE(min_value, -999999)`,
+    [category]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const threshold: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      threshold[col] = row[i];
+    });
+    return threshold as GemmologicalThreshold;
+  });
+}
+
+/**
+ * Classify a value based on gemmological thresholds.
+ */
+export async function classifyValue(category: string, value: number): Promise<string | null> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT level FROM gemmological_thresholds
+     WHERE category = ?
+       AND (min_value IS NULL OR min_value <= ?)
+       AND (max_value IS NULL OR max_value > ?)
+     LIMIT 1`,
+    [category, value, value]
+  );
+
+  if (result.length === 0 || result[0].values.length === 0) return null;
+  return result[0].values[0][0] as string;
+}
+
+/**
+ * Get minerals with heat treatment temperature data.
+ */
+export async function getMineralsWithHeatTreatment(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT * FROM minerals
+     WHERE heat_treatment_temp_min IS NOT NULL
+        OR heat_treatment_temp_max IS NOT NULL
+     ORDER BY name`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get minerals with SG data for carat estimation dropdown.
+ */
+export async function getMineralsWithSG(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, sg, sg_min, sg_max FROM minerals
+     WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
+     ORDER BY name`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
 }

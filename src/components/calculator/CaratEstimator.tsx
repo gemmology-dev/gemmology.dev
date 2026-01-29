@@ -1,14 +1,17 @@
 /**
  * Carat Weight Estimator component.
  * Estimates carat weight from stone dimensions and specific gravity.
+ * Uses database for shape factors and SG presets when available.
  */
 
 import { useState, useMemo } from 'react';
-import { estimateCaratWeight, SHAPE_FACTORS, COMMON_GEMS } from '../../lib/calculator/conversions';
+import { SHAPE_FACTORS } from '../../lib/calculator/conversions';
+import { useCalculatorData } from '../../hooks/useCalculatorData';
 
 type Shape = keyof typeof SHAPE_FACTORS;
 
-const SHAPES: { value: Shape; label: string }[] = [
+// Fallback shape options (used when database not available)
+const FALLBACK_SHAPES: { value: Shape; label: string }[] = [
   { value: 'round-brilliant', label: 'Round Brilliant' },
   { value: 'oval', label: 'Oval' },
   { value: 'pear', label: 'Pear' },
@@ -20,7 +23,8 @@ const SHAPES: { value: Shape; label: string }[] = [
   { value: 'radiant', label: 'Radiant' },
 ];
 
-const COMMON_SG = [
+// Fallback SG presets (used when database not available)
+const FALLBACK_SG = [
   { label: 'Diamond (3.52)', value: 3.52 },
   { label: 'Ruby/Sapphire (4.00)', value: 4.00 },
   { label: 'Emerald (2.72)', value: 2.72 },
@@ -42,8 +46,53 @@ export function CaratEstimator() {
   const [sgCustom, setSgCustom] = useState('');
   const [shape, setShape] = useState<Shape>('round-brilliant');
 
+  const { shapeFactors, mineralsWithSG, dbAvailable, fallbackShapeFactors } = useCalculatorData();
+
+  // Use database shape factors if available, otherwise fallback
+  const shapes = useMemo(() => {
+    if (shapeFactors.length > 0) {
+      return shapeFactors.map(sf => ({
+        value: sf.id as Shape,
+        label: sf.name,
+        factor: sf.factor,
+      }));
+    }
+    return FALLBACK_SHAPES.map(s => ({
+      ...s,
+      factor: fallbackShapeFactors[s.value],
+    }));
+  }, [shapeFactors, fallbackShapeFactors]);
+
+  // Use database SG presets if available, otherwise fallback
+  const sgOptions = useMemo(() => {
+    if (mineralsWithSG.length > 0) {
+      // Get unique minerals with SG, sorted by name
+      const sorted = [...mineralsWithSG]
+        .filter(m => m.sg_min && m.sg_max)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .slice(0, 15); // Limit to 15 most common
+
+      return sorted.map(m => {
+        const sgValue = m.sg_min === m.sg_max
+          ? m.sg_min!
+          : (m.sg_min! + m.sg_max!) / 2;
+        return {
+          label: `${m.name} (${sgValue.toFixed(2)})`,
+          value: sgValue,
+        };
+      });
+    }
+    return FALLBACK_SG;
+  }, [mineralsWithSG]);
+
   // Get the effective SG value
   const sg = sgSource === 'custom' ? sgCustom : sgPreset;
+
+  // Get shape factor from database or fallback
+  const getShapeFactor = (shapeId: Shape): number => {
+    const dbFactor = shapes.find(s => s.value === shapeId);
+    return dbFactor?.factor ?? fallbackShapeFactors[shapeId] ?? 0.0061;
+  };
 
   const result = useMemo(() => {
     const l = parseFloat(length);
@@ -59,9 +108,11 @@ export function CaratEstimator() {
       return null;
     }
 
-    const carats = estimateCaratWeight(l, w, d, sgValue, shape);
-    return { carats };
-  }, [length, width, depth, sg, shape]);
+    // Calculate carat weight: L × W × D × SG × Shape Factor
+    const factor = getShapeFactor(shape);
+    const carats = l * w * d * sgValue * factor;
+    return { carats, factor };
+  }, [length, width, depth, sg, shape, shapes]);
 
   return (
     <div className="space-y-6">
@@ -133,7 +184,7 @@ export function CaratEstimator() {
             onChange={(e) => setShape(e.target.value as Shape)}
             className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
           >
-            {SHAPES.map(s => (
+            {shapes.map(s => (
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
@@ -156,7 +207,7 @@ export function CaratEstimator() {
             }}
             className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
           >
-            {COMMON_SG.map(item => (
+            {sgOptions.map(item => (
               <option key={item.value} value={item.value}>{item.label}</option>
             ))}
             <option value="custom">Custom SG...</option>
@@ -182,10 +233,16 @@ export function CaratEstimator() {
       {result && (
         <div className="p-4 rounded-lg bg-crystal-50 border border-crystal-200">
           <div className="text-center">
-            <p className="text-sm text-slate-500">Estimated Weight</p>
+            <p className="text-sm text-slate-500">
+              Estimated Weight
+              {dbAvailable && <span className="ml-1 text-xs text-green-600">(DB)</span>}
+            </p>
             <p className="text-3xl font-bold text-crystal-700">{result.carats.toFixed(2)} ct</p>
             <p className="text-xs text-slate-500 mt-1">
               ({(result.carats * 0.2).toFixed(3)} grams)
+            </p>
+            <p className="text-xs text-slate-400 mt-1">
+              Shape factor: {result.factor.toFixed(4)}
             </p>
           </div>
         </div>
