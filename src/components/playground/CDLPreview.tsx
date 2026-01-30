@@ -1,5 +1,17 @@
 import { clsx } from 'clsx';
 
+/**
+ * Normalize SVG dimensions for responsive display.
+ * Removes fixed width/height and adds responsive styling.
+ */
+function normalizeSvgForDisplay(svg: string): string {
+  // Remove fixed width/height attributes from the root SVG element
+  // This allows CSS to control sizing while viewBox handles aspect ratio
+  return svg
+    .replace(/<svg([^>]*)\s+width="[^"]*"/gi, '<svg$1')
+    .replace(/<svg([^>]*)\s+height="[^"]*"/gi, '<svg$1');
+}
+
 interface CDLPreviewProps {
   svgContent: string | null;
   loading?: boolean;
@@ -66,8 +78,8 @@ export function CDLPreview({ svgContent, loading, error, className }: CDLPreview
 
       {svgContent && !loading && !error && (
         <div
-          className="w-full h-full flex items-center justify-center p-8"
-          dangerouslySetInnerHTML={{ __html: svgContent }}
+          className="w-full h-full flex items-center justify-center p-4 [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-auto [&>svg]:h-auto"
+          dangerouslySetInnerHTML={{ __html: normalizeSvgForDisplay(svgContent) }}
         />
       )}
     </div>

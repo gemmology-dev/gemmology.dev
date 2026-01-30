@@ -20,6 +20,7 @@ interface CrystalMeshProps {
 
 /**
  * Parse glTF data and create Three.js geometry
+ * Automatically scales geometry to fit within a unit sphere
  */
 function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
   try {
@@ -68,6 +69,14 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
     geometry.setAttribute('position', new THREE.BufferAttribute(posData, 3));
     geometry.setAttribute('normal', new THREE.BufferAttribute(normData, 3));
     geometry.setIndex(new THREE.BufferAttribute(idxData, 1));
+
+    // Normalize geometry to fit within a unit sphere
+    geometry.computeBoundingSphere();
+    if (geometry.boundingSphere) {
+      const scale = 1.5 / geometry.boundingSphere.radius;
+      geometry.scale(scale, scale, scale);
+      geometry.center();
+    }
 
     return geometry;
   } catch (error) {
