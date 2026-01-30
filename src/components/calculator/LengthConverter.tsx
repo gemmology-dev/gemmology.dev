@@ -5,27 +5,52 @@
 
 import { useState, useCallback } from 'react';
 import { mmToInch, inchToMm } from '../../lib/calculator/conversions';
+import { ValidationMessage } from './ValidationMessage';
+
+type Unit = 'mm' | 'inches';
 
 export function LengthConverter() {
   const [mm, setMm] = useState('');
   const [inches, setInches] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [lastEdited, setLastEdited] = useState<Unit | null>(null);
+
+  const validateAndConvert = (value: string): boolean => {
+    if (!value) {
+      setError(null);
+      return false;
+    }
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      setError('Please enter a valid number');
+      return false;
+    }
+    if (num < 0) {
+      setError('Length cannot be negative');
+      return false;
+    }
+    setError(null);
+    return true;
+  };
 
   const updateFromMm = useCallback((value: string) => {
     setMm(value);
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
+    setLastEdited('mm');
+    if (validateAndConvert(value)) {
+      const num = parseFloat(value);
       setInches(mmToInch(num).toFixed(4));
-    } else {
+    } else if (!value) {
       setInches('');
     }
   }, []);
 
   const updateFromInches = useCallback((value: string) => {
     setInches(value);
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
+    setLastEdited('inches');
+    if (validateAndConvert(value)) {
+      const num = parseFloat(value);
       setMm(inchToMm(num).toFixed(2));
-    } else {
+    } else if (!value) {
       setMm('');
     }
   }, []);
@@ -38,6 +63,9 @@ export function LengthConverter() {
           1 inch = 25.4 mm
         </p>
       </div>
+
+      {/* Error message */}
+      <ValidationMessage message={error || ''} visible={!!error} />
 
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -52,7 +80,8 @@ export function LengthConverter() {
             value={mm}
             onChange={(e) => updateFromMm(e.target.value)}
             placeholder="e.g., 6.5"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg"
+            aria-invalid={!!error && lastEdited === 'mm'}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'mm' ? 'border-red-300' : 'border-slate-300'}`}
           />
         </div>
 
@@ -68,7 +97,8 @@ export function LengthConverter() {
             value={inches}
             onChange={(e) => updateFromInches(e.target.value)}
             placeholder="e.g., 0.25"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg"
+            aria-invalid={!!error && lastEdited === 'inches'}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'inches' ? 'border-red-300' : 'border-slate-300'}`}
           />
         </div>
       </div>

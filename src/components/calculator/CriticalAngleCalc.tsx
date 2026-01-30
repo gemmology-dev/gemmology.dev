@@ -5,9 +5,14 @@
 
 import { useState, useMemo } from 'react';
 import { calculateCriticalAngle, getCriticalAngleSignificance } from '../../lib/calculator/conversions';
+import { ValidationMessage, validateRI } from './ValidationMessage';
 
 export function CriticalAngleCalc() {
   const [ri, setRi] = useState('');
+  const [touched, setTouched] = useState(false);
+
+  // Validation
+  const error = touched ? validateRI(ri) : null;
 
   const result = useMemo(() => {
     const riValue = parseFloat(ri);
@@ -43,10 +48,21 @@ export function CriticalAngleCalc() {
           max="4"
           value={ri}
           onChange={(e) => setRi(e.target.value)}
+          onBlur={() => setTouched(true)}
           placeholder="e.g., 2.417"
-          className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+          aria-invalid={!!error}
+          aria-describedby={error ? 'ri-input-error' : undefined}
+          className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 ${error ? 'border-red-300' : 'border-slate-300'}`}
         />
+        <ValidationMessage message={error || ''} visible={!!error} />
       </div>
+
+      {/* Hint when no result and no error */}
+      {!result && !error && ri && (
+        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+          Enter a valid RI value (≥ 1.0) to calculate the critical angle.
+        </div>
+      )}
 
       {result && (
         <div className="p-4 rounded-lg bg-crystal-50 border border-crystal-200">

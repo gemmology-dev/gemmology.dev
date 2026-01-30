@@ -12,16 +12,36 @@ export function PricePerCaratConverter() {
   const [pricePerCarat, setPricePerCarat] = useState('');
   const [carats, setCarats] = useState('');
   const [markup, setMarkup] = useState('0');
+  const [touched, setTouched] = useState({
+    total: false,
+    ppc: false,
+    carats: false,
+    markup: false,
+  });
+
+  // Validation using proper string-based validators
+  const totalError = touched.total
+    ? validateNumber(totalPrice, { min: 0, max: 1000000, label: 'Total price' })
+    : null;
+  const ppcError = touched.ppc
+    ? validateNumber(pricePerCarat, { min: 0, max: 1000000, label: 'Price per carat' })
+    : null;
+  const caratsError = touched.carats
+    ? validateNumber(carats, { positive: true, min: 0.01, max: 1000, label: 'Carats' })
+    : null;
+  const markupError = touched.markup
+    ? validateNumber(markup, { min: -100, max: 1000, label: 'Markup' })
+    : null;
 
   const totalNum = parseFloat(totalPrice);
   const ppcNum = parseFloat(pricePerCarat);
   const caratsNum = parseFloat(carats);
   const markupNum = parseFloat(markup);
 
-  const isValidTotal = validateNumber(totalNum, 0, 1000000);
-  const isValidPpc = validateNumber(ppcNum, 0, 1000000);
-  const isValidCarats = validateNumber(caratsNum, 0.01, 1000);
-  const isValidMarkup = validateNumber(markupNum, -100, 1000);
+  const isValidTotal = !totalError && !isNaN(totalNum) && totalNum >= 0;
+  const isValidPpc = !ppcError && !isNaN(ppcNum) && ppcNum >= 0;
+  const isValidCarats = !caratsError && !isNaN(caratsNum) && caratsNum > 0;
+  const isValidMarkup = !markupError && !isNaN(markupNum);
 
   // Calculate missing values
   let calculatedTotal: number | null = null;
@@ -65,10 +85,12 @@ export function PricePerCaratConverter() {
             min="0"
             value={totalPrice}
             onChange={(e) => setTotalPrice(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, total: true }))}
+            aria-invalid={!!totalError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${totalError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 5000"
           />
-          <ValidationMessage value={totalNum} validator={(v) => validateNumber(v, 0, 1000000)} />
+          <ValidationMessage message={totalError || ''} visible={!!totalError} />
         </div>
 
         <div>
@@ -81,10 +103,12 @@ export function PricePerCaratConverter() {
             min="0"
             value={pricePerCarat}
             onChange={(e) => setPricePerCarat(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, ppc: true }))}
+            aria-invalid={!!ppcError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${ppcError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 10000"
           />
-          <ValidationMessage value={ppcNum} validator={(v) => validateNumber(v, 0, 1000000)} />
+          <ValidationMessage message={ppcError || ''} visible={!!ppcError} />
         </div>
 
         <div>
@@ -97,10 +121,12 @@ export function PricePerCaratConverter() {
             min="0"
             value={carats}
             onChange={(e) => setCarats(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, carats: true }))}
+            aria-invalid={!!caratsError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${caratsError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 0.50"
           />
-          <ValidationMessage value={caratsNum} validator={(v) => validateNumber(v, 0.01, 1000)} />
+          <ValidationMessage message={caratsError || ''} visible={!!caratsError} />
         </div>
       </div>
 
@@ -113,14 +139,25 @@ export function PricePerCaratConverter() {
           step="1"
           value={markup}
           onChange={(e) => setMarkup(e.target.value)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+          onBlur={() => setTouched(t => ({ ...t, markup: true }))}
+          aria-invalid={!!markupError}
+          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${markupError ? 'border-red-300' : 'border-slate-300'}`}
           placeholder="e.g., 30 (or -10 for discount)"
         />
         <p className="text-xs text-slate-500 mt-1">
           Positive for retail markup, negative for discount
         </p>
-        <ValidationMessage value={markupNum} validator={(v) => validateNumber(v, -100, 1000)} />
+        <ValidationMessage message={markupError || ''} visible={!!markupError} />
       </div>
+
+      {/* Hint when inputs are incomplete but no errors */}
+      {(totalPrice || pricePerCarat || carats) &&
+        calculatedTotal === null && calculatedPpc === null && calculatedCarats === null &&
+        !totalError && !ppcError && !caratsError && (
+        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+          Enter any two of: Total Price, Price per Carat, or Carats to calculate the third.
+        </div>
+      )}
 
       {calculatedTotal !== null && (
         <ResultCard

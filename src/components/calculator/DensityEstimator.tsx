@@ -28,6 +28,30 @@ export function DensityEstimator() {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [shapeFactor, setShapeFactor] = useState('0.65');
+  const [touched, setTouched] = useState({
+    weight: false,
+    volume: false,
+    length: false,
+    width: false,
+    height: false,
+  });
+
+  // Validation - pass strings to validators
+  const weightError = touched.weight
+    ? validateNumber(weight, { positive: true, min: 0.01, max: 1000, label: 'Weight' })
+    : null;
+  const volumeError = touched.volume
+    ? validateNumber(volume, { positive: true, min: 0.01, max: 1000, label: 'Volume' })
+    : null;
+  const lengthError = touched.length
+    ? validateNumber(length, { positive: true, min: 0.01, max: 100, label: 'Length' })
+    : null;
+  const widthError = touched.width
+    ? validateNumber(width, { positive: true, min: 0.01, max: 100, label: 'Width' })
+    : null;
+  const heightError = touched.height
+    ? validateNumber(height, { positive: true, min: 0.01, max: 100, label: 'Height' })
+    : null;
 
   const weightNum = parseFloat(weight);
   const volumeNum = parseFloat(volume);
@@ -36,21 +60,22 @@ export function DensityEstimator() {
   const heightNum = parseFloat(height);
   const factorNum = parseFloat(shapeFactor);
 
-  const isValidWeight = validateNumber(weightNum, 0.01, 1000);
+  const isValidWeight = !weightError && !isNaN(weightNum) && weightNum > 0;
 
   let calculatedVolume: number | null = null;
   let density: number | null = null;
 
-  if (method === 'direct' && validateNumber(volumeNum, 0.01, 1000)) {
+  if (method === 'direct' && !volumeError && !isNaN(volumeNum) && volumeNum > 0) {
     calculatedVolume = volumeNum;
-  } else if (method === 'displacement' && validateNumber(volumeNum, 0.01, 1000)) {
+  } else if (method === 'displacement' && !volumeError && !isNaN(volumeNum) && volumeNum > 0) {
     calculatedVolume = volumeNum;
   } else if (
     method === 'geometric' &&
-    validateNumber(lengthNum, 0.01, 100) &&
-    validateNumber(widthNum, 0.01, 100) &&
-    validateNumber(heightNum, 0.01, 100) &&
-    validateNumber(factorNum, 0.01, 2)
+    !lengthError && !widthError && !heightError &&
+    !isNaN(lengthNum) && lengthNum > 0 &&
+    !isNaN(widthNum) && widthNum > 0 &&
+    !isNaN(heightNum) && heightNum > 0 &&
+    !isNaN(factorNum) && factorNum > 0
   ) {
     calculatedVolume = lengthNum * widthNum * heightNum * factorNum;
   }
@@ -58,6 +83,10 @@ export function DensityEstimator() {
   if (isValidWeight && calculatedVolume !== null && calculatedVolume > 0) {
     density = weightNum / calculatedVolume;
   }
+
+  // Check if we should show a hint
+  const hasAnyInput = weight || volume || length || width || height;
+  const needsMoreInput = hasAnyInput && density === null && !weightError && !volumeError && !lengthError && !widthError && !heightError;
 
   return (
     <div className="space-y-6">
@@ -100,10 +129,12 @@ export function DensityEstimator() {
           min="0"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+          onBlur={() => setTouched(t => ({ ...t, weight: true }))}
+          aria-invalid={!!weightError}
+          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${weightError ? 'border-red-300' : 'border-slate-300'}`}
           placeholder="e.g., 3.52"
         />
-        <ValidationMessage value={weightNum} validator={(v) => validateNumber(v, 0.01, 1000)} />
+        <ValidationMessage message={weightError || ''} visible={!!weightError} />
       </div>
 
       {method === 'direct' && (
@@ -117,10 +148,12 @@ export function DensityEstimator() {
             min="0"
             value={volume}
             onChange={(e) => setVolume(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, volume: true }))}
+            aria-invalid={!!volumeError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${volumeError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 1.0"
           />
-          <ValidationMessage value={volumeNum} validator={(v) => validateNumber(v, 0.01, 1000)} />
+          <ValidationMessage message={volumeError || ''} visible={!!volumeError} />
         </div>
       )}
 
@@ -135,13 +168,15 @@ export function DensityEstimator() {
             min="0"
             value={volume}
             onChange={(e) => setVolume(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, volume: true }))}
+            aria-invalid={!!volumeError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${volumeError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 1.0"
           />
           <p className="text-xs text-slate-500 mt-1">
             Submerge stone in graduated cylinder and measure volume change
           </p>
-          <ValidationMessage value={volumeNum} validator={(v) => validateNumber(v, 0.01, 1000)} />
+          <ValidationMessage message={volumeError || ''} visible={!!volumeError} />
         </div>
       )}
 
@@ -158,9 +193,12 @@ export function DensityEstimator() {
                 min="0"
                 value={length}
                 onChange={(e) => setLength(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+                onBlur={() => setTouched(t => ({ ...t, length: true }))}
+                aria-invalid={!!lengthError}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${lengthError ? 'border-red-300' : 'border-slate-300'}`}
                 placeholder="e.g., 6.5"
               />
+              <ValidationMessage message={lengthError || ''} visible={!!lengthError} />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -172,9 +210,12 @@ export function DensityEstimator() {
                 min="0"
                 value={width}
                 onChange={(e) => setWidth(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+                onBlur={() => setTouched(t => ({ ...t, width: true }))}
+                aria-invalid={!!widthError}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${widthError ? 'border-red-300' : 'border-slate-300'}`}
                 placeholder="e.g., 6.5"
               />
+              <ValidationMessage message={widthError || ''} visible={!!widthError} />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -186,9 +227,12 @@ export function DensityEstimator() {
                 min="0"
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+                onBlur={() => setTouched(t => ({ ...t, height: true }))}
+                aria-invalid={!!heightError}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${heightError ? 'border-red-300' : 'border-slate-300'}`}
                 placeholder="e.g., 4.0"
               />
+              <ValidationMessage message={heightError || ''} visible={!!heightError} />
             </div>
           </div>
 
@@ -218,6 +262,13 @@ export function DensityEstimator() {
             </div>
           )}
         </>
+      )}
+
+      {/* Hint when inputs are incomplete */}
+      {needsMoreInput && (
+        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+          Enter weight and {method === 'geometric' ? 'all dimensions' : 'volume'} to calculate density.
+        </div>
       )}
 
       {density !== null && (

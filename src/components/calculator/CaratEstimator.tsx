@@ -7,6 +7,7 @@
 import { useState, useMemo } from 'react';
 import { SHAPE_FACTORS } from '../../lib/calculator/conversions';
 import { useCalculatorData } from '../../hooks/useCalculatorData';
+import { ValidationMessage, validateNumber } from './ValidationMessage';
 
 type Shape = keyof typeof SHAPE_FACTORS;
 
@@ -45,8 +46,17 @@ export function CaratEstimator() {
   const [sgPreset, setSgPreset] = useState('3.52');
   const [sgCustom, setSgCustom] = useState('');
   const [shape, setShape] = useState<Shape>('round-brilliant');
+  const [touched, setTouched] = useState({ length: false, width: false, depth: false, sg: false });
 
   const { shapeFactors, mineralsWithSG, dbAvailable, fallbackShapeFactors } = useCalculatorData();
+
+  // Validation
+  const lengthError = touched.length ? validateNumber(length, { positive: true, label: 'Length' }) : null;
+  const widthError = touched.width ? validateNumber(width, { positive: true, label: 'Width' }) : null;
+  const depthError = touched.depth ? validateNumber(depth, { positive: true, label: 'Depth' }) : null;
+  const sgError = touched.sg && sgSource === 'custom'
+    ? validateNumber(sgCustom, { positive: true, min: 1, max: 10, label: 'Specific gravity' })
+    : null;
 
   // Use database shape factors if available, otherwise fallback
   const shapes = useMemo(() => {
@@ -135,9 +145,12 @@ export function CaratEstimator() {
             min="0"
             value={length}
             onChange={(e) => setLength(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, length: true }))}
             placeholder="e.g., 6.5"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!lengthError}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 ${lengthError ? 'border-red-300' : 'border-slate-300'}`}
           />
+          <ValidationMessage message={lengthError || ''} visible={!!lengthError} />
         </div>
 
         <div>
@@ -151,9 +164,12 @@ export function CaratEstimator() {
             min="0"
             value={width}
             onChange={(e) => setWidth(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, width: true }))}
             placeholder="e.g., 6.5"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!widthError}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 ${widthError ? 'border-red-300' : 'border-slate-300'}`}
           />
+          <ValidationMessage message={widthError || ''} visible={!!widthError} />
         </div>
 
         <div>
@@ -167,9 +183,12 @@ export function CaratEstimator() {
             min="0"
             value={depth}
             onChange={(e) => setDepth(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, depth: true }))}
             placeholder="e.g., 4.0"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500"
+            aria-invalid={!!depthError}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 ${depthError ? 'border-red-300' : 'border-slate-300'}`}
           />
+          <ValidationMessage message={depthError || ''} visible={!!depthError} />
         </div>
       </div>
 
@@ -214,18 +233,23 @@ export function CaratEstimator() {
           </select>
           {/* Custom SG input - only shown when "Custom" is selected */}
           {sgSource === 'custom' && (
-            <input
-              type="number"
-              step="0.01"
-              min="1"
-              max="10"
-              value={sgCustom}
-              onChange={(e) => setSgCustom(e.target.value)}
-              placeholder="Enter custom SG (e.g., 3.50)"
-              aria-label="Custom specific gravity value"
-              autoFocus
-              className="w-full mt-2 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-sm"
-            />
+            <>
+              <input
+                type="number"
+                step="0.01"
+                min="1"
+                max="10"
+                value={sgCustom}
+                onChange={(e) => setSgCustom(e.target.value)}
+                onBlur={() => setTouched(t => ({ ...t, sg: true }))}
+                placeholder="Enter custom SG (e.g., 3.50)"
+                aria-label="Custom specific gravity value"
+                aria-invalid={!!sgError}
+                autoFocus
+                className={`w-full mt-2 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-sm ${sgError ? 'border-red-300' : 'border-slate-300'}`}
+              />
+              <ValidationMessage message={sgError || ''} visible={!!sgError} />
+            </>
           )}
         </div>
       </div>

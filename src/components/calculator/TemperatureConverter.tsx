@@ -6,28 +6,78 @@
 
 import { useState, useCallback } from 'react';
 import { celsiusToFahrenheit, fahrenheitToCelsius } from '../../lib/calculator/conversions';
+import { ValidationMessage } from './ValidationMessage';
+
+type Unit = 'celsius' | 'fahrenheit';
 
 export function TemperatureConverter() {
   const [celsius, setCelsius] = useState('');
   const [fahrenheit, setFahrenheit] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [lastEdited, setLastEdited] = useState<Unit | null>(null);
+
+  const validateAndConvert = (value: string): boolean => {
+    if (!value) {
+      setError(null);
+      return false;
+    }
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      setError('Please enter a valid number');
+      return false;
+    }
+    // Absolute zero limits
+    if (num < -273.15 && lastEdited === 'celsius') {
+      setError('Temperature cannot be below absolute zero (-273.15°C)');
+      return false;
+    }
+    if (num < -459.67 && lastEdited === 'fahrenheit') {
+      setError('Temperature cannot be below absolute zero (-459.67°F)');
+      return false;
+    }
+    setError(null);
+    return true;
+  };
 
   const updateFromCelsius = useCallback((value: string) => {
     setCelsius(value);
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
-      setFahrenheit(celsiusToFahrenheit(num).toFixed(1));
-    } else {
+    setLastEdited('celsius');
+    if (!value) {
+      setError(null);
       setFahrenheit('');
+      return;
+    }
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      setError('Please enter a valid number');
+      setFahrenheit('');
+    } else if (num < -273.15) {
+      setError('Temperature cannot be below absolute zero (-273.15°C)');
+      setFahrenheit('');
+    } else {
+      setError(null);
+      setFahrenheit(celsiusToFahrenheit(num).toFixed(1));
     }
   }, []);
 
   const updateFromFahrenheit = useCallback((value: string) => {
     setFahrenheit(value);
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
-      setCelsius(fahrenheitToCelsius(num).toFixed(1));
-    } else {
+    setLastEdited('fahrenheit');
+    if (!value) {
+      setError(null);
       setCelsius('');
+      return;
+    }
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      setError('Please enter a valid number');
+      setCelsius('');
+    } else if (num < -459.67) {
+      setError('Temperature cannot be below absolute zero (-459.67°F)');
+      setCelsius('');
+    } else {
+      setError(null);
+      setCelsius(fahrenheitToCelsius(num).toFixed(1));
     }
   }, []);
 
@@ -39,6 +89,9 @@ export function TemperatureConverter() {
           Formula: °F = (°C × 9/5) + 32
         </p>
       </div>
+
+      {/* Error message */}
+      <ValidationMessage message={error || ''} visible={!!error} />
 
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -52,7 +105,8 @@ export function TemperatureConverter() {
             value={celsius}
             onChange={(e) => updateFromCelsius(e.target.value)}
             placeholder="e.g., 1800"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg"
+            aria-invalid={!!error && lastEdited === 'celsius'}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'celsius' ? 'border-red-300' : 'border-slate-300'}`}
           />
         </div>
 
@@ -67,7 +121,8 @@ export function TemperatureConverter() {
             value={fahrenheit}
             onChange={(e) => updateFromFahrenheit(e.target.value)}
             placeholder="e.g., 3272"
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg"
+            aria-invalid={!!error && lastEdited === 'fahrenheit'}
+            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'fahrenheit' ? 'border-red-300' : 'border-slate-300'}`}
           />
         </div>
       </div>
