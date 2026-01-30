@@ -23,17 +23,29 @@ const COMMON_GEMS_DISPERSION = [
 export function DispersionCalculator() {
   const [riRed, setRiRed] = useState('');
   const [riViolet, setRiViolet] = useState('');
+  const [touched, setTouched] = useState({ red: false, violet: false });
+
+  // Validation - pass strings to validators
+  const redError = touched.red ? validateRI(riRed) : null;
+  const violetError = touched.violet ? validateRI(riViolet) : null;
 
   const riRedNum = parseFloat(riRed);
   const riVioletNum = parseFloat(riViolet);
 
-  const isValidRed = validateRI(riRedNum);
-  const isValidViolet = validateRI(riVioletNum);
+  // Range error: violet must be greater than red
+  const rangeError = touched.red && touched.violet &&
+    !isNaN(riRedNum) && !isNaN(riVioletNum) &&
+    riVioletNum <= riRedNum
+    ? 'RI at violet must be greater than RI at red'
+    : null;
+
+  const hasValidInputs = !redError && !violetError && !rangeError &&
+    !isNaN(riRedNum) && !isNaN(riVioletNum) && riVioletNum > riRedNum;
 
   let dispersion: number | null = null;
   let category = '';
 
-  if (isValidRed && isValidViolet && riVioletNum > riRedNum) {
+  if (hasValidInputs) {
     dispersion = riVioletNum - riRedNum;
 
     if (dispersion < 0.020) category = 'Low';
@@ -65,10 +77,12 @@ export function DispersionCalculator() {
             max="3"
             value={riRed}
             onChange={(e) => setRiRed(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, red: true }))}
+            aria-invalid={!!redError}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${redError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 2.407"
           />
-          <ValidationMessage value={riRedNum} validator={validateRI} />
+          <ValidationMessage message={redError || ''} visible={!!redError} />
         </div>
 
         <div>
@@ -82,10 +96,12 @@ export function DispersionCalculator() {
             max="3"
             value={riViolet}
             onChange={(e) => setRiViolet(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            onBlur={() => setTouched(t => ({ ...t, violet: true }))}
+            aria-invalid={!!(violetError || rangeError)}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${violetError || rangeError ? 'border-red-300' : 'border-slate-300'}`}
             placeholder="e.g., 2.451"
           />
-          <ValidationMessage value={riVioletNum} validator={validateRI} />
+          <ValidationMessage message={violetError || rangeError || ''} visible={!!(violetError || rangeError)} />
         </div>
       </div>
 

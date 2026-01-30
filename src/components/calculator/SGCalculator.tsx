@@ -131,7 +131,7 @@ export function SGCalculator() {
             <p className="text-3xl font-bold text-crystal-700">{sg.toFixed(2)}</p>
           </div>
 
-          {matchingGems.length > 0 && (
+          {matchingGems.length > 0 ? (
             <div className="border-t border-crystal-200 pt-4 mt-4">
               <p className="text-sm font-medium text-slate-700 mb-2">Possible Matches:</p>
               <div className="flex flex-wrap gap-2">
@@ -144,6 +144,13 @@ export function SGCalculator() {
                   </span>
                 ))}
               </div>
+            </div>
+          ) : (
+            <div className="border-t border-crystal-200 pt-4 mt-4">
+              <p className="text-sm text-slate-500">
+                No common gemstones match this SG value within ±0.05 tolerance.
+                The stone may be unusual, synthetic, or the measurement may need verification.
+              </p>
             </div>
           )}
         </div>
