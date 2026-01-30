@@ -124,15 +124,16 @@ function parseOpticSign(opticalCharacter: string | undefined): '+' | '-' | null 
 /**
  * Check if a measured value falls within a mineral's range with tolerance.
  * Handles cases where only min or max is defined.
+ * Uses == null to catch both null and undefined (SQLite returns null).
  */
 function isInRange(
   measured: number,
-  min: number | undefined,
-  max: number | undefined,
+  min: number | undefined | null,
+  max: number | undefined | null,
   tolerance: number
 ): boolean {
-  // If both are undefined, no data to match against
-  if (min === undefined && max === undefined) return false;
+  // If both are null/undefined, no data to match against
+  if (min == null && max == null) return false;
 
   // If only min is defined, treat it as a single value (min = max)
   const effectiveMin = min ?? max!;
@@ -155,9 +156,10 @@ function calculateDeviation(
 
 /**
  * Format a numeric range for display.
+ * Uses == null to catch both null and undefined (SQLite returns null).
  */
-function formatRange(min: number | undefined, max: number | undefined, decimals: number = 2): string {
-  if (min === undefined || max === undefined) return 'N/A';
+function formatRange(min: number | undefined | null, max: number | undefined | null, decimals: number = 2): string {
+  if (min == null || max == null) return 'N/A';
   if (min === max) return min.toFixed(decimals);
   return `${min.toFixed(decimals)}-${max.toFixed(decimals)}`;
 }
@@ -185,7 +187,7 @@ export function calculateMatch(
       property: 'Refractive Index',
       measured: criteria.ri.toFixed(3),
       expected: formatRange(mineral.ri_min, mineral.ri_max, 3),
-      deviation: mineral.ri_min !== undefined && mineral.ri_max !== undefined
+      deviation: mineral.ri_min != null && mineral.ri_max != null
         ? calculateDeviation(criteria.ri, mineral.ri_min, mineral.ri_max)
         : undefined,
       matched,
@@ -206,7 +208,7 @@ export function calculateMatch(
         property: 'RI Minimum',
         measured: criteria.riMin.toFixed(3),
         expected: formatRange(mineral.ri_min, mineral.ri_max, 3),
-        deviation: mineral.ri_min !== undefined
+        deviation: mineral.ri_min != null
           ? Math.abs(criteria.riMin - mineral.ri_min)
           : undefined,
         matched,
@@ -226,7 +228,7 @@ export function calculateMatch(
         property: 'RI Maximum',
         measured: criteria.riMax.toFixed(3),
         expected: formatRange(mineral.ri_min, mineral.ri_max, 3),
-        deviation: mineral.ri_max !== undefined
+        deviation: mineral.ri_max != null
           ? Math.abs(criteria.riMax - mineral.ri_max)
           : undefined,
         matched,
@@ -248,7 +250,7 @@ export function calculateMatch(
       property: 'Specific Gravity',
       measured: criteria.sg.toFixed(2),
       expected: formatRange(mineral.sg_min, mineral.sg_max, 2),
-      deviation: mineral.sg_min !== undefined && mineral.sg_max !== undefined
+      deviation: mineral.sg_min != null && mineral.sg_max != null
         ? calculateDeviation(criteria.sg, mineral.sg_min, mineral.sg_max)
         : undefined,
       matched,
@@ -261,7 +263,7 @@ export function calculateMatch(
   }
 
   // Birefringence matching
-  if (criteria.birefringence !== undefined && mineral.birefringence !== undefined) {
+  if (criteria.birefringence !== undefined && mineral.birefringence != null) {
     totalWeight += PROPERTY_WEIGHTS.birefringence;
     const diff = Math.abs(criteria.birefringence - mineral.birefringence);
     const matched = diff <= tolerances.birefringence;
@@ -289,7 +291,7 @@ export function calculateMatch(
   }
 
   // Dispersion matching
-  if (criteria.dispersion !== undefined && mineral.dispersion !== undefined) {
+  if (criteria.dispersion !== undefined && mineral.dispersion != null) {
     totalWeight += PROPERTY_WEIGHTS.dispersion;
     const diff = Math.abs(criteria.dispersion - mineral.dispersion);
     const matched = diff <= tolerances.dispersion;
