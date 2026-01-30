@@ -2,7 +2,6 @@
  * Calculator components exports.
  */
 
-export { Calculator } from './Calculator';
 export { MeasurementTools } from './MeasurementTools';
 export { ConversionTools } from './ConversionTools';
 export { SGCalculator } from './SGCalculator';
@@ -27,6 +26,3 @@ export {
 
 // Result display
 export { ResultCard, ResultInline, ResultGroup } from './ResultCard';
-
-// Layout
-export { CalculatorCard } from './CalculatorCard';
