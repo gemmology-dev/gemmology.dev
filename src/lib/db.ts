@@ -133,7 +133,8 @@ export async function getAllMinerals(): Promise<Mineral[]> {
   const result = database.exec(`
     SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
-           fracture, pleochroism, twin_law, phenomenon, note, model_svg
+           fracture, pleochroism, twin_law, phenomenon, note, model_svg,
+           ri_min, ri_max, sg_min, sg_max
     FROM minerals
     ORDER BY name ASC
   `);
