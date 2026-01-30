@@ -3,21 +3,28 @@
  * Alternative SG calculation for irregular shapes using volume estimation
  */
 
-import { useState } from 'react';
-import { ResultCard } from './ResultCard';
-import { ValidationMessage, validateNumber } from './ValidationMessage';
+import { useState, useMemo } from 'react';
+import { validateNumber } from './ValidationMessage';
+import { FormField, NumberInput, Select } from '../form';
+import { NumberResult } from './results';
 
 const VOLUME_METHODS = [
-  { id: 'displacement', label: 'Water Displacement', formula: 'Volume from water displacement' },
-  { id: 'geometric', label: 'Geometric Approximation', formula: 'L × W × H × shape factor' },
-  { id: 'direct', label: 'Direct Volume Input', formula: 'Enter measured volume' },
+  { value: 'displacement', label: 'Water Displacement' },
+  { value: 'geometric', label: 'Geometric Approximation' },
+  { value: 'direct', label: 'Direct Volume Input' },
 ];
 
+const METHOD_DESCRIPTIONS: Record<string, string> = {
+  displacement: 'Volume from water displacement',
+  geometric: 'L × W × H × shape factor',
+  direct: 'Enter measured volume',
+};
+
 const SHAPE_FACTORS = [
-  { id: 'sphere', label: 'Sphere', factor: 0.5236 }, // (4/3)π/8
-  { id: 'ellipsoid', label: 'Ellipsoid', factor: 0.5236 },
-  { id: 'cube', label: 'Cube/Block', factor: 1.0 },
-  { id: 'irregular', label: 'Irregular (est.)', factor: 0.65 },
+  { value: '0.5236', label: 'Sphere (factor: 0.5236)' },
+  { value: '0.5236', label: 'Ellipsoid (factor: 0.5236)' },
+  { value: '1.0', label: 'Cube/Block (factor: 1.0)' },
+  { value: '0.65', label: 'Irregular (est.) (factor: 0.65)' },
 ];
 
 export function DensityEstimator() {
@@ -28,65 +35,52 @@ export function DensityEstimator() {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [shapeFactor, setShapeFactor] = useState('0.65');
-  const [touched, setTouched] = useState({
-    weight: false,
-    volume: false,
-    length: false,
-    width: false,
-    height: false,
-  });
 
-  // Validation - pass strings to validators
-  const weightError = touched.weight
-    ? validateNumber(weight, { positive: true, min: 0.01, max: 1000, label: 'Weight' })
-    : null;
-  const volumeError = touched.volume
-    ? validateNumber(volume, { positive: true, min: 0.01, max: 1000, label: 'Volume' })
-    : null;
-  const lengthError = touched.length
-    ? validateNumber(length, { positive: true, min: 0.01, max: 100, label: 'Length' })
-    : null;
-  const widthError = touched.width
-    ? validateNumber(width, { positive: true, min: 0.01, max: 100, label: 'Width' })
-    : null;
-  const heightError = touched.height
-    ? validateNumber(height, { positive: true, min: 0.01, max: 100, label: 'Height' })
-    : null;
+  // Validation with eager feedback
+  const weightError = weight ? validateNumber(weight, { positive: true, min: 0.01, max: 1000, label: 'Weight' }) : null;
+  const volumeError = volume ? validateNumber(volume, { positive: true, min: 0.01, max: 1000, label: 'Volume' }) : null;
+  const lengthError = length ? validateNumber(length, { positive: true, min: 0.01, max: 100, label: 'Length' }) : null;
+  const widthError = width ? validateNumber(width, { positive: true, min: 0.01, max: 100, label: 'Width' }) : null;
+  const heightError = height ? validateNumber(height, { positive: true, min: 0.01, max: 100, label: 'Height' }) : null;
 
-  const weightNum = parseFloat(weight);
-  const volumeNum = parseFloat(volume);
-  const lengthNum = parseFloat(length);
-  const widthNum = parseFloat(width);
-  const heightNum = parseFloat(height);
-  const factorNum = parseFloat(shapeFactor);
+  const result = useMemo(() => {
+    const weightNum = parseFloat(weight);
+    const volumeNum = parseFloat(volume);
+    const lengthNum = parseFloat(length);
+    const widthNum = parseFloat(width);
+    const heightNum = parseFloat(height);
+    const factorNum = parseFloat(shapeFactor);
 
-  const isValidWeight = !weightError && !isNaN(weightNum) && weightNum > 0;
+    if (isNaN(weightNum) || weightNum <= 0 || weightError) return null;
 
-  let calculatedVolume: number | null = null;
-  let density: number | null = null;
+    let calculatedVolume: number | null = null;
 
-  if (method === 'direct' && !volumeError && !isNaN(volumeNum) && volumeNum > 0) {
-    calculatedVolume = volumeNum;
-  } else if (method === 'displacement' && !volumeError && !isNaN(volumeNum) && volumeNum > 0) {
-    calculatedVolume = volumeNum;
-  } else if (
-    method === 'geometric' &&
-    !lengthError && !widthError && !heightError &&
-    !isNaN(lengthNum) && lengthNum > 0 &&
-    !isNaN(widthNum) && widthNum > 0 &&
-    !isNaN(heightNum) && heightNum > 0 &&
-    !isNaN(factorNum) && factorNum > 0
-  ) {
-    calculatedVolume = lengthNum * widthNum * heightNum * factorNum;
-  }
+    if (method === 'direct' || method === 'displacement') {
+      if (!isNaN(volumeNum) && volumeNum > 0 && !volumeError) {
+        calculatedVolume = volumeNum;
+      }
+    } else if (method === 'geometric') {
+      if (
+        !isNaN(lengthNum) && lengthNum > 0 && !lengthError &&
+        !isNaN(widthNum) && widthNum > 0 && !widthError &&
+        !isNaN(heightNum) && heightNum > 0 && !heightError &&
+        !isNaN(factorNum) && factorNum > 0
+      ) {
+        // Convert mm³ to cm³ (divide by 1000)
+        calculatedVolume = (lengthNum * widthNum * heightNum * factorNum) / 1000;
+      }
+    }
 
-  if (isValidWeight && calculatedVolume !== null && calculatedVolume > 0) {
-    density = weightNum / calculatedVolume;
-  }
+    if (calculatedVolume === null || calculatedVolume <= 0) return null;
 
-  // Check if we should show a hint
+    return {
+      density: weightNum / calculatedVolume,
+      calculatedVolume,
+    };
+  }, [weight, volume, length, width, height, shapeFactor, method, weightError, volumeError, lengthError, widthError, heightError]);
+
   const hasAnyInput = weight || volume || length || width || height;
-  const needsMoreInput = hasAnyInput && density === null && !weightError && !volumeError && !lengthError && !widthError && !heightError;
+  const needsMoreInput = hasAnyInput && !result && !weightError && !volumeError && !lengthError && !widthError && !heightError;
 
   return (
     <div className="space-y-6">
@@ -99,188 +93,120 @@ export function DensityEstimator() {
         </p>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-2">
-          Volume Measurement Method
-        </label>
-        <select
+      <FormField name="method" label="Volume Measurement Method" hint={METHOD_DESCRIPTIONS[method]}>
+        <Select
+          options={VOLUME_METHODS}
           value={method}
-          onChange={(e) => setMethod(e.target.value)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
-        >
-          {VOLUME_METHODS.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.label}
-            </option>
-          ))}
-        </select>
-        <p className="text-xs text-slate-500 mt-1">
-          {VOLUME_METHODS.find((m) => m.id === method)?.formula}
-        </p>
-      </div>
+          onChange={setMethod}
+        />
+      </FormField>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-2">
-          Weight (g)
-        </label>
-        <input
-          type="number"
-          step="0.001"
-          min="0"
+      <FormField name="weight" label="Weight" unit="g" error={weightError}>
+        <NumberInput
           value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          onBlur={() => setTouched(t => ({ ...t, weight: true }))}
-          aria-invalid={!!weightError}
-          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${weightError ? 'border-red-300' : 'border-slate-300'}`}
+          onChange={setWeight}
+          min={0}
+          step={0.001}
           placeholder="e.g., 3.52"
         />
-        <ValidationMessage message={weightError || ''} visible={!!weightError} />
-      </div>
+      </FormField>
 
       {method === 'direct' && (
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
-            Volume (cm³)
-          </label>
-          <input
-            type="number"
-            step="0.001"
-            min="0"
+        <FormField name="volume" label="Volume" unit="cm³" error={volumeError}>
+          <NumberInput
             value={volume}
-            onChange={(e) => setVolume(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, volume: true }))}
-            aria-invalid={!!volumeError}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${volumeError ? 'border-red-300' : 'border-slate-300'}`}
+            onChange={setVolume}
+            min={0}
+            step={0.001}
             placeholder="e.g., 1.0"
           />
-          <ValidationMessage message={volumeError || ''} visible={!!volumeError} />
-        </div>
+        </FormField>
       )}
 
       {method === 'displacement' && (
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
-            Water Displaced (cm³ or mL)
-          </label>
-          <input
-            type="number"
-            step="0.001"
-            min="0"
+        <FormField
+          name="displacement"
+          label="Water Displaced"
+          unit="cm³ or mL"
+          error={volumeError}
+          hint="Submerge stone in graduated cylinder and measure volume change"
+        >
+          <NumberInput
             value={volume}
-            onChange={(e) => setVolume(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, volume: true }))}
-            aria-invalid={!!volumeError}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${volumeError ? 'border-red-300' : 'border-slate-300'}`}
+            onChange={setVolume}
+            min={0}
+            step={0.001}
             placeholder="e.g., 1.0"
           />
-          <p className="text-xs text-slate-500 mt-1">
-            Submerge stone in graduated cylinder and measure volume change
-          </p>
-          <ValidationMessage message={volumeError || ''} visible={!!volumeError} />
-        </div>
+        </FormField>
       )}
 
       {method === 'geometric' && (
         <>
           <div className="grid md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Length (mm)
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
+            <FormField name="length" label="Length" unit="mm" error={lengthError}>
+              <NumberInput
                 value={length}
-                onChange={(e) => setLength(e.target.value)}
-                onBlur={() => setTouched(t => ({ ...t, length: true }))}
-                aria-invalid={!!lengthError}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${lengthError ? 'border-red-300' : 'border-slate-300'}`}
+                onChange={setLength}
+                min={0}
+                step={0.01}
                 placeholder="e.g., 6.5"
               />
-              <ValidationMessage message={lengthError || ''} visible={!!lengthError} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Width (mm)
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
+            </FormField>
+            <FormField name="width" label="Width" unit="mm" error={widthError}>
+              <NumberInput
                 value={width}
-                onChange={(e) => setWidth(e.target.value)}
-                onBlur={() => setTouched(t => ({ ...t, width: true }))}
-                aria-invalid={!!widthError}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${widthError ? 'border-red-300' : 'border-slate-300'}`}
+                onChange={setWidth}
+                min={0}
+                step={0.01}
                 placeholder="e.g., 6.5"
               />
-              <ValidationMessage message={widthError || ''} visible={!!widthError} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Height (mm)
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
+            </FormField>
+            <FormField name="height" label="Height" unit="mm" error={heightError}>
+              <NumberInput
                 value={height}
-                onChange={(e) => setHeight(e.target.value)}
-                onBlur={() => setTouched(t => ({ ...t, height: true }))}
-                aria-invalid={!!heightError}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${heightError ? 'border-red-300' : 'border-slate-300'}`}
+                onChange={setHeight}
+                min={0}
+                step={0.01}
                 placeholder="e.g., 4.0"
               />
-              <ValidationMessage message={heightError || ''} visible={!!heightError} />
-            </div>
+            </FormField>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Shape Approximation
-            </label>
-            <select
+          <FormField
+            name="shape"
+            label="Shape Approximation"
+            hint={`Volume = L × W × H × ${shapeFactor} (in mm³, converted to cm³)`}
+          >
+            <Select
+              options={SHAPE_FACTORS}
               value={shapeFactor}
-              onChange={(e) => setShapeFactor(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
-            >
-              {SHAPE_FACTORS.map((s) => (
-                <option key={s.id} value={s.factor}>
-                  {s.label} (factor: {s.factor})
-                </option>
-              ))}
-            </select>
-            <p className="text-xs text-slate-500 mt-1">
-              Volume = L × W × H × {factorNum} (in mm³, converted to cm³)
-            </p>
-          </div>
+              onChange={setShapeFactor}
+            />
+          </FormField>
 
-          {calculatedVolume !== null && (
+          {result && (
             <div className="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">
-              <strong>Calculated Volume:</strong> {calculatedVolume.toFixed(3)} cm³
+              <strong>Calculated Volume:</strong> {result.calculatedVolume.toFixed(3)} cm³
             </div>
           )}
         </>
       )}
 
-      {/* Hint when inputs are incomplete */}
       {needsMoreInput && (
         <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
           Enter weight and {method === 'geometric' ? 'all dimensions' : 'volume'} to calculate density.
         </div>
       )}
 
-      {density !== null && (
-        <ResultCard
-          value={density.toFixed(3)}
+      {result && (
+        <NumberResult
+          value={result.density}
+          precision={3}
           label="Estimated Specific Gravity"
           variant="emerald"
-        >
-          <p className="text-sm text-slate-600 mt-2">
-            <strong>Note:</strong> This is an estimate. Actual SG from hydrostatic weighing is more accurate.
-          </p>
-        </ResultCard>
+          description="This is an estimate. Actual SG from hydrostatic weighing is more accurate."
+        />
       )}
 
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
