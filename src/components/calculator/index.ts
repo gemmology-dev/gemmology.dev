@@ -24,5 +24,16 @@ export {
   validateRIRange,
 } from './ValidationMessage';
 
-// Result display
+// Result display (legacy)
 export { ResultCard, ResultInline, ResultGroup } from './ResultCard';
+
+// Result display (new consolidated components)
+export {
+  ResultContainer,
+  NumberResult,
+  ClassifiedResult,
+  MultiValueResult,
+  GemMatchBadges,
+  GemMatchCard,
+  GemMatchList,
+} from './results';

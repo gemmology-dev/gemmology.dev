@@ -1,84 +1,49 @@
 /**
  * Weight Converter component.
- * Converts between carat, gram, and milligram.
+ * Converts between carat, gram, and milligram using bidirectional sync.
  */
 
-import { useState, useCallback } from 'react';
+import { useBidirectionalConversion } from '../../hooks/useBidirectionalConversion';
+import { FormField, NumberInput } from '../form';
+import { FieldError } from '../form/FieldError';
 import {
   caratToGram,
   gramToCarat,
   caratToMilligram,
   milligramToCarat,
-  gramToMilligram,
-  milligramToGram,
 } from '../../lib/calculator/conversions';
-import { ValidationMessage } from './ValidationMessage';
 
-type Unit = 'carat' | 'gram' | 'milligram';
+type WeightUnit = 'carat' | 'gram' | 'milligram';
+
+const UNITS = [
+  { key: 'carat' as const, decimals: 4 },
+  { key: 'gram' as const, decimals: 4 },
+  { key: 'milligram' as const, decimals: 2 },
+] as const;
+
+function convert(value: number, from: WeightUnit, to: WeightUnit): number {
+  if (from === to) return value;
+
+  // Convert to carats first (base unit)
+  let inCarats = value;
+  if (from === 'gram') {
+    inCarats = gramToCarat(value);
+  } else if (from === 'milligram') {
+    inCarats = milligramToCarat(value);
+  }
+
+  // Convert from carats to target unit
+  if (to === 'carat') return inCarats;
+  if (to === 'gram') return caratToGram(inCarats);
+  return caratToMilligram(inCarats);
+}
 
 export function WeightConverter() {
-  const [carat, setCarat] = useState('');
-  const [gram, setGram] = useState('');
-  const [milligram, setMilligram] = useState('');
-  const [lastEdited, setLastEdited] = useState<Unit | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const validateAndConvert = (value: string, unit: Unit): boolean => {
-    if (!value) {
-      setError(null);
-      return false;
-    }
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      setError('Please enter a valid number');
-      return false;
-    }
-    if (num < 0) {
-      setError('Weight cannot be negative');
-      return false;
-    }
-    setError(null);
-    return true;
-  };
-
-  const updateFromCarat = useCallback((value: string) => {
-    setCarat(value);
-    setLastEdited('carat');
-    if (validateAndConvert(value, 'carat')) {
-      const num = parseFloat(value);
-      setGram(caratToGram(num).toFixed(4));
-      setMilligram(caratToMilligram(num).toFixed(2));
-    } else if (!value) {
-      setGram('');
-      setMilligram('');
-    }
-  }, []);
-
-  const updateFromGram = useCallback((value: string) => {
-    setGram(value);
-    setLastEdited('gram');
-    if (validateAndConvert(value, 'gram')) {
-      const num = parseFloat(value);
-      setCarat(gramToCarat(num).toFixed(4));
-      setMilligram(gramToMilligram(num).toFixed(2));
-    } else if (!value) {
-      setCarat('');
-      setMilligram('');
-    }
-  }, []);
-
-  const updateFromMilligram = useCallback((value: string) => {
-    setMilligram(value);
-    setLastEdited('milligram');
-    if (validateAndConvert(value, 'milligram')) {
-      const num = parseFloat(value);
-      setCarat(milligramToCarat(num).toFixed(4));
-      setGram(milligramToGram(num).toFixed(4));
-    } else if (!value) {
-      setCarat('');
-      setGram('');
-    }
-  }, []);
+  const { values, error, lastEdited, setValue } = useBidirectionalConversion({
+    units: UNITS,
+    convert,
+    validate: (value) => value < 0 ? 'Weight cannot be negative' : null,
+  });
 
   return (
     <div className="space-y-6">
@@ -89,60 +54,57 @@ export function WeightConverter() {
         </p>
       </div>
 
-      {/* Error message */}
-      <ValidationMessage message={error || ''} visible={!!error} />
+      {/* Shared error message */}
+      {error && <FieldError message={error} />}
 
       <div className="space-y-4">
-        <div>
-          <label htmlFor="weight-carat" className="block text-sm font-medium text-slate-700 mb-1">
-            Carats (ct)
-          </label>
-          <input
-            id="weight-carat"
-            type="number"
-            step="0.01"
-            min="0"
-            value={carat}
-            onChange={(e) => updateFromCarat(e.target.value)}
+        <FormField
+          name="weight-carat"
+          label="Carats"
+          unit="ct"
+          error={lastEdited === 'carat' ? error : null}
+        >
+          <NumberInput
+            value={values.carat}
+            onChange={(v) => setValue('carat', v)}
+            min={0}
+            step={0.01}
             placeholder="e.g., 1.00"
-            aria-invalid={!!error && lastEdited === 'carat'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'carat' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label htmlFor="weight-gram" className="block text-sm font-medium text-slate-700 mb-1">
-            Grams (g)
-          </label>
-          <input
-            id="weight-gram"
-            type="number"
-            step="0.0001"
-            min="0"
-            value={gram}
-            onChange={(e) => updateFromGram(e.target.value)}
+        <FormField
+          name="weight-gram"
+          label="Grams"
+          unit="g"
+          error={lastEdited === 'gram' ? error : null}
+        >
+          <NumberInput
+            value={values.gram}
+            onChange={(v) => setValue('gram', v)}
+            min={0}
+            step={0.0001}
             placeholder="e.g., 0.20"
-            aria-invalid={!!error && lastEdited === 'gram'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'gram' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label htmlFor="weight-mg" className="block text-sm font-medium text-slate-700 mb-1">
-            Milligrams (mg)
-          </label>
-          <input
-            id="weight-mg"
-            type="number"
-            step="1"
-            min="0"
-            value={milligram}
-            onChange={(e) => updateFromMilligram(e.target.value)}
+        <FormField
+          name="weight-mg"
+          label="Milligrams"
+          unit="mg"
+          error={lastEdited === 'milligram' ? error : null}
+        >
+          <NumberInput
+            value={values.milligram}
+            onChange={(v) => setValue('milligram', v)}
+            min={0}
+            step={1}
             placeholder="e.g., 200"
-            aria-invalid={!!error && lastEdited === 'milligram'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'milligram' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
           />
-        </div>
+        </FormField>
       </div>
 
       <div className="text-xs text-slate-500 space-y-1">

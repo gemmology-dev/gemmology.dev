@@ -1,59 +1,32 @@
 /**
  * Length Converter component.
- * Converts between millimeters and inches.
+ * Converts between millimeters and inches using bidirectional sync.
  */
 
-import { useState, useCallback } from 'react';
+import { useBidirectionalConversion } from '../../hooks/useBidirectionalConversion';
+import { FormField, NumberInput } from '../form';
+import { FieldError } from '../form/FieldError';
 import { mmToInch, inchToMm } from '../../lib/calculator/conversions';
-import { ValidationMessage } from './ValidationMessage';
 
-type Unit = 'mm' | 'inches';
+type LengthUnit = 'mm' | 'inches';
+
+const UNITS = [
+  { key: 'mm' as const, decimals: 2 },
+  { key: 'inches' as const, decimals: 4 },
+] as const;
+
+function convert(value: number, from: LengthUnit, to: LengthUnit): number {
+  if (from === to) return value;
+  if (from === 'mm') return mmToInch(value);
+  return inchToMm(value);
+}
 
 export function LengthConverter() {
-  const [mm, setMm] = useState('');
-  const [inches, setInches] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [lastEdited, setLastEdited] = useState<Unit | null>(null);
-
-  const validateAndConvert = (value: string): boolean => {
-    if (!value) {
-      setError(null);
-      return false;
-    }
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      setError('Please enter a valid number');
-      return false;
-    }
-    if (num < 0) {
-      setError('Length cannot be negative');
-      return false;
-    }
-    setError(null);
-    return true;
-  };
-
-  const updateFromMm = useCallback((value: string) => {
-    setMm(value);
-    setLastEdited('mm');
-    if (validateAndConvert(value)) {
-      const num = parseFloat(value);
-      setInches(mmToInch(num).toFixed(4));
-    } else if (!value) {
-      setInches('');
-    }
-  }, []);
-
-  const updateFromInches = useCallback((value: string) => {
-    setInches(value);
-    setLastEdited('inches');
-    if (validateAndConvert(value)) {
-      const num = parseFloat(value);
-      setMm(inchToMm(num).toFixed(2));
-    } else if (!value) {
-      setMm('');
-    }
-  }, []);
+  const { values, error, lastEdited, setValue } = useBidirectionalConversion({
+    units: UNITS,
+    convert,
+    validate: (value) => value < 0 ? 'Length cannot be negative' : null,
+  });
 
   return (
     <div className="space-y-6">
@@ -64,43 +37,41 @@ export function LengthConverter() {
         </p>
       </div>
 
-      {/* Error message */}
-      <ValidationMessage message={error || ''} visible={!!error} />
+      {/* Shared error message */}
+      {error && <FieldError message={error} />}
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="length-mm" className="block text-sm font-medium text-slate-700 mb-1">
-            Millimeters (mm)
-          </label>
-          <input
-            id="length-mm"
-            type="number"
-            step="0.01"
-            min="0"
-            value={mm}
-            onChange={(e) => updateFromMm(e.target.value)}
+        <FormField
+          name="length-mm"
+          label="Millimeters"
+          unit="mm"
+          error={lastEdited === 'mm' ? error : null}
+        >
+          <NumberInput
+            value={values.mm}
+            onChange={(v) => setValue('mm', v)}
+            min={0}
+            step={0.01}
             placeholder="e.g., 6.5"
-            aria-invalid={!!error && lastEdited === 'mm'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'mm' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label htmlFor="length-inch" className="block text-sm font-medium text-slate-700 mb-1">
-            Inches (in)
-          </label>
-          <input
-            id="length-inch"
-            type="number"
-            step="0.0001"
-            min="0"
-            value={inches}
-            onChange={(e) => updateFromInches(e.target.value)}
+        <FormField
+          name="length-inch"
+          label="Inches"
+          unit="in"
+          error={lastEdited === 'inches' ? error : null}
+        >
+          <NumberInput
+            value={values.inches}
+            onChange={(v) => setValue('inches', v)}
+            min={0}
+            step={0.0001}
             placeholder="e.g., 0.25"
-            aria-invalid={!!error && lastEdited === 'inches'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'inches' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
           />
-        </div>
+        </FormField>
       </div>
 
       <div className="text-xs text-slate-500 space-y-1">

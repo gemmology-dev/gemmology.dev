@@ -3,9 +3,10 @@
  * Calculate fire/dispersion from RI at different wavelengths
  */
 
-import { useState } from 'react';
-import { ResultCard } from './ResultCard';
-import { ValidationMessage, validateRI } from './ValidationMessage';
+import { useCalculatorForm } from '../../hooks/useCalculatorForm';
+import { validateRI } from './ValidationMessage';
+import { FormField, NumberInput } from '../form';
+import { ClassifiedResult } from './results';
 
 const COMMON_GEMS_DISPERSION = [
   { name: 'Diamond', dispersion: 0.044, ri: 2.417 },
@@ -20,39 +21,41 @@ const COMMON_GEMS_DISPERSION = [
   { name: 'Emerald', dispersion: 0.014, ri: 1.577 },
 ];
 
+function classifyDispersion(dispersion: number): { category: string; level: 'low' | 'medium' | 'high' | 'very-high' } {
+  if (dispersion < 0.020) return { category: 'Low', level: 'low' };
+  if (dispersion < 0.030) return { category: 'Moderate', level: 'medium' };
+  if (dispersion < 0.040) return { category: 'High', level: 'high' };
+  return { category: 'Very High', level: 'very-high' };
+}
+
 export function DispersionCalculator() {
-  const [riRed, setRiRed] = useState('');
-  const [riViolet, setRiViolet] = useState('');
-  const [touched, setTouched] = useState({ red: false, violet: false });
-
-  // Validation - pass strings to validators
-  const redError = touched.red ? validateRI(riRed) : null;
-  const violetError = touched.violet ? validateRI(riViolet) : null;
-
-  const riRedNum = parseFloat(riRed);
-  const riVioletNum = parseFloat(riViolet);
-
-  // Range error: violet must be greater than red
-  const rangeError = touched.red && touched.violet &&
-    !isNaN(riRedNum) && !isNaN(riVioletNum) &&
-    riVioletNum <= riRedNum
-    ? 'RI at violet must be greater than RI at red'
-    : null;
-
-  const hasValidInputs = !redError && !violetError && !rangeError &&
-    !isNaN(riRedNum) && !isNaN(riVioletNum) && riVioletNum > riRedNum;
-
-  let dispersion: number | null = null;
-  let category = '';
-
-  if (hasValidInputs) {
-    dispersion = riVioletNum - riRedNum;
-
-    if (dispersion < 0.020) category = 'Low';
-    else if (dispersion < 0.030) category = 'Moderate';
-    else if (dispersion < 0.040) category = 'High';
-    else category = 'Very High';
-  }
+  const { values, errors, result, setValue } = useCalculatorForm({
+    fields: {
+      riRed: {
+        validate: validateRI,
+        parse: parseFloat,
+      },
+      riViolet: {
+        validate: validateRI,
+        parse: parseFloat,
+      },
+    },
+    crossValidate: ({ riRed, riViolet }) => {
+      const red = parseFloat(riRed);
+      const violet = parseFloat(riViolet);
+      if (!isNaN(red) && !isNaN(violet) && violet <= red) {
+        return { riViolet: 'RI at violet must be greater than RI at red' };
+      }
+      return {};
+    },
+    compute: ({ riRed, riViolet }) => {
+      if (riRed === undefined || riViolet === undefined) return null;
+      if (riViolet <= riRed) return null;
+      const dispersion = riViolet - riRed;
+      const { category, level } = classifyDispersion(dispersion);
+      return { dispersion, category, level };
+    },
+  });
 
   return (
     <div className="space-y-6">
@@ -66,55 +69,45 @@ export function DispersionCalculator() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
-            RI at Red (C-line 656nm)
-          </label>
-          <input
-            type="number"
-            step="0.001"
-            min="1"
-            max="3"
-            value={riRed}
-            onChange={(e) => setRiRed(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, red: true }))}
-            aria-invalid={!!redError}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${redError ? 'border-red-300' : 'border-slate-300'}`}
+        <FormField
+          name="ri-red"
+          label="RI at Red (C-line 656nm)"
+          error={errors.riRed}
+        >
+          <NumberInput
+            value={values.riRed}
+            onChange={(v) => setValue('riRed', v)}
+            min={1}
+            max={3}
+            step={0.001}
             placeholder="e.g., 2.407"
           />
-          <ValidationMessage message={redError || ''} visible={!!redError} />
-        </div>
+        </FormField>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
-            RI at Violet (F-line 486nm)
-          </label>
-          <input
-            type="number"
-            step="0.001"
-            min="1"
-            max="3"
-            value={riViolet}
-            onChange={(e) => setRiViolet(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, violet: true }))}
-            aria-invalid={!!(violetError || rangeError)}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 ${violetError || rangeError ? 'border-red-300' : 'border-slate-300'}`}
+        <FormField
+          name="ri-violet"
+          label="RI at Violet (F-line 486nm)"
+          error={errors.riViolet}
+        >
+          <NumberInput
+            value={values.riViolet}
+            onChange={(v) => setValue('riViolet', v)}
+            min={1}
+            max={3}
+            step={0.001}
             placeholder="e.g., 2.451"
           />
-          <ValidationMessage message={violetError || rangeError || ''} visible={!!(violetError || rangeError)} />
-        </div>
+        </FormField>
       </div>
 
-      {dispersion !== null && (
-        <ResultCard
-          value={dispersion.toFixed(3)}
-          label={`Dispersion (${category})`}
-          variant="crystal"
-        >
-          <p className="text-sm text-slate-600 mt-2">
-            <strong>Fire Potential:</strong> {category === 'Very High' || category === 'High' ? 'Excellent' : category === 'Moderate' ? 'Good' : 'Low'} spectral color separation
-          </p>
-        </ResultCard>
+      {result && (
+        <ClassifiedResult
+          value={result.dispersion}
+          precision={3}
+          label={`Dispersion (${result.category})`}
+          classification={`${result.category === 'Very High' || result.category === 'High' ? 'Excellent' : result.category === 'Moderate' ? 'Good' : 'Low'} spectral color separation`}
+          classificationLevel={result.level}
+        />
       )}
 
       <div className="mt-6">

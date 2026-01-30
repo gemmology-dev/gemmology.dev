@@ -8,3 +8,15 @@ export { useExam } from './useExam';
 
 // Calculator hooks
 export { useCalculatorData } from './useCalculatorData';
+export { useCalculatorForm } from './useCalculatorForm';
+export { useBidirectionalConversion } from './useBidirectionalConversion';
+export { useGemLookup, formatRI, formatSG } from './useGemLookup';
+
+// Identification hooks
+export {
+  useGemIdentification,
+  DEFAULT_TOLERANCES,
+  type IdentificationCriteria,
+  type ToleranceSettings,
+  type MatchResult,
+} from './useGemIdentification';

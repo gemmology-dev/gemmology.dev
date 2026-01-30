@@ -1,85 +1,40 @@
 /**
  * Temperature Converter component.
- * Converts between Celsius and Fahrenheit.
+ * Converts between Celsius and Fahrenheit using bidirectional sync.
  * Useful for understanding heat treatment temperatures.
  */
 
-import { useState, useCallback } from 'react';
+import { useBidirectionalConversion } from '../../hooks/useBidirectionalConversion';
+import { FormField, NumberInput } from '../form';
+import { FieldError } from '../form/FieldError';
 import { celsiusToFahrenheit, fahrenheitToCelsius } from '../../lib/calculator/conversions';
-import { ValidationMessage } from './ValidationMessage';
 
-type Unit = 'celsius' | 'fahrenheit';
+type TempUnit = 'celsius' | 'fahrenheit';
+
+const UNITS = [
+  { key: 'celsius' as const, decimals: 1, min: -273.15 },
+  { key: 'fahrenheit' as const, decimals: 1, min: -459.67 },
+] as const;
+
+function convert(value: number, from: TempUnit, to: TempUnit): number {
+  if (from === to) return value;
+  if (from === 'celsius') return celsiusToFahrenheit(value);
+  return fahrenheitToCelsius(value);
+}
 
 export function TemperatureConverter() {
-  const [celsius, setCelsius] = useState('');
-  const [fahrenheit, setFahrenheit] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [lastEdited, setLastEdited] = useState<Unit | null>(null);
-
-  const validateAndConvert = (value: string): boolean => {
-    if (!value) {
-      setError(null);
-      return false;
-    }
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      setError('Please enter a valid number');
-      return false;
-    }
-    // Absolute zero limits
-    if (num < -273.15 && lastEdited === 'celsius') {
-      setError('Temperature cannot be below absolute zero (-273.15°C)');
-      return false;
-    }
-    if (num < -459.67 && lastEdited === 'fahrenheit') {
-      setError('Temperature cannot be below absolute zero (-459.67°F)');
-      return false;
-    }
-    setError(null);
-    return true;
-  };
-
-  const updateFromCelsius = useCallback((value: string) => {
-    setCelsius(value);
-    setLastEdited('celsius');
-    if (!value) {
-      setError(null);
-      setFahrenheit('');
-      return;
-    }
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      setError('Please enter a valid number');
-      setFahrenheit('');
-    } else if (num < -273.15) {
-      setError('Temperature cannot be below absolute zero (-273.15°C)');
-      setFahrenheit('');
-    } else {
-      setError(null);
-      setFahrenheit(celsiusToFahrenheit(num).toFixed(1));
-    }
-  }, []);
-
-  const updateFromFahrenheit = useCallback((value: string) => {
-    setFahrenheit(value);
-    setLastEdited('fahrenheit');
-    if (!value) {
-      setError(null);
-      setCelsius('');
-      return;
-    }
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      setError('Please enter a valid number');
-      setCelsius('');
-    } else if (num < -459.67) {
-      setError('Temperature cannot be below absolute zero (-459.67°F)');
-      setCelsius('');
-    } else {
-      setError(null);
-      setCelsius(fahrenheitToCelsius(num).toFixed(1));
-    }
-  }, []);
+  const { values, error, lastEdited, setValue } = useBidirectionalConversion({
+    units: UNITS,
+    convert,
+    validate: (value, unit) => {
+      const minTemp = unit === 'celsius' ? -273.15 : -459.67;
+      const unitLabel = unit === 'celsius' ? '°C' : '°F';
+      if (value < minTemp) {
+        return `Temperature cannot be below absolute zero (${minTemp}${unitLabel})`;
+      }
+      return null;
+    },
+  });
 
   return (
     <div className="space-y-6">
@@ -90,41 +45,41 @@ export function TemperatureConverter() {
         </p>
       </div>
 
-      {/* Error message */}
-      <ValidationMessage message={error || ''} visible={!!error} />
+      {/* Shared error message */}
+      {error && <FieldError message={error} />}
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="temp-celsius" className="block text-sm font-medium text-slate-700 mb-1">
-            Celsius (°C)
-          </label>
-          <input
-            id="temp-celsius"
-            type="number"
-            step="1"
-            value={celsius}
-            onChange={(e) => updateFromCelsius(e.target.value)}
+        <FormField
+          name="temp-celsius"
+          label="Celsius"
+          unit="°C"
+          error={lastEdited === 'celsius' ? error : null}
+        >
+          <NumberInput
+            value={values.celsius}
+            onChange={(v) => setValue('celsius', v)}
+            step={1}
             placeholder="e.g., 1800"
-            aria-invalid={!!error && lastEdited === 'celsius'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'celsius' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
+            allowNegative
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label htmlFor="temp-fahrenheit" className="block text-sm font-medium text-slate-700 mb-1">
-            Fahrenheit (°F)
-          </label>
-          <input
-            id="temp-fahrenheit"
-            type="number"
-            step="1"
-            value={fahrenheit}
-            onChange={(e) => updateFromFahrenheit(e.target.value)}
+        <FormField
+          name="temp-fahrenheit"
+          label="Fahrenheit"
+          unit="°F"
+          error={lastEdited === 'fahrenheit' ? error : null}
+        >
+          <NumberInput
+            value={values.fahrenheit}
+            onChange={(v) => setValue('fahrenheit', v)}
+            step={1}
             placeholder="e.g., 3272"
-            aria-invalid={!!error && lastEdited === 'fahrenheit'}
-            className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 text-lg ${error && lastEdited === 'fahrenheit' ? 'border-red-300' : 'border-slate-300'}`}
+            size="lg"
+            allowNegative
           />
-        </div>
+        </FormField>
       </div>
 
       <div className="bg-slate-50 rounded-lg p-4">

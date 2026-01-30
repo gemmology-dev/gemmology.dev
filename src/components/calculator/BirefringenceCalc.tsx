@@ -3,34 +3,40 @@
  * Calculates birefringence from max and min RI values.
  */
 
-import { useState, useMemo } from 'react';
+import { useCalculatorForm } from '../../hooks/useCalculatorForm';
 import { calculateBirefringence, classifyBirefringence } from '../../lib/calculator/conversions';
-import { cn } from '../ui/cn';
-import { ValidationMessage, validateRI, validateRIRange } from './ValidationMessage';
+import { validateRI } from './ValidationMessage';
+import { FormField, NumberInput } from '../form';
+import { ClassifiedResult } from './results';
 
 export function BirefringenceCalc() {
-  const [riMax, setRiMax] = useState('');
-  const [riMin, setRiMin] = useState('');
-  const [touched, setTouched] = useState({ max: false, min: false });
-
-  // Validation
-  const maxError = touched.max ? validateRI(riMax) : null;
-  const minError = touched.min ? validateRI(riMin) : null;
-  const rangeError = touched.max && touched.min ? validateRIRange(riMax, riMin) : null;
-
-  const result = useMemo(() => {
-    const max = parseFloat(riMax);
-    const min = parseFloat(riMin);
-
-    if (isNaN(max) || isNaN(min) || max < min) {
-      return null;
-    }
-
-    const birefringence = calculateBirefringence(max, min);
-    const classification = classifyBirefringence(birefringence);
-
-    return { birefringence, classification };
-  }, [riMax, riMin]);
+  const { values, errors, result, setValue } = useCalculatorForm({
+    fields: {
+      riMax: {
+        validate: validateRI,
+        parse: parseFloat,
+      },
+      riMin: {
+        validate: validateRI,
+        parse: parseFloat,
+      },
+    },
+    crossValidate: ({ riMax, riMin }) => {
+      const max = parseFloat(riMax);
+      const min = parseFloat(riMin);
+      if (!isNaN(max) && !isNaN(min) && max < min) {
+        return { riMax: 'Maximum RI should be greater than minimum RI' };
+      }
+      return {};
+    },
+    compute: ({ riMax, riMin }) => {
+      if (riMax === undefined || riMin === undefined) return null;
+      if (riMax < riMin) return null;
+      const birefringence = calculateBirefringence(riMax, riMin);
+      const classification = classifyBirefringence(birefringence);
+      return { birefringence, classification };
+    },
+  });
 
   return (
     <div className="space-y-6">
@@ -42,71 +48,44 @@ export function BirefringenceCalc() {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="ri-max" className="block text-sm font-medium text-slate-700 mb-1">
-            RI Maximum
-          </label>
-          <input
-            id="ri-max"
-            type="number"
-            step="0.001"
-            min="1"
-            max="3"
-            value={riMax}
-            onChange={(e) => setRiMax(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, max: true }))}
+        <FormField
+          name="ri-max"
+          label="RI Maximum"
+          error={errors.riMax}
+        >
+          <NumberInput
+            value={values.riMax}
+            onChange={(v) => setValue('riMax', v)}
+            min={1}
+            max={3}
+            step={0.001}
             placeholder="e.g., 1.553"
-            aria-invalid={!!(maxError || rangeError)}
-            aria-describedby={maxError || rangeError ? 'ri-max-error' : undefined}
-            className={cn(
-              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
-              (maxError || rangeError) ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
-            )}
           />
-          <ValidationMessage
-            message={rangeError || maxError || ''}
-            visible={!!(maxError || rangeError)}
-          />
-        </div>
+        </FormField>
 
-        <div>
-          <label htmlFor="ri-min" className="block text-sm font-medium text-slate-700 mb-1">
-            RI Minimum
-          </label>
-          <input
-            id="ri-min"
-            type="number"
-            step="0.001"
-            min="1"
-            max="3"
-            value={riMin}
-            onChange={(e) => setRiMin(e.target.value)}
-            onBlur={() => setTouched(t => ({ ...t, min: true }))}
+        <FormField
+          name="ri-min"
+          label="RI Minimum"
+          error={errors.riMin}
+        >
+          <NumberInput
+            value={values.riMin}
+            onChange={(v) => setValue('riMin', v)}
+            min={1}
+            max={3}
+            step={0.001}
             placeholder="e.g., 1.544"
-            aria-invalid={!!minError}
-            aria-describedby={minError ? 'ri-min-error' : undefined}
-            className={cn(
-              'w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500',
-              minError ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
-            )}
           />
-          <ValidationMessage
-            message={minError || ''}
-            visible={!!minError}
-          />
-        </div>
+        </FormField>
       </div>
 
       {result && (
-        <div className="p-4 rounded-lg bg-crystal-50 border border-crystal-200">
-          <div className="text-center mb-2">
-            <p className="text-sm text-slate-500">Birefringence</p>
-            <p className="text-3xl font-bold text-crystal-700">{result.birefringence.toFixed(3)}</p>
-          </div>
-          <p className="text-center text-sm text-slate-600">
-            Classification: <span className="font-medium">{result.classification}</span>
-          </p>
-        </div>
+        <ClassifiedResult
+          value={result.birefringence}
+          precision={3}
+          label="Birefringence"
+          classification={result.classification}
+        />
       )}
 
       <div className="text-xs text-slate-500 space-y-1">

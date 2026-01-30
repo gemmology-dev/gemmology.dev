@@ -3,29 +3,27 @@
  * Calculates the critical angle for total internal reflection from RI.
  */
 
-import { useState, useMemo } from 'react';
+import { useCalculatorForm } from '../../hooks/useCalculatorForm';
 import { calculateCriticalAngle, getCriticalAngleSignificance } from '../../lib/calculator/conversions';
-import { ValidationMessage, validateRI } from './ValidationMessage';
+import { validateRI } from './ValidationMessage';
+import { FormField, NumberInput } from '../form';
+import { ClassifiedResult } from './results';
 
 export function CriticalAngleCalc() {
-  const [ri, setRi] = useState('');
-  const [touched, setTouched] = useState(false);
-
-  // Validation
-  const error = touched ? validateRI(ri) : null;
-
-  const result = useMemo(() => {
-    const riValue = parseFloat(ri);
-
-    if (isNaN(riValue) || riValue < 1) {
-      return null;
-    }
-
-    const criticalAngle = calculateCriticalAngle(riValue);
-    const significance = getCriticalAngleSignificance(criticalAngle);
-
-    return { criticalAngle, significance };
-  }, [ri]);
+  const { values, errors, result, setValue } = useCalculatorForm({
+    fields: {
+      ri: {
+        validate: validateRI,
+        parse: parseFloat,
+      },
+    },
+    compute: ({ ri }) => {
+      if (ri === undefined || ri < 1) return null;
+      const criticalAngle = calculateCriticalAngle(ri);
+      const significance = getCriticalAngleSignificance(criticalAngle);
+      return { criticalAngle, significance };
+    },
+  });
 
   return (
     <div className="space-y-6">
@@ -36,44 +34,41 @@ export function CriticalAngleCalc() {
         </p>
       </div>
 
-      <div>
-        <label htmlFor="ri-input" className="block text-sm font-medium text-slate-700 mb-1">
-          Refractive Index
-        </label>
-        <input
-          id="ri-input"
-          type="number"
-          step="0.001"
-          min="1"
-          max="4"
-          value={ri}
-          onChange={(e) => setRi(e.target.value)}
-          onBlur={() => setTouched(true)}
+      <FormField
+        name="ri-input"
+        label="Refractive Index"
+        error={errors.ri}
+      >
+        <NumberInput
+          value={values.ri}
+          onChange={(v) => setValue('ri', v)}
+          min={1}
+          max={4}
+          step={0.001}
           placeholder="e.g., 2.417"
-          aria-invalid={!!error}
-          aria-describedby={error ? 'ri-input-error' : undefined}
-          className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-crystal-500 ${error ? 'border-red-300' : 'border-slate-300'}`}
         />
-        <ValidationMessage message={error || ''} visible={!!error} />
-      </div>
+      </FormField>
 
-      {/* Hint when no result and no error */}
-      {!result && !error && ri && (
+      {/* Hint when no result and no error but has input */}
+      {!result && !errors.ri && values.ri && (
         <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
           Enter a valid RI value (≥ 1.0) to calculate the critical angle.
         </div>
       )}
 
       {result && (
-        <div className="p-4 rounded-lg bg-crystal-50 border border-crystal-200">
-          <div className="text-center mb-3">
-            <p className="text-sm text-slate-500">Critical Angle</p>
-            <p className="text-3xl font-bold text-crystal-700">{result.criticalAngle.toFixed(1)}°</p>
-          </div>
-          <p className="text-center text-sm text-slate-600">
-            {result.significance}
-          </p>
-        </div>
+        <ClassifiedResult
+          value={result.criticalAngle}
+          precision={1}
+          unit="°"
+          label="Critical Angle"
+          classification={result.significance}
+          classificationLevel={
+            result.criticalAngle < 25 ? 'very-high' :
+            result.criticalAngle < 35 ? 'high' :
+            result.criticalAngle < 45 ? 'medium' : 'low'
+          }
+        />
       )}
 
       <div className="bg-slate-50 rounded-lg p-4">
