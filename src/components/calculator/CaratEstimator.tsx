@@ -83,7 +83,7 @@ export function CaratEstimator() {
     return FALLBACK_SG;
   }, [mineralsWithSG]);
 
-  const { values, errors, result, setValue } = useCalculatorForm({
+  const { values, errors, setValue, parsedValues } = useCalculatorForm({
     fields: {
       length: {
         validate: (v) => validateNumber(v, { positive: true, label: 'Length' }),
@@ -107,19 +107,23 @@ export function CaratEstimator() {
         required: false,
       },
     },
-    compute: ({ length, width, depth, sgPreset }) => {
-      if (length === undefined || width === undefined || depth === undefined) return null;
-      const sgValue = sgSource === 'custom' ? parseFloat(sgCustom) : sgPreset;
-      if (!sgValue || isNaN(sgValue) || sgValue <= 0) return null;
-
-      const shape = values.shape as Shape;
-      const dbFactor = shapes.find(s => s.value === shape);
-      const factor = dbFactor?.factor ?? fallbackShapeFactors[shape] ?? 0.0061;
-      const carats = length * width * depth * sgValue * factor;
-
-      return { carats, factor, grams: carats * 0.2 };
-    },
   });
+
+  // Compute result separately to include all dependencies (sgSource, sgCustom, shape)
+  const result = useMemo(() => {
+    const { length, width, depth, sgPreset } = parsedValues;
+    if (length === undefined || width === undefined || depth === undefined) return null;
+
+    const sgValue = sgSource === 'custom' ? parseFloat(sgCustom) : sgPreset;
+    if (!sgValue || isNaN(sgValue) || sgValue <= 0) return null;
+
+    const shape = values.shape as Shape;
+    const dbFactor = shapes.find(s => s.value === shape);
+    const factor = dbFactor?.factor ?? fallbackShapeFactors[shape] ?? 0.0061;
+    const carats = length * width * depth * sgValue * factor;
+
+    return { carats, factor, grams: carats * 0.2 };
+  }, [parsedValues, sgSource, sgCustom, values.shape, shapes, fallbackShapeFactors]);
 
   // Custom SG validation
   const sgError = sgSource === 'custom' && sgCustom

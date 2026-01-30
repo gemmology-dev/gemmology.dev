@@ -9,13 +9,20 @@ import type { Mineral } from '../db';
  * Input criteria for gem identification.
  */
 export interface IdentificationCriteria {
+  /** Single RI value (for isotropic or quick search) */
   ri?: number;
+  /** Measured RI minimum (for anisotropic gems) */
+  riMin?: number;
+  /** Measured RI maximum (for anisotropic gems) */
+  riMax?: number;
   sg?: number;
   birefringence?: number;
   dispersion?: number;
   hardness?: number;
   crystalSystem?: string;
   opticSign?: '+' | '-';
+  /** Optic character filter */
+  opticCharacter?: 'isotropic' | 'uniaxial' | 'biaxial';
 }
 
 /**
@@ -56,14 +63,17 @@ export interface MatchResult {
  * Property weights for confidence scoring.
  * Higher values indicate more diagnostic importance.
  */
-export const PROPERTY_WEIGHTS: Record<keyof IdentificationCriteria, number> = {
+export const PROPERTY_WEIGHTS: Record<string, number> = {
   ri: 25,
+  riMin: 15,
+  riMax: 15,
   sg: 20,
   birefringence: 15,
   hardness: 15,
   dispersion: 10,
   crystalSystem: 10,
   opticSign: 5,
+  opticCharacter: 5,
 };
 
 /**
@@ -113,6 +123,7 @@ function parseOpticSign(opticalCharacter: string | undefined): '+' | '-' | null 
 
 /**
  * Check if a measured value falls within a mineral's range with tolerance.
+ * Handles cases where only min or max is defined.
  */
 function isInRange(
   measured: number,
@@ -120,8 +131,14 @@ function isInRange(
   max: number | undefined,
   tolerance: number
 ): boolean {
-  if (min === undefined || max === undefined) return false;
-  return measured >= min - tolerance && measured <= max + tolerance;
+  // If both are undefined, no data to match against
+  if (min === undefined && max === undefined) return false;
+
+  // If only min is defined, treat it as a single value (min = max)
+  const effectiveMin = min ?? max!;
+  const effectiveMax = max ?? min!;
+
+  return measured >= effectiveMin - tolerance && measured <= effectiveMax + tolerance;
 }
 
 /**
@@ -158,8 +175,9 @@ export function calculateMatch(
   let totalWeight = 0;
   let matchedWeight = 0;
 
-  // RI matching
+  // RI matching - supports both single RI and riMin/riMax modes
   if (criteria.ri !== undefined) {
+    // Single RI mode (isotropic or quick search)
     totalWeight += PROPERTY_WEIGHTS.ri;
     const matched = isInRange(criteria.ri, mineral.ri_min, mineral.ri_max, tolerances.ri);
 
@@ -176,6 +194,48 @@ export function calculateMatch(
     if (matched) {
       matchedProperties.push('ri');
       matchedWeight += PROPERTY_WEIGHTS.ri;
+    }
+  } else if (criteria.riMin !== undefined || criteria.riMax !== undefined) {
+    // Dual RI mode (uniaxial/biaxial)
+    // Check if measured RI range overlaps with mineral's RI range
+    if (criteria.riMin !== undefined) {
+      totalWeight += PROPERTY_WEIGHTS.riMin;
+      const matched = isInRange(criteria.riMin, mineral.ri_min, mineral.ri_max, tolerances.ri);
+
+      matchDetails.push({
+        property: 'RI Minimum',
+        measured: criteria.riMin.toFixed(3),
+        expected: formatRange(mineral.ri_min, mineral.ri_max, 3),
+        deviation: mineral.ri_min !== undefined
+          ? Math.abs(criteria.riMin - mineral.ri_min)
+          : undefined,
+        matched,
+      });
+
+      if (matched) {
+        matchedProperties.push('riMin');
+        matchedWeight += PROPERTY_WEIGHTS.riMin;
+      }
+    }
+
+    if (criteria.riMax !== undefined) {
+      totalWeight += PROPERTY_WEIGHTS.riMax;
+      const matched = isInRange(criteria.riMax, mineral.ri_min, mineral.ri_max, tolerances.ri);
+
+      matchDetails.push({
+        property: 'RI Maximum',
+        measured: criteria.riMax.toFixed(3),
+        expected: formatRange(mineral.ri_min, mineral.ri_max, 3),
+        deviation: mineral.ri_max !== undefined
+          ? Math.abs(criteria.riMax - mineral.ri_max)
+          : undefined,
+        matched,
+      });
+
+      if (matched) {
+        matchedProperties.push('riMax');
+        matchedWeight += PROPERTY_WEIGHTS.riMax;
+      }
     }
   }
 
@@ -331,6 +391,36 @@ export function calculateMatch(
     if (matched) {
       matchedProperties.push('opticSign');
       matchedWeight += PROPERTY_WEIGHTS.opticSign;
+    }
+  }
+
+  // Optic character matching (isotropic/uniaxial/biaxial based on crystal system)
+  if (criteria.opticCharacter) {
+    totalWeight += PROPERTY_WEIGHTS.opticCharacter;
+    const mineralSystem = mineral.system?.toLowerCase();
+
+    // Determine mineral's optic character from crystal system
+    let mineralOpticChar: 'isotropic' | 'uniaxial' | 'biaxial' | null = null;
+    if (mineralSystem === 'cubic' || mineralSystem === 'isometric') {
+      mineralOpticChar = 'isotropic';
+    } else if (mineralSystem === 'tetragonal' || mineralSystem === 'hexagonal' || mineralSystem === 'trigonal') {
+      mineralOpticChar = 'uniaxial';
+    } else if (mineralSystem === 'orthorhombic' || mineralSystem === 'monoclinic' || mineralSystem === 'triclinic') {
+      mineralOpticChar = 'biaxial';
+    }
+
+    const matched = mineralOpticChar === criteria.opticCharacter;
+
+    matchDetails.push({
+      property: 'Optic Character',
+      measured: criteria.opticCharacter,
+      expected: mineralOpticChar || 'N/A',
+      matched,
+    });
+
+    if (matched) {
+      matchedProperties.push('opticCharacter');
+      matchedWeight += PROPERTY_WEIGHTS.opticCharacter;
     }
   }
 
