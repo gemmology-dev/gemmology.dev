@@ -108,7 +108,7 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
       />
       {/* Dark edges matching SVG outline style */}
       <Edges
-        threshold={15}
+        threshold={1}
         color="#0369a1"
         lineWidth={1.5}
       />
