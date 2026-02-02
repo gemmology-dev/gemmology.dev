@@ -60,6 +60,12 @@ export interface Mineral {
   cleavage?: string;
   fracture?: string;
   pleochroism?: string;
+  // Structured pleochroism data for dichroscope lookup
+  pleochroism_strength?: string;  // 'none'|'weak'|'moderate'|'strong'|'very_strong'
+  pleochroism_color1?: string;
+  pleochroism_color2?: string;
+  pleochroism_color3?: string;    // For trichroic gems
+  pleochroism_notes?: string;
   twin_law?: string;
   phenomenon?: string;
   note?: string;
@@ -526,6 +532,68 @@ export async function getMineralsWithHardness(): Promise<Mineral[]> {
      WHERE hardness IS NOT NULL AND hardness != ''
      ORDER BY
        CAST(SUBSTR(hardness, 1, INSTR(hardness || '-', '-') - 1) AS REAL) DESC,
+       name ASC`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get minerals suitable for refractometer simulation.
+ * Returns gems with RI data, limited to refractometer range (≤1.81).
+ */
+export async function getMineralsForRefractometer(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, ri_min, ri_max, optical_character
+     FROM minerals
+     WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
+       AND ri_max <= 1.81
+     ORDER BY ri_min ASC`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get minerals with structured pleochroism data for dichroscope lookup.
+ */
+export async function getMineralsWithPleochroism(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, pleochroism, pleochroism_strength,
+            pleochroism_color1, pleochroism_color2, pleochroism_color3,
+            pleochroism_notes
+     FROM minerals
+     WHERE pleochroism_strength IS NOT NULL
+       AND pleochroism_strength != ''
+       AND pleochroism_strength != 'none'
+     ORDER BY
+       CASE pleochroism_strength
+         WHEN 'very_strong' THEN 1
+         WHEN 'strong' THEN 2
+         WHEN 'moderate' THEN 3
+         WHEN 'weak' THEN 4
+         ELSE 5
+       END,
        name ASC`
   );
 
