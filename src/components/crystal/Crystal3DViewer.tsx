@@ -21,7 +21,8 @@ interface CrystalMeshProps {
 /**
  * Parse glTF data and create Three.js geometry
  * Follows glTF 2.0 spec by reading mesh primitives to find accessor indices
- * Automatically scales geometry to fit within a unit sphere
+ * Handles accessor.byteOffset + bufferView.byteOffset correctly
+ * Copies data to avoid TypedArray byte alignment issues
  */
 function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
   try {
@@ -65,37 +66,34 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
     const posBufferView = gltfData.bufferViews[posAccessor.bufferView];
     const idxBufferView = gltfData.bufferViews[idxAccessor.bufferView];
 
-    // Extract position data
-    const posData = new Float32Array(
-      bytes.buffer,
-      posBufferView.byteOffset || 0,
-      posAccessor.count * 3
-    );
+    // Use DataView to safely read data regardless of byte alignment
+    const dataView = new DataView(bytes.buffer);
+
+    // Extract position data (Float32, VEC3)
+    // Total offset = bufferView.byteOffset + accessor.byteOffset
+    const posOffset = (posBufferView.byteOffset || 0) + (posAccessor.byteOffset || 0);
+    const posData = new Float32Array(posAccessor.count * 3);
+    for (let i = 0; i < posAccessor.count * 3; i++) {
+      posData[i] = dataView.getFloat32(posOffset + i * 4, true); // little-endian
+    }
 
     // Extract index data (handle both Uint16 and Uint32)
-    let idxData: Uint16Array | Uint32Array;
+    const idxOffset = (idxBufferView.byteOffset || 0) + (idxAccessor.byteOffset || 0);
     const idxComponentType = idxAccessor.componentType;
-    if (idxComponentType === 5123) {
-      // UNSIGNED_SHORT
-      idxData = new Uint16Array(
-        bytes.buffer,
-        idxBufferView.byteOffset || 0,
-        idxAccessor.count
-      );
-    } else if (idxComponentType === 5125) {
-      // UNSIGNED_INT
-      idxData = new Uint32Array(
-        bytes.buffer,
-        idxBufferView.byteOffset || 0,
-        idxAccessor.count
-      );
+    let idxData: Uint16Array | Uint32Array;
+
+    if (idxComponentType === 5125) {
+      // UNSIGNED_INT (4 bytes)
+      idxData = new Uint32Array(idxAccessor.count);
+      for (let i = 0; i < idxAccessor.count; i++) {
+        idxData[i] = dataView.getUint32(idxOffset + i * 4, true);
+      }
     } else {
-      // Default to Uint16
-      idxData = new Uint16Array(
-        bytes.buffer,
-        idxBufferView.byteOffset || 0,
-        idxAccessor.count
-      );
+      // UNSIGNED_SHORT (2 bytes) - default
+      idxData = new Uint16Array(idxAccessor.count);
+      for (let i = 0; i < idxAccessor.count; i++) {
+        idxData[i] = dataView.getUint16(idxOffset + i * 2, true);
+      }
     }
 
     // Create geometry
@@ -107,11 +105,11 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
     if (normAccessorIdx !== undefined) {
       const normAccessor = gltfData.accessors[normAccessorIdx];
       const normBufferView = gltfData.bufferViews[normAccessor.bufferView];
-      const normData = new Float32Array(
-        bytes.buffer,
-        normBufferView.byteOffset || 0,
-        normAccessor.count * 3
-      );
+      const normOffset = (normBufferView.byteOffset || 0) + (normAccessor.byteOffset || 0);
+      const normData = new Float32Array(normAccessor.count * 3);
+      for (let i = 0; i < normAccessor.count * 3; i++) {
+        normData[i] = dataView.getFloat32(normOffset + i * 4, true);
+      }
       geometry.setAttribute('normal', new THREE.BufferAttribute(normData, 3));
     } else {
       // Compute normals if not provided

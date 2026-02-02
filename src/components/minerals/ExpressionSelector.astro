@@ -1,0 +1,61 @@
+---
+/**
+ * ExpressionSelector - Shows available crystal forms for a mineral family
+ * Allows switching between different expressions via ?form= query param
+ */
+import type { MineralExpression } from '../../lib/db-server';
+
+interface Props {
+  familyId: string;
+  expressions: MineralExpression[];
+  selectedSlug?: string;
+}
+
+const { familyId, expressions, selectedSlug } = Astro.props;
+---
+
+<div class="bg-white rounded-xl border border-slate-200 p-6">
+  <h2 class="text-lg font-semibold text-slate-900 mb-4">Crystal Forms</h2>
+  <p class="text-sm text-slate-600 mb-4">
+    This mineral exhibits {expressions.length} distinct crystal habits or forms.
+    Select a form to view its structure and CDL notation.
+  </p>
+
+  <div class="flex flex-wrap gap-2">
+    {expressions.map((expr) => {
+      const isSelected = expr.slug === selectedSlug || (!selectedSlug && expr.is_primary);
+      const href = isSelected
+        ? `/minerals/${familyId}`
+        : `/minerals/${familyId}?form=${expr.slug}`;
+
+      return (
+        <a
+          href={href}
+          class:list={[
+            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors',
+            isSelected
+              ? 'bg-crystal-600 text-white'
+              : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+          ]}
+        >
+          {expr.name}
+          {expr.is_primary && (
+            <span class:list={[
+              'text-xs px-1.5 py-0.5 rounded-full',
+              isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600',
+            ]}>
+              primary
+            </span>
+          )}
+        </a>
+      );
+    })}
+  </div>
+
+  {/* Form description if available */}
+  {expressions.find((e) => e.slug === selectedSlug)?.form_description && (
+    <p class="mt-4 text-sm text-slate-600 italic">
+      {expressions.find((e) => e.slug === selectedSlug)?.form_description}
+    </p>
+  )}
+</div>
