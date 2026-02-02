@@ -189,6 +189,15 @@ export function SpectroscopeCalculator() {
           <li>• Position matters - some lines only visible in certain orientations</li>
         </ul>
       </div>
+
+      <div className="text-sm text-slate-600">
+        <a
+          href="/learn/equipment/spectroscope"
+          className="text-crystal-600 hover:text-crystal-700 underline"
+        >
+          Learn spectroscope technique and absorption spectrum interpretation →
+        </a>
+      </div>
     </div>
   );
 }
