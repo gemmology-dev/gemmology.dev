@@ -17,8 +17,9 @@ export { SectionHeader } from './SectionHeader';
 export { Link } from './Link';
 
 // Data Display Components
-export { Table, DataTable, PropertyTable } from './Table';
+export { Table, DataTable, PropertyTable, PaginatedTable } from './Table';
 export { DifficultyBadge } from './DifficultyBadge';
+export { Pagination, PaginationCompact } from './Pagination';
 
 // Accessibility Components
 export { LiveRegion, Announcer } from './LiveRegion';
