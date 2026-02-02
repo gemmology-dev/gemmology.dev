@@ -5,8 +5,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import {
-  findMineralsByRI,
-  findMineralsBySG,
+  findFamiliesByRI,
+  findFamiliesBySG,
   getCutShapeFactors,
   getThresholds,
   getMineralsWithHeatTreatment,
@@ -16,6 +16,7 @@ import {
   getMineralsForRefractometer,
   getMineralsWithPleochroism,
   type Mineral,
+  type MineralFamily,
   type CutShapeFactor,
   type GemmologicalThreshold,
 } from '../lib/db';
@@ -25,15 +26,15 @@ import {
   type GemReference,
 } from '../lib/calculator/conversions';
 
+// Helper to ensure numeric values (database may return strings or null)
+function toNumber(val: unknown): number | undefined {
+  if (val === null || val === undefined) return undefined;
+  const num = typeof val === 'number' ? val : parseFloat(String(val));
+  return isNaN(num) ? undefined : num;
+}
+
 // Convert Mineral to GemReference format for compatibility
 function mineralToGemRef(mineral: Mineral): GemReference {
-  // Helper to ensure numeric values (database may return strings or null)
-  const toNumber = (val: unknown): number | undefined => {
-    if (val === null || val === undefined) return undefined;
-    const num = typeof val === 'number' ? val : parseFloat(String(val));
-    return isNaN(num) ? undefined : num;
-  };
-
   return {
     name: mineral.name,
     ri: mineral.ri_min && mineral.ri_max
@@ -49,6 +50,35 @@ function mineralToGemRef(mineral: Mineral): GemReference {
     birefringence: toNumber(mineral.birefringence),
     dispersion: toNumber(mineral.dispersion),
     hardness: mineral.hardness ?? '',
+  };
+}
+
+// Convert MineralFamily to GemReference format (no duplicates)
+function familyToGemRef(family: MineralFamily): GemReference {
+  // Format hardness as string range
+  const formatHardness = (): string => {
+    if (!family.hardness_min) return '';
+    if (family.hardness_min === family.hardness_max) {
+      return String(family.hardness_min);
+    }
+    return `${family.hardness_min}-${family.hardness_max}`;
+  };
+
+  return {
+    name: family.name,
+    ri: family.ri_min && family.ri_max
+      ? family.ri_min === family.ri_max
+        ? family.ri_min
+        : [family.ri_min, family.ri_max]
+      : 0,
+    sg: family.sg_min && family.sg_max
+      ? family.sg_min === family.sg_max
+        ? family.sg_min
+        : [family.sg_min, family.sg_max]
+      : 0,
+    birefringence: toNumber(family.birefringence),
+    dispersion: toNumber(family.dispersion),
+    hardness: formatHardness(),
   };
 }
 
@@ -147,12 +177,14 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     loadData();
   }, []);
 
-  // RI lookup with database or fallback
+  // RI lookup with database or fallback (uses families to avoid duplicates)
   const findByRI = useCallback(async (ri: number, tolerance: number = 0.01): Promise<GemReference[]> => {
     if (dbAvailable) {
       try {
-        const minerals = await findMineralsByRI(ri, tolerance);
-        return minerals.map(mineralToGemRef);
+        // Use family-based query to avoid duplicate entries like
+        // fluorite, fluorite-octahedron, fluorite-twin showing separately
+        const families = await findFamiliesByRI(ri, tolerance);
+        return families.map(familyToGemRef);
       } catch (err) {
         console.warn('DB RI lookup failed, using fallback', err);
       }
@@ -166,12 +198,14 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     });
   }, [dbAvailable]);
 
-  // SG lookup with database or fallback
+  // SG lookup with database or fallback (uses families to avoid duplicates)
   const findBySG = useCallback(async (sg: number, tolerance: number = 0.05): Promise<GemReference[]> => {
     if (dbAvailable) {
       try {
-        const minerals = await findMineralsBySG(sg, tolerance);
-        return minerals.map(mineralToGemRef);
+        // Use family-based query to avoid duplicate entries like
+        // fluorite, fluorite-octahedron, fluorite-twin showing separately
+        const families = await findFamiliesBySG(sg, tolerance);
+        return families.map(familyToGemRef);
       } catch (err) {
         console.warn('DB SG lookup failed, using fallback', err);
       }
