@@ -4,7 +4,7 @@
  */
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Center, Edges } from '@react-three/drei';
+import { OrbitControls, Center, Edges, Outlines } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 
@@ -106,11 +106,12 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
         opacity={0.85}
         side={THREE.DoubleSide}
       />
-      {/* Dark edges matching SVG outline style */}
+      {/* Dark edges using Outlines (inverted hull technique for visible edges) */}
+      <Outlines thickness={0.03} color="#0369a1" />
+      {/* Additional edge lines for sharp angles */}
       <Edges
-        threshold={1}
+        threshold={15}
         color="#0369a1"
-        lineWidth={1.5}
       />
     </mesh>
   );
