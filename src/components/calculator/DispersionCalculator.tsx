@@ -34,11 +34,12 @@ export function DispersionCalculator() {
   const { mineralsWithDispersion, dbAvailable, loading } = useCalculatorData();
 
   // Use database data if available, otherwise fallback
+  // Ensure numeric coercion since SQLite may return strings
   const dispersionGems = dbAvailable && mineralsWithDispersion.length > 0
     ? mineralsWithDispersion.map(m => ({
         name: m.name,
-        dispersion: m.dispersion ?? 0,
-        ri: m.ri_min && m.ri_max ? (m.ri_min + m.ri_max) / 2 : 0,
+        dispersion: Number(m.dispersion) || 0,
+        ri: m.ri_min && m.ri_max ? (Number(m.ri_min) + Number(m.ri_max)) / 2 : 0,
       }))
     : FALLBACK_GEMS_DISPERSION;
 

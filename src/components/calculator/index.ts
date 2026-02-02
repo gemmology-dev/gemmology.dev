@@ -14,7 +14,6 @@ export { CaratEstimator } from './CaratEstimator';
 export { RICalculator } from './RICalculator';
 export { DispersionCalculator } from './DispersionCalculator';
 export { DensityEstimator } from './DensityEstimator';
-export { PricePerCaratConverter } from './PricePerCaratConverter';
 
 // Validation
 export {
