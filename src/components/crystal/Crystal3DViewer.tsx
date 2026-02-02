@@ -7,7 +7,6 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Center } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { EdgesGeometry } from 'three';
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
@@ -22,13 +21,19 @@ interface CrystalMeshProps {
   gltfData: object;
 }
 
+interface ParsedGeometry {
+  geometry: THREE.BufferGeometry;
+  crystalEdges: number[][] | null; // Original polygon edges [v0, v1][]
+}
+
 /**
  * Parse glTF data and create Three.js geometry
  * Follows glTF 2.0 spec by reading mesh primitives to find accessor indices
  * Handles accessor.byteOffset + bufferView.byteOffset correctly
  * Copies data to avoid TypedArray byte alignment issues
+ * Also extracts original polygon edges from extras.crystalEdges if available
  */
-function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
+function parseGLTFToGeometry(gltfData: any): ParsedGeometry | null {
   try {
     if (!gltfData.buffers || !gltfData.accessors || !gltfData.bufferViews || !gltfData.meshes) {
       return null;
@@ -139,7 +144,10 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
       geometry.center();
     }
 
-    return geometry;
+    // Extract original polygon edges from extras if available
+    const crystalEdges = gltfData.extras?.crystalEdges ?? null;
+
+    return { geometry, crystalEdges };
   } catch (error) {
     console.error('Error parsing glTF:', error);
     return null;
@@ -158,20 +166,37 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
 
   // Create face geometry, Line2 object with geometry and material together
   const { faceGeometry, line2 } = useMemo(() => {
-    const faceGeom = parseGLTFToGeometry(gltfData);
-    if (!faceGeom) {
+    const parsed = parseGLTFToGeometry(gltfData);
+    if (!parsed) {
       return { faceGeometry: null, line2: null };
     }
 
-    // Create edge geometry from face geometry (threshold in degrees)
-    // Higher threshold (20°) filters out internal triangulation artifacts
-    // while keeping visible crystal facet edges
-    const edgeGeom = new EdgesGeometry(faceGeom, 20);
+    const { geometry: faceGeom, crystalEdges } = parsed;
 
-    // Convert EdgesGeometry to LineGeometry for Line2
-    const positions = edgeGeom.attributes.position.array as Float32Array;
+    // Build line positions from original polygon edges (not triangulation edges)
+    // This avoids showing internal fan triangulation artifacts
+    const positionAttr = faceGeom.getAttribute('position') as THREE.BufferAttribute;
+    const positions: number[] = [];
+
+    if (crystalEdges && crystalEdges.length > 0) {
+      // Use original polygon edges from glTF extras
+      for (const [v0, v1] of crystalEdges) {
+        positions.push(
+          positionAttr.getX(v0), positionAttr.getY(v0), positionAttr.getZ(v0),
+          positionAttr.getX(v1), positionAttr.getY(v1), positionAttr.getZ(v1)
+        );
+      }
+    } else {
+      // Fallback: use EdgesGeometry for backward compatibility with old glTF data
+      const edgeGeom = new THREE.EdgesGeometry(faceGeom, 30);
+      const edgePositions = edgeGeom.attributes.position.array as Float32Array;
+      positions.push(...Array.from(edgePositions));
+      edgeGeom.dispose();
+    }
+
+    // Create LineGeometry for Line2
     const lineGeom = new LineGeometry();
-    lineGeom.setPositions(Array.from(positions));
+    lineGeom.setPositions(positions);
 
     // Create LineMaterial with screen-space line width
     const lineMat = new LineMaterial({
@@ -179,9 +204,6 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
       linewidth: 2, // Width in pixels
       resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
     });
-
-    // Dispose the temporary edge geometry
-    edgeGeom.dispose();
 
     // Create Line2 object
     const lineObj = new Line2(lineGeom, lineMat);
