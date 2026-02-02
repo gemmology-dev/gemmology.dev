@@ -20,11 +20,12 @@ interface CrystalMeshProps {
 
 /**
  * Parse glTF data and create Three.js geometry
+ * Follows glTF 2.0 spec by reading mesh primitives to find accessor indices
  * Automatically scales geometry to fit within a unit sphere
  */
 function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
   try {
-    if (!gltfData.buffers || !gltfData.accessors || !gltfData.bufferViews) {
+    if (!gltfData.buffers || !gltfData.accessors || !gltfData.bufferViews || !gltfData.meshes) {
       return null;
     }
 
@@ -37,38 +38,85 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
       bytes[i] = binary.charCodeAt(i);
     }
 
+    // Get the first mesh primitive (glTF spec: follow references, don't assume order)
+    const mesh = gltfData.meshes[0];
+    if (!mesh || !mesh.primitives || mesh.primitives.length === 0) {
+      console.error('No mesh primitives found in glTF');
+      return null;
+    }
+
+    const primitive = mesh.primitives[0];
+
+    // Get accessor indices from primitive attributes
+    const posAccessorIdx = primitive.attributes?.POSITION;
+    const normAccessorIdx = primitive.attributes?.NORMAL;
+    const indicesAccessorIdx = primitive.indices;
+
+    if (posAccessorIdx === undefined || indicesAccessorIdx === undefined) {
+      console.error('Missing required POSITION or indices in glTF primitive');
+      return null;
+    }
+
+    // Get accessors using the indices from the primitive
+    const posAccessor = gltfData.accessors[posAccessorIdx];
+    const idxAccessor = gltfData.accessors[indicesAccessorIdx];
+
+    // Get bufferViews using the bufferView property from each accessor
+    const posBufferView = gltfData.bufferViews[posAccessor.bufferView];
+    const idxBufferView = gltfData.bufferViews[idxAccessor.bufferView];
+
     // Extract position data
-    const posAccessor = gltfData.accessors[0];
-    const posBufferView = gltfData.bufferViews[0];
     const posData = new Float32Array(
       bytes.buffer,
-      posBufferView.byteOffset,
+      posBufferView.byteOffset || 0,
       posAccessor.count * 3
     );
 
-    // Extract normal data
-    const normAccessor = gltfData.accessors[1];
-    const normBufferView = gltfData.bufferViews[1];
-    const normData = new Float32Array(
-      bytes.buffer,
-      normBufferView.byteOffset,
-      normAccessor.count * 3
-    );
-
-    // Extract index data
-    const idxAccessor = gltfData.accessors[2];
-    const idxBufferView = gltfData.bufferViews[2];
-    const idxData = new Uint16Array(
-      bytes.buffer,
-      idxBufferView.byteOffset,
-      idxAccessor.count
-    );
+    // Extract index data (handle both Uint16 and Uint32)
+    let idxData: Uint16Array | Uint32Array;
+    const idxComponentType = idxAccessor.componentType;
+    if (idxComponentType === 5123) {
+      // UNSIGNED_SHORT
+      idxData = new Uint16Array(
+        bytes.buffer,
+        idxBufferView.byteOffset || 0,
+        idxAccessor.count
+      );
+    } else if (idxComponentType === 5125) {
+      // UNSIGNED_INT
+      idxData = new Uint32Array(
+        bytes.buffer,
+        idxBufferView.byteOffset || 0,
+        idxAccessor.count
+      );
+    } else {
+      // Default to Uint16
+      idxData = new Uint16Array(
+        bytes.buffer,
+        idxBufferView.byteOffset || 0,
+        idxAccessor.count
+      );
+    }
 
     // Create geometry
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(posData, 3));
-    geometry.setAttribute('normal', new THREE.BufferAttribute(normData, 3));
     geometry.setIndex(new THREE.BufferAttribute(idxData, 1));
+
+    // Extract normal data if available
+    if (normAccessorIdx !== undefined) {
+      const normAccessor = gltfData.accessors[normAccessorIdx];
+      const normBufferView = gltfData.bufferViews[normAccessor.bufferView];
+      const normData = new Float32Array(
+        bytes.buffer,
+        normBufferView.byteOffset || 0,
+        normAccessor.count * 3
+      );
+      geometry.setAttribute('normal', new THREE.BufferAttribute(normData, 3));
+    } else {
+      // Compute normals if not provided
+      geometry.computeVertexNormals();
+    }
 
     // Normalize geometry to fit within a unit sphere
     geometry.computeBoundingSphere();
