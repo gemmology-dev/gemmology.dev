@@ -1,10 +1,14 @@
 /**
  * Container for displaying multiple gem match cards.
  * Used when detailed property information is needed for each match.
+ * Supports pagination for large result sets.
  */
 
+import { useMemo } from 'react';
 import { cn } from '../../ui/cn';
 import { GemMatchCard } from './GemMatchCard';
+import { Pagination } from '../../ui/Pagination';
+import { usePagination } from '../../../hooks/usePagination';
 import type { GemReference } from '../../../lib/calculator/conversions';
 
 interface GemMatchListProps {
@@ -16,8 +20,8 @@ interface GemMatchListProps {
   label?: string;
   /** Message when no matches found */
   emptyMessage?: string;
-  /** Maximum number of cards to show */
-  maxVisible?: number;
+  /** Items per page (default 10) */
+  pageSize?: number;
   /** Layout mode */
   layout?: 'list' | 'grid';
   /** Additional class names */
@@ -29,12 +33,33 @@ export function GemMatchList({
   matchedProperty,
   label,
   emptyMessage = 'No matching gemstones found.',
-  maxVisible = 20,
+  pageSize = 10,
   layout = 'list',
   className,
 }: GemMatchListProps) {
-  const visibleGems = gems.slice(0, maxVisible);
-  const hiddenCount = gems.length - maxVisible;
+  const { page, params, onPageChange, onPageSizeChange, resetPage } = usePagination({
+    initialPageSize: pageSize,
+  });
+
+  // Reset to page 1 when gems array changes (new search results)
+  useMemo(() => {
+    resetPage();
+  }, [gems.length, resetPage]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(gems.length / params.pageSize);
+  const startIndex = (page - 1) * params.pageSize;
+  const endIndex = startIndex + params.pageSize;
+  const visibleGems = gems.slice(startIndex, endIndex);
+
+  const pagination = {
+    page,
+    pageSize: params.pageSize,
+    total: gems.length,
+    totalPages,
+    hasNext: page < totalPages,
+    hasPrev: page > 1,
+  };
 
   return (
     <div className={className}>
@@ -67,10 +92,15 @@ export function GemMatchList({
             ))}
           </div>
 
-          {hiddenCount > 0 && (
-            <p className="text-sm text-slate-500 mt-3 text-center">
-              +{hiddenCount} more matches not shown
-            </p>
+          {totalPages > 1 && (
+            <div className="mt-4">
+              <Pagination
+                pagination={pagination}
+                onPageChange={onPageChange}
+                onPageSizeChange={onPageSizeChange}
+                showPageSize
+              />
+            </div>
           )}
         </>
       ) : (

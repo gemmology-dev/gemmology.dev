@@ -4,7 +4,7 @@
  * Uses optic character first approach for realistic refractometer workflow.
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { FormField, NumberInput, Select } from '../form';
 import { validateNumber } from '../calculator/ValidationMessage';
 import {
@@ -14,7 +14,8 @@ import {
   type ToleranceSettings,
 } from '../../hooks/useGemIdentification';
 import { IdentificationMatchCard } from './IdentificationMatchCard';
-import { cn } from '../ui';
+import { cn, Pagination } from '../ui';
+import { usePagination } from '../../hooks/usePagination';
 
 type OpticCharacter = 'unknown' | 'isotropic' | 'uniaxial' | 'biaxial';
 
@@ -171,6 +172,29 @@ export function GemIdentifier() {
   const results = useMemo(() => {
     return findMatches(criteria, tolerances);
   }, [findMatches, criteria, tolerances]);
+
+  // Pagination for results
+  const { page, params: paginationParams, onPageChange, onPageSizeChange, resetPage } = usePagination({
+    initialPageSize: 10,
+  });
+
+  // Reset pagination when results change
+  useEffect(() => {
+    resetPage();
+  }, [results.length, resetPage]);
+
+  // Paginate results
+  const totalPages = Math.ceil(results.length / paginationParams.pageSize);
+  const startIndex = (page - 1) * paginationParams.pageSize;
+  const paginatedResults = results.slice(startIndex, startIndex + paginationParams.pageSize);
+  const resultsPagination = {
+    page,
+    pageSize: paginationParams.pageSize,
+    total: results.length,
+    totalPages,
+    hasNext: page < totalPages,
+    hasPrev: page > 1,
+  };
 
   // Count active criteria
   const activeCriteria = Object.keys(criteria).filter(k => k !== 'opticCharacter').length;
@@ -501,20 +525,24 @@ export function GemIdentifier() {
             </button>
           </div>
 
-          <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
-            {results.slice(0, 20).map((result, index) => (
+          <div className="space-y-3">
+            {paginatedResults.map((result, index) => (
               <IdentificationMatchCard
                 key={`${result.mineral.id}-${index}`}
                 result={result}
                 showDetails={showAdvanced}
               />
             ))}
-            {results.length > 20 && (
-              <p className="text-center text-sm text-slate-500 py-2">
-                Showing top 20 of {results.length} matches. Narrow your criteria for more precise results.
-              </p>
-            )}
           </div>
+
+          {totalPages > 1 && (
+            <Pagination
+              pagination={resultsPagination}
+              onPageChange={onPageChange}
+              onPageSizeChange={onPageSizeChange}
+              showPageSize
+            />
+          )}
         </div>
       )}
 
