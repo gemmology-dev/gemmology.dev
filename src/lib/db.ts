@@ -364,24 +364,50 @@ export async function getCategories(): Promise<string[]> {
 }
 
 // Pre-generated model query functions
+// These query mineral_expressions table which has the pre-generated 3D models.
+// For family IDs, they return the primary expression's model.
 
-export async function getModelSVG(mineralId: string): Promise<string | null> {
+export async function getModelSVG(id: string): Promise<string | null> {
   const database = await getDB();
-  const result = database.exec(
-    `SELECT model_svg FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
+  const lowerId = id.toLowerCase();
+
+  // First try exact match on expression ID
+  let result = database.exec(
+    `SELECT model_svg FROM mineral_expressions WHERE LOWER(id) = ?`,
+    [lowerId]
   );
+
+  // If not found, try to find primary expression for this family
+  if (result.length === 0 || result[0].values.length === 0 || !result[0].values[0][0]) {
+    result = database.exec(
+      `SELECT model_svg FROM mineral_expressions
+       WHERE LOWER(family_id) = ? AND is_primary = 1`,
+      [lowerId]
+    );
+  }
 
   if (result.length === 0 || result[0].values.length === 0) return null;
   return result[0].values[0][0] as string | null;
 }
 
-export async function getModelSTL(mineralId: string): Promise<Blob | null> {
+export async function getModelSTL(id: string): Promise<Blob | null> {
   const database = await getDB();
-  const result = database.exec(
-    `SELECT model_stl FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
+  const lowerId = id.toLowerCase();
+
+  // First try exact match on expression ID
+  let result = database.exec(
+    `SELECT model_stl FROM mineral_expressions WHERE LOWER(id) = ?`,
+    [lowerId]
   );
+
+  // If not found, try to find primary expression for this family
+  if (result.length === 0 || result[0].values.length === 0 || !result[0].values[0][0]) {
+    result = database.exec(
+      `SELECT model_stl FROM mineral_expressions
+       WHERE LOWER(family_id) = ? AND is_primary = 1`,
+      [lowerId]
+    );
+  }
 
   if (result.length === 0 || result[0].values.length === 0) return null;
   const stlData = result[0].values[0][0];
@@ -391,12 +417,24 @@ export async function getModelSTL(mineralId: string): Promise<Blob | null> {
   return new Blob([stlData as Uint8Array], { type: 'application/sla' });
 }
 
-export async function getModelGLTF(mineralId: string): Promise<object | null> {
+export async function getModelGLTF(id: string): Promise<object | null> {
   const database = await getDB();
-  const result = database.exec(
-    `SELECT model_gltf FROM minerals WHERE id = ? OR LOWER(name) = ?`,
-    [mineralId.toLowerCase(), mineralId.toLowerCase()]
+  const lowerId = id.toLowerCase();
+
+  // First try exact match on expression ID
+  let result = database.exec(
+    `SELECT model_gltf FROM mineral_expressions WHERE LOWER(id) = ?`,
+    [lowerId]
   );
+
+  // If not found, try to find primary expression for this family
+  if (result.length === 0 || result[0].values.length === 0 || !result[0].values[0][0]) {
+    result = database.exec(
+      `SELECT model_gltf FROM mineral_expressions
+       WHERE LOWER(family_id) = ? AND is_primary = 1`,
+      [lowerId]
+    );
+  }
 
   if (result.length === 0 || result[0].values.length === 0) return null;
   const gltfStr = result[0].values[0][0] as string | null;
