@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { GalleryGrid } from './GalleryGrid';
 import { FilterBar } from './FilterBar';
+import { Pagination } from '../ui/Pagination';
 import { useCrystalDB, useFilters } from '../../hooks/useCrystalDB';
+import { usePagination } from '../../hooks/usePagination';
 
 interface GalleryProps {
   initialSystem?: string;
@@ -14,13 +16,35 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
 
+  // Pagination
+  const { page, params: paginationParams, onPageChange, onPageSizeChange, resetPage } = usePagination({
+    initialPageSize: 12, // 4 columns x 3 rows
+  });
+
+  // Paginate minerals
+  const totalPages = Math.ceil(minerals.length / paginationParams.pageSize);
+  const startIndex = (page - 1) * paginationParams.pageSize;
+  const paginatedMinerals = useMemo(() => {
+    return minerals.slice(startIndex, startIndex + paginationParams.pageSize);
+  }, [minerals, startIndex, paginationParams.pageSize]);
+
+  const pagination = {
+    page,
+    pageSize: paginationParams.pageSize,
+    total: minerals.length,
+    totalPages,
+    hasNext: page < totalPages,
+    hasPrev: page > 1,
+  };
+
   const handleSearchChange = useCallback(
     (query: string) => {
       setSearchQuery(query);
       setSelectedSystem(null);
       search(query);
+      resetPage(); // Reset to page 1 on new search
     },
-    [search]
+    [search, resetPage]
   );
 
   const handleSystemChange = useCallback(
@@ -28,8 +52,9 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
       setSelectedSystem(system);
       setSearchQuery('');
       filterBySystem(system);
+      resetPage(); // Reset to page 1 on filter change
     },
-    [filterBySystem]
+    [filterBySystem, resetPage]
   );
 
   // Debounce search
@@ -95,7 +120,16 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
         resultCount={minerals.length}
       />
 
-      <GalleryGrid minerals={minerals} loading={loading || filtersLoading} />
+      <GalleryGrid minerals={paginatedMinerals} loading={loading || filtersLoading} />
+
+      {!loading && !filtersLoading && totalPages > 1 && (
+        <Pagination
+          pagination={pagination}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          showPageSize
+        />
+      )}
     </div>
   );
 }
