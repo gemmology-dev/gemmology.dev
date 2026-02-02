@@ -164,7 +164,9 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
     }
 
     // Create edge geometry from face geometry (threshold in degrees)
-    const edgeGeom = new EdgesGeometry(faceGeom, 1);
+    // Higher threshold (20°) filters out internal triangulation artifacts
+    // while keeping visible crystal facet edges
+    const edgeGeom = new EdgesGeometry(faceGeom, 20);
 
     // Convert EdgesGeometry to LineGeometry for Line2
     const positions = edgeGeom.attributes.position.array as Float32Array;
