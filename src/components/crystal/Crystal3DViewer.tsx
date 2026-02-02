@@ -107,11 +107,10 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
         side={THREE.DoubleSide}
         depthWrite={false}
       />
-      {/* Edge lines for crystal facets */}
+      {/* Edge lines for crystal facets - low threshold to catch all edges */}
       <Edges
-        threshold={15}
+        threshold={1}
         color="#0369a1"
-        lineWidth={2}
       />
     </mesh>
   );
