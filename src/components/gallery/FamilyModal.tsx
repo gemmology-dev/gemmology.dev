@@ -112,6 +112,19 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
     }
   };
 
+  const handleDownloadSTL = () => {
+    const stl = selectedExpression?.model_stl;
+    if (stl) {
+      const blob = new Blob([stl], { type: 'application/sla' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selectedExpression?.id || family.id}.stl`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
   // Format property display values
   const formatRange = (min: number | undefined, max: number | undefined) => {
     if (min === undefined && max === undefined) return undefined;
@@ -312,6 +325,17 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     SVG
+                  </button>
+                  <button
+                    onClick={handleDownloadSTL}
+                    disabled={!selectedExpression?.model_stl}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed text-slate-700 rounded-lg transition-colors"
+                    title="Download STL for 3D printing"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    STL
                   </button>
                   <button
                     onClick={handleDownloadGLTF}
