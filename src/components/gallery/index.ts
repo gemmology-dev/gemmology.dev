@@ -3,3 +3,4 @@ export { GalleryGrid } from './GalleryGrid';
 export { FilterBar } from './FilterBar';
 export { MineralModal } from './MineralModal';
 export { FamilyCard } from './FamilyCard';
+export { FamilyModal } from './FamilyModal';

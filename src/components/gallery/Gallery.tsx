@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { GalleryGrid } from './GalleryGrid';
 import { FilterBar } from './FilterBar';
 import { Pagination } from '../ui/Pagination';
-import { useCrystalDB, useFilters } from '../../hooks/useCrystalDB';
+import { useFamilies } from '../../hooks/useFamilies';
+import { useFilters } from '../../hooks/useCrystalDB';
 import { usePagination } from '../../hooks/usePagination';
 
 interface GalleryProps {
@@ -11,7 +12,7 @@ interface GalleryProps {
 }
 
 export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps) {
-  const { minerals, loading, error, search, filterBySystem } = useCrystalDB();
+  const { families, loading, error, search, filterBySystem } = useFamilies();
   const { systems, loading: filtersLoading } = useFilters();
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
@@ -21,17 +22,17 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
     initialPageSize: 12, // 4 columns x 3 rows
   });
 
-  // Paginate minerals
-  const totalPages = Math.ceil(minerals.length / paginationParams.pageSize);
+  // Paginate families
+  const totalPages = Math.ceil(families.length / paginationParams.pageSize);
   const startIndex = (page - 1) * paginationParams.pageSize;
-  const paginatedMinerals = useMemo(() => {
-    return minerals.slice(startIndex, startIndex + paginationParams.pageSize);
-  }, [minerals, startIndex, paginationParams.pageSize]);
+  const paginatedFamilies = useMemo(() => {
+    return families.slice(startIndex, startIndex + paginationParams.pageSize);
+  }, [families, startIndex, paginationParams.pageSize]);
 
   const pagination = {
     page,
     pageSize: paginationParams.pageSize,
-    total: minerals.length,
+    total: families.length,
     totalPages,
     hasNext: page < totalPages,
     hasPrev: page > 1,
@@ -97,7 +98,7 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-slate-900">Failed to load minerals</h3>
+        <h3 className="text-lg font-medium text-slate-900">Failed to load families</h3>
         <p className="mt-2 text-slate-500">{error.message}</p>
         <button
           onClick={() => window.location.reload()}
@@ -117,10 +118,11 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
         systems={systems}
         selectedSystem={selectedSystem}
         onSystemChange={handleSystemChange}
-        resultCount={minerals.length}
+        resultCount={families.length}
+        resultLabel="families"
       />
 
-      <GalleryGrid minerals={paginatedMinerals} loading={loading || filtersLoading} />
+      <GalleryGrid families={paginatedFamilies} loading={loading || filtersLoading} />
 
       {!loading && !filtersLoading && totalPages > 1 && (
         <Pagination

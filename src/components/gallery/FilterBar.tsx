@@ -9,6 +9,7 @@ interface FilterBarProps {
   selectedSystem: string | null;
   onSystemChange: (system: string | null) => void;
   resultCount?: number;
+  resultLabel?: string;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function FilterBar({
   selectedSystem,
   onSystemChange,
   resultCount,
+  resultLabel = 'mineral',
   className,
 }: FilterBarProps) {
   return (
@@ -34,7 +36,7 @@ export function FilterBar({
         </div>
         {resultCount !== undefined && (
           <div className="flex items-center text-sm text-slate-500">
-            {resultCount} mineral{resultCount !== 1 ? 's' : ''}
+            {resultCount} {resultCount === 1 ? resultLabel.replace(/ies$/, 'y').replace(/s$/, '') : resultLabel}
           </div>
         )}
       </div>
