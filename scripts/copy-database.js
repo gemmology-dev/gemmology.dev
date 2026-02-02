@@ -9,21 +9,21 @@ const projectRoot = join(__dirname, '..');
 // Use require to resolve the npm package path
 const require = createRequire(import.meta.url);
 
-// Prefer local database if it exists (may have newer model data with crystalEdges)
-// Fall back to npm package if local doesn't exist
+// Use npm package as the primary source (has mineral_families table)
 let dbSource;
-const localDbPath = join(projectRoot, 'src', 'data', 'minerals.db');
 
-if (existsSync(localDbPath)) {
-  dbSource = localDbPath;
-  console.log('Using local src/data/minerals.db (preferred for latest model data)');
-} else {
-  try {
-    const mineralData = require('@gemmology/mineral-data');
-    dbSource = mineralData.dbPath;
-    console.log('Using @gemmology/mineral-data package');
-  } catch (e) {
-    console.error('Error: No local database and @gemmology/mineral-data not installed');
+try {
+  const mineralData = require('@gemmology/mineral-data');
+  dbSource = mineralData.dbPath;
+  console.log('Using @gemmology/mineral-data package');
+} catch (e) {
+  // Fallback to local database for development
+  const localDbPath = join(projectRoot, 'src', 'data', 'minerals.db');
+  if (existsSync(localDbPath)) {
+    dbSource = localDbPath;
+    console.log('Using local src/data/minerals.db (fallback)');
+  } else {
+    console.error('Error: @gemmology/mineral-data not installed and no local database');
     process.exit(1);
   }
 }
