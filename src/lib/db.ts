@@ -249,14 +249,19 @@ export async function getDB(): Promise<Database> {
   return dbPromise;
 }
 
+/**
+ * Get all minerals from the mineral_families table.
+ * Queries mineral_families for deduplicated results (68 families instead of 108 with expression variants).
+ */
 export async function getAllMinerals(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(`
-    SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
-           sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
-           fracture, pleochroism, twin_law, phenomenon, note, model_svg,
-           ri_min, ri_max, sg_min, sg_max
-    FROM minerals
+    SELECT id, name, crystal_system as system, point_group, chemistry,
+           CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+           description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+           dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon, notes as note
+    FROM mineral_families
     ORDER BY name ASC
   `);
 
@@ -429,11 +434,17 @@ export async function getMineralWithModels(mineralId: string): Promise<Mineral |
 /**
  * Find minerals matching an RI value within tolerance.
  * Uses numeric ri_min/ri_max columns for efficient searching.
+ * Queries mineral_families for deduplicated results.
  */
 export async function findMineralsByRI(ri: number, tolerance: number = 0.01): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT * FROM minerals
+    `SELECT id, name, crystal_system as system, point_group, chemistry,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon
+     FROM mineral_families
      WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
        AND (ri_min - ? <= ? AND ri_max + ? >= ?)
      ORDER BY ABS((ri_min + ri_max) / 2 - ?) ASC
@@ -456,11 +467,17 @@ export async function findMineralsByRI(ri: number, tolerance: number = 0.01): Pr
 /**
  * Find minerals matching an SG value within tolerance.
  * Uses numeric sg_min/sg_max columns for efficient searching.
+ * Queries mineral_families for deduplicated results.
  */
 export async function findMineralsBySG(sg: number, tolerance: number = 0.05): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT * FROM minerals
+    `SELECT id, name, crystal_system as system, point_group, chemistry,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon
+     FROM mineral_families
      WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
        AND (sg_min - ? <= ? AND sg_max + ? >= ?)
      ORDER BY ABS((sg_min + sg_max) / 2 - ?) ASC
@@ -567,11 +584,18 @@ export async function classifyValue(category: string, value: number): Promise<st
 
 /**
  * Get minerals with heat treatment temperature data.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithHeatTreatment(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT * FROM minerals
+    `SELECT id, name, crystal_system as system, point_group, chemistry,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon,
+            heat_treatment_temp_min, heat_treatment_temp_max
+     FROM mineral_families
      WHERE heat_treatment_temp_min IS NOT NULL
         OR heat_treatment_temp_max IS NOT NULL
      ORDER BY name`
@@ -591,11 +615,16 @@ export async function getMineralsWithHeatTreatment(): Promise<Mineral[]> {
 
 /**
  * Get minerals with SG data for carat estimation dropdown.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithSG(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT id, name, sg, sg_min, sg_max FROM minerals
+    `SELECT id, name,
+            CASE WHEN sg_min = sg_max THEN CAST(sg_min AS TEXT)
+                 ELSE CAST(sg_min AS TEXT) || '-' || CAST(sg_max AS TEXT) END as sg,
+            sg_min, sg_max
+     FROM mineral_families
      WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
      ORDER BY name`
   );
@@ -614,12 +643,15 @@ export async function getMineralsWithSG(): Promise<Mineral[]> {
 
 /**
  * Get minerals with dispersion data for fire reference table.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithDispersion(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT id, name, dispersion, ri_min, ri_max, ri
-     FROM minerals
+    `SELECT id, name, dispersion, ri_min, ri_max,
+            CASE WHEN ri_min = ri_max THEN CAST(ri_min AS TEXT)
+                 ELSE CAST(ri_min AS TEXT) || '-' || CAST(ri_max AS TEXT) END as ri
+     FROM mineral_families
      WHERE dispersion IS NOT NULL AND dispersion > 0
      ORDER BY dispersion DESC`
   );
@@ -638,16 +670,18 @@ export async function getMineralsWithDispersion(): Promise<Mineral[]> {
 
 /**
  * Get minerals with hardness data for hardness reference table.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithHardness(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT id, name, hardness, cleavage, fracture, note
-     FROM minerals
-     WHERE hardness IS NOT NULL AND hardness != ''
-     ORDER BY
-       CAST(SUBSTR(hardness, 1, INSTR(hardness || '-', '-') - 1) AS REAL) DESC,
-       name ASC`
+    `SELECT id, name,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            cleavage, fracture, notes as note
+     FROM mineral_families
+     WHERE hardness_min IS NOT NULL
+     ORDER BY hardness_max DESC, hardness_min DESC, name ASC`
   );
 
   if (result.length === 0) return [];
@@ -665,12 +699,13 @@ export async function getMineralsWithHardness(): Promise<Mineral[]> {
 /**
  * Get minerals suitable for refractometer simulation.
  * Returns gems with RI data, limited to refractometer range (≤1.81).
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsForRefractometer(): Promise<Mineral[]> {
   const database = await getDB();
   const result = database.exec(
     `SELECT id, name, ri_min, ri_max, optical_character
-     FROM minerals
+     FROM mineral_families
      WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
        AND ri_max <= 1.81
      ORDER BY ri_min ASC`
@@ -690,6 +725,7 @@ export async function getMineralsForRefractometer(): Promise<Mineral[]> {
 
 /**
  * Get minerals with structured pleochroism data for dichroscope lookup.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithPleochroism(): Promise<Mineral[]> {
   const database = await getDB();
@@ -697,7 +733,7 @@ export async function getMineralsWithPleochroism(): Promise<Mineral[]> {
     `SELECT id, name, pleochroism, pleochroism_strength,
             pleochroism_color1, pleochroism_color2, pleochroism_color3,
             pleochroism_notes
-     FROM minerals
+     FROM mineral_families
      WHERE pleochroism_strength IS NOT NULL
        AND pleochroism_strength != ''
        AND pleochroism_strength != 'none'
@@ -771,13 +807,18 @@ async function executePaginatedQuery(
 
 /**
  * Get paginated minerals with SG data.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithSGPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL`,
-    `SELECT id, name, sg, sg_min, sg_max FROM minerals
+    `SELECT COUNT(*) FROM mineral_families WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL`,
+    `SELECT id, name,
+            CASE WHEN sg_min = sg_max THEN CAST(sg_min AS TEXT)
+                 ELSE CAST(sg_min AS TEXT) || '-' || CAST(sg_max AS TEXT) END as sg,
+            sg_min, sg_max
+     FROM mineral_families
      WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
      ORDER BY name
      LIMIT ? OFFSET ?`,
@@ -787,14 +828,17 @@ export async function getMineralsWithSGPaginated(
 
 /**
  * Get paginated minerals with dispersion data.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithDispersionPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals WHERE dispersion IS NOT NULL AND dispersion > 0`,
-    `SELECT id, name, dispersion, ri_min, ri_max, ri
-     FROM minerals
+    `SELECT COUNT(*) FROM mineral_families WHERE dispersion IS NOT NULL AND dispersion > 0`,
+    `SELECT id, name, dispersion, ri_min, ri_max,
+            CASE WHEN ri_min = ri_max THEN CAST(ri_min AS TEXT)
+                 ELSE CAST(ri_min AS TEXT) || '-' || CAST(ri_max AS TEXT) END as ri
+     FROM mineral_families
      WHERE dispersion IS NOT NULL AND dispersion > 0
      ORDER BY dispersion DESC
      LIMIT ? OFFSET ?`,
@@ -804,18 +848,20 @@ export async function getMineralsWithDispersionPaginated(
 
 /**
  * Get paginated minerals with hardness data.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithHardnessPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals WHERE hardness IS NOT NULL AND hardness != ''`,
-    `SELECT id, name, hardness, cleavage, fracture, note
-     FROM minerals
-     WHERE hardness IS NOT NULL AND hardness != ''
-     ORDER BY
-       CAST(SUBSTR(hardness, 1, INSTR(hardness || '-', '-') - 1) AS REAL) DESC,
-       name ASC
+    `SELECT COUNT(*) FROM mineral_families WHERE hardness_min IS NOT NULL`,
+    `SELECT id, name,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            cleavage, fracture, notes as note
+     FROM mineral_families
+     WHERE hardness_min IS NOT NULL
+     ORDER BY hardness_max DESC, hardness_min DESC, name ASC
      LIMIT ? OFFSET ?`,
     params
   );
@@ -823,15 +869,16 @@ export async function getMineralsWithHardnessPaginated(
 
 /**
  * Get paginated minerals for refractometer simulation.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsForRefractometerPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals
+    `SELECT COUNT(*) FROM mineral_families
      WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL AND ri_max <= 1.81`,
     `SELECT id, name, ri_min, ri_max, optical_character
-     FROM minerals
+     FROM mineral_families
      WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
        AND ri_max <= 1.81
      ORDER BY ri_min ASC
@@ -842,19 +889,20 @@ export async function getMineralsForRefractometerPaginated(
 
 /**
  * Get paginated minerals with structured pleochroism data.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getMineralsWithPleochroismPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals
+    `SELECT COUNT(*) FROM mineral_families
      WHERE pleochroism_strength IS NOT NULL
        AND pleochroism_strength != ''
        AND pleochroism_strength != 'none'`,
     `SELECT id, name, pleochroism, pleochroism_strength,
             pleochroism_color1, pleochroism_color2, pleochroism_color3,
             pleochroism_notes
-     FROM minerals
+     FROM mineral_families
      WHERE pleochroism_strength IS NOT NULL
        AND pleochroism_strength != ''
        AND pleochroism_strength != 'none'
@@ -874,17 +922,19 @@ export async function getMineralsWithPleochroismPaginated(
 
 /**
  * Get paginated list of all minerals.
+ * Queries mineral_families for deduplicated results.
  */
 export async function getAllMineralsPaginated(
   params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Mineral>> {
   return executePaginatedQuery(
-    `SELECT COUNT(*) FROM minerals`,
-    `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
-            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
-            fracture, pleochroism, twin_law, phenomenon, note, model_svg,
-            ri_min, ri_max, sg_min, sg_max
-     FROM minerals
+    `SELECT COUNT(*) FROM mineral_families`,
+    `SELECT id, name, crystal_system as system, point_group, chemistry,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon, notes as note
+     FROM mineral_families
      ORDER BY name ASC
      LIMIT ? OFFSET ?`,
     params
