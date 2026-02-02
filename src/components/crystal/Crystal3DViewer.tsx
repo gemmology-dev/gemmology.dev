@@ -4,9 +4,10 @@
  */
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Center, Edges } from '@react-three/drei';
+import { OrbitControls, Center } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
+import { EdgesGeometry, LineSegments, LineBasicMaterial } from 'three';
 
 interface Crystal3DViewerProps {
   gltfData: object | null;
@@ -96,6 +97,17 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
       }
     }
 
+    // Validate indices are within bounds
+    const vertexCount = posAccessor.count;
+    let maxIndex = 0;
+    for (let i = 0; i < idxData.length; i++) {
+      if (idxData[i] > maxIndex) maxIndex = idxData[i];
+      if (idxData[i] >= vertexCount) {
+        console.error(`Index ${idxData[i]} at position ${i} exceeds vertex count ${vertexCount}`);
+        return null;
+      }
+    }
+
     // Create geometry
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(posData, 3));
@@ -133,32 +145,50 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
 
 /**
  * Crystal mesh component that renders the geometry
+ * Creates both face and edge geometry in sync to avoid WebGL errors
  */
 function CrystalMesh({ gltfData }: CrystalMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const edgesRef = useRef<LineSegments>(null);
 
-  const geometry = useMemo(() => {
-    return parseGLTFToGeometry(gltfData);
+  // Create both face geometry and edge geometry together
+  const { faceGeometry, edgeGeometry } = useMemo(() => {
+    const faceGeom = parseGLTFToGeometry(gltfData);
+    if (!faceGeom) {
+      return { faceGeometry: null, edgeGeometry: null };
+    }
+    // Create edge geometry from face geometry (threshold in radians, ~1 degree)
+    const edgeGeom = new EdgesGeometry(faceGeom, 1);
+    return { faceGeometry: faceGeom, edgeGeometry: edgeGeom };
   }, [gltfData]);
 
-  if (!geometry) return null;
+  // Cleanup geometries on unmount or change
+  useEffect(() => {
+    return () => {
+      if (faceGeometry) faceGeometry.dispose();
+      if (edgeGeometry) edgeGeometry.dispose();
+    };
+  }, [faceGeometry, edgeGeometry]);
+
+  if (!faceGeometry || !edgeGeometry) return null;
 
   return (
-    <mesh ref={meshRef} geometry={geometry}>
-      {/* Flat-shaded faces matching SVG style */}
-      <meshBasicMaterial
-        color="#7dd3fc"
-        transparent
-        opacity={0.9}
-        side={THREE.DoubleSide}
-        depthWrite={false}
-      />
-      {/* Edge lines for crystal facets - low threshold to catch all edges */}
-      <Edges
-        threshold={1}
-        color="#0369a1"
-      />
-    </mesh>
+    <group>
+      <mesh ref={meshRef} geometry={faceGeometry}>
+        {/* Flat-shaded faces matching SVG style */}
+        <meshBasicMaterial
+          color="#7dd3fc"
+          transparent
+          opacity={0.9}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
+      </mesh>
+      {/* Edge lines rendered as separate LineSegments - always in sync with face geometry */}
+      <lineSegments ref={edgesRef} geometry={edgeGeometry}>
+        <lineBasicMaterial color="#0369a1" />
+      </lineSegments>
+    </group>
   );
 }
 
