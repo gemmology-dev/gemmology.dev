@@ -3,5 +3,5 @@
  */
 
 export { TreatmentDetection } from './TreatmentDetection';
-export { OriginCharacteristics } from './OriginCharacteristics';
 export { ProportionAnalyzer } from './ProportionAnalyzer';
+export { AdvancedTools } from './AdvancedTools';
