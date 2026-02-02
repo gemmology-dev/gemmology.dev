@@ -3,8 +3,10 @@
  * Full-width layout: filter bar across the top, matching gems in a responsive grid below.
  */
 
-import { useState, useMemo } from 'react';
-import { useCalculatorData } from '../../hooks/useCalculatorData';
+import { useState, useMemo, useEffect } from 'react';
+import { usePagination } from '../../hooks/usePagination';
+import { getMineralsWithPleochroismPaginated, type Mineral, type PaginatedResult } from '../../lib/db';
+import { Pagination } from '../ui';
 
 interface DichroscopeData {
   gem: string;
@@ -49,15 +51,45 @@ const STRENGTH_COLORS: Record<string, string> = {
 };
 
 export function DichroscopeResults() {
-  const { mineralsWithPleochroism, dbAvailable, loading } = useCalculatorData();
   const [color1, setColor1] = useState('');
   const [color2, setColor2] = useState('');
   const [strengthFilter, setStrengthFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [dbAvailable, setDbAvailable] = useState(false);
+  const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
+
+  const { params, onPageChange, onPageSizeChange, resetPage } = usePagination<Mineral>({
+    initialPageSize: 15,
+  });
+
+  // Fetch paginated data from database
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      try {
+        const result = await getMineralsWithPleochroismPaginated(params);
+        setPaginatedData(result);
+        setDbAvailable(result.pagination.total > 0);
+      } catch (err) {
+        console.warn('Failed to load pleochroism data:', err);
+        setDbAvailable(false);
+        setPaginatedData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [params]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    resetPage();
+  }, [color1, color2, strengthFilter, resetPage]);
 
   // Convert database minerals to dichroscope display format
   const dichroicGems = useMemo((): DichroscopeData[] => {
-    if (dbAvailable && mineralsWithPleochroism.length > 0) {
-      return mineralsWithPleochroism
+    if (dbAvailable && paginatedData && paginatedData.data.length > 0) {
+      return paginatedData.data
         .filter(m => m.pleochroism_color1 && m.pleochroism_color2)
         .map(m => ({
           gem: m.name,
@@ -69,7 +101,7 @@ export function DichroscopeResults() {
         }));
     }
     return FALLBACK_DICHROIC_GEMS;
-  }, [dbAvailable, mineralsWithPleochroism]);
+  }, [dbAvailable, paginatedData]);
 
   const filtered = dichroicGems.filter(gem => {
     const allColors = [gem.color1, gem.color2, gem.color3].filter(Boolean).join(' ').toLowerCase();
@@ -119,9 +151,9 @@ export function DichroscopeResults() {
         </div>
         <div className="flex items-center gap-2 shrink-0 pb-1">
           <span className="text-xs text-slate-400">{filtered.length} gem{filtered.length !== 1 ? 's' : ''}</span>
-          {dbAvailable && (
+          {dbAvailable && paginatedData && (
             <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
-              from database
+              {paginatedData.pagination.total} in database
             </span>
           )}
         </div>
@@ -131,36 +163,47 @@ export function DichroscopeResults() {
       {loading ? (
         <div className="text-center py-6 text-slate-500 text-sm">Loading pleochroism data...</div>
       ) : filtered.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {filtered.map((gem, idx) => (
-            <div key={idx} className="p-3 rounded-lg border border-slate-200 bg-white hover:border-purple-300 transition-colors">
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <h5 className="font-semibold text-slate-900 text-sm">{gem.gem}</h5>
-                <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-medium ${STRENGTH_COLORS[gem.strength] || 'bg-slate-100 text-slate-600'}`}>
-                  {gem.strength}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs mb-1.5">
-                <div>
-                  <span className="text-slate-500">1:</span>{' '}
-                  <span className="font-medium text-slate-800">{gem.color1}</span>
+        <>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {filtered.map((gem, idx) => (
+              <div key={idx} className="p-3 rounded-lg border border-slate-200 bg-white hover:border-purple-300 transition-colors">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h5 className="font-semibold text-slate-900 text-sm">{gem.gem}</h5>
+                  <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-medium ${STRENGTH_COLORS[gem.strength] || 'bg-slate-100 text-slate-600'}`}>
+                    {gem.strength}
+                  </span>
                 </div>
-                <div>
-                  <span className="text-slate-500">2:</span>{' '}
-                  <span className="font-medium text-slate-800">{gem.color2}</span>
-                </div>
-                {gem.color3 && (
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs mb-1.5">
                   <div>
-                    <span className="text-slate-500">3:</span>{' '}
-                    <span className="font-medium text-slate-800">{gem.color3}</span>
-                    <span className="text-purple-500 ml-1">(trichroic)</span>
+                    <span className="text-slate-500">1:</span>{' '}
+                    <span className="font-medium text-slate-800">{gem.color1}</span>
                   </div>
-                )}
+                  <div>
+                    <span className="text-slate-500">2:</span>{' '}
+                    <span className="font-medium text-slate-800">{gem.color2}</span>
+                  </div>
+                  {gem.color3 && (
+                    <div>
+                      <span className="text-slate-500">3:</span>{' '}
+                      <span className="font-medium text-slate-800">{gem.color3}</span>
+                      <span className="text-purple-500 ml-1">(trichroic)</span>
+                    </div>
+                  )}
+                </div>
+                {gem.notes && <p className="text-xs text-slate-500">{gem.notes}</p>}
               </div>
-              {gem.notes && <p className="text-xs text-slate-500">{gem.notes}</p>}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          {/* Pagination */}
+          {paginatedData && paginatedData.pagination.totalPages > 1 && (
+            <Pagination
+              pagination={paginatedData.pagination}
+              onPageChange={onPageChange}
+              onPageSizeChange={onPageSizeChange}
+              showPageSize
+            />
+          )}
+        </>
       ) : (
         <div className="text-center py-6 text-slate-500 text-sm">No matching gems found. Try different color terms.</div>
       )}

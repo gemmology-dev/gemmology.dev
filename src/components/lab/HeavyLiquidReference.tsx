@@ -3,8 +3,10 @@
  * Which liquids for which gem SG ranges
  */
 
-import { useState } from 'react';
-import { useCalculatorData } from '../../hooks/useCalculatorData';
+import { useState, useEffect, useMemo } from 'react';
+import { usePagination } from '../../hooks/usePagination';
+import { getMineralsWithSGPaginated, type Mineral, type PaginatedResult } from '../../lib/db';
+import { PaginatedTable } from '../ui';
 
 interface HeavyLiquid {
   name: string;
@@ -68,15 +70,43 @@ const FALLBACK_GEMS = [
 
 export function HeavyLiquidReference() {
   const [selectedSG, setSelectedSG] = useState<number | null>(null);
-  const { mineralsWithSG, dbAvailable, loading } = useCalculatorData();
+  const [loading, setLoading] = useState(true);
+  const [dbAvailable, setDbAvailable] = useState(false);
+  const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
-  // Use database data if available, otherwise fallback
-  const gems = dbAvailable && mineralsWithSG.length > 0
-    ? mineralsWithSG.map(m => ({
+  const { params, onPageChange, onPageSizeChange } = usePagination<Mineral>({
+    initialPageSize: 15,
+  });
+
+  // Fetch paginated data from database
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      try {
+        const result = await getMineralsWithSGPaginated(params);
+        setPaginatedData(result);
+        setDbAvailable(result.pagination.total > 0);
+      } catch (err) {
+        console.warn('Failed to load SG data:', err);
+        setDbAvailable(false);
+        setPaginatedData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [params]);
+
+  // Convert database minerals to simple gem format
+  const gems = useMemo(() => {
+    if (dbAvailable && paginatedData && paginatedData.data.length > 0) {
+      return paginatedData.data.map(m => ({
         name: m.name,
         sg: m.sg_min && m.sg_max ? (m.sg_min + m.sg_max) / 2 : 0,
-      })).filter(g => g.sg > 0).sort((a, b) => a.sg - b.sg)
-    : FALLBACK_GEMS;
+      })).filter(g => g.sg > 0).sort((a, b) => a.sg - b.sg);
+    }
+    return FALLBACK_GEMS;
+  }, [dbAvailable, paginatedData]);
 
   // Compute floats and sinks for a given liquid SG
   const getFloatsAndSinks = (liquidSG: number) => {
@@ -160,43 +190,33 @@ export function HeavyLiquidReference() {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-slate-900">Gem SG Reference</h4>
-          {dbAvailable && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
-              {gems.length} gems from database
-            </span>
-          )}
-        </div>
-        {loading ? (
-          <div className="text-center py-4 text-slate-500 text-sm">Loading gem data...</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Gem</th>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">SG</th>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Liquid Test</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {gems.slice(0, 15).map((gem) => (
-                  <tr key={gem.name} className="hover:bg-slate-50">
-                    <td className="px-3 py-2 text-slate-900">{gem.name}</td>
-                    <td className="px-3 py-2 font-mono text-slate-700">{gem.sg.toFixed(2)}</td>
-                    <td className="px-3 py-2 text-xs text-slate-600">
-                      {gem.sg < 2.89 ? 'Floats in bromoform (2.89)' :
-                       gem.sg < 3.32 ? 'Sinks in bromoform, floats in MI (3.32)' :
-                       gem.sg < 4.25 ? 'Sinks in MI, floats in Clerici (4.25)' :
-                       'Sinks in Clerici solution'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <h4 className="text-sm font-semibold text-slate-900 mb-3">Gem SG Reference</h4>
+        <PaginatedTable
+          columns={[
+            { key: 'name', header: 'Gem' },
+            { key: 'sg', header: 'SG', mono: true },
+            { key: 'test', header: 'Liquid Test' },
+          ]}
+          data={paginatedData}
+          rowMapper={(m: Mineral) => {
+            const sg = m.sg_min && m.sg_max ? (m.sg_min + m.sg_max) / 2 : 0;
+            return {
+              name: m.name,
+              sg: sg.toFixed(2),
+              test: sg < 2.89 ? 'Floats in bromoform (2.89)' :
+                    sg < 3.32 ? 'Sinks in bromoform, floats in MI (3.32)' :
+                    sg < 4.25 ? 'Sinks in MI, floats in Clerici (4.25)' :
+                    'Sinks in Clerici solution',
+            };
+          }}
+          loading={loading}
+          emptyMessage="No SG data available."
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          showPageSize
+          showTotalBadge
+          variant="minimal"
+        />
       </div>
 
       <div className="bg-red-50 border-2 border-red-300 rounded-lg p-4">

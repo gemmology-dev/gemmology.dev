@@ -1,4 +1,11 @@
 import type { Database, SqlJsStatic } from 'sql.js';
+import {
+  type PaginationParams,
+  type PaginatedResult,
+  calculatePagination,
+  toSqlParams,
+  DEFAULT_PAGE_SIZE,
+} from './pagination';
 
 // sql.js needs to be loaded via script tag to work properly with WASM
 type InitSqlJs = (config?: { locateFile?: (file: string) => string }) => Promise<SqlJsStatic>;
@@ -608,3 +615,174 @@ export async function getMineralsWithPleochroism(): Promise<Mineral[]> {
     return mineral as Mineral;
   });
 }
+
+// =============================================================================
+// Paginated query functions for large datasets
+// =============================================================================
+
+/**
+ * Helper to execute a paginated query with count.
+ */
+async function executePaginatedQuery(
+  countSql: string,
+  dataSql: string,
+  params: PaginationParams,
+  queryParams: unknown[] = []
+): Promise<PaginatedResult<Mineral>> {
+  const database = await getDB();
+  const { limit, offset } = toSqlParams(params);
+
+  // Get total count
+  const countResult = database.exec(countSql, queryParams);
+  const total = countResult.length > 0 ? (countResult[0].values[0][0] as number) : 0;
+
+  // Get paginated data
+  const result = database.exec(dataSql, [...queryParams, limit, offset]);
+
+  if (result.length === 0) {
+    return {
+      data: [],
+      pagination: calculatePagination(total, params.page, params.pageSize),
+    };
+  }
+
+  const columns = result[0].columns;
+  const data = result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+
+  return {
+    data,
+    pagination: calculatePagination(total, params.page, params.pageSize),
+  };
+}
+
+/**
+ * Get paginated minerals with SG data.
+ */
+export async function getMineralsWithSGPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL`,
+    `SELECT id, name, sg, sg_min, sg_max FROM minerals
+     WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
+     ORDER BY name
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+/**
+ * Get paginated minerals with dispersion data.
+ */
+export async function getMineralsWithDispersionPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals WHERE dispersion IS NOT NULL AND dispersion > 0`,
+    `SELECT id, name, dispersion, ri_min, ri_max, ri
+     FROM minerals
+     WHERE dispersion IS NOT NULL AND dispersion > 0
+     ORDER BY dispersion DESC
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+/**
+ * Get paginated minerals with hardness data.
+ */
+export async function getMineralsWithHardnessPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals WHERE hardness IS NOT NULL AND hardness != ''`,
+    `SELECT id, name, hardness, cleavage, fracture, note
+     FROM minerals
+     WHERE hardness IS NOT NULL AND hardness != ''
+     ORDER BY
+       CAST(SUBSTR(hardness, 1, INSTR(hardness || '-', '-') - 1) AS REAL) DESC,
+       name ASC
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+/**
+ * Get paginated minerals for refractometer simulation.
+ */
+export async function getMineralsForRefractometerPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals
+     WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL AND ri_max <= 1.81`,
+    `SELECT id, name, ri_min, ri_max, optical_character
+     FROM minerals
+     WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
+       AND ri_max <= 1.81
+     ORDER BY ri_min ASC
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+/**
+ * Get paginated minerals with structured pleochroism data.
+ */
+export async function getMineralsWithPleochroismPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals
+     WHERE pleochroism_strength IS NOT NULL
+       AND pleochroism_strength != ''
+       AND pleochroism_strength != 'none'`,
+    `SELECT id, name, pleochroism, pleochroism_strength,
+            pleochroism_color1, pleochroism_color2, pleochroism_color3,
+            pleochroism_notes
+     FROM minerals
+     WHERE pleochroism_strength IS NOT NULL
+       AND pleochroism_strength != ''
+       AND pleochroism_strength != 'none'
+     ORDER BY
+       CASE pleochroism_strength
+         WHEN 'very_strong' THEN 1
+         WHEN 'strong' THEN 2
+         WHEN 'moderate' THEN 3
+         WHEN 'weak' THEN 4
+         ELSE 5
+       END,
+       name ASC
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+/**
+ * Get paginated list of all minerals.
+ */
+export async function getAllMineralsPaginated(
+  params: PaginationParams = { page: 1, pageSize: DEFAULT_PAGE_SIZE }
+): Promise<PaginatedResult<Mineral>> {
+  return executePaginatedQuery(
+    `SELECT COUNT(*) FROM minerals`,
+    `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
+            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
+            fracture, pleochroism, twin_law, phenomenon, note, model_svg,
+            ri_min, ri_max, sg_min, sg_max
+     FROM minerals
+     ORDER BY name ASC
+     LIMIT ? OFFSET ?`,
+    params
+  );
+}
+
+// Re-export pagination types and utilities for convenience
+export type { PaginationParams, PaginatedResult };
+export { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from './pagination';

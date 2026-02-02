@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { Table } from '../ui';
 
 interface Treatment {
   treatment: string;
@@ -215,41 +216,39 @@ export function TreatmentDetection() {
           <span className="text-xs text-slate-400 shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
         </div>
 
-        <div className="rounded-lg border border-slate-200 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Treatment</th>
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Visual</th>
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider hidden lg:table-cell">Instrumental</th>
-                <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTreatments.map((treatment, idx) => (
-                <tr key={idx} className={`border-b border-slate-100 last:border-0 ${idx % 2 === 0 ? '' : 'bg-slate-50/50'}`}>
-                  <td className="px-3 py-2">
-                    <p className="font-medium text-slate-900 text-xs">{treatment.treatment}</p>
-                    <p className="text-xs text-slate-500">{treatment.gems}</p>
-                  </td>
-                  <td className="px-3 py-2 text-xs text-slate-600">{treatment.visualIndicators}</td>
-                  <td className="px-3 py-2 text-xs text-slate-600 hidden lg:table-cell">{treatment.instrumentalTests}</td>
-                  <td className="px-3 py-2 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                      treatment.permanence.startsWith('Permanent') ? 'bg-green-100 text-green-700' :
-                      'bg-amber-100 text-amber-700'
-                    }`}>
-                      {treatment.permanence.startsWith('Permanent') ? 'Permanent' : 'Temporary'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filteredTreatments.length === 0 && (
-            <p className="text-center text-slate-500 text-sm py-4">No treatments found matching your criteria.</p>
-          )}
-        </div>
+        {filteredTreatments.length > 0 ? (
+          <Table
+            columns={[
+              { key: 'treatment', header: 'Treatment' },
+              { key: 'visual', header: 'Visual' },
+              { key: 'instrumental', header: 'Instrumental' },
+              { key: 'status', header: 'Status', align: 'center' },
+            ]}
+            rows={filteredTreatments.map(treatment => ({
+              treatment: (
+                <div>
+                  <p className="font-medium text-slate-900 text-xs">{treatment.treatment}</p>
+                  <p className="text-xs text-slate-500">{treatment.gems}</p>
+                </div>
+              ),
+              visual: <span className="text-xs">{treatment.visualIndicators}</span>,
+              instrumental: <span className="text-xs">{treatment.instrumentalTests}</span>,
+              status: (
+                <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                  treatment.permanence.startsWith('Permanent') ? 'bg-green-100 text-green-700' :
+                  'bg-amber-100 text-amber-700'
+                }`}>
+                  {treatment.permanence.startsWith('Permanent') ? 'Permanent' : 'Temporary'}
+                </span>
+              ),
+            }))}
+            variant="default"
+          />
+        ) : (
+          <div className="text-center text-slate-500 text-sm py-4 border border-slate-200 rounded-xl">
+            No treatments found matching your criteria.
+          </div>
+        )}
       </div>
 
       {/* Disclosure requirements — inline warning */}

@@ -3,25 +3,14 @@
  * Calculate fire/dispersion from RI at different wavelengths
  */
 
+import { useState, useEffect } from 'react';
 import { useCalculatorForm } from '../../hooks/useCalculatorForm';
-import { useCalculatorData } from '../../hooks/useCalculatorData';
+import { usePagination } from '../../hooks/usePagination';
+import { getMineralsWithDispersionPaginated, type Mineral, type PaginatedResult } from '../../lib/db';
 import { validateRI } from './ValidationMessage';
 import { FormField, NumberInput } from '../form';
 import { ClassifiedResult } from './results';
-
-// Fallback data if database is unavailable
-const FALLBACK_GEMS_DISPERSION = [
-  { name: 'Diamond', dispersion: 0.044, ri: 2.417 },
-  { name: 'Zircon', dispersion: 0.039, ri: 1.960 },
-  { name: 'Sphene', dispersion: 0.051, ri: 1.900 },
-  { name: 'Demantoid Garnet', dispersion: 0.057, ri: 1.888 },
-  { name: 'Ruby/Sapphire', dispersion: 0.018, ri: 1.762 },
-  { name: 'Spinel', dispersion: 0.020, ri: 1.718 },
-  { name: 'Topaz', dispersion: 0.014, ri: 1.619 },
-  { name: 'Tourmaline', dispersion: 0.017, ri: 1.624 },
-  { name: 'Quartz', dispersion: 0.013, ri: 1.544 },
-  { name: 'Emerald', dispersion: 0.014, ri: 1.577 },
-];
+import { PaginatedTable } from '../ui';
 
 function classifyDispersion(dispersion: number): { category: string; level: 'low' | 'medium' | 'high' | 'very-high' } {
   if (dispersion < 0.020) return { category: 'Low', level: 'low' };
@@ -31,17 +20,29 @@ function classifyDispersion(dispersion: number): { category: string; level: 'low
 }
 
 export function DispersionCalculator() {
-  const { mineralsWithDispersion, dbAvailable, loading } = useCalculatorData();
+  const [loading, setLoading] = useState(true);
+  const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
-  // Use database data if available, otherwise fallback
-  // Ensure numeric coercion since SQLite may return strings
-  const dispersionGems = dbAvailable && mineralsWithDispersion.length > 0
-    ? mineralsWithDispersion.map(m => ({
-        name: m.name,
-        dispersion: Number(m.dispersion) || 0,
-        ri: m.ri_min && m.ri_max ? (Number(m.ri_min) + Number(m.ri_max)) / 2 : 0,
-      }))
-    : FALLBACK_GEMS_DISPERSION;
+  const { params, onPageChange, onPageSizeChange } = usePagination<Mineral>({
+    initialPageSize: 15,
+  });
+
+  // Fetch paginated data from database
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      try {
+        const result = await getMineralsWithDispersionPaginated(params);
+        setPaginatedData(result);
+      } catch (err) {
+        console.warn('Failed to load dispersion data:', err);
+        setPaginatedData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [params]);
 
   const { values, errors, result, setValue } = useCalculatorForm({
     fields: {
@@ -70,6 +71,26 @@ export function DispersionCalculator() {
       return { dispersion, category, level };
     },
   });
+
+  // Define table columns
+  const columns = [
+    { key: 'name', header: 'Gem' },
+    { key: 'dispersion', header: 'Dispersion', mono: true },
+    { key: 'ri', header: 'RI (avg)', mono: true },
+    { key: 'fire', header: 'Fire' },
+  ];
+
+  // Map mineral to table row
+  const rowMapper = (m: Mineral) => {
+    const dispersion = Number(m.dispersion) || 0;
+    const ri = m.ri_min && m.ri_max ? (Number(m.ri_min) + Number(m.ri_max)) / 2 : 0;
+    return {
+      name: m.name,
+      dispersion: dispersion.toFixed(3),
+      ri: ri > 0 ? ri.toFixed(3) : '—',
+      fire: dispersion >= 0.040 ? 'Very High' : dispersion >= 0.030 ? 'High' : dispersion >= 0.020 ? 'Moderate' : 'Low',
+    };
+  };
 
   return (
     <div className="space-y-6">
@@ -125,42 +146,19 @@ export function DispersionCalculator() {
       )}
 
       <div className="mt-6">
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-slate-900">Gem Dispersion Reference</h4>
-          {dbAvailable && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
-              {dispersionGems.length} gems from database
-            </span>
-          )}
-        </div>
-        {loading ? (
-          <div className="text-center py-4 text-slate-500 text-sm">Loading gem data...</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Gem</th>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Dispersion</th>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">RI (avg)</th>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Fire</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {dispersionGems.slice(0, 15).map((gem) => (
-                  <tr key={gem.name} className="hover:bg-slate-50">
-                    <td className="px-3 py-2 text-slate-900">{gem.name}</td>
-                    <td className="px-3 py-2 font-mono text-slate-700">{gem.dispersion.toFixed(3)}</td>
-                    <td className="px-3 py-2 font-mono text-slate-600">{gem.ri > 0 ? gem.ri.toFixed(3) : '—'}</td>
-                    <td className="px-3 py-2 text-slate-600">
-                      {gem.dispersion >= 0.040 ? 'Very High' : gem.dispersion >= 0.030 ? 'High' : gem.dispersion >= 0.020 ? 'Moderate' : 'Low'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <h4 className="text-sm font-semibold text-slate-900 mb-3">Gem Dispersion Reference</h4>
+        <PaginatedTable
+          columns={columns}
+          data={paginatedData}
+          rowMapper={rowMapper}
+          loading={loading}
+          emptyMessage="No dispersion data available."
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          showPageSize
+          showTotalBadge
+          variant="minimal"
+        />
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

@@ -3,8 +3,10 @@
  * Full-width layout: Mohs scale on left, searchable gem lookup on right (desktop).
  */
 
-import { useState, useMemo } from 'react';
-import { useCalculatorData } from '../../hooks/useCalculatorData';
+import { useState, useMemo, useEffect } from 'react';
+import { usePagination } from '../../hooks/usePagination';
+import { getMineralsWithHardnessPaginated, type Mineral, type PaginatedResult } from '../../lib/db';
+import { Pagination } from '../ui';
 
 interface MohsLevel {
   hardness: number;
@@ -75,12 +77,42 @@ const WEARABILITY_COLORS: Record<string, string> = {
 export function HardnessReference() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterWearability, setFilterWearability] = useState<string>('all');
-  const { mineralsWithHardness, dbAvailable, loading } = useCalculatorData();
+  const [loading, setLoading] = useState(true);
+  const [dbAvailable, setDbAvailable] = useState(false);
+  const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
+
+  const { params, getPaginationProps, resetPage } = usePagination<Mineral>({
+    initialPageSize: 20,
+  });
+
+  // Fetch paginated data from database
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      try {
+        const result = await getMineralsWithHardnessPaginated(params);
+        setPaginatedData(result);
+        setDbAvailable(result.pagination.total > 0);
+      } catch (err) {
+        console.warn('Failed to load hardness data:', err);
+        setDbAvailable(false);
+        setPaginatedData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [params]);
+
+  // Reset to first page when search or filter changes
+  useEffect(() => {
+    resetPage();
+  }, [searchTerm, filterWearability, resetPage]);
 
   // Convert database minerals to GemHardness format
   const gems: GemHardness[] = useMemo(() => {
-    if (dbAvailable && mineralsWithHardness.length > 0) {
-      return mineralsWithHardness.map(m => {
+    if (dbAvailable && paginatedData && paginatedData.data.length > 0) {
+      return paginatedData.data.map(m => {
         const hardness = m.hardness ?? '';
         const cleavageNotes = m.cleavage ? `Cleavage: ${m.cleavage}` : '';
         const notes = m.note || cleavageNotes || '—';
@@ -93,8 +125,9 @@ export function HardnessReference() {
       });
     }
     return FALLBACK_GEMS;
-  }, [dbAvailable, mineralsWithHardness]);
+  }, [dbAvailable, paginatedData]);
 
+  // Client-side filtering of current page data
   const filteredGems = gems.filter(gem => {
     const matchesSearch = gem.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterWearability === 'all' || gem.wearability === filterWearability;
@@ -146,9 +179,9 @@ export function HardnessReference() {
               <option value="Fair">Fair</option>
               <option value="Poor">Poor</option>
             </select>
-            {dbAvailable && (
+            {dbAvailable && paginatedData && (
               <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded whitespace-nowrap">
-                {gems.length} gems
+                {paginatedData.pagination.total} gems
               </span>
             )}
           </div>
@@ -167,7 +200,7 @@ export function HardnessReference() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredGems.slice(0, 20).map((gem, i) => (
+                  {filteredGems.map((gem, i) => (
                     <tr key={gem.name} className={`border-b border-slate-100 last:border-0 ${i % 2 === 0 ? '' : 'bg-slate-50/50'}`}>
                       <td className="px-3 py-2 font-medium text-slate-900">{gem.name}</td>
                       <td className="px-3 py-2 text-center font-mono text-slate-900">{gem.hardness}</td>
@@ -184,10 +217,16 @@ export function HardnessReference() {
               {filteredGems.length === 0 && (
                 <p className="text-center text-slate-500 text-sm py-4">No matches found.</p>
               )}
-              {filteredGems.length > 20 && (
-                <p className="text-center text-slate-400 text-xs py-2">Showing 20 of {filteredGems.length} gems</p>
-              )}
             </div>
+          )}
+
+          {/* Pagination */}
+          {paginatedData && paginatedData.pagination.totalPages > 1 && (
+            <Pagination
+              {...getPaginationProps(paginatedData)}
+              showPageSize
+              className="border-t border-slate-200 pt-3"
+            />
           )}
         </div>
       </div>

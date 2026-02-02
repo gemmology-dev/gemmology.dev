@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { Table } from '../ui';
 
 interface CleavageData {
   gem: string;
@@ -122,42 +123,38 @@ export function FractureCleavageGuide() {
           <span className="text-xs text-slate-400 shrink-0 pb-0.5">{filteredGems.length} gem{filteredGems.length !== 1 ? 's' : ''}</span>
         </div>
 
-        <div className="rounded-lg border border-slate-200 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Gemstone</th>
-                <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Cleavage</th>
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider hidden sm:table-cell">Directions</th>
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider hidden lg:table-cell">Fracture</th>
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredGems.map((gem, i) => (
-                <tr key={gem.gem} className={`border-b border-slate-100 last:border-0 ${i % 2 === 0 ? '' : 'bg-slate-50/50'}`}>
-                  <td className="px-3 py-2 font-medium text-slate-900 text-sm">{gem.gem}</td>
-                  <td className="px-3 py-2 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                      gem.cleavage === 'Perfect' ? 'bg-red-100 text-red-700' :
-                      gem.cleavage === 'Distinct' ? 'bg-amber-100 text-amber-700' :
-                      gem.cleavage === 'Indistinct' ? 'bg-blue-100 text-blue-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {gem.cleavage}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2 text-xs text-slate-600 hidden sm:table-cell">{gem.directions}</td>
-                  <td className="px-3 py-2 text-xs text-slate-600 hidden lg:table-cell">{gem.fracture}</td>
-                  <td className="px-3 py-2 text-xs text-slate-500">{gem.notes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filteredGems.length === 0 && (
-            <p className="text-center text-slate-500 text-sm py-4">No gemstones found matching your criteria.</p>
-          )}
-        </div>
+        {filteredGems.length > 0 ? (
+          <Table
+            columns={[
+              { key: 'gem', header: 'Gemstone' },
+              { key: 'cleavage', header: 'Cleavage', align: 'center' },
+              { key: 'directions', header: 'Directions' },
+              { key: 'fracture', header: 'Fracture' },
+              { key: 'notes', header: 'Notes' },
+            ]}
+            rows={filteredGems.map(gem => ({
+              gem: gem.gem,
+              cleavage: (
+                <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                  gem.cleavage === 'Perfect' ? 'bg-red-100 text-red-700' :
+                  gem.cleavage === 'Distinct' ? 'bg-amber-100 text-amber-700' :
+                  gem.cleavage === 'Indistinct' ? 'bg-blue-100 text-blue-700' :
+                  'bg-green-100 text-green-700'
+                }`}>
+                  {gem.cleavage}
+                </span>
+              ),
+              directions: <span className="text-xs">{gem.directions}</span>,
+              fracture: <span className="text-xs">{gem.fracture}</span>,
+              notes: <span className="text-xs text-slate-500">{gem.notes}</span>,
+            }))}
+            variant="default"
+          />
+        ) : (
+          <div className="text-center text-slate-500 text-sm py-4 border border-slate-200 rounded-xl">
+            No gemstones found matching your criteria.
+          </div>
+        )}
       </div>
 
       {/* Tips — compact inline strips */}

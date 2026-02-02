@@ -11,6 +11,7 @@ import { useCalculatorData } from '../../hooks/useCalculatorData';
 import { validateRI } from './ValidationMessage';
 import { FormField, NumberInput, Select } from '../form';
 import { GemMatchList } from './results';
+import { Table } from '../ui';
 
 const TOLERANCE_OPTIONS = [
   { value: '0.005', label: '± 0.005 (Narrow)' },
@@ -104,29 +105,22 @@ export function RICalculator() {
       )}
 
       {/* Reference table */}
-      <div className="border rounded-lg overflow-hidden">
-        <div className="px-4 py-2 bg-slate-50 border-b">
-          <h4 className="text-sm font-medium text-slate-700">Common Gem RI Reference</h4>
-        </div>
+      <div>
+        <h4 className="text-sm font-medium text-slate-700 mb-2">Common Gem RI Reference</h4>
         <div className="max-h-64 overflow-y-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 sticky top-0">
-              <tr>
-                <th className="px-4 py-2 text-left text-slate-700">Gem</th>
-                <th className="px-4 py-2 text-left text-slate-700">RI</th>
-                <th className="px-4 py-2 text-left text-slate-700">SG</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {fallbackGems.map(gem => (
-                <tr key={gem.name} className="hover:bg-slate-50">
-                  <td className="px-4 py-2 text-slate-900">{gem.name}</td>
-                  <td className="px-4 py-2 text-slate-600 font-mono text-xs">{formatRI(gem.ri)}</td>
-                  <td className="px-4 py-2 text-slate-600 font-mono text-xs">{formatSG(gem.sg)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table
+            columns={[
+              { key: 'name', header: 'Gem' },
+              { key: 'ri', header: 'RI', mono: true },
+              { key: 'sg', header: 'SG', mono: true },
+            ]}
+            rows={fallbackGems.map(gem => ({
+              name: gem.name,
+              ri: formatRI(gem.ri),
+              sg: formatSG(gem.sg),
+            }))}
+            variant="minimal"
+          />
         </div>
       </div>
     </div>

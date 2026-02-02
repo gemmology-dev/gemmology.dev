@@ -1,5 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from './cn';
+import { Pagination } from './Pagination';
+import type { PaginatedResult } from '../../lib/pagination';
 
 type TableVariant = 'default' | 'card' | 'minimal';
 
@@ -175,6 +177,95 @@ export function PropertyTable({
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * PaginatedTable - Table with built-in pagination, loading, and empty states.
+ * Use this for database-backed tables that need pagination.
+ */
+interface PaginatedTableProps<T> extends Omit<TableProps, 'rows'> {
+  /** Paginated result from a database query */
+  data: PaginatedResult<T> | null;
+  /** Transform each data item to table row */
+  rowMapper: (item: T, index: number) => Record<string, ReactNode> | ReactNode[];
+  /** Loading state */
+  loading?: boolean;
+  /** Message when no data */
+  emptyMessage?: string;
+  /** Callback when page changes */
+  onPageChange: (page: number) => void;
+  /** Callback when page size changes */
+  onPageSizeChange?: (size: number) => void;
+  /** Show page size selector */
+  showPageSize?: boolean;
+  /** Optional header content (e.g., search, filters) */
+  headerContent?: ReactNode;
+  /** Optional badge showing total count */
+  showTotalBadge?: boolean;
+}
+
+export function PaginatedTable<T>({
+  data,
+  rowMapper,
+  loading = false,
+  emptyMessage = 'No results found.',
+  onPageChange,
+  onPageSizeChange,
+  showPageSize = true,
+  headerContent,
+  showTotalBadge = true,
+  columns,
+  className,
+  ...tableProps
+}: PaginatedTableProps<T>) {
+  const rows = data?.data.map(rowMapper) ?? [];
+  const hasData = rows.length > 0;
+  const showPagination = data && data.pagination.totalPages > 1;
+
+  return (
+    <div className={cn('space-y-3', className)}>
+      {/* Header with optional content and total badge */}
+      {(headerContent || (showTotalBadge && data)) && (
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex-1">{headerContent}</div>
+          {showTotalBadge && data && (
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded whitespace-nowrap">
+              {data.pagination.total} total
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Loading state */}
+      {loading && (
+        <div className="text-center py-8 text-slate-500 text-sm">
+          Loading...
+        </div>
+      )}
+
+      {/* Table */}
+      {!loading && hasData && (
+        <Table columns={columns} rows={rows} {...tableProps} />
+      )}
+
+      {/* Empty state */}
+      {!loading && !hasData && (
+        <div className="text-center py-8 text-slate-500 text-sm border border-slate-200 rounded-xl">
+          {emptyMessage}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {!loading && showPagination && data && (
+        <Pagination
+          pagination={data.pagination}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          showPageSize={showPageSize && !!onPageSizeChange}
+        />
+      )}
     </div>
   );
 }
