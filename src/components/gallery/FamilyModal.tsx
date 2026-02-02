@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { Badge } from '../ui/Badge';
 import { Crystal3DViewer } from '../crystal/Crystal3DViewer';
 import { ViewerToggle } from '../crystal/ViewerToggle';
@@ -33,25 +33,43 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
     }
   }, [expressions, selectedExpression]);
 
-  // Load glTF when switching to 3D mode
+  // Track which expression's glTF is currently loaded
+  const loadedExpressionId = useRef<string | null>(null);
+
+  // Load glTF when switching to 3D mode OR when expression changes while in 3D
   useEffect(() => {
-    if (viewMode === '3d' && selectedExpression?.model_gltf && !gltfData) {
+    // Only load if in 3D mode
+    if (viewMode !== '3d') {
+      return;
+    }
+
+    // Check if we need to load new data (expression changed or no data loaded)
+    const needsLoad = selectedExpression?.id !== loadedExpressionId.current;
+
+    if (needsLoad && selectedExpression?.model_gltf) {
       setIsLoadingGltf(true);
+      setGltfData(null); // Clear old data first
+
       try {
         const parsed = JSON.parse(selectedExpression.model_gltf as string);
         setGltfData(parsed);
+        loadedExpressionId.current = selectedExpression.id;
       } catch (error) {
         console.error('Failed to parse glTF:', error);
+        loadedExpressionId.current = null;
       } finally {
         setIsLoadingGltf(false);
       }
     }
-  }, [viewMode, selectedExpression, gltfData]);
+  }, [viewMode, selectedExpression?.id, selectedExpression?.model_gltf]);
 
-  // Reset gltfData when expression changes
+  // Reset loaded expression tracking when switching away from 3D
   useEffect(() => {
-    setGltfData(null);
-  }, [selectedExpression?.id]);
+    if (viewMode !== '3d') {
+      loadedExpressionId.current = null;
+      setGltfData(null);
+    }
+  }, [viewMode]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
