@@ -1,3 +1,4 @@
 // Mineral page components - Astro components are imported directly
-// This file exists for consistency with other component directories
-export {};
+// React components for interactive family/expression display
+export { ExpressionSelector } from './ExpressionSelector';
+export { FamilyDetail } from './FamilyDetail';
