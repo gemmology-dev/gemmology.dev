@@ -11,6 +11,8 @@ import {
   getThresholds,
   getMineralsWithHeatTreatment,
   getMineralsWithSG,
+  getMineralsWithDispersion,
+  getMineralsWithHardness,
   type Mineral,
   type CutShapeFactor,
   type GemmologicalThreshold,
@@ -63,6 +65,8 @@ interface UseCalculatorDataReturn {
   thresholds: Record<string, GemmologicalThreshold[]>;
   heatTreatableGems: Mineral[];
   mineralsWithSG: Mineral[];
+  mineralsWithDispersion: Mineral[];
+  mineralsWithHardness: Mineral[];
 
   // Fallback data
   fallbackGems: GemReference[];
@@ -82,6 +86,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
   const [thresholds, setThresholds] = useState<Record<string, GemmologicalThreshold[]>>({});
   const [heatTreatableGems, setHeatTreatableGems] = useState<Mineral[]>([]);
   const [mineralsWithSG, setMineralsWithSG] = useState<Mineral[]>([]);
+  const [mineralsWithDispersion, setMineralsWithDispersion] = useState<Mineral[]>([]);
+  const [mineralsWithHardness, setMineralsWithHardness] = useState<Mineral[]>([]);
 
   // Load reference data on mount
   useEffect(() => {
@@ -91,13 +97,15 @@ export function useCalculatorData(): UseCalculatorDataReturn {
         setError(null);
 
         // Try to load data from database
-        const [shapes, biref, disp, critAngle, heatGems, sgMinerals] = await Promise.all([
+        const [shapes, biref, disp, critAngle, heatGems, sgMinerals, dispMinerals, hardMinerals] = await Promise.all([
           getCutShapeFactors(),
           getThresholds('birefringence'),
           getThresholds('dispersion'),
           getThresholds('critical_angle'),
           getMineralsWithHeatTreatment(),
           getMineralsWithSG(),
+          getMineralsWithDispersion(),
+          getMineralsWithHardness(),
         ]);
 
         // If we got shape factors, database is available
@@ -111,6 +119,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
           });
           setHeatTreatableGems(heatGems);
           setMineralsWithSG(sgMinerals);
+          setMineralsWithDispersion(dispMinerals);
+          setMineralsWithHardness(hardMinerals);
         } else {
           // Database may not have reference tables yet
           setDbAvailable(false);
@@ -175,6 +185,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     thresholds,
     heatTreatableGems,
     mineralsWithSG,
+    mineralsWithDispersion,
+    mineralsWithHardness,
     fallbackGems: COMMON_GEMS,
     fallbackShapeFactors: SHAPE_FACTORS,
   };

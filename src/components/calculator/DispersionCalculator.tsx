@@ -4,11 +4,13 @@
  */
 
 import { useCalculatorForm } from '../../hooks/useCalculatorForm';
+import { useCalculatorData } from '../../hooks/useCalculatorData';
 import { validateRI } from './ValidationMessage';
 import { FormField, NumberInput } from '../form';
 import { ClassifiedResult } from './results';
 
-const COMMON_GEMS_DISPERSION = [
+// Fallback data if database is unavailable
+const FALLBACK_GEMS_DISPERSION = [
   { name: 'Diamond', dispersion: 0.044, ri: 2.417 },
   { name: 'Zircon', dispersion: 0.039, ri: 1.960 },
   { name: 'Sphene', dispersion: 0.051, ri: 1.900 },
@@ -29,6 +31,17 @@ function classifyDispersion(dispersion: number): { category: string; level: 'low
 }
 
 export function DispersionCalculator() {
+  const { mineralsWithDispersion, dbAvailable, loading } = useCalculatorData();
+
+  // Use database data if available, otherwise fallback
+  const dispersionGems = dbAvailable && mineralsWithDispersion.length > 0
+    ? mineralsWithDispersion.map(m => ({
+        name: m.name,
+        dispersion: m.dispersion ?? 0,
+        ri: m.ri_min && m.ri_max ? (m.ri_min + m.ri_max) / 2 : 0,
+      }))
+    : FALLBACK_GEMS_DISPERSION;
+
   const { values, errors, result, setValue } = useCalculatorForm({
     fields: {
       riRed: {
@@ -111,31 +124,42 @@ export function DispersionCalculator() {
       )}
 
       <div className="mt-6">
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Common Gem Dispersion Reference</h4>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
-              <tr>
-                <th className="px-3 py-2 text-left font-medium text-slate-700">Gem</th>
-                <th className="px-3 py-2 text-left font-medium text-slate-700">Dispersion</th>
-                <th className="px-3 py-2 text-left font-medium text-slate-700">RI (avg)</th>
-                <th className="px-3 py-2 text-left font-medium text-slate-700">Fire</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {COMMON_GEMS_DISPERSION.map((gem) => (
-                <tr key={gem.name} className="hover:bg-slate-50">
-                  <td className="px-3 py-2 text-slate-900">{gem.name}</td>
-                  <td className="px-3 py-2 font-mono text-slate-700">{gem.dispersion.toFixed(3)}</td>
-                  <td className="px-3 py-2 font-mono text-slate-600">{gem.ri.toFixed(3)}</td>
-                  <td className="px-3 py-2 text-slate-600">
-                    {gem.dispersion >= 0.040 ? 'Very High' : gem.dispersion >= 0.030 ? 'High' : gem.dispersion >= 0.020 ? 'Moderate' : 'Low'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-sm font-semibold text-slate-900">Gem Dispersion Reference</h4>
+          {dbAvailable && (
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
+              {dispersionGems.length} gems from database
+            </span>
+          )}
         </div>
+        {loading ? (
+          <div className="text-center py-4 text-slate-500 text-sm">Loading gem data...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="px-3 py-2 text-left font-medium text-slate-700">Gem</th>
+                  <th className="px-3 py-2 text-left font-medium text-slate-700">Dispersion</th>
+                  <th className="px-3 py-2 text-left font-medium text-slate-700">RI (avg)</th>
+                  <th className="px-3 py-2 text-left font-medium text-slate-700">Fire</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {dispersionGems.slice(0, 15).map((gem) => (
+                  <tr key={gem.name} className="hover:bg-slate-50">
+                    <td className="px-3 py-2 text-slate-900">{gem.name}</td>
+                    <td className="px-3 py-2 font-mono text-slate-700">{gem.dispersion.toFixed(3)}</td>
+                    <td className="px-3 py-2 font-mono text-slate-600">{gem.ri > 0 ? gem.ri.toFixed(3) : '—'}</td>
+                    <td className="px-3 py-2 text-slate-600">
+                      {gem.dispersion >= 0.040 ? 'Very High' : gem.dispersion >= 0.030 ? 'High' : gem.dispersion >= 0.020 ? 'Moderate' : 'Low'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

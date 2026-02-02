@@ -490,3 +490,53 @@ export async function getMineralsWithSG(): Promise<Mineral[]> {
     return mineral as Mineral;
   });
 }
+
+/**
+ * Get minerals with dispersion data for fire reference table.
+ */
+export async function getMineralsWithDispersion(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, dispersion, ri_min, ri_max, ri
+     FROM minerals
+     WHERE dispersion IS NOT NULL AND dispersion > 0
+     ORDER BY dispersion DESC`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get minerals with hardness data for hardness reference table.
+ */
+export async function getMineralsWithHardness(): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, hardness, cleavage, fracture, note
+     FROM minerals
+     WHERE hardness IS NOT NULL AND hardness != ''
+     ORDER BY
+       CAST(SUBSTR(hardness, 1, INSTR(hardness || '-', '-') - 1) AS REAL) DESC,
+       name ASC`
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}

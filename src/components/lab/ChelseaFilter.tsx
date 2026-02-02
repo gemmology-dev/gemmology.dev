@@ -190,6 +190,15 @@ export function ChelseaFilter() {
           The Chelsea filter is a didymium glass filter that transmits deep red (around 690nm) and yellow-green (around 570nm) light. Gems containing chromium fluoresce under the filter, appearing red or pink. This is especially useful for screening emeralds and detecting some synthetic stones.
         </p>
       </div>
+
+      <div className="text-sm text-slate-600">
+        <a
+          href="/learn/equipment/other-tools"
+          className="text-crystal-600 hover:text-crystal-700 underline"
+        >
+          Learn more about the Chelsea filter and its limitations →
+        </a>
+      </div>
     </div>
   );
 }

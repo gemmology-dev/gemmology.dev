@@ -126,6 +126,15 @@ export function DichroscopeResults() {
         <span>• Biaxial gems can show 2–3 colors</span>
         <span>• Best viewed in strong light against white</span>
       </div>
+
+      <div className="text-sm text-slate-600 pt-2">
+        <a
+          href="/learn/equipment/dichroscope"
+          className="text-purple-600 hover:text-purple-700 underline"
+        >
+          Learn dichroscope technique and see full pleochroism reference →
+        </a>
+      </div>
     </div>
   );
 }
