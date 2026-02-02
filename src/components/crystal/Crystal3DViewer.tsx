@@ -3,11 +3,14 @@
  * Uses React Three Fiber for declarative Three.js in React
  */
 
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Center } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { EdgesGeometry, LineSegments, LineBasicMaterial } from 'three';
+import { EdgesGeometry } from 'three';
+import { Line2 } from 'three/examples/jsm/lines/Line2.js';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
 
 interface Crystal3DViewerProps {
   gltfData: object | null;
@@ -146,31 +149,64 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
 /**
  * Crystal mesh component that renders the geometry
  * Creates both face and edge geometry in sync to avoid WebGL errors
+ * Uses Line2 for thick edges that work across all platforms
  */
 function CrystalMesh({ gltfData }: CrystalMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const edgesRef = useRef<LineSegments>(null);
+  const lineRef = useRef<Line2>(null);
+  const { size } = useThree();
 
-  // Create both face geometry and edge geometry together
-  const { faceGeometry, edgeGeometry } = useMemo(() => {
+  // Create face geometry, Line2 object with geometry and material together
+  const { faceGeometry, line2 } = useMemo(() => {
     const faceGeom = parseGLTFToGeometry(gltfData);
     if (!faceGeom) {
-      return { faceGeometry: null, edgeGeometry: null };
+      return { faceGeometry: null, line2: null };
     }
-    // Create edge geometry from face geometry (threshold in radians, ~1 degree)
+
+    // Create edge geometry from face geometry (threshold in degrees)
     const edgeGeom = new EdgesGeometry(faceGeom, 1);
-    return { faceGeometry: faceGeom, edgeGeometry: edgeGeom };
+
+    // Convert EdgesGeometry to LineGeometry for Line2
+    const positions = edgeGeom.attributes.position.array as Float32Array;
+    const lineGeom = new LineGeometry();
+    lineGeom.setPositions(Array.from(positions));
+
+    // Create LineMaterial with screen-space line width
+    const lineMat = new LineMaterial({
+      color: 0x0369a1,
+      linewidth: 2, // Width in pixels
+      resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+    });
+
+    // Dispose the temporary edge geometry
+    edgeGeom.dispose();
+
+    // Create Line2 object
+    const lineObj = new Line2(lineGeom, lineMat);
+    lineObj.computeLineDistances();
+
+    return { faceGeometry: faceGeom, line2: lineObj };
   }, [gltfData]);
 
-  // Cleanup geometries on unmount or change
+  // Update line material resolution when viewport size changes
+  useEffect(() => {
+    if (line2) {
+      (line2.material as LineMaterial).resolution.set(size.width, size.height);
+    }
+  }, [size, line2]);
+
+  // Cleanup geometries and material on unmount or change
   useEffect(() => {
     return () => {
       if (faceGeometry) faceGeometry.dispose();
-      if (edgeGeometry) edgeGeometry.dispose();
+      if (line2) {
+        line2.geometry.dispose();
+        (line2.material as LineMaterial).dispose();
+      }
     };
-  }, [faceGeometry, edgeGeometry]);
+  }, [faceGeometry, line2]);
 
-  if (!faceGeometry || !edgeGeometry) return null;
+  if (!faceGeometry || !line2) return null;
 
   return (
     <group>
@@ -184,10 +220,8 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
           depthWrite={false}
         />
       </mesh>
-      {/* Edge lines rendered as separate LineSegments - always in sync with face geometry */}
-      <lineSegments ref={edgesRef} geometry={edgeGeometry}>
-        <lineBasicMaterial color="#0369a1" />
-      </lineSegments>
+      {/* Thick edge lines using Line2 - works across all platforms */}
+      <primitive object={line2} ref={lineRef} />
     </group>
   );
 }
