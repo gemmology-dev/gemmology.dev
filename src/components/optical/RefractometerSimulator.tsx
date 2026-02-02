@@ -3,10 +3,11 @@
  * Interactive teaching tool for learning to read shadow edges
  */
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useCalculatorData } from '../../hooks/useCalculatorData';
 
-const SIMULATION_GEMS = [
-  { name: 'Diamond', ri_low: 2.417, ri_high: 2.417, isotropic: true },
+// Fallback data if database is unavailable
+const FALLBACK_GEMS = [
   { name: 'Spinel', ri_low: 1.718, ri_high: 1.718, isotropic: true },
   { name: 'Garnet (Pyrope)', ri_low: 1.740, ri_high: 1.740, isotropic: true },
   { name: 'Ruby', ri_low: 1.762, ri_high: 1.770, isotropic: false },
@@ -15,11 +16,37 @@ const SIMULATION_GEMS = [
   { name: 'Quartz', ri_low: 1.544, ri_high: 1.553, isotropic: false },
   { name: 'Topaz', ri_low: 1.609, ri_high: 1.617, isotropic: false },
   { name: 'Tourmaline', ri_low: 1.624, ri_high: 1.644, isotropic: false },
-  { name: 'Zircon', ri_low: 1.925, ri_high: 1.984, isotropic: false },
+  { name: 'Peridot', ri_low: 1.654, ri_high: 1.690, isotropic: false },
+  { name: 'Aquamarine', ri_low: 1.577, ri_high: 1.583, isotropic: false },
 ];
 
+interface SimulationGem {
+  name: string;
+  ri_low: number;
+  ri_high: number;
+  isotropic: boolean;
+}
+
 export function RefractometerSimulator() {
-  const [selectedGem, setSelectedGem] = useState(SIMULATION_GEMS[0]);
+  const { mineralsForRefractometer, dbAvailable, loading } = useCalculatorData();
+
+  // Convert database minerals to simulation format
+  const simulationGems = useMemo((): SimulationGem[] => {
+    if (dbAvailable && mineralsForRefractometer.length > 0) {
+      return mineralsForRefractometer
+        .filter(m => m.ri_min && m.ri_max)
+        .map(m => ({
+          name: m.name,
+          ri_low: Number(m.ri_min) || 0,
+          ri_high: Number(m.ri_max) || 0,
+          isotropic: m.optical_character === 'Isotropic',
+        }))
+        .filter(g => g.ri_low > 0 && g.ri_high <= 1.81);
+    }
+    return FALLBACK_GEMS;
+  }, [dbAvailable, mineralsForRefractometer]);
+
+  const [selectedGem, setSelectedGem] = useState<SimulationGem>(simulationGems[0] || FALLBACK_GEMS[0]);
   const [showAnswer, setShowAnswer] = useState(false);
 
   const birefringence = selectedGem.ri_high - selectedGem.ri_low;
@@ -41,23 +68,39 @@ export function RefractometerSimulator() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-2">
-          Select Gem to Simulate
-        </label>
-        <select
-          value={selectedGem.name}
-          onChange={(e) => {
-            setSelectedGem(SIMULATION_GEMS.find(g => g.name === e.target.value)!);
-            setShowAnswer(false);
-          }}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
-        >
-          {SIMULATION_GEMS.map((gem) => (
-            <option key={gem.name} value={gem.name}>
-              {gem.name}
-            </option>
-          ))}
-        </select>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Select Gem to Simulate
+          </label>
+          {dbAvailable && (
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
+              {simulationGems.length} gems from database
+            </span>
+          )}
+        </div>
+        {loading ? (
+          <div className="w-full px-3 py-2 text-sm text-slate-500 bg-slate-100 rounded-lg">
+            Loading gems...
+          </div>
+        ) : (
+          <select
+            value={selectedGem.name}
+            onChange={(e) => {
+              const found = simulationGems.find(g => g.name === e.target.value);
+              if (found) {
+                setSelectedGem(found);
+                setShowAnswer(false);
+              }
+            }}
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+          >
+            {simulationGems.map((gem) => (
+              <option key={gem.name} value={gem.name}>
+                {gem.name} (RI: {gem.ri_low.toFixed(3)}{gem.ri_low !== gem.ri_high ? `-${gem.ri_high.toFixed(3)}` : ''})
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       {/* Simulated Refractometer Scale */}

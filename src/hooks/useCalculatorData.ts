@@ -13,6 +13,8 @@ import {
   getMineralsWithSG,
   getMineralsWithDispersion,
   getMineralsWithHardness,
+  getMineralsForRefractometer,
+  getMineralsWithPleochroism,
   type Mineral,
   type CutShapeFactor,
   type GemmologicalThreshold,
@@ -67,6 +69,8 @@ interface UseCalculatorDataReturn {
   mineralsWithSG: Mineral[];
   mineralsWithDispersion: Mineral[];
   mineralsWithHardness: Mineral[];
+  mineralsForRefractometer: Mineral[];
+  mineralsWithPleochroism: Mineral[];
 
   // Fallback data
   fallbackGems: GemReference[];
@@ -88,6 +92,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
   const [mineralsWithSG, setMineralsWithSG] = useState<Mineral[]>([]);
   const [mineralsWithDispersion, setMineralsWithDispersion] = useState<Mineral[]>([]);
   const [mineralsWithHardness, setMineralsWithHardness] = useState<Mineral[]>([]);
+  const [mineralsForRefractometer, setMineralsForRefractometer] = useState<Mineral[]>([]);
+  const [mineralsWithPleochroism, setMineralsWithPleochroism] = useState<Mineral[]>([]);
 
   // Load reference data on mount
   useEffect(() => {
@@ -97,7 +103,7 @@ export function useCalculatorData(): UseCalculatorDataReturn {
         setError(null);
 
         // Try to load data from database
-        const [shapes, biref, disp, critAngle, heatGems, sgMinerals, dispMinerals, hardMinerals] = await Promise.all([
+        const [shapes, biref, disp, critAngle, heatGems, sgMinerals, dispMinerals, hardMinerals, refractMinerals, pleochroicMinerals] = await Promise.all([
           getCutShapeFactors(),
           getThresholds('birefringence'),
           getThresholds('dispersion'),
@@ -106,6 +112,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
           getMineralsWithSG(),
           getMineralsWithDispersion(),
           getMineralsWithHardness(),
+          getMineralsForRefractometer(),
+          getMineralsWithPleochroism(),
         ]);
 
         // If we got shape factors, database is available
@@ -121,6 +129,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
           setMineralsWithSG(sgMinerals);
           setMineralsWithDispersion(dispMinerals);
           setMineralsWithHardness(hardMinerals);
+          setMineralsForRefractometer(refractMinerals);
+          setMineralsWithPleochroism(pleochroicMinerals);
         } else {
           // Database may not have reference tables yet
           setDbAvailable(false);
@@ -187,6 +197,8 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     mineralsWithSG,
     mineralsWithDispersion,
     mineralsWithHardness,
+    mineralsForRefractometer,
+    mineralsWithPleochroism,
     fallbackGems: COMMON_GEMS,
     fallbackShapeFactors: SHAPE_FACTORS,
   };
