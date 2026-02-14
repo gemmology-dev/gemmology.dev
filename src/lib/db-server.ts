@@ -477,9 +477,21 @@ export async function getFamiliesBySystem(system: string): Promise<MineralFamily
 /**
  * Get counterpart minerals (synthetics/simulants) for a given mineral ID.
  * Used on detail pages to show related synthetic/simulant entries.
+ * The mineralId is an expression-level ID (e.g., 'diamond-octahedron'),
+ * so we first resolve it to a family ID via mineral_expressions.
  */
 export async function getCounterpartMinerals(mineralId: string): Promise<Mineral[]> {
   const database = await getDB();
+
+  // Resolve expression ID to family ID
+  const familyResult = database.exec(
+    `SELECT family_id FROM mineral_expressions WHERE id = ? LIMIT 1`,
+    [mineralId]
+  );
+  const familyId = familyResult.length > 0 && familyResult[0].values.length > 0
+    ? familyResult[0].values[0][0] as string
+    : mineralId; // fallback to mineralId if not found
+
   const result = database.exec(
     `SELECT id, name, system, cdl, point_group, chemistry, hardness,
             sg, ri, origin, growth_method, natural_counterpart_id,
@@ -487,7 +499,7 @@ export async function getCounterpartMinerals(mineralId: string): Promise<Mineral
      FROM minerals
      WHERE natural_counterpart_id = ?
      ORDER BY origin, name`,
-    [mineralId]
+    [familyId]
   );
 
   if (result.length === 0) return [];
@@ -504,16 +516,31 @@ export async function getCounterpartMinerals(mineralId: string): Promise<Mineral
 
 /**
  * Get the natural counterpart mineral for a synthetic/simulant.
+ * The counterpartId is a family ID (e.g., 'diamond'), so we find
+ * the primary expression mineral for that family.
  */
 export async function getNaturalCounterpart(counterpartId: string): Promise<Mineral | null> {
   const database = await getDB();
+
+  // Find the primary expression ID for this family
+  const exprResult = database.exec(
+    `SELECT id FROM mineral_expressions
+     WHERE family_id = ? AND is_primary = 1
+     LIMIT 1`,
+    [counterpartId]
+  );
+
+  const mineralId = exprResult.length > 0 && exprResult[0].values.length > 0
+    ? exprResult[0].values[0][0] as string
+    : counterpartId;
+
   const result = database.exec(
     `SELECT id, name, system, cdl, point_group, chemistry, hardness,
             sg, ri, origin, model_svg
      FROM minerals
      WHERE id = ?
      LIMIT 1`,
-    [counterpartId]
+    [mineralId]
   );
 
   if (result.length === 0 || result[0].values.length === 0) return null;
