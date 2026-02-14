@@ -1,6 +1,24 @@
 import { SearchInput } from '../ui/SearchInput';
-import { Badge } from '../ui/Badge';
 import { clsx } from 'clsx';
+
+const originStyles: Record<string, { active: string; inactive: string }> = {
+  natural: {
+    active: 'bg-emerald-600 text-white',
+    inactive: 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200',
+  },
+  synthetic: {
+    active: 'bg-blue-600 text-white',
+    inactive: 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200',
+  },
+  simulant: {
+    active: 'bg-amber-600 text-white',
+    inactive: 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200',
+  },
+  composite: {
+    active: 'bg-slate-600 text-white',
+    inactive: 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-300',
+  },
+};
 
 interface FilterBarProps {
   searchQuery: string;
@@ -8,6 +26,9 @@ interface FilterBarProps {
   systems: string[];
   selectedSystem: string | null;
   onSystemChange: (system: string | null) => void;
+  origins?: string[];
+  selectedOrigin?: string | null;
+  onOriginChange?: (origin: string | null) => void;
   resultCount?: number;
   resultLabel?: string;
   className?: string;
@@ -19,6 +40,9 @@ export function FilterBar({
   systems,
   selectedSystem,
   onSystemChange,
+  origins = [],
+  selectedOrigin = null,
+  onOriginChange,
   resultCount,
   resultLabel = 'mineral',
   className,
@@ -41,6 +65,39 @@ export function FilterBar({
         )}
       </div>
 
+      {/* Origin filter tabs */}
+      {origins.length > 1 && onOriginChange && (
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => onOriginChange(null)}
+            className={clsx(
+              'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
+              selectedOrigin === null
+                ? 'bg-crystal-600 text-white'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            )}
+          >
+            All Types
+          </button>
+          {origins.map((origin) => {
+            const styles = originStyles[origin] || originStyles.natural;
+            return (
+              <button
+                key={origin}
+                onClick={() => onOriginChange(origin)}
+                className={clsx(
+                  'px-3 py-1.5 rounded-full text-sm font-medium transition-colors capitalize',
+                  selectedOrigin === origin ? styles.active : styles.inactive
+                )}
+              >
+                {origin}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Crystal system filter */}
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => onSystemChange(null)}

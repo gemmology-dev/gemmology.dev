@@ -1252,6 +1252,85 @@ export async function searchFamilies(query: string): Promise<MineralFamily[]> {
 }
 
 /**
+ * Get distinct origin values from the database.
+ */
+export async function getOrigins(): Promise<string[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT DISTINCT origin FROM mineral_families
+     WHERE origin IS NOT NULL
+     ORDER BY CASE origin
+       WHEN 'natural' THEN 0
+       WHEN 'synthetic' THEN 1
+       WHEN 'simulant' THEN 2
+       WHEN 'composite' THEN 3
+       ELSE 4
+     END`
+  );
+
+  if (result.length === 0) return [];
+  return result[0].values.map((row) => row[0] as string);
+}
+
+/**
+ * Get families filtered by origin (natural, synthetic, simulant, composite).
+ */
+export async function getFamiliesByOrigin(origin: string): Promise<MineralFamily[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT f.*, COUNT(e.id) as expressionCount,
+            (SELECT e2.model_svg FROM mineral_expressions e2
+             WHERE e2.family_id = f.id AND e2.is_primary = 1 LIMIT 1) as primarySvg
+     FROM mineral_families f
+     LEFT JOIN mineral_expressions e ON f.id = e.family_id
+     WHERE LOWER(f.origin) = ?
+     GROUP BY f.id
+     ORDER BY f.name`,
+    [origin.toLowerCase()]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const family: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      family[col] = row[i];
+    });
+    return family as MineralFamily;
+  });
+}
+
+/**
+ * Get families that are synthetics/simulants for a given natural counterpart.
+ */
+export async function getCounterparts(naturalId: string): Promise<MineralFamily[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT f.*, COUNT(e.id) as expressionCount,
+            (SELECT e2.model_svg FROM mineral_expressions e2
+             WHERE e2.family_id = f.id AND e2.is_primary = 1 LIMIT 1) as primarySvg
+     FROM mineral_families f
+     LEFT JOIN mineral_expressions e ON f.id = e.family_id
+     WHERE f.natural_counterpart_id = ?
+     GROUP BY f.id
+     ORDER BY f.origin, f.name`,
+    [naturalId]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const family: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      family[col] = row[i];
+    });
+    return family as MineralFamily;
+  });
+}
+
+/**
  * Get count of families and expressions.
  */
 export async function getFamilyStats(): Promise<{ families: number; expressions: number }> {
