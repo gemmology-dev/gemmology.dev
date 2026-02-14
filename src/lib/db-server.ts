@@ -36,6 +36,13 @@ export interface Mineral {
   model_stl?: Uint8Array;
   model_gltf?: string;
   models_generated_at?: string;
+  // Synthetic/simulant classification
+  origin?: string;
+  growth_method?: string;
+  natural_counterpart_id?: string;
+  diagnostic_synthetic_features?: string;
+  manufacturer?: string;
+  year_first_produced?: number;
 }
 
 let db: Database | null = null;
@@ -72,7 +79,8 @@ export async function getAllMinerals(): Promise<Mineral[]> {
   const result = database.exec(`
     SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
            sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
-           fracture, pleochroism, twin_law, phenomenon, note
+           fracture, pleochroism, twin_law, phenomenon, note,
+           origin, growth_method, natural_counterpart_id
     FROM minerals
     ORDER BY name ASC
   `);
@@ -113,7 +121,8 @@ export async function getMineralWithModels(name: string): Promise<Mineral | null
     `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
             sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
             fracture, pleochroism, twin_law, phenomenon, note,
-            model_svg, model_gltf
+            model_svg, model_gltf,
+            origin, growth_method, natural_counterpart_id
      FROM minerals WHERE name = ? LIMIT 1`,
     [name]
   );
@@ -126,6 +135,23 @@ export async function getMineralWithModels(name: string): Promise<Mineral | null
   columns.forEach((col, i) => {
     mineral[col] = row[i];
   });
+
+  // Fetch family-level fields not in the minerals view
+  if (mineral.origin && mineral.origin !== 'natural') {
+    const familyResult = database.exec(
+      `SELECT diagnostic_synthetic_features, manufacturer, year_first_produced
+       FROM mineral_families WHERE id = ? LIMIT 1`,
+      [mineral.id as string]
+    );
+    if (familyResult.length > 0 && familyResult[0].values.length > 0) {
+      const famCols = familyResult[0].columns;
+      const famRow = familyResult[0].values[0];
+      famCols.forEach((col, i) => {
+        mineral[col] = famRow[i];
+      });
+    }
+  }
+
   return mineral as Mineral;
 }
 
@@ -255,6 +281,14 @@ export interface MineralFamily {
   twin_law?: string;
   phenomenon?: string;
   fluorescence?: string;
+  // Synthetic/simulant classification
+  origin?: string;
+  growth_method?: string;
+  natural_counterpart_id?: string;
+  target_minerals_json?: string;
+  manufacturer?: string;
+  year_first_produced?: number;
+  diagnostic_synthetic_features?: string;
   expressionCount?: number;
   primarySvg?: string;
 }
@@ -438,4 +472,57 @@ export async function getFamiliesBySystem(system: string): Promise<MineralFamily
     });
     return family as MineralFamily;
   });
+}
+
+/**
+ * Get counterpart minerals (synthetics/simulants) for a given mineral ID.
+ * Used on detail pages to show related synthetic/simulant entries.
+ */
+export async function getCounterpartMinerals(mineralId: string): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, system, cdl, point_group, chemistry, hardness,
+            sg, ri, origin, growth_method, natural_counterpart_id,
+            model_svg
+     FROM minerals
+     WHERE natural_counterpart_id = ?
+     ORDER BY origin, name`,
+    [mineralId]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
+}
+
+/**
+ * Get the natural counterpart mineral for a synthetic/simulant.
+ */
+export async function getNaturalCounterpart(counterpartId: string): Promise<Mineral | null> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, system, cdl, point_group, chemistry, hardness,
+            sg, ri, origin, model_svg
+     FROM minerals
+     WHERE id = ?
+     LIMIT 1`,
+    [counterpartId]
+  );
+
+  if (result.length === 0 || result[0].values.length === 0) return null;
+
+  const columns = result[0].columns;
+  const row = result[0].values[0];
+  const mineral: Record<string, unknown> = {};
+  columns.forEach((col, i) => {
+    mineral[col] = row[i];
+  });
+  return mineral as Mineral;
 }

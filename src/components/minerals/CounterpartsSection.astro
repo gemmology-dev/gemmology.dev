@@ -1,0 +1,147 @@
+---
+/**
+ * CounterpartsSection - Shows synthetics/simulants for a natural mineral,
+ * or the natural counterpart for a synthetic/simulant.
+ */
+import type { Mineral } from '../../lib/db-server';
+import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
+
+interface Props {
+  /** The current mineral being viewed */
+  mineral: Mineral;
+  /** Counterpart minerals (synthetics/simulants that reference this natural mineral) */
+  counterparts: Mineral[];
+  /** The natural counterpart (if current mineral is synthetic/simulant) */
+  naturalCounterpart?: Mineral | null;
+}
+
+const { mineral, counterparts, naturalCounterpart } = Astro.props;
+
+const isNatural = !mineral.origin || mineral.origin === 'natural';
+const hasCounterparts = counterparts.length > 0;
+const hasNaturalCounterpart = !!naturalCounterpart;
+
+// Don't render if nothing to show
+if (!hasCounterparts && !hasNaturalCounterpart) return;
+
+const originStyles: Record<string, string> = {
+  synthetic: 'bg-blue-100 text-blue-700',
+  simulant: 'bg-amber-100 text-amber-700',
+  composite: 'bg-slate-100 text-slate-600',
+  natural: 'bg-emerald-100 text-emerald-700',
+};
+---
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+  <div class="px-6 py-4 border-b border-slate-100">
+    <h2 class="text-lg font-semibold text-slate-900">
+      {isNatural ? 'Synthetics & Simulants' : 'Natural Counterpart'}
+    </h2>
+    <p class="text-sm text-slate-500 mt-1">
+      {isNatural
+        ? `Known synthetic and simulant versions of ${mineral.name}`
+        : `The natural gem this ${mineral.origin} imitates`
+      }
+    </p>
+  </div>
+
+  <div class="divide-y divide-slate-100">
+    {/* For natural minerals: show synthetic/simulant counterparts */}
+    {isNatural && counterparts.map((cp) => {
+      const hasSvg = isValidSvg(cp.model_svg);
+      const cleanedSvg = hasSvg ? cleanCrystalSvg(cp.model_svg!) : '';
+      const originStyle = originStyles[cp.origin || 'natural'] || originStyles.natural;
+
+      return (
+        <a
+          href={`/minerals/${cp.id}`}
+          class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+        >
+          <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden">
+            {hasSvg ? (
+              <div
+                class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                set:html={cleanedSvg}
+              />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+            )}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="font-medium text-slate-900 truncate">{cp.name}</span>
+              <span class={`px-1.5 py-0.5 text-[10px] font-medium rounded-full capitalize ${originStyle}`}>
+                {cp.origin}
+              </span>
+            </div>
+            {cp.growth_method && (
+              <div class="text-sm text-slate-500 capitalize">{cp.growth_method.replace(/_/g, ' ')}</div>
+            )}
+          </div>
+          <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      );
+    })}
+
+    {/* For synthetics/simulants: show natural counterpart */}
+    {!isNatural && naturalCounterpart && (() => {
+      const hasSvg = isValidSvg(naturalCounterpart.model_svg);
+      const cleanedSvg = hasSvg ? cleanCrystalSvg(naturalCounterpart.model_svg!) : '';
+
+      return (
+        <a
+          href={`/minerals/${naturalCounterpart.id}`}
+          class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+        >
+          <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden">
+            {hasSvg ? (
+              <div
+                class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                set:html={cleanedSvg}
+              />
+            ) : (
+              <img
+                src={`/crystals/${naturalCounterpart.id}.svg`}
+                alt={naturalCounterpart.name}
+                class="w-full h-full object-contain"
+                loading="lazy"
+                onerror="this.src='/crystals/placeholder.svg'"
+              />
+            )}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="font-medium text-slate-900 truncate">{naturalCounterpart.name}</span>
+              <span class="px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-100 text-emerald-700">
+                natural
+              </span>
+            </div>
+            {naturalCounterpart.chemistry && (
+              <div class="text-sm text-slate-500 font-mono truncate">{naturalCounterpart.chemistry}</div>
+            )}
+          </div>
+          <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      );
+    })()}
+  </div>
+
+  {isNatural && counterparts.length > 0 && (
+    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100">
+      <a
+        href="/gallery?origin=synthetic"
+        class="text-sm text-sky-600 hover:text-sky-700 font-medium"
+      >
+        View all synthetic gems &rarr;
+      </a>
+    </div>
+  )}
+</div>

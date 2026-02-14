@@ -7,6 +7,7 @@ import {
   getMineralsByCategory,
   getCrystalSystems,
   getCategories,
+  getOrigins,
   type Mineral,
 } from '../lib/db';
 
@@ -142,23 +143,27 @@ export function useMineral(name: string | undefined): UseMineralResult {
 interface UseFiltersResult {
   systems: string[];
   categories: string[];
+  origins: string[];
   loading: boolean;
 }
 
 export function useFilters(): UseFiltersResult {
   const [systems, setSystems] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const [origins, setOrigins] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
-        const [systemsData, categoriesData] = await Promise.all([
+        const [systemsData, categoriesData, originsData] = await Promise.all([
           getCrystalSystems(),
           getCategories(),
+          getOrigins(),
         ]);
         setSystems(systemsData);
         setCategories(categoriesData);
+        setOrigins(originsData);
       } catch {
         // Silently fail - filters will be empty
       } finally {
@@ -167,5 +172,5 @@ export function useFilters(): UseFiltersResult {
     })();
   }, []);
 
-  return { systems, categories, loading };
+  return { systems, categories, origins, loading };
 }

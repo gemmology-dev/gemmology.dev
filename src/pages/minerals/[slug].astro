@@ -1,7 +1,7 @@
 ---
 /**
  * Individual Mineral Detail Page
- * Generated statically for all 94+ minerals in the database
+ * Generated statically for all 96+ minerals in the database
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MineralHero from '../../components/minerals/MineralHero.astro';
@@ -9,10 +9,11 @@ import QuickFacts from '../../components/minerals/QuickFacts.astro';
 import PropertyTable from '../../components/minerals/PropertyTable.astro';
 import CrystalStructureCard from '../../components/minerals/CrystalStructureCard.astro';
 import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
+import CounterpartsSection from '../../components/minerals/CounterpartsSection.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
-import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, type Mineral } from '../../lib/db-server';
+import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
@@ -44,6 +45,13 @@ const { mineral } = Astro.props;
 const relatedMinerals = (await getMineralsBySystemWithSvg(mineral.system))
   .filter((m) => m.id !== mineral.id)
   .slice(0, 6);
+
+// Get counterpart minerals (synthetics/simulants for natural, or natural for synthetic/simulant)
+const isNatural = !mineral.origin || mineral.origin === 'natural';
+const counterparts = isNatural ? await getCounterpartMinerals(mineral.id) : [];
+const naturalCounterpart = !isNatural && mineral.natural_counterpart_id
+  ? await getNaturalCounterpart(mineral.natural_counterpart_id)
+  : null;
 
 // Generate page metadata
 const title = `${mineral.name} Crystal Structure`;
@@ -92,12 +100,33 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
               { label: 'Dispersion', value: mineral.dispersion },
             ]}
           />
+
+          {/* Origin & Identification (for synthetics/simulants) */}
+          {mineral.origin && mineral.origin !== 'natural' && (
+            <PropertyTable
+              title="Origin & Identification"
+              properties={[
+                { label: 'Origin', value: mineral.origin },
+                { label: 'Growth Method', value: mineral.growth_method?.replace(/_/g, ' ') },
+                { label: 'Manufacturer', value: mineral.manufacturer },
+                { label: 'First Produced', value: mineral.year_first_produced },
+                { label: 'Diagnostic Features', value: mineral.diagnostic_synthetic_features },
+              ]}
+            />
+          )}
         </div>
 
         <!-- Right Column: Actions & Related -->
         <div class="space-y-8">
           <!-- Open in Playground -->
           <PlaygroundLink mineral={mineral} />
+
+          <!-- Synthetics & Simulants / Natural Counterpart -->
+          <CounterpartsSection
+            mineral={mineral}
+            counterparts={counterparts}
+            naturalCounterpart={naturalCounterpart}
+          />
 
           <!-- Related Minerals -->
           {relatedMinerals.length > 0 && (

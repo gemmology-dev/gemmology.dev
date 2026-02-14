@@ -9,13 +9,15 @@ import { usePagination } from '../../hooks/usePagination';
 interface GalleryProps {
   initialSystem?: string;
   initialSearch?: string;
+  initialOrigin?: string;
 }
 
-export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps) {
-  const { families, loading, error, search, filterBySystem } = useFamilies();
-  const { systems, loading: filtersLoading } = useFilters();
+export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin = '' }: GalleryProps) {
+  const { families, loading, error, search, filterBySystem, filterByOrigin } = useFamilies();
+  const { systems, origins, loading: filtersLoading } = useFilters();
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
+  const [selectedOrigin, setSelectedOrigin] = useState<string | null>(initialOrigin || null);
 
   // Pagination
   const { page, params: paginationParams, onPageChange, onPageSizeChange, resetPage } = usePagination({
@@ -42,8 +44,9 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
     (query: string) => {
       setSearchQuery(query);
       setSelectedSystem(null);
+      setSelectedOrigin(null);
       search(query);
-      resetPage(); // Reset to page 1 on new search
+      resetPage();
     },
     [search, resetPage]
   );
@@ -51,11 +54,23 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
   const handleSystemChange = useCallback(
     (system: string | null) => {
       setSelectedSystem(system);
+      setSelectedOrigin(null);
       setSearchQuery('');
       filterBySystem(system);
-      resetPage(); // Reset to page 1 on filter change
+      resetPage();
     },
     [filterBySystem, resetPage]
+  );
+
+  const handleOriginChange = useCallback(
+    (origin: string | null) => {
+      setSelectedOrigin(origin);
+      setSelectedSystem(null);
+      setSearchQuery('');
+      filterByOrigin(origin);
+      resetPage();
+    },
+    [filterByOrigin, resetPage]
   );
 
   // Debounce search
@@ -70,7 +85,9 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
 
   // Apply initial filters from URL on mount
   useEffect(() => {
-    if (initialSystem) {
+    if (initialOrigin) {
+      filterByOrigin(initialOrigin);
+    } else if (initialSystem) {
       filterBySystem(initialSystem);
     } else if (initialSearch) {
       search(initialSearch);
@@ -81,6 +98,7 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
   useEffect(() => {
     const params = new URLSearchParams();
     if (selectedSystem) params.set('system', selectedSystem);
+    if (selectedOrigin) params.set('origin', selectedOrigin);
     if (searchQuery) params.set('search', searchQuery);
 
     const newUrl = params.toString()
@@ -88,7 +106,7 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
       : window.location.pathname;
 
     window.history.replaceState({}, '', newUrl);
-  }, [selectedSystem, searchQuery]);
+  }, [selectedSystem, selectedOrigin, searchQuery]);
 
   if (error) {
     return (
@@ -118,6 +136,9 @@ export function Gallery({ initialSystem = '', initialSearch = '' }: GalleryProps
         systems={systems}
         selectedSystem={selectedSystem}
         onSystemChange={handleSystemChange}
+        origins={origins}
+        selectedOrigin={selectedOrigin}
+        onOriginChange={handleOriginChange}
         resultCount={families.length}
         resultLabel="families"
       />

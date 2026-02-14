@@ -114,9 +114,21 @@ export function FamilyCard({
           <h3 className="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
             {family.name}
           </h3>
-          <Badge variant={systemColors[family.crystal_system?.toLowerCase()] || 'default'}>
-            {family.crystal_system}
-          </Badge>
+          <div className="flex gap-1.5 flex-shrink-0">
+            {family.origin && family.origin !== 'natural' && (
+              <span className={clsx(
+                'px-1.5 py-0.5 text-[10px] font-medium rounded-full border capitalize',
+                family.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200',
+                family.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200',
+                family.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300',
+              )}>
+                {family.origin}
+              </span>
+            )}
+            <Badge variant={systemColors[family.crystal_system?.toLowerCase()] || 'default'}>
+              {family.crystal_system}
+            </Badge>
+          </div>
         </div>
         {(family.chemistry || hardnessDisplay) && (
           <div className="mt-2 flex items-center gap-3 text-sm text-slate-500">

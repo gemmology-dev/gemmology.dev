@@ -272,9 +272,62 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
           {/* Info Panel */}
           <div className="lg:w-1/2 p-8 overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-slate-900">{family.name}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-semibold text-slate-900">{family.name}</h2>
+                {family.origin && family.origin !== 'natural' && (
+                  <span className={clsx(
+                    'px-2 py-0.5 text-xs font-medium rounded-full border capitalize',
+                    family.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200',
+                    family.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200',
+                    family.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300',
+                  )}>
+                    {family.origin}
+                  </span>
+                )}
+              </div>
               <Badge variant="crystal">{family.crystal_system}</Badge>
             </div>
+
+            {/* Origin details for synthetics/simulants */}
+            {family.origin && family.origin !== 'natural' && (
+              <div className="mb-4 p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+                {family.growth_method && (
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-slate-500">Growth Method</span>
+                    <span className="text-sm font-medium text-slate-900 capitalize">{family.growth_method.replace(/_/g, ' ')}</span>
+                  </div>
+                )}
+                {family.manufacturer && (
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-slate-500">Manufacturer</span>
+                    <span className="text-sm font-medium text-slate-900">{family.manufacturer}</span>
+                  </div>
+                )}
+                {family.year_first_produced && (
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-slate-500">First Produced</span>
+                    <span className="text-sm font-medium text-slate-900">{family.year_first_produced}</span>
+                  </div>
+                )}
+                {family.natural_counterpart_id && (
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-slate-500">Natural Counterpart</span>
+                    <a
+                      href={`/minerals/${family.natural_counterpart_id}`}
+                      className="text-sm font-medium text-crystal-600 hover:text-crystal-700 capitalize"
+                    >
+                      {family.natural_counterpart_id.replace(/-/g, ' ')}
+                    </a>
+                  </div>
+                )}
+                {family.diagnostic_synthetic_features && (
+                  <div className="pt-2 border-t border-slate-200">
+                    <span className="text-sm text-slate-500">Diagnostic Features</span>
+                    <p className="text-sm text-slate-700 mt-1">{family.diagnostic_synthetic_features}</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Properties */}
             <div className="space-y-3">
