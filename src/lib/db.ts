@@ -1132,7 +1132,9 @@ export async function getExpressionById(
 export async function getFamiliesBySystem(system: string): Promise<MineralFamily[]> {
   const database = await getDB();
   const result = database.exec(
-    `SELECT f.*, COUNT(e.id) as expressionCount
+    `SELECT f.*, COUNT(e.id) as expressionCount,
+            (SELECT e2.model_svg FROM mineral_expressions e2
+             WHERE e2.family_id = f.id AND e2.is_primary = 1 LIMIT 1) as primarySvg
      FROM mineral_families f
      LEFT JOIN mineral_expressions e ON f.id = e.family_id
      WHERE LOWER(f.crystal_system) = ?
@@ -1221,7 +1223,9 @@ export async function searchFamilies(query: string): Promise<MineralFamily[]> {
   const searchTerm = `%${query.toLowerCase()}%`;
 
   const result = database.exec(
-    `SELECT f.*, COUNT(e.id) as expressionCount
+    `SELECT f.*, COUNT(e.id) as expressionCount,
+            (SELECT e2.model_svg FROM mineral_expressions e2
+             WHERE e2.family_id = f.id AND e2.is_primary = 1 LIMIT 1) as primarySvg
      FROM mineral_families f
      LEFT JOIN mineral_expressions e ON f.id = e.family_id
      WHERE LOWER(f.name) LIKE ?
