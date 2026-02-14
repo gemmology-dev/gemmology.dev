@@ -79,6 +79,7 @@ function familyToGemRef(family: MineralFamily): GemReference {
     birefringence: toNumber(family.birefringence),
     dispersion: toNumber(family.dispersion),
     hardness: formatHardness(),
+    origin: family.origin || 'natural',
   };
 }
 

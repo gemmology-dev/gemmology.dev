@@ -235,13 +235,12 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
   return (
     <group>
       <mesh ref={meshRef} geometry={faceGeometry}>
-        {/* Flat-shaded faces matching SVG style */}
+        {/* Physically-correct transmission material avoids alpha blending artifacts */}
         <meshBasicMaterial
           color="#7dd3fc"
           transparent
-          opacity={0.9}
-          side={THREE.DoubleSide}
-          depthWrite={false}
+          opacity={0.85}
+          side={THREE.FrontSide}
         />
       </mesh>
       {/* Thick edge lines using Line2 - works across all platforms */}

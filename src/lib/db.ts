@@ -94,6 +94,10 @@ export interface Mineral {
   // Heat treatment temperatures (Celsius)
   heat_treatment_temp_min?: number;
   heat_treatment_temp_max?: number;
+  // Synthetic/simulant classification
+  origin?: string;  // 'natural'|'synthetic'|'simulant'|'composite'
+  growth_method?: string;
+  natural_counterpart_id?: string;
 }
 
 // Reference table types
@@ -181,6 +185,15 @@ export interface MineralFamily {
   phenomenon?: string;
   fluorescence?: string;
 
+  // Synthetic/simulant classification
+  origin?: string;  // 'natural'|'synthetic'|'simulant'|'composite'
+  growth_method?: string;
+  natural_counterpart_id?: string;
+  target_minerals_json?: string;
+  manufacturer?: string;
+  year_first_produced?: number;
+  diagnostic_synthetic_features?: string;
+
   // Computed fields (populated by JOIN queries)
   expressionCount?: number;
   primarySvg?: string;
@@ -260,7 +273,8 @@ export async function getAllMinerals(): Promise<Mineral[]> {
            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
-           dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon, notes as note
+           dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon, notes as note,
+           origin, growth_method, natural_counterpart_id
     FROM mineral_families
     ORDER BY name ASC
   `);
@@ -481,7 +495,8 @@ export async function findMineralsByRI(ri: number, tolerance: number = 0.01): Pr
             CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
                  ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
             description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
-            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon,
+            origin, growth_method, natural_counterpart_id
      FROM mineral_families
      WHERE ri_min IS NOT NULL AND ri_max IS NOT NULL
        AND (ri_min - ? <= ? AND ri_max + ? >= ?)
@@ -514,7 +529,8 @@ export async function findMineralsBySG(sg: number, tolerance: number = 0.05): Pr
             CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
                  ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
             description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
-            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon,
+            origin, growth_method, natural_counterpart_id
      FROM mineral_families
      WHERE sg_min IS NOT NULL AND sg_max IS NOT NULL
        AND (sg_min - ? <= ? AND sg_max + ? >= ?)

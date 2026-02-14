@@ -10,7 +10,15 @@ interface GemMatch {
   name: string;
   /** Optional property value to display (e.g., "3.52" for SG) */
   propertyValue?: string;
+  /** Origin classification (natural, synthetic, simulant, composite) */
+  origin?: string;
 }
+
+const originBadgeStyles: Record<string, string> = {
+  synthetic: 'bg-blue-100 text-blue-700 border-blue-200',
+  simulant: 'bg-amber-100 text-amber-700 border-amber-200',
+  composite: 'bg-slate-100 text-slate-600 border-slate-300',
+};
 
 interface GemMatchBadgesProps {
   /** Array of matching gems */
@@ -49,6 +57,14 @@ export function GemMatchBadges({
                 className="px-2 py-1 text-xs font-medium rounded-full bg-white text-slate-700 border border-slate-200"
               >
                 {gem.name}
+                {gem.origin && gem.origin !== 'natural' && (
+                  <span className={cn(
+                    'ml-1 px-1.5 py-0.5 text-[10px] rounded-full border',
+                    originBadgeStyles[gem.origin] || 'bg-slate-100 text-slate-600 border-slate-300'
+                  )}>
+                    {gem.origin}
+                  </span>
+                )}
                 {gem.propertyValue && (
                   <span className="text-slate-500 ml-1">({gem.propertyValue})</span>
                 )}
