@@ -13,26 +13,23 @@ interface CDLValidationResult {
 }
 
 /**
- * Validate CDL code using the proper CDL parser
+ * Validate CDL code using the proper CDL parser.
+ * Parses the entire string (supports multi-line definitions and references).
  */
 function validateCDL(code: string): CDLValidationResult {
-  const lines = code.split('\n');
   const errors: ValidationError[] = [];
+  const trimmed = code.trim();
+  if (!trimmed) return { isValid: true, errors: [] };
 
-  lines.forEach((line, lineIndex) => {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) return; // Skip empty lines and comments
+  const result = parseCDL(trimmed);
 
-    const result = parseCDL(trimmed);
-
-    if (!result.valid && result.error) {
-      errors.push({
-        line: lineIndex + 1,
-        column: 1,
-        message: result.error,
-      });
-    }
-  });
+  if (!result.valid && result.error) {
+    errors.push({
+      line: 1,
+      column: 1,
+      message: result.error,
+    });
+  }
 
   return {
     isValid: errors.length === 0,
