@@ -201,6 +201,7 @@ export interface GemReference {
   birefringence?: number;
   dispersion?: number;
   hardness: number | string;
+  origin?: string;  // 'natural'|'synthetic'|'simulant'|'composite'
 }
 
 export const COMMON_GEMS: GemReference[] = [

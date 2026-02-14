@@ -102,6 +102,7 @@ export function SGCalculator() {
             matches={matches.map(gem => ({
               name: gem.name,
               propertyValue: formatSG(gem.sg),
+              origin: gem.origin,
             }))}
             label="Possible Matches"
             emptyMessage="No common gemstones match this SG value within ±0.05 tolerance. The stone may be unusual, synthetic, or the measurement may need verification."

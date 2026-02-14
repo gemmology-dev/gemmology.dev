@@ -60,8 +60,20 @@ export function GemMatchCard({
         className
       )}
     >
-      {/* Gem name */}
-      <h4 className="font-medium text-slate-900 mb-2">{gem.name}</h4>
+      {/* Gem name + origin badge */}
+      <h4 className="font-medium text-slate-900 mb-2">
+        {gem.name}
+        {gem.origin && gem.origin !== 'natural' && (
+          <span className={cn(
+            'ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded-full border',
+            gem.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200',
+            gem.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200',
+            gem.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300',
+          )}>
+            {gem.origin}
+          </span>
+        )}
+      </h4>
 
       {/* Properties grid */}
       <div className="grid grid-cols-5 gap-1 text-xs">
