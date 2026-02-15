@@ -7,8 +7,8 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Center } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { Line2 } from 'three/examples/jsm/lines/Line2.js';
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
+import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
 
 interface Crystal3DViewerProps {
@@ -161,7 +161,7 @@ function parseGLTFToGeometry(gltfData: any): ParsedGeometry | null {
  */
 function CrystalMesh({ gltfData }: CrystalMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const lineRef = useRef<Line2>(null);
+  const lineRef = useRef<LineSegments2>(null);
   const { size } = useThree();
 
   // Create face geometry, Line2 object with geometry and material together
@@ -195,7 +195,7 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
     }
 
     // Create LineGeometry for Line2
-    const lineGeom = new LineGeometry();
+    const lineGeom = new LineSegmentsGeometry();
     lineGeom.setPositions(positions);
 
     // Create LineMaterial with screen-space line width
@@ -206,7 +206,7 @@ function CrystalMesh({ gltfData }: CrystalMeshProps) {
     });
 
     // Create Line2 object
-    const lineObj = new Line2(lineGeom, lineMat);
+    const lineObj = new LineSegments2(lineGeom, lineMat);
     lineObj.computeLineDistances();
 
     return { faceGeometry: faceGeom, line2: lineObj };
