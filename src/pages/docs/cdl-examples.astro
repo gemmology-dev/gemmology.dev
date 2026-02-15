@@ -6,55 +6,108 @@ import { Container, Button, Card } from '../../components/ui-astro';
 
 const examples = [
   {
-    category: 'Gemstones',
+    category: 'Basic Crystals',
+    description: 'Single-form crystal habits using Miller indices or named forms.',
     items: [
-      { name: 'Diamond', cdl: 'cubic[m3m]:{111}@1.0', description: 'Classic octahedral habit' },
-      { name: 'Ruby/Sapphire', cdl: 'trigonal[-3m]:{10-10}@1.0 + {0001}@1.2 + {10-11}@0.8', description: 'Hexagonal prism with pinacoid and rhombohedron' },
-      { name: 'Emerald', cdl: 'hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.5', description: 'Beryl structure with prism and pinacoid' },
-      { name: 'Spinel', cdl: 'cubic[m3m]:{111}@1.0 + {110}@1.5', description: 'Octahedron modified by dodecahedron' },
-      { name: 'Garnet', cdl: 'cubic[m3m]:{110}@1.0 + {211}@1.2', description: 'Rhombic dodecahedron with trapezohedron' },
+      { name: 'Diamond Octahedron', cdl: 'cubic[m3m]:{111}', description: 'Classic octahedral habit' },
+      { name: 'Fluorite Cube', cdl: 'cubic[m3m]:{100}', description: 'Perfect cubic habit' },
+      { name: 'Garnet Dodecahedron', cdl: 'cubic[m3m]:{110}', description: 'Rhombic dodecahedron' },
+      { name: 'Garnet Trapezohedron', cdl: 'cubic[m3m]:{211}', description: 'Icositetrahedron habit' },
+      { name: 'Hexagonal Prism', cdl: 'hexagonal[6/mmm]:{10-10}', description: 'Basic hexagonal prism (beryl, apatite)' },
+      { name: 'Calcite Rhomb', cdl: 'trigonal[-3m]:{10-11}', description: 'Rhombohedral cleavage form' },
+      { name: 'Pyritohedron', cdl: 'cubic[m-3]:{210}', description: 'Pentagonal dodecahedron (pyrite)' },
+      { name: 'Ruby Tabular', cdl: 'trigonal[-3m]:{10-11}@1.0 + {0001}@0.4', description: 'Tabular habit with dipyramid and pinacoid' },
+    ],
+  },
+  {
+    category: 'Multi-form Combinations',
+    description: 'Crystals with multiple forms combined using the + operator.',
+    items: [
+      { name: 'Diamond (Octahedron + Dodecahedron)', cdl: 'cubic[m3m]:{111}@1.0 + {110}@0.2', description: 'Octahedron with minor dodecahedron truncation' },
+      { name: 'Fluorite Cuboctahedron', cdl: 'cubic[m3m]:{100}@1.0 + {111}@1.0', description: 'Equal cube and octahedron development' },
+      { name: 'Garnet Combination', cdl: 'cubic[m3m]:{110}@1.0 + {211}@0.6', description: 'Dodecahedron with trapezohedron' },
+      { name: 'Beryl Hexagonal Prism', cdl: 'hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.0', description: 'Prism with basal pinacoid' },
+      { name: 'Beryl Tabular', cdl: 'hexagonal[6/mmm]:{0001}@1.0 + {10-10}@0.6 + {11-20}@0.2', description: 'Tabular habit with dominant pinacoid' },
+      { name: 'Quartz (Short Prismatic)', cdl: 'trigonal[32]:{10-10}@0.4 + {10-11}@1.2 + {01-11}@1.0', description: 'Short prism with rhombohedral terminations' },
+      { name: 'Tourmaline Prismatic', cdl: 'trigonal[3m]:{10-10}@1.0 + {10-11}@0.8', description: 'Hemimorphic prismatic habit' },
       { name: 'Zircon', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {101}@0.9 + {100}@1.3', description: 'Tetragonal bipyramid with prism' },
-      { name: 'Topaz', cdl: 'orthorhombic[mmm]:{110}@1.0 + {120}@1.1 + {011}@0.9', description: 'Orthorhombic prism habit' },
+      { name: 'Topaz', cdl: 'orthorhombic[mmm]:{110}@1.0 + {120}@1.1 + {011}@0.9', description: 'Orthorhombic prismatic habit' },
+      { name: 'Chrysoberyl Tabular', cdl: 'orthorhombic[mmm]:{110}@1.0 + {010}@0.8 + {111}@0.5', description: 'Tabular orthorhombic crystals' },
+      { name: 'Moonstone', cdl: 'monoclinic[2/m]:{010}@1.0 + {110}@0.8 + {001}@0.7 + {100}@0.5', description: 'Monoclinic feldspar habit' },
     ],
   },
   {
-    category: 'Quartz Varieties',
+    category: 'Modifications',
+    description: 'Crystal shapes modified by elongation, flattening, or tapering.',
     items: [
-      { name: 'Alpha Quartz', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8', description: 'Standard low quartz' },
-      { name: 'Dauphine Twin', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 twin:dauphine', description: 'Common quartz twin law' },
-      { name: 'Japan Law Twin', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 twin:japan_law', description: 'Heart-shaped twin' },
-      { name: 'Amethyst Scepter', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.6 + {01-11}@0.7', description: 'Well-developed rhombohedra' },
+      { name: 'Quartz (Elongated Prism)', cdl: 'trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 | elongate(c:2.0)', description: 'Classic elongated quartz crystal' },
+      { name: 'Sapphire (Barrel-shaped)', cdl: 'trigonal[-3m]:{10-10}@1.0 + {10-11}@0.7 | elongate(c:1.8)', description: 'Elongated barrel-shaped corundum' },
+      { name: 'Tourmaline (Elongated)', cdl: 'trigonal[32]:{10-10}@1.0 + {10-11}@0.8 | elongate(c:2.5)', description: 'Strongly elongated prismatic tourmaline' },
+      { name: 'Flattened Tabular', cdl: 'cubic[m3m]:{111} | flatten(a:0.5)', description: 'Flattened octahedral crystal' },
     ],
   },
   {
-    category: 'Cubic System',
+    category: 'Twin Laws',
+    description: 'Crystal twinning using the | twin(law) syntax.',
     items: [
-      { name: 'Cube', cdl: 'cubic[m3m]:{100}@1.0', description: 'Hexahedron - pyrite, galena, halite' },
-      { name: 'Octahedron', cdl: 'cubic[m3m]:{111}@1.0', description: 'Diamond, magnetite, spinel' },
-      { name: 'Dodecahedron', cdl: 'cubic[m3m]:{110}@1.0', description: 'Rhombic dodecahedron - garnet' },
-      { name: 'Cube-Octahedron', cdl: 'cubic[m3m]:{100}@1.0 + {111}@1.2', description: 'Truncated cube' },
-      { name: 'Cubo-Octahedron', cdl: 'cubic[m3m]:{100}@1.0 + {111}@1.0', description: 'Equal development' },
-      { name: 'Pyritohedron', cdl: 'cubic[m3]:{210}@1.0', description: 'Pentagonal dodecahedron' },
+      { name: 'Diamond Macle', cdl: 'cubic[m3m]:{111}@1.0 + {100}@0.3 | twin(spinel_law)', description: 'Flattened triangular spinel-law contact twin' },
+      { name: 'Spinel Macle', cdl: 'cubic[m3m]:{111}@1.0 + {100}@0.25 | twin(spinel_law)', description: 'Classic spinel law twin' },
+      { name: 'Fluorite Interpenetrating', cdl: 'cubic[m3m]:{100}@1.0 | twin(fluorite)', description: 'Two cubes at 60 degree rotation around [111]' },
+      { name: 'Fluorite Twin (with Octahedron)', cdl: 'cubic[m3m]:{100}@1.0 + {111}@0.8 | twin(fluorite)', description: 'Interpenetrating twin with octahedron modification' },
+      { name: 'Quartz Japan Law', cdl: 'trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 + {0001}@2.0 | elongate(c:2.0) | twin(japan)', description: 'Heart-shaped contact twin at ~84.5 degrees' },
+      { name: 'Quartz Dauphine', cdl: 'trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 + {0001}@2.0 | elongate(c:2.0) | twin(dauphine)', description: 'Penetration twin with 180 degree c-axis rotation' },
+      { name: 'Quartz Brazil Law', cdl: 'trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 + {0001}@2.0 | elongate(c:2.0) | twin(brazil)', description: 'Optical twin (left/right hand interpenetration)' },
+      { name: 'Staurolite 90 Degree Cross', cdl: 'orthorhombic[mmm]:{110}@1.0 + {010}@0.7 + {001}@0.2 | twin(staurolite_90)', description: 'Cruciform penetration twin' },
+      { name: 'Staurolite 60 Degree Cross', cdl: 'orthorhombic[mmm]:{110}@1.0 + {010}@0.6 + {001}@0.3 | twin(staurolite_60)', description: 'X-shaped "fairy cross" twin' },
+      { name: 'Chrysoberyl Trilling', cdl: 'orthorhombic[mmm]:{1-10}@1.0 + {110}@0.9 + {010}@0.5 + {001}@0.2 | twin(trilling)', description: 'Cyclic pseudohexagonal triplet twin' },
     ],
   },
   {
-    category: 'Hexagonal/Trigonal',
+    category: 'Features',
+    version: 'v1.2',
+    description: 'Surface markings, growth patterns, and inclusions annotated on forms.',
     items: [
-      { name: 'Hex Prism', cdl: 'hexagonal[6/mmm]:{10-10}@1.0', description: 'Basic hexagonal prism' },
-      { name: 'Hex Bipyramid', cdl: 'hexagonal[6/mmm]:{10-11}@1.0', description: 'Pointed termination' },
-      { name: 'Beryl', cdl: 'hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.2 + {10-11}@1.5', description: 'Prism with pinacoid and bipyramid' },
-      { name: 'Tourmaline', cdl: 'trigonal[3m]:{10-10}@1.0 + {10-11}@0.8 + {01-11}@0.9 + {0001}@1.3', description: 'Hemimorphic prism' },
-      { name: 'Calcite Scalenohedron', cdl: 'trigonal[-3m]:{21-31}@1.0', description: '"Dogtooth" calcite' },
-      { name: 'Calcite Rhomb', cdl: 'trigonal[-3m]:{10-11}@1.0', description: 'Rhombohedral cleavage' },
+      { name: 'Diamond with Trigons', cdl: 'cubic[m3m]:{111}@1.0[trigon:dense] + {110}@0.2', description: 'Octahedron with dense triangular etch pits' },
+      { name: 'Diamond Cube with Etch Pits', cdl: 'cubic[m3m]:{100}[etch_pit:square]', description: 'Cube faces with square dissolution features' },
+      { name: 'Quartz with Striations', cdl: 'trigonal[32]:{10-10}@0.5[striation:horizontal] + {10-11}@1.2 + {01-11}@1.0 | elongate(c:2.0)', description: 'Prism faces with horizontal growth lines' },
+      { name: 'Sapphire with Silk', cdl: 'trigonal[-3m]:{10-10}@1.0[striation:horizontal] + {10-11}@0.7 | elongate(c:1.8)', description: 'Barrel-shaped with horizontal striations' },
+      { name: 'Tourmaline with Striations', cdl: 'trigonal[32]:{10-10}@1.0[striation:parallel] + {10-11}@0.8 | elongate(c:2.5)', description: 'Parallel vertical striations on prism faces' },
+      { name: 'Garnet with Curved Striations', cdl: 'cubic[m3m]:{110}[striation:curved]', description: 'Dodecahedral faces with characteristic curved lines' },
+      { name: 'Watermelon Tourmaline', cdl: 'trigonal[32]:{10-10}@1.0 + {10-11}@0.8 | elongate(c:1.5)', description: 'Colour-zoned pink core with green rim' },
     ],
   },
   {
-    category: 'Tetragonal',
+    category: 'Phenomena',
+    version: 'v1.2',
+    description: 'Optical phenomena like asterism, chatoyancy, and adularescence.',
     items: [
-      { name: 'Tetragonal Prism', cdl: 'tetragonal[4/mmm]:{100}@1.0', description: 'Square prism' },
-      { name: 'Tetragonal Bipyramid', cdl: 'tetragonal[4/mmm]:{101}@1.0', description: 'Pointed form' },
-      { name: 'Vesuvianite', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {100}@1.2 + {101}@0.9', description: 'Complex prismatic' },
-      { name: 'Rutile', cdl: 'tetragonal[4/mmm]:{110}@1.0 + {101}@0.8 + {100}@1.5', description: 'Prismatic with pyramids' },
+      { name: 'Star Sapphire (6-Ray)', cdl: 'trigonal[-3m]:{10-11}@1.0 | phenomenon[asterism:6]', description: 'Six-rayed star from oriented rutile silk' },
+      { name: 'Star Sapphire (with Silk)', cdl: 'trigonal[-3m]:{10-11}@1.0[silk:dense] | phenomenon[asterism:6]', description: 'Asterism with silk feature on form' },
+      { name: 'Cat\'s Eye Chrysoberyl', cdl: 'orthorhombic[mmm]:{110}@1.0 | phenomenon[chatoyancy:sharp]', description: 'Sharp chatoyant band from parallel silk' },
+      { name: 'Star Sapphire (Strong)', cdl: 'trigonal[-3m]:{10-11} | phenomenon[asterism:6, intensity:strong]', description: 'Asterism with intensity parameter' },
+    ],
+  },
+  {
+    category: 'Grouping and Labels',
+    version: 'v1.3',
+    description: 'Parenthesized groups for shared features and labeled forms.',
+    items: [
+      { name: 'Grouped with Shared Feature', cdl: 'cubic[m3m]:({111}@1.0 + {100}@1.3)[phantom:3]', description: 'Both forms share phantom feature' },
+      { name: 'Group + Standalone Form', cdl: 'cubic[m3m]:({111} + {100})[phantom:3] + {110}@0.8', description: 'Group alongside an ungrouped form' },
+      { name: 'Merged Features', cdl: 'cubic[m3m]:({111}[trigon:dense] + {100})[phantom:3]', description: 'Own features merge with group features' },
+      { name: 'Labeled Forms', cdl: 'cubic[m3m]:core:{111}@1.0 + rim:{100}@1.3', description: 'Forms labeled as core and rim' },
+      { name: 'Labeled Group', cdl: 'cubic[m3m]:core:({111} + {100})[phantom:3]', description: 'Named group with shared feature' },
+    ],
+  },
+  {
+    category: 'Definitions',
+    version: 'v1.3',
+    description: 'Named form definitions for reuse with @name and $reference syntax.',
+    items: [
+      { name: 'Simple Definition', cdl: '@oct = {111}@1.0\ncubic[m3m]:$oct + {100}@1.3', description: 'Define octahedron form, reference with $oct' },
+      { name: 'Quartz Definitions', cdl: '@prism = {10-10}@1.0\n@rhomb = {10-11}@0.8\ntrigonal[-3m]:$prism + $rhomb', description: 'Named prism and rhombohedron' },
+      { name: 'Chained Definitions', cdl: '@a = {111}@1.0\n@b = {100}@1.3\n@combo = $a + $b\ncubic[m3m]:$combo', description: 'Definitions referencing other definitions' },
+      { name: 'With Doc Comments', cdl: '#! Mineral: Diamond\n@oct = {111}@1.0\ncubic[m3m]:$oct', description: 'Definitions work alongside doc comments' },
     ],
   },
 ];
@@ -78,9 +131,25 @@ const examples = [
         Click any example to open it in the Playground.
       </p>
 
+      <div class="not-prose my-8 flex flex-wrap gap-2">
+        {examples.map((section) => (
+          <a
+            href={`#${section.category.toLowerCase().replace(/[\s&]+/g, '-')}`}
+            class="text-sm px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-crystal-100 hover:text-crystal-700 transition-colors"
+          >
+            {section.category}
+            {section.version && <span class="ml-1 text-xs text-slate-400">{section.version}</span>}
+          </a>
+        ))}
+      </div>
+
       {examples.map((section) => (
-        <section class="mt-12">
-          <h2 class="text-2xl font-bold text-slate-900 mb-6">{section.category}</h2>
+        <section class="mt-12" id={section.category.toLowerCase().replace(/[\s&]+/g, '-')}>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">
+            {section.category}
+            {section.version && <span class="text-sm font-normal text-slate-400 ml-2">{section.version}</span>}
+          </h2>
+          {section.description && <p class="text-slate-600 mb-6">{section.description}</p>}
 
           <div class="not-prose grid gap-4">
             {section.items.map((item) => (
@@ -96,7 +165,7 @@ const examples = [
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </div>
-                <code class="mt-3 block text-xs font-mono text-slate-600 bg-slate-50 px-3 py-2 rounded-lg overflow-x-auto">
+                <code class="mt-3 block text-xs font-mono text-slate-600 bg-slate-50 px-3 py-2 rounded-lg overflow-x-auto whitespace-pre-wrap">
                   {item.cdl}
                 </code>
               </Card>
@@ -112,13 +181,31 @@ const examples = [
       <CodeBlock lang="text" code={`# Start with a base form
 cubic[m3m]:{111}@1.0
 
-# Add a modifying form
+# Add a modifying form with +
 cubic[m3m]:{111}@1.0 + {100}@1.3
 
 # Adjust relative development
-# Lower @distance = larger faces
+# Smaller @scale = more prominent faces
 cubic[m3m]:{111}@0.8 + {100}@1.5  # More octahedron
-cubic[m3m]:{111}@1.5 + {100}@0.8  # More cube`} />
+cubic[m3m]:{111}@1.5 + {100}@0.8  # More cube
+
+# Add features to specific forms
+cubic[m3m]:{111}@1.0[trigon:dense] + {100}@1.3
+
+# Apply a modification
+trigonal[32]:{10-10}@0.5 + {10-11}@1.2 | elongate(c:2.0)
+
+# Add a twin law
+cubic[m3m]:{111}@1.0 | twin(spinel_law)
+
+# Annotate a phenomenon
+trigonal[-3m]:{10-11}@1.0[silk:dense] | phenomenon[asterism:6]
+
+# Full example with comments, definitions, features, and twin
+#! Mineral: Diamond
+#! Habit: Macle twin
+@oct = {111}@1.0[trigon:sparse]
+cubic[m3m]:$oct + {100}@0.3 | twin(spinel_law)`} />
 
       <Card padding="md" class="mt-12 bg-crystal-50 border-crystal-200">
         <h3 class="text-lg font-semibold text-crystal-900 mt-0">Try These Examples</h3>
