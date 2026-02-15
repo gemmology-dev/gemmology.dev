@@ -110,6 +110,48 @@ const examples = [
       { name: 'With Doc Comments', cdl: '#! Mineral: Diamond\n@oct = {111}@1.0\ncubic[m3m]:$oct', description: 'Definitions work alongside doc comments' },
     ],
   },
+  {
+    category: 'Amorphous Materials',
+    version: 'v2.0',
+    description: 'Non-crystalline materials using shape descriptors instead of Miller indices.',
+    items: [
+      { name: 'Precious Opal', cdl: 'amorphous[opalescent]:{nodular, botryoidal} | phenomenon[play_of_color:spectral]', description: 'Opal with play of colour from silica sphere diffraction' },
+      { name: 'Turquoise Massive', cdl: 'amorphous[waxy]:{massive, nodular}[colour:blue]', description: 'Massive turquoise habit with characteristic colour' },
+      { name: 'Pearl Nacre', cdl: 'amorphous[opalescent]:{mammillary}[nacre:layered] | phenomenon[iridescence:orient]', description: 'Layered nacre with orient iridescence' },
+      { name: 'Obsidian', cdl: 'amorphous[glassy]:{massive, conchoidal}[colour:black]', description: 'Volcanic glass with conchoidal fracture' },
+      { name: 'Amber', cdl: 'amorphous[resinous]:{nodular}[colour:golden]', description: 'Fossilised tree resin in nodular form' },
+    ],
+  },
+  {
+    category: 'Nested Growth',
+    version: 'v2.0',
+    description: 'Overgrowth relationships using the > operator for scepter and phantom crystals.',
+    items: [
+      { name: 'Scepter Quartz', cdl: 'trigonal[32]:({10-10}@0.5 + {10-11}@1.2) > ({10-10}@0.8 + {10-11}@0.6) | elongate(c:2.0)', description: 'Prismatic base with overgrown cap crystal' },
+      { name: 'Phantom Diamond', cdl: 'cubic[m3m]:{111}@1.0[phantom:3] > {111}@0.6', description: 'Octahedron core with later overgrowth shell' },
+      { name: 'Multi-stage Growth', cdl: 'cubic[m3m]:{111}@1.0 > {111}@0.7 > {111}@0.4', description: 'Three successive growth stages (right-associative)' },
+    ],
+  },
+  {
+    category: 'Aggregates',
+    version: 'v2.0',
+    description: 'Multi-crystal arrangements using the ~ operator for clusters, druses, and radiating forms.',
+    items: [
+      { name: 'Quartz Cluster', cdl: 'trigonal[32]:({10-10}@0.5 + {10-11}@1.2 | elongate(c:2.0)) ~ cluster[12]', description: 'Cluster of 12 quartz crystals' },
+      { name: 'Fluorite Cluster', cdl: 'cubic[m3m]:{100}@1.0 ~ cluster[6]', description: 'Group of 6 fluorite cubes' },
+      { name: 'Amethyst Geode Lining', cdl: 'trigonal[32]:({10-10}@0.3 + {10-11}@1.0) ~ druse[50]@0.2', description: 'Dense druzy coating inside a geode cavity' },
+      { name: 'Radial Tourmaline', cdl: 'trigonal[3m]:({10-10}@1.0 + {10-11}@0.8 | elongate(c:3.0)) ~ radial[8]', description: 'Radiating arrangement of 8 tourmaline needles' },
+    ],
+  },
+  {
+    category: 'Group-Level Twins',
+    version: 'v2.0',
+    description: 'Twin laws applied to individual groups rather than the whole crystal.',
+    items: [
+      { name: 'Spinel Twin Group', cdl: 'cubic[m3m]:(({111}@1.0 + {100}@0.3) | twin(spinel)) + {110}@0.8', description: 'Spinel twin on one group, untwinned dodecahedron alongside' },
+      { name: 'Mixed Twin Groups', cdl: 'cubic[m3m]:(({111}) | twin(spinel)) + (({100}) | twin(fluorite))', description: 'Different twin laws on different groups' },
+    ],
+  },
 ];
 ---
 

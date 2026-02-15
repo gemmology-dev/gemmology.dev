@@ -26,9 +26,10 @@ import { Container, Button, Card } from '../../components/ui-astro';
 
       <div class="not-prose my-8 bg-slate-50 border border-slate-200 rounded-xl p-6">
         <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-2">Current version</p>
-        <p class="text-lg font-semibold text-slate-900">CDL v1.3</p>
+        <p class="text-lg font-semibold text-slate-900">CDL v2.0</p>
         <p class="text-sm text-slate-600 mt-1">
-          Includes comments (v1.1), features and phenomena (v1.2), grouping, labels, and definitions (v1.3).
+          Includes comments (v1.1), features and phenomena (v1.2), grouping, labels, and definitions (v1.3),
+          amorphous materials, nested growth, aggregates, and group-level twins (v2.0).
         </p>
       </div>
 
@@ -163,6 +164,15 @@ import { Container, Button, Card } from '../../components/ui-astro';
           </tr>
         </tbody>
       </table>
+
+      <div class="not-prose my-6 bg-blue-50 border border-blue-200 rounded-xl p-5">
+        <p class="text-sm font-medium text-blue-800 mb-1">New in v2.0: Amorphous materials</p>
+        <p class="text-sm text-blue-700">
+          CDL now supports the <code class="bg-blue-100 px-1 rounded">amorphous</code> system for non-crystalline
+          materials like opal, obsidian, and turquoise. Amorphous materials use shape descriptors instead of Miller
+          indices. See <a href="#amorphous" class="text-blue-800 underline">Amorphous Materials</a> below.
+        </p>
+      </div>
 
       <!-- ============================================================ -->
       <!-- MILLER INDICES -->
@@ -714,6 +724,244 @@ cubic[m3m]:$oct`} />
       </p>
 
       <!-- ============================================================ -->
+      <!-- AMORPHOUS MATERIALS (v2.0) -->
+      <!-- ============================================================ -->
+
+      <h2 id="amorphous">Amorphous Materials <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+
+      <p>
+        CDL v2.0 introduces the <code>amorphous</code> system for non-crystalline materials.
+        Amorphous expressions replace Miller indices with shape descriptors and use a subtype
+        instead of a point group.
+      </p>
+
+      <CodeBlock lang="text" title="Amorphous syntax" code={`amorphous[subtype]:{shape1, shape2}[features] | phenomenon[...]`} />
+
+      <h3>Subtypes</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Subtype</th>
+            <th>Description</th>
+            <th>Typical Materials</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>opalescent</code></td>
+            <td>Hydrated silica with play of colour</td>
+            <td>Precious opal</td>
+          </tr>
+          <tr>
+            <td><code>glassy</code></td>
+            <td>Volcanic glass or obsidian</td>
+            <td>Obsidian, moldavite</td>
+          </tr>
+          <tr>
+            <td><code>waxy</code></td>
+            <td>Waxy lustre, microcrystalline</td>
+            <td>Turquoise, variscite</td>
+          </tr>
+          <tr>
+            <td><code>resinous</code></td>
+            <td>Organic or resinous lustre</td>
+            <td>Amber</td>
+          </tr>
+          <tr>
+            <td><code>cryptocrystalline</code></td>
+            <td>Microcrystalline aggregate (not truly amorphous but treated as such)</td>
+            <td>Chalcedony, agate, jasper</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Shape Descriptors</h3>
+
+      <p>
+        Instead of Miller indices, amorphous materials use shape descriptors inside curly braces.
+        Multiple shapes can be listed with commas.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Shape</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>massive</code></td><td>No distinct external form</td></tr>
+          <tr><td><code>botryoidal</code></td><td>Grape-like rounded masses</td></tr>
+          <tr><td><code>reniform</code></td><td>Kidney-shaped</td></tr>
+          <tr><td><code>stalactitic</code></td><td>Elongated drip-like forms</td></tr>
+          <tr><td><code>mammillary</code></td><td>Rounded breast-like protrusions</td></tr>
+          <tr><td><code>nodular</code></td><td>Rounded nodules</td></tr>
+          <tr><td><code>conchoidal</code></td><td>Shell-like fracture surfaces</td></tr>
+        </tbody>
+      </table>
+
+      <CodeBlock lang="text" code={`# Precious opal with play of colour
+amorphous[opalescent]:{nodular, botryoidal} | phenomenon[play_of_color:spectral]
+
+# Turquoise massive habit
+amorphous[waxy]:{massive, nodular}[colour:blue]
+
+# Pearl nacre (organic amorphous)
+amorphous[opalescent]:{mammillary}[nacre:layered] | phenomenon[iridescence:orient]
+
+# Obsidian with conchoidal fracture
+amorphous[glassy]:{massive, conchoidal}[colour:black]`} />
+
+      <p>
+        Features and phenomena work the same way as for crystalline materials.
+        Amorphous expressions cannot use modifiers like <code>elongate</code> or <code>flatten</code>,
+        and they cannot have twin laws.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- NESTED GROWTH (v2.0) -->
+      <!-- ============================================================ -->
+
+      <h2 id="nested-growth">Nested Growth <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+
+      <p>
+        The nested growth operator <code>&gt;</code> describes overgrowth relationships where one
+        crystal form grows over another. The operator is right-associative: <code>a &gt; b &gt; c</code>
+        means <code>a &gt; (b &gt; c)</code>.
+      </p>
+
+      <CodeBlock lang="text" title="Nested growth syntax" code={`base_form > overgrowth_form`} />
+
+      <p>
+        For multi-form bases or overgrowths, use explicit parenthesized groups:
+      </p>
+
+      <CodeBlock lang="text" code={`# Scepter quartz: prismatic base with overgrown cap
+trigonal[32]:({10-10}@0.5 + {10-11}@1.2) > ({10-10}@0.8 + {10-11}@0.6) | elongate(c:2.0)
+
+# Phantom diamond: core octahedron with later growth
+cubic[m3m]:{111}@1.0[phantom:3] > {111}@0.6
+
+# Multi-stage growth (right-associative)
+cubic[m3m]:{111}@1.0 > {111}@0.7 > {111}@0.4`} />
+
+      <p>
+        The nested growth operator sits at the same precedence level as <code>+</code> but binds
+        more tightly. To combine nested growth with other forms, use groups:
+      </p>
+
+      <CodeBlock lang="text" code={`# Base with two forms, overgrown by a single form
+cubic[m3m]:({111}@1.0 + {100}@1.3) > {111}@0.5
+
+# Nested growth alongside a standalone form
+cubic[m3m]:({111} > {111}@0.6) + {100}@1.3`} />
+
+      <!-- ============================================================ -->
+      <!-- AGGREGATES (v2.0) -->
+      <!-- ============================================================ -->
+
+      <h2 id="aggregates">Aggregates <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+
+      <p>
+        The aggregate operator <code>~</code> describes clusters or arrangements of multiple
+        crystal individuals. The syntax is <code>form ~ arrangement[count]</code>, with
+        optional spacing and orientation parameters.
+      </p>
+
+      <CodeBlock lang="text" title="Aggregate syntax" code={`form ~ arrangement[count]
+form ~ arrangement[count]@spacing
+form ~ arrangement[count]@spacing[orientation]`} />
+
+      <h3>Arrangements</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Arrangement</th>
+            <th>Description</th>
+            <th>Example Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>parallel</code></td>
+            <td>Crystals aligned in parallel</td>
+            <td>Parallel-growth tourmaline</td>
+          </tr>
+          <tr>
+            <td><code>random</code></td>
+            <td>Randomly oriented cluster</td>
+            <td>General crystal clusters</td>
+          </tr>
+          <tr>
+            <td><code>radial</code></td>
+            <td>Radiating from a centre</td>
+            <td>Wavellite, pyrite suns</td>
+          </tr>
+          <tr>
+            <td><code>epitaxial</code></td>
+            <td>Oriented overgrowth on substrate</td>
+            <td>Rutile on hematite</td>
+          </tr>
+          <tr>
+            <td><code>druse</code></td>
+            <td>Coating of small crystals on surface</td>
+            <td>Druzy quartz, geode linings</td>
+          </tr>
+          <tr>
+            <td><code>cluster</code></td>
+            <td>General multi-crystal grouping</td>
+            <td>Quartz clusters, fluorite groups</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <CodeBlock lang="text" code={`# Quartz cluster with 12 individuals
+trigonal[32]:({10-10}@0.5 + {10-11}@1.2 | elongate(c:2.0)) ~ cluster[12]
+
+# Druzy amethyst geode lining
+trigonal[32]:({10-10}@0.3 + {10-11}@1.0) ~ druse[50]@0.2
+
+# Fluorite cluster with 6 cubes
+cubic[m3m]:{100}@1.0 ~ cluster[6]
+
+# Radial arrangement of tourmaline needles
+trigonal[3m]:({10-10}@1.0 + {10-11}@0.8 | elongate(c:3.0)) ~ radial[8]
+
+# Epitaxial rutile on hematite
+tetragonal[4/mmm]:({110}@1.0 + {101}@0.9 | elongate(c:2.5)) ~ epitaxial[3][aligned]`} />
+
+      <!-- ============================================================ -->
+      <!-- GROUP-LEVEL TWINS (v2.0) -->
+      <!-- ============================================================ -->
+
+      <h2 id="group-twins">Group-Level Twins <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+
+      <p>
+        In v1.3, twin laws could only be applied globally to the entire crystal.
+        CDL v2.0 adds support for group-level twins, allowing a twin law to be applied
+        to a specific parenthesized group of forms while leaving other groups untwinned.
+      </p>
+
+      <CodeBlock lang="text" title="Group-level twin syntax" code={`(form_group) | twin(law)`} />
+
+      <CodeBlock lang="text" code={`# Twin applied to one group only
+cubic[m3m]:(({111}@1.0 + {100}@0.3) | twin(spinel)) + {110}@0.8
+
+# Different twins on different groups
+cubic[m3m]:(({111}) | twin(spinel)) + (({100}) | twin(fluorite))
+
+# Group-level twin with global modification
+cubic[m3m]:(({111}@1.0 + {100}@0.3) | twin(spinel)) | flatten(c:0.5)`} />
+
+      <p>
+        Group-level twins are separate from the global twin specification.
+        A crystal can have both group-level and global twins, though this is uncommon.
+        The group-level twin only affects the forms within its parenthesized group.
+      </p>
+
+      <!-- ============================================================ -->
       <!-- FULL GRAMMAR -->
       <!-- ============================================================ -->
 
@@ -721,16 +969,24 @@ cubic[m3m]:$oct`} />
 
       <p>The complete CDL grammar, expressed as a production rule summary:</p>
 
-      <CodeBlock lang="text" code={`cdl         = definitions? system ['[' point_group ']'] ':' form_list modifiers?
+      <CodeBlock lang="text" code={`cdl         = definitions? (crystal_expr | amorphous_expr)
 definitions = ('@' name '=' form_list NEWLINE)*
 
-form_list   = form_or_group ('+' form_or_group)*
-form_or_group = label? '(' form_list ')' features?   # group
-              | label? form                            # single form
+# Crystalline materials
+crystal_expr = system ['[' point_group ']'] ':' form_list modifiers?
+
+# Amorphous materials (v2.0)
+amorphous_expr = 'amorphous' '[' subtype ']' ':' '{' shape (',' shape)* '}' features? ('|' phenomenon)?
+
+form_list   = form_or_group (('+' | '>') form_or_group)*
+form_or_group = label? '(' form_list ')' features? ('|' twin)?   # group (twin is v2.0)
+              | label? form ('~' aggregate)?                       # single form (aggregate is v2.0)
 
 form        = (named_form | '{' miller '}') ['@' scale] features?
 features    = '[' feature (',' feature)* ']'
 feature     = name ':' value (',' value)*
+
+aggregate   = arrangement '[' count ']' ['@' spacing] ['[' orientation ']']
 
 modifiers   = ('|' modification_list)? ('|' twin)? ('|' phenomenon)?
 modification_list = modification (',' modification)*
@@ -741,6 +997,10 @@ phenomenon        = 'phenomenon' '[' type [':' value] (',' param ':' value)* ']'
 label       = IDENTIFIER ':'
 miller      = INTEGER{3..4}
 scale       = NUMBER
+shape       = 'massive' | 'botryoidal' | 'reniform' | 'stalactitic'
+            | 'mammillary' | 'nodular' | 'conchoidal'
+subtype     = 'opalescent' | 'glassy' | 'waxy' | 'resinous' | 'cryptocrystalline'
+arrangement = 'parallel' | 'random' | 'radial' | 'epitaxial' | 'druse' | 'cluster'
 name, type  = IDENTIFIER
 value       = NUMBER | IDENTIFIER`} />
 

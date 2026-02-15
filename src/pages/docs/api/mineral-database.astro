@@ -50,7 +50,8 @@ const familyAttrs = [
 
       <p class="lead">
         SQLite database of 96 mineral families (68 natural + 15 synthetic + 9 simulant + 4 composite)
-        with 128 CDL expressions, crystal system data, and gemmological properties. Version 1.8.1.
+        with 140 CDL expressions, crystal system data, and gemmological properties. Version 1.8.1.
+        Now includes amorphous material support for opal, turquoise, pearl, and more.
       </p>
 
       <CodeBlock code="pip install gemmology-mineral-database" lang="bash" />
@@ -108,7 +109,7 @@ if mineral:
         code={`from mineral_database import list_presets
 
 names = list_presets()
-print(len(names))  # 128
+print(len(names))  # 140
 
 # Filter by crystal system
 cubic = list_presets("cubic")
@@ -357,7 +358,7 @@ set_database_path(Path("/path/to/custom/minerals.db"))`}
 
       <h2>Included Data</h2>
 
-      <p>The database includes 96 mineral families with 128 CDL expressions:</p>
+      <p>The database includes 96 mineral families with 140 CDL expressions:</p>
 
       <div class="not-prose mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card padding="sm" class="bg-slate-50">
@@ -376,6 +377,17 @@ set_database_path(Path("/path/to/custom/minerals.db"))`}
           <h4 class="font-semibold text-purple-900">Composite (4)</h4>
           <p class="text-sm text-purple-600 mt-1">Garnet-Topped Doublet, Opal Triplet...</p>
         </Card>
+      </div>
+
+      <div class="not-prose mt-4 bg-blue-50 border border-blue-200 rounded-xl p-5">
+        <p class="text-sm font-medium text-blue-800 mb-1">Amorphous material support</p>
+        <p class="text-sm text-blue-700">
+          Materials previously without CDL expressions (opal, turquoise, pearl, obsidian, amber, chalcedony)
+          now use the CDL v2.0 <code class="bg-blue-100 px-1 rounded">amorphous</code> system with shape descriptors.
+          These expressions use subtypes like <code class="bg-blue-100 px-1 rounded">opalescent</code>,
+          <code class="bg-blue-100 px-1 rounded">waxy</code>, and <code class="bg-blue-100 px-1 rounded">glassy</code>
+          instead of crystal systems and point groups.
+        </p>
       </div>
     </article>
 
