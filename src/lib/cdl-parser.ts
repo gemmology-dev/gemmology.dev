@@ -1,8 +1,9 @@
 /**
- * CDL Parser v1.3 - Recursive descent implementation
+ * CDL Parser v2.0 - Recursive descent implementation
  * Parses Crystal Description Language strings into structured form data.
  *
- * Supports: grouping, labels, definitions, references, comments (line/block/doc)
+ * Supports: grouping, labels, definitions, references, comments (line/block/doc),
+ * amorphous materials, nested growth, aggregates
  */
 
 // =============================================================================
@@ -29,7 +30,21 @@ export interface FormGroup {
   label?: string;
 }
 
-export type FormNode = CrystalForm | FormGroup;
+export interface NestedGrowth {
+  base: FormNode;
+  overgrowth: FormNode;
+}
+
+export interface AggregateSpec {
+  form: FormNode;
+  arrangement: string;
+  count: number;
+  spacing?: string;
+  orientation?: string;
+  orientationParam?: number;
+}
+
+export type FormNode = CrystalForm | FormGroup | NestedGrowth | AggregateSpec;
 
 export interface CDLParseResult {
   system: string;
@@ -39,6 +54,8 @@ export interface CDLParseResult {
   phenomenon?: string; // Raw phenomenon content e.g., "asterism:6"
   definitions?: Record<string, string>; // name -> raw expression text
   docComments?: string[];
+  shapes?: string[]; // Amorphous shapes (CDL v2.0)
+  subtype?: string; // Amorphous subtype (CDL v2.0)
 }
 
 export interface ValidationResult {
@@ -53,6 +70,14 @@ export interface ValidationResult {
 
 export function isFormGroup(node: FormNode): node is FormGroup {
   return 'forms' in node && Array.isArray((node as FormGroup).forms);
+}
+
+export function isNestedGrowth(node: FormNode): node is NestedGrowth {
+  return 'base' in node && 'overgrowth' in node;
+}
+
+export function isAggregateSpec(node: FormNode): node is AggregateSpec {
+  return 'arrangement' in node && 'count' in node;
 }
 
 /**
@@ -77,13 +102,18 @@ function flattenNode(
     for (const child of node.forms) {
       flattenNode(child, combined, result);
     }
+  } else if (isNestedGrowth(node)) {
+    flattenNode(node.base, parentFeatures, result);
+    flattenNode(node.overgrowth, parentFeatures, result);
+  } else if (isAggregateSpec(node)) {
+    flattenNode(node.form, parentFeatures, result);
   } else {
-    const merged = mergeFeatures(parentFeatures, node.features);
+    const merged = mergeFeatures(parentFeatures, (node as CrystalForm).features);
     result.push({
-      millerIndex: node.millerIndex,
-      scale: node.scale,
+      millerIndex: (node as CrystalForm).millerIndex,
+      scale: (node as CrystalForm).scale,
       features: merged,
-      label: node.label,
+      label: (node as CrystalForm).label,
     });
   }
 }
@@ -128,6 +158,25 @@ for (const groups of Object.values(POINT_GROUPS)) {
     ALL_POINT_GROUPS.add(g);
   }
 }
+
+// Amorphous constants (CDL v2.0)
+const AMORPHOUS_SUBTYPES = new Set([
+  'opalescent', 'glassy', 'waxy', 'resinous', 'cryptocrystalline',
+]);
+
+const AMORPHOUS_SHAPES = new Set([
+  'massive', 'botryoidal', 'reniform', 'stalactitic',
+  'mammillary', 'nodular', 'conchoidal',
+]);
+
+// Aggregate constants (CDL v2.0)
+const AGGREGATE_ARRANGEMENTS = new Set([
+  'parallel', 'random', 'radial', 'epitaxial', 'druse', 'cluster',
+]);
+
+const AGGREGATE_ORIENTATIONS = new Set([
+  'aligned', 'random', 'planar', 'spherical',
+]);
 
 // =============================================================================
 // Comment Stripping
@@ -237,6 +286,8 @@ const enum TokenType {
   COMMA = 'COMMA',
   LPAREN = 'LPAREN',
   RPAREN = 'RPAREN',
+  GREATER = 'GREATER',
+  TILDE = 'TILDE',
   INTEGER = 'INTEGER',
   FLOAT = 'FLOAT',
   IDENTIFIER = 'IDENTIFIER',
@@ -266,6 +317,8 @@ const SINGLE_CHAR_TOKENS: Record<string, TokenType> = {
   ',': TokenType.COMMA,
   '(': TokenType.LPAREN,
   ')': TokenType.RPAREN,
+  '>': TokenType.GREATER,
+  '~': TokenType.TILDE,
   '$': TokenType.EOF, // Should not appear after preprocessing; treat as error marker
   '=': TokenType.EOF, // Same
 };
@@ -328,6 +381,11 @@ class Lexer {
 
     const value = this.text.substring(start, this.pos);
     const valueLower = value.toLowerCase();
+
+    // 'amorphous' emits as SYSTEM token (CDL v2.0)
+    if (valueLower === 'amorphous') {
+      return { type: TokenType.SYSTEM, value: valueLower, position: start };
+    }
 
     if (CRYSTAL_SYSTEMS.has(valueLower)) {
       return { type: TokenType.SYSTEM, value: valueLower, position: start };
@@ -466,6 +524,11 @@ class CDLParser {
     const systemToken = this.expect(TokenType.SYSTEM);
     const system = systemToken.value as string;
 
+    // Branch for amorphous materials (CDL v2.0)
+    if (system === 'amorphous') {
+      return this.parseAmorphous();
+    }
+
     // Parse point group [pg]
     this.expect(TokenType.LBRACKET);
     const pgToken = this.current();
@@ -526,18 +589,118 @@ class CDLParser {
   }
 
   // ---------------------------------------------------------------------------
+  // Amorphous parsing (CDL v2.0)
+  // ---------------------------------------------------------------------------
+
+  private parseAmorphous(): CDLParseResult {
+    // Parse optional [subtype]
+    let subtype = 'none';
+    if (this.current().type === TokenType.LBRACKET) {
+      this.advance(); // consume [
+      const subToken = this.expect(TokenType.IDENTIFIER);
+      subtype = (subToken.value as string).toLowerCase();
+      if (subtype !== 'none' && !AMORPHOUS_SUBTYPES.has(subtype)) {
+        throw new Error(`Unknown amorphous subtype: ${subtype}`);
+      }
+      this.expect(TokenType.RBRACKET);
+    }
+
+    // Expect colon
+    this.expect(TokenType.COLON);
+
+    // Parse {shape1, shape2, ...} — identifiers inside braces
+    this.expect(TokenType.LBRACE);
+    const shapes: string[] = [];
+    while (
+      this.current().type !== TokenType.RBRACE &&
+      this.current().type !== TokenType.EOF
+    ) {
+      const shapeToken = this.expect(TokenType.IDENTIFIER);
+      const shape = (shapeToken.value as string).toLowerCase();
+      if (!AMORPHOUS_SHAPES.has(shape)) {
+        throw new Error(`Unknown amorphous shape: ${shape}`);
+      }
+      shapes.push(shape);
+      if (this.current().type === TokenType.COMMA) {
+        this.advance();
+      }
+    }
+    this.expect(TokenType.RBRACE);
+
+    if (shapes.length === 0) {
+      throw new Error('At least one shape is required');
+    }
+
+    // Parse optional [features]
+    let features: string | undefined;
+    if (this.current().type === TokenType.LBRACKET) {
+      features = this.parseRawFeatures();
+    }
+
+    // Parse optional | phenomenon[...]
+    let phenomenon: string | undefined;
+    let modifier: string | undefined;
+    if (this.current().type === TokenType.PIPE) {
+      const pipePos = this.current().position;
+      modifier = this.text.substring(pipePos + 1).trim();
+
+      const phenMatch = modifier.match(/phenomenon\[([^\]]*)\]/i);
+      if (phenMatch) {
+        phenomenon = phenMatch[1];
+      }
+
+      while (this.current().type !== TokenType.EOF) {
+        this.advance();
+      }
+    }
+
+    return {
+      system: 'amorphous',
+      pointGroup: 'none',
+      forms: [],
+      shapes,
+      subtype,
+      modifier: modifier || (features ? `[${features}]` : undefined),
+      phenomenon,
+    };
+  }
+
+  // ---------------------------------------------------------------------------
   // Form parsing
   // ---------------------------------------------------------------------------
 
   private parseFormList(): FormNode[] {
-    const forms: FormNode[] = [this.parseFormOrGroup()];
+    const forms: FormNode[] = [this.parseAggregateExpr()];
 
     while (this.current().type === TokenType.PLUS) {
       this.advance(); // consume +
-      forms.push(this.parseFormOrGroup());
+      forms.push(this.parseAggregateExpr());
     }
 
     return forms;
+  }
+
+  private parseAggregateExpr(): FormNode {
+    const node = this.parseGrowthExpr();
+
+    if (this.current().type === TokenType.TILDE) {
+      this.advance(); // consume ~
+      return this.parseAggregateSpec(node);
+    }
+
+    return node;
+  }
+
+  private parseGrowthExpr(): FormNode {
+    const node = this.parseFormOrGroup();
+
+    if (this.current().type === TokenType.GREATER) {
+      this.advance(); // consume >
+      const overgrowth = this.parseGrowthExpr(); // right-recursive
+      return { base: node, overgrowth } as NestedGrowth;
+    }
+
+    return node;
   }
 
   private parseFormOrGroup(): FormNode {
@@ -598,6 +761,63 @@ class CDLParser {
     }
 
     return { millerIndex, scale, features, label };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Aggregate spec parsing (CDL v2.0)
+  // ---------------------------------------------------------------------------
+
+  private parseAggregateSpec(form: FormNode): AggregateSpec {
+    // Parse arrangement identifier
+    const arrToken = this.expect(TokenType.IDENTIFIER);
+    const arrangement = (arrToken.value as string).toLowerCase();
+    if (!AGGREGATE_ARRANGEMENTS.has(arrangement)) {
+      throw new Error(`Unknown aggregate arrangement: ${arrangement}`);
+    }
+
+    // Parse [count]
+    this.expect(TokenType.LBRACKET);
+    const count = this.parseIntOrPointGroup();
+    this.expect(TokenType.RBRACKET);
+
+    // Parse optional @spacing
+    let spacing: string | undefined;
+    if (this.current().type === TokenType.AT) {
+      this.advance(); // consume @
+      const spToken = this.current();
+      if (
+        spToken.type === TokenType.INTEGER ||
+        spToken.type === TokenType.FLOAT
+      ) {
+        let spacingVal = String(this.advance().value);
+        // Check for unit suffix
+        if (this.current().type === TokenType.IDENTIFIER) {
+          spacingVal += this.advance().value;
+        }
+        spacing = spacingVal;
+      } else {
+        throw new Error('Expected spacing value after @');
+      }
+    }
+
+    // Parse optional [orientation] with optional :param
+    let orientation: string | undefined;
+    let orientationParam: number | undefined;
+    if (this.current().type === TokenType.LBRACKET) {
+      this.advance(); // consume [
+      const orientToken = this.expect(TokenType.IDENTIFIER);
+      orientation = (orientToken.value as string).toLowerCase();
+      if (!AGGREGATE_ORIENTATIONS.has(orientation)) {
+        throw new Error(`Unknown aggregate orientation: ${orientation}`);
+      }
+      if (this.current().type === TokenType.COLON) {
+        this.advance(); // consume :
+        orientationParam = this.parseNumber();
+      }
+      this.expect(TokenType.RBRACKET);
+    }
+
+    return { form, arrangement, count, spacing, orientation, orientationParam };
   }
 
   // ---------------------------------------------------------------------------
@@ -716,6 +936,46 @@ class CDLParser {
 
     const raw = this.text.substring(startPos, endPos).trim();
     return raw || undefined;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Number parsing helpers (CDL v2.0)
+  // ---------------------------------------------------------------------------
+
+  private parseNumber(): number {
+    const token = this.current();
+    if (token.type === TokenType.INTEGER || token.type === TokenType.FLOAT) {
+      this.advance();
+      return typeof token.value === 'number'
+        ? token.value
+        : parseFloat(String(token.value));
+    }
+    if (token.type === TokenType.POINT_GROUP) {
+      const num = parseFloat(String(token.value));
+      if (!isNaN(num)) {
+        this.advance();
+        return num;
+      }
+    }
+    throw new Error(`Expected number at position ${token.position}`);
+  }
+
+  private parseIntOrPointGroup(): number {
+    const token = this.current();
+    if (token.type === TokenType.INTEGER) {
+      this.advance();
+      return typeof token.value === 'number'
+        ? token.value
+        : parseInt(String(token.value), 10);
+    }
+    if (token.type === TokenType.POINT_GROUP) {
+      const str = String(token.value);
+      if (/^-?\d+$/.test(str)) {
+        this.advance();
+        return parseInt(str, 10);
+      }
+    }
+    throw new Error(`Expected integer at position ${token.position}`);
   }
 }
 

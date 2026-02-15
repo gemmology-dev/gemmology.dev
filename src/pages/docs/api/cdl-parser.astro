@@ -20,12 +20,36 @@ const crystalFormAttrs = [
   { name: 'name', type: 'str | None', description: 'Original name if using named form (e.g., "octahedron")' },
   { name: 'features', type: 'list[Feature] | None', description: 'Per-form feature annotations' },
   { name: 'label', type: 'str | None', description: 'Optional label (e.g., "prism" in prism:{10-10})' },
+  { name: 'aggregate', type: 'AggregateSpec | None', description: 'Optional aggregate specification (v2.0)' },
 ];
 
 const formGroupAttrs = [
   { name: 'forms', type: 'list[FormNode]', description: 'Child form nodes in this group' },
   { name: 'features', type: 'list[Feature] | None', description: 'Shared features applied to all children' },
   { name: 'label', type: 'str | None', description: 'Optional group label' },
+  { name: 'twin', type: 'TwinSpec | None', description: 'Optional group-level twin (v2.0)' },
+];
+
+const amorphousDescriptionAttrs = [
+  { name: 'subtype', type: 'str', description: 'Amorphous subtype (opalescent, glassy, waxy, resinous, cryptocrystalline)' },
+  { name: 'shapes', type: 'list[str]', description: 'Shape descriptors (massive, botryoidal, nodular, etc.)' },
+  { name: 'features', type: 'list[Feature] | None', description: 'Optional features on the material' },
+  { name: 'phenomenon', type: 'PhenomenonSpec | None', description: 'Optional optical phenomenon' },
+  { name: 'definitions', type: 'list[Definition] | None', description: 'Named definitions' },
+  { name: 'doc_comments', type: 'list[str] | None', description: 'Doc comments (#! Key: Value)' },
+];
+
+const nestedGrowthAttrs = [
+  { name: 'base', type: 'FormNode', description: 'The base form or group that is overgrown' },
+  { name: 'overgrowth', type: 'FormNode', description: 'The form or group that grows over the base' },
+  { name: 'label', type: 'str | None', description: 'Optional label' },
+];
+
+const aggregateSpecAttrs = [
+  { name: 'arrangement', type: 'str', description: 'Arrangement type (parallel, random, radial, epitaxial, druse, cluster)' },
+  { name: 'count', type: 'int', description: 'Number of individuals in the aggregate' },
+  { name: 'spacing', type: 'float | None', description: 'Optional spacing between individuals' },
+  { name: 'orientation', type: 'str | None', description: 'Optional orientation descriptor' },
 ];
 
 const featureAttrs = [
@@ -73,7 +97,7 @@ const definitionAttrs = [
 
       <p class="lead">
         Parse and validate Crystal Description Language (CDL) expressions.
-        Zero external dependencies. Version 1.3.0.
+        Zero external dependencies. Version 2.0.0.
       </p>
 
       <CodeBlock code="pip install gemmology-cdl-parser" lang="bash" />
@@ -82,11 +106,12 @@ const definitionAttrs = [
 
       <APISignature
         name="parse_cdl"
-        signature="parse_cdl(text: str) → CrystalDescription"
+        signature="parse_cdl(text: str) → CrystalDescription | AmorphousDescription"
       />
 
-      <p>Parse a CDL string into a structured <code>CrystalDescription</code> object.
-      Handles comments, definitions, forms, modifications, twins, and phenomena.</p>
+      <p>Parse a CDL string into a structured <code>CrystalDescription</code> or
+      <code>AmorphousDescription</code> object. Handles comments, definitions, forms,
+      modifications, twins, phenomena, nested growth, and aggregates.</p>
 
       <CodeBlock
         lang="python"
@@ -108,7 +133,21 @@ desc = parse_cdl("""
 @base = {111}@1.0 + {100}@1.3
 cubic[m3m]:$base
 """)
-print(desc.definitions)  # [Definition(name='base', ...)]`}
+print(desc.definitions)  # [Definition(name='base', ...)]
+
+# Amorphous materials (v2.0)
+desc = parse_cdl("amorphous[opalescent]:{nodular, botryoidal} | phenomenon[play_of_color:spectral]")
+print(type(desc))        # <class 'AmorphousDescription'>
+print(desc.subtype)      # 'opalescent'
+print(desc.shapes)       # ['nodular', 'botryoidal']
+
+# Nested growth (v2.0)
+desc = parse_cdl("cubic[m3m]:{111}@1.0 > {111}@0.6")
+print(desc.forms[0])     # NestedGrowth(base=CrystalForm({111}), overgrowth=CrystalForm({111}))
+
+# Aggregates (v2.0)
+desc = parse_cdl("cubic[m3m]:{100}@1.0 ~ cluster[6]")
+print(desc.forms[0].aggregate)  # AggregateSpec(arrangement='cluster', count=6)`}
       />
 
       <p><strong>Parameters:</strong></p>
@@ -116,7 +155,8 @@ print(desc.definitions)  # [Definition(name='base', ...)]`}
         <li><code>text</code> - CDL expression string</li>
       </ul>
 
-      <p><strong>Returns:</strong> <code>CrystalDescription</code> object</p>
+      <p><strong>Returns:</strong> <code>CrystalDescription</code> for crystalline materials,
+      <code>AmorphousDescription</code> for amorphous materials</p>
 
       <p><strong>Raises:</strong></p>
       <ul>
@@ -228,8 +268,9 @@ print(str(desc))  # "cubic[m3m]:{111}@1.0 + {100}@1.3"`}
 
       <h3 id="FormNode"><code>FormNode</code></h3>
 
-      <p>Type alias: <code>FormNode = CrystalForm | FormGroup</code>.
-      Used as the element type for <code>CrystalDescription.forms</code>.</p>
+      <p>Type alias: <code>FormNode = CrystalForm | FormGroup | NestedGrowth</code>.
+      Used as the element type for <code>CrystalDescription.forms</code>.
+      <code>NestedGrowth</code> was added in v2.0.</p>
 
       <h3 id="Feature"><code>Feature</code></h3>
 
@@ -313,6 +354,74 @@ print(desc.modifications)
         code={`desc = parse_cdl("trigonal[-3m]:{10-10}@1.0 | phenomenon[asterism:6]")
 print(desc.phenomenon)       # PhenomenonSpec(type='asterism', params={'value': 6})
 print(desc.phenomenon.type)  # 'asterism'`}
+      />
+
+      <h3 id="AmorphousDescription"><code>AmorphousDescription</code> <span class="text-sm font-normal text-slate-400">(v2.0)</span></h3>
+
+      <p>Returned by <code>parse_cdl()</code> when the input uses the <code>amorphous</code> system.
+      Uses shape descriptors instead of Miller indices and crystal forms.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={amorphousDescriptionAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("amorphous[opalescent]:{nodular, botryoidal} | phenomenon[play_of_color:spectral]")
+print(desc.subtype)             # 'opalescent'
+print(desc.shapes)              # ['nodular', 'botryoidal']
+print(desc.phenomenon.type)     # 'play_of_color'`}
+      />
+
+      <h3 id="NestedGrowth"><code>NestedGrowth</code> <span class="text-sm font-normal text-slate-400">(v2.0)</span></h3>
+
+      <p>Represents an overgrowth relationship between two forms or groups using
+      the <code>&gt;</code> operator. Right-associative: <code>a &gt; b &gt; c</code> is
+      <code>a &gt; (b &gt; c)</code>.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={nestedGrowthAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("cubic[m3m]:{111}@1.0 > {111}@0.6")
+ng = desc.forms[0]              # NestedGrowth
+print(ng.base)                  # CrystalForm({111}, scale=1.0)
+print(ng.overgrowth)            # CrystalForm({111}, scale=0.6)`}
+      />
+
+      <h3 id="AggregateSpec"><code>AggregateSpec</code> <span class="text-sm font-normal text-slate-400">(v2.0)</span></h3>
+
+      <p>Describes an aggregate arrangement of multiple crystal individuals
+      using the <code>~</code> operator.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={aggregateSpecAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("cubic[m3m]:{100}@1.0 ~ cluster[6]")
+form = desc.forms[0]            # CrystalForm with aggregate
+print(form.aggregate)           # AggregateSpec(arrangement='cluster', count=6)
+print(form.aggregate.count)     # 6
+print(form.aggregate.spacing)   # None`}
       />
 
       <h3 id="Definition"><code>Definition</code></h3>

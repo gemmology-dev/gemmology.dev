@@ -25,7 +25,7 @@ def generate_assets():
         from mineral_database import list_presets, get_preset
         from cdl_parser import parse_cdl
         from crystal_geometry import cdl_to_geometry
-        from crystal_renderer import generate_svg
+        from crystal_renderer.visualization import generate_geometry_svg
     except ImportError as e:
         print(f"Error: Missing required package: {e}")
         print("\nInstall required packages:")
@@ -38,6 +38,7 @@ def generate_assets():
     presets = list_presets()
     total = len(presets)
     success = 0
+    skipped = 0
     failed = []
 
     print(f"Generating {total} crystal SVG assets...")
@@ -46,8 +47,10 @@ def generate_assets():
 
     for i, name in enumerate(presets, 1):
         preset = get_preset(name)
-        if not preset or not preset.cdl:
+        cdl_string = preset.get("cdl", "") if isinstance(preset, dict) else getattr(preset, "cdl", "")
+        if not preset or not cdl_string:
             print(f"[{i}/{total}] SKIP: {name} (no CDL)")
+            skipped += 1
             continue
 
         # Normalize filename (lowercase, replace spaces with hyphens)
@@ -56,26 +59,25 @@ def generate_assets():
 
         try:
             # Parse CDL
-            desc = parse_cdl(preset.cdl)
+            desc = parse_cdl(cdl_string)
 
             # Generate geometry
             geom = cdl_to_geometry(desc)
 
             # Generate SVG with consistent styling
-            generate_svg(
-                geom,
-                str(output_path),
-                width=300,
-                height=300,
-                elevation=30,
-                azimuth=-45,
+            generate_geometry_svg(
+                vertices=geom.vertices,
+                faces=geom.faces,
+                output_path=str(output_path),
+                face_normals=geom.face_normals,
+                show_axes=False,
+                elev=30,
+                azim=-45,
+                show_grid=False,
                 face_color="#0ea5e9",
                 edge_color="#0369a1",
-                edge_width=1.5,
-                opacity=0.85,
-                gradient=True,
-                show_axes=False,
-                show_labels=False,
+                figsize=(3, 3),
+                dpi=100,
             )
 
             print(f"[{i}/{total}] OK: {name} -> {filename}.svg")
@@ -86,7 +88,7 @@ def generate_assets():
             failed.append((name, str(e)))
 
     print("-" * 50)
-    print(f"Generated: {success}/{total} SVG files")
+    print(f"Generated: {success}/{total} SVG files ({skipped} skipped, {len(failed)} failed)")
 
     if failed:
         print(f"\nFailed ({len(failed)}):")
