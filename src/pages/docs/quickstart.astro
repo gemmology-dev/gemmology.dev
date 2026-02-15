@@ -19,7 +19,7 @@ import { Container, Button, Card } from '../../components/ui-astro';
       <h1>Quick Start</h1>
 
       <p class="lead text-xl text-slate-600">
-        Generate your first crystal visualization in just 5 lines of Python code.
+        Generate your first crystal visualization in just a few lines of Python code.
       </p>
 
       <h2>Your First Crystal</h2>
@@ -28,11 +28,10 @@ import { Container, Button, Card } from '../../components/ui-astro';
 
       <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
 from crystal_geometry import cdl_to_geometry
-from crystal_renderer import generate_svg
+from crystal_renderer import generate_cdl_svg
 
-desc = parse_cdl("cubic[m3m]:{111}")
-geom = cdl_to_geometry(desc)
-generate_svg(geom, "diamond.svg")`} />
+# One-liner from CDL to SVG
+generate_cdl_svg("cubic[m3m]:{111}", "diamond.svg")`} />
 
       <p>This creates <code>diamond.svg</code> - an octahedral crystal commonly seen in natural diamonds.</p>
 
@@ -40,7 +39,12 @@ generate_svg(geom, "diamond.svg")`} />
 
       <h3>Step 1: Parse the CDL expression</h3>
 
-      <CodeBlock lang="python" code={`desc = parse_cdl("cubic[m3m]:{111}")`} />
+      <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
+
+desc = parse_cdl("cubic[m3m]:{111}")
+print(desc.system)       # 'cubic'
+print(desc.point_group)  # 'm3m'
+print(desc.forms)        # [CrystalForm({111}, scale=1.0)]`} />
 
       <p>The CDL expression breaks down as:</p>
       <ul>
@@ -51,24 +55,28 @@ generate_svg(geom, "diamond.svg")`} />
 
       <h3>Step 2: Generate 3D geometry</h3>
 
-      <CodeBlock lang="python" code={`geom = cdl_to_geometry(desc)`} />
+      <CodeBlock lang="python" code={`from crystal_geometry import cdl_to_geometry
+
+geom = cdl_to_geometry(desc)
+print(len(geom.vertices))  # 6
+print(len(geom.faces))     # 8`} />
 
       <p>This computes vertices and faces using half-space intersection, applying the symmetry operations from the point group.</p>
 
       <h3>Step 3: Render to SVG</h3>
 
-      <CodeBlock lang="python" code={`generate_svg(geom, "diamond.svg")`} />
+      <CodeBlock lang="python" code={`from crystal_renderer import generate_cdl_svg
 
-      <p>Projects the 3D geometry to 2D and creates an SVG file with proper face ordering for realistic rendering.</p>
+generate_cdl_svg("cubic[m3m]:{111}", "diamond.svg")`} />
+
+      <p>Generates a matplotlib-based SVG file with orthographic projection and crystallographic axes.</p>
 
       <h2>Combining Crystal Forms</h2>
 
       <p>Most real crystals show multiple forms. Use <code>+</code> to combine them:</p>
 
       <CodeBlock lang="python" code={`# Fluorite: cube with octahedron corners
-desc = parse_cdl("cubic[m3m]:{100}@1.0 + {111}@1.4")
-geom = cdl_to_geometry(desc)
-generate_svg(geom, "fluorite.svg")`} />
+generate_cdl_svg("cubic[m3m]:{100}@1.0 + {111}@1.4", "fluorite.svg")`} />
 
       <p>The <code>@distance</code> value controls form development - lower values produce larger faces.</p>
 
@@ -76,46 +84,65 @@ generate_svg(geom, "fluorite.svg")`} />
 
       <p>For common minerals, use the built-in presets:</p>
 
-      <CodeBlock lang="python" code={`from mineral_database import get_preset
-from crystal_geometry import cdl_to_geometry
-from crystal_renderer import generate_svg
+      <CodeBlock lang="python" code={`from mineral_database import get_preset, list_presets
+from crystal_renderer import generate_cdl_svg
 
 # Get quartz preset
 preset = get_preset("quartz")
-geom = cdl_to_geometry(preset.cdl)
-generate_svg(geom, "quartz.svg")
+if preset:
+    print(preset['name'])    # "Quartz"
+    print(preset['cdl'])     # CDL expression string
+    generate_cdl_svg(preset['cdl'], "quartz.svg")
 
 # List all available presets
-from mineral_database import list_presets
-print(list_presets())  # 94 minerals`} />
+names = list_presets()
+print(len(names))  # 128 expressions`} />
 
       <h2>Customizing Output</h2>
 
-      <h3>View angle</h3>
+      <h3>View angle and styling</h3>
 
-      <CodeBlock lang="python" code={`generate_svg(geom, "crystal.svg",
-    elevation=30,   # degrees from horizontal
-    azimuth=-45     # rotation around vertical axis
-)`} />
-
-      <h3>Size and styling</h3>
-
-      <CodeBlock lang="python" code={`generate_svg(geom, "crystal.svg",
-    figsize=(6, 6),      # inches
-    face_color="#0ea5e9", # fill color
-    edge_color="#0369a1", # stroke color
-    show_axes=True        # crystallographic axes
+      <CodeBlock lang="python" code={`generate_cdl_svg("cubic[m3m]:{111}@1.0 + {100}@1.3", "crystal.svg",
+    elev=30,            # degrees from horizontal
+    azim=-45,           # rotation around vertical axis
+    show_axes=True,     # crystallographic axes
+    color_by_form=True, # color faces by form
+    show_grid=False,    # hide background grid
+    figsize=(10, 10),   # figure size in inches
+    dpi=150             # output resolution
 )`} />
 
       <h2>Exporting to Other Formats</h2>
 
-      <CodeBlock lang="python" code={`from crystal_renderer import export_stl, export_gltf
+      <CodeBlock lang="python" code={`from crystal_geometry import cdl_to_geometry
+from crystal_renderer import export_stl, export_gltf
+from cdl_parser import parse_cdl
+
+desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
+geom = cdl_to_geometry(desc)
 
 # Export for 3D printing
-export_stl(geom, "crystal.stl")
+export_stl(geom.vertices, geom.faces, "crystal.stl")
 
 # Export for web/AR/VR
-export_gltf(geom, "crystal.gltf")`} />
+export_gltf(geom.vertices, geom.faces, "crystal.gltf")`} />
+
+      <h2>Using the CDL CLI</h2>
+
+      <CodeBlock lang="bash" code={`# Parse a CDL expression
+cdl parse "cubic[m3m]:{111}@1.0 + {100}@1.3"
+
+# Validate a CDL expression
+cdl validate "cubic[m3m]:{111}"
+
+# Output as JSON
+cdl parse "cubic[m3m]:{111}" --json
+
+# List reference data
+cdl --list-systems
+cdl --list-point-groups
+cdl --list-forms
+cdl --list-twins`} />
 
       <h2>Try it Interactively</h2>
 

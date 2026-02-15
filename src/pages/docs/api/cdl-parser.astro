@@ -4,16 +4,56 @@ import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../
 import { Container } from '../../../components/ui-astro';
 
 const crystalDescriptionAttrs = [
-  { name: 'system', type: 'CrystalSystem', description: 'Crystal system enum' },
-  { name: 'point_group', type: 'str', description: 'Point group symbol' },
-  { name: 'forms', type: 'list[Form]', description: 'List of crystal forms' },
-  { name: 'twin_law', type: 'str | None', description: 'Optional twin law name' },
-  { name: 'modifiers', type: 'dict[str, Any]', description: 'Optional modifiers (elongate, etc.)' },
+  { name: 'system', type: 'str', description: 'Crystal system name (e.g., "cubic", "trigonal")' },
+  { name: 'point_group', type: 'str', description: 'Hermann-Mauguin point group symbol (e.g., "m3m")' },
+  { name: 'forms', type: 'list[FormNode]', description: 'List of form nodes (CrystalForm or FormGroup)' },
+  { name: 'modifications', type: 'list[Modification]', description: 'Morphological modifications (elongate, flatten, etc.)' },
+  { name: 'twin', type: 'TwinSpec | None', description: 'Optional twin specification' },
+  { name: 'phenomenon', type: 'PhenomenonSpec | None', description: 'Optional optical phenomenon' },
+  { name: 'definitions', type: 'list[Definition] | None', description: 'Named definitions (@name = expression)' },
+  { name: 'doc_comments', type: 'list[str] | None', description: 'Doc comments (#! Key: Value)' },
 ];
 
-const formAttrs = [
-  { name: 'miller_indices', type: 'MillerIndex', description: 'Miller indices for this form' },
-  { name: 'distance', type: 'float', description: 'Distance from origin (default 1.0)' },
+const crystalFormAttrs = [
+  { name: 'miller', type: 'MillerIndex', description: 'Miller index defining the form' },
+  { name: 'scale', type: 'float', description: 'Distance scale (default 1.0, larger = more truncated)' },
+  { name: 'name', type: 'str | None', description: 'Original name if using named form (e.g., "octahedron")' },
+  { name: 'features', type: 'list[Feature] | None', description: 'Per-form feature annotations' },
+  { name: 'label', type: 'str | None', description: 'Optional label (e.g., "prism" in prism:{10-10})' },
+];
+
+const formGroupAttrs = [
+  { name: 'forms', type: 'list[FormNode]', description: 'Child form nodes in this group' },
+  { name: 'features', type: 'list[Feature] | None', description: 'Shared features applied to all children' },
+  { name: 'label', type: 'str | None', description: 'Optional group label' },
+];
+
+const featureAttrs = [
+  { name: 'name', type: 'str', description: 'Feature type (phantom, trigon, silk, colour, etc.)' },
+  { name: 'values', type: 'list[int | float | str]', description: 'Feature values (numbers, identifiers, color specs)' },
+];
+
+const twinSpecAttrs = [
+  { name: 'law', type: 'str | None', description: 'Named twin law (spinel, brazil, japan, etc.)' },
+  { name: 'axis', type: 'tuple | None', description: 'Custom twin axis [x, y, z]' },
+  { name: 'angle', type: 'float', description: 'Rotation angle in degrees (default 180)' },
+  { name: 'twin_type', type: 'str', description: 'Type: "contact", "penetration", or "cyclic"' },
+  { name: 'count', type: 'int', description: 'Number of twin individuals (default 2)' },
+];
+
+const modificationAttrs = [
+  { name: 'type', type: 'str', description: 'Type: "elongate", "truncate", "taper", "bevel", or "flatten"' },
+  { name: 'params', type: 'dict[str, Any]', description: 'Parameters (e.g., {"axis": "c", "ratio": 1.5})' },
+];
+
+const phenomenonSpecAttrs = [
+  { name: 'type', type: 'str', description: 'Phenomenon type (asterism, chatoyancy, etc.)' },
+  { name: 'params', type: 'dict[str, int | float | str]', description: 'Parameters (e.g., {"value": 6})' },
+];
+
+const definitionAttrs = [
+  { name: 'name', type: 'str', description: 'Definition name (from @name = expression)' },
+  { name: 'body', type: 'list[FormNode]', description: 'Parsed form nodes for the definition body' },
 ];
 ---
 
@@ -33,19 +73,20 @@ const formAttrs = [
 
       <p class="lead">
         Parse and validate Crystal Description Language (CDL) expressions.
-        Zero external dependencies.
+        Zero external dependencies. Version 1.3.0.
       </p>
 
-      <CodeBlock code="pip install cdl-parser" lang="bash" />
+      <CodeBlock code="pip install gemmology-cdl-parser" lang="bash" />
 
       <h2>Functions</h2>
 
       <APISignature
         name="parse_cdl"
-        signature="parse_cdl(expression: str) → CrystalDescription"
+        signature="parse_cdl(text: str) → CrystalDescription"
       />
 
-      <p>Parse a CDL expression string into a structured <code>CrystalDescription</code> object.</p>
+      <p>Parse a CDL string into a structured <code>CrystalDescription</code> object.
+      Handles comments, definitions, forms, modifications, twins, and phenomena.</p>
 
       <CodeBlock
         lang="python"
@@ -53,64 +94,85 @@ const formAttrs = [
 
 desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
 
-print(desc.system)      # CrystalSystem.CUBIC
-print(desc.point_group) # "m3m"
-print(desc.forms)       # [Form({111}, 1.0), Form({100}, 1.3)]`}
+print(desc.system)       # 'cubic'
+print(desc.point_group)  # 'm3m'
+print(len(desc.forms))   # 2
+print(desc.forms[0])     # CrystalForm({111}, scale=1.0)
+
+# With features
+desc = parse_cdl("cubic[m3m]:{111}@1.0[phantom:3] + {100}@1.3")
+print(desc.forms[0].features)  # [Feature(name='phantom', values=[3])]
+
+# With definitions and references
+desc = parse_cdl("""
+@base = {111}@1.0 + {100}@1.3
+cubic[m3m]:$base
+""")
+print(desc.definitions)  # [Definition(name='base', ...)]`}
       />
 
       <p><strong>Parameters:</strong></p>
       <ul>
-        <li><code>expression</code> - CDL expression string</li>
+        <li><code>text</code> - CDL expression string</li>
       </ul>
 
       <p><strong>Returns:</strong> <code>CrystalDescription</code> object</p>
 
-      <p><strong>Raises:</strong> <code>CDLParseError</code> if the expression is invalid</p>
+      <p><strong>Raises:</strong></p>
+      <ul>
+        <li><code>ParseError</code> - if the expression has a syntax error</li>
+        <li><code>ValidationError</code> - if semantically invalid (e.g., wrong point group for system)</li>
+      </ul>
 
       <APISignature
         name="validate_cdl"
-        signature="validate_cdl(expression: str) → ValidationResult"
+        signature="validate_cdl(text: str) → tuple[bool, str | None]"
       />
 
-      <p>Validate a CDL expression without fully parsing it. Returns detailed error information.</p>
+      <p>Validate a CDL expression without raising exceptions. Returns a tuple of
+      <code>(is_valid, error_message)</code>.</p>
 
       <CodeBlock
         lang="python"
         code={`from cdl_parser import validate_cdl
 
-result = validate_cdl("cubic[m3m]:{111}")
-print(result.is_valid)  # True
+valid, error = validate_cdl("cubic[m3m]:{111}")
+print(valid)   # True
+print(error)   # None
 
-result = validate_cdl("invalid[xyz]:{abc}")
-print(result.is_valid)  # False
-print(result.errors)    # [ValidationError(...)]`}
+valid, error = validate_cdl("invalid[xyz]:{abc}")
+print(valid)   # False
+print(error)   # "Expected SYSTEM, got IDENTIFIER ..."`}
       />
 
       <APISignature
-        name="tokenize"
-        signature="tokenize(expression: str) → list[Token]"
+        name="strip_comments"
+        signature="strip_comments(text: str) → tuple[str, list[str]]"
       />
 
-      <p>Tokenize a CDL expression into a list of tokens. Useful for syntax highlighting.</p>
+      <p>Strip comments from CDL text. Extracts doc comments (<code>#!</code>),
+      removes block comments (<code>/* ... */</code>) and line comments (<code>#</code>).</p>
 
       <CodeBlock
         lang="python"
-        code={`from cdl_parser import tokenize
+        code={`from cdl_parser import strip_comments
 
-tokens = tokenize("cubic[m3m]:{111}")
-for token in tokens:
-    print(f"{token.type}: {token.value}")
-# SYSTEM: cubic
-# LBRACKET: [
-# POINT_GROUP: m3m
-# ...`}
+text = """
+#! Mineral: Diamond
+#! System: Cubic
+# This is a comment
+cubic[m3m]:{111} /* inline block */
+"""
+cleaned, doc_comments = strip_comments(text)
+print(doc_comments)  # ['Mineral: Diamond', 'System: Cubic']`}
       />
 
       <h2>Classes</h2>
 
       <h3 id="CrystalDescription"><code>CrystalDescription</code></h3>
 
-      <p>Represents a parsed CDL expression.</p>
+      <p>The main output of CDL parsing, containing all information needed
+      to generate a crystal visualization.</p>
 
       <PropsTable
         columns={[
@@ -121,9 +183,25 @@ for token in tokens:
         rows={crystalDescriptionAttrs}
       />
 
-      <h3 id="Form"><code>Form</code></h3>
+      <h4>Methods</h4>
 
-      <p>Represents a single crystal form (set of Miller indices with distance).</p>
+      <CodeBlock
+        lang="python"
+        code={`# Get a flat list of all CrystalForm objects (flattens FormGroups)
+# Features from parent groups are merged into child forms
+flat = desc.flat_forms()  # list[CrystalForm]
+
+# Convert to dictionary representation
+d = desc.to_dict()
+
+# String representation (reconstructs CDL)
+print(str(desc))  # "cubic[m3m]:{111}@1.0 + {100}@1.3"`}
+      />
+
+      <h3 id="CrystalForm"><code>CrystalForm</code></h3>
+
+      <p>Represents a single crystal form (set of symmetry-equivalent faces)
+      with an optional distance scale for truncation.</p>
 
       <PropsTable
         columns={[
@@ -131,7 +209,124 @@ for token in tokens:
           { key: 'type', header: 'Type', mono: true },
           { key: 'description', header: 'Description' }
         ]}
-        rows={formAttrs}
+        rows={crystalFormAttrs}
+      />
+
+      <h3 id="FormGroup"><code>FormGroup</code></h3>
+
+      <p>A parenthesized group of forms with optional shared features and label.
+      Syntax: <code>(form + form)[shared_features]</code></p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={formGroupAttrs}
+      />
+
+      <h3 id="FormNode"><code>FormNode</code></h3>
+
+      <p>Type alias: <code>FormNode = CrystalForm | FormGroup</code>.
+      Used as the element type for <code>CrystalDescription.forms</code>.</p>
+
+      <h3 id="Feature"><code>Feature</code></h3>
+
+      <p>Describes growth patterns, surface markings, inclusions, or colour properties
+      on a crystal form.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={featureAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`# Features are parsed from [name:value] syntax on forms
+desc = parse_cdl("cubic[m3m]:{111}@1.0[phantom:3, colour:blue]")
+form = desc.forms[0]  # CrystalForm
+print(form.features)
+# [Feature(name='phantom', values=[3]), Feature(name='colour', values=['blue'])]`}
+      />
+
+      <h3 id="TwinSpec"><code>TwinSpec</code></h3>
+
+      <p>Defines how crystal twinning should be applied.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={twinSpecAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("cubic[m3m]:{111} | twin(spinel)")
+print(desc.twin)       # TwinSpec(law='spinel')
+print(desc.twin.law)   # 'spinel'
+print(desc.twin.count) # 2`}
+      />
+
+      <h3 id="Modification"><code>Modification</code></h3>
+
+      <p>Represents a morphological transformation applied to the crystal shape.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={modificationAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("cubic[m3m]:{111} | flatten(c:0.5)")
+print(desc.modifications)
+# [Modification(type='flatten', params={'axis': 'c', 'ratio': 0.5})]`}
+      />
+
+      <h3 id="PhenomenonSpec"><code>PhenomenonSpec</code></h3>
+
+      <p>Optical phenomenon specification (asterism, chatoyancy, etc.).</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={phenomenonSpecAttrs}
+      />
+
+      <CodeBlock
+        lang="python"
+        code={`desc = parse_cdl("trigonal[-3m]:{10-10}@1.0 | phenomenon[asterism:6]")
+print(desc.phenomenon)       # PhenomenonSpec(type='asterism', params={'value': 6})
+print(desc.phenomenon.type)  # 'asterism'`}
+      />
+
+      <h3 id="Definition"><code>Definition</code></h3>
+
+      <p>A named definition that allows reuse via <code>@name = expression</code>
+      and <code>$name</code> references.</p>
+
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={definitionAttrs}
       />
 
       <h3 id="MillerIndex"><code>MillerIndex</code></h3>
@@ -144,65 +339,155 @@ for token in tokens:
 
 # 3-index notation
 mi = MillerIndex(1, 1, 1)
-print(mi)  # {111}
+print(mi)            # {111}
+print(mi.as_tuple()) # (1, 1, 1)
 
 # 4-index notation (Miller-Bravais)
-mi = MillerIndex(1, 0, -1, 0)
-print(mi)  # {10-10}
-
-# Convert between notations
-mi_3 = mi.to_3index()
-mi_4 = mi.to_4index()`}
-      />
-
-      <h3 id="CrystalSystem"><code>CrystalSystem</code></h3>
-
-      <p>Enum of the seven crystal systems.</p>
-
-      <CodeBlock
-        lang="python"
-        code={`from cdl_parser import CrystalSystem
-
-CrystalSystem.CUBIC
-CrystalSystem.HEXAGONAL
-CrystalSystem.TRIGONAL
-CrystalSystem.TETRAGONAL
-CrystalSystem.ORTHORHOMBIC
-CrystalSystem.MONOCLINIC
-CrystalSystem.TRICLINIC`}
+mi = MillerIndex(1, 0, 1, i=-1)
+print(mi)              # {10-11}
+print(mi.as_tuple())   # (1, 0, -1, 1)
+print(mi.as_3index())  # (1, 0, 1)`}
       />
 
       <h2>Exceptions</h2>
 
-      <h3 id="CDLParseError"><code>CDLParseError</code></h3>
+      <h3 id="CDLError"><code>CDLError</code></h3>
 
-      <p>Raised when parsing fails. Contains detailed error information.</p>
+      <p>Base exception for all CDL-related errors.</p>
+
+      <h3 id="ParseError"><code>ParseError</code></h3>
+
+      <p>Raised when CDL parsing fails due to a syntax error. Contains position information.</p>
 
       <CodeBlock
         lang="python"
-        code={`from cdl_parser import parse_cdl, CDLParseError
+        code={`from cdl_parser import parse_cdl, ParseError
 
 try:
     parse_cdl("invalid")
-except CDLParseError as e:
-    print(e.message)    # Error message
-    print(e.line)       # Line number (1-based)
-    print(e.column)     # Column number (1-based)
-    print(e.context)    # Surrounding text`}
+except ParseError as e:
+    print(e.message)    # Error description
+    print(e.position)   # Character position in input`}
+      />
+
+      <h3 id="ValidationError"><code>ValidationError</code></h3>
+
+      <p>Raised when CDL is syntactically valid but semantically incorrect
+      (e.g., invalid point group for the given crystal system).</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import parse_cdl, ValidationError
+
+try:
+    parse_cdl("cubic[-3m]:{111}")  # -3m is trigonal, not cubic
+except ValidationError as e:
+    print(e.message)  # "Point group '-3m' not valid for cubic system"
+    print(e.field)    # "point_group"
+    print(e.value)    # "-3m"`}
       />
 
       <h2>Constants</h2>
 
+      <h3><code>CRYSTAL_SYSTEMS</code></h3>
+
+      <p>Set of the seven crystal system names.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import CRYSTAL_SYSTEMS
+
+print(CRYSTAL_SYSTEMS)
+# {'cubic', 'tetragonal', 'orthorhombic', 'hexagonal', 'trigonal', 'monoclinic', 'triclinic'}`}
+      />
+
       <h3><code>POINT_GROUPS</code></h3>
 
-      <p>Dictionary mapping crystal systems to valid point groups.</p>
+      <p>Dictionary mapping crystal system names to their valid point groups.</p>
 
       <CodeBlock
         lang="python"
         code={`from cdl_parser import POINT_GROUPS
 
-print(POINT_GROUPS[CrystalSystem.CUBIC])
-# ['m3m', '432', '-43m', 'm3', '23']`}
+print(POINT_GROUPS['cubic'])
+# {'m3m', '432', '-43m', 'm-3', '23'}`}
+      />
+
+      <h3><code>DEFAULT_POINT_GROUPS</code></h3>
+
+      <p>Dictionary mapping each crystal system to its default (highest symmetry) point group.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import DEFAULT_POINT_GROUPS
+
+print(DEFAULT_POINT_GROUPS['cubic'])     # 'm3m'
+print(DEFAULT_POINT_GROUPS['trigonal'])  # '-3m'`}
+      />
+
+      <h3><code>NAMED_FORMS</code></h3>
+
+      <p>Dictionary mapping form names to Miller indices (h, k, l).</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import NAMED_FORMS
+
+print(NAMED_FORMS['octahedron'])     # (1, 1, 1)
+print(NAMED_FORMS['cube'])           # (1, 0, 0)
+print(NAMED_FORMS['dodecahedron'])   # (1, 1, 0)
+print(NAMED_FORMS['rhombohedron'])   # (1, 0, 1)`}
+      />
+
+      <h3><code>TWIN_LAWS</code></h3>
+
+      <p>Set of recognised twin law names.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import TWIN_LAWS
+
+print(sorted(TWIN_LAWS))
+# ['albite', 'baveno', 'brazil', 'carlsbad', 'dauphine', 'fluorite',
+#  'gypsum_swallow', 'iron_cross', 'japan', 'manebach', 'pericline',
+#  'spinel', 'spinel_law', 'staurolite_60', 'staurolite_90', 'trilling']`}
+      />
+
+      <h3><code>FEATURE_NAMES</code></h3>
+
+      <p>Set of recognised feature annotation names (phantom, trigon, silk, colour, etc.).</p>
+
+      <h3><code>PHENOMENON_TYPES</code></h3>
+
+      <p>Set of recognised phenomenon types (asterism, chatoyancy, adularescence, etc.).</p>
+
+      <h3><code>MODIFICATION_TYPES</code></h3>
+
+      <p>Set of recognised modification types: elongate, truncate, taper, bevel, flatten.</p>
+
+      <h2>Lexer/Parser Internals</h2>
+
+      <p>For advanced use cases (syntax highlighting, custom processing):</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from cdl_parser import Lexer, Token, TokenType
+
+lexer = Lexer("cubic[m3m]:{111}")
+tokens = lexer.tokenize()
+for token in tokens:
+    print(f"{token.type.value}: {token.value}")
+# SYSTEM: cubic
+# LBRACKET: [
+# POINT_GROUP: m3m
+# RBRACKET: ]
+# COLON: :
+# LBRACE: {
+# INTEGER: 1
+# INTEGER: 1
+# INTEGER: 1
+# RBRACE: }
+# EOF: None`}
       />
     </article>
 

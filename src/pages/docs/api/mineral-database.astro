@@ -3,22 +3,34 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
 import { Container, Card } from '../../../components/ui-astro';
 
-const presetAttrs = [
-  { name: 'name', type: 'str', description: 'Mineral name' },
+const mineralAttrs = [
+  { name: 'id', type: 'str', description: 'Preset ID (e.g., "diamond-octahedron")' },
+  { name: 'name', type: 'str', description: 'Display name' },
   { name: 'cdl', type: 'str', description: 'CDL expression' },
   { name: 'system', type: 'str', description: 'Crystal system' },
   { name: 'point_group', type: 'str', description: 'Point group symbol' },
-  { name: 'formula', type: 'str | None', description: 'Chemical formula' },
-  { name: 'hardness', type: 'float | None', description: 'Mohs hardness' },
-  { name: 'specific_gravity', type: 'tuple[float, float] | None', description: 'SG range' },
-  { name: 'ri_range', type: 'tuple[float, float] | None', description: 'Refractive index range' },
+  { name: 'chemistry', type: 'str', description: 'Chemical formula' },
+  { name: 'hardness', type: 'int | float | str', description: 'Mohs hardness (may be range like "6-7")' },
+  { name: 'sg', type: 'float | str | None', description: 'Specific gravity' },
+  { name: 'ri', type: 'float | str | None', description: 'Refractive index' },
   { name: 'birefringence', type: 'float | None', description: 'Maximum birefringence' },
-  { name: 'optic_sign', type: 'str | None', description: '"+" or "-" or None (isotropic)' },
-  { name: 'optic_character', type: 'str | None', description: '"uniaxial" or "biaxial" or None' },
+  { name: 'optical_character', type: 'str | None', description: 'Optical character' },
   { name: 'dispersion', type: 'float | None', description: 'Dispersion value' },
-  { name: 'colors', type: 'list[str]', description: 'Common colors' },
+  { name: 'colors', type: 'list[str]', description: 'Common colours' },
   { name: 'cleavage', type: 'str | None', description: 'Cleavage description' },
-  { name: 'varieties', type: 'list[str]', description: 'Named varieties' },
+  { name: 'twin_law', type: 'str | None', description: 'Twin law name' },
+  { name: 'origin', type: 'str', description: 'Origin: natural, synthetic, simulant, or composite' },
+];
+
+const familyAttrs = [
+  { name: 'id', type: 'str', description: 'Family ID (e.g., "diamond")' },
+  { name: 'name', type: 'str', description: 'Display name (e.g., "Diamond")' },
+  { name: 'crystal_system', type: 'str', description: 'Crystal system' },
+  { name: 'point_group', type: 'str | None', description: 'Point group symbol' },
+  { name: 'chemistry', type: 'str | None', description: 'Chemical formula' },
+  { name: 'origin', type: 'str', description: 'Origin: natural, synthetic, simulant, composite' },
+  { name: 'growth_method', type: 'str | None', description: 'Synthesis method (synthetics only)' },
+  { name: 'natural_counterpart_id', type: 'str | None', description: 'ID of natural equivalent' },
 ];
 ---
 
@@ -37,20 +49,20 @@ const presetAttrs = [
       <h1>mineral-database</h1>
 
       <p class="lead">
-        SQLite database of 94+ mineral presets with CDL definitions, crystal system data,
-        and gemmological properties.
+        SQLite database of 96 mineral families (68 natural + 15 synthetic + 9 simulant + 4 composite)
+        with 128 CDL expressions, crystal system data, and gemmological properties. Version 1.8.1.
       </p>
 
-      <CodeBlock code="pip install mineral-database" lang="bash" />
+      <CodeBlock code="pip install gemmology-mineral-database" lang="bash" />
 
-      <h2>Functions</h2>
+      <h2>Core Query Functions</h2>
 
       <APISignature
         name="get_preset"
-        signature="get_preset(name: str) → MineralPreset | None"
+        signature="get_preset(name: str) → dict[str, Any] | None"
       />
 
-      <p>Get a mineral preset by name (case-insensitive).</p>
+      <p>Get a mineral preset by name (case-insensitive). Returns a dictionary.</p>
 
       <CodeBlock
         lang="python"
@@ -58,116 +70,266 @@ const presetAttrs = [
 
 preset = get_preset("quartz")
 if preset:
-    print(preset.name)         # "Quartz"
-    print(preset.cdl)          # "trigonal[-3m]:{10-10}@1.0 + ..."
-    print(preset.system)       # "trigonal"
-    print(preset.hardness)     # 7.0
-    print(preset.ri_range)     # (1.544, 1.553)`}
+    print(preset['name'])         # "Quartz"
+    print(preset['cdl'])          # CDL expression string
+    print(preset['system'])       # "trigonal"
+    print(preset['hardness'])     # "7"
+    print(preset['ri'])           # "1.544-1.553"`}
       />
 
-      <p><strong>Parameters:</strong></p>
-      <ul>
-        <li><code>name</code> - Mineral name (case-insensitive)</li>
-      </ul>
+      <APISignature
+        name="get_mineral"
+        signature="get_mineral(name: str) → Mineral | None"
+      />
 
-      <p><strong>Returns:</strong> <code>MineralPreset</code> or <code>None</code> if not found</p>
+      <p>Get a <code>Mineral</code> object by name. Returns a typed dataclass instead of a dict.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_mineral
+
+mineral = get_mineral("diamond-octahedron")
+if mineral:
+    print(mineral.name)     # "Diamond"
+    print(mineral.cdl)      # "cubic[m3m]:{111}@1.0 + {110}@0.2"
+    print(mineral.system)   # "cubic"
+    print(mineral.origin)   # "natural"`}
+      />
 
       <APISignature
         name="list_presets"
-        signature="list_presets() → list[str]"
+        signature="list_presets(category: str | None = None) → list[str]"
       />
 
-      <p>List all available preset names.</p>
+      <p>List all available preset names, optionally filtered by crystal system or category.</p>
 
       <CodeBlock
         lang="python"
         code={`from mineral_database import list_presets
 
 names = list_presets()
-print(len(names))  # 94
-print(names[:5])   # ['Alexandrite', 'Almandine', 'Amazonite', ...]`}
+print(len(names))  # 128
+
+# Filter by crystal system
+cubic = list_presets("cubic")
+print(len(cubic))  # All cubic presets`}
       />
 
       <APISignature
-        name="search"
-        signature="search(query: str, limit: int = 10) → list[MineralPreset]"
+        name="search_presets"
+        signature="search_presets(query: str) → list[str]"
       />
 
-      <p>Search presets by name, formula, or properties.</p>
+      <p>Search presets using full-text search across name, chemistry, and description.</p>
 
       <CodeBlock
         lang="python"
-        code={`from mineral_database import search
+        code={`from mineral_database import search_presets
 
-# Search by name
-results = search("beryl")
-for r in results:
-    print(r.name)  # Beryl, Emerald, Aquamarine, ...
+results = search_presets("beryl")
+print(results)  # ['beryl-prismatic', 'emerald-prismatic', ...]
 
-# Search by chemical formula
-results = search("SiO2")
-
-# Search by crystal system
-results = search("cubic")`}
+results = search_presets("SiO2")
+print(results)  # Quartz, Amethyst, etc.`}
       />
 
       <APISignature
-        name="get_by_system"
-        signature="get_by_system(system: str) → list[MineralPreset]"
+        name="filter_minerals"
+        signature="filter_minerals(system=None, min_hardness=None, max_hardness=None, has_twin=False) → list[str]"
       />
 
-      <p>Get all presets for a specific crystal system.</p>
+      <p>Filter minerals by various criteria.</p>
 
       <CodeBlock
         lang="python"
-        code={`from mineral_database import get_by_system
+        code={`from mineral_database import filter_minerals
 
-cubic_minerals = get_by_system("cubic")
-print(len(cubic_minerals))  # 18
+# Durable gems (hardness 7+)
+durable = filter_minerals(min_hardness=7.0)
 
-# Valid systems: cubic, hexagonal, trigonal, tetragonal,
-#                orthorhombic, monoclinic, triclinic`}
+# Cubic minerals with twins
+cubic_twins = filter_minerals(system="cubic", has_twin=True)`}
       />
+
+      <h2>RI/SG Lookup</h2>
 
       <APISignature
-        name="get_by_hardness"
-        signature="get_by_hardness(min_h: float, max_h: float) → list[MineralPreset]"
+        name="find_by_ri"
+        signature="find_by_ri(ri: float, tolerance: float = 0.01) → list[Mineral]"
       />
 
-      <p>Get presets within a hardness range.</p>
+      <p>Find minerals matching a measured refractive index, sorted by closest match.</p>
 
       <CodeBlock
         lang="python"
-        code={`from mineral_database import get_by_hardness
+        code={`from mineral_database import find_by_ri
 
-# Get gems suitable for rings (hardness 7+)
-durable = get_by_hardness(7.0, 10.0)
-for m in durable:
-    print(f"{m.name}: {m.hardness}")`}
-      />
-
-      <APISignature
-        name="get_by_ri"
-        signature="get_by_ri(ri: float, tolerance: float = 0.01) → list[MineralPreset]"
-      />
-
-      <p>Find minerals matching a measured refractive index.</p>
-
-      <CodeBlock
-        lang="python"
-        code={`from mineral_database import get_by_ri
-
-# Find minerals with RI around 1.54
-matches = get_by_ri(1.54, tolerance=0.01)
+matches = find_by_ri(1.544, tolerance=0.01)
 for m in matches:
-    print(f"{m.name}: {m.ri_range}")`}
+    print(f"{m.name}: RI {m.ri}")`}
+      />
+
+      <APISignature
+        name="find_by_sg"
+        signature="find_by_sg(sg: float, tolerance: float = 0.05) → list[Mineral]"
+      />
+
+      <p>Find minerals matching a specific gravity value, sorted by closest match.</p>
+
+      <h2>Synthetic and Simulant Queries</h2>
+
+      <APISignature
+        name="list_synthetics"
+        signature="list_synthetics(growth_method: str | None = None) → list[str]"
+      />
+
+      <p>List all synthetic mineral family IDs, optionally filtered by growth method.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import list_synthetics
+
+# All synthetics
+synths = list_synthetics()
+print(synths)  # ['cvd-diamond', 'flame-fusion-ruby', ...]
+
+# Filter by method
+flux = list_synthetics(growth_method="flux")
+print(flux)  # Flux-grown synthetics only`}
+      />
+
+      <APISignature
+        name="list_simulants"
+        signature="list_simulants(target: str | None = None) → list[str]"
+      />
+
+      <p>List all simulant mineral family IDs, optionally filtered by what they imitate.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import list_simulants
+
+# All simulants
+sims = list_simulants()
+print(sims)  # ['cubic-zirconia', 'moissanite', ...]
+
+# Diamond simulants specifically
+diamond_sims = list_simulants(target="diamond")
+print(diamond_sims)  # ['cubic-zirconia', 'moissanite', ...]`}
+      />
+
+      <APISignature
+        name="get_counterparts"
+        signature="get_counterparts(name: str) → dict[str, list[str]]"
+      />
+
+      <p>Get all synthetic and simulant counterparts for a natural mineral.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_counterparts
+
+cp = get_counterparts("diamond")
+print(cp['synthetics'])  # ['cvd-diamond', 'hpht-diamond']
+print(cp['simulants'])   # ['cubic-zirconia', 'moissanite', ...]`}
+      />
+
+      <APISignature
+        name="list_by_origin"
+        signature="list_by_origin(origin: str) → list[str]"
+      />
+
+      <p>List all mineral family IDs filtered by origin type.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import list_by_origin
+
+naturals = list_by_origin("natural")     # 68 families
+synthetics = list_by_origin("synthetic") # 15 families
+simulants = list_by_origin("simulant")   # 9 families
+composites = list_by_origin("composite") # 4 families`}
+      />
+
+      <APISignature
+        name="get_family"
+        signature="get_family(name: str) → MineralFamily | None"
+      />
+
+      <p>Get a <code>MineralFamily</code> object by ID, including synthetic-specific fields.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import get_family
+
+family = get_family("cubic-zirconia")
+if family:
+    print(family.name)                  # "Cubic Zirconia"
+    print(family.origin)                # "simulant"
+    print(family.natural_counterpart_id) # "diamond"
+    print(family.growth_method)          # "skull_melting"`}
+      />
+
+      <h2>Calculator Utilities</h2>
+
+      <APISignature
+        name="classify"
+        signature="classify(category: str, value: float) → str | None"
+      />
+
+      <p>Classify a gemmological value based on standard thresholds.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from mineral_database import classify
+
+# Birefringence classification
+print(classify("birefringence", 0.009))  # "low"
+print(classify("birefringence", 0.045))  # "high"
+
+# Dispersion classification
+print(classify("dispersion", 0.044))  # "very_high" (diamond)
+
+# Critical angle classification
+print(classify("critical_angle", 24.4))  # "very_small" (diamond)`}
+      />
+
+      <APISignature
+        name="list_shape_factors"
+        signature="list_shape_factors() → list[dict]"
+      />
+
+      <p>Get cut shape factors for carat weight estimation.</p>
+
+      <APISignature
+        name="list_heat_treatable"
+        signature="list_heat_treatable() → list[Mineral]"
+      />
+
+      <p>Get minerals with heat treatment temperature data.</p>
+
+      <h2>Database Configuration</h2>
+
+      <APISignature
+        name="set_database_path"
+        signature="set_database_path(path: Path) → None"
+      />
+
+      <p>Override the default database path for all queries.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from pathlib import Path
+from mineral_database import set_database_path
+
+set_database_path(Path("/path/to/custom/minerals.db"))`}
       />
 
       <h2>Classes</h2>
 
-      <h3 id="MineralPreset"><code>MineralPreset</code></h3>
+      <h3 id="Mineral"><code>Mineral</code></h3>
 
-      <p>Complete mineral data including CDL and gemmological properties.</p>
+      <p>Dataclass representing a mineral preset with all gemmological properties.</p>
 
       <PropsTable
         columns={[
@@ -175,90 +337,44 @@ for m in matches:
           { key: 'type', header: 'Type', mono: true },
           { key: 'description', header: 'Description' }
         ]}
-        rows={presetAttrs}
+        rows={mineralAttrs}
       />
 
-      <h4>Methods</h4>
+      <h3 id="MineralFamily"><code>MineralFamily</code></h3>
 
-      <CodeBlock
-        lang="python"
-        code={`# Check if preset matches identification criteria
-preset.matches_ri(1.544)           # True if RI in range
-preset.matches_sg(2.65)            # True if SG in range
-preset.matches_hardness(7.0)       # True if hardness matches
+      <p>Dataclass representing a mineral family (normalized structure). Includes
+      synthetic-specific fields like <code>growth_method</code>, <code>manufacturer</code>,
+      and <code>diagnostic_synthetic_features</code>.</p>
 
-# Export to different formats
-preset.to_dict()                   # Dictionary representation
-preset.to_json()                   # JSON string`}
+      <PropsTable
+        columns={[
+          { key: 'name', header: 'Attribute', mono: true },
+          { key: 'type', header: 'Type', mono: true },
+          { key: 'description', header: 'Description' }
+        ]}
+        rows={familyAttrs}
       />
 
-      <h2>Database Information</h2>
+      <h2>Included Data</h2>
 
-      <APISignature
-        name="get_db_info"
-        signature="get_db_info() → dict"
-      />
+      <p>The database includes 96 mineral families with 128 CDL expressions:</p>
 
-      <p>Get database metadata.</p>
-
-      <CodeBlock
-        lang="python"
-        code={`from mineral_database import get_db_info
-
-info = get_db_info()
-print(info)
-# {
-#   'version': '1.0.0',
-#   'preset_count': 94,
-#   'systems': {'cubic': 18, 'hexagonal': 12, ...},
-#   'last_updated': '2025-01-15'
-# }`}
-      />
-
-      <h2>Custom Database</h2>
-
-      <p>Load a custom SQLite database with additional presets:</p>
-
-      <CodeBlock
-        lang="python"
-        code={`from mineral_database import MineralDatabase
-
-# Load custom database
-db = MineralDatabase("/path/to/custom.db")
-
-# Use same API
-preset = db.get_preset("custom_mineral")
-all_presets = db.list_presets()`}
-      />
-
-      <h2>Included Presets</h2>
-
-      <p>The database includes 94 mineral presets organized by crystal system:</p>
-
-      <div class="not-prose mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="not-prose mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Cubic (18)</h4>
-          <p class="text-sm text-slate-600 mt-1">Diamond, Spinel, Garnet group, Pyrite, Fluorite...</p>
+          <h4 class="font-semibold text-slate-900">Natural (68)</h4>
+          <p class="text-sm text-slate-600 mt-1">Diamond, Ruby, Emerald, Quartz, Garnet...</p>
         </Card>
-        <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Hexagonal (12)</h4>
-          <p class="text-sm text-slate-600 mt-1">Beryl varieties, Apatite, Zincite...</p>
+        <Card padding="sm" class="bg-blue-50">
+          <h4 class="font-semibold text-blue-900">Synthetic (15)</h4>
+          <p class="text-sm text-blue-600 mt-1">CVD Diamond, Flux Ruby, Hydrothermal Emerald...</p>
         </Card>
-        <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Trigonal (15)</h4>
-          <p class="text-sm text-slate-600 mt-1">Quartz varieties, Corundum, Tourmaline, Calcite...</p>
+        <Card padding="sm" class="bg-amber-50">
+          <h4 class="font-semibold text-amber-900">Simulant (9)</h4>
+          <p class="text-sm text-amber-600 mt-1">CZ, Moissanite, YAG, Glass...</p>
         </Card>
-        <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Tetragonal (8)</h4>
-          <p class="text-sm text-slate-600 mt-1">Zircon, Rutile, Cassiterite, Vesuvianite...</p>
-        </Card>
-        <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Orthorhombic (14)</h4>
-          <p class="text-sm text-slate-600 mt-1">Topaz, Peridot, Chrysoberyl, Tanzanite...</p>
-        </Card>
-        <Card padding="sm" class="bg-slate-50">
-          <h4 class="font-semibold text-slate-900">Monoclinic (12)</h4>
-          <p class="text-sm text-slate-600 mt-1">Orthoclase, Jadeite, Spodumene, Malachite...</p>
+        <Card padding="sm" class="bg-purple-50">
+          <h4 class="font-semibold text-purple-900">Composite (4)</h4>
+          <p class="text-sm text-purple-600 mt-1">Garnet-Topped Doublet, Opal Triplet...</p>
         </Card>
       </div>
     </article>

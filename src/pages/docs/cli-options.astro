@@ -7,7 +7,7 @@ import { Container, Button } from '../../components/ui-astro';
 
 <BaseLayout
   title="CLI Options"
-  description="Complete command-line options reference for crystal-renderer CLI."
+  description="Complete command-line options reference for cdl and mineral-db CLI tools."
 >
   <Container size="md" padding="lg">
     <Breadcrumb items={[
@@ -20,289 +20,270 @@ import { Container, Button } from '../../components/ui-astro';
 
       <p class="lead text-xl text-slate-600">
         Complete reference for all command-line flags and options available in the
-        <code>crystal-render</code> command.
+        <code>cdl</code> and <code>mineral-db</code> commands.
       </p>
 
-      <h2>Basic Usage</h2>
+      <h2><code>cdl</code> Command</h2>
 
-      <CodeBlock lang="bash" code={`crystal-render [OPTIONS] <CDL_EXPRESSION> [OUTPUT_FILE]`} />
+      <CodeBlock lang="bash" code={`cdl [COMMAND] [CDL_STRING] [OPTIONS]`} />
 
-      <h2>Input Options</h2>
+      <h3>Commands</h3>
 
       <table>
         <thead>
           <tr>
-            <th>Option</th>
+            <th>Command</th>
             <th>Description</th>
-            <th>Default</th>
+            <th>Example</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>CDL_EXPRESSION</code></td>
-            <td>CDL expression to render (positional argument)</td>
-            <td>Required</td>
+            <td><code>parse</code></td>
+            <td>Parse a CDL expression and display the result</td>
+            <td><code>cdl parse "cubic[m3m]:{'{'}111{'}'}"</code></td>
           </tr>
           <tr>
-            <td><code>-p, --preset NAME</code></td>
-            <td>Use a preset from mineral database instead of CDL</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><code>-f, --file PATH</code></td>
-            <td>Read CDL expression from file</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><code>--list-presets</code></td>
-            <td>List all available mineral presets</td>
-            <td>-</td>
+            <td><code>validate</code></td>
+            <td>Validate a CDL expression (exit code 0 = valid)</td>
+            <td><code>cdl validate "cubic[m3m]:{'{'}111{'}'}"</code></td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Output Options</h2>
+      <h3>Options</h3>
 
       <table>
         <thead>
           <tr>
             <th>Option</th>
             <th>Description</th>
-            <th>Default</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>OUTPUT_FILE</code></td>
-            <td>Output file path (positional argument)</td>
-            <td><code>crystal.svg</code></td>
+            <td><code>--json</code></td>
+            <td>Output parsed result as JSON (with <code>parse</code> command)</td>
           </tr>
           <tr>
-            <td><code>--format FORMAT</code></td>
-            <td>Output format: <code>svg</code>, <code>stl</code>, <code>gltf</code>, <code>gemcad</code></td>
-            <td>Inferred from extension</td>
+            <td><code>--list-systems</code></td>
+            <td>List all 7 crystal systems with their default point groups</td>
           </tr>
           <tr>
-            <td><code>--stdout</code></td>
-            <td>Write output to stdout instead of file</td>
-            <td><code>false</code></td>
+            <td><code>--list-point-groups</code></td>
+            <td>List all 32 point groups organized by crystal system</td>
+          </tr>
+          <tr>
+            <td><code>--list-forms</code></td>
+            <td>List all named forms with their Miller indices</td>
+          </tr>
+          <tr>
+            <td><code>--list-twins</code></td>
+            <td>List all registered twin laws</td>
+          </tr>
+          <tr>
+            <td><code>--version</code></td>
+            <td>Show cdl-parser version</td>
+          </tr>
+          <tr>
+            <td><code>--help</code></td>
+            <td>Show help message</td>
           </tr>
         </tbody>
       </table>
 
-      <h2>View Options</h2>
+      <h3>Parse Output</h3>
+
+      <p>The <code>parse</code> command displays:</p>
+      <ul>
+        <li>Crystal system and point group</li>
+        <li>Forms with Miller indices and scale values</li>
+        <li>Modifications (if any)</li>
+        <li>Twin specification (if any)</li>
+        <li>Reconstructed CDL string</li>
+      </ul>
+
+      <CodeBlock lang="bash" code={`$ cdl parse "cubic[m3m]:{111}@1.0 + {100}@1.3 | elongate(c:1.5)"
+Parsed successfully!
+  System: cubic
+  Point Group: m3m
+  Forms (2):
+    {111} @ scale=1.0
+    {100} @ scale=1.3
+  Modifications (1):
+    elongate(c:1.5)
+
+Reconstructed: cubic[m3m]:{111}@1.0 + {100}@1.3 | elongate(c:1.5)`} />
+
+      <p>With <code>--json</code>, the output is a structured JSON object:</p>
+
+      <CodeBlock lang="bash" code={`$ cdl parse "cubic[m3m]:{111}" --json
+{
+  "system": "cubic",
+  "point_group": "m3m",
+  "forms": [
+    {
+      "type": "form",
+      "miller": {"h": 1, "k": 1, "l": 1},
+      "scale": 1.0
+    }
+  ],
+  "modifications": [],
+  "twin": null,
+  "phenomenon": null
+}`} />
+
+      <h2><code>mineral-db</code> Command</h2>
+
+      <CodeBlock lang="bash" code={`mineral-db [OPTIONS]`} />
+
+      <h3>Query Options</h3>
 
       <table>
         <thead>
           <tr>
             <th>Option</th>
             <th>Description</th>
-            <th>Default</th>
+            <th>Example</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>--elevation DEGREES</code></td>
-            <td>View elevation angle (0-90)</td>
-            <td><code>30</code></td>
+            <td><code>--list [CATEGORY]</code></td>
+            <td>List all presets, or filter by crystal system</td>
+            <td><code>mineral-db --list cubic</code></td>
           </tr>
           <tr>
-            <td><code>--azimuth DEGREES</code></td>
-            <td>View azimuth angle (-180 to 180)</td>
-            <td><code>-45</code></td>
+            <td><code>--info NAME</code></td>
+            <td>Show detailed info for a preset</td>
+            <td><code>mineral-db --info diamond-octahedron</code></td>
           </tr>
           <tr>
-            <td><code>--zoom FACTOR</code></td>
-            <td>Zoom factor (0.5-5.0)</td>
-            <td><code>1.0</code></td>
+            <td><code>--search QUERY</code></td>
+            <td>Search presets by name, mineral, or chemistry</td>
+            <td><code>mineral-db --search beryl</code></td>
           </tr>
           <tr>
-            <td><code>--ortho</code></td>
-            <td>Use orthographic projection</td>
-            <td><code>true</code></td>
+            <td><code>--json NAME</code></td>
+            <td>Output preset data as JSON</td>
+            <td><code>mineral-db --json quartz</code></td>
           </tr>
           <tr>
-            <td><code>--perspective</code></td>
-            <td>Use perspective projection</td>
-            <td><code>false</code></td>
+            <td><code>--categories</code></td>
+            <td>List all preset categories with counts</td>
+            <td><code>mineral-db --categories</code></td>
+          </tr>
+          <tr>
+            <td><code>--count</code></td>
+            <td>Show total number of presets</td>
+            <td><code>mineral-db --count</code></td>
           </tr>
         </tbody>
       </table>
 
-      <h2>SVG Options</h2>
+      <h3>Synthetic and Simulant Options</h3>
 
       <table>
         <thead>
           <tr>
             <th>Option</th>
             <th>Description</th>
-            <th>Default</th>
+            <th>Example</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>--width PIXELS</code></td>
-            <td>SVG width</td>
-            <td><code>400</code></td>
+            <td><code>--synthetics [METHOD]</code></td>
+            <td>List synthetic minerals, optionally filtered by growth method (flux, cvd, hpht, etc.)</td>
+            <td><code>mineral-db --synthetics flux</code></td>
           </tr>
           <tr>
-            <td><code>--height PIXELS</code></td>
-            <td>SVG height</td>
-            <td><code>400</code></td>
+            <td><code>--simulants [TARGET]</code></td>
+            <td>List simulant minerals, optionally filtered by target mineral</td>
+            <td><code>mineral-db --simulants diamond</code></td>
           </tr>
           <tr>
-            <td><code>--face-color COLOR</code></td>
-            <td>Face fill color (hex or name)</td>
-            <td><code>#0ea5e9</code></td>
+            <td><code>--counterparts NAME</code></td>
+            <td>Show all synthetics and simulants for a natural mineral</td>
+            <td><code>mineral-db --counterparts diamond</code></td>
           </tr>
           <tr>
-            <td><code>--edge-color COLOR</code></td>
-            <td>Edge stroke color</td>
-            <td><code>#0369a1</code></td>
-          </tr>
-          <tr>
-            <td><code>--edge-width PIXELS</code></td>
-            <td>Edge stroke width</td>
-            <td><code>1.5</code></td>
-          </tr>
-          <tr>
-            <td><code>--opacity VALUE</code></td>
-            <td>Face opacity (0.0-1.0)</td>
-            <td><code>0.85</code></td>
-          </tr>
-          <tr>
-            <td><code>--gradient</code></td>
-            <td>Apply lighting gradient to faces</td>
-            <td><code>true</code></td>
-          </tr>
-          <tr>
-            <td><code>--no-gradient</code></td>
-            <td>Use flat shading</td>
-            <td>-</td>
+            <td><code>--origin TYPE</code></td>
+            <td>Filter <code>--list</code> by origin: natural, synthetic, simulant, composite</td>
+            <td><code>mineral-db --list --origin synthetic</code></td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Display Options</h2>
+      <h3>Other Options</h3>
 
       <table>
         <thead>
           <tr>
             <th>Option</th>
             <th>Description</th>
-            <th>Default</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>--axes</code></td>
-            <td>Show crystallographic axes</td>
-            <td><code>false</code></td>
+            <td><code>--version</code></td>
+            <td>Show mineral-database version</td>
           </tr>
           <tr>
-            <td><code>--grid</code></td>
-            <td>Show reference grid</td>
-            <td><code>false</code></td>
-          </tr>
-          <tr>
-            <td><code>--labels</code></td>
-            <td>Show face labels (Miller indices)</td>
-            <td><code>false</code></td>
-          </tr>
-          <tr>
-            <td><code>--title TEXT</code></td>
-            <td>Add title below crystal</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>3D Export Options</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Description</th>
-            <th>Default</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--scale FACTOR</code></td>
-            <td>Scale factor for STL/glTF output</td>
-            <td><code>10.0</code></td>
-          </tr>
-          <tr>
-            <td><code>--units UNIT</code></td>
-            <td>STL units: <code>mm</code>, <code>cm</code>, <code>in</code></td>
-            <td><code>mm</code></td>
-          </tr>
-          <tr>
-            <td><code>--binary</code></td>
-            <td>Use binary STL format</td>
-            <td><code>true</code></td>
-          </tr>
-          <tr>
-            <td><code>--ascii</code></td>
-            <td>Use ASCII STL format</td>
-            <td><code>false</code></td>
+            <td><code>--help</code></td>
+            <td>Show help message</td>
           </tr>
         </tbody>
       </table>
 
       <h2>Examples</h2>
 
-      <h3>Basic rendering</h3>
+      <h3>CDL Parser</h3>
 
-      <CodeBlock lang="bash" code={`# Render octahedron to SVG
-crystal-render "cubic[m3m]:{111}" diamond.svg
+      <CodeBlock lang="bash" code={`# Parse simple octahedron
+cdl parse "cubic[m3m]:{111}"
 
-# Render preset to SVG
-crystal-render --preset quartz quartz.svg`} />
+# Parse combination with JSON output
+cdl parse "cubic[m3m]:{111}@1.0 + {100}@1.3" --json
 
-      <h3>Custom styling</h3>
+# Validate a hexagonal expression
+cdl validate "hexagonal[6/mmm]:{10-10} + {0001}"
 
-      <CodeBlock lang="bash" code={`# Purple garnet with larger size
-crystal-render "cubic[m3m]:{110}@1.0 + {211}@1.2" garnet.svg \\
-  --width 600 --height 600 \\
-  --face-color "#8b5cf6" --edge-color "#6d28d9"
+# List all named forms
+cdl --list-forms
 
-# With crystallographic axes
-crystal-render --preset beryl beryl.svg --axes --labels`} />
+# List twin laws
+cdl --list-twins`} />
 
-      <h3>3D export</h3>
+      <h3>Mineral Database</h3>
 
-      <CodeBlock lang="bash" code={`# Export for 3D printing (20mm scale)
-crystal-render --preset diamond diamond.stl --scale 20 --units mm
+      <CodeBlock lang="bash" code={`# List all cubic presets
+mineral-db --list cubic
 
-# Export for web visualization
-crystal-render --preset zircon zircon.gltf`} />
+# Get detailed info
+mineral-db --info ruby-hexagonal
 
-      <h3>View angles</h3>
+# Search by chemistry
+mineral-db --search "Al2O3"
 
-      <CodeBlock lang="bash" code={`# Top-down view
-crystal-render --preset quartz quartz-top.svg --elevation 90 --azimuth 0
+# List all flux-grown synthetics
+mineral-db --synthetics flux
 
-# Side view
-crystal-render --preset quartz quartz-side.svg --elevation 0 --azimuth 0
+# Find diamond counterparts
+mineral-db --counterparts diamond
 
-# Isometric view
-crystal-render --preset quartz quartz-iso.svg --elevation 35 --azimuth -45`} />
+# List composites
+mineral-db --list --origin composite
 
-      <h3>Batch processing</h3>
-
-      <CodeBlock lang="bash" code={`# Render all presets
-crystal-render --list-presets | while read name; do
-  crystal-render --preset "$name" "output/$name.svg"
-done`} />
+# Export as JSON for scripting
+mineral-db --json diamond-octahedron | python -c "import sys,json; d=json.load(sys.stdin); print(d['cdl'])"`} />
 
       <div class="mt-12 flex gap-4">
         <Button href="/docs/cli" variant="outline" size="md">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
           </svg>
-          CLI Basics
+          CLI Overview
         </Button>
         <Button href="/docs/api/crystal-renderer" variant="primary" size="md">
           Renderer API
