@@ -20,15 +20,27 @@ import { Container, Button, Card } from '../../components/ui-astro';
 
       <p class="lead text-xl text-slate-600">
         CDL is a domain-specific language for describing crystal morphology using crystallographic
-        notation. It combines crystal systems, point groups, and Miller indices to precisely
-        define crystal forms.
+        notation. It combines crystal systems, point groups, Miller indices, and optional modifiers
+        to precisely define crystal forms for 3D visualization.
       </p>
 
-      <h2>Syntax Overview</h2>
+      <div class="not-prose my-8 bg-slate-50 border border-slate-200 rounded-xl p-6">
+        <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-2">Current version</p>
+        <p class="text-lg font-semibold text-slate-900">CDL v1.3</p>
+        <p class="text-sm text-slate-600 mt-1">
+          Includes comments (v1.1), features and phenomena (v1.2), grouping, labels, and definitions (v1.3).
+        </p>
+      </div>
 
-      <p>A CDL expression follows this general format:</p>
+      <!-- ============================================================ -->
+      <!-- BASIC SYNTAX -->
+      <!-- ============================================================ -->
 
-      <CodeBlock lang="text" code={`system[point_group]:{hkl}@distance + {hkl}@distance ...`} />
+      <h2 id="basic-syntax">Basic Syntax</h2>
+
+      <p>A CDL expression follows this general structure:</p>
+
+      <CodeBlock lang="text" code={`system[point_group]:{hkl}@scale + {hkl}@scale | modifier`} />
 
       <h3>Components</h3>
 
@@ -36,6 +48,7 @@ import { Container, Button, Card } from '../../components/ui-astro';
         <thead>
           <tr>
             <th>Component</th>
+            <th>Required</th>
             <th>Description</th>
             <th>Example</th>
           </tr>
@@ -43,166 +56,710 @@ import { Container, Button, Card } from '../../components/ui-astro';
         <tbody>
           <tr>
             <td><code>system</code></td>
+            <td>Yes</td>
             <td>Crystal system</td>
-            <td><code>cubic</code>, <code>hexagonal</code>, <code>trigonal</code></td>
+            <td><code>cubic</code>, <code>trigonal</code></td>
           </tr>
           <tr>
             <td><code>[point_group]</code></td>
-            <td>Point group symmetry</td>
-            <td><code>[m3m]</code>, <code>[6/mmm]</code>, <code>[-3m]</code></td>
+            <td>No</td>
+            <td>Point group symmetry (defaults per system)</td>
+            <td><code>[m3m]</code>, <code>[-3m]</code></td>
+          </tr>
+          <tr>
+            <td><code>:</code></td>
+            <td>Yes</td>
+            <td>Separator between header and forms</td>
+            <td></td>
           </tr>
           <tr>
             <td><code>{'{'}hkl{'}'}</code></td>
-            <td>Miller indices</td>
+            <td>Yes</td>
+            <td>Miller index defining a crystal form</td>
             <td><code>{'{'}111{'}'}</code>, <code>{'{'}10-10{'}'}</code></td>
           </tr>
           <tr>
-            <td><code>@distance</code></td>
-            <td>Distance from origin</td>
+            <td><code>@scale</code></td>
+            <td>No</td>
+            <td>Distance from origin (default 1.0)</td>
             <td><code>@1.0</code>, <code>@0.8</code></td>
+          </tr>
+          <tr>
+            <td><code>+</code></td>
+            <td>No</td>
+            <td>Combine multiple forms</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Crystal Systems</h2>
+      <p>
+        When the point group is omitted, the default for the system is used (e.g., <code>cubic</code> defaults to <code>m3m</code>).
+      </p>
 
-      <p>CDL supports all seven crystal systems:</p>
+      <CodeBlock lang="text" title="Minimal expression" code={`cubic:{111}`} />
 
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 not-prose my-8">
-        {['cubic', 'hexagonal', 'trigonal', 'tetragonal', 'orthorhombic', 'monoclinic', 'triclinic'].map((system) => (
-          <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
-            <code class="text-crystal-600 font-semibold">{system}</code>
-          </div>
-        ))}
-      </div>
+      <CodeBlock lang="text" title="Explicit point group" code={`cubic[m3m]:{111}`} />
 
-      <h2>Point Groups</h2>
+      <CodeBlock lang="text" title="Two forms with scales" code={`cubic[m3m]:{111}@1.0 + {100}@1.3`} />
 
-      <p>Point groups define the symmetry operations applied to Miller indices. Each crystal system has specific valid point groups:</p>
+      <p>
+        The <code>@scale</code> value controls how far each form sits from the crystal centre.
+        Larger values push the form outward, reducing its face area relative to other forms.
+        Smaller values bring it closer, making faces more prominent.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- CRYSTAL SYSTEMS -->
+      <!-- ============================================================ -->
+
+      <h2 id="crystal-systems">Crystal Systems and Point Groups</h2>
+
+      <p>CDL supports all seven crystal systems and all 32 crystallographic point groups:</p>
 
       <table>
         <thead>
           <tr>
             <th>System</th>
+            <th>Default</th>
             <th>Point Groups</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Cubic</td>
-            <td><code>m3m</code>, <code>432</code>, <code>-43m</code>, <code>m3</code>, <code>23</code></td>
+            <td><code>cubic</code></td>
+            <td><code>m3m</code></td>
+            <td><code>m3m</code>, <code>432</code>, <code>-43m</code>, <code>m-3</code>, <code>23</code></td>
           </tr>
           <tr>
-            <td>Hexagonal</td>
-            <td><code>6/mmm</code>, <code>622</code>, <code>6mm</code>, <code>-62m</code>, <code>6/m</code>, <code>6</code>, <code>-6</code></td>
+            <td><code>hexagonal</code></td>
+            <td><code>6/mmm</code></td>
+            <td><code>6/mmm</code>, <code>622</code>, <code>6mm</code>, <code>-6m2</code>, <code>6/m</code>, <code>6</code>, <code>-6</code></td>
           </tr>
           <tr>
-            <td>Trigonal</td>
+            <td><code>trigonal</code></td>
+            <td><code>-3m</code></td>
             <td><code>-3m</code>, <code>32</code>, <code>3m</code>, <code>-3</code>, <code>3</code></td>
           </tr>
           <tr>
-            <td>Tetragonal</td>
+            <td><code>tetragonal</code></td>
+            <td><code>4/mmm</code></td>
             <td><code>4/mmm</code>, <code>422</code>, <code>4mm</code>, <code>-42m</code>, <code>4/m</code>, <code>4</code>, <code>-4</code></td>
           </tr>
           <tr>
-            <td>Orthorhombic</td>
+            <td><code>orthorhombic</code></td>
+            <td><code>mmm</code></td>
             <td><code>mmm</code>, <code>222</code>, <code>mm2</code></td>
           </tr>
           <tr>
-            <td>Monoclinic</td>
+            <td><code>monoclinic</code></td>
+            <td><code>2/m</code></td>
             <td><code>2/m</code>, <code>2</code>, <code>m</code></td>
           </tr>
           <tr>
-            <td>Triclinic</td>
+            <td><code>triclinic</code></td>
+            <td><code>-1</code></td>
             <td><code>-1</code>, <code>1</code></td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Miller Indices</h2>
+      <!-- ============================================================ -->
+      <!-- MILLER INDICES -->
+      <!-- ============================================================ -->
 
-      <p>Miller indices define crystal planes. Use curly braces with comma-separated values:</p>
+      <h2 id="miller-indices">Miller Indices</h2>
 
-      <ul>
-        <li><strong>Three indices</strong>: <code>{'{'}h,k,l{'}'}</code> for most systems</li>
-        <li><strong>Four indices</strong>: <code>{'{'}h,k,i,l{'}'}</code> for hexagonal/trigonal (Miller-Bravais)</li>
-        <li><strong>Negative values</strong>: Use minus sign, e.g., <code>{'{'}10-10{'}'}</code></li>
-      </ul>
-
-      <h3>Common Forms</h3>
+      <p>Miller indices define crystal face orientations using curly braces. CDL supports several notations:</p>
 
       <table>
         <thead>
           <tr>
-            <th>Indices</th>
-            <th>Form Name</th>
+            <th>Format</th>
+            <th>Example</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Condensed 3-index</td>
+            <td><code>{'{'}111{'}'}</code></td>
+            <td>Single-digit indices concatenated</td>
+          </tr>
+          <tr>
+            <td>Separated 3-index</td>
+            <td><code>{'{'}1 1 1{'}'}</code></td>
+            <td>Space-separated (for multi-digit indices)</td>
+          </tr>
+          <tr>
+            <td>4-index (Miller-Bravais)</td>
+            <td><code>{'{'}10-10{'}'}</code></td>
+            <td>For hexagonal and trigonal systems</td>
+          </tr>
+          <tr>
+            <td>Negative indices</td>
+            <td><code>{'{'}10-11{'}'}</code></td>
+            <td>Minus sign before the digit</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        In 4-index Miller-Bravais notation <code>{'{'}hkil{'}'}</code>, the third index <code>i</code> is
+        redundant (<code>i = -(h+k)</code>) but included for clarity in hexagonal and trigonal systems.
+      </p>
+
+      <h3>Named Forms</h3>
+
+      <p>Common crystal forms can be referenced by name instead of Miller indices:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Miller Index</th>
             <th>System</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>{'{'}111{'}'}</code></td>
-            <td>Octahedron</td>
-            <td>Cubic</td>
-          </tr>
-          <tr>
+            <td><code>cube</code></td>
             <td><code>{'{'}100{'}'}</code></td>
-            <td>Cube</td>
             <td>Cubic</td>
           </tr>
           <tr>
+            <td><code>octahedron</code></td>
+            <td><code>{'{'}111{'}'}</code></td>
+            <td>Cubic</td>
+          </tr>
+          <tr>
+            <td><code>dodecahedron</code></td>
             <td><code>{'{'}110{'}'}</code></td>
-            <td>Rhombic dodecahedron</td>
             <td>Cubic</td>
           </tr>
           <tr>
-            <td><code>{'{'}10-10{'}'}</code></td>
-            <td>Hexagonal prism</td>
+            <td><code>trapezohedron</code></td>
+            <td><code>{'{'}211{'}'}</code></td>
+            <td>Cubic</td>
+          </tr>
+          <tr>
+            <td><code>prism</code></td>
+            <td><code>{'{'}100{'}'}</code></td>
             <td>Hexagonal/Trigonal</td>
           </tr>
           <tr>
-            <td><code>{'{'}0001{'}'}</code></td>
-            <td>Basal pinacoid</td>
+            <td><code>pinacoid</code> / <code>basal</code></td>
+            <td><code>{'{'}001{'}'}</code></td>
+            <td>Hexagonal/Trigonal</td>
+          </tr>
+          <tr>
+            <td><code>rhombohedron</code></td>
+            <td><code>{'{'}101{'}'}</code></td>
+            <td>Trigonal</td>
+          </tr>
+          <tr>
+            <td><code>dipyramid</code></td>
+            <td><code>{'{'}101{'}'}</code></td>
             <td>Hexagonal/Trigonal</td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Combining Forms</h2>
+      <CodeBlock lang="text" title="Named form" code={`cubic[m3m]:octahedron`} />
 
-      <p>Use <code>+</code> to combine multiple crystal forms:</p>
+      <CodeBlock lang="text" title="Named form with scale" code={`cubic[m3m]:octahedron@1.0 + cube@1.3`} />
 
-      <CodeBlock lang="text" code={`# Truncated octahedron
-cubic[m3m]:{111}@1.0 + {100}@1.3
+      <!-- ============================================================ -->
+      <!-- COMBINING FORMS -->
+      <!-- ============================================================ -->
 
-# Quartz with prism and rhombohedra
-trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 + {01-11}@0.9`} />
+      <h2 id="combining-forms">Combining Forms</h2>
 
-      <p>The <code>@distance</code> value controls how "developed" each form is. Smaller distances result in larger face areas.</p>
+      <p>Use <code>+</code> to combine multiple crystal forms into a single crystal:</p>
 
-      <h2>Examples</h2>
+      <CodeBlock lang="text" code={`# Diamond: octahedron with minor dodecahedron
+cubic[m3m]:{111}@1.0 + {110}@0.2
 
-      <h3>Diamond (Octahedron)</h3>
-      <CodeBlock lang="text" code={`cubic[m3m]:{111}`} />
+# Quartz: prism with two rhombohedra
+trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0
 
-      <h3>Fluorite (Cube with Octahedron)</h3>
-      <CodeBlock lang="text" code={`cubic[m3m]:{100}@1.0 + {111}@1.2`} />
+# Garnet: dodecahedron + trapezohedron
+cubic[m3m]:{110}@1.0 + {211}@0.6`} />
 
-      <h3>Beryl (Hexagonal Prism with Pinacoid)</h3>
-      <CodeBlock lang="text" code={`hexagonal[6/mmm]:{10-10}@1.0 + {0001}@1.5`} />
+      <!-- ============================================================ -->
+      <!-- TWIN LAWS -->
+      <!-- ============================================================ -->
 
-      <h3>Quartz</h3>
-      <CodeBlock lang="text" code={`trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 + {01-11}@0.9`} />
+      <h2 id="twins">Twin Laws</h2>
 
-      <h2>Extensions</h2>
+      <p>
+        Crystal twinning is specified with the <code>| twin(law)</code> syntax after
+        the form list. The pipe <code>|</code> separates the forms from the twin specification.
+      </p>
 
-      <h3>Twin Laws</h3>
-      <p>Add twin laws with the <code>twin:</code> modifier:</p>
-      <CodeBlock lang="text" code={`cubic[m3m]:{111} twin:spinel_law`} />
+      <CodeBlock lang="text" code={`# Spinel law twin (diamond macle)
+cubic[m3m]:{111}@1.0 + {100}@0.3 | twin(spinel_law)
 
-      <h3>Modifications</h3>
-      <p>Apply modifications like elongation or flattening:</p>
-      <CodeBlock lang="text" code={`tetragonal[4/mmm]:{110}@1.0 --elongate=1.5`} />
+# Fluorite interpenetrating twin
+cubic[m3m]:{100}@1.0 | twin(fluorite)
+
+# Quartz Japan law twin
+trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 + {0001}@2.0 | elongate(c:2.0) | twin(japan)
+
+# Cyclic twin with count
+cubic[m3m]:{111} | twin(trilling,3)
+
+# Custom twin axis
+cubic[m3m]:{111} | twin([1,1,1],180)`} />
+
+      <h3>Named Twin Laws</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Law</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>spinel</code> / <code>spinel_law</code></td>
+            <td>Contact twin on {'{'}111{'}'} (diamond, spinel)</td>
+          </tr>
+          <tr>
+            <td><code>brazil</code></td>
+            <td>Optical twin in quartz (left/right hand)</td>
+          </tr>
+          <tr>
+            <td><code>dauphine</code></td>
+            <td>Penetration twin in quartz (180&deg; about c-axis)</td>
+          </tr>
+          <tr>
+            <td><code>japan</code></td>
+            <td>Contact twin in quartz (~84.5&deg;)</td>
+          </tr>
+          <tr>
+            <td><code>carlsbad</code></td>
+            <td>Penetration twin in feldspar</td>
+          </tr>
+          <tr>
+            <td><code>baveno</code></td>
+            <td>Contact twin in feldspar</td>
+          </tr>
+          <tr>
+            <td><code>manebach</code></td>
+            <td>Contact twin in feldspar</td>
+          </tr>
+          <tr>
+            <td><code>albite</code></td>
+            <td>Polysynthetic twin in plagioclase</td>
+          </tr>
+          <tr>
+            <td><code>pericline</code></td>
+            <td>Polysynthetic twin in plagioclase</td>
+          </tr>
+          <tr>
+            <td><code>fluorite</code></td>
+            <td>Interpenetrating cube twin</td>
+          </tr>
+          <tr>
+            <td><code>iron_cross</code></td>
+            <td>Pyrite cross twin</td>
+          </tr>
+          <tr>
+            <td><code>trilling</code></td>
+            <td>Cyclic triplet twin (chrysoberyl)</td>
+          </tr>
+          <tr>
+            <td><code>staurolite_60</code></td>
+            <td>60&deg; cross twin</td>
+          </tr>
+          <tr>
+            <td><code>staurolite_90</code></td>
+            <td>90&deg; cross twin</td>
+          </tr>
+          <tr>
+            <td><code>gypsum_swallow</code></td>
+            <td>Swallowtail twin in gypsum</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================ -->
+      <!-- MODIFICATIONS -->
+      <!-- ============================================================ -->
+
+      <h2 id="modifications">Modifications</h2>
+
+      <p>
+        Morphological modifications alter the crystal shape. They follow the form list,
+        separated by a pipe <code>|</code>. Each takes the form <code>type(param:value)</code>.
+      </p>
+
+      <CodeBlock lang="text" code={`# Elongated quartz prism
+trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 | elongate(c:2.0)
+
+# Flattened tabular crystal
+cubic[m3m]:{111} | flatten(a:0.5)
+
+# Multiple modifications separated by commas
+cubic[m3m]:{111} | elongate(c:1.5), taper(top:0.3)`} />
+
+      <h3>Modification Types</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Syntax</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>elongate</code></td>
+            <td><code>elongate(axis:ratio)</code></td>
+            <td>Stretch along an axis (a, b, or c)</td>
+          </tr>
+          <tr>
+            <td><code>flatten</code></td>
+            <td><code>flatten(axis:ratio)</code></td>
+            <td>Compress along an axis</td>
+          </tr>
+          <tr>
+            <td><code>truncate</code></td>
+            <td><code>truncate(form:depth)</code></td>
+            <td>Cut corners or edges by a form</td>
+          </tr>
+          <tr>
+            <td><code>taper</code></td>
+            <td><code>taper(direction:factor)</code></td>
+            <td>Narrow in one direction</td>
+          </tr>
+          <tr>
+            <td><code>bevel</code></td>
+            <td><code>bevel(edges:width)</code></td>
+            <td>Add beveled edges</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================ -->
+      <!-- COMMENTS (v1.1) -->
+      <!-- ============================================================ -->
+
+      <h2 id="comments">Comments <span class="text-sm font-normal text-slate-400">(v1.1)</span></h2>
+
+      <p>CDL supports three comment styles, stripped before parsing:</p>
+
+      <CodeBlock lang="text" code={`# Line comment (to end of line)
+cubic[m3m]:{111}  # Inline comment
+
+/* Block comment
+   spanning multiple lines */
+
+#! Mineral: Diamond
+#! Habit: Octahedral
+cubic[m3m]:{111}@1.0`} />
+
+      <table>
+        <thead>
+          <tr>
+            <th>Style</th>
+            <th>Syntax</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Line comment</td>
+            <td><code># text</code></td>
+            <td>Ignored during parsing</td>
+          </tr>
+          <tr>
+            <td>Block comment</td>
+            <td><code>/* text */</code></td>
+            <td>Multi-line ignored content</td>
+          </tr>
+          <tr>
+            <td>Doc comment</td>
+            <td><code>#! Key: Value</code></td>
+            <td>Extracted as structured metadata</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Doc comments (<code>#!</code>) are preserved in the parsed output as structured metadata
+        and can carry mineral names, habits, or other descriptive information.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- FEATURES (v1.2) -->
+      <!-- ============================================================ -->
+
+      <h2 id="features">Features <span class="text-sm font-normal text-slate-400">(v1.2)</span></h2>
+
+      <p>
+        Features annotate individual crystal forms with surface markings, growth patterns,
+        inclusions, or colour properties. Features are placed in square brackets <code>[...]</code>
+        immediately after the form's Miller index and optional scale.
+      </p>
+
+      <CodeBlock lang="text" code={`# Diamond octahedron with trigons
+cubic[m3m]:{111}@1.0[trigon:dense]
+
+# Sapphire with silk inclusions
+trigonal[-3m]:{10-10}@1.0[striation:horizontal] + {10-11}@0.7
+
+# Multiple features on one form
+cubic[m3m]:{111}[trigon:dense, phantom:3]
+
+# Feature with multiple values
+cubic[m3m]:{111}[phantom:3, white]`} />
+
+      <h3>Feature Types</h3>
+
+      <div class="not-prose my-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Growth</p>
+          <p class="text-sm text-slate-700 mt-1"><code>phantom</code>, <code>sector</code>, <code>zoning</code>, <code>skeletal</code>, <code>dendritic</code></p>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Surface</p>
+          <p class="text-sm text-slate-700 mt-1"><code>striation</code>, <code>trigon</code>, <code>etch_pit</code>, <code>growth_hillock</code></p>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Inclusions</p>
+          <p class="text-sm text-slate-700 mt-1"><code>inclusion</code>, <code>needle</code>, <code>silk</code>, <code>fluid</code>, <code>bubble</code></p>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Colour</p>
+          <p class="text-sm text-slate-700 mt-1"><code>colour</code>, <code>colour_zone</code>, <code>pleochroism</code>, <code>lamellar</code>, <code>banding</code></p>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- PHENOMENA (v1.2) -->
+      <!-- ============================================================ -->
+
+      <h2 id="phenomena">Phenomena <span class="text-sm font-normal text-slate-400">(v1.2)</span></h2>
+
+      <p>
+        Optical phenomena are crystal-level annotations (not per-form).
+        They follow the form list (and any modifications or twin), separated by <code>|</code>,
+        using the syntax <code>phenomenon[type:value]</code>.
+      </p>
+
+      <CodeBlock lang="text" code={`# Star sapphire (6-rayed asterism)
+trigonal[-3m]:{10-11}@1.0 | phenomenon[asterism:6]
+
+# Cat's eye chatoyancy
+orthorhombic[mmm]:{110}@1.0 | phenomenon[chatoyancy:sharp]
+
+# Phenomenon with additional parameters
+trigonal[-3m]:{10-11} | phenomenon[asterism:6, intensity:strong]
+
+# Phenomenon after twin
+cubic[m3m]:{111} | twin(spinel) | phenomenon[asterism:6]
+
+# Phenomenon after modification
+cubic[m3m]:{111} | elongate(c:1.5) | phenomenon[asterism:6]
+
+# Features on forms AND phenomenon on crystal
+trigonal[-3m]:{10-11}@1.0[silk:dense] | phenomenon[asterism:6]`} />
+
+      <h3>Phenomenon Types</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Example Gems</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>asterism</code></td>
+            <td>Star effect (4, 6, or 12 rays)</td>
+            <td>Star sapphire, star ruby</td>
+          </tr>
+          <tr>
+            <td><code>chatoyancy</code></td>
+            <td>Cat's eye band</td>
+            <td>Chrysoberyl cat's eye</td>
+          </tr>
+          <tr>
+            <td><code>adularescence</code></td>
+            <td>Billowy internal glow</td>
+            <td>Moonstone</td>
+          </tr>
+          <tr>
+            <td><code>labradorescence</code></td>
+            <td>Spectral colour play on cleavage planes</td>
+            <td>Labradorite</td>
+          </tr>
+          <tr>
+            <td><code>play_of_color</code></td>
+            <td>Spectral flashes from diffraction</td>
+            <td>Opal</td>
+          </tr>
+          <tr>
+            <td><code>colour_change</code></td>
+            <td>Hue shift under different lighting</td>
+            <td>Alexandrite</td>
+          </tr>
+          <tr>
+            <td><code>aventurescence</code></td>
+            <td>Spangled glitter from inclusions</td>
+            <td>Sunstone, aventurine</td>
+          </tr>
+          <tr>
+            <td><code>iridescence</code></td>
+            <td>Rainbow colours from thin-film interference</td>
+            <td>Rainbow quartz</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================ -->
+      <!-- GROUPING (v1.3) -->
+      <!-- ============================================================ -->
+
+      <h2 id="grouping">Grouping <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+
+      <p>
+        Parenthesized groups allow shared features to be applied to multiple forms at once.
+        Features placed after the closing parenthesis apply to all forms in the group.
+      </p>
+
+      <CodeBlock lang="text" code={`# Group with shared feature
+cubic[m3m]:({111}@1.0 + {100}@1.3)[phantom:3]
+
+# Group alongside a standalone form
+cubic[m3m]:({111} + {100})[phantom:3] + {110}@0.8
+
+# Nested groups
+cubic[m3m]:(({111} + {100}) + {110})
+
+# Individual features within a group merge with group features
+cubic[m3m]:({111}[trigon:dense] + {100})[phantom:3]`} />
+
+      <p>
+        When <code>flat_forms()</code> is called on the parsed result, group features are
+        merged into each child form. In the last example above, the <code>{'{'}111{'}'}</code> form
+        would have both <code>trigon:dense</code> (its own) and <code>phantom:3</code> (from the group).
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- LABELS (v1.3) -->
+      <!-- ============================================================ -->
+
+      <h2 id="labels">Labels <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+
+      <p>
+        Labels assign descriptive names to forms or groups using a <code>label:</code> prefix.
+        This is useful for documenting which form plays what role in the crystal.
+      </p>
+
+      <CodeBlock lang="text" code={`# Label individual forms
+cubic[m3m]:core:{111}@1.0 + rim:{100}@1.3
+
+# Label a group
+cubic[m3m]:core:({111} + {100})[phantom:3]`} />
+
+      <p>
+        Named forms (like <code>octahedron</code>, <code>prism</code>) are not treated as
+        labels &mdash; they are resolved to their Miller indices directly. Labels must be identifiers
+        that are not known named forms.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- DEFINITIONS (v1.3) -->
+      <!-- ============================================================ -->
+
+      <h2 id="definitions">Definitions <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+
+      <p>
+        Named definitions let you assign a form expression to a name with <code>@name = expr</code>,
+        then reference it with <code>$name</code>. Definitions are resolved by text substitution
+        before parsing. They must appear on their own lines before the main CDL expression.
+      </p>
+
+      <CodeBlock lang="text" code={`# Simple definition and reference
+@oct = {111}@1.0
+cubic[m3m]:$oct + {100}@1.3
+
+# Multiple definitions
+@prism = {10-10}@1.0
+@rhomb = {10-11}@0.8
+trigonal[-3m]:$prism + $rhomb
+
+# Definitions can reference earlier definitions
+@a = {111}@1.0
+@b = {100}@1.3
+@combo = $a + $b
+cubic[m3m]:$combo
+
+# Definitions work with comments and doc comments
+#! Mineral: Diamond
+@oct = {111}@1.0
+# Main crystal form
+cubic[m3m]:$oct`} />
+
+      <p>
+        Referencing an undefined name raises a parse error.
+        Definitions are stored on the parsed result for inspection by tools.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- FULL GRAMMAR -->
+      <!-- ============================================================ -->
+
+      <h2 id="grammar">Full Grammar</h2>
+
+      <p>The complete CDL grammar, expressed as a production rule summary:</p>
+
+      <CodeBlock lang="text" code={`cdl         = definitions? system ['[' point_group ']'] ':' form_list modifiers?
+definitions = ('@' name '=' form_list NEWLINE)*
+
+form_list   = form_or_group ('+' form_or_group)*
+form_or_group = label? '(' form_list ')' features?   # group
+              | label? form                            # single form
+
+form        = (named_form | '{' miller '}') ['@' scale] features?
+features    = '[' feature (',' feature)* ']'
+feature     = name ':' value (',' value)*
+
+modifiers   = ('|' modification_list)? ('|' twin)? ('|' phenomenon)?
+modification_list = modification (',' modification)*
+modification      = type '(' param ':' value ')'
+twin              = 'twin' '(' (law [',' count] | '[' axis ']' ',' angle) ')'
+phenomenon        = 'phenomenon' '[' type [':' value] (',' param ':' value)* ']'
+
+label       = IDENTIFIER ':'
+miller      = INTEGER{3..4}
+scale       = NUMBER
+name, type  = IDENTIFIER
+value       = NUMBER | IDENTIFIER`} />
+
+      <!-- ============================================================ -->
+      <!-- PROCESSING ORDER -->
+      <!-- ============================================================ -->
+
+      <h2 id="processing-order">Processing Order</h2>
+
+      <p>CDL text is processed through these stages:</p>
+
+      <ol>
+        <li><strong>Doc comment extraction</strong> &mdash; <code>#!</code> lines are captured as metadata</li>
+        <li><strong>Comment stripping</strong> &mdash; <code>#</code> and <code>/* */</code> are removed</li>
+        <li><strong>Definition pre-processing</strong> &mdash; <code>@name = ...</code> lines are extracted and <code>$name</code> references are resolved by text substitution</li>
+        <li><strong>Lexing</strong> &mdash; remaining text is tokenized</li>
+        <li><strong>Parsing</strong> &mdash; tokens are parsed into the AST: system, point group, form tree, modifications, twin, phenomenon</li>
+        <li><strong>Validation</strong> &mdash; point group checked against system</li>
+      </ol>
 
       <Card padding="md" class="mt-12 bg-crystal-50 border-crystal-200">
         <h3 class="text-lg font-semibold text-crystal-900 mt-0">Try it yourself</h3>

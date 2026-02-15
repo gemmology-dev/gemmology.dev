@@ -19,8 +19,8 @@ import { Container, Button } from '../../components/ui-astro';
       <h1>Installation</h1>
 
       <p class="lead text-xl text-slate-600">
-        The gemmology.dev ecosystem consists of four Python packages that work together
-        to parse, compute, and render crystal structures.
+        The gemmology.dev ecosystem consists of five Python packages that work together
+        to parse, compute, render, and query crystal structures.
       </p>
 
       <h2>Requirements</h2>
@@ -34,7 +34,7 @@ import { Container, Button } from '../../components/ui-astro';
 
       <p>Install all packages at once:</p>
 
-      <CodeBlock lang="bash" code={`pip install cdl-parser crystal-geometry mineral-database crystal-renderer`} />
+      <CodeBlock lang="bash" code={`pip install gemmology-cdl-parser gemmology-crystal-geometry gemmology-mineral-database gemmology-crystal-renderer`} />
 
       <h2>Virtual Environment (Recommended)</h2>
 
@@ -50,7 +50,7 @@ source venv/bin/activate
 venv\\Scripts\\activate
 
 # Install packages
-pip install cdl-parser crystal-geometry mineral-database crystal-renderer`} />
+pip install gemmology-cdl-parser gemmology-crystal-geometry gemmology-mineral-database gemmology-crystal-renderer`} />
 
       <h2>Individual Packages</h2>
 
@@ -60,30 +60,41 @@ pip install cdl-parser crystal-geometry mineral-database crystal-renderer`} />
         <thead>
           <tr>
             <th>Package</th>
+            <th>Version</th>
             <th>Purpose</th>
             <th>Install Command</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>cdl-parser</code></td>
-            <td>Parse CDL expressions</td>
-            <td><code>pip install cdl-parser</code></td>
+            <td><code>gemmology-cdl-parser</code></td>
+            <td>1.3.0</td>
+            <td>Parse CDL expressions (zero dependencies)</td>
+            <td><code>pip install gemmology-cdl-parser</code></td>
           </tr>
           <tr>
-            <td><code>crystal-geometry</code></td>
+            <td><code>gemmology-crystal-geometry</code></td>
+            <td>1.0.5</td>
             <td>Generate 3D geometry</td>
-            <td><code>pip install crystal-geometry</code></td>
+            <td><code>pip install gemmology-crystal-geometry</code></td>
           </tr>
           <tr>
-            <td><code>mineral-database</code></td>
-            <td>Access mineral presets</td>
-            <td><code>pip install mineral-database</code></td>
+            <td><code>gemmology-mineral-database</code></td>
+            <td>1.8.1</td>
+            <td>Access mineral presets (96 families, 128 expressions)</td>
+            <td><code>pip install gemmology-mineral-database</code></td>
           </tr>
           <tr>
-            <td><code>crystal-renderer</code></td>
+            <td><code>gemmology-crystal-renderer</code></td>
+            <td>1.0.1</td>
             <td>Render to SVG/STL/glTF</td>
-            <td><code>pip install crystal-renderer</code></td>
+            <td><code>pip install gemmology-crystal-renderer</code></td>
+          </tr>
+          <tr>
+            <td><code>gemmology-cdl-lsp</code></td>
+            <td>1.1.0</td>
+            <td>Language Server Protocol for editors</td>
+            <td><code>pip install gemmology-cdl-lsp</code></td>
           </tr>
         </tbody>
       </table>
@@ -118,20 +129,25 @@ pytest`} />
         <thead>
           <tr>
             <th>Feature</th>
-            <th>Dependency</th>
+            <th>Package</th>
             <th>Install Command</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>STL export</td>
-            <td>numpy-stl</td>
-            <td><code>pip install numpy-stl</code></td>
+            <td>SVG raster conversion</td>
+            <td>cairosvg, Pillow</td>
+            <td><code>pip install gemmology-crystal-renderer[raster]</code></td>
           </tr>
           <tr>
-            <td>glTF export</td>
-            <td>pygltflib</td>
-            <td><code>pip install pygltflib</code></td>
+            <td>YAML mineral export</td>
+            <td>pyyaml</td>
+            <td><code>pip install gemmology-mineral-database[yaml]</code></td>
+          </tr>
+          <tr>
+            <td>LSP preview</td>
+            <td>crystal-geometry, crystal-renderer</td>
+            <td><code>pip install gemmology-cdl-lsp[preview]</code></td>
           </tr>
         </tbody>
       </table>

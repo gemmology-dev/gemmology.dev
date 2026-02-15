@@ -7,7 +7,7 @@ import { Container, Card } from '../../components/ui-astro';
 
 <BaseLayout
   title="CLI Reference"
-  description="Command-line interface reference for generating crystal visualizations."
+  description="Command-line interface reference for CDL parsing, mineral database queries, and crystal visualization."
 >
   <Container size="md" padding="lg">
     <Breadcrumb items={[
@@ -19,17 +19,111 @@ import { Container, Card } from '../../components/ui-astro';
       <h1>Command Line Interface</h1>
 
       <p class="lead text-xl text-slate-600">
-        Generate crystal visualizations directly from your terminal using the
-        <code>gemmology</code> CLI tool.
+        The gemmology ecosystem provides three CLI tools for parsing CDL expressions,
+        querying the mineral database, and generating crystal visualizations.
       </p>
 
-      <h2>Installation</h2>
+      <h2 id="cdl"><code>cdl</code> - CDL Parser CLI</h2>
+
+      <CodeBlock lang="bash" code={`pip install gemmology-cdl-parser`} />
+
+      <h3>Parse a CDL Expression</h3>
+
+      <CodeBlock lang="bash" code={`# Parse and display the result
+cdl parse "cubic[m3m]:{111}"
+
+# Parse with JSON output
+cdl parse "cubic[m3m]:{111}@1.0 + {100}@1.3" --json
+
+# Parse a complex expression
+cdl parse "trigonal[-3m]:{10-10}@1.0 + {10-11}@0.8 | elongate(c:1.5)"`} />
+
+      <h3>Validate a CDL Expression</h3>
+
+      <CodeBlock lang="bash" code={`# Returns exit code 0 if valid, 1 if invalid
+cdl validate "cubic[m3m]:{111}"
+cdl validate "hexagonal[6/mmm]:{10-10} + {0001}"`} />
+
+      <h3>Reference Data</h3>
+
+      <CodeBlock lang="bash" code={`# List all crystal systems with default point groups
+cdl --list-systems
+
+# List all point groups by crystal system
+cdl --list-point-groups
+
+# List all named forms (e.g., octahedron, cube, prism)
+cdl --list-forms
+
+# List all twin laws
+cdl --list-twins
+
+# Show version
+cdl --version`} />
+
+      <h2 id="mineral-db"><code>mineral-db</code> - Mineral Database CLI</h2>
+
+      <CodeBlock lang="bash" code={`pip install gemmology-mineral-database`} />
+
+      <h3>List Presets</h3>
+
+      <CodeBlock lang="bash" code={`# List all 128 presets
+mineral-db --list
+
+# List presets by crystal system
+mineral-db --list cubic
+mineral-db --list trigonal
+
+# List preset categories
+mineral-db --categories
+
+# Count total presets
+mineral-db --count`} />
+
+      <h3>Query Preset Details</h3>
+
+      <CodeBlock lang="bash" code={`# Show detailed info for a preset
+mineral-db --info diamond-octahedron
+
+# Output preset as JSON
+mineral-db --json diamond-octahedron
+
+# Search presets by name, mineral, or chemistry
+mineral-db --search garnet
+mineral-db --search SiO2`} />
+
+      <h3>Synthetic and Simulant Queries</h3>
+
+      <CodeBlock lang="bash" code={`# List all synthetic minerals
+mineral-db --synthetics
+
+# Filter synthetics by growth method
+mineral-db --synthetics flux
+mineral-db --synthetics cvd
+
+# List all simulants
+mineral-db --simulants
+
+# Filter simulants by target mineral
+mineral-db --simulants diamond
+
+# Show all counterparts for a natural mineral
+mineral-db --counterparts diamond
+
+# Filter by origin type
+mineral-db --list --origin natural
+mineral-db --list --origin synthetic
+mineral-db --list --origin simulant
+mineral-db --list --origin composite`} />
+
+      <h2 id="gemmology"><code>gemmology</code> - Plugin CLI</h2>
 
       <CodeBlock lang="bash" code={`pip install gemmology-plugin`} />
 
-      <p>This installs the <code>gemmology</code> command along with all required packages.</p>
+      <p>The <code>gemmology</code> command is installed with the plugin package and provides
+      crystal visualization from the terminal.</p>
 
-      <h2>Basic Usage</h2>
+      <h3>Basic Usage</h3>
 
       <CodeBlock lang="bash" code={`# Generate from CDL
 gemmology --cdl "cubic[m3m]:{111}" -o octahedron.svg
@@ -40,9 +134,7 @@ gemmology --preset diamond -o diamond.svg
 # Generate twin
 gemmology --twin japan -o japan_twin.svg`} />
 
-      <h2>Options</h2>
-
-      <h3>Input Options</h3>
+      <h3>Options</h3>
 
       <table>
         <thead>
@@ -68,44 +160,14 @@ gemmology --twin japan -o japan_twin.svg`} />
             <td><code>--habit &lt;name&gt;</code></td>
             <td>Use a named crystal habit</td>
           </tr>
-        </tbody>
-      </table>
-
-      <h3>Output Options</h3>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
           <tr>
             <td><code>-o, --output &lt;file&gt;</code></td>
             <td>Output file path</td>
           </tr>
           <tr>
             <td><code>--format &lt;fmt&gt;</code></td>
-            <td>Output format: <code>svg</code>, <code>stl</code>, <code>gltf</code>, <code>gemcad</code></td>
+            <td>Output format: <code>svg</code>, <code>stl</code>, <code>gltf</code></td>
           </tr>
-          <tr>
-            <td><code>--size &lt;px&gt;</code></td>
-            <td>SVG size in pixels (default: 400)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>View Options</h3>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
           <tr>
             <td><code>--elev &lt;deg&gt;</code></td>
             <td>Elevation angle in degrees (default: 30)</td>
@@ -122,19 +184,6 @@ gemmology --twin japan -o japan_twin.svg`} />
             <td><code>--no-axes</code></td>
             <td>Disable crystallographic axes</td>
           </tr>
-        </tbody>
-      </table>
-
-      <h3>Info Panel Options</h3>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
           <tr>
             <td><code>--info-fga</code></td>
             <td>Add FGA-style info panel with properties</td>
@@ -143,86 +192,62 @@ gemmology --twin japan -o japan_twin.svg`} />
             <td><code>--info-basic</code></td>
             <td>Add basic info panel (name, system, CDL)</td>
           </tr>
+          <tr>
+            <td><code>--list-presets</code></td>
+            <td>List all available presets</td>
+          </tr>
+          <tr>
+            <td><code>--list-twins</code></td>
+            <td>List all available twin laws</td>
+          </tr>
         </tbody>
       </table>
 
-      <h2>Examples</h2>
+      <h3>Examples</h3>
 
-      <h3>Generate Diamond Preset</h3>
-      <CodeBlock lang="bash" code={`gemmology --preset diamond -o diamond.svg`} />
+      <CodeBlock lang="bash" code={`# Custom CDL with view angles
+gemmology --cdl "cubic[m3m]:{111}@1.0 + {100}@1.3" \\
+  --elev 45 --azim -30 -o truncated.svg
 
-      <h3>Custom CDL with View Angles</h3>
-      <CodeBlock lang="bash" code={`gemmology --cdl "cubic[m3m]:{111}@1.0 + {100}@1.3" \\
-  --elev 45 --azim -30 -o truncated.svg`} />
+# Export to STL for 3D printing
+gemmology --preset quartz --format stl -o quartz.stl
 
-      <h3>Export to STL for 3D Printing</h3>
-      <CodeBlock lang="bash" code={`gemmology --preset quartz --format stl -o quartz.stl`} />
+# Generate with FGA info panel
+gemmology --preset ruby --info-fga --no-grid -o ruby.svg
 
-      <h3>Generate with FGA Info Panel</h3>
-      <CodeBlock lang="bash" code={`gemmology --preset ruby --info-fga --no-grid -o ruby.svg`} />
-
-      <h3>Generate Japan Law Twin</h3>
-      <CodeBlock lang="bash" code={`gemmology --twin japan --elev 20 --azim -60 -o japan_twin.svg`} />
-
-      <h2>Available Presets</h2>
-
-      <p>List all available presets:</p>
-      <CodeBlock lang="bash" code={`gemmology --list-presets`} />
-
-      <p>Get details about a specific preset:</p>
-      <CodeBlock lang="bash" code={`gemmology --preset-info diamond`} />
-
-      <h2>Available Twin Laws</h2>
-
-      <p>List all available twin laws:</p>
-      <CodeBlock lang="bash" code={`gemmology --list-twins`} />
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 not-prose my-8 text-sm">
-        {[
-          'spinel_law',
-          'japan',
-          'brazil',
-          'dauphine',
-          'carlsbad',
-          'manebach',
-          'baveno',
-          'albite',
-          'pericline',
-          'iron_cross',
-          'staurolite_60',
-          'staurolite_90',
-          'fluorite',
-          'gypsum_swallow',
-          'chrysoberyl',
-          'rutile_geniculated'
-        ].map((twin) => (
-          <code class="bg-slate-100 px-2 py-1 rounded">{twin}</code>
-        ))}
-      </div>
+# Japan law twin
+gemmology --twin japan --elev 20 --azim -60 -o japan_twin.svg`} />
 
       <h2>Programmatic Usage</h2>
 
-      <p>The CLI is a thin wrapper around the Python packages. For programmatic use:</p>
+      <p>The CLI tools are thin wrappers around the Python packages. For programmatic use:</p>
 
       <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
 from crystal_geometry import cdl_to_geometry
-from crystal_renderer import generate_svg
+from crystal_renderer import generate_cdl_svg, export_stl
 from mineral_database import get_preset
 
-# From CDL
-desc = parse_cdl("cubic[m3m]:{111}")
+# From CDL string (simplest approach)
+generate_cdl_svg("cubic[m3m]:{111}", "diamond.svg")
+
+# Step by step with geometry access
+desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
 geom = cdl_to_geometry(desc)
-svg = generate_svg(geom, elevation=30, azimuth=-45)
+print(f"Vertices: {len(geom.vertices)}, Faces: {len(geom.faces)}")
+
+# Export to STL
+export_stl(geom.vertices, geom.faces, "diamond.stl")
 
 # From preset
-preset = get_preset("diamond")
-desc = parse_cdl(preset.cdl)
-geom = cdl_to_geometry(desc)
-svg = generate_svg(geom)`} />
+preset = get_preset("diamond-octahedron")
+if preset:
+    generate_cdl_svg(preset['cdl'], "diamond.svg")`} />
 
       <Card padding="md" class="mt-12 bg-slate-50 border-slate-200">
         <h3 class="text-lg font-semibold text-slate-900 mt-0">Need help?</h3>
-        <CodeBlock lang="bash" code={`gemmology --help`} />
+        <CodeBlock lang="bash" code={`cdl --help
+mineral-db --help
+gemmology --help`} />
       </Card>
     </article>
   </Container>
