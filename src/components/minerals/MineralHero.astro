@@ -16,7 +16,7 @@ const { mineral } = Astro.props;
 // Use SVG from database if available, otherwise fallback to file path
 const hasSvgContent = isValidSvg(mineral.model_svg);
 const cleanedSvg = hasSvgContent ? cleanCrystalSvg(mineral.model_svg!) : '';
-const svgPath = `/crystals/${mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}.svg`;
+const svgPath = `/crystals/${mineral.id}.svg`;
 
 // System colors
 const systemColors: Record<string, string> = {
