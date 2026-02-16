@@ -13,7 +13,7 @@ import CounterpartsSection from '../../components/minerals/CounterpartsSection.a
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
-import { getAllMinerals, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
+import { getAllMinerals, getAllFamilies, getPrimaryExpressionId, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
@@ -26,13 +26,32 @@ export async function getStaticPaths() {
     })
   );
 
-  // Use mineral.id (preset ID) for URL slug - matches SVG filenames
-  return mineralsWithModels.map((mineral) => ({
-    params: {
-      slug: mineral.id,
-    },
+  // Index by expression ID for fast lookup
+  const byId = new Map(mineralsWithModels.map((m) => [m.id, m]));
+
+  // Build paths for each expression (e.g., /minerals/pearl-nacre)
+  const paths = mineralsWithModels.map((mineral) => ({
+    params: { slug: mineral.id },
     props: { mineral },
   }));
+
+  // Also generate family-level pages (e.g., /minerals/pearl) that show the
+  // primary expression. This ensures gallery links (which use family IDs) work.
+  const families = await getAllFamilies();
+  for (const family of families) {
+    if (!byId.has(family.id)) {
+      const primaryId = await getPrimaryExpressionId(family.id);
+      const primary = primaryId ? byId.get(primaryId) : undefined;
+      if (primary) {
+        paths.push({
+          params: { slug: family.id },
+          props: { mineral: primary },
+        });
+      }
+    }
+  }
+
+  return paths;
 }
 
 interface Props {
