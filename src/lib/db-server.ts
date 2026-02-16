@@ -403,6 +403,33 @@ export async function getExpressionsForFamily(familyId: string): Promise<Mineral
 }
 
 /**
+ * Get the primary expression ID for a family.
+ */
+export async function getPrimaryExpressionId(familyId: string): Promise<string | null> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id FROM mineral_expressions
+     WHERE family_id = ? AND is_primary = 1
+     LIMIT 1`,
+    [familyId.toLowerCase()]
+  );
+
+  if (result.length === 0 || result[0].values.length === 0) {
+    // Fallback to first expression
+    const fallback = database.exec(
+      `SELECT id FROM mineral_expressions
+       WHERE family_id = ?
+       ORDER BY sort_order ASC LIMIT 1`,
+      [familyId.toLowerCase()]
+    );
+    if (fallback.length === 0 || fallback[0].values.length === 0) return null;
+    return fallback[0].values[0][0] as string;
+  }
+
+  return result[0].values[0][0] as string;
+}
+
+/**
  * Get a family with all its expressions.
  */
 export async function getFamilyWithExpressions(

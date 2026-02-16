@@ -4,7 +4,7 @@
  * Generates 1200×630 social media preview cards
  * Shows: crystal SVG, name, system badge, CDL code, chemistry
  */
-import { getAllMinerals, getMineralWithModels, type Mineral } from '../../../lib/db-server';
+import { getAllMinerals, getAllFamilies, getPrimaryExpressionId, getMineralWithModels, type Mineral } from '../../../lib/db-server';
 import { cleanCrystalSvg, isValidSvg } from '../../../lib/svg-utils';
 
 export async function getStaticPaths() {
@@ -18,11 +18,31 @@ export async function getStaticPaths() {
     })
   );
 
-  // Use mineral.id for URL slug (matches preset IDs)
-  return mineralsWithModels.map((mineral) => ({
+  // Index by expression ID for fast lookup
+  const byId = new Map(mineralsWithModels.map((m) => [m.id, m]));
+
+  // Build paths for each expression
+  const paths = mineralsWithModels.map((mineral) => ({
     params: { slug: mineral.id },
     props: { mineral },
   }));
+
+  // Also generate family-level OG images so /og/minerals/pearl works
+  const families = await getAllFamilies();
+  for (const family of families) {
+    if (!byId.has(family.id)) {
+      const primaryId = await getPrimaryExpressionId(family.id);
+      const primary = primaryId ? byId.get(primaryId) : undefined;
+      if (primary) {
+        paths.push({
+          params: { slug: family.id },
+          props: { mineral: primary },
+        });
+      }
+    }
+  }
+
+  return paths;
 }
 
 interface Props {
