@@ -11,9 +11,8 @@ interface Props {
 
 const { mineral } = Astro.props;
 
-const slug = mineral.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
-const url = `https://gemmology.dev/minerals/${slug}`;
-const imageUrl = `https://gemmology.dev/crystals/${slug}.svg`;
+const url = `https://gemmology.dev/minerals/${mineral.id}`;
+const imageUrl = `https://gemmology.dev/crystals/${mineral.id}.svg`;
 
 // Build the JSON-LD schema
 const schema = {
