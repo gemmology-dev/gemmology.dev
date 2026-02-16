@@ -1,0 +1,26 @@
+---
+/**
+ * TagList - Renders a JSON string array as coloured tag pills
+ */
+interface Props {
+  title: string;
+  json?: string | null;
+  colorClass?: string;
+}
+
+const { title, json, colorClass = 'bg-slate-100 text-slate-700' } = Astro.props;
+const items: string[] = json ? JSON.parse(json) : [];
+---
+
+{items.length > 0 && (
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-100">
+      <h2 class="text-lg font-semibold text-slate-900">{title}</h2>
+    </div>
+    <div class="px-6 py-4 flex flex-wrap gap-2">
+      {items.map((item) => (
+        <span class={`px-3 py-1 rounded-full text-sm font-medium ${colorClass}`}>{item}</span>
+      ))}
+    </div>
+  </div>
+)}
