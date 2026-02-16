@@ -26,9 +26,9 @@ const validProperties = properties.filter(p => p.value);
     </div>
     <div class="divide-y divide-slate-100">
       {validProperties.map((property) => (
-        <div class="px-6 py-3 flex justify-between items-center">
-          <span class="text-slate-600">{property.label}</span>
-          <span class="font-medium text-slate-900">{property.value}</span>
+        <div class="px-6 py-3 flex justify-between gap-4">
+          <span class="text-slate-600 shrink-0">{property.label}</span>
+          <span class="font-medium text-slate-900 text-right">{property.value}</span>
         </div>
       ))}
     </div>

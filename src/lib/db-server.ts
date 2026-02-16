@@ -24,6 +24,11 @@ export interface Mineral {
   cleavage?: string;
   fracture?: string;
   pleochroism?: string;
+  pleochroism_strength?: string;
+  pleochroism_color1?: string;
+  pleochroism_color2?: string;
+  pleochroism_color3?: string;
+  pleochroism_notes?: string;
   twin_law?: string;
   phenomenon?: string;
   note?: string;
@@ -36,6 +41,12 @@ export interface Mineral {
   model_stl?: Uint8Array;
   model_gltf?: string;
   models_generated_at?: string;
+  // Family-level fields
+  fluorescence?: string;
+  category?: string;
+  diagnostic_features?: string;
+  common_inclusions?: string;
+  family_id?: string;
   // Synthetic/simulant classification
   origin?: string;
   growth_method?: string;
@@ -121,6 +132,9 @@ export async function getMineralWithModels(name: string): Promise<Mineral | null
     `SELECT id, name, system, cdl, point_group, chemistry, hardness, description,
             sg, ri, birefringence, optical_character, dispersion, lustre, cleavage,
             fracture, pleochroism, twin_law, phenomenon, note,
+            pleochroism_strength, pleochroism_color1, pleochroism_color2,
+            pleochroism_color3, pleochroism_notes,
+            localities_json, forms_json, colors_json, treatments_json, inclusions_json,
             model_svg, model_gltf,
             origin, growth_method, natural_counterpart_id
      FROM minerals WHERE name = ? LIMIT 1`,
@@ -136,20 +150,32 @@ export async function getMineralWithModels(name: string): Promise<Mineral | null
     mineral[col] = row[i];
   });
 
-  // Fetch family-level fields not in the minerals view
-  if (mineral.origin && mineral.origin !== 'natural') {
-    const familyResult = database.exec(
-      `SELECT diagnostic_synthetic_features, manufacturer, year_first_produced
-       FROM mineral_families WHERE id = ? LIMIT 1`,
-      [mineral.id as string]
-    );
-    if (familyResult.length > 0 && familyResult[0].values.length > 0) {
-      const famCols = familyResult[0].columns;
-      const famRow = familyResult[0].values[0];
-      famCols.forEach((col, i) => {
+  // Resolve family_id via mineral_expressions (expression id -> family_id)
+  const exprResult = database.exec(
+    `SELECT family_id FROM mineral_expressions WHERE id = ? LIMIT 1`,
+    [mineral.id as string]
+  );
+  const familyId = exprResult.length > 0 && exprResult[0].values.length > 0
+    ? exprResult[0].values[0][0] as string
+    : mineral.id as string;
+  mineral.family_id = familyId;
+
+  // Fetch family-level fields (fluorescence, category, diagnostic_features, common_inclusions)
+  // plus synthetic-specific fields — these live on mineral_families, not in the view
+  const familyResult = database.exec(
+    `SELECT fluorescence, category, diagnostic_features, common_inclusions,
+            diagnostic_synthetic_features, manufacturer, year_first_produced
+     FROM mineral_families WHERE id = ? LIMIT 1`,
+    [familyId]
+  );
+  if (familyResult.length > 0 && familyResult[0].values.length > 0) {
+    const famCols = familyResult[0].columns;
+    const famRow = familyResult[0].values[0];
+    famCols.forEach((col, i) => {
+      if (famRow[i] != null) {
         mineral[col] = famRow[i];
-      });
-    }
+      }
+    });
   }
 
   return mineral as Mineral;

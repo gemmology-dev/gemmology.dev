@@ -12,6 +12,7 @@ import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import CounterpartsSection from '../../components/minerals/CounterpartsSection.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
+import TagList from '../../components/minerals/TagList.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getAllFamilies, getPrimaryExpressionId, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
 
@@ -106,6 +107,7 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
               { label: 'Cleavage', value: mineral.cleavage },
               { label: 'Fracture', value: mineral.fracture },
               { label: 'Lustre', value: mineral.lustre },
+              { label: 'Twin Law', value: mineral.twin_law },
             ]}
           />
 
@@ -115,8 +117,13 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
             properties={[
               { label: 'Refractive Index', value: mineral.ri },
               { label: 'Birefringence', value: mineral.birefringence },
-              { label: 'Pleochroism', value: mineral.pleochroism },
+              { label: 'Optical Character', value: mineral.optical_character },
               { label: 'Dispersion', value: mineral.dispersion },
+              { label: 'Pleochroism', value: mineral.pleochroism_strength
+                ? `${mineral.pleochroism_strength.replace(/_/g, ' ')}${mineral.pleochroism_color1 ? ': ' + [mineral.pleochroism_color1, mineral.pleochroism_color2, mineral.pleochroism_color3].filter(Boolean).join(' / ') : ''}${mineral.pleochroism_notes ? ' (' + mineral.pleochroism_notes + ')' : ''}`
+                : mineral.pleochroism },
+              { label: 'Phenomenon', value: mineral.phenomenon?.replace(/_/g, ' ') },
+              { label: 'Fluorescence', value: mineral.fluorescence },
             ]}
           />
 
@@ -132,6 +139,33 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
                 { label: 'Diagnostic Features', value: mineral.diagnostic_synthetic_features },
               ]}
             />
+          )}
+
+          {/* JSON array sections */}
+          <TagList title="Colours" json={mineral.colors_json} colorClass="bg-sky-50 text-sky-700" />
+          <TagList title="Localities" json={mineral.localities_json} colorClass="bg-emerald-50 text-emerald-700" />
+          <TagList title="Common Inclusions" json={mineral.inclusions_json} colorClass="bg-amber-50 text-amber-700" />
+          <TagList title="Known Treatments" json={mineral.treatments_json} colorClass="bg-rose-50 text-rose-700" />
+          <TagList title="Crystal Forms" json={mineral.forms_json} colorClass="bg-violet-50 text-violet-700" />
+
+          {/* Diagnostic Features (family-level) */}
+          {mineral.diagnostic_features && (
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+              <div class="px-6 py-4 border-b border-slate-100">
+                <h2 class="text-lg font-semibold text-slate-900">Diagnostic Features</h2>
+              </div>
+              <div class="px-6 py-4 text-slate-700">{mineral.diagnostic_features}</div>
+            </div>
+          )}
+
+          {/* Notes */}
+          {mineral.note && (
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+              <div class="px-6 py-4 border-b border-slate-100">
+                <h2 class="text-lg font-semibold text-slate-900">Notes</h2>
+              </div>
+              <div class="px-6 py-4 text-slate-700">{mineral.note}</div>
+            </div>
           )}
         </div>
 
