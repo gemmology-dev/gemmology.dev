@@ -157,6 +157,8 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
 
   const properties = [
     { label: 'Chemistry', value: family.chemistry },
+    { label: 'Mineral Group', value: family.mineral_group },
+    { label: 'Category', value: family.category },
     { label: 'Hardness', value: hardnessDisplay },
     { label: 'Specific Gravity', value: sgDisplay },
     { label: 'Refractive Index', value: riDisplay },
@@ -166,6 +168,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
     { label: 'Lustre', value: family.lustre },
     { label: 'Cleavage', value: family.cleavage },
     { label: 'Fracture', value: family.fracture },
+    { label: 'Fluorescence', value: family.fluorescence },
   ].filter(p => p.value !== undefined && p.value !== null && p.value !== '');
 
   return (

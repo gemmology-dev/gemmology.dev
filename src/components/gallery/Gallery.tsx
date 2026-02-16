@@ -13,11 +13,12 @@ interface GalleryProps {
 }
 
 export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin = '' }: GalleryProps) {
-  const { families, loading, error, search, filterBySystem, filterByOrigin } = useFamilies();
-  const { systems, origins, loading: filtersLoading } = useFilters();
+  const { families, loading, error, search, filterBySystem, filterByOrigin, filterByGroup } = useFamilies();
+  const { systems, origins, mineralGroups, loading: filtersLoading } = useFilters();
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
   const [selectedOrigin, setSelectedOrigin] = useState<string | null>(initialOrigin || null);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   // Pagination
   const { page, params: paginationParams, onPageChange, onPageSizeChange, resetPage } = usePagination({
@@ -45,6 +46,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
       setSearchQuery(query);
       setSelectedSystem(null);
       setSelectedOrigin(null);
+      setSelectedGroup(null);
       search(query);
       resetPage();
     },
@@ -55,6 +57,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
     (system: string | null) => {
       setSelectedSystem(system);
       setSelectedOrigin(null);
+      setSelectedGroup(null);
       setSearchQuery('');
       filterBySystem(system);
       resetPage();
@@ -66,11 +69,24 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
     (origin: string | null) => {
       setSelectedOrigin(origin);
       setSelectedSystem(null);
+      setSelectedGroup(null);
       setSearchQuery('');
       filterByOrigin(origin);
       resetPage();
     },
     [filterByOrigin, resetPage]
+  );
+
+  const handleGroupChange = useCallback(
+    (group: string | null) => {
+      setSelectedGroup(group);
+      setSelectedSystem(null);
+      setSelectedOrigin(null);
+      setSearchQuery('');
+      filterByGroup(group);
+      resetPage();
+    },
+    [filterByGroup, resetPage]
   );
 
   // Debounce search
@@ -99,6 +115,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
     const params = new URLSearchParams();
     if (selectedSystem) params.set('system', selectedSystem);
     if (selectedOrigin) params.set('origin', selectedOrigin);
+    if (selectedGroup) params.set('group', selectedGroup);
     if (searchQuery) params.set('search', searchQuery);
 
     const newUrl = params.toString()
@@ -106,7 +123,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
       : window.location.pathname;
 
     window.history.replaceState({}, '', newUrl);
-  }, [selectedSystem, selectedOrigin, searchQuery]);
+  }, [selectedSystem, selectedOrigin, selectedGroup, searchQuery]);
 
   if (error) {
     return (
@@ -139,6 +156,9 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
         origins={origins}
         selectedOrigin={selectedOrigin}
         onOriginChange={handleOriginChange}
+        mineralGroups={mineralGroups}
+        selectedGroup={selectedGroup}
+        onGroupChange={handleGroupChange}
         resultCount={families.length}
         resultLabel="families"
       />
