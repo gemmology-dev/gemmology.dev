@@ -138,6 +138,7 @@ export interface MineralFamily {
   point_group?: string;
   chemistry?: string;
   category?: string;
+  mineral_group?: string;
 
   // Physical properties
   hardness_min?: number;
@@ -357,9 +358,31 @@ export async function getMineralsBySystem(system: string): Promise<Mineral[]> {
   });
 }
 
-export async function getMineralsByCategory(_category: string): Promise<Mineral[]> {
-  // Category column doesn't exist in the database - return all minerals
-  return getAllMinerals();
+export async function getMineralsByCategory(category: string): Promise<Mineral[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT id, name, crystal_system as system, point_group, chemistry,
+            CASE WHEN hardness_min = hardness_max THEN CAST(hardness_min AS TEXT)
+                 ELSE CAST(hardness_min AS TEXT) || '-' || CAST(hardness_max AS TEXT) END as hardness,
+            description, sg_min, sg_max, ri_min, ri_max, birefringence, optical_character,
+            dispersion, lustre, cleavage, fracture, pleochroism, twin_law, phenomenon, notes as note,
+            origin, growth_method, natural_counterpart_id
+     FROM mineral_families
+     WHERE LOWER(category) = ?
+     ORDER BY name ASC`,
+    [category.toLowerCase()]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const mineral: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      mineral[col] = row[i];
+    });
+    return mineral as Mineral;
+  });
 }
 
 export async function getCrystalSystems(): Promise<string[]> {
@@ -373,8 +396,59 @@ export async function getCrystalSystems(): Promise<string[]> {
 }
 
 export async function getCategories(): Promise<string[]> {
-  // Category column doesn't exist in the database
-  return [];
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT DISTINCT category FROM mineral_families
+     WHERE category IS NOT NULL AND category != ''
+     ORDER BY category`
+  );
+
+  if (result.length === 0) return [];
+  return result[0].values.map((row) => row[0] as string);
+}
+
+/**
+ * Get distinct mineral groups from the database.
+ */
+export async function getMineralGroups(): Promise<string[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT DISTINCT mineral_group FROM mineral_families
+     WHERE mineral_group IS NOT NULL AND mineral_group != ''
+     ORDER BY mineral_group`
+  );
+
+  if (result.length === 0) return [];
+  return result[0].values.map((row) => row[0] as string);
+}
+
+/**
+ * Get families filtered by mineral group.
+ */
+export async function getFamiliesByGroup(group: string): Promise<MineralFamily[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT f.*, COUNT(e.id) as expressionCount,
+            (SELECT e2.model_svg FROM mineral_expressions e2
+             WHERE e2.family_id = f.id AND e2.is_primary = 1 LIMIT 1) as primarySvg
+     FROM mineral_families f
+     LEFT JOIN mineral_expressions e ON f.id = e.family_id
+     WHERE f.mineral_group = ?
+     GROUP BY f.id
+     ORDER BY f.name`,
+    [group]
+  );
+
+  if (result.length === 0) return [];
+
+  const columns = result[0].columns;
+  return result[0].values.map((row) => {
+    const family: Record<string, unknown> = {};
+    columns.forEach((col, i) => {
+      family[col] = row[i];
+    });
+    return family as MineralFamily;
+  });
 }
 
 // Pre-generated model query functions

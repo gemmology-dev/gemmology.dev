@@ -29,6 +29,9 @@ interface FilterBarProps {
   origins?: string[];
   selectedOrigin?: string | null;
   onOriginChange?: (origin: string | null) => void;
+  mineralGroups?: string[];
+  selectedGroup?: string | null;
+  onGroupChange?: (group: string | null) => void;
   resultCount?: number;
   resultLabel?: string;
   className?: string;
@@ -43,6 +46,9 @@ export function FilterBar({
   origins = [],
   selectedOrigin = null,
   onOriginChange,
+  mineralGroups = [],
+  selectedGroup = null,
+  onGroupChange,
   resultCount,
   resultLabel = 'mineral',
   className,
@@ -103,7 +109,7 @@ export function FilterBar({
           onClick={() => onSystemChange(null)}
           className={clsx(
             'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
-            selectedSystem === null
+            selectedSystem === null && selectedGroup === null
               ? 'bg-crystal-600 text-white'
               : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
           )}
@@ -125,6 +131,27 @@ export function FilterBar({
           </button>
         ))}
       </div>
+
+      {/* Mineral group filter */}
+      {mineralGroups.length > 0 && onGroupChange && (
+        <div className="flex flex-wrap gap-2">
+          <span className="flex items-center text-xs font-medium text-slate-400 uppercase tracking-wider mr-1">Groups</span>
+          {mineralGroups.map((group) => (
+            <button
+              key={group}
+              onClick={() => onGroupChange(selectedGroup === group ? null : group)}
+              className={clsx(
+                'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
+                selectedGroup === group
+                  ? 'bg-violet-600 text-white'
+                  : 'bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200'
+              )}
+            >
+              {group.replace(' Group', '')}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

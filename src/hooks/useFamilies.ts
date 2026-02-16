@@ -6,6 +6,7 @@ import {
   searchFamilies,
   getFamiliesBySystem,
   getFamiliesByOrigin,
+  getFamiliesByGroup,
   getExpressionsForFamily,
   type MineralFamily,
   type MineralFamilyWithExpressions,
@@ -19,6 +20,7 @@ interface UseFamiliesResult {
   search: (query: string) => Promise<void>;
   filterBySystem: (system: string | null) => Promise<void>;
   filterByOrigin: (origin: string | null) => Promise<void>;
+  filterByGroup: (group: string | null) => Promise<void>;
   refresh: () => Promise<void>;
 }
 
@@ -95,6 +97,23 @@ export function useFamilies(): UseFamiliesResult {
     }
   }, [loadAll]);
 
+  const filterByGroup = useCallback(async (group: string | null) => {
+    if (!group) {
+      return loadAll();
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getFamiliesByGroup(group);
+      setFamilies(data);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Filter failed'));
+    } finally {
+      setLoading(false);
+    }
+  }, [loadAll]);
+
   useEffect(() => {
     loadAll();
   }, [loadAll]);
@@ -106,6 +125,7 @@ export function useFamilies(): UseFamiliesResult {
     search,
     filterBySystem,
     filterByOrigin,
+    filterByGroup,
     refresh: loadAll,
   };
 }
