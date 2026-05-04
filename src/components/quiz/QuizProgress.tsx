@@ -44,7 +44,7 @@ export function QuizProgress({
         </span>
         {showScore && current > 0 && (
           <span className="text-slate-600">
-            Score: <span className="font-medium text-crystal-600">{score}/{current}</span>
+            Score: <span className="font-medium text-crystal-700">{score}/{current}</span>
             <span className="text-slate-400 ml-1">({scorePercentage}%)</span>
           </span>
         )}

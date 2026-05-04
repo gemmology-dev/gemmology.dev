@@ -48,7 +48,7 @@ export function ViewControls({
       <div className="flex items-center gap-2">
         <button
           onClick={onReset}
-          className="text-sm text-slate-600 hover:text-crystal-600 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
         >
           Reset view
         </button>
@@ -58,7 +58,7 @@ export function ViewControls({
             onElevationChange(90);
             onAzimuthChange(0);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-600 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
         >
           Top
         </button>
@@ -67,7 +67,7 @@ export function ViewControls({
             onElevationChange(0);
             onAzimuthChange(0);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-600 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
         >
           Front
         </button>
@@ -76,7 +76,7 @@ export function ViewControls({
             onElevationChange(0);
             onAzimuthChange(90);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-600 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
         >
           Side
         </button>

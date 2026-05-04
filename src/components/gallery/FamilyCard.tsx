@@ -111,7 +111,7 @@ export function FamilyCard({
       {/* Info */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
+          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-700 transition-colors">
             {family.name}
           </h3>
           <div className="flex gap-1.5 flex-shrink-0">

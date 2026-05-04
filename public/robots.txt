@@ -10,6 +10,9 @@ Sitemap: https://gemmology.dev/sitemap-index.xml
 # Disallow API endpoints (served by separate worker)
 Disallow: /api/
 
+# Disallow admin surface
+Disallow: /admin/
+
 # Allow all crawlers to access static assets
 Allow: /crystals/
 Allow: /og-images/

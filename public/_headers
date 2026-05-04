@@ -1,0 +1,27 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# Long-cache versioned static assets (Astro hashed bundle)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Crystal SVGs are stable per mineral id
+/crystals/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+# Static GLB models
+/models/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+# Database is regenerated on each build — short cache, must-revalidate
+/minerals.db
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# sql.js wasm
+/sql.js/*
+  Cache-Control: public, max-age=2592000, must-revalidate

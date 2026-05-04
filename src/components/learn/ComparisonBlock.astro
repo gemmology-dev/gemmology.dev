@@ -13,9 +13,11 @@ interface ComparisonItem {
 
 interface Props {
   items: ComparisonItem[];
+  headingLevel?: 3 | 4;
 }
 
-const { items } = Astro.props;
+const { items, headingLevel = 3 } = Astro.props;
+const HeadingTag = `h${headingLevel}` as 'h3' | 'h4';
 
 const variantClasses = {
   default: 'bg-slate-50 border-slate-200',
@@ -50,7 +52,7 @@ const gridCols = items.length === 2
     const variant = item.variant || 'default';
     return (
       <Card padding="md" class={variantClasses[variant]}>
-        <h4 class={`font-semibold ${titleClasses[variant]}`}>{item.title}</h4>
+        <HeadingTag class={`font-semibold ${titleClasses[variant]}`}>{item.title}</HeadingTag>
         <ul class={`mt-3 text-sm ${textClasses[variant]}`}>
           {item.points.map((point, i) => (
             <li class={`py-2 ${i < item.points.length - 1 ? 'border-b border-current/10' : ''}`}>

@@ -1,3 +1,6 @@
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,7 +36,7 @@
   }
 
   .btn-primary {
-    @apply btn bg-crystal-600 text-white hover:bg-crystal-700;
+    @apply btn bg-crystal-700 text-white hover:bg-crystal-800;
   }
 
   .btn-secondary {
@@ -215,9 +218,9 @@
 
 /* Mineral auto-links in prose content */
 .prose a.mineral-link {
-  @apply text-crystal-600 no-underline border-b border-dotted border-crystal-400 hover:border-solid hover:border-crystal-600 transition-colors;
+  @apply text-crystal-700 no-underline border-b border-dotted border-crystal-500 font-medium hover:border-solid hover:border-crystal-700 transition-colors;
 }
 
 .prose a.mineral-link:hover {
-  @apply text-crystal-700;
+  @apply text-crystal-800;
 }

@@ -15,8 +15,8 @@ const currentPath = Astro.url.pathname;
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 font-semibold text-slate-900 hover:text-crystal-600 transition-colors">
-        <svg class="h-8 w-8 text-crystal-600" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <a href="/" class="flex items-center gap-3 font-semibold text-slate-900 hover:text-crystal-700 transition-colors">
+        <svg class="h-8 w-8 text-crystal-700" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 2L28 10V22L16 30L4 22V10L16 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
           <path d="M16 2L16 30" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
           <path d="M4 10L28 22" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
@@ -26,20 +26,24 @@ const currentPath = Astro.url.pathname;
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-1">
-        {navItems.map(({ href, label }) => (
-          <a
-            href={href}
-            class:list={[
-              'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-              currentPath.startsWith(href)
-                ? 'bg-crystal-50 text-crystal-700'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
-            ]}
-          >
-            {label}
-          </a>
-        ))}
+      <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+        {navItems.map(({ href, label }) => {
+          const isActive = currentPath === href || currentPath.startsWith(href + '/');
+          return (
+            <a
+              href={href}
+              aria-current={isActive ? 'page' : undefined}
+              class:list={[
+                'relative px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                isActive
+                  ? 'bg-crystal-50 text-crystal-700 after:absolute after:left-3 after:right-3 after:-bottom-px after:h-0.5 after:bg-crystal-700 after:rounded-full'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
+              ]}
+            >
+              {label}
+            </a>
+          );
+        })}
       </nav>
 
       <!-- GitHub Link + Mobile Menu -->
@@ -73,20 +77,24 @@ const currentPath = Astro.url.pathname;
 
   <!-- Mobile Navigation -->
   <div class="md:hidden hidden border-t border-slate-200" id="mobile-menu">
-    <nav class="px-4 py-3 space-y-1">
-      {navItems.map(({ href, label }) => (
-        <a
-          href={href}
-          class:list={[
-            'block px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-            currentPath.startsWith(href)
-              ? 'bg-crystal-50 text-crystal-700'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
-          ]}
-        >
-          {label}
-        </a>
-      ))}
+    <nav class="px-4 py-3 space-y-1" aria-label="Mobile primary">
+      {navItems.map(({ href, label }) => {
+        const isActive = currentPath === href || currentPath.startsWith(href + '/');
+        return (
+          <a
+            href={href}
+            aria-current={isActive ? 'page' : undefined}
+            class:list={[
+              'block px-4 py-2 rounded-lg text-sm font-medium transition-colors border-l-4',
+              isActive
+                ? 'bg-crystal-50 text-crystal-700 border-crystal-700'
+                : 'border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50',
+            ]}
+          >
+            {label}
+          </a>
+        );
+      })}
     </nav>
   </div>
 </header>

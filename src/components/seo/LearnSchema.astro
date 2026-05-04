@@ -24,12 +24,15 @@ function formatName(name: string): string {
     .join(' ');
 }
 
-// Article schema for educational content
+// Use combined LearningResource + Article so Google can pick either rich-result type
 const articleSchema = {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": ["LearningResource", "Article"],
   "headline": title,
+  "name": title,
   "description": description,
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
   "author": {
     "@type": "Organization",
     "name": "gemmology.dev",
@@ -50,6 +53,7 @@ const articleSchema = {
   },
   "educationalLevel": difficulty || "intermediate",
   "learningResourceType": "Article",
+  "teaches": formatName(category),
   "about": {
     "@type": "Thing",
     "name": formatName(category)

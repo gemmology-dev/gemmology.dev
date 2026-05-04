@@ -42,13 +42,20 @@ function formatCategoryName(category: string): string {
     .join(' ');
 }
 
-// Helper to generate category description based on topics
+// Helper to generate category description based on topics. When there are more
+// than 3 topics we list the first three and surface the remaining count so
+// browsers don't think the section only covers those three (P2-2).
 function generateCategoryDescription(categoryTopics: typeof topics): string {
-  const keywords = categoryTopics.slice(0, 3).map(t => t.title.toLowerCase());
-  if (keywords.length === 0) return '';
-  if (keywords.length === 1) return `Learn about ${keywords[0]}`;
-  const last = keywords.pop();
-  return `Covering ${keywords.join(', ')}, and ${last}`;
+  const total = categoryTopics.length;
+  const sample = categoryTopics.slice(0, 3).map(t => t.title.toLowerCase());
+  if (sample.length === 0) return '';
+  if (sample.length === 1) return `Learn about ${sample[0]}`;
+  const last = sample.pop()!;
+  const head = `${sample.join(', ')}, and ${last}`;
+  if (total > 3) {
+    return `${total} topics covering ${head}, plus ${total - 3} more`;
+  }
+  return `Covering ${head}`;
 }
 
 // Automatically discover categories from the content and group topics
@@ -131,6 +138,21 @@ const groupedTopics: CategoryGroup[] = sortedCategories.map((category) => {
   };
 }).filter(group => group.directTopics.length > 0 || group.subcategories.length > 0);
 
+// "Start here" curated path for newcomers — surfaces the highest-leverage
+// foundational articles before the 90-card wall (P2-1).
+const startHereSlugs = [
+  'fundamentals/crystal-systems',
+  'fundamentals/physical-properties',
+  'fundamentals/optical-properties',
+  'identification/inclusions',
+  'identification/treatments',
+];
+const startHereTopics = startHereSlugs
+  .map(slug => topics.find(t => t.href === `/learn/${slug}`))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const totalTopicCount = topics.length;
+
 // Icon SVG paths (shared with topic cards)
 const iconPaths: Record<string, string> = {
   cube: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
@@ -161,10 +183,69 @@ const iconPaths: Record<string, string> = {
         <h1 class="text-4xl font-bold text-slate-900">Learn Gemmology</h1>
         <p class="mt-4 text-lg text-slate-600">
           FGA curriculum-aligned content covering crystallography, physical and optical properties,
-          inclusions, treatments, and synthetics.
+          inclusions, treatments, and synthetics. {totalTopicCount} articles across {sortedCategories.length} categories.
         </p>
       </div>
 
+      <!-- Search (P2-4): client-side filter, no JS framework needed -->
+      <div class="mt-8">
+        <label class="block">
+          <span class="sr-only">Filter learn topics</span>
+          <div class="relative">
+            <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              id="learn-filter"
+              type="search"
+              placeholder="Filter topics… (e.g. quartz, refractometer, inclusions)"
+              class="w-full max-w-xl pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-700 focus:border-crystal-700"
+              aria-controls="learn-results"
+            />
+          </div>
+        </label>
+        <p id="learn-empty" class="mt-3 text-sm text-slate-500 hidden" role="status">
+          No topics match your filter. Try a broader term.
+        </p>
+      </div>
+
+      <!-- Start here (P2-1): curated foundations, surfaced above the 90-card wall -->
+      {startHereTopics.length > 0 && (
+        <section class="mt-10" data-no-filter>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-emerald-100 text-emerald-700">
+              <svg aria-hidden="true" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+              </svg>
+            </span>
+            <h2 class="text-lg font-semibold text-slate-900">Start here</h2>
+            <span class="text-sm text-slate-500">— recommended foundations before you dive in</span>
+          </div>
+          <ol class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
+            {startHereTopics.map((topic, i) => (
+              <li>
+                <a href={topic.href} class="group block">
+                  <Card hover padding="md" className="h-full">
+                    <div class="flex items-start gap-3">
+                      <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-crystal-50 text-crystal-700 font-semibold text-sm">{i + 1}</span>
+                      <div class="flex-1 min-w-0">
+                        <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
+                          {topic.title}
+                        </CardTitle>
+                        <CardDescription className="mt-1.5 line-clamp-2">
+                          {topic.description}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </Card>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <div id="learn-results">
       {groupedTopics.length > 0 ? (
         <div class="mt-12 space-y-16">
           {groupedTopics.map((group, groupIndex) => (
@@ -193,6 +274,8 @@ const iconPaths: Record<string, string> = {
                       href={topic.href}
                       class="group animate-slide-up"
                       style={`animation-delay: ${groupIndex * 100 + topicIndex * 50}ms`}
+                      data-learn-card
+                      data-search={`${topic.title} ${topic.description} ${topic.category} ${topic.subcategory || ''}`.toLowerCase()}
                     >
                       <Card hover padding="md" className="h-full">
                         <div class="flex items-start gap-3">
@@ -202,7 +285,7 @@ const iconPaths: Record<string, string> = {
                             </svg>
                           </IconBox>
                           <div class="flex-1 min-w-0">
-                            <CardTitle className="text-base leading-tight group-hover:text-crystal-600 transition-colors">
+                            <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
                               {topic.title}
                             </CardTitle>
                             <CardDescription className="mt-1.5 line-clamp-2">
@@ -236,6 +319,8 @@ const iconPaths: Record<string, string> = {
                         href={topic.href}
                         class="group animate-slide-up"
                         style={`animation-delay: ${groupIndex * 100 + subcatIndex * 75 + topicIndex * 50}ms`}
+                        data-learn-card
+                        data-search={`${topic.title} ${topic.description} ${topic.category} ${topic.subcategory || ''}`.toLowerCase()}
                       >
                         <Card hover padding="md" className="h-full">
                           <div class="flex items-start gap-3">
@@ -245,7 +330,7 @@ const iconPaths: Record<string, string> = {
                               </svg>
                             </IconBox>
                             <div class="flex-1 min-w-0">
-                              <CardTitle className="text-base leading-tight group-hover:text-crystal-600 transition-colors">
+                              <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
                                 {topic.title}
                               </CardTitle>
                               <CardDescription className="mt-1.5 line-clamp-2">
@@ -276,6 +361,7 @@ const iconPaths: Record<string, string> = {
           </CardDescription>
         </Card>
       )}
+      </div>
 
       <!-- FGA Notice -->
       <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800">
@@ -298,3 +384,35 @@ const iconPaths: Record<string, string> = {
     </Container>
   </div>
 </BaseLayout>
+
+<script>
+  // Lightweight client-side filter for the learn hub (P2-4). Hides cards whose
+  // searchable text doesn't match, then hides any subcategory/category section
+  // that ends up empty so the page collapses cleanly.
+  const input = document.getElementById('learn-filter') as HTMLInputElement | null;
+  const empty = document.getElementById('learn-empty');
+  const results = document.getElementById('learn-results');
+  if (input && results) {
+    const cards = results.querySelectorAll<HTMLElement>('[data-learn-card]');
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const hay = card.dataset.search || '';
+        const match = q === '' || hay.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      // Collapse empty subcategory/category groups for tidy results.
+      results.querySelectorAll<HTMLElement>('section, .grid + div, [class*="mt-8"]').forEach(group => {
+        const visibleInside = group.querySelectorAll<HTMLElement>('[data-learn-card]:not([style*="display: none"])').length;
+        // Only operate on containers that actually wrap cards.
+        if (group.querySelector('[data-learn-card]')) {
+          (group as HTMLElement).style.display = visibleInside === 0 ? 'none' : '';
+        }
+      });
+      if (empty) empty.classList.toggle('hidden', visible !== 0);
+    };
+    input.addEventListener('input', apply);
+  }
+</script>

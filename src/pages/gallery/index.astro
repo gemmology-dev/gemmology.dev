@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ProtectedGallery } from '../../components/auth/ProtectedGallery';
+import { getSiteStats } from '../../lib/stats';
 
 const url = Astro.url;
 const initialSystem = url.searchParams.get('system') || '';
@@ -9,11 +10,13 @@ const initialOrigin = url.searchParams.get('origin') || '';
 
 // Always point to base gallery URL as canonical to prevent duplicate content from filters
 const canonicalURL = 'https://gemmology.dev/gallery';
+
+const { familyCount } = await getSiteStats();
 ---
 
 <BaseLayout
   title="Crystal Gallery"
-  description="Explore 90+ mineral presets with FGA-accurate crystallographic data and interactive visualizations."
+  description={`Explore ${familyCount} mineral families with FGA-accurate crystallographic data and interactive visualizations.`}
   canonical={canonicalURL}
 >
   <ProtectedGallery

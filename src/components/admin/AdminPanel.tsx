@@ -410,7 +410,7 @@ export function AdminPanel() {
                           <td className="px-4 py-3">
                             <button
                               onClick={() => copyCode(code.code)}
-                              className="font-mono text-sm text-slate-900 hover:text-crystal-600"
+                              className="font-mono text-sm text-slate-900 hover:text-crystal-700"
                               title="Click to copy"
                             >
                               {code.code}
