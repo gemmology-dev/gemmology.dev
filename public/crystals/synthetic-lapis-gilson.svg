@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="568.8pt" height="568.8pt">
+  <polygon points="100,30 160,80 130,160 70,160 40,80" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+  <polygon points="100,30 160,80 130,160 70,160 40,80" fill="none" stroke="#0369a1" stroke-width="0.5" stroke-dasharray="3 3"/>
+  <line x1="100" y1="30" x2="100" y2="160" stroke="#0369a1" stroke-width="0.5" opacity="0.3"/>
+</svg>

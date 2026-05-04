@@ -11,6 +11,7 @@ import { Center, Edges } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { getModelGLTF } from '../../lib/db';
+import { isWebGLAvailable, prefersReducedMotion } from '../../lib/webgl';
 
 interface HeroCrystal3DProps {
   mineralName?: string;
@@ -155,10 +156,14 @@ export function HeroCrystal3D({
   const [isClient, setIsClient] = useState(false);
   const [gltfData, setGltfData] = useState<object | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [canRender3D, setCanRender3D] = useState(true);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   // Only render on client side (Three.js requires DOM)
   useEffect(() => {
     setIsClient(true);
+    setCanRender3D(isWebGLAvailable());
+    setReduceMotion(prefersReducedMotion());
   }, []);
 
   // Load mineral glTF data
@@ -191,11 +196,35 @@ export function HeroCrystal3D({
 
   if (!isClient) {
     return (
-      <div className={`flex items-center justify-center bg-slate-100 ${className}`}>
-        <div className="text-slate-400">Loading...</div>
+      <div
+        className={`flex items-center justify-center bg-gradient-to-br from-crystal-50 to-slate-50 ${className}`}
+        aria-hidden="true"
+      />
+    );
+  }
+
+  if (!canRender3D) {
+    return (
+      <div
+        className={`relative flex items-center justify-center bg-gradient-to-br from-crystal-50 to-slate-50 ${className}`}
+        role="img"
+        aria-label={`Static illustration of a ${mineralName} crystal`}
+      >
+        <svg viewBox="0 0 200 200" className="w-3/4 h-3/4" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <g className="text-crystal-700">
+            <polygon points="100,30 160,80 130,160 70,160 40,80" fill="currentColor" fillOpacity="0.08" />
+            <polygon points="100,30 160,80 130,160 70,160 40,80" />
+            <line x1="100" y1="30" x2="100" y2="160" strokeOpacity="0.4" />
+            <line x1="40" y1="80" x2="160" y2="80" strokeOpacity="0.4" />
+            <line x1="70" y1="160" x2="160" y2="80" strokeOpacity="0.3" />
+            <line x1="130" y1="160" x2="40" y2="80" strokeOpacity="0.3" />
+          </g>
+        </svg>
       </div>
     );
   }
+
+  const effectiveRotation = reduceMotion ? 0 : rotationSpeed;
 
   return (
     <div className={`w-full h-full ${className}`}>
@@ -205,16 +234,16 @@ export function HeroCrystal3D({
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
       >
-        <Suspense fallback={<LoadingFallback rotationSpeed={rotationSpeed} />}>
+        <Suspense fallback={<LoadingFallback rotationSpeed={effectiveRotation} />}>
           <ambientLight intensity={0.4} />
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
           <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
           <Center position={[0, 0.15, 0]}>
             {gltfData ? (
-              <RotatingCrystal gltfData={gltfData} rotationSpeed={rotationSpeed} scale={scale} />
+              <RotatingCrystal gltfData={gltfData} rotationSpeed={effectiveRotation} scale={scale} />
             ) : (
-              <LoadingFallback rotationSpeed={rotationSpeed} />
+              <LoadingFallback rotationSpeed={effectiveRotation} />
             )}
           </Center>
         </Suspense>
