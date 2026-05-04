@@ -14,15 +14,23 @@ const { mineral } = Astro.props;
 const url = `https://gemmology.dev/minerals/${mineral.id}`;
 const imageUrl = `https://gemmology.dev/crystals/${mineral.id}.svg`;
 
-// Build the JSON-LD schema
+// Build the JSON-LD schema — Schema.org has no Mineral type, so we use Thing
+// with a Wikidata additionalType for the Mineral concept (Q43533).
 const schema = {
   "@context": "https://schema.org",
   "@type": "Thing",
+  "additionalType": "https://www.wikidata.org/wiki/Q43533",
   "name": mineral.name,
+  "alternateName": mineral.id,
   "description": `${mineral.name} crystal structure and gemmological properties. ${mineral.system} system${mineral.chemistry ? ` with chemical composition ${mineral.chemistry}` : ''}.`,
   "identifier": mineral.id,
   "url": url,
-  "image": imageUrl,
+  "image": {
+    "@type": "ImageObject",
+    "url": imageUrl,
+    "width": 568,
+    "height": 568,
+  },
   "additionalProperty": [
     mineral.system && {
       "@type": "PropertyValue",

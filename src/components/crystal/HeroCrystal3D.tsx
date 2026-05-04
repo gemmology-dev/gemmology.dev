@@ -8,9 +8,9 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Center, Edges } from '@react-three/drei';
-import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
+import { Suspense, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
-import { getModelGLTF } from '../../lib/db';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { isWebGLAvailable, prefersReducedMotion } from '../../lib/webgl';
 
 interface HeroCrystal3DProps {
@@ -79,7 +79,7 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
 }
 
 interface RotatingCrystalProps {
-  gltfData: object;
+  geometry: THREE.BufferGeometry;
   rotationSpeed: number;
   scale: number;
 }
@@ -87,21 +87,14 @@ interface RotatingCrystalProps {
 /**
  * Rotating crystal mesh with Y-axis auto-rotation
  */
-function RotatingCrystal({ gltfData, rotationSpeed, scale }: RotatingCrystalProps) {
+function RotatingCrystal({ geometry, rotationSpeed, scale }: RotatingCrystalProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  const geometry = useMemo(() => {
-    return parseGLTFToGeometry(gltfData);
-  }, [gltfData]);
-
-  // Y-axis rotation animation
   useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += rotationSpeed * delta;
     }
   });
-
-  if (!geometry) return null;
 
   return (
     <group ref={groupRef} scale={scale}>
@@ -154,45 +147,42 @@ export function HeroCrystal3D({
   className = '',
 }: HeroCrystal3DProps) {
   const [isClient, setIsClient] = useState(false);
-  const [gltfData, setGltfData] = useState<object | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [geometry, setGeometry] = useState<THREE.BufferGeometry | null>(null);
   const [canRender3D, setCanRender3D] = useState(true);
   const [reduceMotion, setReduceMotion] = useState(false);
 
-  // Only render on client side (Three.js requires DOM)
   useEffect(() => {
     setIsClient(true);
     setCanRender3D(isWebGLAvailable());
     setReduceMotion(prefersReducedMotion());
   }, []);
 
-  // Load mineral glTF data
+  // Load static .glb directly — no sql.js / minerals.db cost on home
   useEffect(() => {
-    if (!isClient) return;
-
+    if (!isClient || !canRender3D) return;
     let cancelled = false;
-
-    async function loadMineral() {
-      try {
-        const data = await getModelGLTF(mineralName);
-        if (!cancelled && data) {
-          setGltfData(data);
-        }
-      } catch (error) {
-        console.error('Failed to load mineral:', error);
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    loadMineral();
-
+    const slug = mineralName.toLowerCase().replace(/\s+/g, '-');
+    const loader = new GLTFLoader();
+    loader.load(
+      `/models/gltf/${slug}.glb`,
+      (gltf) => {
+        if (cancelled) return;
+        let geom: THREE.BufferGeometry | null = null;
+        gltf.scene.traverse((obj) => {
+          if (geom) return;
+          if (obj instanceof THREE.Mesh && obj.geometry) geom = obj.geometry as THREE.BufferGeometry;
+        });
+        if (geom) setGeometry(geom);
+      },
+      undefined,
+      () => {
+        // Static .glb missing: keep wireframe fallback (LoadingFallback)
+      },
+    );
     return () => {
       cancelled = true;
     };
-  }, [isClient, mineralName]);
+  }, [isClient, canRender3D, mineralName]);
 
   if (!isClient) {
     return (
@@ -240,8 +230,8 @@ export function HeroCrystal3D({
           <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
           <Center position={[0, 0.15, 0]}>
-            {gltfData ? (
-              <RotatingCrystal gltfData={gltfData} rotationSpeed={effectiveRotation} scale={scale} />
+            {geometry ? (
+              <RotatingCrystal geometry={geometry} rotationSpeed={effectiveRotation} scale={scale} />
             ) : (
               <LoadingFallback rotationSpeed={effectiveRotation} />
             )}

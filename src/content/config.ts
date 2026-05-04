@@ -90,6 +90,9 @@ const learnCollection = defineCollection({
     icon: z.string().optional(),
     related: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
+    author: z.string().optional(),
+    reviewedBy: z.string().optional(),
+    reviewedAt: z.string().optional(),
     sections: z.array(sectionSchema),
   }),
 });

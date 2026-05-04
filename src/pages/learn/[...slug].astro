@@ -134,6 +134,19 @@ breadcrumbItems.push({ label: data.title });
           {data.description}
         </p>
 
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500">
+          <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'gemmology.dev editors'}</a></span>
+          {data.reviewedAt && (
+            <span>
+              Last reviewed
+              <time datetime={data.reviewedAt}>
+                {new Date(data.reviewedAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </time>
+              {data.reviewedBy && <span> by {data.reviewedBy}</span>}
+            </span>
+          )}
+        </div>
+
         {data.tags && data.tags.length > 0 && (
           <div class="mt-4 flex flex-wrap gap-2">
             {data.tags.map(tag => (

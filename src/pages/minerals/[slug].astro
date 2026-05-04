@@ -94,6 +94,11 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
           <!-- Quick Facts -->
           <QuickFacts mineral={mineral} />
 
+          <!-- Mobile-only primary CTA (desktop renders in right column) -->
+          <div class="lg:hidden">
+            <PlaygroundLink mineral={mineral} />
+          </div>
+
           <!-- Crystal Structure -->
           <CrystalStructureCard mineral={mineral} />
 
@@ -171,8 +176,10 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
 
         <!-- Right Column: Actions & Related -->
         <div class="space-y-8">
-          <!-- Open in Playground -->
-          <PlaygroundLink mineral={mineral} />
+          <!-- Open in Playground (desktop only - mobile sees it above) -->
+          <div class="hidden lg:block">
+            <PlaygroundLink mineral={mineral} />
+          </div>
 
           <!-- Synthetics & Simulants / Natural Counterpart -->
           <CounterpartsSection

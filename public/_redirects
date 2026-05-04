@@ -1,0 +1,22 @@
+# Legacy flat learn slugs → topic/slug structure
+# Pre-2026 site shipped /learn/<slug>; current structure is /learn/<topic>/<slug>.
+/learn/crystal-systems              /learn/fundamentals/crystal-systems            301
+/learn/crystallography-advanced     /learn/fundamentals/crystallography-advanced   301
+/learn/physical-properties          /learn/fundamentals/physical-properties        301
+/learn/optical-properties           /learn/fundamentals/optical-properties         301
+/learn/optical-properties-advanced  /learn/fundamentals/optical-properties-advanced 301
+/learn/chemical-properties          /learn/fundamentals/chemical-properties        301
+/learn/colour-theory                /learn/fundamentals/colour-theory              301
+/learn/twin-laws                    /learn/fundamentals/twin-laws                  301
+/learn/optic-sign-determination     /learn/fundamentals/optic-sign-determination   301
+/learn/inclusions                   /learn/identification/inclusions               301
+/learn/treatments                   /learn/identification/treatments               301
+/learn/synthetics                   /learn/identification/synthetics               301
+
+# Old gallery deep links
+/minerals/                          /gallery/                                      301
+/gem/*                              /minerals/:splat                               301
+
+# Old docs
+/cdl                                /docs/cdl                                      301
+/api                                /docs/api                                      301
