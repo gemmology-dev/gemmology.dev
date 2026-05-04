@@ -7,6 +7,10 @@ Allow: /
 # Sitemap location
 Sitemap: https://gemmology.dev/sitemap-index.xml
 
+# LLM crawler index (https://llmstxt.org/)
+LLM-Content: https://gemmology.dev/llms.txt
+Sitemap: https://gemmology.dev/llms.txt
+
 # Disallow API endpoints (served by separate worker)
 Disallow: /api/
 
