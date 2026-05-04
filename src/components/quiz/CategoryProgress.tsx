@@ -173,7 +173,7 @@ export function OverallProgress({ progress, className }: OverallProgressProps) {
     : 0;
 
   return (
-    <div className={cn('p-6 rounded-xl bg-gradient-to-br from-crystal-500 to-crystal-600 text-white', className)}>
+    <div className={cn('p-6 rounded-xl bg-gradient-to-br from-crystal-600 to-crystal-700 text-white', className)}>
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Overall Progress</h3>

@@ -240,7 +240,7 @@ export function Exam({
                 <span
                   className={cn(
                     'flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold',
-                    isSelected ? 'bg-crystal-500 text-white' : 'bg-slate-100 text-slate-600'
+                    isSelected ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-600'
                   )}
                 >
                   {labels[index]}

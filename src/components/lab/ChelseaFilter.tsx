@@ -194,7 +194,7 @@ export function ChelseaFilter() {
       <div className="text-sm text-slate-600">
         <a
           href="/learn/equipment/other-tools"
-          className="text-crystal-600 hover:text-crystal-700 underline"
+          className="text-crystal-700 hover:text-crystal-700 underline"
         >
           Learn more about the Chelsea filter and its limitations →
         </a>

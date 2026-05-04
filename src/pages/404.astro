@@ -5,9 +5,12 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Container, Button, Card } from '../components/ui-astro';
+import { getSiteStats } from '../lib/stats';
+
+const { familyCount } = await getSiteStats();
 
 const popularPages = [
-  { title: 'Crystal Gallery', href: '/gallery', description: 'Explore 94+ mineral crystal structures' },
+  { title: 'Crystal Gallery', href: '/gallery', description: `Explore ${familyCount} mineral crystal structures` },
   { title: 'Learn Gemmology', href: '/learn', description: 'FGA curriculum and educational content' },
   { title: 'CDL Playground', href: '/playground', description: 'Interactive crystal visualization' },
   { title: 'Documentation', href: '/docs', description: 'API reference and guides' },

@@ -79,7 +79,7 @@ export function FilterBar({
             className={clsx(
               'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
               selectedOrigin === null
-                ? 'bg-crystal-600 text-white'
+                ? 'bg-crystal-700 text-white'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             )}
           >
@@ -110,7 +110,7 @@ export function FilterBar({
           className={clsx(
             'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
             selectedSystem === null && selectedGroup === null
-              ? 'bg-crystal-600 text-white'
+              ? 'bg-crystal-700 text-white'
               : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
           )}
         >
@@ -123,7 +123,7 @@ export function FilterBar({
             className={clsx(
               'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
               selectedSystem === system
-                ? 'bg-crystal-600 text-white'
+                ? 'bg-crystal-700 text-white'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             )}
           >

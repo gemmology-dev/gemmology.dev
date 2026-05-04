@@ -95,7 +95,7 @@ export function Pagination({
                   className={cn(
                     'min-w-[32px] px-2 py-1 text-sm rounded border transition-colors',
                     pageNum === page
-                      ? 'border-crystal-500 bg-crystal-500 text-white'
+                      ? 'border-crystal-500 bg-crystal-700 text-white'
                       : 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
                   )}
                   aria-label={`Go to page ${pageNum}`}

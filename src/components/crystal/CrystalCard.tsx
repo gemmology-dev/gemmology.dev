@@ -92,7 +92,7 @@ export function CrystalCard({
       {/* Info */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-600 transition-colors">
+          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-700 transition-colors">
             {name}
           </h3>
           <Badge variant={systemColors[system.toLowerCase()] || 'default'}>
