@@ -21,7 +21,9 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/admin'),
+    }),
   ],
   vite: {
     optimizeDeps: {

@@ -11,6 +11,7 @@ interface Props {
   type?: 'website' | 'article';
   noHeader?: boolean;
   noFooter?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   canonical,
   type = 'website',
   noHeader = false,
-  noFooter = false
+  noFooter = false,
+  noindex = false
 } = Astro.props;
 
 // Generate canonical URL
@@ -71,7 +73,7 @@ const fullTitle = `${title} | gemmology.dev`;
 
     <!-- Additional SEO -->
     <meta name="author" content="gemmology.dev" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="theme-color" content="#0ea5e9" />
 
     <!-- Slot for additional head content (e.g., JSON-LD) -->
