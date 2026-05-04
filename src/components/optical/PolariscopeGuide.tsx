@@ -80,7 +80,7 @@ export function PolariscopeGuide() {
           {PROCEDURES.map((proc) => (
             <div key={proc.step} className="bg-slate-50 rounded-lg p-3 border border-slate-200">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 rounded-full bg-crystal-500 text-white flex items-center justify-center text-xs font-bold">
+                <div className="w-6 h-6 rounded-full bg-crystal-700 text-white flex items-center justify-center text-xs font-bold">
                   {proc.step}
                 </div>
                 <h5 className="font-semibold text-sm text-slate-900">{proc.title}</h5>

@@ -13,8 +13,8 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 
 const variantStyles: Record<LinkVariant, string> = {
   default: 'text-slate-700 hover:text-slate-900',
-  primary: 'text-crystal-600 hover:text-crystal-700',
-  muted: 'text-slate-500 hover:text-slate-700',
+  primary: 'text-crystal-700 hover:text-crystal-800',
+  muted: 'text-slate-600 hover:text-slate-800',
 };
 
 function ArrowIcon() {

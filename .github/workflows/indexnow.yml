@@ -1,0 +1,108 @@
+name: IndexNow ping
+
+# Notify Bing/Yandex/Naver of changed URLs after a successful main-branch
+# deploy. Uses the IndexNow open protocol with a key file hosted at
+# https://gemmology.dev/<INDEXNOW_KEY>.txt — the key value is stored as a
+# repo secret and the public file is generated as part of the build (see
+# `public/<key>.txt` placeholder; replace with the real key on first setup).
+#
+# Diffs the sitemap between the previous main commit and the current commit
+# to keep the submission list under IndexNow's 10k-URL limit and avoid
+# spam-pinging the entire 600+ mineral catalogue on cosmetic changes.
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Cloudflare Pages"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      full_resubmit:
+        description: 'Resubmit every URL in the sitemap (use sparingly)'
+        type: boolean
+        default: false
+
+jobs:
+  ping:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Determine changed URLs
+        id: urls
+        env:
+          FULL: ${{ github.event.inputs.full_resubmit || 'false' }}
+        run: |
+          set -euo pipefail
+          mkdir -p .indexnow
+          if [ "$FULL" = "true" ]; then
+            echo "Submitting full sitemap"
+            curl -fsSL https://gemmology.dev/sitemap-0.xml \
+              | grep -oE 'https://gemmology\.dev/[^<]*' \
+              | sort -u > .indexnow/urls.txt
+          else
+            # Diff content/page paths since the previous commit on main.
+            git diff --name-only "${{ github.event.before || 'HEAD~1' }}"...HEAD \
+              | grep -E '^(src/pages|src/content|public/crystals)/' \
+              | sort -u > .indexnow/changed.txt || true
+            : > .indexnow/urls.txt
+            while IFS= read -r path; do
+              case "$path" in
+                src/pages/index.astro) echo 'https://gemmology.dev/' >> .indexnow/urls.txt ;;
+                src/pages/about.astro) echo 'https://gemmology.dev/about/' >> .indexnow/urls.txt ;;
+                src/pages/learn/index.astro) echo 'https://gemmology.dev/learn/' >> .indexnow/urls.txt ;;
+                src/pages/gallery/index.astro) echo 'https://gemmology.dev/gallery/' >> .indexnow/urls.txt ;;
+                src/content/learn/*.yaml)
+                  slug="${path#src/content/learn/}"
+                  slug="${slug%.yaml}"
+                  echo "https://gemmology.dev/learn/${slug}/" >> .indexnow/urls.txt
+                  ;;
+                public/crystals/*.svg)
+                  slug="${path#public/crystals/}"
+                  slug="${slug%.svg}"
+                  echo "https://gemmology.dev/minerals/${slug}/" >> .indexnow/urls.txt
+                  ;;
+              esac
+            done < .indexnow/changed.txt
+            sort -u -o .indexnow/urls.txt .indexnow/urls.txt
+          fi
+          count=$(wc -l < .indexnow/urls.txt | tr -d ' ')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Found $count URLs to submit"
+
+      - name: Submit to IndexNow
+        if: ${{ steps.urls.outputs.count != '0' }}
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "${INDEXNOW_KEY:-}" ]; then
+            echo "INDEXNOW_KEY secret not configured — skipping submission."
+            exit 0
+          fi
+          mapfile -t URLS < .indexnow/urls.txt
+          # Build JSON array
+          payload=$(jq -n \
+            --arg host "gemmology.dev" \
+            --arg key "$INDEXNOW_KEY" \
+            --arg keyLocation "https://gemmology.dev/${INDEXNOW_KEY}.txt" \
+            --argjson urls "$(printf '%s\n' "${URLS[@]}" | jq -R . | jq -s .)" \
+            '{host:$host, key:$key, keyLocation:$keyLocation, urlList:$urls}')
+          for endpoint in \
+            https://api.indexnow.org/IndexNow \
+            https://www.bing.com/indexnow \
+            https://yandex.com/indexnow \
+            https://searchadvisor.naver.com/indexnow ; do
+            echo "POST $endpoint"
+            curl -fsS -X POST "$endpoint" \
+              -H 'Content-Type: application/json; charset=utf-8' \
+              --data "$payload" || echo "  (endpoint unreachable, continuing)"
+          done

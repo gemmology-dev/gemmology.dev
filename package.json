@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "copy-db": "node scripts/copy-database.js",
     "prerender": "node scripts/prerender-crystals.js",
-    "prebuild": "npm run sync && npm run copy-db",
+    "check-svgs": "node scripts/audit-crystal-svgs.mjs",
+    "prebuild": "npm run sync && npm run copy-db && npm run check-svgs",
     "generate-og": "npm run build && node scripts/generate-og-image.js"
   },
   "dependencies": {
@@ -18,6 +19,8 @@
     "@astrojs/react": "^4.1.0",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^5.1.0",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@gemmology/mineral-data": "^2.2.1",
     "@monaco-editor/react": "^4.6.0",
     "@react-three/drei": "^9.105.0",

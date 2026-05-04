@@ -11,6 +11,7 @@ interface Props {
   type?: 'website' | 'article';
   noHeader?: boolean;
   noFooter?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   canonical,
   type = 'website',
   noHeader = false,
-  noFooter = false
+  noFooter = false,
+  noindex = false
 } = Astro.props;
 
 // Generate canonical URL
@@ -29,8 +31,12 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
 // Default OG image
 const ogImage = image || new URL('/og-default.jpg', Astro.site).href;
 
-// Full title
-const fullTitle = `${title} | gemmology.dev`;
+// Full title — brand-first for SERP recall, except on the home page where the
+// brand IS the title (avoids "gemmology.dev — gemmology.dev" duplication).
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const fullTitle = isHome
+  ? `gemmology.dev — Crystal Visualization & FGA Reference`
+  : `gemmology.dev — ${title}`;
 ---
 
 <!doctype html>
@@ -47,10 +53,7 @@ const fullTitle = `${title} | gemmology.dev`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Fonts (self-hosted via @fontsource-variable to avoid CLS / third-party hop) -->
 
     <title>{fullTitle}</title>
 
@@ -71,7 +74,7 @@ const fullTitle = `${title} | gemmology.dev`;
 
     <!-- Additional SEO -->
     <meta name="author" content="gemmology.dev" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="theme-color" content="#0ea5e9" />
 
     <!-- Slot for additional head content (e.g., JSON-LD) -->

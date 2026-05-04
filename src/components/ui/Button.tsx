@@ -14,10 +14,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-crystal-600 text-white hover:bg-crystal-700 focus:ring-crystal-500',
+  primary: 'bg-crystal-700 text-white hover:bg-crystal-800 focus:ring-crystal-600',
   secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500',
   ghost: 'bg-transparent hover:bg-slate-100 text-slate-700 focus:ring-slate-500',
-  outline: 'border-2 border-crystal-600 text-crystal-600 hover:bg-crystal-50 focus:ring-crystal-500',
+  outline: 'border-2 border-crystal-700 text-crystal-700 hover:bg-crystal-50 focus:ring-crystal-600',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

@@ -21,7 +21,31 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/admin'),
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+      serialize(item) {
+        // Boost priority/lastmod for hub pages and canonical references
+        if (item.url === 'https://gemmology.dev/' ||
+            item.url === 'https://gemmology.dev/gallery/' ||
+            item.url === 'https://gemmology.dev/learn/') {
+          item.priority = 1.0;
+          item.changefreq = 'weekly';
+        } else if (/\/minerals\/[^/]+\/$/.test(item.url)) {
+          item.priority = 0.8;
+          item.changefreq = 'monthly';
+        } else if (/\/learn\//.test(item.url)) {
+          item.priority = 0.7;
+          item.changefreq = 'monthly';
+        } else if (/\/docs\//.test(item.url)) {
+          item.priority = 0.5;
+          item.changefreq = 'monthly';
+        }
+        return item;
+      },
+    }),
   ],
   vite: {
     optimizeDeps: {

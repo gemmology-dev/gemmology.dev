@@ -93,7 +93,7 @@ export function ResultCard({
       {/* Main value */}
       <p className="text-center">
         <span className="text-3xl font-bold text-crystal-700">{value}</span>
-        {unit && <span className="text-lg text-crystal-600 ml-1">{unit}</span>}
+        {unit && <span className="text-lg text-crystal-700 ml-1">{unit}</span>}
       </p>
 
       {/* Description */}
@@ -122,7 +122,7 @@ export function ResultInline({ value, unit, label, className }: ResultInlineProp
     <span className={cn('inline-flex items-baseline gap-1', className)}>
       {label && <span className="text-sm text-slate-500">{label}:</span>}
       <span className="font-semibold text-crystal-700">{value}</span>
-      {unit && <span className="text-sm text-crystal-600">{unit}</span>}
+      {unit && <span className="text-sm text-crystal-700">{unit}</span>}
     </span>
   );
 }
@@ -157,7 +157,7 @@ export function ResultGroup({ results, layout = 'horizontal', className }: Resul
           <p>
             <span className="text-xl font-bold text-crystal-700">{result.value}</span>
             {result.unit && (
-              <span className="text-sm text-crystal-600 ml-1">{result.unit}</span>
+              <span className="text-sm text-crystal-700 ml-1">{result.unit}</span>
             )}
           </p>
         </div>

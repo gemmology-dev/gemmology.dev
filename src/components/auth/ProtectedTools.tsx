@@ -86,7 +86,7 @@ export function ProtectedTools() {
                       </svg>
                     </IconBox>
                     <div className="flex-1 min-w-0">
-                      <CardTitle className="text-lg group-hover:text-crystal-600 transition-colors">
+                      <CardTitle className="text-lg group-hover:text-crystal-700 transition-colors">
                         {tool.title}
                       </CardTitle>
                       <CardDescription className="mt-2">
@@ -97,14 +97,6 @@ export function ProtectedTools() {
                 </Card>
               </a>
             ))}
-          </div>
-
-          {/* Info */}
-          <div className="mt-12 p-6 rounded-xl border border-crystal-200 bg-crystal-50">
-            <h2 className="text-lg font-semibold text-slate-900 mb-2">Professional Gemmological Tools</h2>
-            <p className="text-slate-600">
-              Each tool category contains multiple calculators, reference guides, and interactive tools designed for FGA students and professional gemmologists. All tools are optimized for accuracy and ease of use in lab and field environments.
-            </p>
           </div>
         </Container>
       </div>

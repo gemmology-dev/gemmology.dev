@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui-astro/Container.astro';
+import { Card } from '../components/ui/Card';
+import { Link } from '../components/ui/Link';
+import { getSiteStats } from '../lib/stats';
+import StructuredData from '../components/seo/StructuredData.astro';
+
+const { familyCount, expressionCount } = await getSiteStats();
+---
+
+<BaseLayout
+  title="About"
+  description="About gemmology.dev — an open, FGA-aligned reference and study toolkit for coloured gemstones, with editorial standards and source attribution."
+>
+  <StructuredData
+    slot="head"
+    breadcrumbs={[
+      { name: 'Home', url: 'https://gemmology.dev' },
+      { name: 'About', url: 'https://gemmology.dev/about/' },
+    ]}
+    webPage={{
+      name: 'About gemmology.dev',
+      description: 'Editorial standards, sourcing, and contributors behind gemmology.dev.',
+      url: 'https://gemmology.dev/about/',
+    }}
+  />
+
+  <Container size="md" padding="lg">
+    <article class="prose prose-slate prose-lg max-w-none
+                    prose-headings:text-slate-900
+                    prose-p:text-slate-600 prose-p:leading-relaxed
+                    prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700">
+      <h1>About gemmology.dev</h1>
+      <p class="lead">
+        gemmology.dev is an open, FGA-aligned reference and study toolkit for
+        coloured gemstones. Everything here — the {familyCount}-mineral family
+        reference, {expressionCount} crystal expressions, the Crystal
+        Description Language (CDL), the calculators, and the quiz — is
+        free and open-source.
+      </p>
+
+      <h2>Who maintains this</h2>
+      <p>
+        gemmology.dev is maintained by the
+        <a href="https://github.com/gemmology-dev">gemmology-dev</a> open-source
+        project. Contributions, corrections, and source citations from the
+        gemmological community are welcomed via GitHub issues and pull requests.
+      </p>
+
+      <h2>Editorial standards</h2>
+      <ul>
+        <li>
+          <strong>Curriculum alignment.</strong> Reference content follows the
+          published Fellowship of the Gemmological Association (FGA) Diploma
+          syllabus structure for crystal systems, optical and physical
+          properties, equipment, and identification.
+        </li>
+        <li>
+          <strong>Numerical data.</strong> Refractive index, specific gravity,
+          birefringence, and dispersion ranges are sourced from
+          peer-reviewed gemmological references and verified across multiple
+          sources before inclusion.
+        </li>
+        <li>
+          <strong>Crystal morphology.</strong> Crystal structures are described
+          using CDL — a domain-specific language documented at
+          <Link href="/docs/cdl">/docs/cdl</Link> — and rendered from formal
+          Miller indices and point-group symmetry rather than artistic
+          impressions.
+        </li>
+        <li>
+          <strong>Synthetics &amp; simulants.</strong> Lab-grown materials are
+          labelled by growth method (CVD, HPHT, flux, hydrothermal, Verneuil,
+          Czochralski) and linked to their natural counterparts where one
+          exists.
+        </li>
+        <li>
+          <strong>Reviewed dates.</strong> Each learn article shows when it was
+          last reviewed. Out-of-date pages are flagged for refresh.
+        </li>
+      </ul>
+
+      <h2>Sources &amp; further reading</h2>
+      <ul>
+        <li><em>Gem-A:</em> Gem Testing (Anderson / Webster), <em>Gems &amp; Gemmology</em> (FGA notes)</li>
+        <li><em>GIA:</em> <em>Gems &amp; Gemology</em> journal, GIA Reference Guides</li>
+        <li><em>Mindat.org</em> for locality and chemistry cross-checks</li>
+        <li><em>Schumann, Walter.</em> <em>Gemstones of the World</em></li>
+        <li><em>Read, Peter.</em> <em>Gemmology</em></li>
+      </ul>
+
+      <h2>What is <em>not</em> here</h2>
+      <ul>
+        <li>Commercial appraisals or price guidance</li>
+        <li>Real-time market or auction data</li>
+        <li>Authentication or certification — gemmology.dev is a study tool, not a lab</li>
+      </ul>
+
+      <h2>Reporting an error</h2>
+      <p>
+        Spotted incorrect data, a missing reference, or a broken figure?
+        Open an issue at
+        <a href="https://github.com/gemmology-dev/gemmology.dev/issues">github.com/gemmology-dev/gemmology.dev/issues</a>
+        — corrections are usually shipped within a week.
+      </p>
+
+      <h2>Licence</h2>
+      <p>
+        Code is MIT-licensed. Educational content (the learn articles and
+        curriculum data in
+        <a href="https://github.com/gemmology-dev/gemmology-knowledge"><code>gemmology-knowledge</code></a>)
+        is published under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+      </p>
+    </article>
+  </Container>
+</BaseLayout>

@@ -79,7 +79,7 @@ export function LockGate({ children }: LockGateProps) {
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-crystal-100 flex items-center justify-center">
             <svg
-              className="h-6 w-6 text-crystal-600"
+              className="h-6 w-6 text-crystal-700"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
