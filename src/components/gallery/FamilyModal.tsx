@@ -257,7 +257,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                       className={clsx(
                         'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
                         selectedExpression?.id === expr.id
-                          ? 'bg-crystal-600 text-white'
+                          ? 'bg-crystal-700 text-white'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       )}
                     >
@@ -317,7 +317,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                     <span className="text-sm text-slate-500">Natural Counterpart</span>
                     <a
                       href={`/minerals/${family.natural_counterpart_id}`}
-                      className="text-sm font-medium text-crystal-600 hover:text-crystal-700 capitalize"
+                      className="text-sm font-medium text-crystal-700 hover:text-crystal-700 capitalize"
                     >
                       {family.natural_counterpart_id.replace(/-/g, ' ')}
                     </a>

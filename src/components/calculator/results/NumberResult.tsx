@@ -35,7 +35,7 @@ interface NumberResultProps {
 }
 
 const variantTextClasses: Record<ResultVariant, { value: string; unit: string }> = {
-  crystal: { value: 'text-crystal-700', unit: 'text-crystal-600' },
+  crystal: { value: 'text-crystal-700', unit: 'text-crystal-700' },
   emerald: { value: 'text-emerald-700', unit: 'text-emerald-600' },
   sapphire: { value: 'text-blue-700', unit: 'text-blue-600' },
   ruby: { value: 'text-red-700', unit: 'text-red-600' },

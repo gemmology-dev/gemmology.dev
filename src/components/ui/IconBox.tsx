@@ -17,7 +17,7 @@ const sizeStyles: Record<IconBoxSize, string> = {
 };
 
 const variantStyles: Record<IconBoxVariant, string> = {
-  crystal: 'bg-crystal-100 text-crystal-600',
+  crystal: 'bg-crystal-100 text-crystal-700',
   ruby: 'bg-red-100 text-red-600',
   sapphire: 'bg-blue-100 text-blue-600',
   emerald: 'bg-green-100 text-green-600',

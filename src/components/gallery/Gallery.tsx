@@ -137,7 +137,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
         <p className="mt-2 text-slate-500">{error.message}</p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-4 text-crystal-600 hover:text-crystal-700 font-medium"
+          className="mt-4 text-crystal-700 hover:text-crystal-700 font-medium"
         >
           Try again
         </button>

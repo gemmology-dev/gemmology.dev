@@ -86,7 +86,7 @@ export function ProtectedTools() {
                       </svg>
                     </IconBox>
                     <div className="flex-1 min-w-0">
-                      <CardTitle className="text-lg group-hover:text-crystal-600 transition-colors">
+                      <CardTitle className="text-lg group-hover:text-crystal-700 transition-colors">
                         {tool.title}
                       </CardTitle>
                       <CardDescription className="mt-2">

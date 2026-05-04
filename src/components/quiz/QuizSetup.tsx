@@ -100,7 +100,7 @@ export function QuizSetup({
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'practice' ? 'bg-crystal-500 text-white' : 'bg-slate-100 text-slate-500'
+                    mode === 'practice' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-500'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,7 +128,7 @@ export function QuizSetup({
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'exam' ? 'bg-crystal-500 text-white' : 'bg-slate-100 text-slate-500'
+                    mode === 'exam' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-500'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -174,7 +174,7 @@ export function RefractometerSimulator() {
         <div className="mt-12 text-center">
           <button
             onClick={() => setShowAnswer(!showAnswer)}
-            className="px-4 py-2 bg-crystal-500 text-white rounded-lg hover:bg-crystal-600 transition-colors font-medium text-sm"
+            className="px-4 py-2 bg-crystal-700 text-white rounded-lg hover:bg-crystal-800 transition-colors font-medium text-sm"
           >
             {showAnswer ? 'Hide Reading' : 'Show Reading'}
           </button>

@@ -86,7 +86,7 @@ export function QuestionNav({
                 // Current + answered
                 isCurrent && answered && 'bg-emerald-500 text-white',
                 // Current + not answered
-                isCurrent && !answered && 'bg-crystal-500 text-white'
+                isCurrent && !answered && 'bg-crystal-700 text-white'
               )}
               title={`Question ${index + 1}${flagged ? ' (Flagged)' : ''}${answered ? ' (Answered)' : ''}`}
             >

@@ -79,7 +79,7 @@ export function AnswerOption({
           // Default state
           !isAnswered && !isSelected && 'bg-slate-100 text-slate-600',
           // Selected state
-          !isAnswered && isSelected && 'bg-crystal-500 text-white',
+          !isAnswered && isSelected && 'bg-crystal-700 text-white',
           // Correct
           showCorrect && 'bg-emerald-500 text-white',
           // Incorrect
