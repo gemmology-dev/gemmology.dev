@@ -23,11 +23,17 @@ const links = {
 };
 
 const currentYear = new Date().getFullYear();
+
+// "Packages" lists the PyPI distributions and is only relevant to developers
+// reading the docs. On consumer surfaces (quiz, learn, tools, gallery, home,
+// minerals) the column is noise and gets hidden — see P2-9.
+const path = Astro.url.pathname;
+const showPackages = path.startsWith('/docs');
 ---
 
 <footer class="border-t border-slate-200 bg-slate-50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class:list={['grid grid-cols-2 gap-8', showPackages ? 'md:grid-cols-4' : 'md:grid-cols-3']}>
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
         <a href="/" class="flex items-center gap-2 text-slate-900 font-semibold">
@@ -58,19 +64,21 @@ const currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Developers -->
-      <div>
-        <h3 class="font-semibold text-slate-900 text-sm">Packages</h3>
-        <ul class="mt-4 space-y-2">
-          {links.developers.map(({ href, label }) => (
-            <li>
-              <a href={href} target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <!-- Developers (only on /docs/* — see P2-9) -->
+      {showPackages && (
+        <div>
+          <h3 class="font-semibold text-slate-900 text-sm">Packages</h3>
+          <ul class="mt-4 space-y-2">
+            {links.developers.map(({ href, label }) => (
+              <li>
+                <a href={href} target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <!-- Resources -->
       <div>

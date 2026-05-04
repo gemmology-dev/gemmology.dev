@@ -80,7 +80,9 @@ export function QuizSetup({
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-12 space-y-8 lg:space-y-0">
+      {/* Left column: mode + categories (the heavyweight pickers) */}
+      <div className="space-y-8">
       {/* Mode selection */}
       {showExamMode && (
         <div>
@@ -148,7 +150,7 @@ export function QuizSetup({
       {/* Category selection */}
       <div>
         <h3 className="text-lg font-medium text-slate-900 mb-3">Categories</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2">
           {CATEGORIES.map(category => {
             const count = availableQuestions[category] || 0;
             const isSelected = selectedCategories.includes(category);
@@ -174,6 +176,10 @@ export function QuizSetup({
           })}
         </div>
       </div>
+      </div>
+
+      {/* Right column: tighter pickers + Start */}
+      <div className="space-y-8">
 
       {/* Difficulty filter */}
       <div>
@@ -269,6 +275,7 @@ export function QuizSetup({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </Button>
+      </div>
       </div>
     </div>
   );

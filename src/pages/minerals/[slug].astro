@@ -77,12 +77,27 @@ const naturalCounterpart = !isNatural && mineral.natural_counterpart_id
 const title = `${mineral.name} Crystal Structure`;
 const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
 const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
+
+// Acronym-aware formatter for free-text identification fields (CVD, HPHT, FTIR, …) — P2-7
+const ACRONYMS = new Set(['CVD', 'HPHT', 'FTIR', 'HPLC', 'GIA', 'FGA', 'AGTA', 'EDXRF', 'XRF', 'EDS', 'SEM', 'UV', 'IR', 'NIR', 'YAG', 'GGG', 'CZ']);
+function formatLabel(value: string | null | undefined): string {
+  if (!value) return '';
+  return value
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(word => {
+      const upper = word.toUpperCase();
+      if (ACRONYMS.has(upper)) return upper;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+}
 ---
 
 <BaseLayout title={title} description={description}>
   <MineralSchema mineral={mineral} slot="head" />
 
-  <main class="min-h-screen bg-slate-50">
+  <article class="min-h-screen bg-slate-50">
     <!-- Hero Section -->
     <MineralHero mineral={mineral} />
 
@@ -137,8 +152,8 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
             <PropertyTable
               title="Origin & Identification"
               properties={[
-                { label: 'Origin', value: mineral.origin },
-                { label: 'Growth Method', value: mineral.growth_method?.replace(/_/g, ' ') },
+                { label: 'Origin', value: formatLabel(mineral.origin) },
+                { label: 'Growth Method', value: formatLabel(mineral.growth_method) },
                 { label: 'Manufacturer', value: mineral.manufacturer },
                 { label: 'First Produced', value: mineral.year_first_produced },
                 { label: 'Diagnostic Features', value: mineral.diagnostic_synthetic_features },
@@ -200,5 +215,5 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
         <LearnMoreSection mineral={mineral} />
       </div>
     </div>
-  </main>
+  </article>
 </BaseLayout>

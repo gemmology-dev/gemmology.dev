@@ -132,25 +132,56 @@ export function FilterBar({
         ))}
       </div>
 
-      {/* Mineral group filter */}
+      {/* Mineral group filter — collapses to a select once there are too many
+          to fit on a single row without overflow (P2-8). */}
       {mineralGroups.length > 0 && onGroupChange && (
-        <div className="flex flex-wrap gap-2">
-          <span className="flex items-center text-xs font-medium text-slate-400 uppercase tracking-wider mr-1">Groups</span>
-          {mineralGroups.map((group) => (
-            <button
-              key={group}
-              onClick={() => onGroupChange(selectedGroup === group ? null : group)}
-              className={clsx(
-                'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
-                selectedGroup === group
-                  ? 'bg-violet-600 text-white'
-                  : 'bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200'
-              )}
+        mineralGroups.length > 6 ? (
+          <div className="flex items-center gap-3">
+            <label htmlFor="gallery-group-select" className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+              Group
+            </label>
+            <select
+              id="gallery-group-select"
+              value={selectedGroup ?? ''}
+              onChange={(e) => onGroupChange(e.target.value === '' ? null : e.target.value)}
+              className="flex-1 max-w-xs px-3 py-1.5 rounded-full text-sm font-medium bg-violet-50 text-violet-700 border border-violet-200 hover:bg-violet-100 focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
-              {group.replace(' Group', '')}
-            </button>
-          ))}
-        </div>
+              <option value="">All groups ({mineralGroups.length})</option>
+              {mineralGroups.map((group) => (
+                <option key={group} value={group}>
+                  {group.replace(' Group', '')}
+                </option>
+              ))}
+            </select>
+            {selectedGroup && (
+              <button
+                type="button"
+                onClick={() => onGroupChange(null)}
+                className="text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            <span className="flex items-center text-xs font-medium text-slate-400 uppercase tracking-wider mr-1">Groups</span>
+            {mineralGroups.map((group) => (
+              <button
+                key={group}
+                onClick={() => onGroupChange(selectedGroup === group ? null : group)}
+                className={clsx(
+                  'px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
+                  selectedGroup === group
+                    ? 'bg-violet-600 text-white'
+                    : 'bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200'
+                )}
+              >
+                {group.replace(' Group', '')}
+              </button>
+            ))}
+          </div>
+        )
       )}
     </div>
   );
