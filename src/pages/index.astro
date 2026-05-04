@@ -8,6 +8,9 @@ import { SectionHeader } from '../components/ui/SectionHeader';
 import Container from '../components/ui-astro/Container.astro';
 import { Link } from '../components/ui/Link';
 import { HeroCrystal3D } from '../components/crystal/HeroCrystal3D';
+import { getSiteStats } from '../lib/stats';
+
+const { familyCount, expressionCount } = await getSiteStats();
 
 // JSON-LD schemas for homepage
 const websiteSchema = {
@@ -40,7 +43,7 @@ const organizationSchema = {
 const features = [
   {
     title: 'Crystal Gallery',
-    description: 'Explore 50+ mineral presets with FGA-accurate crystallographic data and interactive visualizations.',
+    description: `Explore ${familyCount} mineral families and ${expressionCount} crystal expressions with FGA-accurate data and interactive visualizations.`,
     href: '/gallery',
     icon: 'gallery',
     variant: 'crystal' as const,
@@ -401,7 +404,7 @@ const iconPaths: Record<string, string> = {
     <Container size="xl" padding="none" class="px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl font-bold text-white">Ready to visualize crystals?</h2>
       <p class="mt-4 text-lg text-crystal-100 max-w-2xl mx-auto">
-        Start with the interactive playground or explore our gallery of 50+ mineral presets.
+        Start with the interactive playground or explore our gallery of {familyCount} mineral families.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <a href="/playground" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-crystal-700 font-medium rounded-lg hover:bg-crystal-50 transition-colors">
