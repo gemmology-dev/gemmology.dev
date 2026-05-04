@@ -156,7 +156,7 @@ const subsectionContent = section.subsections
             {sub.renderedContent && (
               <div class="prose prose-slate max-w-none mb-4" set:html={sub.renderedContent} />
             )}
-            {sub.items && <PropertyList items={sub.items} />}
+            {sub.items && <PropertyList items={sub.items} headingLevel={4} />}
             {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
           </div>
         </div>
