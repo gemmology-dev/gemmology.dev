@@ -1,0 +1,37 @@
+# CODEOWNERS — study v1 file ownership lattice
+#
+# Patterns follow GitHub CODEOWNERS syntax: last matching rule wins.
+# All paths are relative to the repository root.
+# @Bissbert is the sole maintainer; every path below auto-requests a review
+# from them on any PR that touches the listed files or directories.
+
+# Study v1 — core type contracts
+/src/lib/quiz/study-types.ts                     @Bissbert
+
+# Study v1 — scheduling algorithm
+/src/lib/quiz/scheduler.ts                       @Bissbert
+
+# Study v1 — question selection
+/src/lib/quiz/selector.ts                        @Bissbert
+
+# Study v1 — near-miss interleaving
+/src/lib/quiz/interleaver.ts                     @Bissbert
+
+# Study v1 — store implementations and migrations
+/src/lib/quiz/store/                             @Bissbert
+
+# Quiz UI components (all tracks write here; single reviewer)
+/src/components/quiz/                            @Bissbert
+
+# Curated question bank (T5a/T5b write here)
+/src/content/questions/                          @Bissbert
+
+# Astro content collection schema (T4 sole owner)
+/src/content/config.ts                           @Bissbert
+
+# Build and authoring scripts
+/scripts/                                        @Bissbert
+
+# Documentation and ADRs
+/docs/                                           @Bissbert
+/docs/adr/                                       @Bissbert
