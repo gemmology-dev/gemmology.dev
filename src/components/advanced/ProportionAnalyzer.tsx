@@ -4,6 +4,44 @@
  */
 
 import { useState } from 'react';
+import {
+  gradeRoundBrilliant,
+  type GirdleThickness,
+  type CuletSize,
+  type CutGradeBand,
+} from '../../lib/calculator/cut-grades';
+
+const GIRDLE_OPTIONS: { value: GirdleThickness | ''; label: string }[] = [
+  { value: '', label: '— not measured —' },
+  { value: 'extremely-thin', label: 'Extremely thin (chipping risk)' },
+  { value: 'very-thin', label: 'Very thin' },
+  { value: 'thin', label: 'Thin' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'slightly-thick', label: 'Slightly thick' },
+  { value: 'thick', label: 'Thick' },
+  { value: 'very-thick', label: 'Very thick' },
+  { value: 'extremely-thick', label: 'Extremely thick (carat-weight penalty)' },
+];
+
+const CULET_OPTIONS: { value: CuletSize | ''; label: string }[] = [
+  { value: '', label: '— not measured —' },
+  { value: 'none', label: 'None / pointed' },
+  { value: 'very-small', label: 'Very small' },
+  { value: 'small', label: 'Small' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'slightly-large', label: 'Slightly large' },
+  { value: 'large', label: 'Large' },
+  { value: 'very-large', label: 'Very large' },
+  { value: 'extremely-large', label: 'Extremely large' },
+];
+
+const GIA_BADGE: Record<CutGradeBand, string> = {
+  Excellent: 'bg-green-200 text-green-800',
+  'Very Good': 'bg-blue-200 text-blue-800',
+  Good: 'bg-slate-200 text-slate-800',
+  Fair: 'bg-amber-200 text-amber-800',
+  Poor: 'bg-red-200 text-red-800',
+};
 
 interface ProportionStandard {
   cut: string;
@@ -130,6 +168,8 @@ export function ProportionAnalyzer() {
   const [depth, setDepth] = useState('');
   const [crownAngle, setCrownAngle] = useState('');
   const [pavilionAngle, setPavilionAngle] = useState('');
+  const [girdle, setGirdle] = useState<GirdleThickness | ''>('');
+  const [culet, setCulet] = useState<CuletSize | ''>('');
 
   const selectedStandard = PROPORTION_STANDARDS.find(
     s => `${s.cut} (${s.gem})` === selectedCut
@@ -207,6 +247,20 @@ export function ProportionAnalyzer() {
   };
 
   const analysis = analyzeProportions();
+
+  const isDiamondRoundBrilliant =
+    selectedStandard?.cut === 'Round Brilliant' && selectedStandard?.gem === 'Diamond';
+  const giaResult = isDiamondRoundBrilliant
+    ? gradeRoundBrilliant({
+        tablePercent: table ? parseFloat(table) : undefined,
+        depthPercent: depth ? parseFloat(depth) : undefined,
+        crownAngle: crownAngle ? parseFloat(crownAngle) : undefined,
+        pavilionAngle: pavilionAngle ? parseFloat(pavilionAngle) : undefined,
+        girdleThickness: girdle || undefined,
+        culetSize: culet || undefined,
+      })
+    : null;
+  const giaInputCount = giaResult?.parameterGrades.length ?? 0;
 
   return (
     <div className="space-y-6">
@@ -335,6 +389,83 @@ export function ProportionAnalyzer() {
                   />
                 </div>
               </div>
+
+              {isDiamondRoundBrilliant && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                      Girdle thickness (optional)
+                    </label>
+                    <select
+                      value={girdle}
+                      onChange={(e) => setGirdle(e.target.value as GirdleThickness | '')}
+                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    >
+                      {GIRDLE_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                      Culet size (optional)
+                    </label>
+                    <select
+                      value={culet}
+                      onChange={(e) => setCulet(e.target.value as CuletSize | '')}
+                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    >
+                      {CULET_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {giaResult && giaInputCount > 0 && (
+                <div className={`p-4 rounded-lg border-2 ${
+                  giaResult.grade === 'Excellent' ? 'bg-green-50 border-green-300' :
+                  giaResult.grade === 'Very Good' ? 'bg-blue-50 border-blue-300' :
+                  giaResult.grade === 'Good' ? 'bg-slate-50 border-slate-300' :
+                  giaResult.grade === 'Fair' ? 'bg-amber-50 border-amber-300' :
+                  'bg-red-50 border-red-300'
+                }`}>
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h5 className="text-lg font-bold text-slate-900">
+                      GIA-style Cut Grade: {giaResult.grade}
+                    </h5>
+                    <span className={`text-xs px-2 py-1 rounded font-medium ${GIA_BADGE[giaResult.grade]}`}>
+                      Diamond round brilliant
+                    </span>
+                  </div>
+                  {giaResult.limitingParameter && giaResult.grade !== 'Excellent' && (
+                    <p className="text-sm text-slate-800 mb-2">
+                      <strong>Limiting parameter:</strong> {giaResult.limitingParameter.comment}
+                    </p>
+                  )}
+                  <div className="text-xs text-slate-700">
+                    <strong>Per-parameter:</strong>
+                    <ul className="mt-1 space-y-0.5">
+                      {giaResult.parameterGrades.map((p, idx) => (
+                        <li key={idx}>
+                          <span className={`inline-block px-1.5 py-0.5 rounded mr-2 text-[10px] font-medium ${GIA_BADGE[p.grade]}`}>
+                            {p.grade}
+                          </span>
+                          {p.parameter} = {p.value}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <p className="text-xs text-slate-600 mt-2 italic">
+                    Educational reference only — formal GIA grading also weighs symmetry, polish, and overall appeal.
+                  </p>
+                </div>
+              )}
 
               {analysis && (
                 <div className={`p-4 rounded-lg border-2 ${

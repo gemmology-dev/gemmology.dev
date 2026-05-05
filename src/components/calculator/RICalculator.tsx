@@ -1,10 +1,10 @@
 /**
  * RI Lookup Calculator component.
- * Look up gems by refractive index value.
- * Uses database with fallback to hardcoded reference data.
+ * Look up gems by refractive index value, with optional double-reading mode
+ * that infers birefringence and optic character (SR vs DR) on the fly.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCalculatorForm } from '../../hooks/useCalculatorForm';
 import { useGemLookup, formatRI, formatSG } from '../../hooks/useGemLookup';
 import { useCalculatorData } from '../../hooks/useCalculatorData';
@@ -12,6 +12,10 @@ import { validateRI } from './ValidationMessage';
 import { FormField, NumberInput, Select } from '../form';
 import { GemMatchList } from './results';
 import { Table } from '../ui';
+import {
+  calculateBirefringence,
+  classifyBirefringence,
+} from '../../lib/calculator/conversions';
 
 const TOLERANCE_OPTIONS = [
   { value: '0.005', label: '± 0.005 (Narrow)' },
@@ -20,8 +24,16 @@ const TOLERANCE_OPTIONS = [
   { value: '0.05', label: '± 0.05 (Very Wide)' },
 ];
 
+const MODE_OPTIONS = [
+  { value: 'single', label: 'Single reading' },
+  { value: 'double', label: 'Double reading (anisotropic)' },
+];
+
 export function RICalculator() {
   const { fallbackGems } = useCalculatorData();
+
+  const [mode, setMode] = useState<'single' | 'double'>('single');
+  const [ri2, setRi2] = useState('');
 
   const { values, errors, result, setValue } = useCalculatorForm({
     fields: {
@@ -41,27 +53,62 @@ export function RICalculator() {
     },
   });
 
-  // Gem lookup with debouncing
+  const ri2Error = mode === 'double' && ri2 ? validateRI(ri2) : null;
+
+  const doubleReadingResult = useMemo(() => {
+    if (mode !== 'double') return null;
+    const a = result?.ri;
+    const b = parseFloat(ri2);
+    if (a === undefined || isNaN(b) || b < 1) return null;
+
+    const birefringence = calculateBirefringence(a, b);
+    const character = birefringence > 0.005 ? 'DR' : 'SR';
+    const lookupRI = (a + b) / 2;
+
+    return {
+      ri1: Math.min(a, b),
+      ri2: Math.max(a, b),
+      birefringence,
+      classification: classifyBirefringence(birefringence),
+      character,
+      characterLabel:
+        character === 'DR'
+          ? 'Doubly refractive (anisotropic — uniaxial or biaxial)'
+          : 'Singly refractive within reading tolerance — likely cubic, amorphous, or read along an optic axis',
+      lookupRI,
+    };
+  }, [mode, result?.ri, ri2]);
+
+  // Use the average of the two readings when in double mode, otherwise the single reading.
+  const lookupTarget = doubleReadingResult?.lookupRI ?? result?.ri ?? null;
+
   const { matches, lookup } = useGemLookup({
     type: 'ri',
     tolerance: parseFloat(values.tolerance) || 0.01,
   });
 
-  // Trigger lookup when RI result changes
   useEffect(() => {
-    lookup(result?.ri ?? null);
-  }, [result?.ri, lookup]);
+    lookup(lookupTarget);
+  }, [lookupTarget, lookup]);
 
   return (
     <div className="space-y-6">
       <div className="text-sm text-slate-600">
-        <p>Enter an RI reading to find matching gemstones.</p>
+        <p>Enter an RI reading to find matching gemstones. Toggle <strong>Double reading</strong> to enter both shadow-edge readings (ω/ε or α/γ) and infer birefringence + optic character automatically.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <FormField name="ri-mode" label="Reading mode">
+          <Select
+            options={MODE_OPTIONS}
+            value={mode}
+            onChange={(v) => setMode(v as 'single' | 'double')}
+          />
+        </FormField>
+
         <FormField
           name="ri-lookup"
-          label="Refractive Index"
+          label={mode === 'double' ? 'Reading 1 (lower)' : 'Refractive Index'}
           error={errors.ri}
         >
           <NumberInput
@@ -74,19 +121,57 @@ export function RICalculator() {
           />
         </FormField>
 
-        <FormField
-          name="ri-tolerance"
-          label="Tolerance (±)"
-        >
+        {mode === 'double' ? (
+          <FormField name="ri-lookup-2" label="Reading 2 (upper)" error={ri2Error}>
+            <NumberInput
+              value={ri2}
+              onChange={setRi2}
+              min={1}
+              max={3}
+              step={0.001}
+              placeholder="e.g., 1.553"
+              hasError={!!ri2Error}
+            />
+          </FormField>
+        ) : (
+          <FormField name="ri-tolerance" label="Tolerance (±)">
+            <Select
+              options={TOLERANCE_OPTIONS}
+              value={values.tolerance}
+              onChange={(v) => setValue('tolerance', v)}
+            />
+          </FormField>
+        )}
+      </div>
+
+      {mode === 'double' && (
+        <FormField name="ri-tolerance-double" label="Match tolerance (±)">
           <Select
             options={TOLERANCE_OPTIONS}
             value={values.tolerance}
             onChange={(v) => setValue('tolerance', v)}
           />
         </FormField>
-      </div>
+      )}
 
-      {result !== null && (
+      {doubleReadingResult && (
+        <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-sm space-y-1">
+          <div className="font-semibold text-emerald-900">Double-reading inference</div>
+          <div className="text-emerald-800">
+            RI {doubleReadingResult.ri1.toFixed(3)} – {doubleReadingResult.ri2.toFixed(3)},
+            birefringence <span className="font-mono">{doubleReadingResult.birefringence.toFixed(3)}</span>{' '}
+            ({doubleReadingResult.classification})
+          </div>
+          <div className="text-emerald-800">
+            Optic character: <strong>{doubleReadingResult.character}</strong> — {doubleReadingResult.characterLabel}
+          </div>
+          <div className="text-xs text-emerald-700">
+            Matches below use the average RI ({doubleReadingResult.lookupRI.toFixed(3)}) ± {values.tolerance}.
+          </div>
+        </div>
+      )}
+
+      {lookupTarget !== null && (
         <div className="space-y-3">
           {matches.length > 0 ? (
             <GemMatchList
@@ -97,8 +182,8 @@ export function RICalculator() {
             />
           ) : (
             <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
-              No common gems found with RI {values.ri} (±{values.tolerance}). Try widening the tolerance or
-              checking your reading.
+              No common gems found near RI {lookupTarget.toFixed(3)} (±{values.tolerance}). Try widening the tolerance or
+              checking your readings.
             </div>
           )}
         </div>

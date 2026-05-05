@@ -10,6 +10,7 @@ import { CriticalAngleCalc } from './CriticalAngleCalc';
 import { CaratEstimator } from './CaratEstimator';
 import { DispersionCalculator } from './DispersionCalculator';
 import { DensityEstimator } from './DensityEstimator';
+import { HannemanRI } from './HannemanRI';
 import { ToolSection } from '../ui/ToolSection';
 
 const ICON_PATHS = {
@@ -93,6 +94,16 @@ export function MeasurementTools() {
         accent="emerald"
       >
         <DensityEstimator />
+      </ToolSection>
+
+      <ToolSection
+        id="hanneman-ri"
+        title="Hanneman / Hodgkinson Short-cut RI"
+        description="Bracket RI with contact-liquid relief for over-the-limit and rough stones"
+        iconPath={ICON_PATHS.beaker}
+        accent="emerald"
+      >
+        <HannemanRI />
       </ToolSection>
 
       {/* Learn More section */}
