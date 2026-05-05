@@ -1,8 +1,7 @@
 /**
- * SM-2 scheduler — contract & shared helper.
+ * SM-2 scheduler — full implementation.
  *
- * Track T2 owns the full implementation; this file only carries the public
- * signatures so dependent tracks (T1, T3) can compile against the contract.
+ * Track T2 (`.trees/study-algorithms`) owns this file.
  *
  * See V1-PLAN.md §5.1 (SM-2 update) and §A.1.
  */
@@ -13,6 +12,8 @@ import type { Confidence, ScheduleEntry } from './study-types';
 export const DEFAULT_EASE = 2.5;
 /** Lower bound for easiness factor — SM-2 paper. */
 export const MIN_EASE = 1.3;
+/** Milliseconds per day. */
+export const DAY_MS = 86_400_000;
 
 /**
  * Map a (correct, confidence) pair to an SM-2 quality score in [0, 5].
@@ -36,15 +37,55 @@ export function qualityOf(correct: boolean, confidence: Confidence): 0 | 1 | 2 |
 /**
  * Compute the next ScheduleEntry from the previous one + the latest quality.
  *
- * Implementation lives on track T2's branch (`.trees/study-algorithms`).
- * Until then this throws to make incomplete integration loud rather than silent.
+ * SM-2 algorithm:
+ *  - quality < 3 → lapse: repetitions reset to 0, intervalDays = 1, lapses++.
+ *  - quality ≥ 3 → recall: repetitions++, interval grows.
+ *    - repetitions === 1 → intervalDays = 1
+ *    - repetitions === 2 → intervalDays = 6
+ *    - else             → intervalDays = round(prevInterval * EF)
+ *  - EF always updated with the standard formula, clamped to ≥ MIN_EASE.
+ *  - nextDue = now + intervalDays * DAY_MS
  *
  * V1-PLAN §5.1.
  */
 export function applySM2(
-  _previous: ScheduleEntry,
-  _quality: 0 | 1 | 2 | 3 | 4 | 5,
-  _now: number = Date.now(),
+  previous: ScheduleEntry,
+  quality: 0 | 1 | 2 | 3 | 4 | 5,
+  now: number = Date.now(),
 ): ScheduleEntry {
-  throw new Error('applySM2: implementation deferred to track T2 (study-algorithms)');
+  let { intervalDays, easeFactor, repetitions, lapses, totalReviews } = previous;
+
+  if (quality < 3) {
+    // Lapse: reset streak, schedule for review tomorrow.
+    repetitions = 0;
+    intervalDays = 1;
+    lapses += 1;
+  } else {
+    // Recall: advance the streak.
+    repetitions += 1;
+    if (repetitions === 1) {
+      intervalDays = 1;
+    } else if (repetitions === 2) {
+      intervalDays = 6;
+    } else {
+      intervalDays = Math.round(previous.intervalDays * easeFactor);
+    }
+  }
+
+  // EF update is applied unconditionally (lapse and recall), per SM-2 paper.
+  easeFactor = Math.max(
+    MIN_EASE,
+    easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02),
+  );
+
+  return {
+    questionId: previous.questionId,
+    nextDue: now + intervalDays * DAY_MS,
+    intervalDays,
+    easeFactor,
+    repetitions,
+    lapses,
+    lastReviewed: now,
+    totalReviews: totalReviews + 1,
+  };
 }

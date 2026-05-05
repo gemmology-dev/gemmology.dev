@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
@@ -11,9 +12,18 @@ export default defineConfig({
       reporter: ['text', 'json-summary'],
       include: [
         'src/lib/quiz/store/**',
+        'src/lib/quiz/scheduler.ts',
+        'src/lib/quiz/selector.ts',
+        'src/lib/quiz/interleaver.ts',
         'src/hooks/useQuiz.ts',
         'src/hooks/useExam.ts',
       ],
+      thresholds: {
+        lines: 85,
+        functions: 90,
+        branches: 85,
+        statements: 85,
+      },
     },
   },
   resolve: {
