@@ -1,0 +1,76 @@
+id: crystal-system-006
+stem: |
+  A gemmologist is examining a rough corundum crystal that shows prominent flat, shiny
+  internal planes that could be either cleavage or parting. A client has described the
+  stone as having "perfect basal cleavage." The gemmologist knows this description is
+  incorrect. What is the correct explanation of what the client has observed, and how
+  does it differ from true cleavage?
+type: mcq
+options:
+  - text: "Corundum has no cleavage; the flat internal planes are parting along polysynthetic twin planes — rhombohedral {10-11} parting is the most prominent, arising from twinning, not from inherently weak bonds in the structure"
+    isCorrect: true
+    rationale: |
+      Corundum (Al2O3) has no true cleavage — this is a well-established gemmological
+      fact. The flat, reflective planes observed in corundum are parting: a tendency to
+      split along the planes of polysynthetic twinning. Two parting directions are known:
+      rhombohedral parting on {10-11} (the most prominent, arising from repeated twinning
+      on that plane) and basal parting on {0001}. Parting is distinguished from cleavage
+      by being contingent — only specimens with twinning show parting, and it does not
+      occur universally in all corundum specimens the way true cleavage would.
+  - text: "Corundum has one direction of imperfect cleavage parallel to the basal pinacoid {0001}, commonly called parting by mistake"
+    isCorrect: false
+    rationale: |
+      This answer incorrectly grants corundum a cleavage. Standard gemmological and
+      mineralogical references (Read, Hurlbut & Klein) consistently state that corundum
+      has no cleavage. What appears as "basal cleavage" is in fact basal parting arising
+      from twinning on the {0001} plane. Describing it as "imperfect cleavage commonly
+      called parting by mistake" reverses the relationship — it is actually parting that
+      is commonly mistaken for cleavage, not the other way around. The distinction
+      matters for durability assessment: cleavage is a universal weakness; parting only
+      weakens specimens with that specific twinning.
+  - text: "Corundum belongs to the trigonal system and all trigonal gems have one direction of rhombohedral cleavage related to the {10-11} planes"
+    isCorrect: false
+    rationale: |
+      Trigonal symmetry does not automatically confer rhombohedral cleavage. Calcite
+      (trigonal, 3̄m) has perfect rhombohedral cleavage on {10-11}, but corundum (also
+      trigonal, 3̄m, same point group) has no cleavage on those planes — it has parting.
+      The presence or absence of cleavage is determined by the specific bond strengths
+      in the crystal structure, not by the crystal system alone. Making a rule that all
+      trigonal gems have rhombohedral cleavage would incorrectly apply calcite's cleavage
+      to corundum. Quartz (trigonal) also lacks cleavage, showing conchoidal fracture.
+rationaleCorrect: |
+  Corundum has no cleavage in any direction. The flat planes observed are rhombohedral
+  parting on {10-11} — caused by polysynthetic twinning — and less commonly basal
+  parting on {0001}. The key distinction from cleavage: cleavage is universal in every
+  crystal of a species (it reflects inherently weaker bond planes in the structure);
+  parting is contingent on twinning and not present in all specimens. This is one of the
+  most frequently tested corundum facts in FGA examinations. A common exam error states
+  "corundum has perfect basal cleavage" — this is incorrect. The iridescent flat planes
+  sometimes seen internally in faceted rubies and sapphires are parting planes, not
+  cleavage. Knowing this matters practically: a stone with parting is not universally
+  weakened in the way that a stone with perfect cleavage (like topaz or diamond) is.
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - cleavage
+  - parting
+  - crystal-system
+  - trigonal-system
+  - corundum
+  - miller-indices
+sourceArticle: fundamentals/crystal-systems
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-007
+  - crystal-system-008
+similarTo:
+  - crystal-system-005
+  - crystal-system-007
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 25–28."
+  - id: pignatelli-2024
+    citation: "Pignatelli, I. et al. (2024). Journal of Gemmology. DOI: 10.1007/s00710-024-00858-1"

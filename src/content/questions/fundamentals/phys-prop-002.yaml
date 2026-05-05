@@ -1,0 +1,74 @@
+id: phys-prop-002
+stem: |
+  A pale yellow oval brilliant-cut stone is submitted to a gemmology laboratory.
+  Testing reveals: RI 1.544 (single constant shadow edge throughout rotation), SG 2.65,
+  hardness approximately 7 (scratches feldspar easily), vitreous lustre, conchoidal
+  fracture. A client suspects this is a yellow diamond. Which combination of properties
+  definitively rules out diamond and points to the correct identity?
+type: mcq
+options:
+  - text: "Diamond has RI 2.417 (above refractometer range), SG 3.52, and hardness 10 — all three are incompatible with the measured values; the stone is quartz (citrine or heat-treated amethyst), RI 1.544, SG 2.65, hardness 7"
+    isCorrect: true
+    rationale: |
+      Each measured property eliminates diamond decisively: RI 1.544 is far below
+      diamond's 2.417 (diamond gives no shadow edge on the standard refractometer);
+      SG 2.65 is less than half of diamond's 3.52; hardness 7 is three full Mohs units
+      below diamond's 10. The combination of RI 1.544, SG 2.65, and hardness 7 with
+      vitreous lustre and conchoidal fracture is textbook quartz. The pale yellow colour
+      suggests citrine (natural or heat-treated amethyst), which is a common diamond
+      simulant in low-end jewellery.
+  - text: "Diamond is isotropic and has a single constant shadow edge like the tested stone; only the SG and hardness eliminate it"
+    isCorrect: false
+    rationale: |
+      While it is true that diamond is isotropic (cubic) and would theoretically give
+      a single constant shadow edge, diamond's RI of 2.417 places it above the
+      refractometer's contact-liquid limit (~1.79). Diamond gives NO shadow edge on the
+      standard refractometer — the scale appears uniformly bright. The tested stone gives
+      a shadow edge at 1.544, which is unambiguously a stone with RI 1.544, not diamond.
+      The statement "diamond has a single constant shadow edge" is technically true only
+      for refractometers with higher-RI contact liquids; on standard instruments, diamond
+      produces no reading at all.
+  - text: "The vitreous lustre eliminates diamond, which has adamantine lustre; the other properties are consistent with diamond simulants including some glass"
+    isCorrect: false
+    rationale: |
+      Lustre alone does not eliminate diamond — it is a supporting observation, not a
+      decisive one, because lustre is affected by surface quality and polish. More
+      importantly, glass has RI typically 1.44–1.70, SG approximately 2.5, and
+      conchoidal fracture — overlapping somewhat with the test results. However,
+      glass is an amorphous material, not a crystal; it would also show isotropic
+      behaviour. The RI, SG, and hardness all point definitively to quartz rather
+      than glass: SG 2.65 is specific to quartz, not glass. Hardness 7 eliminates
+      glass (hardness approximately 5–6) as well as diamond.
+rationaleCorrect: |
+  Diamond elimination rests on three simultaneous mismatches: (1) RI 1.544 vs diamond
+  2.417 — a difference of 0.873, enormous by gemmological standards; (2) SG 2.65 vs
+  diamond 3.52 — nearly 1.0 unit difference; (3) hardness 7 vs diamond 10 — the maximum
+  difference on the Mohs scale. Any single one of these would eliminate diamond; all three
+  together with conchoidal fracture and vitreous lustre confirm quartz. Citrine is the
+  most common yellow quartz gem; it can be natural (trace iron) or heat-treated amethyst.
+  It is an important diamond simulant in inexpensive jewellery and a common misidentification
+  by untrained buyers. The three-property elimination protocol is the correct approach:
+  never rely on colour alone.
+difficulty: 2
+category: fundamentals
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - hardness
+  - diamond
+  - quartz
+  - isotropic
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-001
+  - phys-prop-003
+similarTo:
+  - phys-prop-001
+  - phys-prop-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

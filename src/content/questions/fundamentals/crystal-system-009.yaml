@@ -1,0 +1,78 @@
+id: crystal-system-009
+stem: |
+  A gemmologist reads the following four-index Miller index notation on a laboratory
+  report: {10-11}. The report relates this to a parting direction in corundum. The
+  gemmologist's assistant asks why a four-index notation is used instead of the simpler
+  three-index {hkl} notation. What is the correct explanation, and what crystal systems
+  require four-index (Bravais-Miller) notation?
+type: mcq
+options:
+  - text: "Four-index notation {hkil} is required for trigonal and hexagonal systems because they have three equivalent horizontal axes at 120° apart; the redundant index i = −(h+k) makes the symmetry equivalence of faces explicit"
+    isCorrect: true
+    rationale: |
+      Trigonal and hexagonal crystal systems have three equal horizontal axes (a1, a2,
+      a3) arranged at 120° to each other, plus a unique vertical c-axis. Three-index
+      notation cannot capture the six-fold (or three-fold) equivalence of prism faces
+      because it does not include the third horizontal axis. By adding the redundant
+      index i, where i = −(h+k), all equivalent prism faces can be recognised by
+      inspection: the indices {10-10}, {01-10}, {-1100}, etc. are obviously related.
+      The closure relation i = −(h+k) ensures the third horizontal axis intercept is
+      not an independent variable. Corundum {10-11} is the rhombohedral parting and
+      twin plane.
+  - text: "Four-index notation is required whenever Miller indices include a negative value, regardless of crystal system, to keep track of the signs on all four axes"
+    isCorrect: false
+    rationale: |
+      Negative Miller index values (the bar notation) appear in all crystal systems
+      whenever a face intercepts an axis in the negative direction. Three-index notation
+      routinely uses negative values: {-110}, {10-1}, etc. are standard three-index
+      Miller indices for cubic, tetragonal, orthorhombic, monoclinic, and triclinic
+      systems. The need for four indices has nothing to do with the sign of the indices;
+      it is purely about the symmetry of the hexagonal/trigonal system having three
+      equivalent horizontal axes. A student who chooses this answer has conflated
+      bar notation (negative intercepts) with the reason for using four indices.
+  - text: "Four-index notation is used for all high-symmetry crystal systems (cubic, hexagonal, tetragonal) to increase precision in describing crystal faces"
+    isCorrect: false
+    rationale: |
+      Cubic and tetragonal systems do not use four-index notation. The cubic system
+      uses standard three-index {hkl} (e.g. {111} for the octahedron, {100} for
+      the cube). The tetragonal system also uses three-index notation. Four-index
+      (Bravais-Miller) notation is exclusively for hexagonal and trigonal systems
+      because of their three-axis horizontal symmetry. Using four indices for cubic
+      or tetragonal would be unconventional and would not add information because
+      those systems do not have the three-fold horizontal axis equivalence that
+      four-index notation exploits.
+rationaleCorrect: |
+  The Bravais-Miller four-index {hkil} notation is required specifically for trigonal
+  and hexagonal crystal systems because these have three crystallographically equivalent
+  horizontal axes (a1, a2, a3) at 120° to each other, plus the unique c-axis. The
+  closure relation i = −(h+k) ensures that i is not an independent variable; it is a
+  derived index that makes the three-fold or six-fold equivalence of faces visible
+  by inspection. For corundum {10-11}: i = −(1+0) = −1, confirming h+k+i = 0.
+  The rhombohedral {10-11} plane is the parting and twin plane of corundum.
+  The examination tests whether students can explain WHY four indices — not just
+  that four indices are used.
+difficulty: 4
+category: fundamentals
+conceptTags:
+  - miller-indices
+  - crystal-system
+  - trigonal-system
+  - hexagonal-system
+  - corundum
+  - parting
+sourceArticle: fundamentals/crystal-systems
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-006
+  - crystal-system-010
+similarTo:
+  - crystal-system-006
+  - crystal-system-010
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: schwarzenbach-2003
+    citation: "Schwarzenbach, D. (2003). Journal of Applied Crystallography, 36(1), 1–3. DOI: 10.1107/s0021889803014778"
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 17–30."

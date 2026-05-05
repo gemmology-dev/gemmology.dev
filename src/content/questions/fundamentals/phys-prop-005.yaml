@@ -1,0 +1,73 @@
+id: phys-prop-005
+stem: |
+  A gemmologist is presented with three orange stones of similar colour and cut. Physical
+  testing reveals: Stone 1 — RI 1.620–1.640, SG 3.06, uniaxial negative, strong
+  pleochroism (orange and yellow); Stone 2 — RI 1.654–1.690, SG 3.34, biaxial positive,
+  weak pleochroism; Stone 3 — single constant edge RI approximately 1.810 (above normal
+  refractometer range, reading estimated from edge position), SG 3.84, isotropic.
+  Identify all three correctly.
+type: mcq
+options:
+  - text: "Stone 1: orange tourmaline (elbaite); Stone 2: peridot; Stone 3: spessartine garnet"
+    isCorrect: true
+    rationale: |
+      Stone 1 matches orange tourmaline: trigonal, uniaxial negative, RI 1.620–1.640,
+      SG 3.06, strong dichroism — tourmaline shows the strongest pleochroism of any
+      common gem. Stone 2 matches peridot: orthorhombic, biaxial positive, RI 1.654–1.690,
+      SG 3.28–3.48, weak pleochroism. Stone 3 matches spessartine garnet: cubic (isotropic),
+      RI approximately 1.800–1.820 (above standard refractometer range), SG 3.8–4.25.
+      The isotropic behaviour and RI above the scale are characteristic of garnets with
+      high RI readings.
+  - text: "Stone 1: sapphire; Stone 2: peridot; Stone 3: spessartine garnet"
+    isCorrect: false
+    rationale: |
+      Sapphire (corundum) is trigonal and uniaxial negative, which matches Stone 1's
+      optic character. However, sapphire RI is 1.762–1.770 and SG is 3.99–4.01 — both
+      significantly higher than the measured 1.620–1.640 and 3.06. Orange sapphire
+      (padparadscha is pink-orange) exists but would give the corundum RI and SG values.
+      The RI of 1.620–1.640 is far below corundum's range and is instead consistent with
+      tourmaline. A student might reach for sapphire because it is "the blue stone" and
+      forgetting that orange sapphire exists — but the RI mismatch eliminates it.
+  - text: "Stone 1: orange tourmaline; Stone 2: citrine; Stone 3: hessonite grossular garnet"
+    isCorrect: false
+    rationale: |
+      Citrine (yellow quartz) is trigonal, uniaxial positive, RI 1.544–1.553, SG 2.65 —
+      none of which match Stone 2's biaxial positive character, RI 1.654–1.690, or SG 3.34.
+      Stone 3's RI near 1.810 is too high for hessonite grossular garnet (RI typically
+      1.73–1.76, SG 3.57–3.73). Hessonite can reach RI ~1.76 but not 1.81; an RI of 1.81
+      points to spessartine (Mn-Al garnet, RI up to 1.82) or almandine (Fe-Al garnet, RI
+      1.77–1.83). A student might choose hessonite because it is an orange garnet, but the
+      RI value eliminates it.
+rationaleCorrect: |
+  Three orange gems with overlapping colour but distinct properties: (1) Orange tourmaline
+  (elbaite): uniaxial negative, RI 1.620–1.640, SG 3.06, strong dichroism — the strongest
+  pleochroism of any uniaxial gem; (2) Peridot (olivine): biaxial positive, RI 1.654–1.690,
+  SG 3.28–3.48, weak pleochroism — distinctive high birefringence (0.036) makes doubling
+  visible; (3) Spessartine garnet: cubic/isotropic, RI 1.80–1.82 (above refractometer),
+  SG 3.8–4.25, no pleochroism — vivid orange-red popular in recent years from Namibia and
+  Nigeria. The three-way differentiation relies on optic character first (isotropic/uniaxial/
+  biaxial), then RI range, then SG. Colour alone cannot distinguish these orange gems.
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - optic-character
+  - pleochroism
+  - tourmaline
+  - peridot
+  - almandine
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-003
+  - phys-prop-004
+similarTo:
+  - phys-prop-003
+  - phys-prop-006
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

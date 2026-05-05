@@ -1,0 +1,80 @@
+id: red-stone-garnet-001
+stem: |
+  A red faceted stone is tested in the laboratory. Results: single constant shadow
+  edge on the refractometer at approximately 1.75, SG 3.82, uniformly dark on the
+  polariscope except for occasional irregular patchy lightening that does not follow
+  the four-position pattern. No fluorescence under LWUV. The student initially suspects
+  ruby. Which identification is most consistent with these results, and what does the
+  irregular patchy polariscope response signify?
+type: mcq
+options:
+  - text: "Almandine garnet; SG 3.82 and RI approximately 1.75–1.77 are within almandine range; the patchy polariscope response is anomalous double refraction (ADR), common in cubic garnets due to strain"
+    isCorrect: true
+    rationale: |
+      Almandine (Fe-Al garnet) is cubic and isotropic, with RI typically 1.770–1.830
+      and SG 3.9–4.2 — the measured 1.75 and 3.82 fall within the lower end of almandine
+      or could indicate a pyrope-almandine intermediate (rhodolite). The single constant
+      edge confirms isotropic behaviour. The patchy, irregular lightening on the polariscope
+      is anomalous double refraction (ADR): strain birefringence from growth stress or
+      compositional variation, appearing as irregular patches rather than systematic
+      four-position lighting. ADR is especially common in almandine and does not indicate
+      a doubly refractive mineral; it is a strain effect in a cubic crystal.
+  - text: "Ruby; the patchy polariscope response means the stone was examined down the optic axis, suppressing the normal uniaxial lighting pattern"
+    isCorrect: false
+    rationale: |
+      A uniaxial stone examined exactly down its optic axis (the c-axis) would appear
+      uniformly dark between crossed polars — it would not show patchy, irregular
+      lightening. Patchy lightening is specifically the pattern of ADR (anomalous double
+      refraction) in cubic minerals, not the pattern of a uniaxial stone viewed down
+      its optic axis. Moreover, ruby has RI 1.762–1.770 and SG 3.99–4.01; the measured
+      RI ~1.75 and SG 3.82 are both below corundum values. Two properties eliminate ruby;
+      the polariscope pattern provides additional confirmation of garnet.
+  - text: "Red glass; glass can give a single constant shadow edge and irregular polariscope patterns; the SG of 3.82 is consistent with lead glass used as a ruby simulant"
+    isCorrect: false
+    rationale: |
+      High-lead glass (strass) used as a ruby simulant can achieve SG values up to
+      approximately 4.5–5.0 and RI up to approximately 1.70–1.75 depending on composition.
+      SG 3.82 is plausible for heavy glass, but glass would give a perfectly uniform dark
+      field on the polariscope (it is amorphous and isotropic) without the patchy ADR
+      that characterises strained cubic crystals. The patchy lightening is the key
+      distinction: ADR in garnet is a structured, crystal-related strain effect; glass
+      shows true isotropy. Under the microscope, glass also shows swirl marks, gas
+      bubbles, and lacks crystalline inclusions, which would confirm the distinction.
+rationaleCorrect: |
+  Almandine garnet (or pyrope-almandine rhodolite) is the correct identification.
+  The single constant shadow edge confirms isotropic (cubic) behaviour; the RI ~1.75
+  and SG 3.82 are consistent with almandine or a pyrope-rich intermediate. The patchy
+  polariscope response is anomalous double refraction (ADR) — a strain birefringence
+  effect common in cubic garnets, particularly almandine, from internal stresses during
+  rapid growth or compositional variation in the lattice. ADR looks like irregular
+  patches of light and dark rather than the systematic four-fold lightening of a doubly
+  refractive gem. The absence of LWUV fluorescence is typical for iron-bearing garnet.
+  Distinguishing ADR from true double refraction is a key FGA practical skill: rotate
+  the stone slowly and observe whether the light/dark pattern is systematic (four positions
+  = DR) or irregular and wandering (ADR = garnet).
+difficulty: 3
+category: species
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - isotropic
+  - anomalous-double-refraction
+  - almandine
+  - pyrope
+  - ruby
+  - optic-character
+sourceArticle: species/garnet
+examRelevance: FGA-foundation
+confusionPairs:
+  - corundum-vs-spinel-001
+  - corundum-vs-spinel-002
+  - corundum-vs-spinel-003
+similarTo:
+  - corundum-vs-spinel-001
+  - corundum-vs-spinel-002
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115, 165–172."
