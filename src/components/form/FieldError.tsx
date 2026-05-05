@@ -35,7 +35,7 @@ export function FieldError({
         'text-xs mt-1',
         type === 'error' && 'text-red-500',
         type === 'warning' && 'text-amber-500',
-        type === 'info' && 'text-slate-500',
+        type === 'info' && 'text-slate-600',
         className
       )}
       role={type === 'error' ? 'alert' : 'status'}

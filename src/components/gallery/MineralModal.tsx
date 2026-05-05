@@ -182,7 +182,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg">
                       <div className="text-center">
                         <div className="animate-spin w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full mx-auto mb-2" />
-                        <div className="text-sm text-slate-500">Loading 3D model...</div>
+                        <div className="text-sm text-slate-600">Loading 3D model...</div>
                       </div>
                     </div>
                   ) : (

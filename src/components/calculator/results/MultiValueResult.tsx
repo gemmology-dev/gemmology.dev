@@ -71,7 +71,7 @@ export function MultiValueResult({
 
           return (
             <div key={index} className="text-center">
-              <p className="text-sm text-slate-500">{result.label}</p>
+              <p className="text-sm text-slate-600">{result.label}</p>
               <p>
                 <span
                   className={cn(

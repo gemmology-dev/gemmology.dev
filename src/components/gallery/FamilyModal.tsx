@@ -235,7 +235,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg">
                       <div className="text-center">
                         <div className="animate-spin w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full mx-auto mb-2" />
-                        <div className="text-sm text-slate-500">Loading 3D model...</div>
+                        <div className="text-sm text-slate-600">Loading 3D model...</div>
                       </div>
                     </div>
                   ) : (
@@ -296,25 +296,25 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
               <div className="mb-4 p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                 {family.growth_method && (
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm text-slate-500">Growth Method</span>
+                    <span className="text-sm text-slate-600">Growth Method</span>
                     <span className="text-sm font-medium text-slate-900 capitalize">{family.growth_method.replace(/_/g, ' ')}</span>
                   </div>
                 )}
                 {family.manufacturer && (
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm text-slate-500">Manufacturer</span>
+                    <span className="text-sm text-slate-600">Manufacturer</span>
                     <span className="text-sm font-medium text-slate-900">{family.manufacturer}</span>
                   </div>
                 )}
                 {family.year_first_produced && (
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm text-slate-500">First Produced</span>
+                    <span className="text-sm text-slate-600">First Produced</span>
                     <span className="text-sm font-medium text-slate-900">{family.year_first_produced}</span>
                   </div>
                 )}
                 {family.natural_counterpart_id && (
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm text-slate-500">Natural Counterpart</span>
+                    <span className="text-sm text-slate-600">Natural Counterpart</span>
                     <a
                       href={`/minerals/${family.natural_counterpart_id}`}
                       className="text-sm font-medium text-crystal-700 hover:text-crystal-700 capitalize"
@@ -325,7 +325,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                 )}
                 {family.diagnostic_synthetic_features && (
                   <div className="pt-2 border-t border-slate-200">
-                    <span className="text-sm text-slate-500">Diagnostic Features</span>
+                    <span className="text-sm text-slate-600">Diagnostic Features</span>
                     <p className="text-sm text-slate-700 mt-1">{family.diagnostic_synthetic_features}</p>
                   </div>
                 )}
@@ -336,7 +336,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
             <div className="space-y-3">
               {properties.map(({ label, value }) => (
                 <div key={label} className="flex justify-between items-baseline">
-                  <span className="text-sm text-slate-500">{label}</span>
+                  <span className="text-sm text-slate-600">{label}</span>
                   <span className="text-sm font-medium text-slate-900">{value}</span>
                 </div>
               ))}

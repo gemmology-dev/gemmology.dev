@@ -59,7 +59,7 @@ export function Quiz({
   if (!currentQuestion) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-500">No questions available</p>
+        <p className="text-slate-600">No questions available</p>
         <Button variant="secondary" onClick={onBack} className="mt-4">
           Go Back
         </Button>
@@ -142,7 +142,7 @@ export function Quiz({
       {/* Quick finish option when all questions are answered */}
       {allAnswered && !isLastQuestion && (
         <div className="text-center pt-4 border-t border-slate-200">
-          <p className="text-sm text-slate-500 mb-2">
+          <p className="text-sm text-slate-600 mb-2">
             All questions answered!
           </p>
           <Button variant="outline" onClick={submitQuiz}>

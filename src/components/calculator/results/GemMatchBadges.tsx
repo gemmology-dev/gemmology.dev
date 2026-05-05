@@ -66,7 +66,7 @@ export function GemMatchBadges({
                   </span>
                 )}
                 {gem.propertyValue && (
-                  <span className="text-slate-500 ml-1">({gem.propertyValue})</span>
+                  <span className="text-slate-600 ml-1">({gem.propertyValue})</span>
                 )}
               </span>
             ))}
@@ -78,7 +78,7 @@ export function GemMatchBadges({
           </div>
         </>
       ) : (
-        <p className="text-sm text-slate-500">{emptyMessage}</p>
+        <p className="text-sm text-slate-600">{emptyMessage}</p>
       )}
     </div>
   );

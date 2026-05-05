@@ -88,7 +88,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <span
           className={cn(
             'inline-flex items-center px-3 rounded-l-lg border border-r-0',
-            'bg-slate-50 text-slate-500 text-sm',
+            'bg-slate-50 text-slate-600 text-sm',
             hasError ? 'border-red-300' : 'border-slate-300'
           )}
         >
@@ -100,7 +100,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <span
           className={cn(
             'inline-flex items-center px-3 rounded-r-lg border border-l-0',
-            'bg-slate-50 text-slate-500 text-sm',
+            'bg-slate-50 text-slate-600 text-sm',
             hasError ? 'border-red-300' : 'border-slate-300'
           )}
         >

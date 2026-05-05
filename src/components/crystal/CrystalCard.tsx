@@ -100,7 +100,7 @@ export function CrystalCard({
           </Badge>
         </div>
         {(chemistry || hardness) && (
-          <div className="mt-2 flex items-center gap-3 text-sm text-slate-500">
+          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600">
             {chemistry && <span>{chemistry}</span>}
             {hardness && <span>H: {hardness}</span>}
           </div>

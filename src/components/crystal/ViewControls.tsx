@@ -29,7 +29,7 @@ export function ViewControls({
           onChange={(e) => onElevationChange(Number(e.target.value))}
           className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-crystal-600"
         />
-        <span className="text-sm text-slate-500 w-12 text-right">{elevation}°</span>
+        <span className="text-sm text-slate-600 w-12 text-right">{elevation}°</span>
       </div>
 
       <div className="flex items-center gap-3">
@@ -42,7 +42,7 @@ export function ViewControls({
           onChange={(e) => onAzimuthChange(Number(e.target.value))}
           className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-crystal-600"
         />
-        <span className="text-sm text-slate-500 w-12 text-right">{azimuth}°</span>
+        <span className="text-sm text-slate-600 w-12 text-right">{azimuth}°</span>
       </div>
 
       <div className="flex items-center gap-2">

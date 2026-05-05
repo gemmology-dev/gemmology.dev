@@ -62,7 +62,7 @@ export function StudyReviewScreen({ learnEntries }: StudyReviewScreenProps) {
         </header>
 
         {dueQuestions === null ? (
-          <div className="text-center py-12 animate-pulse text-slate-400">
+          <div className="text-center py-12 animate-pulse text-slate-500">
             Loading due items…
           </div>
         ) : dueQuestions.length === 0 ? (

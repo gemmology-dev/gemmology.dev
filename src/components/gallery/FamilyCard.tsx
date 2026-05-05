@@ -131,7 +131,7 @@ export function FamilyCard({
           </div>
         </div>
         {(family.chemistry || hardnessDisplay) && (
-          <div className="mt-2 flex items-center gap-3 text-sm text-slate-500">
+          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600">
             {family.chemistry && <span>{family.chemistry}</span>}
             {hardnessDisplay && <span>H: {hardnessDisplay}</span>}
           </div>

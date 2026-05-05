@@ -114,7 +114,7 @@ export function ToolSection({
           </div>
           <div className="min-w-0">
             <h3 className={`font-semibold text-base ${colors.titleText}`}>{title}</h3>
-            <p className="text-xs text-slate-500 truncate">{description}</p>
+            <p className="text-xs text-slate-600 truncate">{description}</p>
           </div>
         </div>
       </div>

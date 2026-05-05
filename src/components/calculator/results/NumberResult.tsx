@@ -85,7 +85,7 @@ export function NumberResult({
           onClick={handleCopy}
           className={cn(
             'absolute top-2 right-2 p-1.5 rounded-md transition-colors',
-            'text-slate-400 hover:text-slate-600 hover:bg-white/50',
+            'text-slate-500 hover:text-slate-600 hover:bg-white/50',
             'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2'
           )}
           aria-label={copied ? 'Copied!' : 'Copy result'}
@@ -110,7 +110,7 @@ export function NumberResult({
 
       {/* Label */}
       {label && (
-        <p className="text-sm text-slate-500 text-center mb-1">{label}</p>
+        <p className="text-sm text-slate-600 text-center mb-1">{label}</p>
       )}
 
       {/* Main value with unit */}

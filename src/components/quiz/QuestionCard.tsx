@@ -50,7 +50,7 @@ export function QuestionCard({
       {/* Header */}
       <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-slate-500">
+          <span className="text-sm font-medium text-slate-600">
             Question {questionNumber} of {totalQuestions}
           </span>
           <div className="flex items-center gap-2">
