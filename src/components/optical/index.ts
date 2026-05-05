@@ -5,4 +5,6 @@
 export { DichroscopeResults } from './DichroscopeResults';
 export { PolariscopeGuide } from './PolariscopeGuide';
 export { RefractometerSimulator } from './RefractometerSimulator';
+export { PleochroismReasoner } from './PleochroismReasoner';
+export { OpticSignReasoner } from './OpticSignReasoner';
 export { OpticalTools } from './OpticalTools';
