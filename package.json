@@ -12,7 +12,11 @@
     "prerender": "node scripts/prerender-crystals.js",
     "check-svgs": "node scripts/audit-crystal-svgs.mjs",
     "prebuild": "npm run sync && npm run copy-db && npm run check-svgs",
-    "generate-og": "npm run build && node scripts/generate-og-image.js"
+    "generate-og": "npm run build && node scripts/generate-og-image.js",
+    "question:new": "node scripts/new-question.mjs",
+    "validate:questions": "node scripts/validate-questions.mjs",
+    "questions:coverage": "node scripts/questions-coverage.mjs",
+    "schema:questions": "node scripts/generate-question-schema.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.2",
