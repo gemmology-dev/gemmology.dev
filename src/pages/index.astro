@@ -17,7 +17,7 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "gemmology.dev",
-  "description": "Crystal structure visualization and gemmological reference for FGA students and professionals.",
+  "description": "Crystal structure visualisation and gemmological reference for FGA students and professionals.",
   "url": "https://gemmology.dev",
   "potentialAction": {
     "@type": "SearchAction",
@@ -43,7 +43,7 @@ const organizationSchema = {
 const features = [
   {
     title: 'Crystal Gallery',
-    description: `Explore ${familyCount} mineral families and ${expressionCount} crystal expressions with FGA-accurate data and interactive visualizations.`,
+    description: `Explore ${familyCount} mineral families and ${expressionCount} crystal expressions with FGA-accurate data and interactive visualisations.`,
     href: '/gallery',
     icon: 'gallery',
     variant: 'crystal' as const,
@@ -90,7 +90,7 @@ const iconPaths: Record<string, string> = {
 };
 ---
 
-<BaseLayout title="Crystal Visualization">
+<BaseLayout title="Crystal Visualisation">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

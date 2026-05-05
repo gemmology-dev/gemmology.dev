@@ -140,7 +140,7 @@ export function DispersionCalculator() {
           value={result.dispersion}
           precision={3}
           label={`Dispersion (${result.category})`}
-          classification={`${result.category === 'Very High' || result.category === 'High' ? 'Excellent' : result.category === 'Moderate' ? 'Good' : 'Low'} spectral color separation`}
+          classification={`${result.category === 'Very High' || result.category === 'High' ? 'Excellent' : result.category === 'Moderate' ? 'Good' : 'Low'} spectral colour separation`}
           classificationLevel={result.level}
         />
       )}
@@ -164,7 +164,7 @@ export function DispersionCalculator() {
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h4 className="text-sm font-semibold text-blue-900 mb-2">Why Dispersion Matters</h4>
         <p className="text-sm text-blue-800">
-          Dispersion measures how much a gem splits white light into spectral colors. Higher dispersion creates more "fire" — the rainbow flashes seen in a well-cut stone. Diamond's high dispersion (0.044) is why it shows exceptional fire, while quartz's low dispersion (0.013) produces minimal color flashes.
+          Dispersion measures how much a gem splits white light into spectral colours. Higher dispersion creates more "fire" (the rainbow flashes seen in a well-cut stone). Diamond's high dispersion (0.044) is why it shows exceptional fire, while quartz's low dispersion (0.013) produces minimal colour flashes.
         </p>
       </div>
     </div>

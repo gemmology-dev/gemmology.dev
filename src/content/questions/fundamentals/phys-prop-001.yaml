@@ -20,13 +20,13 @@ options:
     isCorrect: false
     rationale: |
       Topaz does have an SG in the 3.49–3.57 range [ref:read-gemmology-3e], which is close to the measured
-      3.47. However, topaz RI ranges from 1.619 to 1.627 — far above the measured
+      3.47. However, topaz RI ranges from 1.619 to 1.627 – far above the measured
       1.434 [ref:read-gemmology-3e]. More importantly, topaz is biaxial and would show birefringence on the
       refractometer. An RI of 1.434 is unambiguously too low for topaz regardless of SG.
   - text: "Fluorite (SG 3.18, RI 1.434, isotropic); the SG discrepancy suggests the stone may contain dense inclusions, and the RI of 1.434 with single constant edge confirms isotropic fluorite pending verification"
     isCorrect: true
     rationale: |
-      Fluorite is cubic (isotropic), RI exactly 1.434 [ref:read-gemmology-3e] — one of the most precise
+      Fluorite is cubic (isotropic), RI exactly 1.434 [ref:read-gemmology-3e] – one of the most precise
       reference values in gemmology, used for refractometer calibration. The SG of
       3.47 is above the expected 3.18, suggesting possible inclusions of denser
       minerals (fluorite commonly hosts calcite, pyrite, or other minerals) [ref:read-gemmology-3e]. The
@@ -36,7 +36,7 @@ options:
 rationaleCorrect: |
   Fluorite (CaF2) is the reference standard for RI 1.434 and is cubic (isotropic),
   giving Pattern I on the refractometer [ref:read-gemmology-3e]. Its typical SG is 3.18. The measured 3.47
-  is significantly above this — likely due to dense mineral inclusions, which are
+  is significantly above this – likely due to dense mineral inclusions, which are
   extremely common in fluorite (pyrite, calcite, galena inclusions all raise SG).
   A clean fluorite crystal would yield SG 3.18, but natural specimens frequently
   contain inclusions that elevate the measured value. The correct procedure is to

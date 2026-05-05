@@ -27,32 +27,32 @@ const MOHS_SCALE: MohsLevel[] = [
   { hardness: 8, mineral: 'Topaz / Spinel', wearResistance: 'Excellent for daily wear' },
   { hardness: 7.5, mineral: 'Beryl (Emerald / Aquamarine)', wearResistance: 'Good for most jewelry' },
   { hardness: 7, mineral: 'Quartz', wearResistance: 'Good for most jewelry' },
-  { hardness: 6.5, mineral: 'Tanzanite / Peridot', wearResistance: 'Fair — avoid rings' },
-  { hardness: 6, mineral: 'Feldspar (Moonstone)', wearResistance: 'Fair — pendants/earrings' },
-  { hardness: 5, mineral: 'Apatite', wearResistance: 'Poor — collector only' },
-  { hardness: 4, mineral: 'Fluorite', wearResistance: 'Poor — collector only' },
+  { hardness: 6.5, mineral: 'Tanzanite / Peridot', wearResistance: 'Fair: avoid rings' },
+  { hardness: 6, mineral: 'Feldspar (Moonstone)', wearResistance: 'Fair: pendants/earrings' },
+  { hardness: 5, mineral: 'Apatite', wearResistance: 'Poor: collector only' },
+  { hardness: 4, mineral: 'Fluorite', wearResistance: 'Poor: collector only' },
   { hardness: 3, mineral: 'Calcite', wearResistance: 'Not suitable for jewelry' },
 ];
 
 // Fallback data if database is unavailable
 const FALLBACK_GEMS: GemHardness[] = [
-  { name: 'Diamond', hardness: '10', wearability: 'Excellent', notes: 'Perfect cleavage — avoid sharp blows' },
-  { name: 'Ruby', hardness: '9', wearability: 'Excellent', notes: 'No cleavage — extremely durable' },
-  { name: 'Sapphire', hardness: '9', wearability: 'Excellent', notes: 'No cleavage — extremely durable' },
+  { name: 'Diamond', hardness: '10', wearability: 'Excellent', notes: 'Perfect cleavage; avoid sharp blows' },
+  { name: 'Ruby', hardness: '9', wearability: 'Excellent', notes: 'No cleavage; extremely durable' },
+  { name: 'Sapphire', hardness: '9', wearability: 'Excellent', notes: 'No cleavage; extremely durable' },
   { name: 'Alexandrite', hardness: '8.5', wearability: 'Excellent', notes: 'Good toughness' },
-  { name: 'Spinel', hardness: '8', wearability: 'Excellent', notes: 'No cleavage — excellent toughness' },
-  { name: 'Topaz', hardness: '8', wearability: 'Good', notes: 'Perfect cleavage — handle with care' },
-  { name: 'Emerald', hardness: '7.5–8', wearability: 'Fair', notes: 'Usually included — avoid ultrasonic' },
+  { name: 'Spinel', hardness: '8', wearability: 'Excellent', notes: 'No cleavage; excellent toughness' },
+  { name: 'Topaz', hardness: '8', wearability: 'Good', notes: 'Perfect cleavage; handle with care' },
+  { name: 'Emerald', hardness: '7.5–8', wearability: 'Fair', notes: 'Usually included; avoid ultrasonic' },
   { name: 'Aquamarine', hardness: '7.5–8', wearability: 'Good', notes: 'Better toughness than emerald' },
-  { name: 'Tourmaline', hardness: '7–7.5', wearability: 'Good', notes: 'Can be brittle — avoid sharp blows' },
-  { name: 'Garnet', hardness: '6.5–7.5', wearability: 'Good', notes: 'Varies by type — generally durable' },
+  { name: 'Tourmaline', hardness: '7–7.5', wearability: 'Good', notes: 'Can be brittle; avoid sharp blows' },
+  { name: 'Garnet', hardness: '6.5–7.5', wearability: 'Good', notes: 'Varies by type; generally durable' },
   { name: 'Amethyst', hardness: '7', wearability: 'Good', notes: 'Durable but can fade in sunlight' },
-  { name: 'Peridot', hardness: '6.5–7', wearability: 'Fair', notes: 'Avoid rings — better for pendants' },
-  { name: 'Tanzanite', hardness: '6–6.5', wearability: 'Fair', notes: 'Perfect cleavage — very fragile' },
-  { name: 'Moonstone', hardness: '6–6.5', wearability: 'Fair', notes: 'Two cleavage directions — fragile' },
-  { name: 'Opal', hardness: '5–6.5', wearability: 'Poor', notes: 'Hydrous — can crack with drying' },
-  { name: 'Turquoise', hardness: '5–6', wearability: 'Poor', notes: 'Porous — avoid chemicals/heat' },
-  { name: 'Pearl', hardness: '2.5–4.5', wearability: 'Poor', notes: 'Organic — avoid acids/cosmetics' },
+  { name: 'Peridot', hardness: '6.5–7', wearability: 'Fair', notes: 'Avoid rings; better for pendants' },
+  { name: 'Tanzanite', hardness: '6–6.5', wearability: 'Fair', notes: 'Perfect cleavage; very fragile' },
+  { name: 'Moonstone', hardness: '6–6.5', wearability: 'Fair', notes: 'Two cleavage directions; fragile' },
+  { name: 'Opal', hardness: '5–6.5', wearability: 'Poor', notes: 'Hydrous; can crack with drying' },
+  { name: 'Turquoise', hardness: '5–6', wearability: 'Poor', notes: 'Porous; avoid chemicals/heat' },
+  { name: 'Pearl', hardness: '2.5–4.5', wearability: 'Poor', notes: 'Organic; avoid acids/cosmetics' },
 ];
 
 // Compute wearability from hardness value
@@ -235,7 +235,7 @@ export function HardnessReference() {
       <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
         <span>• <strong>Hardness</strong> = resistance to scratching</span>
         <span>• <strong>Toughness</strong> = resistance to breaking (not the same thing)</span>
-        <span>• Diamond is hard but has perfect cleavage — jade is softer but tougher</span>
+        <span>• Diamond is hard but has perfect cleavage; jade is softer but tougher</span>
       </div>
 
       <div className="text-sm text-slate-600">

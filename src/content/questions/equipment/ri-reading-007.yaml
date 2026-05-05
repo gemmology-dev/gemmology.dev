@@ -1,7 +1,7 @@
 id: ri-reading-007
 stem: |
   A gemmologist places an unmounted colourless stone on the refractometer and finds
-  no shadow edge anywhere on the scale — the scale appears uniformly bright above
+  no shadow edge anywhere on the scale; the scale appears uniformly bright above
   approximately 1.79. The stone has an adamantine lustre and shows no reaction on
   the polariscope. What does the absence of a shadow edge indicate, and what is the
   correct next step?
@@ -20,7 +20,7 @@ options:
   - text: "The stone is amorphous glass; amorphous materials do not give shadow edges"
     isCorrect: false
     rationale: |
-      Amorphous glass does give a shadow edge on the refractometer — glass has an RI
+      Amorphous glass does give a shadow edge on the refractometer; glass has an RI
       typically between 1.44 and 1.70 depending on composition [ref:read-gemmology-3e], well within the
       instrument's range. A stone with no refractometer reading and adamantine lustre
       cannot be common silicate glass; glass has a vitreous, not adamantine, lustre and
@@ -39,9 +39,9 @@ rationaleCorrect: |
   When no shadow edge appears on the refractometer scale, and the stone has adamantine
   lustre (RI > 1.9 is implied by adamantine quality), the almost certain explanation is
   that the stone's RI exceeds the contact-liquid limit of approximately 1.79–1.81 [ref:read-gemmology-3e].
-  This is not a fault in the instrument — it is a diagnostic result in itself. The
-  priority next tests are: (1) SG by hydrostatic weighing — diamond 3.52, CZ 5.8,
-  high zircon 4.69 [ref:read-gemmology-3e]; (2) thermal probe — diamond conducts heat rapidly, CZ does not [ref:anderson-gem-testing].
+  This is not a fault in the instrument; it is a diagnostic result in itself. The
+  priority next tests are: (1) SG by hydrostatic weighing (diamond 3.52, CZ 5.8,
+  high zircon 4.69) [ref:read-gemmology-3e]; (2) thermal probe (diamond conducts heat rapidly, CZ does not) [ref:anderson-gem-testing].
   The polariscope reading (uniformly dark = isotropic) rules out high zircon (which
   would show birefringence on polariscope), narrowing the candidates to diamond or
   an isotropic simulant [ref:read-gemmology-3e].

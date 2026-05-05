@@ -7,7 +7,7 @@ stem: |
   1.718; Stone B edge is at 1.434. Identify both stones correctly.
 type: mcq
 options:
-  - text: "Stone A: spinel (RI 1.718, SG 3.58–3.61); Stone B: fluorite (RI 1.434, SG 3.18) — the SG values are consistent with these identifications within measurement error for small stones"
+  - text: "Stone A: spinel (RI 1.718, SG 3.58–3.61); Stone B: fluorite (RI 1.434, SG 3.18) – the SG values are consistent with these identifications within measurement error for small stones"
     isCorrect: true
     rationale: |
       Stone A: RI 1.718 matches spinel (cubic, isotropic, SG typically 3.58–3.61) [ref:read-gemmology-3e].
@@ -17,18 +17,18 @@ options:
       Stone B: RI 1.434 matches fluorite (cubic, isotropic, SG 3.18) [ref:read-gemmology-3e]. The measured 3.15
       is close to the expected 3.18, within the ±0.01–0.02 precision of a careful
       hydrostatic measurement on a small stone.
-  - text: "Stone A: glass (RI 1.718, SG 3.42); Stone B: quartz (RI 1.434, SG 3.15) — both are low-value simulants"
+  - text: "Stone A: glass (RI 1.718, SG 3.42); Stone B: quartz (RI 1.434, SG 3.15) – both are low-value simulants"
     isCorrect: false
     rationale: |
       Glass can achieve RI 1.718 by adding heavy-metal oxides, but glass SG at that RI
       would be approximately 4.5–5.0 (high-lead glass), not 3.42 [ref:read-gemmology-3e]. Additionally, quartz
-      has RI 1.544–1.553, not 1.434 [ref:read-gemmology-3e] — Stone B's RI of 1.434 is far below any quartz value.
-  - text: "Stone A: grossular garnet (RI ~1.73–1.76, SG ~3.58); Stone B: apatite (RI ~1.63, SG ~3.20) — both close matches by SG"
+      has RI 1.544–1.553, not 1.434 [ref:read-gemmology-3e] – Stone B's RI of 1.434 is far below any quartz value.
+  - text: "Stone A: grossular garnet (RI ~1.73–1.76, SG ~3.58); Stone B: apatite (RI ~1.63, SG ~3.20) – both close matches by SG"
     isCorrect: false
     rationale: |
       Grossular garnet RI ranges approximately 1.73–1.76 [ref:read-gemmology-3e], which is well above the
       measured shadow edge at 1.718. Apatite RI is approximately 1.630–1.640 with
-      birefringence 0.002–0.006 — far above the measured 1.434 [ref:read-gemmology-3e]. In gemmological
+      birefringence 0.002–0.006 – far above the measured 1.434 [ref:read-gemmology-3e]. In gemmological
       identification, RI is typically the most precise instrument measurement; mismatches
       of 0.02 or more in RI are decisive.
 rationaleCorrect: |

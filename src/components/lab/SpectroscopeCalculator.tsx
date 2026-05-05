@@ -88,7 +88,7 @@ export function SpectroscopeCalculator() {
     <div className="space-y-6">
       <div>
         <p className="text-sm text-slate-600">
-          Enter a wavelength (380-780nm) to see its color, or browse common absorption lines by gem.
+          Enter a wavelength (380-780nm) to see its colour, or browse common absorption lines by gem.
         </p>
       </div>
 
@@ -132,7 +132,7 @@ export function SpectroscopeCalculator() {
       {isValid && (
         <div className="p-6 rounded-lg border border-slate-300">
           <div className="text-center">
-            <div className="text-sm text-slate-600 mb-2">Color at {wl}nm</div>
+            <div className="text-sm text-slate-600 mb-2">Colour at {wl}nm</div>
             <div
               className="w-full h-24 rounded-lg border-2 border-slate-300 shadow-inner"
               style={{ backgroundColor: color }}
@@ -165,7 +165,7 @@ export function SpectroscopeCalculator() {
                     </span>
                   </div>
                   <div className="text-sm text-slate-600">
-                    <span className="font-mono font-medium">{line.wavelength}nm</span> — {line.color}
+                    <span className="font-mono font-medium">{line.wavelength}nm</span> – {line.color}
                   </div>
                   <p className="text-xs text-slate-600 mt-1">{line.notes}</p>
                 </div>

@@ -28,12 +28,12 @@ options:
   - text: "Both stones are green sapphire (corundum); the RI range 1.577–1.583 represents omega only, while 1.620–1.640 represents different cut orientations of corundum"
     isCorrect: false
     rationale: |
-      Corundum RI is 1.762–1.770 [ref:read-gemmology-3e] — neither 1.577–1.583 nor 1.620–1.640 is within
+      Corundum RI is 1.762–1.770 [ref:read-gemmology-3e] – neither 1.577–1.583 nor 1.620–1.640 is within
       corundum's published range by a large margin (0.18+ units difference). No
       orientation of corundum can give an RI reading of 1.577 on a standard refractometer;
       the minimum omega for corundum is 1.762.
 rationaleCorrect: |
-  Green beryl (emerald) and green tourmaline are both uniaxial negative — a property
+  Green beryl (emerald) and green tourmaline are both uniaxial negative – a property
   they share [ref:read-gemmology-3e]. The discrimination rests entirely on RI range and SG: emerald RI 1.577–1.583,
   SG 2.67–2.78; tourmaline RI 1.620–1.640, SG 3.06 [ref:read-gemmology-3e]. The ~0.04 RI gap between maximum
   emerald (1.583) and minimum tourmaline (1.620) is large enough to be read clearly on

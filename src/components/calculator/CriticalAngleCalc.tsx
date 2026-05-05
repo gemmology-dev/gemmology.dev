@@ -82,9 +82,9 @@ export function CriticalAngleCalc() {
       </div>
 
       <div className="text-sm text-slate-600 space-y-1">
-        <p><strong>Diamond (RI 2.417):</strong> θc = 24.4° — Excellent light return</p>
-        <p><strong>Corundum (RI 1.77):</strong> θc = 34.4° — Good light return</p>
-        <p><strong>Quartz (RI 1.55):</strong> θc = 40.2° — Moderate light return</p>
+        <p><strong>Diamond (RI 2.417):</strong> θc = 24.4° (excellent light return)</p>
+        <p><strong>Corundum (RI 1.77):</strong> θc = 34.4° (good light return)</p>
+        <p><strong>Quartz (RI 1.55):</strong> θc = 40.2° (moderate light return)</p>
       </div>
     </div>
   );

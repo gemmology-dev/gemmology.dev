@@ -12,10 +12,10 @@ options:
     isCorrect: true
     rationale: |
       RI approximately 1.59 is far below ruby (1.762–1.770) [ref:read-gemmology-3e], spinel (1.712–1.720) [ref:read-gemmology-3e], and
-      almandine garnet (1.770–1.830) [ref:read-gemmology-3e] — all three cannot produce this reading. The value
+      almandine garnet (1.770–1.830) [ref:read-gemmology-3e] – all three cannot produce this reading. The value
       1.59 falls within the range for silicate glass (typically 1.44–1.70 depending on
-      composition) [ref:read-gemmology-3e]. Foiled settings — metal foil behind the stone to enhance brightness
-      — were a standard technique for glass stones in Georgian and early Victorian
+      composition) [ref:read-gemmology-3e]. Foiled settings – metal foil behind the stone to enhance brightness
+      – were a standard technique for glass stones in Georgian and early Victorian
       jewellery before synthetic stones became available [ref:read-gemmology-3e]. The isotropic polariscope
       result is consistent with amorphous glass.
   - text: "Natural ruby; Georgian jewellers often cut rubies with foiled settings to enhance the colour, and heat treatment has reduced the RI to 1.59"
@@ -23,7 +23,7 @@ options:
     rationale: |
       Heat treatment does not alter the RI or crystal structure of corundum. Ruby RI is
       determined by the Al2O3 crystal lattice and cannot be changed by any thermal
-      treatment to reach 1.59 — a difference of over 0.17 from corundum's 1.762 [ref:read-gemmology-3e]. Foiled
+      treatment to reach 1.59 – a difference of over 0.17 from corundum's 1.762 [ref:read-gemmology-3e]. Foiled
       settings were not typically used for genuine rubies in Georgian jewellery; they
       were used for glass, paste, and composite stones to improve brilliance where the
       material's own lustre was insufficient [ref:read-gemmology-3e].
@@ -31,7 +31,7 @@ options:
     isCorrect: false
     rationale: |
       The Verneuil flame-fusion process was developed by Auguste Verneuil and became
-      commercially available approximately 1902 — well after the Georgian era
+      commercially available approximately 1902 – well after the Georgian era
       (approximately 1714–1830) [ref:read-gemmology-3e]. Georgian jewellers did not have access to synthetic
       ruby. More importantly, Verneuil synthetic ruby has exactly the same RI as natural
       ruby (1.762–1.770) because it is chemically identical Al2O3 [ref:read-gemmology-3e]. No form of synthetic

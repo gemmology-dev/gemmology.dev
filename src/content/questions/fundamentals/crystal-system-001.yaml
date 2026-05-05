@@ -7,14 +7,14 @@ stem: |
   and why does trichroism occur in this system?
 type: mcq
 options:
-  - text: "Trigonal; trichroism arises because trigonal gems are uniaxial with one optic axis, producing two absorption directions and therefore two apparent colours (dichroism), not three — so this description is actually dichroism, consistent with trigonal tourmaline"
+  - text: "Trigonal; trichroism arises because trigonal gems are uniaxial with one optic axis, producing two absorption directions and therefore two apparent colours (dichroism), not three – so this description is actually dichroism, consistent with trigonal tourmaline"
     isCorrect: true
     rationale: |
       Tourmaline is trigonal (point group 3m), which is uniaxial [ref:read-gemmology-3e]. Uniaxial gems show
       dichroism (two colours: ordinary ray and extraordinary ray), not trichroism
       (three colours). The RI 1.620–1.640 and uniaxial character confirm tourmaline [ref:read-gemmology-3e].
       The key correction here is terminological: what a student might describe as
-      "three colours" in tourmaline is actually very strong dichroism — the ordinary
+      "three colours" in tourmaline is actually very strong dichroism – the ordinary
       and extraordinary ray can appear dramatically different. True trichroism is the
       property of biaxial gems [ref:read-gemmology-3e]. Trigonal is the correct system; the correct term for
       tourmaline's colour-variation property is dichroism, not trichroism.
@@ -30,20 +30,20 @@ options:
   - text: "Hexagonal; hexagonal gems are uniaxial and have one sixfold axis, producing trichroism along three crystallographic directions"
     isCorrect: false
     rationale: |
-      The hexagonal system is uniaxial (like trigonal), producing dichroism only — not
+      The hexagonal system is uniaxial (like trigonal), producing dichroism only – not
       trichroism [ref:read-gemmology-3e]. A sixfold axis does not create three optically distinct directions
       in terms of absorption; the gem still has only two principal vibration directions
       (ordinary and extraordinary). Additionally, RI 1.620–1.640 does not match
       hexagonal beryl (RI 1.577–1.583) [ref:read-gemmology-3e].
 rationaleCorrect: |
   Tourmaline is trigonal (point group 3m), uniaxial negative, RI 1.620–1.640,
-  birefringence up to 0.020 — the largest of any common gem [ref:read-gemmology-3e]. The uniaxial conoscope
+  birefringence up to 0.020 – the largest of any common gem [ref:read-gemmology-3e]. The uniaxial conoscope
   figure (one isogyres cross) confirms trigonal or hexagonal or tetragonal system.
   The RI range confirms tourmaline specifically. A critical vocabulary point:
   uniaxial gems show dichroism (two absorption directions: O-ray and E-ray) [ref:read-gemmology-3e]. Only
   biaxial gems (orthorhombic, monoclinic, triclinic) show true trichroism along
   three independent vibration directions. Tourmaline's dichroism is exceptionally
-  strong — sometimes the two colours are radically different — which may mislead
+  strong – sometimes the two colours are radically different – which may mislead
   a student into thinking three colours exist.
 difficulty: 3
 category: fundamentals

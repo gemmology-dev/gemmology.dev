@@ -11,8 +11,8 @@ options:
   - text: "Moonstone (orthoclase feldspar), adularescence from light scattering between albite lamellae; the optical phenomenon eliminates white chalcedony and milky quartz, which show no adularescence"
     isCorrect: true
     rationale: |
-      Adularescence — the floating blue-white sheen caused by light scattering between
-      alternating layers of orthoclase and albite — is virtually diagnostic for moonstone
+      Adularescence – the floating blue-white sheen caused by light scattering between
+      alternating layers of orthoclase and albite – is virtually diagnostic for moonstone
       (adularia/orthoclase feldspar) [ref:read-gemmology-3e]. The SG of 3.02 is above the normal orthoclase
       range of 2.56–2.59, suggesting this might be a high-SG variety or include a
       measurement error; however, the spot RI ~1.53 (orthoclase RI ~1.52–1.54) [ref:read-gemmology-3e] and
@@ -23,7 +23,7 @@ options:
     rationale: |
       Peristerite is an albite-rich plagioclase that can show adularescence (sometimes
       called "rainbow moonstone" in the trade, though this is a misnomer) [ref:read-gemmology-3e]. Peristerite
-      SG is typically 2.62–2.65 and RI approximately 1.53–1.55 — overlapping partially
+      SG is typically 2.62–2.65 and RI approximately 1.53–1.55 – overlapping partially
       with orthoclase. The measured SG of 3.02 is too high for peristerite; distinguishing
       peristerite from orthoclase moonstone requires precise RI measurement and spectroscopy,
       not the spot method.
@@ -38,15 +38,15 @@ options:
       change with angle. Labradorite SG 2.69–2.72 and RI 1.56–1.57 [ref:read-gemmology-3e] are also clearly
       different from the measured values.
 rationaleCorrect: |
-  Moonstone (adularia/orthoclase feldspar) is identified by its adularescence — a
+  Moonstone (adularia/orthoclase feldspar) is identified by its adularescence – a
   floating blue-white sheen caused by Rayleigh scattering from submicroscopic albite
   lamellae exsolved within the orthoclase host [ref:read-gemmology-3e]. This optical effect is specific to
   moonstone among common gem feldspars and distinguishes it from quartz-group stones
-  (which do not show adularescence) and labradorite (which shows labradorescence —
+  (which do not show adularescence) and labradorite (which shows labradorescence –
   spectral colour play, visually distinct) [ref:read-gemmology-3e]. SG ~2.56–2.59 for pure orthoclase; RI
   1.518–1.526 (alpha) to 1.524–1.533 (gamma), mean ~1.52–1.53 [ref:read-gemmology-3e]. The spot reading of
   ~1.53 is consistent. Note: "rainbow moonstone" in the trade is often labradorite,
-  not orthoclase moonstone — the trade name is misleading [ref:read-gemmology-3e].
+  not orthoclase moonstone – the trade name is misleading [ref:read-gemmology-3e].
 difficulty: 3
 category: fundamentals
 conceptTags:

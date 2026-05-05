@@ -11,7 +11,7 @@ options:
     isCorrect: false
     rationale: |
       Corundum (sapphire) has an RI of 1.762–1.770, not 1.718 [ref:read-gemmology-3e]. It is uniaxial negative,
-      which would produce Pattern II or III on the refractometer — not a single constant
+      which would produce Pattern II or III on the refractometer, not a single constant
       edge at 1.718. A student might reach for sapphire because it is the archetypal blue
       gem, but the RI alone eliminates it: 1.718 is clearly lower than the minimum
       corundum RI of 1.762 [ref:read-gemmology-3e]. The polariscope confirming uniform darkness (isotropic) also
@@ -32,15 +32,15 @@ options:
       Tanzanite (zoisite) is orthorhombic and biaxial, with RI 1.691–1.704 and very
       strong trichroism (blue/violet/burgundy) [ref:read-gemmology-3e]. Its RI range does not reach 1.718, and
       it would show two variable shadow edges (Pattern VI or VII) on the refractometer,
-      not a single constant edge. Additionally, tanzanite shows striking pleochroism —
-      described as one of the strongest trichroic gems — which would be immediately
+      not a single constant edge. Additionally, tanzanite shows striking pleochroism
+      (described as one of the strongest trichroic gems), which would be immediately
       apparent when rotating the stone, contradicting the single constant reading [ref:read-gemmology-3e].
 rationaleCorrect: |
   The diagnostic chain here is: (1) single constant RI ~1.718 on refractometer = Pattern I,
   consistent with an isotropic gem [ref:read-gemmology-3e]; (2) polariscope uniformly dark between crossed polars
   confirms isotropic character; (3) RI ~1.718 matches spinel's published range (1.712–1.720) [ref:read-gemmology-3e]
   and eliminates corundum (too low) and tanzanite (wrong pattern and wrong RI). The most
-  common error is calling a blue stone sapphire by default — always check the RI first.
+  common error is calling a blue stone sapphire by default; always check the RI first.
   Spinel at 1.718 is one of the most important reference values in FGA Foundation: it is the
   calibration standard for refractometer verification [ref:anderson-gem-testing].
 difficulty: 2

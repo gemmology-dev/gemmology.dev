@@ -16,8 +16,8 @@ options:
       used in standard ruby enhancement (typically 1200–1800°C), rutile needles begin to
       dissolve back into the corundum lattice (TiO2 re-entering the Al2O3 structure) [ref:read-gemmology-3e].
       The dissolution starts at the ends and along the length of the needles, producing
-      an interrupted or "dotted" appearance [ref:gubelin-koivula-vol1]. This pattern — segments of needle with
-      gaps between them — is a well-established indicator of moderate heat treatment [ref:gubelin-koivula-vol1].
+      an interrupted or "dotted" appearance [ref:gubelin-koivula-vol1]. This pattern – segments of needle with
+      gaps between them – is a well-established indicator of moderate heat treatment [ref:gubelin-koivula-vol1].
       The seller's claim of "untreated" is contradicted by the dotted silk observation.
   - text: "The broken silk needles indicate natural parting of the corundum, which fractures silk as it forms; this is a natural feature not related to treatment"
     isCorrect: false
@@ -25,7 +25,7 @@ options:
       Natural parting in corundum (along twin planes) occurs at a scale visible as flat
       reflective surfaces, not as a breakdown of individual silk needles within the bulk
       of the crystal [ref:read-gemmology-3e]. Parting does not selectively interrupt rutile needles mid-length
-      while leaving the orientation intact; it would produce a different observation —
+      while leaving the orientation intact; it would produce a different observation –
       a flat plane cutting across the stone. The dotted, segmented appearance of silk
       needles is specifically associated with thermal dissolution of rutile in the
       literature and is not explained by natural parting mechanics [ref:gubelin-koivula-vol1].
@@ -35,7 +35,7 @@ options:
       Growth tubes (hollow or fluid-filled channels parallel to the c-axis in some gem
       species) are a different inclusion type from rutile silk [ref:gubelin-koivula-vol1]. Rutile silk is solid TiO2
       crystallites, not hollow tubes, and they form by exsolution from the corundum lattice
-      on cooling — not during primary growth [ref:read-gemmology-3e]. The intersecting pattern at 60° is specific
+      on cooling – not during primary growth [ref:read-gemmology-3e]. The intersecting pattern at 60° is specific
       to exsolved rutile silk (the three crystallographic directions of the trigonal corundum
       lattice). Growth tubes in tourmaline or aquamarine are parallel to c-axis only and do
       not form intersecting networks [ref:gubelin-koivula-vol3].
@@ -46,7 +46,7 @@ rationaleCorrect: |
   treatment (partial dissolution) [ref:gubelin-koivula-vol1]; (3) no silk = high-heat treatment (complete dissolution)
   or the stone never had silk. The presence of dotted silk is often combined with other
   heat-treatment indicators (e.g. healed fissures, altered fingerprints, rutile particles
-  re-precipitated on healed surfaces) [ref:gubelin-koivula-vol1]. Reporting "dotted silk observed — heat treatment
+  re-precipitated on healed surfaces) [ref:gubelin-koivula-vol1]. Reporting "dotted silk observed – heat treatment
   cannot be excluded" is the correct wording [ref:read-gemmology-3e].
 difficulty: 3
 category: identification

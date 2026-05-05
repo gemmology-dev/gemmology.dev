@@ -3,13 +3,13 @@ stem: |
   A laboratory tests an emerald-green oval brilliant with an RI of 1.577–1.582 and
   SG of 2.69. Under the microscope the gemmologist sees numerous two-phase fluid
   inclusions, some irregular growth cavities, and short three-sided hollow channels
-  parallel to the crystal's c-axis — but no three-phase inclusions containing solid
+  parallel to the crystal's c-axis – but no three-phase inclusions containing solid
   crystals. LWUV shows a moderate red fluorescence. An assistant concludes: "Absence
   of three-phase inclusions proves this is NOT Colombian emerald." Is the assistant
   correct?
 type: mcq
 options:
-  - text: "The assistant is incorrect; three-phase inclusions are diagnostic FOR Colombian origin when present, but their absence does not exclude Colombia — not all Colombian emeralds contain them, and other tests (UV, RI, SG) remain consistent with Colombian beryl"
+  - text: "The assistant is incorrect; three-phase inclusions are diagnostic FOR Colombian origin when present, but their absence does not exclude Colombia – not all Colombian emeralds contain them, and other tests (UV, RI, SG) remain consistent with Colombian beryl"
     isCorrect: true
     rationale: |
       Three-phase inclusions are characteristic of Colombian emerald and, when present,
@@ -17,8 +17,8 @@ options:
       does not exclude Colombia: not every Colombian emerald contains three-phase inclusions,
       and some sections of a stone may lack them even when present elsewhere [ref:read-gemmology-3e]. Three-phase
       inclusions are a positive indicator, not a required feature. The correct approach
-      is to state "no three-phase inclusions observed" in the report — a neutral
-      observation — while noting that the RI (1.577–1.582), SG (2.69) [ref:read-gemmology-3e], red LWUV
+      is to state "no three-phase inclusions observed" in the report – a neutral
+      observation – while noting that the RI (1.577–1.582), SG (2.69) [ref:read-gemmology-3e], red LWUV
       fluorescence, and growth-tube features are all consistent with Colombian beryl.
   - text: "The assistant is correct; three-phase inclusions are virtually diagnostic for Colombia, so their absence provides equal and opposite evidence that the stone is not Colombian"
     isCorrect: false
@@ -33,7 +33,7 @@ options:
   - text: "The assistant is correct, but for the wrong reason; the absence of three-phase inclusions proves the stone is synthetic emerald, which never contains three-phase inclusions"
     isCorrect: false
     rationale: |
-      Synthetic emeralds do not produce three-phase inclusions containing halite —
+      Synthetic emeralds do not produce three-phase inclusions containing halite –
       this is correct [ref:gubelin-koivula-vol1]. However, many natural non-Colombian emeralds also lack
       three-phase inclusions (Zambian, Brazilian, Ethiopian, Afghan emeralds have
       different inclusion suites) [ref:gubelin-koivula-vol1]. The absence of three-phase inclusions does not
@@ -45,7 +45,7 @@ rationaleCorrect: |
   This question addresses a common logical error in gemmology: the confusion between
   a positive indicator and a required indicator. Three-phase inclusions in emerald are
   a positive diagnostic for Colombian origin when present, but their absence is not
-  a negative diagnostic [ref:gubelin-koivula-vol1]. Colombian origin is established through a weight of evidence —
+  a negative diagnostic [ref:gubelin-koivula-vol1]. Colombian origin is established through a weight of evidence –
   microscopy, UV fluorescence, RI, SG [ref:read-gemmology-3e], and where necessary trace-element analysis
   (e.g. LA-ICP-MS at a major laboratory). The red LWUV fluorescence (Cr-bearing beryl),
   RI and SG within the beryl range [ref:read-gemmology-3e], and natural inclusion types are all consistent

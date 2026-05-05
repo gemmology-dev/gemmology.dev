@@ -17,7 +17,7 @@ options:
       amphibole) radiating from a central chromite (FeCr2O4) crystal [ref:gubelin-koivula-vol1]. This combination
       is virtually diagnostic for demantoid garnet from the Ural Mountain deposits in
       Russia [ref:gubelin-koivula-vol1]. The SG of 3.84 is critical because demantoid (andradite, Ca3Fe2(SiO4)3)
-      has RI approximately 1.888, above the standard refractometer range [ref:read-gemmology-3e] — no shadow
+      has RI approximately 1.888, above the standard refractometer range [ref:read-gemmology-3e] – no shadow
       edge is visible. SG distinguishes demantoid (3.82–3.85) from tsavorite (3.57–3.73),
       green tourmaline (3.06), and emerald (2.67–2.78) [ref:read-gemmology-3e].
   - text: "Tsavorite garnet (grossular); tsavorite shows fibrous actinolite inclusions in cluster form as a result of its metamorphic origin in Kenya"
@@ -25,10 +25,10 @@ options:
     rationale: |
       Tsavorite (green grossular garnet) does not show horsetail inclusions. Tsavorite
       from Kenya forms in metasomatic calc-silicate rocks and contains typical inclusions
-      such as apatite, graphite, and diopside — not fibrous actinolite halos from chromite [ref:gubelin-koivula-vol1].
+      such as apatite, graphite, and diopside – not fibrous actinolite halos from chromite [ref:gubelin-koivula-vol1].
       The horsetail inclusion is specific to demantoid from the Ural deposits (and
       occasionally other andradite localities) [ref:gubelin-koivula-vol1]. Additionally, tsavorite RI is
-      approximately 1.740–1.760, within the standard refractometer range [ref:read-gemmology-3e] — it would give
+      approximately 1.740–1.760, within the standard refractometer range [ref:read-gemmology-3e] – it would give
       a visible shadow edge, contradicting the "no shadow edge" observation.
   - text: "Chrome tourmaline; chrome tourmaline contains fibrous inclusions radiating from a chromite crystal in characteristic horsetail patterns"
     isCorrect: false
@@ -36,11 +36,11 @@ options:
       Chrome tourmaline does not show horsetail inclusions. Tourmaline inclusions include
       growth tubes parallel to the c-axis, fluid inclusions, and occasionally mineral
       crystals, but not the characteristic radial byssolite fibres from a chromite centre
-      that define the horsetail [ref:gubelin-koivula-vol3]. Furthermore, chrome tourmaline RI is 1.620–1.640 [ref:read-gemmology-3e] —
+      that define the horsetail [ref:gubelin-koivula-vol3]. Furthermore, chrome tourmaline RI is 1.620–1.640 [ref:read-gemmology-3e] –
       it gives a clear shadow edge on the refractometer. The "no shadow edge" observation
       eliminates tourmaline before microscopy even begins.
 rationaleCorrect: |
-  The horsetail inclusion — byssolite fibres radiating from a chromite crystal — is
+  The horsetail inclusion – byssolite fibres radiating from a chromite crystal – is
   one of the most celebrated diagnostic features in gemmology and is virtually
   pathognomonic for Russian demantoid garnet [ref:gubelin-koivula-vol1]. Demantoid from the Ural Mountains
   almost always shows horsetails; demantoid from other localities (Madagascar,

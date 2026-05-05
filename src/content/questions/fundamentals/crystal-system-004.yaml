@@ -1,7 +1,7 @@
 id: crystal-system-004
 stem: |
   A gemmologist examines a faceted gem under the polariscope and finds that it remains
-  uniformly dark throughout a full 360° rotation between crossed polars — showing no
+  uniformly dark throughout a full 360° rotation between crossed polars – showing no
   lightening at any position. This result is confirmed on two different facets. The
   refractometer gives a single constant shadow edge. Which crystal systems are consistent
   with this observation, and what is the minimum additional test needed to narrow the
@@ -26,12 +26,12 @@ options:
       was confirmed on two different facets, making it very unlikely that both facets
       happen to be cut perpendicular to the c-axis [ref:read-gemmology-3e]. Furthermore, a tetragonal gem would
       give two shadow edges on the refractometer in any orientation that is not exactly
-      down the optic axis — the refractometer reading of a single constant edge on
+      down the optic axis – the refractometer reading of a single constant edge on
       multiple facets strongly implies true isotropy, not an accident of orientation.
   - text: "Trigonal system only; the polariscope is unreliable for distinguishing trigonal from cubic"
     isCorrect: false
     rationale: |
-      Trigonal gems are uniaxial — they are optically anisotropic and will show lightening
+      Trigonal gems are uniaxial – they are optically anisotropic and will show lightening
       on the polariscope when rotated, unless viewed exactly down the c-axis [ref:read-gemmology-3e]. The claim
       that the polariscope is unreliable for distinguishing trigonal from cubic is
       incorrect; the polariscope is precisely the instrument used to make this distinction.
@@ -46,7 +46,7 @@ rationaleCorrect: |
   (diamond 2.417, spinel 1.718, garnet 1.73–1.89) and amorphous materials (glass
   1.44–1.70, amber ~1.54, opal 1.44–1.46) [ref:read-gemmology-3e]. If the RI is diagnostic, SG confirms.
   Anomalous double refraction (ADR) in some cubic gems (e.g. garnets) shows as
-  patchy rather than fully uniform behaviour — distinguished from true isotropy by
+  patchy rather than fully uniform behaviour – distinguished from true isotropy by
   the irregular, strain-related pattern rather than uniform dark [ref:read-gemmology-3e].
 difficulty: 3
 category: fundamentals

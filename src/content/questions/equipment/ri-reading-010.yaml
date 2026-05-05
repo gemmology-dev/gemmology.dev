@@ -9,32 +9,32 @@ stem: |
   distinction?
 type: mcq
 options:
-  - text: "Stone 1 is uniaxial negative (corundum — Pattern III, omega constant at 1.762, epsilon variable to 1.770); Stone 2 is isotropic (spinel — Pattern I at 1.718)"
+  - text: "Stone 1 is uniaxial negative (corundum: Pattern III, omega constant at 1.762, epsilon variable to 1.770); Stone 2 is isotropic (spinel: Pattern I at 1.718)"
     isCorrect: true
     rationale: |
       Stone 1 shows Pattern III: one constant edge and one variable edge touching at one
-      position [ref:read-gemmology-3e]. For corundum (uniaxial negative), omega > epsilon — the constant edge
+      position [ref:read-gemmology-3e]. For corundum (uniaxial negative), omega > epsilon; the constant edge
       at 1.762 is omega (the higher fixed value) and the variable edge rises to 1.770 max.
       Wait: if omega = 1.762 (constant) and epsilon moves up to 1.770, then epsilon >
-      omega — this is actually uniaxial positive by the sign rule [ref:read-gemmology-3e]. The stem states
+      omega; this is actually uniaxial positive by the sign rule [ref:read-gemmology-3e]. The stem states
       "uniaxial negative" and corundum is indeed uniaxial negative (omega > epsilon);
       in corundum the constant edge (omega) should be the higher value. The RI range
       1.762–1.770 with birefringence 0.008 confirms corundum [ref:read-gemmology-3e]. Stone 2: single constant
       edge at 1.718 = Pattern I = isotropic = spinel [ref:read-gemmology-3e].
-  - text: "Stone 1 is biaxial (beryl — Pattern VI); Stone 2 is uniaxial negative (tourmaline — Pattern III at 1.718)"
+  - text: "Stone 1 is biaxial (beryl: Pattern VI); Stone 2 is uniaxial negative (tourmaline: Pattern III at 1.718)"
     isCorrect: false
     rationale: |
       Pattern III requires one constant and one variable edge touching at one point [ref:read-gemmology-3e].
       The stem explicitly describes exactly that for Stone 1. Calling Stone 1 biaxial
       (Pattern VI requires two variable edges with no constant edge) contradicts the
-      observation. Tourmaline RI ranges from 1.620 to 1.640 [ref:read-gemmology-3e] — it cannot give a single
+      observation. Tourmaline RI ranges from 1.620 to 1.640 [ref:read-gemmology-3e]; it cannot give a single
       edge at 1.718. Tourmaline is also uniaxial negative and doubly refractive; a
       single constant edge at 1.718 is inconsistent with tourmaline at any orientation [ref:read-gemmology-3e].
   - text: "Both stones are isotropic; Stone 1 shows two edges from strain birefringence and Stone 2 is unstrained"
     isCorrect: false
     rationale: |
       Strain birefringence (anomalous double refraction) in nominally isotropic gems
-      produces weak, diffuse, or patchy patterns on the polariscope — it does not
+      produces weak, diffuse, or patchy patterns on the polariscope; it does not
       produce two well-defined, sharp shadow edges on the refractometer with a
       measurable birefringence of 0.008 [ref:read-gemmology-3e]. The two clean, distinct edges in Stone 1
       indicate genuine double refraction in a correctly doubly refractive mineral

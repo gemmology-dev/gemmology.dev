@@ -25,8 +25,8 @@ interface TreatmentType {
 const TREATMENT_TYPES: TreatmentType[] = [
   {
     name: 'Heat Treatment',
-    description: 'Controlled heating to improve color and clarity',
-    purpose: 'Color improvement, inclusion dissolving',
+    description: 'Controlled heating to improve colour and clarity',
+    purpose: 'Colour improvement, inclusion dissolving',
     detectability: 'Moderate'
   },
   {
@@ -37,8 +37,8 @@ const TREATMENT_TYPES: TreatmentType[] = [
   },
   {
     name: 'Dyeing',
-    description: 'Adding color through dyes or stains',
-    purpose: 'Color enhancement',
+    description: 'Adding colour through dyes or stains',
+    purpose: 'Colour enhancement',
     detectability: 'Easy'
   },
   {
@@ -49,26 +49,26 @@ const TREATMENT_TYPES: TreatmentType[] = [
   },
   {
     name: 'Irradiation',
-    description: 'Exposure to radiation to alter color',
-    purpose: 'Color change (blue topaz, colored diamonds)',
+    description: 'Exposure to radiation to alter colour',
+    purpose: 'Colour change (blue topaz, coloured diamonds)',
     detectability: 'Difficult'
   },
   {
     name: 'Diffusion',
-    description: 'Surface or bulk diffusion of color-causing elements',
-    purpose: 'Color enhancement',
+    description: 'Surface or bulk diffusion of colour-causing elements',
+    purpose: 'Colour enhancement',
     detectability: 'Moderate'
   },
   {
     name: 'Coating',
-    description: 'Thin surface coating for color/effect',
-    purpose: 'Color, iridescence, or protective layer',
+    description: 'Thin surface coating for colour/effect',
+    purpose: 'Colour, iridescence, or protective layer',
     detectability: 'Easy'
   },
   {
     name: 'HPHT',
     description: 'High Pressure High Temperature processing',
-    purpose: 'Color improvement (diamonds, synthetic gems)',
+    purpose: 'Colour improvement (diamonds, synthetic gems)',
     detectability: 'Very Difficult'
   },
 ];
@@ -77,7 +77,7 @@ const TREATMENT_INDICATORS: Treatment[] = [
   {
     treatment: 'Heat (Corundum)',
     gems: 'Ruby, Sapphire',
-    visualIndicators: 'Silk dissolution, rounded inclusions, color zoning changes, stress fractures',
+    visualIndicators: 'Silk dissolution, rounded inclusions, colour zoning changes, stress fractures',
     instrumentalTests: 'Microscopy (inclusion changes), spectroscopy (Fe³⁺ peaks)',
     permanence: 'Permanent',
     disclosure: 'Standard practice - disclosure varies by market'
@@ -85,7 +85,7 @@ const TREATMENT_INDICATORS: Treatment[] = [
   {
     treatment: 'Beryllium Diffusion',
     gems: 'Sapphire (orange padparadscha)',
-    visualIndicators: 'Color concentration at facet junctions, uneven color',
+    visualIndicators: 'Colour concentration at facet junctions, uneven colour',
     instrumentalTests: 'EDXRF (beryllium detection), FTIR, UV-Vis',
     permanence: 'Permanent',
     disclosure: 'Required - significantly affects value'
@@ -93,7 +93,7 @@ const TREATMENT_INDICATORS: Treatment[] = [
   {
     treatment: 'Fracture Filling (Glass)',
     gems: 'Ruby, Diamond',
-    visualIndicators: 'Flash effect, color flashes in fissures, surface residue',
+    visualIndicators: 'Flash effect, colour flashes in fissures, surface residue',
     instrumentalTests: 'Microscopy (gas bubbles, flow structures)',
     permanence: 'Not permanent - avoid heat/ultrasonic',
     disclosure: 'Required - major value impact'
@@ -109,15 +109,15 @@ const TREATMENT_INDICATORS: Treatment[] = [
   {
     treatment: 'Irradiation + Heat',
     gems: 'Blue Topaz, Fancy Diamonds',
-    visualIndicators: 'Uniform color, specific color types (Swiss/London blue)',
-    instrumentalTests: 'Spectroscopy (radiation-induced defects), color centers',
+    visualIndicators: 'Uniform colour, specific colour types (Swiss/London blue)',
+    instrumentalTests: 'Spectroscopy (radiation-induced defects), colour centres',
     permanence: 'Permanent (stable)',
     disclosure: 'Required for blue topaz'
   },
   {
     treatment: 'Dyeing',
     gems: 'Jade, Chalcedony, Pearls',
-    visualIndicators: 'Color in pores/fractures, unnatural colors, concentrations',
+    visualIndicators: 'Colour in pores/fractures, unnatural colours, concentrations',
     instrumentalTests: 'Microscopy (dye concentrations), Chelsea filter, spectroscopy',
     permanence: 'Not permanent - can fade',
     disclosure: 'Required - major value impact'
@@ -125,15 +125,15 @@ const TREATMENT_INDICATORS: Treatment[] = [
   {
     treatment: 'Coating',
     gems: 'Topaz (Mystic), Diamond',
-    visualIndicators: 'Wear at facet edges, scratches revealing base color',
+    visualIndicators: 'Wear at facet edges, scratches revealing base colour',
     instrumentalTests: 'Microscopy (edge chipping), spectroscopy',
     permanence: 'Not permanent - wears off',
     disclosure: 'Required - temporary treatment'
   },
   {
     treatment: 'Lattice Diffusion',
-    gems: 'Sapphire (full color)',
-    visualIndicators: 'Even color distribution, possible surface concentration',
+    gems: 'Sapphire (full colour)',
+    visualIndicators: 'Even colour distribution, possible surface concentration',
     instrumentalTests: 'EDXRF (Ti, Fe detection at surface), FTIR',
     permanence: 'Permanent',
     disclosure: 'Required - affects value'

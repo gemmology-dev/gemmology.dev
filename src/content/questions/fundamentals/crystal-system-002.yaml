@@ -15,22 +15,22 @@ options:
       specifically do). A centre of inversion (centrosymmetric point group) eliminates
       the possibility of piezoelectricity (which requires no centre of inversion) and
       optical activity (which requires an enantiomorphic, non-centrosymmetric class) [ref:read-gemmology-3e].
-      Corundum in point group 3̄m is centrosymmetric — confirmed by its lack of
+      Corundum in point group 3̄m is centrosymmetric – confirmed by its lack of
       piezoelectric or optical-activity effects.
   - text: "The 3̄ indicates a sixfold screw axis, placing corundum in the hexagonal system and making it optically active like quartz"
     isCorrect: false
     rationale: |
-      A sixfold screw axis is denoted 6₁, 6₂, etc. — these are space-group notations,
+      A sixfold screw axis is denoted 6₁, 6₂, etc. – these are space-group notations,
       not point-group notations. The point group 3̄m belongs to the trigonal system,
       not hexagonal [ref:read-gemmology-3e]. Quartz belongs to point group 32 (trigonal), which is enantiomorphic
       and therefore optically active. Corundum (3̄m) has a centre of inversion that
-      quartz (32) lacks — this is precisely why corundum is not optically active while
+      quartz (32) lacks – this is precisely why corundum is not optically active while
       quartz is.
   - text: "The 3̄ means corundum has three mirror planes arranged around the c-axis, and mirror planes cause the cancellation of piezoelectric effects"
     isCorrect: false
     rationale: |
       The "m" in 3̄m represents mirror planes (three of them, parallel to the c-axis),
-      not the "3̄" symbol. The 3̄ is the rotoinversion axis — a separate symmetry element [ref:read-gemmology-3e].
+      not the "3̄" symbol. The 3̄ is the rotoinversion axis – a separate symmetry element [ref:read-gemmology-3e].
       While mirror planes do prevent certain piezoelectric modes, it is the inversion
       centre (contained in the 3̄ axis) that is the primary reason corundum lacks
       piezoelectricity and optical activity. Misreading 3̄ as "three mirror planes" is

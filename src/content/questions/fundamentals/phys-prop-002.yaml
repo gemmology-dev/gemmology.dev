@@ -7,7 +7,7 @@ stem: |
   definitively rules out diamond and points to the correct identity?
 type: mcq
 options:
-  - text: "Diamond has RI 2.417 (above refractometer range), SG 3.52, and hardness 10 — all three are incompatible with the measured values; the stone is quartz (citrine or heat-treated amethyst), RI 1.544, SG 2.65, hardness 7"
+  - text: "Diamond has RI 2.417 (above refractometer range), SG 3.52, and hardness 10 – all three are incompatible with the measured values; the stone is quartz (citrine or heat-treated amethyst), RI 1.544, SG 2.65, hardness 7"
     isCorrect: true
     rationale: |
       Each measured property eliminates diamond decisively: RI 1.544 is far below
@@ -22,21 +22,21 @@ options:
       While it is true that diamond is isotropic (cubic) and would theoretically give
       a single constant shadow edge, diamond's RI of 2.417 places it above the
       refractometer's contact-liquid limit (~1.79) [ref:read-gemmology-3e]. Diamond gives NO shadow edge on the
-      standard refractometer — the scale appears uniformly bright. The tested stone gives
+      standard refractometer – the scale appears uniformly bright. The tested stone gives
       a shadow edge at 1.544, which is unambiguously a stone with RI 1.544, not diamond.
   - text: "The vitreous lustre eliminates diamond, which has adamantine lustre; the other properties are consistent with diamond simulants including some glass"
     isCorrect: false
     rationale: |
-      Lustre alone does not eliminate diamond — it is a supporting observation, not a
+      Lustre alone does not eliminate diamond – it is a supporting observation, not a
       decisive one, because lustre is affected by surface quality and polish [ref:read-gemmology-3e]. Glass has RI
-      typically 1.44–1.70, SG approximately 2.5, and conchoidal fracture — overlapping
+      typically 1.44–1.70, SG approximately 2.5, and conchoidal fracture – overlapping
       somewhat with the test results. However, glass is amorphous, not a crystal.
       The RI, SG, and hardness all point definitively to quartz rather than glass:
       SG 2.65 is specific to quartz, not glass [ref:read-gemmology-3e].
 rationaleCorrect: |
   Diamond elimination rests on three simultaneous mismatches: (1) RI 1.544 vs diamond
-  2.417 [ref:read-gemmology-3e] — a difference of 0.873, enormous by gemmological standards; (2) SG 2.65 vs
-  diamond 3.52 [ref:read-gemmology-3e] — nearly 1.0 unit difference; (3) hardness 7 vs diamond 10 [ref:read-gemmology-3e] — the maximum
+  2.417 [ref:read-gemmology-3e] – a difference of 0.873, enormous by gemmological standards; (2) SG 2.65 vs
+  diamond 3.52 [ref:read-gemmology-3e] – nearly 1.0 unit difference; (3) hardness 7 vs diamond 10 [ref:read-gemmology-3e] – the maximum
   difference on the Mohs scale. Any single one of these would eliminate diamond; all three
   together with conchoidal fracture and vitreous lustre confirm quartz. Citrine is the
   most common yellow quartz gem; it can be natural (trace iron) or heat-treated amethyst [ref:read-gemmology-3e].

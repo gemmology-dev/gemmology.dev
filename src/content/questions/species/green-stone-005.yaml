@@ -13,7 +13,7 @@ options:
     rationale: |
       Emerald (beryl) RI 1.577–1.583 with minimum value 1.577 [ref:read-gemmology-3e]; the measured 1.54 is
       approximately 0.037 below the minimum beryl value. This single reading eliminates
-      emerald absolutely — no beryl of any composition gives RI as low as 1.54 [ref:read-gemmology-3e]. Green
+      emerald absolutely – no beryl of any composition gives RI as low as 1.54 [ref:read-gemmology-3e]. Green
       glass RI can be approximately 1.50–1.55 depending on composition [ref:read-gemmology-3e]. SG ~2.50 is
       consistent with light glass (beryl SG is 2.67–2.78, also higher) [ref:read-gemmology-3e]. The featureless,
       homogeneous interior (no growth features, no inclusions) is typical of glass.
@@ -21,8 +21,8 @@ options:
     isCorrect: false
     rationale: |
       The SG is a secondary confirmatory observation, not the most immediate eliminator
-      in this case. SG of green glass varies considerably — from approximately 2.3 for
-      borosilicate to 4.5+ for high-lead glass [ref:read-gemmology-3e] — depending on composition. Stating that
+      in this case. SG of green glass varies considerably – from approximately 2.3 for
+      borosilicate to 4.5+ for high-lead glass [ref:read-gemmology-3e] – depending on composition. Stating that
       glass "always reads 2.50" is incorrect. The RI reading is the most immediately
       accessible and precise measurement: the refractometer is used first in the standard
       workflow, and the 1.54 reading eliminates beryl with a 0.037-unit margin [ref:read-gemmology-3e].
@@ -34,7 +34,7 @@ options:
       test is not binary: some Cr-bearing emeralds (especially vanadium-rich or iron-rich
       varieties) may not respond strongly red [ref:read-gemmology-3e], and some non-emerald green materials
       (Cr-bearing glass) appear red. A green response under the Chelsea filter does not
-      rule out Cr-bearing emerald — it is a screening tool, not a definitive test [ref:read-gemmology-3e].
+      rule out Cr-bearing emerald – it is a screening tool, not a definitive test [ref:read-gemmology-3e].
 rationaleCorrect: |
   Spot RI 1.54 is the critical reading here: it is below the minimum RI of any beryl
   (1.577), eliminating emerald with certainty [ref:read-gemmology-3e]. The RI measurement is the most immediate

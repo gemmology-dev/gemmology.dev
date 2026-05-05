@@ -16,7 +16,7 @@ options:
       edge) is greater than omega (the constant edge), the stone is uniaxial positive [ref:read-gemmology-3e].
       Here epsilon 1.691 > omega 1.662, so the stone is uniaxial positive. Birefringence
       is 1.691 − 1.662 = 0.029.
-  - text: "Pattern IV; uniaxial or biaxial — optic sign indeterminate"
+  - text: "Pattern IV; uniaxial or biaxial; optic sign indeterminate"
     isCorrect: false
     rationale: |
       Pattern IV shows one constant and one variable edge that do NOT touch during
@@ -30,8 +30,8 @@ options:
     isCorrect: false
     rationale: |
       For uniaxial negative, the constant omega must be greater than the variable
-      epsilon — that is, the constant edge must lie at a higher RI than the variable
-      one [ref:read-gemmology-3e]. In this case, the constant edge is at 1.662 and the variable edge rises
+      epsilon (that is, the constant edge must lie at a higher RI than the variable
+      one) [ref:read-gemmology-3e]. In this case, the constant edge is at 1.662 and the variable edge rises
       to 1.691, meaning epsilon > omega. Choosing "negative" reverses the sign rule.
       The mnemonic is: positive = epsilon exceeds omega [ref:anderson-gem-testing].
 rationaleCorrect: |
@@ -40,7 +40,7 @@ rationaleCorrect: |
   only pattern that unambiguously confirms uniaxial character AND allows optic sign
   determination from the refractometer alone. The sign rule: epsilon > omega = positive;
   omega > epsilon = negative [ref:read-gemmology-3e]. Here epsilon 1.691 > omega 1.662, giving uniaxial positive.
-  Note: never confuse Pattern III (edges touch) with Pattern IV (edges do not touch) —
+  Note: never confuse Pattern III (edges touch) with Pattern IV (edges do not touch);
   the touch/no-touch test is the single most tested distinction in FGA refractometer
   questions [ref:anderson-gem-testing].
 difficulty: 3

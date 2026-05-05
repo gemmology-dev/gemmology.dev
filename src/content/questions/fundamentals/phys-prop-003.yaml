@@ -8,18 +8,18 @@ stem: |
   would confirm each?
 type: mcq
 options:
-  - text: "Jadeite SG is 3.25–3.35, while peridot (olivine) SG is 3.28–3.48; the spot RI is the better discriminator — jadeite RI approximately 1.65–1.67, peridot RI 1.654–1.690 — but both overlap so SG plus RI together give highest confidence"
+  - text: "Jadeite SG is 3.25–3.35, while peridot (olivine) SG is 3.28–3.48; the spot RI is the better discriminator – jadeite RI approximately 1.65–1.67, peridot RI 1.654–1.690 – but both overlap so SG plus RI together give highest confidence"
     isCorrect: false
     rationale: |
       This answer correctly notes the overlap in both SG and RI ranges for jadeite and
       peridot [ref:read-gemmology-3e], making it a partially correct observation. However, the question asks
       for the MOST efficient single measurement to separate them. The key discriminator
-      is not one property in isolation but the combination — and the answer underestimates
+      is not one property in isolation but the combination – and the answer underestimates
       the value of spectroscopic testing (peridot's characteristic absorption spectrum
       with iron bands is highly diagnostic) or the crystal form under the microscope
       (jadeite is polycrystalline with interlocking grain texture; peridot is single
       crystal with lily-pad inclusions).
-  - text: "SG is the most efficient single discriminator for this pair: jadeite peaks at 3.25–3.35 (mean ~3.34), peridot ranges 3.28–3.48 with a typical mean near 3.34 too — they overlap significantly, so the spectroscope showing peridot's iron absorption at 493 nm is the most efficient single definitive test"
+  - text: "SG is the most efficient single discriminator for this pair: jadeite peaks at 3.25–3.35 (mean ~3.34), peridot ranges 3.28–3.48 with a typical mean near 3.34 too – they overlap significantly, so the spectroscope showing peridot's iron absorption at 493 nm is the most efficient single definitive test"
     isCorrect: true
     rationale: |
       Jadeite SG 3.25–3.35 and peridot SG 3.28–3.48 overlap substantially [ref:read-gemmology-3e], and the
@@ -35,16 +35,16 @@ options:
     rationale: |
       Both jadeite and peridot have virtually identical Mohs hardness ranges (jadeite
       6.5–7; peridot 6.5–7) [ref:read-gemmology-3e]. Hardness testing would not separate them and is also a
-      damaging test — inappropriate for a finished cabochon submitted by a client.
+      damaging test – inappropriate for a finished cabochon submitted by a client.
       Recommending hardness testing on a finished gem is poor laboratory practice when
       non-destructive optical and spectroscopic methods are available.
 rationaleCorrect: |
   The jadeite-versus-peridot discrimination is one of the classic "overlapping SG and RI"
   problems in gemmology [ref:read-gemmology-3e]. Both cluster around SG 3.3 and RI 1.65–1.67 in spot readings.
-  The decisive non-destructive tests are: (1) spectroscope — peridot shows iron absorption
+  The decisive non-destructive tests are: (1) spectroscope – peridot shows iron absorption
   bands (particularly ~493 nm) [ref:read-gemmology-3e]; jadeite shows a different pattern or may be featureless;
-  (2) microscopy — peridot is single crystal with characteristic lily-pad chromite inclusions;
-  jadeite is polycrystalline with an interlocking "sugary" texture [ref:read-gemmology-3e]; (3) birefringence —
+  (2) microscopy – peridot is single crystal with characteristic lily-pad chromite inclusions;
+  jadeite is polycrystalline with an interlocking "sugary" texture [ref:read-gemmology-3e]; (3) birefringence –
   peridot (biaxial positive, birefringence 0.036) will show strong birefringence effects on
   the refractometer on a polished facet; jadeite as a polycrystalline aggregate shows no
   net birefringence [ref:read-gemmology-3e].

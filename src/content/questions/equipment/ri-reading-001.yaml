@@ -6,17 +6,17 @@ stem: |
   it indicate about the stone's optical character?
 type: mcq
 options:
-  - text: "Pattern I — the stone is isotropic"
+  - text: "Pattern I: the stone is isotropic"
     isCorrect: false
     rationale: |
       Pattern I does produce a single constant shadow edge, but the RI of 1.544 is
       consistent with quartz, not an isotropic gem [ref:read-gemmology-3e]. Quartz is uniaxial positive,
       not isotropic. A single constant edge can arise from Pattern I (isotropic) or
       from a uniaxial stone viewed down its c-axis [ref:read-gemmology-3e]. At RI 1.544, quartz (Pattern II
-      or III reading omega) is a more accurate interpretation — but this distractor
+      or III reading omega) is a more accurate interpretation; but this distractor
       tests whether students conflate "one constant edge" with isotropic character
       exclusively [ref:anderson-gem-testing].
-  - text: "Pattern II — the stone is uniaxial with its c-axis perpendicular to the table facet"
+  - text: "Pattern II: the stone is uniaxial with its c-axis perpendicular to the table facet"
     isCorrect: false
     rationale: |
       Pattern II shows two constant, parallel edges that remain fixed during rotation [ref:read-gemmology-3e].
@@ -24,7 +24,7 @@ options:
       rules out Pattern II. A student might choose this because they know quartz is
       uniaxial and assume any uniaxial reading shows two edges, but Pattern II requires
       exactly two constant parallel edges to be visible simultaneously [ref:read-gemmology-3e].
-  - text: "Pattern I — the stone displays one constant shadow edge, consistent with isotropic or a uniaxial stone viewed down its optic axis"
+  - text: "Pattern I: the stone displays one constant shadow edge, consistent with isotropic or a uniaxial stone viewed down its optic axis"
     isCorrect: true
     rationale: |
       Pattern I is defined as a single shadow edge that remains constant during full
@@ -36,7 +36,7 @@ options:
       without re-examining the stone on a different facet [ref:anderson-gem-testing].
 rationaleCorrect: |
   Pattern I is defined as one constant shadow edge throughout full rotation [ref:read-gemmology-3e]. The key
-  teaching point is that Pattern I does NOT prove isotropic character — it could also
+  teaching point is that Pattern I does NOT prove isotropic character; it could also
   mean a uniaxial stone is oriented with its c-axis perpendicular to the hemisphere
   (i.e. you are looking down the optic axis) [ref:read-gemmology-3e]. At RI 1.544, quartz omega is the classic
   match: to determine whether this is an isotropic gem or quartz viewed down c, the

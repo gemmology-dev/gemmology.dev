@@ -9,7 +9,7 @@ const cdlSvgParams = [
   { option: 'show_axes', type: 'bool', default: 'True', description: 'Show crystallographic axes' },
   { option: 'elev', type: 'float', default: '30', description: 'Elevation angle in degrees' },
   { option: 'azim', type: 'float', default: '-45', description: 'Azimuth angle in degrees' },
-  { option: 'color_by_form', type: 'bool', default: 'False', description: 'Color faces by which form they belong to' },
+  { option: 'color_by_form', type: 'bool', default: 'False', description: 'Colour faces by which form they belong to' },
   { option: 'show_grid', type: 'bool', default: 'True', description: 'Show background grid and panes' },
   { option: 'face_labels', type: 'bool', default: 'False', description: 'Show Miller index labels on visible faces' },
   { option: 'info_properties', type: 'dict | None', default: 'None', description: 'Dictionary of properties for info panel' },
@@ -30,8 +30,8 @@ const geometrySvgParams = [
   { option: 'elev', type: 'float', default: '30', description: 'Elevation angle in degrees' },
   { option: 'azim', type: 'float', default: '-45', description: 'Azimuth angle in degrees' },
   { option: 'show_grid', type: 'bool', default: 'True', description: 'Show background grid and panes' },
-  { option: 'face_color', type: 'str', default: '"#81D4FA"', description: 'Face fill color (hex)' },
-  { option: 'edge_color', type: 'str', default: '"#0277BD"', description: 'Edge stroke color (hex)' },
+  { option: 'face_color', type: 'str', default: '"#81D4FA"', description: 'Face fill colour (hex)' },
+  { option: 'edge_color', type: 'str', default: '"#0277BD"', description: 'Edge stroke colour (hex)' },
   { option: 'title', type: 'str | None', default: 'None', description: 'Optional title text' },
   { option: 'info_properties', type: 'dict | None', default: 'None', description: 'Properties for info panel' },
   { option: 'figsize', type: 'tuple[int, int]', default: '(10, 10)', description: 'Figure size in inches' },
@@ -54,7 +54,7 @@ const geometrySvgParams = [
       <h1>crystal-renderer</h1>
 
       <p class="lead">
-        Render crystal geometry to SVG for visualization, STL for 3D printing,
+        Render crystal geometry to SVG for visualisation, STL for 3D printing,
         and glTF for web/AR/VR applications. Version 1.0.1.
       </p>
 
@@ -67,7 +67,7 @@ const geometrySvgParams = [
         signature="generate_cdl_svg(cdl_string, output_path, **options) → Path"
       />
 
-      <p>Generate an SVG visualization directly from a CDL string. This is the primary
+      <p>Generate an SVG visualisation directly from a CDL string. This is the primary
       rendering function - it parses the CDL, generates geometry, and renders to SVG
       in one call.</p>
 
@@ -256,7 +256,7 @@ convert_svg_to_raster("crystal.svg", "crystal.jpg", output_format="jpg", quality
         signature="generate_with_format(generator_func, output_path, output_format='svg', scale=2.0, quality=95, **kwargs) → Path"
       />
 
-      <p>Generate a crystal visualization in any supported format. Wraps a generator
+      <p>Generate a crystal visualisation in any supported format. Wraps a generator
       function, automatically converting through SVG for raster outputs.</p>
 
       <h2>Info Panel</h2>
@@ -277,7 +277,7 @@ convert_svg_to_raster("crystal.svg", "crystal.jpg", output_format="jpg", quality
 
       <h2>Rendering Primitives</h2>
 
-      <p>Low-level drawing functions for building custom visualizations:</p>
+      <p>Low-level drawing functions for building custom visualisations:</p>
 
       <CodeBlock
         lang="python"

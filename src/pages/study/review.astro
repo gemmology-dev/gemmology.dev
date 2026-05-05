@@ -24,7 +24,7 @@ const entries: LearnEntry[] = learnEntries.map(entry => ({
 
 <BaseLayout
   title="Review"
-  description="Spaced-repetition review session — surfaces only the questions the scheduler says you should see today."
+  description="Spaced-repetition review session: shows only the questions the scheduler says are due today."
   noindex={true}
 >
   <StudyReviewScreen client:load learnEntries={entries} />
