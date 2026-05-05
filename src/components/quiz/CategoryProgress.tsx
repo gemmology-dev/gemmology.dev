@@ -70,7 +70,7 @@ function CategoryProgressBar({ category, percentage, bestScore }: CategoryProgre
     <div className="space-y-1">
       <div className="flex items-center justify-between text-sm">
         <span className="text-slate-600">{label}</span>
-        <span className="text-slate-500">
+        <span className="text-slate-600">
           Best: {bestScore > 0 ? `${bestScore}%` : '--'}
         </span>
       </div>
@@ -148,7 +148,7 @@ function CategoryCard({
         </div>
 
         <div className="flex-1 text-sm">
-          <p className="text-slate-500">
+          <p className="text-slate-600">
             {completedTopics}/{totalTopics} topics
           </p>
           {bestScore > 0 && (

@@ -65,7 +65,7 @@ export function FilterBar({
           />
         </div>
         {resultCount !== undefined && (
-          <div className="flex items-center text-sm text-slate-500">
+          <div className="flex items-center text-sm text-slate-600">
             {resultCount} {resultCount === 1 ? resultLabel.replace(/ies$/, 'y').replace(/s$/, '') : resultLabel}
           </div>
         )}
@@ -137,7 +137,7 @@ export function FilterBar({
       {mineralGroups.length > 0 && onGroupChange && (
         mineralGroups.length > 6 ? (
           <div className="flex items-center gap-3">
-            <label htmlFor="gallery-group-select" className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+            <label htmlFor="gallery-group-select" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
               Group
             </label>
             <select
@@ -157,7 +157,7 @@ export function FilterBar({
               <button
                 type="button"
                 onClick={() => onGroupChange(null)}
-                className="text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
+                className="text-sm text-slate-600 hover:text-slate-700 underline underline-offset-2"
               >
                 Clear
               </button>
@@ -165,7 +165,7 @@ export function FilterBar({
           </div>
         ) : (
           <div className="flex flex-wrap gap-2">
-            <span className="flex items-center text-xs font-medium text-slate-400 uppercase tracking-wider mr-1">Groups</span>
+            <span className="flex items-center text-xs font-semibold text-slate-600 uppercase tracking-wider mr-1">Groups</span>
             {mineralGroups.map((group) => (
               <button
                 key={group}

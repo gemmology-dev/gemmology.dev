@@ -67,7 +67,7 @@ export function GemMatchList({
         <h3 className="text-sm font-medium text-slate-700 mb-3">
           {label}
           {gems.length > 0 && (
-            <span className="ml-2 text-slate-500 font-normal">
+            <span className="ml-2 text-slate-600 font-normal">
               ({gems.length} {gems.length === 1 ? 'match' : 'matches'})
             </span>
           )}
@@ -104,7 +104,7 @@ export function GemMatchList({
           )}
         </>
       ) : (
-        <p className="text-sm text-slate-500 py-4 text-center bg-slate-50 rounded-lg">
+        <p className="text-sm text-slate-600 py-4 text-center bg-slate-50 rounded-lg">
           {emptyMessage}
         </p>
       )}

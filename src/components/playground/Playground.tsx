@@ -274,7 +274,7 @@ export function Playground({ initialCDL }: PlaygroundProps) {
               <div className="h-full relative">
                 {gltfLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-10">
-                    <div className="flex items-center gap-3 text-slate-500">
+                    <div className="flex items-center gap-3 text-slate-600">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path

@@ -144,7 +144,7 @@ export function HeavyLiquidReference() {
                     <div className="text-sm text-slate-600 mt-1">
                       SG: <span className="font-mono font-medium">{liquid.sg.toFixed(2)}</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">{liquid.notes}</p>
+                    <p className="text-xs text-slate-600 mt-1">{liquid.notes}</p>
                     <div className={`text-xs mt-2 px-2 py-1 rounded inline-block ${
                       liquid.safety === 'Safe'
                         ? 'bg-green-100 text-green-700'

@@ -100,7 +100,7 @@ export function ExamResults({
         </div>
 
         {filteredResults.length === 0 && (
-          <div className="text-center py-12 text-slate-500">
+          <div className="text-center py-12 text-slate-600">
             No questions match this filter.
           </div>
         )}
@@ -159,22 +159,22 @@ export function ExamResults({
             <p className="text-lg text-slate-600 mt-1">
               {results.percentage}% correct
             </p>
-            <p className="text-sm text-slate-500 mt-2">{feedback}</p>
+            <p className="text-sm text-slate-600 mt-2">{feedback}</p>
           </div>
 
           {/* Stats grid */}
           <div className="grid grid-cols-3 gap-4 pt-6">
             <div className="text-center">
               <p className="text-2xl font-bold text-slate-900">{grade}</p>
-              <p className="text-sm text-slate-500">Grade</p>
+              <p className="text-sm text-slate-600">Grade</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-slate-900">{duration}</p>
-              <p className="text-sm text-slate-500">Time Used</p>
+              <p className="text-sm text-slate-600">Time Used</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-slate-900">{timeUsedPercent}%</p>
-              <p className="text-sm text-slate-500">Time Usage</p>
+              <p className="text-sm text-slate-600">Time Usage</p>
             </div>
           </div>
 
@@ -182,7 +182,7 @@ export function ExamResults({
           <div className="mt-6">
             <div className="flex items-center justify-between text-sm mb-2">
               <span className="text-slate-600">Time Used</span>
-              <span className="text-slate-500">
+              <span className="text-slate-600">
                 {timeUnusedSeconds > 0
                   ? `${formatDuration(timeUnusedSeconds * 1000)} remaining`
                   : 'Time limit reached'}
@@ -339,7 +339,7 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
         <div className="mt-4 space-y-2">
           {/* Your answer */}
           <div className="flex items-start gap-2">
-            <span className="text-sm text-slate-500 w-24 flex-shrink-0">Your answer:</span>
+            <span className="text-sm text-slate-600 w-24 flex-shrink-0">Your answer:</span>
             <span
               className={cn(
                 'text-sm font-medium',
@@ -353,7 +353,7 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
           {/* Correct answer (if wrong) */}
           {!isCorrect && (
             <div className="flex items-start gap-2">
-              <span className="text-sm text-slate-500 w-24 flex-shrink-0">Correct:</span>
+              <span className="text-sm text-slate-600 w-24 flex-shrink-0">Correct:</span>
               <span className="text-sm font-medium text-emerald-600">{correctAnswer}</span>
             </div>
           )}

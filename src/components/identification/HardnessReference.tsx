@@ -149,7 +149,7 @@ export function HardnessReference() {
                 <tr key={level.hardness} className="border-b border-slate-100 last:border-0">
                   <td className="px-3 py-2 font-mono font-bold text-amber-600 text-center w-12">{level.hardness}</td>
                   <td className="px-3 py-2 font-medium text-slate-900 whitespace-nowrap">{level.mineral}</td>
-                  <td className="px-3 py-2 text-xs text-slate-500 hidden lg:table-cell">{level.wearResistance}</td>
+                  <td className="px-3 py-2 text-xs text-slate-600 hidden lg:table-cell">{level.wearResistance}</td>
                 </tr>
               ))}
             </tbody>
@@ -187,7 +187,7 @@ export function HardnessReference() {
           </div>
 
           {loading ? (
-            <div className="text-center py-8 text-slate-500 text-sm">Loading gem data...</div>
+            <div className="text-center py-8 text-slate-600 text-sm">Loading gem data...</div>
           ) : (
             <div className="rounded-lg border border-slate-200 overflow-hidden">
               <table className="w-full text-sm">
@@ -209,13 +209,13 @@ export function HardnessReference() {
                           {gem.wearability}
                         </span>
                       </td>
-                      <td className="px-3 py-2 text-xs text-slate-500">{gem.notes}</td>
+                      <td className="px-3 py-2 text-xs text-slate-600">{gem.notes}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
               {filteredGems.length === 0 && (
-                <p className="text-center text-slate-500 text-sm py-4">No matches found.</p>
+                <p className="text-center text-slate-600 text-sm py-4">No matches found.</p>
               )}
             </div>
           )}
@@ -232,7 +232,7 @@ export function HardnessReference() {
       </div>
 
       {/* Info strip */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
         <span>• <strong>Hardness</strong> = resistance to scratching</span>
         <span>• <strong>Toughness</strong> = resistance to breaking (not the same thing)</span>
         <span>• Diamond is hard but has perfect cleavage — jade is softer but tougher</span>

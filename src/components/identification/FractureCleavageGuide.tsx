@@ -87,7 +87,7 @@ export function FractureCleavageGuide() {
             <div key={fracture.type} className="p-3 rounded-lg border border-slate-200 bg-slate-50">
               <h5 className="font-semibold text-slate-900 text-xs mb-1">{fracture.type}</h5>
               <p className="text-xs text-slate-600 mb-1">{fracture.description}</p>
-              <p className="text-xs text-slate-500">{fracture.examples}</p>
+              <p className="text-xs text-slate-600">{fracture.examples}</p>
             </div>
           ))}
         </div>
@@ -120,7 +120,7 @@ export function FractureCleavageGuide() {
               <option value="None">None</option>
             </select>
           </div>
-          <span className="text-xs text-slate-400 shrink-0 pb-0.5">{filteredGems.length} gem{filteredGems.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600 shrink-0 pb-0.5">{filteredGems.length} gem{filteredGems.length !== 1 ? 's' : ''}</span>
         </div>
 
         {filteredGems.length > 0 ? (
@@ -146,19 +146,19 @@ export function FractureCleavageGuide() {
               ),
               directions: <span className="text-xs">{gem.directions}</span>,
               fracture: <span className="text-xs">{gem.fracture}</span>,
-              notes: <span className="text-xs text-slate-500">{gem.notes}</span>,
+              notes: <span className="text-xs text-slate-600">{gem.notes}</span>,
             }))}
             variant="default"
           />
         ) : (
-          <div className="text-center text-slate-500 text-sm py-4 border border-slate-200 rounded-xl">
+          <div className="text-center text-slate-600 text-sm py-4 border border-slate-200 rounded-xl">
             No gemstones found matching your criteria.
           </div>
         )}
       </div>
 
       {/* Tips — compact inline strips */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
         <span>• <strong>Perfect</strong> cleavage splits easily along smooth planes</span>
         <span>• <strong>Cleavage</strong> = along crystal planes; <strong>Fracture</strong> = random breaking</span>
         <span>• Avoid ultrasonic cleaning for gems with perfect cleavage</span>

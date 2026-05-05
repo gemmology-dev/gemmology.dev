@@ -32,7 +32,7 @@ export function LockGate({ children }: LockGateProps) {
   if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="animate-pulse text-slate-400">Loading...</div>
+        <div className="animate-pulse text-slate-500">Loading...</div>
       </div>
     );
   }
@@ -209,7 +209,7 @@ export function LockGate({ children }: LockGateProps) {
                       required
                       minLength={10}
                     />
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-slate-600">
                       Minimum 10 characters
                     </p>
                   </div>

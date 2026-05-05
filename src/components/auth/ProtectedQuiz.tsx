@@ -62,7 +62,7 @@ export function ProtectedQuiz({ learnEntries }: ProtectedQuizProps) {
 
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-pulse text-slate-400">Loading questions...</div>
+              <div className="animate-pulse text-slate-500">Loading questions...</div>
             </div>
           ) : config && selectedQuestions.length > 0 ? (
             config.mode === 'exam' ? (

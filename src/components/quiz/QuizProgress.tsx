@@ -39,13 +39,13 @@ export function QuizProgress({
 
       {/* Stats */}
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-500">
+        <span className="text-slate-600">
           Question {current + 1} of {total}
         </span>
         {showScore && current > 0 && (
           <span className="text-slate-600">
             Score: <span className="font-medium text-crystal-700">{score}/{current}</span>
-            <span className="text-slate-400 ml-1">({scorePercentage}%)</span>
+            <span className="text-slate-600 ml-1">({scorePercentage}%)</span>
           </span>
         )}
       </div>
@@ -96,7 +96,7 @@ export function QuizProgressDots({
               // Current question
               isCurrent && 'ring-2 ring-crystal-500 ring-offset-2',
               // Not answered
-              !isAnswered && !isCurrent && 'bg-slate-100 text-slate-400',
+              !isAnswered && !isCurrent && 'bg-slate-100 text-slate-600',
               // Answered correctly
               isAnswered && isCorrect && 'bg-emerald-100 text-emerald-700',
               // Answered incorrectly

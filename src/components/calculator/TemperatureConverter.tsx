@@ -40,7 +40,7 @@ export function TemperatureConverter() {
     <div className="space-y-6">
       <div className="text-sm text-slate-600">
         <p>Enter a value in either field to convert between temperature units.</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-sm text-slate-600">
           Formula: °F = (°C × 9/5) + 32
         </p>
       </div>
@@ -93,7 +93,7 @@ export function TemperatureConverter() {
         </div>
       </div>
 
-      <div className="text-xs text-slate-500">
+      <div className="text-sm text-slate-600">
         <p><strong>Note:</strong> Heat treatment temperatures are approximate and depend on specific conditions including atmosphere, duration, and starting material.</p>
       </div>
     </div>

@@ -40,7 +40,7 @@ function ToggleRow({ id, label, description, checked, onToggle }: ToggleRowProps
         >
           {label}
         </label>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{description}</p>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{description}</p>
       </div>
       {/* Toggle switch */}
       <button
@@ -107,11 +107,11 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
             className="block text-sm font-medium text-slate-800 dark:text-slate-200"
           >
             Review mix
-            <span className="ml-2 text-xs font-normal text-slate-500 dark:text-slate-400">
+            <span className="ml-2 text-xs font-normal text-slate-600 dark:text-slate-400">
               {reviewMixPercent}% review / {100 - reviewMixPercent}% new
             </span>
           </label>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 mb-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 mb-2">
             Fraction of due (spaced-repetition) items vs new questions in each session.
           </p>
           <input
@@ -134,7 +134,7 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
               'accent-crystal-600 dark:accent-crystal-500',
             )}
           />
-          <div className="flex justify-between text-xs text-slate-400 mt-1">
+          <div className="flex justify-between text-xs text-slate-600 mt-1">
             <span>All new</span>
             <span>All review</span>
           </div>
@@ -148,7 +148,7 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
           >
             Default question count
           </label>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 mb-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 mb-2">
             Pre-filled in the quiz setup screen.
           </p>
           <input

@@ -32,7 +32,7 @@ export function LengthConverter() {
     <div className="space-y-6">
       <div className="text-sm text-slate-600">
         <p>Enter a value in either field to convert between length units.</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-sm text-slate-600">
           1 inch = 25.4 mm
         </p>
       </div>
@@ -74,7 +74,7 @@ export function LengthConverter() {
         </FormField>
       </div>
 
-      <div className="text-xs text-slate-500 space-y-1">
+      <div className="text-sm text-slate-600 space-y-1">
         <p><strong>Common stone sizes:</strong></p>
         <p>• 6.5mm round ≈ 1 carat diamond</p>
         <p>• 7mm round ≈ 1.25 carat diamond</p>

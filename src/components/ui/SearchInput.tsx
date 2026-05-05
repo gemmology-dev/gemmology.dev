@@ -10,7 +10,7 @@ export function SearchInput({ className, value, onClear, ...props }: SearchInput
   return (
     <div className="relative">
       <svg
-        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400"
+        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -40,7 +40,7 @@ export function SearchInput({ className, value, onClear, ...props }: SearchInput
         <button
           type="button"
           onClick={onClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-600 transition-colors"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
