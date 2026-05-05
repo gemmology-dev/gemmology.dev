@@ -15,7 +15,11 @@
     "generate-og": "npm run build && node scripts/generate-og-image.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "question:new": "node scripts/new-question.mjs",
+    "validate:questions": "node scripts/validate-questions.mjs",
+    "questions:coverage": "node scripts/questions-coverage.mjs",
+    "schema:questions": "node scripts/generate-question-schema.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.2",
