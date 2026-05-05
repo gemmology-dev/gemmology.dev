@@ -5,16 +5,34 @@ import { Pagination } from '../ui/Pagination';
 import { useFamilies } from '../../hooks/useFamilies';
 import { useFilters } from '../../hooks/useCrystalDB';
 import { usePagination } from '../../hooks/usePagination';
+import type { MineralFamily } from '../../lib/db';
 
 interface GalleryProps {
   initialSystem?: string;
   initialSearch?: string;
   initialOrigin?: string;
+  /** SSG-fetched families — when present, the wasm DB only loads on filter/search. */
+  initialFamilies?: MineralFamily[];
+  initialSystems?: string[];
+  initialOrigins?: string[];
+  initialGroups?: string[];
 }
 
-export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin = '' }: GalleryProps) {
-  const { families, loading, error, search, filterBySystem, filterByOrigin, filterByGroup } = useFamilies();
-  const { systems, origins, mineralGroups, loading: filtersLoading } = useFilters();
+export function Gallery({
+  initialSystem = '',
+  initialSearch = '',
+  initialOrigin = '',
+  initialFamilies,
+  initialSystems,
+  initialOrigins,
+  initialGroups,
+}: GalleryProps) {
+  const { families, loading, error, search, filterBySystem, filterByOrigin, filterByGroup } = useFamilies(initialFamilies);
+  const { systems, origins, mineralGroups, loading: filtersLoading } = useFilters({
+    systems: initialSystems,
+    origins: initialOrigins,
+    mineralGroups: initialGroups,
+  });
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(initialSystem || null);
   const [selectedOrigin, setSelectedOrigin] = useState<string | null>(initialOrigin || null);

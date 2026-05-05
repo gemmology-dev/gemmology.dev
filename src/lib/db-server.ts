@@ -299,6 +299,21 @@ export async function getCategories(): Promise<string[]> {
 }
 
 /**
+ * Get distinct origin classifications from the families table.
+ */
+export async function getOrigins(): Promise<string[]> {
+  const database = await getDB();
+  const result = database.exec(
+    `SELECT DISTINCT origin FROM mineral_families
+     WHERE origin IS NOT NULL AND origin != ''
+     ORDER BY origin`
+  );
+
+  if (result.length === 0) return [];
+  return result[0].values.map((row) => row[0] as string);
+}
+
+/**
  * Get distinct mineral groups from the database.
  */
 export async function getMineralGroups(): Promise<string[]> {

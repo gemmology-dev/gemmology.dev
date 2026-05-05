@@ -3,6 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Gallery } from '../../components/gallery/Gallery';
 import { Container, SectionHeader } from '../../components/ui';
 import { getSiteStats } from '../../lib/stats';
+import {
+  getAllFamilies,
+  getCrystalSystems,
+  getOrigins,
+  getMineralGroups,
+} from '../../lib/db-server';
 
 const url = Astro.url;
 const initialSystem = url.searchParams.get('system') || '';
@@ -13,6 +19,16 @@ const initialOrigin = url.searchParams.get('origin') || '';
 const canonicalURL = 'https://gemmology.dev/gallery';
 
 const { familyCount } = await getSiteStats();
+
+// SSG-fetch families + filter dropdowns at build time so the gallery first
+// paint does not block on sql.js + the 8 MB minerals.db. The wasm DB only
+// loads client-side once the user actually searches or filters.
+const [initialFamilies, initialSystems, initialOrigins, initialGroups] = await Promise.all([
+  getAllFamilies(),
+  getCrystalSystems(),
+  getOrigins(),
+  getMineralGroups(),
+]);
 ---
 
 <BaseLayout
@@ -31,6 +47,10 @@ const { familyCount } = await getSiteStats();
         initialSystem={initialSystem}
         initialSearch={initialSearch}
         initialOrigin={initialOrigin}
+        initialFamilies={initialFamilies}
+        initialSystems={initialSystems}
+        initialOrigins={initialOrigins}
+        initialGroups={initialGroups}
       />
     </Container>
   </div>
