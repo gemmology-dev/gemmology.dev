@@ -1,0 +1,77 @@
+id: green-stone-001
+stem: |
+  A vivid green oval cabochon is submitted for testing. Results: spot RI approximately
+  1.58, SG 2.71, inert under both LWUV and SWUV, strong dichroism (blue-green and
+  yellow-green) visible in the dichroscope. Under the microscope the gemmologist sees
+  a characteristic "garden" (jardin) of irregular parallel growth tubes, two-phase
+  inclusions, and a three-phase inclusion with a cuboid crystal in the fluid. What is
+  the identification, and which inclusion type is virtually diagnostic for a specific
+  geographic origin?
+type: mcq
+options:
+  - text: "Colombian emerald (beryl); three-phase inclusions with a halite cube are virtually diagnostic of Colombian origin; the jardin and two-phase inclusions confirm natural emerald"
+    isCorrect: true
+    rationale: |
+      The three-phase inclusion — liquid + gas bubble + solid cubic crystal (halite,
+      NaCl) — is one of the most celebrated diagnostic features in gemmology: it is
+      virtually diagnostic of Colombian origin for emerald. The RI ~1.58 (beryl range
+      1.577–1.583), SG 2.71 (beryl range 2.67–2.78), dichroism in blue-green and
+      yellow-green, and parallel growth tubes all confirm emerald. The jardin (from
+      French, garden) of inclusions is characteristic of natural emerald. Inert UV
+      response may indicate iron-rich or non-Cr emerald; Cr-bearing Colombian emeralds
+      sometimes show red LWUV fluorescence, but not always.
+  - text: "Chrome tourmaline; chrome tourmaline gives vivid green with dichroism, RI in the beryl range, and three-phase inclusions"
+    isCorrect: false
+    rationale: |
+      Chrome tourmaline (Cr-bearing elbaite/dravite) is vivid green with strong
+      dichroism — correct. However, tourmaline RI is 1.620–1.640, not approximately
+      1.58. A spot reading of 1.58 falls well below tourmaline's minimum RI. Three-phase
+      inclusions with a halite cube are not a known feature of tourmaline — they are
+      specific to the saline-fluid formation environment of Colombian emerald. Chrome
+      tourmaline inclusions include growth tubes parallel to c-axis and fluid inclusions,
+      but not the characteristic NaCl halite cubes. The RI mismatch alone eliminates
+      tourmaline.
+  - text: "Tsavorite garnet (grossular); tsavorite is vivid green, has SG approximately 3.61, and shows strong dichroism"
+    isCorrect: false
+    rationale: |
+      Tsavorite (chrome/vanadium grossular garnet) is cubic and therefore isotropic —
+      it shows no dichroism or pleochroism. The strong dichroism observed in this stone
+      (two distinct colours in the dichroscope) eliminates any cubic gem, including all
+      garnets. Additionally, tsavorite SG is approximately 3.58–3.73, clearly higher
+      than the measured 2.71. The spot RI of approximately 1.58 is also far below
+      tsavorite's RI of approximately 1.740–1.760. Three property mismatches — isotropy,
+      SG, and RI — all eliminate tsavorite.
+rationaleCorrect: |
+  Colombian emerald identification relies on a convergent suite of evidence. The
+  three-phase inclusion (liquid + gas + halite cube) is so characteristic that its
+  presence alone, in a green beryl with the correct RI and SG, constitutes very strong
+  evidence of Colombian origin — it is listed as a virtual diagnostic in GIA and FGA
+  training materials. The jardin of irregular inclusions and two-phase cavities adds
+  supporting natural-origin evidence. Beryl RI 1.577–1.583, SG 2.67–2.78 confirms the
+  species. The dichroism (blue-green / yellow-green) is characteristic of Cr-bearing
+  emerald. Note: UV response varies — some Colombian emeralds fluoresce, others do not,
+  depending on iron content, so UV inertness does not exclude Colombia.
+difficulty: 4
+category: species
+conceptTags:
+  - three-phase-inclusion
+  - refractive-index
+  - specific-gravity
+  - emerald
+  - beryl
+  - pleochroism
+sourceArticle: species/beryl
+examRelevance: FGA-foundation
+confusionPairs:
+  - green-stone-002
+  - green-stone-003
+  - green-stone-004
+similarTo:
+  - green-stone-002
+  - green-stone-003
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 118–130."

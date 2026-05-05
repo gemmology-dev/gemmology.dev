@@ -1,0 +1,76 @@
+id: corundum-vs-spinel-003
+stem: |
+  During a practical session, a student tests a red stone that gives the following
+  readings: RI 1.762–1.770 (two-edge refractometer pattern, edges touching), SG 4.00,
+  uniaxial negative on polariscope. Under the microscope the student sees a dense
+  network of very fine needle-like inclusions intersecting at approximately 60° angles,
+  plus several small octahedral negative crystals. A colleague suggests the stone is
+  synthetic ruby. What microscopic evidence would confirm or deny synthetic origin,
+  and what is the most likely identity here?
+type: mcq
+options:
+  - text: "Natural ruby; silk (rutile needles at 60°) and negative crystals are characteristic natural inclusions — synthetic ruby shows curved growth striae (Verneuil) or flux fingerprints (flux-grown), neither of which matches the described features"
+    isCorrect: true
+    rationale: |
+      Rutile silk (TiO2 needles at 60° intersections) is an exsolution feature formed
+      during slow natural cooling of corundum — the rutile exsolves from the corundum
+      lattice as the crystal cools. This process cannot occur in the rapid Verneuil
+      (flame fusion) synthesis, which produces a boule in hours. Flux-grown synthetic
+      ruby shows flux fingerprints (curved or irregular growth planes with flux residue)
+      and wispy flux inclusions, not straight intersecting needles. Octahedral negative
+      crystals are voids with the crystal habit of the host mineral — a natural feature.
+      None of these are diagnostic of synthetic origin.
+  - text: "Synthetic ruby; the high SG of 4.00 suggests flux contamination increased the density above natural ruby values"
+    isCorrect: false
+    rationale: |
+      SG 4.00 is the standard value for natural ruby (corundum, Al2O3) — it is not
+      "above natural" and it does not indicate flux contamination. Flux-grown synthetic
+      ruby has the same SG as natural ruby because the host crystal is pure Al2O3;
+      any flux inclusions present are minor and would slightly lower SG (if flux-rich
+      inclusions are lighter) or have negligible effect. The premise of this distractor
+      is factually incorrect. This tests whether students apply correct reasoning to
+      SG values for corundum, rather than misinterpreting a routine value as anomalous.
+  - text: "Synthetic ruby (Verneuil process); Verneuil rubies routinely show rutile silk inclusions because the process uses TiO2 as a dopant to produce the characteristic silk"
+    isCorrect: false
+    rationale: |
+      The Verneuil (flame fusion) process does not use TiO2 as a dopant and does not
+      produce true rutile silk. Verneuil rubies show characteristic curved growth striae
+      — fine curved lines visible under darkfield illumination, reflecting the curved
+      growth front of the boule. They may contain minute gas bubbles and occasionally
+      unmelted powder. The presence of straight, intersecting rutile needles at 60°
+      is a natural formation indicator, not a Verneuil feature. Claiming that Verneuil
+      synthesis produces silk would be a factual error in a gemmological report.
+rationaleCorrect: |
+  The microscopic features described — rutile silk at 60° intersections and octahedral
+  negative crystals — are both natural inclusion types that cannot be replicated by
+  synthetic processes. Rutile silk arises from exsolution during slow geological cooling;
+  it is one of the most important natural origin indicators in corundum. Synthetic rubies
+  have their own diagnostic inclusion suites: Verneuil shows curved growth striae and
+  gas bubbles; flux-grown shows flux fingerprints, wispy flux, and sometimes flux-filled
+  fractures; hydrothermal shows chevron growth patterns. Knowing these diagnostic inclusions
+  is fundamental to the FGA practical examination and to responsible laboratory reporting.
+difficulty: 4
+category: species
+conceptTags:
+  - refractive-index
+  - optic-character
+  - silk-inclusion
+  - corundum
+  - ruby
+  - synthetic-ruby
+  - natural-vs-synthetic
+sourceArticle: species/corundum
+examRelevance: FGA-foundation
+confusionPairs:
+  - corundum-vs-spinel-001
+  - corundum-vs-spinel-002
+  - red-stone-garnet-001
+similarTo:
+  - corundum-vs-spinel-001
+  - red-stone-garnet-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
