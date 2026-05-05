@@ -107,7 +107,7 @@ export function Quiz({
         <div className="flex gap-2">
           {/* Submit answer button (practice mode) */}
           {config.mode === 'practice' && !isSubmitted && hasAnswer && (
-            <Button variant="secondary" onClick={submitAnswer}>
+            <Button variant="secondary" onClick={() => submitAnswer()}>
               Check Answer
             </Button>
           )}
