@@ -1,6 +1,11 @@
 /**
  * React hook for managing exam state with timer.
  * Extends useQuiz with countdown functionality and exam-specific features.
+ *
+ * Study v1 additions (T1):
+ * - Wires studyStore.appendResponse for every answered question at submit time.
+ * - Wires progressTracker.updateProgress + studyStore.updateProgress on submit.
+ * - sessionId groups all responses from a single exam sitting.
  */
 
 import { useState, useCallback, useEffect, useRef } from 'react';
@@ -14,8 +19,12 @@ import {
   calculateResults,
   serializeQuizState,
   deserializeQuizState,
+  checkAnswer,
 } from '../lib/quiz';
 import { useLocalStorage, STORAGE_KEYS } from './useLocalStorage';
+import { getStudyStore } from '../lib/quiz/store';
+import { updateProgress } from '../lib/quiz/progress-tracker';
+import type { Confidence } from '../lib/quiz/study-types';
 
 interface UseExamOptions {
   /** Exam configuration */
@@ -65,8 +74,15 @@ interface UseExamReturn {
   isQuestionFlagged: (questionId: string) => boolean;
   /** Check if a question is answered */
   isQuestionAnswered: (questionId: string) => boolean;
-  /** Submit the exam */
-  submitExam: () => void;
+  /**
+   * Submit the exam.
+   *
+   * @param confidenceMap - Per-question confidence captured by ConfidenceTap
+   *   (keyed by questionId). Until T3's ConfidenceTap lands, pass an empty
+   *   Map or omit; answers will record 'fairly-sure'.
+   * TODO(T3): wire ConfidenceTap — remove default once component is available.
+   */
+  submitExam: (confidenceMap?: Map<string, Confidence>) => void;
   /** Reset the exam */
   resetExam: () => void;
   /** Pause the timer */
@@ -81,12 +97,26 @@ interface SerializedExamState {
   isPaused: boolean;
 }
 
+/** Generate a random session identifier. */
+function makeSessionId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
 export function useExam({
   config,
   questions,
   timeLimit,
   autoSubmitOnTimeout = true,
 }: UseExamOptions): UseExamReturn {
+  // Study store singleton — stable reference.
+  const store = useRef(getStudyStore()).current;
+
+  // Unique identifier for this exam session.
+  const sessionId = useRef(makeSessionId()).current;
+
+  // Track per-question start times for timeMs computation.
+  const questionStartTimes = useRef<Map<string, number>>(new Map());
+
   // Persist exam state
   const [savedState, setSavedState, clearSavedState] = useLocalStorage<string | null>(
     STORAGE_KEYS.EXAM_STATE,
@@ -175,6 +205,7 @@ export function useExam({
     if (isTimeExpired && autoSubmitOnTimeout && !isComplete) {
       submitExam();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimeExpired, autoSubmitOnTimeout, isComplete]);
 
   // Save state periodically
@@ -189,9 +220,21 @@ export function useExam({
     }
   }, [state, timeRemaining, isPaused, isComplete, setSavedState]);
 
+  // Track when a user first views/interacts with each question.
+  useEffect(() => {
+    if (currentQuestion && !questionStartTimes.current.has(currentQuestion.id)) {
+      questionStartTimes.current.set(currentQuestion.id, Date.now());
+    }
+  }, [currentQuestion]);
+
   // Select an answer
   const selectAnswer = useCallback((answer: string | string[]) => {
     if (!currentQuestion || state.submitted) return;
+
+    // Record start time on first answer for this question.
+    if (!questionStartTimes.current.has(currentQuestion.id)) {
+      questionStartTimes.current.set(currentQuestion.id, Date.now());
+    }
 
     const newAnswers = new Map(state.answers);
     newAnswers.set(currentQuestion.id, answer);
@@ -260,11 +303,23 @@ export function useExam({
     return state.answers.has(questionId);
   }, [state.answers]);
 
-  // Submit the exam
-  const submitExam = useCallback(() => {
-    const finalState = {
+  /**
+   * Submit the exam.
+   *
+   * Logs one ResponseRecord per answered question to the study store, then
+   * updates progress via progressTracker + store.
+   *
+   * @param confidenceMap - Per-question confidence (keyed by questionId).
+   *   Defaults to 'fairly-sure' for all until ConfidenceTap (T3) is wired.
+   * TODO(T3): wire ConfidenceTap — remove default once component is available.
+   */
+  const submitExam = useCallback((
+    confidenceMap: Map<string, Confidence> = new Map()
+  ) => {
+    const now = Date.now();
+    const finalState: QuizState = {
       ...state,
-      endTime: Date.now(),
+      endTime: now,
       submitted: true,
     };
 
@@ -277,7 +332,40 @@ export function useExam({
 
     // Clear saved state
     clearSavedState();
-  }, [state, config, clearSavedState]);
+
+    // --- Study v1: log one ResponseRecord per answered question ---
+    for (const [questionId, answer] of finalState.answers) {
+      const question = finalState.questions.find(q => q.id === questionId);
+      if (!question) continue;
+
+      const correct = checkAnswer(question, answer);
+      // TODO(T3): wire ConfidenceTap — remove default once component is available.
+      const confidence: Confidence = confidenceMap.get(questionId) ?? 'fairly-sure';
+      const startTime = questionStartTimes.current.get(questionId) ?? finalState.startTime;
+      const timeMs = now - startTime;
+
+      store.appendResponse({
+        questionId,
+        timestamp: now,
+        correct,
+        confidence,
+        timeMs,
+        mode: 'exam',
+        optionChosen: Array.isArray(answer) ? answer.join(',') : answer,
+        sessionId,
+      }).catch((err: unknown) => {
+        console.warn('[useExam] appendResponse failed:', err);
+      });
+    }
+
+    // --- Study v1: update progress ---
+    store.getProgress().then(currentProgress => {
+      const updated = updateProgress(currentProgress, examResults);
+      return store.updateProgress(updated);
+    }).catch((err: unknown) => {
+      console.warn('[useExam] updateProgress failed:', err);
+    });
+  }, [state, config, clearSavedState, store, sessionId]);
 
   // Reset the exam
   const resetExam = useCallback(() => {
@@ -286,6 +374,7 @@ export function useExam({
     setScore(null);
     setTimeRemaining(timeLimit);
     setIsPaused(false);
+    questionStartTimes.current = new Map();
 
     setState({
       questions,
