@@ -1,0 +1,182 @@
+{
+  "$ref": "#/definitions/GemmologyQuestion",
+  "definitions": {
+    "GemmologyQuestion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "stem": {
+          "type": "string",
+          "minLength": 10
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "mcq",
+            "true-false",
+            "fill-blank",
+            "matching",
+            "image-mcq"
+          ]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "isCorrect": {
+                "type": "boolean"
+              },
+              "rationale": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "isCorrect"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2,
+          "maxItems": 5
+        },
+        "acceptedAnswers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "left": {
+                "type": "string"
+              },
+              "right": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "left",
+              "right"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rationaleCorrect": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "fundamentals",
+            "equipment",
+            "species",
+            "identification",
+            "phenomena",
+            "origin",
+            "market",
+            "care"
+          ]
+        },
+        "conceptTags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceArticle": {
+          "type": "string"
+        },
+        "examRelevance": {
+          "type": "string",
+          "enum": [
+            "FGA-foundation",
+            "FGA-diploma",
+            "GIA-GG"
+          ]
+        },
+        "confusionPairs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "similarTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "imageRef": {
+          "type": "string"
+        },
+        "unvetted": {
+          "type": "boolean",
+          "default": false
+        },
+        "authorReviewed": {
+          "type": "string"
+        },
+        "lastReviewed": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "default": false
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "id",
+              "citation"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "stem",
+        "type",
+        "rationaleCorrect",
+        "difficulty",
+        "category",
+        "conceptTags"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Gemmology Question",
+  "description": "A single question in the gemmology.dev curated question bank. See src/content/questions/_example/example-mcq.yaml for a full annotated example."
+}
