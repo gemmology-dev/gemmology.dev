@@ -1,0 +1,76 @@
+id: corundum-vs-spinel-001
+stem: |
+  A polished red stone gives the following instrument readings in the gemmology
+  laboratory: RI 1.762–1.770 (two edges touching at 1.762 during rotation), SG 4.00,
+  polariscope — lights up at four positions during rotation, LWUV — strong red fluorescence.
+  Three candidate identifications are proposed: natural ruby, spinel, or pyrope garnet.
+  Which candidate is correct and what is the diagnostic reasoning chain?
+type: mcq
+options:
+  - text: "Natural ruby (corundum); doubly refractive on polariscope eliminates spinel and pyrope, SG 4.00 eliminates pyrope, LWUV fluorescence and RI 1.762–1.770 confirm corundum"
+    isCorrect: true
+    rationale: |
+      The polariscope result (lighting at four positions = double refraction) immediately
+      eliminates isotropic spinel and isotropic pyrope garnet — both are cubic and remain
+      dark between crossed polars [ref:read-gemmology-3e]. Of the three candidates, only corundum is doubly
+      refractive (uniaxial negative). RI 1.762–1.770 matches corundum precisely [ref:read-gemmology-3e]; spinel
+      RI is 1.712–1.720 (too low); pyrope RI is 1.730–1.760 (too low) [ref:read-gemmology-3e]. SG 4.00 matches
+      corundum (3.99–4.01); pyrope SG is 3.65–3.87 (too low); spinel SG is 3.58–3.61
+      (too low) [ref:read-gemmology-3e]. Strong red LWUV fluorescence from chromium confirms ruby [ref:read-gemmology-3e].
+  - text: "Spinel; red spinel also shows strong red LWUV fluorescence and RI near 1.718, and fluorescence is the most diagnostic property for red stones"
+    isCorrect: false
+    rationale: |
+      Red spinel does fluoresce strongly red under LWUV — this is why historical gem
+      traders frequently confused spinel with ruby [ref:read-gemmology-3e]. However, fluorescence is explicitly
+      the LEAST diagnostic property here because both ruby and Burma spinel can show red
+      LWUV fluorescence. The decisive observations are: (1) the polariscope showing double
+      refraction — spinel is isotropic and stays dark [ref:read-gemmology-3e]; (2) RI 1.762–1.770 — spinel RI is
+      1.712–1.720, clearly lower [ref:read-gemmology-3e]; (3) SG 4.00 — spinel SG is 3.58–3.61, clearly lower [ref:read-gemmology-3e].
+  - text: "Pyrope garnet; pyrope is deep red and can be confused with ruby; the polariscope result suggests pyrope because garnets often show anomalous double refraction"
+    isCorrect: false
+    rationale: |
+      Anomalous double refraction (ADR) in garnets appears as patchy or mottled light
+      patterns between crossed polars — not the clean four-position lighting of true
+      double refraction [ref:read-gemmology-3e]. Pyrope is cubic and should appear predominantly dark; ADR is
+      an irregular strain effect, not systematic double refraction. The stone described
+      lights up clearly at four positions, which is the behaviour of a genuinely doubly
+      refractive gem (corundum), not ADR from a garnet [ref:read-gemmology-3e]. Additionally, pyrope RI is
+      1.730–1.760 and SG 3.65–3.87 — both below the measured values [ref:read-gemmology-3e].
+rationaleCorrect: |
+  The ruby/spinel/pyrope discrimination is the most historically important near-miss
+  problem in gemmology — the Black Prince's Ruby (Tower of London) is a red spinel [ref:read-gemmology-3e].
+  The diagnostic chain is always: optic character first (doubly refractive = not spinel,
+  not garnet), then RI (1.762–1.770 = corundum range) [ref:read-gemmology-3e], then SG (4.00 = corundum) [ref:read-gemmology-3e].
+  Fluorescence confirms but never establishes identification — some Burma spinel also
+  fluoresces red [ref:read-gemmology-3e]. A clean four-position lighting on the polariscope is the
+  single observation that eliminates both cubic candidates simultaneously, before
+  any measurement is taken. This sequence (polariscope → refractometer → SG) is
+  the standard FGA practical workflow for red stones [ref:anderson-gem-testing].
+difficulty: 3
+category: species
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - optic-character
+  - fluorescence-LWUV
+  - corundum
+  - ruby
+  - spinel
+  - pyrope
+sourceArticle: species/corundum
+examRelevance: FGA-foundation
+confusionPairs:
+  - corundum-vs-spinel-002
+  - red-stone-garnet-001
+  - corundum-vs-spinel-003
+similarTo:
+  - corundum-vs-spinel-002
+  - ri-reading-010
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

@@ -25,6 +25,10 @@ jobs:
       - name: Copy database files
         run: npm run copy-db
 
+      - name: Validate question bank
+        if: ${{ hashFiles('src/content/questions/**/*.yaml') != '' }}
+        run: npm run validate:questions
+
       - name: Build
         run: npm run build
 

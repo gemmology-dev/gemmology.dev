@@ -1,0 +1,16 @@
+---
+/**
+ * Study settings — user-tunable study system preferences and JSON
+ * export/import. Auth-gated by LockGate (rendered inside the React shell).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { StudySettingsScreen } from '../../components/quiz/study/StudySettingsScreen';
+---
+
+<BaseLayout
+  title="Study settings"
+  description="Customise spaced-repetition behaviour, confidence prompts, and export or import your study progress."
+  noindex={true}
+>
+  <StudySettingsScreen client:load />
+</BaseLayout>

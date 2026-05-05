@@ -1,0 +1,72 @@
+id: crystal-system-003
+stem: |
+  A gemmology student is trying to determine whether an unknown gem belongs to the
+  orthorhombic or monoclinic crystal system. Under the polariscope, the stone shows
+  a biaxial interference figure. On the refractometer, the student records three
+  distinct RI values. The stone displays distinct trichroism. Which crystal system
+  property eliminates monoclinic and confirms orthorhombic as the more likely answer,
+  given the additional observation that all three crystallographic axes meet at exactly
+  90 degrees?
+type: mcq
+options:
+  - text: "In orthorhombic crystals all three axes are mutually perpendicular (alpha = beta = gamma = 90°), whereas in monoclinic one of the inter-axial angles departs from 90° (beta ≠ 90°)"
+    isCorrect: true
+    rationale: |
+      Both orthorhombic and monoclinic systems are biaxial and show trichroism, so
+      optical properties alone cannot separate them in this scenario [ref:read-gemmology-3e]. The diagnostic
+      is the axial geometry: orthorhombic has a ≠ b ≠ c but all angles = 90°; monoclinic
+      has a ≠ b ≠ c with alpha = gamma = 90° but beta ≠ 90° [ref:read-gemmology-3e]. The student's observation
+      that all three axes meet at 90° confirms orthorhombic. In practice this is
+      determined from the crystal morphology or X-ray diffraction, not directly from
+      gemmological instruments.
+  - text: "Orthorhombic gems always show stronger trichroism than monoclinic gems, and the strength of trichroism confirms the system"
+    isCorrect: false
+    rationale: |
+      The intensity of pleochroism depends on the chromophore concentration and crystal
+      chemistry, not directly on the crystal system. Monoclinic gems (e.g. spodumene,
+      diopside) can show strong trichroism; orthorhombic gems (e.g. topaz) may show weak
+      trichroism [ref:read-gemmology-3e]. There is no rule that orthorhombic gems have systematically stronger
+      pleochroism. Both systems are biaxial and support trichroism; the degree of
+      trichroism is not a reliable crystal-system discriminator.
+  - text: "Orthorhombic gems give a centred optic axis figure with a straight isogyre, while monoclinic gems always give a Bxa figure with curved isogyres"
+    isCorrect: false
+    rationale: |
+      The shape of isogyres on a conoscope figure depends on crystal orientation relative
+      to the optical section, not on whether the crystal is orthorhombic or monoclinic [ref:read-gemmology-3e].
+      Both systems can produce Bxa, Bxo, or optic axis figures depending on the cut
+      orientation. Straight versus curved isogyres reflect 2V (the optic axial angle) —
+      a 2V of approximately 90° gives nearly straight isogyres in a Bxa figure, but this
+      occurs in both orthorhombic and monoclinic gems.
+rationaleCorrect: |
+  Both orthorhombic and monoclinic systems are biaxial, show trichroism, and give similar
+  interference figures. The defining structural distinction is the inter-axial angles:
+  orthorhombic has all three angles at exactly 90° (a ≠ b ≠ c; alpha = beta = gamma = 90°);
+  monoclinic has two right angles but one oblique angle (alpha = gamma = 90°, beta ≠ 90°) [ref:read-gemmology-3e].
+  In gemmological practice, individual gem identification uses RI, SG, and spectroscopic
+  tests rather than direct axial angle measurement; but the crystal-system definition is
+  tested at FGA level as pure crystallographic knowledge. Common orthorhombic gems:
+  topaz, peridot, tanzanite, chrysoberyl. Common monoclinic gems: orthoclase, spodumene,
+  jadeite, diopside [ref:read-gemmology-3e].
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - crystal-system
+  - orthorhombic-system
+  - monoclinic-system
+  - biaxial
+  - symmetry
+  - pleochroism
+sourceArticle: fundamentals/crystal-systems
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-001
+  - crystal-system-004
+similarTo:
+  - crystal-system-002
+  - crystal-system-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 17–30."

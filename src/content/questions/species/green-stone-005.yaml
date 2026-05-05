@@ -1,0 +1,72 @@
+id: green-stone-005
+stem: |
+  A client brings a vivid green oval cabochon set in a silver ring. Spot RI reads
+  approximately 1.54. The stone appears homogeneous under the loupe with a waxy to
+  vitreous lustre, shows no inclusions, no birefringence effect, and SG approximately
+  2.50. Under the Chelsea colour filter the stone appears green. LWUV inert.
+  A student suggests this could be a fine emerald. What instrument reading most
+  immediately eliminates emerald, and what is the more likely identity?
+type: mcq
+options:
+  - text: "RI approximately 1.54 immediately eliminates emerald (RI 1.577–1.583); the low RI combined with SG ~2.50 and featureless homogeneous appearance is consistent with green glass or green synthetic glass simulant"
+    isCorrect: true
+    rationale: |
+      Emerald (beryl) RI 1.577–1.583 with minimum value 1.577 [ref:read-gemmology-3e]; the measured 1.54 is
+      approximately 0.037 below the minimum beryl value. This single reading eliminates
+      emerald absolutely — no beryl of any composition gives RI as low as 1.54 [ref:read-gemmology-3e]. Green
+      glass RI can be approximately 1.50–1.55 depending on composition [ref:read-gemmology-3e]. SG ~2.50 is
+      consistent with light glass (beryl SG is 2.67–2.78, also higher) [ref:read-gemmology-3e]. The featureless,
+      homogeneous interior (no growth features, no inclusions) is typical of glass.
+  - text: "SG approximately 2.50 immediately eliminates emerald; green glass is confirmed because glass always reads 2.50 on hydrostatic weighing"
+    isCorrect: false
+    rationale: |
+      The SG is a secondary confirmatory observation, not the most immediate eliminator
+      in this case. SG of green glass varies considerably — from approximately 2.3 for
+      borosilicate to 4.5+ for high-lead glass [ref:read-gemmology-3e] — depending on composition. Stating that
+      glass "always reads 2.50" is incorrect. The RI reading is the most immediately
+      accessible and precise measurement: the refractometer is used first in the standard
+      workflow, and the 1.54 reading eliminates beryl with a 0.037-unit margin [ref:read-gemmology-3e].
+  - text: "The Chelsea colour filter immediately eliminates emerald; emerald appears red under the Chelsea filter, and this green stone appearing green proves it is not Cr-bearing"
+    isCorrect: false
+    rationale: |
+      The Chelsea colour filter was designed to detect chromium by its absorption, making
+      Cr-bearing stones appear orange-red under the filter [ref:read-gemmology-3e]. However, the Chelsea filter
+      test is not binary: some Cr-bearing emeralds (especially vanadium-rich or iron-rich
+      varieties) may not respond strongly red [ref:read-gemmology-3e], and some non-emerald green materials
+      (Cr-bearing glass) appear red. A green response under the Chelsea filter does not
+      rule out Cr-bearing emerald — it is a screening tool, not a definitive test [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Spot RI 1.54 is the critical reading here: it is below the minimum RI of any beryl
+  (1.577), eliminating emerald with certainty [ref:read-gemmology-3e]. The RI measurement is the most immediate
+  and instrument-based discriminator. Green glass simulants are common in cheap jewellery;
+  the combination of low RI, low SG, featureless interior, and homogeneous lustre is
+  diagnostic of glass [ref:read-gemmology-3e]. The Chelsea colour filter is a useful screening tool but subject
+  to false positives and negatives [ref:read-gemmology-3e]. In a gemmological laboratory, the refractometer
+  finding always takes precedence over a Chelsea colour filter observation when the two
+  appear to conflict [ref:anderson-gem-testing].
+difficulty: 2
+category: species
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - isotropic
+  - glass
+  - emerald
+  - beryl
+sourceArticle: species/beryl
+examRelevance: FGA-foundation
+confusionPairs:
+  - green-stone-001
+  - green-stone-002
+  - green-stone-003
+similarTo:
+  - green-stone-002
+  - red-stone-glass-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 118–130."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

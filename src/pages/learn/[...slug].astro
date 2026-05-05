@@ -5,6 +5,8 @@ import { Breadcrumb, PageNav } from '../../components/docs';
 import { SectionRenderer } from '../../components/learn';
 import { Container, Card, Badge } from '../../components/ui-astro';
 import LearnSchema from '../../components/seo/LearnSchema.astro';
+import { LearnQuizWidget } from '../../components/quiz/study/LearnQuizWidget';
+import type { WidgetQuestion } from '../../components/quiz/study/LearnQuizWidget';
 
 export async function getStaticPaths() {
   const entries = await getCollection('learn');
@@ -112,6 +114,36 @@ if (data.subcategory) {
 }
 
 breadcrumbItems.push({ label: data.title });
+
+// ----------------------------------------------------------------------
+// Pretest widget — pull up to 3 curated questions that point at this slug
+// via their `sourceArticle` field. Article ships without the widget when
+// no curated questions exist yet for this slug.
+// ----------------------------------------------------------------------
+const allQuestions = await getCollection('questions');
+const articleQuestions = allQuestions
+  .filter(q => q.data.sourceArticle === entry.id && q.data.deprecated !== true)
+  .slice(0, 3);
+
+const pretestQuestions: WidgetQuestion[] = articleQuestions
+  .filter(q => Array.isArray(q.data.options) && q.data.options.length >= 2)
+  .map(q => {
+    const opts = q.data.options ?? [];
+    const correct = opts.find(o => o.isCorrect);
+    return {
+      id: q.id,
+      questionText: q.data.stem,
+      options: opts.map(o => o.text),
+      correctAnswer: correct?.text ?? opts[0]!.text,
+      rationaleCorrect: q.data.rationaleCorrect,
+      optionRationales: opts.map(o => ({
+        text: o.text,
+        rationale: o.rationale ?? '',
+        isCorrect: o.isCorrect,
+      })),
+      unvetted: q.data.unvetted ?? false,
+    };
+  });
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -155,6 +187,17 @@ breadcrumbItems.push({ label: data.title });
           </div>
         )}
       </header>
+
+      {pretestQuestions.length > 0 && (
+        <div class="mb-10">
+          <LearnQuizWidget
+            client:visible
+            slug={entry.id}
+            pretestEnabled={true}
+            questions={pretestQuestions}
+          />
+        </div>
+      )}
 
       <div class="prose prose-slate prose-lg max-w-none
                   prose-headings:text-slate-900

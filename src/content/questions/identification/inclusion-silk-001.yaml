@@ -1,0 +1,77 @@
+id: inclusion-silk-001
+stem: |
+  Under darkfield illumination at 30× magnification, a gemmologist examines a red
+  corundum cabochon. They observe extremely fine, bright, needle-like inclusions
+  arranged in three intersecting directions, meeting at approximately 60° angles
+  throughout the stone. The needles are short and appear slightly interrupted in
+  places, as if broken into dotted segments. The stone has been described by the
+  seller as "untreated Burmese ruby." What do the broken, dotted needles indicate
+  about the stone's treatment history?
+type: mcq
+options:
+  - text: "The interrupted (dotted) needles indicate partial heat treatment; intact silk suggests unheated, fully dissolved silk suggests high-heat treatment, and broken or dotted silk is diagnostic of moderate-heat treatment that partially dissolved the rutile needles"
+    isCorrect: true
+    rationale: |
+      Rutile silk in corundum is progressively altered by heat treatment [ref:gubelin-koivula-vol1]. At temperatures
+      used in standard ruby enhancement (typically 1200–1800°C), rutile needles begin to
+      dissolve back into the corundum lattice (TiO2 re-entering the Al2O3 structure) [ref:read-gemmology-3e].
+      The dissolution starts at the ends and along the length of the needles, producing
+      an interrupted or "dotted" appearance [ref:gubelin-koivula-vol1]. This pattern — segments of needle with
+      gaps between them — is a well-established indicator of moderate heat treatment [ref:gubelin-koivula-vol1].
+      The seller's claim of "untreated" is contradicted by the dotted silk observation.
+  - text: "The broken silk needles indicate natural parting of the corundum, which fractures silk as it forms; this is a natural feature not related to treatment"
+    isCorrect: false
+    rationale: |
+      Natural parting in corundum (along twin planes) occurs at a scale visible as flat
+      reflective surfaces, not as a breakdown of individual silk needles within the bulk
+      of the crystal [ref:read-gemmology-3e]. Parting does not selectively interrupt rutile needles mid-length
+      while leaving the orientation intact; it would produce a different observation —
+      a flat plane cutting across the stone. The dotted, segmented appearance of silk
+      needles is specifically associated with thermal dissolution of rutile in the
+      literature and is not explained by natural parting mechanics [ref:gubelin-koivula-vol1].
+  - text: "The needles are actually growth tubes from the original crystal, and the interrupted appearance is from the growth front stopping and restarting during crystallisation"
+    isCorrect: false
+    rationale: |
+      Growth tubes (hollow or fluid-filled channels parallel to the c-axis in some gem
+      species) are a different inclusion type from rutile silk [ref:gubelin-koivula-vol1]. Rutile silk is solid TiO2
+      crystallites, not hollow tubes, and they form by exsolution from the corundum lattice
+      on cooling — not during primary growth [ref:read-gemmology-3e]. The intersecting pattern at 60° is specific
+      to exsolved rutile silk (the three crystallographic directions of the trigonal corundum
+      lattice). Growth tubes in tourmaline or aquamarine are parallel to c-axis only and do
+      not form intersecting networks [ref:gubelin-koivula-vol3].
+rationaleCorrect: |
+  The thermal dissolution sequence of rutile silk in corundum is one of the most important
+  treatment indicators in ruby and sapphire examination [ref:gubelin-koivula-vol1]. Three states are recognised:
+  (1) intact, sharp needles = likely unheated [ref:gubelin-koivula-vol1]; (2) broken/dotted needles = moderate heat
+  treatment (partial dissolution) [ref:gubelin-koivula-vol1]; (3) no silk = high-heat treatment (complete dissolution)
+  or the stone never had silk. The presence of dotted silk is often combined with other
+  heat-treatment indicators (e.g. healed fissures, altered fingerprints, rutile particles
+  re-precipitated on healed surfaces) [ref:gubelin-koivula-vol1]. Reporting "dotted silk observed — heat treatment
+  cannot be excluded" is the correct wording [ref:read-gemmology-3e].
+difficulty: 3
+category: identification
+conceptTags:
+  - silk-inclusion
+  - heat-treatment
+  - corundum
+  - ruby
+  - needle-inclusion
+sourceArticle: identification/inclusions/silk
+examRelevance: FGA-foundation
+confusionPairs:
+  - inclusion-silk-002
+  - inclusion-fingerprint-001
+  - inclusion-three-phase-001
+similarTo:
+  - inclusion-silk-002
+  - inclusion-fingerprint-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 88–126."
+  - id: gubelin-koivula-vol3
+    citation: "Gübelin, E.J. & Koivula, J.I. (2005). Photoatlas of Inclusions in Gemstones, Vol. 3. Opinio Verlag, Basel. pp. 16–52."
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."

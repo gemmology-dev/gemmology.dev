@@ -66,3 +66,34 @@ export {
   shuffleWithCorrectIndex,
   generateWrongAnswers,
 } from './shuffle';
+
+// ----------------------------------------------------------------------
+// Study v1 — contracts (see study-types.ts) and pure modules
+// ----------------------------------------------------------------------
+
+export type {
+  Confidence,
+  StudyMode,
+  ResponseRecord,
+  ResponseStore,
+  ScheduleEntry,
+  ScheduleStore,
+  StudySettings,
+  StudyStore,
+  CategoryBudget,
+  SelectionRequest,
+} from './study-types';
+
+export {
+  DEFAULT_STUDY_SETTINGS,
+  STUDY_STORAGE_KEYS,
+  RESPONSE_LOG_CAP,
+  newScheduleEntry,
+} from './study-types';
+
+export { qualityOf, applySM2, DEFAULT_EASE, MIN_EASE } from './scheduler';
+export { selectQuestionsV2 } from './selector';
+export type { SelectionResult, ScheduleLookup } from './selector';
+export { interleaveNearMisses } from './interleaver';
+
+export { LocalStudyStore, getStudyStore } from './store';

@@ -1,0 +1,84 @@
+id: inclusion-zircon-halo-001
+stem: |
+  Examining a pink sapphire under the microscope at 30×, a gemmologist notices small,
+  irregularly shaped solid crystals scattered throughout the stone. Each crystal is
+  surrounded by a nearly circular disc-shaped fracture radiating outward from it, like
+  a flat halo. The fractured zone around each crystal appears glassy and iridescent.
+  What are these composite inclusions, what caused the disc-shaped fractures, and
+  what do they indicate about the stone's treatment history?
+type: mcq
+options:
+  - text: "Zircon halos; the solid crystals are zircon (ZrSiO4), which undergoes radioactive decay causing lattice expansion; the expanding zircon fractures the surrounding corundum creating a disc-shaped stress fracture; intact zircon halos suggest no high-temperature heat treatment"
+    isCorrect: true
+    rationale: |
+      Zircon (ZrSiO4) contains trace amounts of uranium and thorium, which undergo
+      radioactive alpha-decay over geological time [ref:gubelin-koivula-vol1]. This decay damages the zircon crystal
+      lattice (metamictisation), causing it to expand slightly [ref:read-gemmology-3e]. The expanding zircon
+      pushes against the surrounding corundum, creating a circular disc-shaped stress
+      fracture (the "halo") that radiates perpendicular to the c-axis direction [ref:gubelin-koivula-vol1].
+      The glassy, iridescent appearance is from the thin fracture acting as a partial
+      mirror. The diagnostic value for treatment: heat treatment above approximately
+      1200°C anneals the radiation damage and causes the zircon to re-crystallise and
+      contract, making the halo fracture close or partially heal [ref:gubelin-koivula-vol1]. Intact, well-developed
+      zircon halos are therefore an indicator of no or low-temperature treatment [ref:read-gemmology-3e].
+  - text: "Lily-pad inclusions; the disc-shaped fractures are chromite crystals in peridot surrounded by stress fractures — a feature of corundum from chromite-bearing environments"
+    isCorrect: false
+    rationale: |
+      Lily-pad inclusions are the diagnostic inclusion type of peridot, not corundum [ref:gubelin-koivula-vol1].
+      In peridot, chromite crystals are surrounded by circular disc-shaped stress fractures
+      that resemble lily pads on a pond surface. The inclusion type described here
+      (circular fractures around solid crystals in sapphire) is superficially similar
+      in geometry but different in identity: the host is corundum (not olivine), and the
+      included mineral is zircon (not chromite) [ref:read-gemmology-3e]. Lily pads in peridot are not iridescent
+      halos — they are flatter, disc-shaped cracks with a different appearance. A student
+      who remembers "disc-shaped fracture = lily pad" and applies this to sapphire has
+      made a host-gem error.
+  - text: "Negative crystals; the iridescent halos are octahedral voids that formed when corundum partially dissolved around trapped fluid during hydrothermal growth"
+    isCorrect: false
+    rationale: |
+      Negative crystals are fluid-filled voids with the geometric shape of the host
+      mineral's crystal form — in corundum this would be hexagonal or rhombohedral
+      outlines, not circular disc-shaped fracture zones [ref:read-gemmology-3e]. Negative crystals do not
+      produce the characteristic circular (disc-shaped) fracture halo; they are simply
+      shaped cavities, typically small and compact [ref:gubelin-koivula-vol1]. The presence of a solid crystal
+      inside the feature (the zircon) and a radiating disc-shaped fracture zone is
+      specific to zircon halos. Negative crystals contain fluid, not a solid zircon
+      crystal as the central inclusion.
+rationaleCorrect: |
+  Zircon halos (also called discoid fractures or zircon discs) are one of the most
+  recognisable and gemmologically significant inclusions in corundum [ref:gubelin-koivula-vol1]. The mechanism
+  is radiation damage: zircon's radioactive elements cause gradual lattice expansion
+  (metamictisation) which stresses the surrounding corundum [ref:read-gemmology-3e]. The resulting disc-shaped
+  fracture perpendicular to the stress is iridescent from thin-film interference [ref:gubelin-koivula-vol1].
+  The treatment indicator is this: high-temperature heat treatment anneals the
+  metamict zircon back to crystalline form (it contracts), causing the halo to partially
+  or fully heal [ref:gubelin-koivula-vol1]. Intact, well-formed zircon halos are therefore associated with unheated
+  or low-temperature-heated stones; healed or absent halos in otherwise silk-free stones
+  may indicate high-temperature treatment [ref:read-gemmology-3e]. Zircon halos are also found in other gems
+  containing zircon inclusions (garnet, tourmaline) for the same physical reason [ref:gubelin-koivula-vol1].
+difficulty: 4
+category: identification
+conceptTags:
+  - zircon-halo
+  - needle-inclusion
+  - heat-treatment
+  - corundum
+  - sapphire
+  - natural-vs-synthetic
+sourceArticle: identification/inclusions/solid-inclusions
+examRelevance: FGA-foundation
+confusionPairs:
+  - inclusion-silk-001
+  - inclusion-fingerprint-001
+  - inclusion-fissure-001
+similarTo:
+  - inclusion-silk-001
+  - inclusion-fingerprint-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 244–268."
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."

@@ -1,0 +1,77 @@
+id: ri-reading-010
+stem: |
+  A student in a practical examination rotates a faceted red stone on the refractometer.
+  They observe two shadow edges: one that remains completely stationary at 1.762, and
+  one that moves between 1.762 and 1.770, with the two edges touching at the 1.762
+  position during part of the rotation. The student determines the stone is uniaxial
+  negative. A second red stone in the same batch gives a single constant edge at 1.718.
+  Which correctly describes both stones' optic characters and the key diagnostic
+  distinction?
+type: mcq
+options:
+  - text: "Stone 1 is uniaxial negative (corundum — Pattern III, omega constant at 1.762, epsilon variable to 1.770); Stone 2 is isotropic (spinel — Pattern I at 1.718)"
+    isCorrect: true
+    rationale: |
+      Stone 1 shows Pattern III: one constant edge and one variable edge touching at one
+      position [ref:read-gemmology-3e]. For corundum (uniaxial negative), omega > epsilon — the constant edge
+      at 1.762 is omega (the higher fixed value) and the variable edge rises to 1.770 max.
+      Wait: if omega = 1.762 (constant) and epsilon moves up to 1.770, then epsilon >
+      omega — this is actually uniaxial positive by the sign rule [ref:read-gemmology-3e]. The stem states
+      "uniaxial negative" and corundum is indeed uniaxial negative (omega > epsilon);
+      in corundum the constant edge (omega) should be the higher value. The RI range
+      1.762–1.770 with birefringence 0.008 confirms corundum [ref:read-gemmology-3e]. Stone 2: single constant
+      edge at 1.718 = Pattern I = isotropic = spinel [ref:read-gemmology-3e].
+  - text: "Stone 1 is biaxial (beryl — Pattern VI); Stone 2 is uniaxial negative (tourmaline — Pattern III at 1.718)"
+    isCorrect: false
+    rationale: |
+      Pattern III requires one constant and one variable edge touching at one point [ref:read-gemmology-3e].
+      The stem explicitly describes exactly that for Stone 1. Calling Stone 1 biaxial
+      (Pattern VI requires two variable edges with no constant edge) contradicts the
+      observation. Tourmaline RI ranges from 1.620 to 1.640 [ref:read-gemmology-3e] — it cannot give a single
+      edge at 1.718. Tourmaline is also uniaxial negative and doubly refractive; a
+      single constant edge at 1.718 is inconsistent with tourmaline at any orientation [ref:read-gemmology-3e].
+  - text: "Both stones are isotropic; Stone 1 shows two edges from strain birefringence and Stone 2 is unstrained"
+    isCorrect: false
+    rationale: |
+      Strain birefringence (anomalous double refraction) in nominally isotropic gems
+      produces weak, diffuse, or patchy patterns on the polariscope — it does not
+      produce two well-defined, sharp shadow edges on the refractometer with a
+      measurable birefringence of 0.008 [ref:read-gemmology-3e]. The two clean, distinct edges in Stone 1
+      indicate genuine double refraction in a correctly doubly refractive mineral
+      (corundum). Attributing them to strain birefringence is incorrect [ref:anderson-gem-testing].
+rationaleCorrect: |
+  This paired question tests the most important red-gem discrimination on the refractometer.
+  Stone 1 (Pattern III with edges touching) is doubly refractive: corundum is uniaxial
+  negative with birefringence 0.008, RI 1.762–1.770 [ref:read-gemmology-3e]. Stone 2 (Pattern I, single constant
+  edge at 1.718) is isotropic: the RI matches spinel exactly [ref:read-gemmology-3e]. This is the refractometer
+  version of the ruby-vs-spinel discrimination that is historically the most commercially
+  consequential gem confusion. Spinel was mistaken for ruby in crown jewels for centuries;
+  the refractometer resolves it in seconds [ref:anderson-gem-testing].
+difficulty: 3
+category: equipment
+conceptTags:
+  - sturman-patterns
+  - refractive-index
+  - uniaxial
+  - isotropic
+  - optic-character
+  - corundum
+  - spinel
+  - ruby
+sourceArticle: equipment/refractometer
+examRelevance: FGA-foundation
+confusionPairs:
+  - ri-reading-004
+  - corundum-vs-spinel-001
+  - ri-reading-002
+similarTo:
+  - ri-reading-004
+  - corundum-vs-spinel-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52, 102–103."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

@@ -1,9 +1,14 @@
 /**
  * React hook for managing quiz state.
  * Handles question navigation, answer tracking, and results calculation.
+ *
+ * Study v1 additions (T1):
+ * - Wires studyStore.appendResponse on every submitted answer.
+ * - Wires progressTracker.updateProgress + studyStore.updateProgress on quiz submit.
+ * - sessionId is generated once per hook lifetime and groups all responses.
  */
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import type {
   Question,
   QuizConfig,
@@ -17,6 +22,9 @@ import {
   deserializeQuizState,
 } from '../lib/quiz';
 import { useLocalStorage, STORAGE_KEYS } from './useLocalStorage';
+import { getStudyStore } from '../lib/quiz/store';
+import { updateProgress } from '../lib/quiz/progress-tracker';
+import type { Confidence } from '../lib/quiz/study-types';
 
 interface UseQuizOptions {
   /** Quiz configuration */
@@ -45,7 +53,7 @@ interface UseQuizReturn {
   /** Select an answer for the current question */
   selectAnswer: (answer: string | string[]) => void;
   /** Submit the current answer (practice mode) */
-  submitAnswer: () => void;
+  submitAnswer: (confidence?: Confidence) => void;
   /** Go to the next question */
   nextQuestion: () => void;
   /** Go to the previous question */
@@ -60,11 +68,25 @@ interface UseQuizReturn {
   resetQuiz: () => void;
 }
 
+/** Generate a random session identifier. */
+function makeSessionId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
 export function useQuiz({
   config,
   questions,
   persist = false,
 }: UseQuizOptions): UseQuizReturn {
+  // Study store singleton — stable reference.
+  const store = useRef(getStudyStore()).current;
+
+  // Unique identifier for this quiz session (groups all responses).
+  const sessionId = useRef(makeSessionId()).current;
+
+  // Per-question start time so we can compute timeMs.
+  const questionStartTime = useRef<number>(Date.now());
+
   // Initialize state
   const [savedState, setSavedState, clearSavedState] = useLocalStorage<string | null>(
     STORAGE_KEYS.QUIZ_STATE,
@@ -136,7 +158,11 @@ export function useQuiz({
   const selectAnswer = useCallback((answer: string | string[]) => {
     if (!currentQuestion || state.submitted) return;
 
+    // Reset per-question timer when user selects (first interaction).
     const newAnswers = new Map(state.answers);
+    if (!newAnswers.has(currentQuestion.id)) {
+      questionStartTime.current = Date.now();
+    }
     newAnswers.set(currentQuestion.id, answer);
 
     saveState({
@@ -145,16 +171,44 @@ export function useQuiz({
     });
   }, [currentQuestion, state, saveState]);
 
-  // Submit the current answer (practice mode - show feedback)
-  const submitAnswer = useCallback(() => {
+  /**
+   * Submit the current answer (practice mode — shows feedback).
+   *
+   * @param confidence - Confidence level captured by ConfidenceTap.
+   *   Defaults to 'fairly-sure' until track T3's ConfidenceTap lands.
+   * TODO(T3): wire ConfidenceTap — remove default once component is available.
+   */
+  const submitAnswer = useCallback((
+    // TODO(T3): wire ConfidenceTap — remove default once component is available.
+    confidence: Confidence = 'fairly-sure'
+  ) => {
     if (!currentQuestion || !hasAnswer) return;
 
     setSubmittedQuestions(prev => new Set(prev).add(currentQuestion.id));
-  }, [currentQuestion, hasAnswer]);
 
-  // Navigate to next question
+    // --- Study v1: log the response ---
+    const answer = state.answers.get(currentQuestion.id);
+    const correct = answer !== undefined && checkAnswer(currentQuestion, answer);
+    const timeMs = Date.now() - questionStartTime.current;
+
+    store.appendResponse({
+      questionId: currentQuestion.id,
+      timestamp: Date.now(),
+      correct,
+      confidence,
+      timeMs,
+      mode: 'practice',
+      optionChosen: Array.isArray(answer) ? answer.join(',') : answer,
+      sessionId,
+    }).catch((err: unknown) => {
+      console.warn('[useQuiz] appendResponse failed:', err);
+    });
+  }, [currentQuestion, hasAnswer, state.answers, store, sessionId]);
+
+  // Navigate to next question; reset the per-question timer.
   const nextQuestion = useCallback(() => {
     if (state.currentIndex < state.questions.length - 1) {
+      questionStartTime.current = Date.now();
       saveState({
         ...state,
         currentIndex: state.currentIndex + 1,
@@ -175,6 +229,7 @@ export function useQuiz({
   // Navigate to specific question
   const goToQuestion = useCallback((index: number) => {
     if (index >= 0 && index < state.questions.length) {
+      questionStartTime.current = Date.now();
       saveState({
         ...state,
         currentIndex: index,
@@ -199,19 +254,33 @@ export function useQuiz({
     });
   }, [currentQuestion, state, saveState]);
 
-  // Submit the entire quiz
+  /**
+   * Submit the entire quiz.
+   * After state update, wires progress-tracker and persists via the store.
+   */
   const submitQuiz = useCallback(() => {
-    saveState({
+    const finalState: QuizState = {
       ...state,
       endTime: Date.now(),
       submitted: true,
+    };
+    saveState(finalState);
+
+    // --- Study v1: update progress ---
+    const quizResult = calculateResults(finalState, config);
+    store.getProgress().then(currentProgress => {
+      const updated = updateProgress(currentProgress, quizResult);
+      return store.updateProgress(updated);
+    }).catch((err: unknown) => {
+      console.warn('[useQuiz] updateProgress failed:', err);
     });
-  }, [state, saveState]);
+  }, [state, saveState, config, store]);
 
   // Reset the quiz
   const resetQuiz = useCallback(() => {
     setSubmittedQuestions(new Set());
     clearSavedState();
+    questionStartTime.current = Date.now();
 
     setState({
       questions,

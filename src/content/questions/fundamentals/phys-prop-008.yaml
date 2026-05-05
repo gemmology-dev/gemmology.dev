@@ -1,0 +1,69 @@
+id: phys-prop-008
+stem: |
+  A kyanite crystal is being assessed for cutting. A student measures the hardness
+  in two directions: parallel to the length of the crystal (along the c-axis) and
+  perpendicular to the length. The readings are markedly different — approximately
+  4.5–5 parallel to the c-axis and 6.5–7 perpendicular. The student asks why the
+  hardness differs so dramatically in a single mineral species. What is the correct
+  mineralogical explanation?
+type: mcq
+options:
+  - text: "Kyanite shows directional hardness (anisotropic hardness) because the crystal structure has different bond strengths along different crystallographic directions; along the c-axis, bonds are weaker and easier to scratch"
+    isCorrect: true
+    rationale: |
+      Directional hardness (also called anisotropic hardness) occurs in minerals whose
+      crystal structure has different bond strengths in different crystallographic
+      directions [ref:read-gemmology-3e]. In kyanite (Al2SiO5, triclinic), the aluminium-oxygen bond geometry
+      produces weaker planes parallel to the length (c-axis direction), giving hardness
+      4.5–5 in that direction, and stronger planes perpendicular, giving 6.5–7 [ref:read-gemmology-3e].
+      This property gave kyanite its historical name "disthene" (two strengths). The
+      same mineral — same crystal, same composition — scratches easily along one
+      direction and resists scratching in another.
+  - text: "The two measurements were taken on different zones of the crystal that have different compositions due to chemical zoning, causing the hardness variation"
+    isCorrect: false
+    rationale: |
+      Chemical zoning (compositional variation across a crystal from core to rim)
+      can affect colour and sometimes RI in gem minerals, but it does not cause the
+      strong, reproducible, direction-specific hardness variation seen in kyanite [ref:read-gemmology-3e].
+      Kyanite's directional hardness is a fundamental, repeatable crystallographic
+      property that every kyanite crystal displays, not an artefact of individual
+      chemical variation.
+  - text: "Kyanite has a perfect cleavage in the c-axis direction, and the hardness tester scratches along the cleavage plane, producing a false low reading"
+    isCorrect: false
+    rationale: |
+      Kyanite does have good to perfect cleavage in two directions ({100} and {010}),
+      but this does not explain the hardness measurement result through a "false reading" [ref:read-gemmology-3e].
+      Cleavage affects how the mineral fractures, not how it resists a scratch. The
+      hardness tester measures resistance to a scratch groove, which is a genuine material
+      property measured in the direction of the test. The 4.5–5 value parallel to c is a
+      real, reproducible hardness value, not a measurement artefact from the cleavage [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Kyanite is the classic gemmological demonstration of directional hardness (anisotropic
+  hardness) [ref:read-gemmology-3e]. The Mohs scale assumes hardness is a single value per mineral; kyanite shows
+  it can vary by 2 full Mohs units depending on the direction of the test [ref:read-gemmology-3e]. This has
+  significant practical implications: cutting and polishing kyanite is challenging because
+  the polishing wheel must be oriented correctly for each facet. Directional hardness is
+  not unique to kyanite — diamond also varies by direction (hardest along octahedral,
+  softest across dodecahedral) [ref:read-gemmology-3e] — but kyanite is the most extreme and pedagogically
+  useful example in gemmology.
+difficulty: 2
+category: fundamentals
+conceptTags:
+  - hardness
+  - crystal-system
+  - triclinic-system
+  - cleavage
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-007
+  - phys-prop-009
+similarTo:
+  - crystal-system-007
+  - phys-prop-007
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–32."

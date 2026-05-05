@@ -1,0 +1,70 @@
+id: ri-reading-002
+stem: |
+  On the refractometer, a faceted stone shows two shadow edges during rotation. One
+  edge stays fixed at RI 1.662; the other moves continuously between 1.662 and 1.691
+  and the two edges come together and touch at one point in the rotation. A student
+  records: constant edge omega = 1.662, variable edge epsilon = 1.691. What Sturman
+  pattern is this, and what is the optic sign?
+type: mcq
+options:
+  - text: "Pattern III; uniaxial positive (epsilon > omega)"
+    isCorrect: true
+    rationale: |
+      Pattern III is characterised by one constant and one variable edge that touch
+      at one point during rotation, confirming uniaxial character with the c-axis
+      parallel to the table facet [ref:read-gemmology-3e]. The optic sign rule is: if epsilon (the variable
+      edge) is greater than omega (the constant edge), the stone is uniaxial positive [ref:read-gemmology-3e].
+      Here epsilon 1.691 > omega 1.662, so the stone is uniaxial positive. Birefringence
+      is 1.691 − 1.662 = 0.029.
+  - text: "Pattern IV; uniaxial or biaxial — optic sign indeterminate"
+    isCorrect: false
+    rationale: |
+      Pattern IV shows one constant and one variable edge that do NOT touch during
+      rotation [ref:read-gemmology-3e]. The critical distinction from Pattern III is whether the edges meet.
+      In this scenario the edges are explicitly described as coming together at one
+      point, which is the defining criterion for Pattern III [ref:read-gemmology-3e]. A student might confuse
+      the two patterns because both show one constant and one variable edge, but the
+      touching/non-touching distinction is decisive. Pattern IV is also ambiguous
+      between uniaxial and biaxial; Pattern III is unambiguously uniaxial [ref:anderson-gem-testing].
+  - text: "Pattern III; uniaxial negative (omega > epsilon)"
+    isCorrect: false
+    rationale: |
+      For uniaxial negative, the constant omega must be greater than the variable
+      epsilon — that is, the constant edge must lie at a higher RI than the variable
+      one [ref:read-gemmology-3e]. In this case, the constant edge is at 1.662 and the variable edge rises
+      to 1.691, meaning epsilon > omega. Choosing "negative" reverses the sign rule.
+      The mnemonic is: positive = epsilon exceeds omega [ref:anderson-gem-testing].
+rationaleCorrect: |
+  Pattern III is identified by one constant shadow edge (omega), one variable edge
+  (epsilon), and the edges touching at exactly one point in the rotation [ref:read-gemmology-3e]. This is the
+  only pattern that unambiguously confirms uniaxial character AND allows optic sign
+  determination from the refractometer alone. The sign rule: epsilon > omega = positive;
+  omega > epsilon = negative [ref:read-gemmology-3e]. Here epsilon 1.691 > omega 1.662, giving uniaxial positive.
+  Note: never confuse Pattern III (edges touch) with Pattern IV (edges do not touch) —
+  the touch/no-touch test is the single most tested distinction in FGA refractometer
+  questions [ref:anderson-gem-testing].
+difficulty: 3
+category: equipment
+conceptTags:
+  - sturman-patterns
+  - refractive-index
+  - uniaxial
+  - optic-sign
+  - birefringence
+sourceArticle: equipment/refractometer
+examRelevance: FGA-foundation
+confusionPairs:
+  - ri-reading-001
+  - ri-reading-003
+  - ri-reading-004
+similarTo:
+  - ri-reading-001
+  - ri-reading-003
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."
