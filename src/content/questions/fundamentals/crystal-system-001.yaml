@@ -1,0 +1,76 @@
+id: crystal-system-001
+stem: |
+  A gemmologist examining a prismatic green crystal notes that it shows strong
+  trichroism (three distinct body colours visible from different directions), a
+  uniaxial interference figure under the conoscope, and RI values of 1.620–1.640.
+  Based on these optical observations, which crystal system does this gem belong to,
+  and why does trichroism occur in this system?
+type: mcq
+options:
+  - text: "Trigonal; trichroism arises because trigonal gems are uniaxial with one optic axis, producing two absorption directions and therefore two apparent colours (dichroism), not three — so this description is actually dichroism, consistent with trigonal tourmaline"
+    isCorrect: true
+    rationale: |
+      Tourmaline is trigonal (point group 3m), which is uniaxial. Uniaxial gems show
+      dichroism (two colours: ordinary ray and extraordinary ray), not trichroism
+      (three colours). The RI 1.620–1.640 and uniaxial character confirm tourmaline.
+      The key correction here is terminological: what a student might describe as
+      "three colours" in tourmaline is actually very strong dichroism — the ordinary
+      and extraordinary ray can appear dramatically different. True trichroism is the
+      property of biaxial gems. Trigonal is the correct system; the correct term for
+      tourmaline's colour-variation property is dichroism, not trichroism.
+  - text: "Orthorhombic; orthorhombic gems are biaxial and can display true trichroism with three distinct body colours"
+    isCorrect: false
+    rationale: |
+      Orthorhombic gems are indeed biaxial and do show true trichroism (three absorption
+      colours along alpha, beta, and gamma). However, RI 1.620–1.640 does not match
+      typical orthorhombic gem species: topaz (orthorhombic) has RI 1.619–1.627 which
+      overlaps, but topaz shows much lower birefringence (0.008) and would give a
+      biaxial interference figure, not uniaxial. The uniaxial conoscope figure
+      explicitly rules out orthorhombic (biaxial) systems. A student might choose this
+      because they correctly associate trichroism with biaxial gems, but the conoscope
+      observation takes priority.
+  - text: "Hexagonal; hexagonal gems are uniaxial and have one sixfold axis, producing trichroism along three crystallographic directions"
+    isCorrect: false
+    rationale: |
+      The hexagonal system is uniaxial (like trigonal), producing dichroism only — not
+      trichroism. A sixfold axis does not create three optically distinct directions
+      in terms of absorption; the gem still has only two principal vibration directions
+      (ordinary and extraordinary). Additionally, RI 1.620–1.640 does not match
+      hexagonal beryl (RI 1.577–1.583). A student might confuse "six sides" with
+      "three absorption directions," but crystallographic symmetry and optical
+      absorption are related differently: the number of fold-axes does not directly
+      equal the number of absorption colours.
+rationaleCorrect: |
+  Tourmaline is trigonal (point group 3m), uniaxial negative, RI 1.620–1.640,
+  birefringence up to 0.020 — the largest of any common gem. The uniaxial conoscope
+  figure (one isogyres cross) confirms trigonal or hexagonal or tetragonal system.
+  The RI range confirms tourmaline specifically. A critical vocabulary point:
+  uniaxial gems show dichroism (two absorption directions: O-ray and E-ray). Only
+  biaxial gems (orthorhombic, monoclinic, triclinic) show true trichroism along
+  three independent vibration directions. If a student says "trichroism" for
+  tourmaline, the gemmologically correct term is "dichroism." Tourmaline's
+  dichroism is exceptionally strong — sometimes the two colours are radically
+  different — which may mislead a student into thinking three colours exist.
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - crystal-system
+  - trigonal-system
+  - uniaxial
+  - pleochroism
+  - tourmaline
+  - optic-character
+sourceArticle: fundamentals/crystal-systems
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-002
+  - crystal-system-003
+similarTo:
+  - crystal-system-002
+  - crystal-system-005
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 17–30."
