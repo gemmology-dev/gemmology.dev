@@ -56,6 +56,14 @@ export function runMigrations(storage: Storage): void {
     version = 0;
   }
 
+  // Downgrade safety: if a future build wrote a version higher than we
+  // understand, leave storage untouched. Stamping back to CURRENT_VERSION
+  // would let a v2-aware tab re-run its v2 migration on data that already
+  // contains v2 fields (T7b-05).
+  if (version >= CURRENT_VERSION) {
+    return;
+  }
+
   for (let i = version; i < CURRENT_VERSION; i++) {
     migrations[i]!(storage);
   }

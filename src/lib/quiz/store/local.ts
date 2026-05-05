@@ -218,9 +218,19 @@ export class LocalStudyStore implements StudyStore {
       const existingKeys = new Set(
         existing.responses.map(r => `${r.questionId}::${r.timestamp}`)
       );
-      const toAppend = payload.responses.filter(
-        r => !existingKeys.has(`${r.questionId}::${r.timestamp}`)
-      );
+      let skipped = 0;
+      const toAppend: ResponseRecord[] = [];
+      for (const r of payload.responses) {
+        if (!isResponseRecord(r)) {
+          skipped++;
+          continue;
+        }
+        if (existingKeys.has(`${r.questionId}::${r.timestamp}`)) continue;
+        toAppend.push(r);
+      }
+      if (skipped > 0) {
+        warnings.push(`Skipped ${skipped} invalid response record(s).`);
+      }
       existing.responses.push(...toAppend);
       if (existing.responses.length > RESPONSE_LOG_CAP) {
         existing.responses.splice(0, existing.responses.length - RESPONSE_LOG_CAP);
@@ -302,8 +312,84 @@ export class LocalStudyStore implements StudyStore {
   }
 
   private _write(key: string, value: unknown): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (err) {
+      // QuotaExceededError surfaces as DOMException; trim oldest responses
+      // and retry once before surfacing.
+      if (
+        err instanceof DOMException &&
+        (err.name === 'QuotaExceededError' || err.code === 22)
+      ) {
+        if (key === STUDY_STORAGE_KEYS.responses && isResponseStoreLike(value)) {
+          const trimmed: ResponseStore = {
+            ...value,
+            responses: value.responses.slice(
+              Math.floor(value.responses.length / 2),
+            ),
+          };
+          try {
+            localStorage.setItem(key, JSON.stringify(trimmed));
+            return;
+          } catch {
+            // fallthrough — surface as StorageFullError
+          }
+        }
+        throw new StorageFullError(`Storage quota exceeded for "${key}".`);
+      }
+      throw err;
+    }
   }
+}
+
+export class StorageFullError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'StorageFullError';
+  }
+}
+
+function isResponseStoreLike(v: unknown): v is ResponseStore {
+  return (
+    typeof v === 'object' &&
+    v !== null &&
+    Array.isArray((v as { responses?: unknown }).responses)
+  );
+}
+
+function isResponseRecord(v: unknown): v is ResponseRecord {
+  if (typeof v !== 'object' || v === null) return false;
+  const r = v as Record<string, unknown>;
+  if (typeof r['questionId'] !== 'string') return false;
+  if (typeof r['timestamp'] !== 'number' || !Number.isFinite(r['timestamp'])) {
+    return false;
+  }
+  if (typeof r['correct'] !== 'boolean') return false;
+  if (
+    r['confidence'] !== 'unsure' &&
+    r['confidence'] !== 'fairly-sure' &&
+    r['confidence'] !== 'certain'
+  ) {
+    return false;
+  }
+  if (typeof r['timeMs'] !== 'number' || !Number.isFinite(r['timeMs'])) {
+    return false;
+  }
+  if (r['mode'] !== 'practice' && r['mode'] !== 'exam' && r['mode'] !== 'pretest') {
+    return false;
+  }
+  if (typeof r['sessionId'] !== 'string') return false;
+  if (
+    r['optionChosen'] !== undefined &&
+    typeof r['optionChosen'] !== 'string'
+  ) {
+    return false;
+  }
+  // Bound optionChosen length defensively (T7b-06).
+  if (typeof r['optionChosen'] === 'string' && r['optionChosen'].length > 1024) {
+    return false;
+  }
+  return true;
 }
 
 // ---------------------------------------------------------------------------

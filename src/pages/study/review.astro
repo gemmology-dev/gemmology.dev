@@ -1,17 +1,17 @@
 ---
 /**
- * Quiz hub page.
- * Protected by LockGate - requires authentication to access.
+ * Study review — express "show me what's due" route. Bypasses the QuizSetup
+ * screen and surfaces only items that the SM-2 scheduler marks as due now.
+ *
+ * Auth-gated by LockGate (rendered inside the React shell).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedQuiz } from '../../components/auth/ProtectedQuiz';
+import { StudyReviewScreen } from '../../components/quiz/study/StudyReviewScreen';
 import type { LearnEntry } from '../../lib/quiz';
 
-// Get all learn entries for question generation
 const learnEntries = await getCollection('learn');
 
-// Transform to LearnEntry format expected by quiz system
 const entries: LearnEntry[] = learnEntries.map(entry => ({
   id: entry.id,
   data: {
@@ -25,9 +25,9 @@ const entries: LearnEntry[] = learnEntries.map(entry => ({
 ---
 
 <BaseLayout
-  title="Quiz"
-  description="Test your gemmology knowledge with interactive quizzes covering crystallography, optical properties, treatments, and more."
+  title="Review"
+  description="Spaced-repetition review session — surfaces only the questions the scheduler says you should see today."
   noindex={true}
 >
-  <ProtectedQuiz client:load learnEntries={entries} />
+  <StudyReviewScreen client:load learnEntries={entries} />
 </BaseLayout>
