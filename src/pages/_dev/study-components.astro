@@ -1,0 +1,35 @@
+---
+/**
+ * Dev harness for study system UI components.
+ *
+ * IMPORTANT: This page is only available in development.
+ * In a production build, `import.meta.env.DEV` is false and we return 404.
+ *
+ * Usage: npm run dev  →  http://localhost:4321/_dev/study-components
+ */
+
+import '../../styles/global.css';
+import { StudyDevHarness } from '../../components/quiz/study/StudyDevHarness';
+
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Study Components — Dev Harness</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+  </head>
+  <body class="min-h-screen bg-slate-50">
+    <!--
+      client:load → React hydrates immediately.
+      All mock data, stores, and state live inside StudyDevHarness.
+    -->
+    <StudyDevHarness client:load />
+  </body>
+</html>

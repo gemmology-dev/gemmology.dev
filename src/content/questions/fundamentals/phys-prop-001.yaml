@@ -1,0 +1,65 @@
+id: phys-prop-001
+stem: |
+  A gemmologist performs hydrostatic weighing on a colourless faceted stone. The stone
+  weighs 0.52 g in air and 0.37 g when suspended in water. Calculated SG = 0.52 /
+  (0.52 − 0.37) = 3.47. The refractometer gives a single constant shadow edge at
+  approximately 1.434. No birefringence is measurable. Which gem is the most likely
+  identification, and which near-miss species can be eliminated by the SG result?
+type: mcq
+options:
+  - text: "Fluorite (SG 3.18, RI 1.434, isotropic); the SG of 3.47 is somewhat high for pure fluorite but quartz (SG 2.65) and glass (SG ~2.5) are firmly eliminated"
+    isCorrect: false
+    rationale: |
+      Fluorite has RI 1.434 (a classic calibration value) [ref:read-gemmology-3e] and is isotropic (cubic),
+      but its SG is typically 3.18, not 3.47 [ref:read-gemmology-3e]. An SG of 3.47 is too high for fluorite
+      by a significant margin. While this answer correctly identifies the RI and
+      isotropic character as matching fluorite, the SG discrepancy (0.29 units above
+      fluorite's typical value) should prompt further investigation rather than
+      confirming fluorite.
+  - text: "Topaz (SG 3.49–3.57, RI 1.619–1.627, biaxial positive); the SG fits but the RI of 1.434 is far below topaz's range"
+    isCorrect: false
+    rationale: |
+      Topaz does have an SG in the 3.49–3.57 range [ref:read-gemmology-3e], which is close to the measured
+      3.47. However, topaz RI ranges from 1.619 to 1.627 — far above the measured
+      1.434 [ref:read-gemmology-3e]. More importantly, topaz is biaxial and would show birefringence on the
+      refractometer. An RI of 1.434 is unambiguously too low for topaz regardless of SG.
+  - text: "Fluorite (SG 3.18, RI 1.434, isotropic); the SG discrepancy suggests the stone may contain dense inclusions, and the RI of 1.434 with single constant edge confirms isotropic fluorite pending verification"
+    isCorrect: true
+    rationale: |
+      Fluorite is cubic (isotropic), RI exactly 1.434 [ref:read-gemmology-3e] — one of the most precise
+      reference values in gemmology, used for refractometer calibration. The SG of
+      3.47 is above the expected 3.18, suggesting possible inclusions of denser
+      minerals (fluorite commonly hosts calcite, pyrite, or other minerals) [ref:read-gemmology-3e]. The
+      combination of RI 1.434, isotropic behaviour, and a refractometer value used
+      as a calibration standard points strongly to fluorite, with the SG anomaly
+      warranting a note about potential inclusions.
+rationaleCorrect: |
+  Fluorite (CaF2) is the reference standard for RI 1.434 and is cubic (isotropic),
+  giving Pattern I on the refractometer [ref:read-gemmology-3e]. Its typical SG is 3.18. The measured 3.47
+  is significantly above this — likely due to dense mineral inclusions, which are
+  extremely common in fluorite (pyrite, calcite, galena inclusions all raise SG).
+  A clean fluorite crystal would yield SG 3.18, but natural specimens frequently
+  contain inclusions that elevate the measured value. The correct procedure is to
+  report the RI/optical findings as consistent with fluorite and note the elevated
+  SG as anomalous, recommending microscopic examination for inclusions [ref:read-gemmology-3e].
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - specific-gravity
+  - refractive-index
+  - isotropic
+  - hardness
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-002
+  - phys-prop-003
+similarTo:
+  - phys-prop-002
+  - phys-prop-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

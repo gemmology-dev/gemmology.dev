@@ -1,0 +1,67 @@
+id: ri-reading-008
+stem: |
+  A student is testing a cabochon stone using the spot method on the refractometer.
+  They observe a small bright spot of light on the scale and rock the stone gently
+  to centre it, reading the position as approximately 1.71. Compared to the standard
+  faceted-stone technique, what is the main limitation of the spot method that the
+  student must acknowledge when recording this result?
+type: mcq
+options:
+  - text: "The spot method can only provide an approximate RI (±0.01) and cannot measure birefringence accurately"
+    isCorrect: true
+    rationale: |
+      The spot method, used for curved surfaces such as cabochons, reads a diffuse
+      spot of light rather than a sharp shadow edge [ref:read-gemmology-3e]. The position of the spot centre
+      can be estimated but is inherently less precise than a sharp edge, giving an
+      accuracy of approximately ±0.01 RI unit [ref:anderson-gem-testing]. More importantly, the curved surface
+      averages light from multiple orientations simultaneously, making it impossible
+      to rotate the stone and measure omega and epsilon separately [ref:read-gemmology-3e]. Birefringence
+      measurement requires two distinct shadow edge positions, which the spot method
+      cannot deliver [ref:anderson-gem-testing].
+  - text: "The spot method reads only the extraordinary ray (epsilon) and misses the ordinary ray (omega)"
+    isCorrect: false
+    rationale: |
+      The spot method does not selectively measure epsilon; it integrates light from
+      many directions at once due to the curved surface, giving an average or mean RI
+      rather than individual ray velocities [ref:read-gemmology-3e]. It does not preferentially select epsilon
+      any more than omega. The statement about epsilon-only readings applies to
+      specific cut orientations in doubly refractive stones tested by the standard
+      technique, not to the spot method per se [ref:anderson-gem-testing].
+  - text: "The spot method cannot be used on stones with RI above 1.70, making it useless for spinel"
+    isCorrect: false
+    rationale: |
+      The spot method works across the full RI range of the contact liquid (~1.35–1.79),
+      the same as the faceted-stone technique [ref:read-gemmology-3e]. Spinel at RI 1.718 is well within range
+      and can be tested by the spot method as a cabochon. The limitation is accuracy
+      and inability to measure birefringence, not an upper RI cutoff [ref:anderson-gem-testing].
+rationaleCorrect: |
+  The spot method is a practical compromise for curved surfaces: it gives an approximate
+  RI (±0.01) useful for screening, but the result should always be recorded as approximate [ref:anderson-gem-testing].
+  The critical limitation is the inability to measure birefringence — birefringence
+  requires rotating the stone to find two distinct edge positions, which requires a
+  polished flat facet and the standard technique [ref:read-gemmology-3e]. A cabochon RI reading of approximately
+  1.71 could indicate spinel, chrysoberyl, or other species; the gemmologist must note
+  the uncertainty and use SG or other tests to confirm [ref:anderson-gem-testing].
+difficulty: 2
+category: equipment
+conceptTags:
+  - refractive-index
+  - birefringence
+  - optic-character
+  - critical-angle
+sourceArticle: equipment/refractometer
+examRelevance: FGA-foundation
+confusionPairs:
+  - ri-reading-007
+  - ri-reading-009
+similarTo:
+  - ri-reading-007
+  - ri-reading-010
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

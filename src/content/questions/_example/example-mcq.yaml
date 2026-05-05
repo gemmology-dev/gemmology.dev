@@ -1,0 +1,140 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# EXAMPLE QUESTION — for curator reference and scaffolder template only.
+#
+# This file lives in _example/ so Astro's glob-loader ignores it (the loader
+# pattern excludes paths starting with _). It is NOT loaded into the question
+# bank. Run `npx astro sync` to confirm no schema errors.
+#
+# To create a real question, run:
+#   npm run question:new -- --category=<cat> --slug=<your-slug>
+#
+# See docs/authoring-questions.md for the full curator guide.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Required fields ─────────────────────────────────────────────────────────
+
+# id: must match the filename slug, lowercase, digits and hyphens only,
+# no leading hyphen. Regex: /^[a-z0-9][a-z0-9-]*$/
+id: example-mcq-001
+
+# stem: the question text. Use scenario-based phrasing, not bare fact lookup.
+# Minimum 10 characters. Multi-line YAML literal block (|) is fine.
+stem: |
+  A polished red stone gives the following lab readings:
+  RI 1.762–1.770, SG 4.00, uniaxial negative on the polariscope,
+  strong red fluorescence under LWUV.
+  What is the most likely identification?
+
+# type: one of mcq | true-false | fill-blank | matching | image-mcq
+type: mcq
+
+# ── Type-specific answer data ─────────────────────────────────────────────────
+
+# For mcq / true-false / image-mcq:
+#   options: list of 2–5 answer choices; exactly one must have isCorrect: true.
+#   Recommended default: 3 options. "All of the above" style allows up to 5.
+#   rationale per option is optional but strongly encouraged for curated items.
+options:
+  - text: "Natural ruby (corundum)"
+    isCorrect: true
+    rationale: |
+      All four readings are diagnostic of corundum: RI 1.762–1.770 (within
+      corundum's published range 1.762–1.770), SG 4.00, uniaxial negative
+      optic character, and strong red LWUV fluorescence are textbook ruby.
+  - text: "Spinel"
+    isCorrect: false
+    rationale: |
+      Spinel is isotropic (single RI ≈ 1.718) and cannot produce a uniaxial
+      reading. Burma spinel does fluoresce red under LWUV but the RI range
+      and the optic character exclude it conclusively.
+  - text: "Pyrope garnet"
+    isCorrect: false
+    rationale: |
+      Pyrope is also isotropic with RI ≈ 1.730–1.760 and SG 3.7–3.9.
+      There is slight RI overlap but the uniaxial polariscope reading
+      and SG 4.00 exclude it.
+
+# For fill-blank questions:
+# acceptedAnswers:
+#   - "primary answer"
+#   - "alternative phrasing"
+
+# For matching questions:
+# pairs:
+#   - left: "Diamond"
+#     right: "Cubic"
+#   - left: "Quartz"
+#     right: "Trigonal"
+
+# For image-mcq, also set:
+# imageRef: /crystals/corundum-bipyramid.svg
+
+# ── Universal required fields ─────────────────────────────────────────────────
+
+# rationaleCorrect: explains the diagnostic chain for the correct answer.
+# Should elaborate beyond merely restating the answer.
+rationaleCorrect: |
+  This is a classic FGA practical exam scenario: three red gems with partially
+  overlapping properties. The diagnostic chain is optic character first
+  (isotropic reading eliminates spinel and pyrope, leaving only corundum as
+  a uniaxial negative species in the red gem range), then SG 4.00 (matches
+  corundum's 3.99–4.00, excludes pyrope at 3.7–3.9).
+  Note: fluorescence alone is never diagnostic — some Burma spinel also
+  fluoresces red — so it confirms but does not establish the identification.
+
+# difficulty: integer 1 (trivial / recall) to 5 (expert / complex reasoning)
+difficulty: 3
+
+# category: one of fundamentals | equipment | species | identification |
+#           phenomena | origin | market | care
+category: species
+
+# conceptTags: array of lowercase hyphenated concept identifiers.
+# Used for filtering, interleaving, and the coverage report.
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - optic-character
+  - fluorescence
+  - corundum
+  - ruby
+
+# ── Optional metadata ─────────────────────────────────────────────────────────
+
+# sourceArticle: slug of the /learn/ article this question tests.
+sourceArticle: species/corundum
+
+# examRelevance: one of FGA-foundation | FGA-diploma | GIA-GG
+examRelevance: FGA-diploma
+
+# confusionPairs: ids of near-miss questions (drives interleaving).
+# High-value metadata — populate whenever there is a known confusion pair.
+confusionPairs:
+  - spinel-ri-001
+  - pyrope-sg-001
+
+# similarTo: ids of conceptually similar questions (for session interleaving).
+similarTo:
+  - corundum-ri-002
+  - ruby-fluorescence-001
+
+# unvetted: true = auto-generated or not yet FGA-reviewed; false = expert-vetted.
+# New stubs should default to true. Only set false after review.
+unvetted: false
+
+# authorReviewed: free-text reviewer identifier (name, initials, role).
+authorReviewed: "FGA-reviewer-1"
+
+# lastReviewed: ISO 8601 datetime string.
+lastReviewed: "2026-05-15T10:00:00Z"
+
+# deprecated: set true to soft-delete without removing the file.
+deprecated: false
+
+# references: cited sources supporting the rationale.
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
+    url: https://www.butterworth-heinemann.com/
+  - id: gia-corundum
+    citation: "GIA (2024). Corundum — Ruby and Sapphire. Gem Reference Guide."

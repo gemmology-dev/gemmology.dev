@@ -1,0 +1,63 @@
+id: phys-prop-004
+stem: |
+  A student is testing two colourless oval brilliant stones of similar appearance. Stone A
+  weighs 0.41 g in air and 0.29 g in water, giving SG = 0.41 / (0.41 − 0.29) = 3.42.
+  Stone B weighs 0.41 g in air and 0.28 g in water, giving SG = 0.41 / (0.41 − 0.28)
+  = 3.15. Both give single constant shadow edges on the refractometer. Stone A edge is at
+  1.718; Stone B edge is at 1.434. Identify both stones correctly.
+type: mcq
+options:
+  - text: "Stone A: spinel (RI 1.718, SG 3.58–3.61); Stone B: fluorite (RI 1.434, SG 3.18) — the SG values are consistent with these identifications within measurement error for small stones"
+    isCorrect: true
+    rationale: |
+      Stone A: RI 1.718 matches spinel (cubic, isotropic, SG typically 3.58–3.61) [ref:read-gemmology-3e].
+      The measured SG of 3.42 is somewhat below the typical spinel range; small stones
+      are harder to measure accurately by hydrostatic weighing due to surface tension
+      effects, wire-bridge weight, and water-temperature variation [ref:read-gemmology-3e]. The RI is definitive.
+      Stone B: RI 1.434 matches fluorite (cubic, isotropic, SG 3.18) [ref:read-gemmology-3e]. The measured 3.15
+      is close to the expected 3.18, within the ±0.01–0.02 precision of a careful
+      hydrostatic measurement on a small stone.
+  - text: "Stone A: glass (RI 1.718, SG 3.42); Stone B: quartz (RI 1.434, SG 3.15) — both are low-value simulants"
+    isCorrect: false
+    rationale: |
+      Glass can achieve RI 1.718 by adding heavy-metal oxides, but glass SG at that RI
+      would be approximately 4.5–5.0 (high-lead glass), not 3.42 [ref:read-gemmology-3e]. Additionally, quartz
+      has RI 1.544–1.553, not 1.434 [ref:read-gemmology-3e] — Stone B's RI of 1.434 is far below any quartz value.
+  - text: "Stone A: grossular garnet (RI ~1.73–1.76, SG ~3.58); Stone B: apatite (RI ~1.63, SG ~3.20) — both close matches by SG"
+    isCorrect: false
+    rationale: |
+      Grossular garnet RI ranges approximately 1.73–1.76 [ref:read-gemmology-3e], which is well above the
+      measured shadow edge at 1.718. Apatite RI is approximately 1.630–1.640 with
+      birefringence 0.002–0.006 — far above the measured 1.434 [ref:read-gemmology-3e]. In gemmological
+      identification, RI is typically the most precise instrument measurement; mismatches
+      of 0.02 or more in RI are decisive.
+rationaleCorrect: |
+  Stone A: RI 1.718 is the calibration-standard value for spinel (cubic, isotropic, SG
+  3.58–3.61) [ref:read-gemmology-3e]. The SG of 3.42 is below typical range, consistent with measurement
+  imprecision on a small stone. Stone B: RI 1.434 is the calibration-standard value for
+  fluorite (cubic, isotropic, SG 3.18) [ref:read-gemmology-3e]. Both spinel 1.718 and fluorite 1.434 are the
+  two most important refractometer calibration values: they bracket the common gem range
+  and are used routinely to verify instrument accuracy [ref:read-gemmology-3e]. Both stones are cubic and
+  isotropic, giving Pattern I (single constant edge).
+difficulty: 2
+category: fundamentals
+conceptTags:
+  - specific-gravity
+  - refractive-index
+  - isotropic
+  - spinel
+  - hardness
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-001
+  - phys-prop-002
+similarTo:
+  - phys-prop-001
+  - phys-prop-005
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

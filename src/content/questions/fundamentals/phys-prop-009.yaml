@@ -1,0 +1,69 @@
+id: phys-prop-009
+stem: |
+  A gemmologist needs to distinguish between nephrite jade (H 6–6.5, SG 2.95–3.10,
+  aggregate structure) and jadeite (H 6.5–7, SG 3.25–3.35, aggregate structure) from a
+  polished flat surface. Standard refractometer testing gives a spot reading of approximately
+  1.61 for Stone A and 1.65 for Stone B. Both stones show a "sugary" or interlocking
+  granular texture under the microscope. Which assignment is correct, and which property
+  is most diagnostic?
+type: mcq
+options:
+  - text: "Stone A (spot RI ~1.61) is nephrite; Stone B (spot RI ~1.65) is jadeite; the spot RI is the most diagnostic single property for separating the two jade types"
+    isCorrect: true
+    rationale: |
+      Nephrite (calcium-magnesium-iron amphibole aggregate) has RI approximately 1.60–1.63
+      with a spot reading typically around 1.61 [ref:read-gemmology-3e]. Jadeite (sodium aluminium pyroxene
+      aggregate) has RI approximately 1.65–1.68 with a spot reading typically around 1.65 [ref:read-gemmology-3e].
+      The approximately 0.04 unit gap between the two spot readings is sufficient to
+      distinguish them on the refractometer with reasonable care, making the spot RI
+      the most practical single test [ref:read-gemmology-3e]. SG also separates them (nephrite 2.95–3.10 vs
+      jadeite 3.25–3.35) but requires hydrostatic weighing equipment.
+  - text: "Stone A is jadeite; Stone B is nephrite — the RI values for jade types are frequently confused"
+    isCorrect: false
+    rationale: |
+      The assignment is reversed. Jadeite has the higher RI (~1.65 spot) because of its
+      denser pyroxene (NaAlSi2O6) structure; nephrite has the lower RI (~1.61 spot) due
+      to the tremolite-actinolite amphibole structure [ref:read-gemmology-3e]. The RI values for both jade types
+      are key Foundation-level data: nephrite always gives the lower spot reading
+      (approximately 1.60–1.63), jadeite the higher (approximately 1.65–1.68) [ref:read-gemmology-3e].
+  - text: "Both stones are jadeite; nephrite cannot be polished to give a flat surface suitable for refractometer reading"
+    isCorrect: false
+    rationale: |
+      Nephrite can be polished to a high lustre on flat surfaces; it is regularly
+      used as polished slabs and cabochons where a spot reading is entirely feasible [ref:read-gemmology-3e].
+      Nephrite's fibrous, interlocking amphibole structure gives it exceptional toughness
+      but does not prevent a polished surface suitable for gemmological testing.
+      The spot reading technique is specifically designed for curved and flat polished
+      surfaces that are not faceted — it works well on both jade types [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Nephrite and jadeite are both "jade" but are entirely different minerals — nephrite is
+  an amphibole aggregate (tremolite-actinolite), jadeite is a pyroxene single mineral [ref:read-gemmology-3e].
+  Their separation is one of the most practically important distinctions in gem trade,
+  as top-quality "Imperial" jadeite (translucent vivid green, Myanmar) commands prices
+  far exceeding nephrite. The spot RI is the most immediately accessible test: nephrite
+  ~1.60–1.63, jadeite ~1.65–1.68 [ref:read-gemmology-3e]. SG confirms: nephrite 2.95–3.10, jadeite 3.25–3.35 [ref:read-gemmology-3e].
+  Both show polycrystalline texture under the microscope; spectroscopy (jadeite
+  absorption at 437 nm — always present, even in non-green jadeite) provides additional
+  confirmation [ref:read-gemmology-3e]. Never identify jade by colour alone: dyed quartzite and glass can
+  mimic green colour convincingly.
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - hardness
+  - monoclinic-system
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-010
+  - phys-prop-003
+similarTo:
+  - phys-prop-003
+  - phys-prop-010
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

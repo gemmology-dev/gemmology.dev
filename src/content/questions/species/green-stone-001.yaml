@@ -1,0 +1,71 @@
+id: green-stone-001
+stem: |
+  A vivid green oval cabochon is submitted for testing. Results: spot RI approximately
+  1.58, SG 2.71, inert under both LWUV and SWUV, strong dichroism (blue-green and
+  yellow-green) visible in the dichroscope. Under the microscope the gemmologist sees
+  a characteristic "garden" (jardin) of irregular parallel growth tubes, two-phase
+  inclusions, and a three-phase inclusion with a cuboid crystal in the fluid. What is
+  the identification, and which inclusion type is virtually diagnostic for a specific
+  geographic origin?
+type: mcq
+options:
+  - text: "Colombian emerald (beryl); three-phase inclusions with a halite cube are virtually diagnostic of Colombian origin; the jardin and two-phase inclusions confirm natural emerald"
+    isCorrect: true
+    rationale: |
+      The three-phase inclusion — liquid + gas bubble + solid cubic crystal (halite,
+      NaCl) — is one of the most celebrated diagnostic features in gemmology: it is
+      virtually diagnostic of Colombian origin for emerald [ref:gubelin-koivula-vol1]. The RI ~1.58 (beryl range
+      1.577–1.583), SG 2.71 (beryl range 2.67–2.78) [ref:read-gemmology-3e], dichroism in blue-green and
+      yellow-green, and parallel growth tubes all confirm emerald [ref:read-gemmology-3e]. The jardin (from
+      French, garden) of inclusions is characteristic of natural emerald [ref:gubelin-koivula-vol1].
+  - text: "Chrome tourmaline; chrome tourmaline gives vivid green with dichroism, RI in the beryl range, and three-phase inclusions"
+    isCorrect: false
+    rationale: |
+      Chrome tourmaline (Cr-bearing elbaite/dravite) is vivid green with strong
+      dichroism — correct. However, tourmaline RI is 1.620–1.640, not approximately
+      1.58 [ref:read-gemmology-3e]. A spot reading of 1.58 falls well below tourmaline's minimum RI.
+      Three-phase inclusions with a halite cube are not a known feature of tourmaline —
+      they are specific to the saline-fluid formation environment of Colombian emerald [ref:gubelin-koivula-vol1].
+  - text: "Tsavorite garnet (grossular); tsavorite is vivid green, has SG approximately 3.61, and shows strong dichroism"
+    isCorrect: false
+    rationale: |
+      Tsavorite (chrome/vanadium grossular garnet) is cubic and therefore isotropic —
+      it shows no dichroism or pleochroism [ref:read-gemmology-3e]. The strong dichroism observed in this stone
+      eliminates any cubic gem, including all garnets. Additionally, tsavorite SG is
+      approximately 3.58–3.73, clearly higher than the measured 2.71 [ref:read-gemmology-3e]. The spot RI of
+      approximately 1.58 is also far below tsavorite's RI of approximately 1.740–1.760 [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Colombian emerald identification relies on a convergent suite of evidence. The
+  three-phase inclusion (liquid + gas + halite cube) is so characteristic that its
+  presence alone, in a green beryl with the correct RI and SG, constitutes very strong
+  evidence of Colombian origin [ref:gubelin-koivula-vol1]. The jardin of inclusions and two-phase cavities adds
+  supporting natural-origin evidence. Beryl RI 1.577–1.583, SG 2.67–2.78 confirms the
+  species [ref:read-gemmology-3e]. The dichroism (blue-green / yellow-green) is characteristic of Cr-bearing
+  emerald [ref:read-gemmology-3e]. Note: UV response varies — some Colombian emeralds fluoresce, others do
+  not, depending on iron content, so UV inertness does not exclude Colombia [ref:read-gemmology-3e].
+difficulty: 4
+category: species
+conceptTags:
+  - three-phase-inclusion
+  - refractive-index
+  - specific-gravity
+  - emerald
+  - beryl
+  - pleochroism
+sourceArticle: species/beryl
+examRelevance: FGA-foundation
+confusionPairs:
+  - green-stone-002
+  - green-stone-003
+  - green-stone-004
+similarTo:
+  - green-stone-002
+  - green-stone-003
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 118–130."
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 168–210."

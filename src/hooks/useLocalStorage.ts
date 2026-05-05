@@ -107,9 +107,18 @@ export function clearQuizStorage(): void {
   if (typeof window === 'undefined') return;
 
   const keysToRemove = [
+    // Legacy v0 keys.
     'gemmology-quiz-state',
     'gemmology-quiz-progress',
     'gemmology-exam-state',
+    // v1 study keys (must mirror STUDY_STORAGE_KEYS in src/lib/quiz/study-types.ts).
+    'gemmology-study-responses',
+    'gemmology-study-schedule',
+    'gemmology-study-progress',
+    'gemmology-study-settings',
+    // Migration version stamp (gemmology-study-version) so a fresh start
+    // re-runs migrations cleanly.
+    'gemmology-study-version',
   ];
 
   keysToRemove.forEach(key => {

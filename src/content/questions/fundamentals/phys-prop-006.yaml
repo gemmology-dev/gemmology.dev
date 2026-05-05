@@ -1,0 +1,68 @@
+id: phys-prop-006
+stem: |
+  A student compares two blue oval cabochons of similar appearance. Stone A: SG 3.60,
+  spot RI approximately 1.72, no fluorescence LWUV, isotropic on polariscope. Stone B:
+  SG 4.00, spot RI approximately 1.77, strong blue fluorescence SWUV, birefringence
+  visible as a double image at girdle under loupe. A colleague identifies both as
+  "blue spinel." Evaluate this identification for each stone separately.
+type: mcq
+options:
+  - text: "Stone A is correctly identified as blue spinel (RI 1.712–1.720, SG 3.58–3.61, isotropic); Stone B is misidentified — the SG 4.00, RI ~1.77, and birefringence confirm blue sapphire (corundum), not spinel"
+    isCorrect: true
+    rationale: |
+      Stone A matches spinel precisely: cubic (isotropic), RI 1.712–1.720, SG 3.58–3.61 [ref:read-gemmology-3e].
+      No fluorescence is common for iron-bearing blue spinel (cobalt-blue spinel can show
+      red fluorescence, but iron-blue is typically inert) [ref:read-gemmology-3e]. Stone B cannot be spinel:
+      SG 4.00 is the definitive value for corundum (SG 3.99–4.01) [ref:read-gemmology-3e], far above spinel's
+      3.58–3.61; visible birefringence under a loupe confirms double refraction, ruling
+      out isotropic spinel; RI ~1.77 matches corundum (1.762–1.770) [ref:read-gemmology-3e].
+  - text: "Both stones are blue spinel — SG and RI variations are within the normal range for spinel from different localities"
+    isCorrect: false
+    rationale: |
+      Spinel SG does not range up to 4.00 from locality variation alone — the
+      compositional range (Mg replaced by Fe, Zn, Mn) does slightly shift SG, but
+      the maximum for gem spinel is approximately 3.63–3.72 for iron-bearing varieties,
+      not 4.00 [ref:read-gemmology-3e]. A difference of 0.40 SG units cannot be explained by locality variation;
+      4.00 is a diagnostic, species-level value for corundum, not spinel [ref:read-gemmology-3e]. Additionally,
+      visible birefringence (double image) under a loupe in Stone B rules out any cubic
+      mineral including spinel.
+  - text: "Stone A is blue topaz (RI ~1.62, SG ~3.50); Stone B is blue sapphire — blue topaz can appear similar to spinel but is biaxial"
+    isCorrect: false
+    rationale: |
+      Blue topaz RI is 1.619–1.627, clearly below the spot reading of approximately
+      1.72 [ref:read-gemmology-3e]. Stone A's spot RI of ~1.72 is too high for topaz and matches spinel.
+      Blue topaz is also biaxial (orthorhombic) and would show birefringence on a
+      polariscope, not isotropic behaviour [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Stone A: spinel (RI 1.718, SG 3.60, isotropic) — all three properties within published
+  spinel range [ref:read-gemmology-3e]. Stone B: blue sapphire (corundum, RI 1.762–1.770, SG 4.00, uniaxial
+  negative with visible birefringence) — the SG of 4.00 is one of the most precise and
+  diagnostic values in gemmology (corundum SG 3.99–4.01) [ref:read-gemmology-3e]. Blue sapphire and blue spinel
+  are the classic pair historically confused before the advent of gemmological instruments —
+  the Black Prince's Ruby and Timur Ruby in the English crown jewels are actually red
+  spinels mistaken for rubies for centuries.
+difficulty: 3
+category: fundamentals
+conceptTags:
+  - specific-gravity
+  - refractive-index
+  - optic-character
+  - isotropic
+  - spinel
+  - corundum
+  - birefringence
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-005
+  - phys-prop-007
+  - corundum-vs-spinel-001
+similarTo:
+  - phys-prop-004
+  - corundum-vs-spinel-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43, 102–103."

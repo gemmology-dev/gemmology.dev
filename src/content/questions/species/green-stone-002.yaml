@@ -1,0 +1,67 @@
+id: green-stone-002
+stem: |
+  A gemmologist tests a vivid grass-green faceted oval stone. RI: two edges touching
+  on the refractometer, constant at 1.620, variable up to 1.637. SG approximately 3.06.
+  Strong dichroism: dark green / yellowish-green. LWUV: inert. SWUV: inert. Polariscope:
+  lights up at four positions confirming double refraction. The stone is being offered
+  as "fine Colombian emerald." Can this be emerald, and what is the correct identification?
+type: mcq
+options:
+  - text: "Chrome tourmaline, not emerald; RI 1.620–1.637 with birefringence ~0.017 and SG 3.06 match tourmaline, not beryl (RI 1.577–1.583, SG 2.67–2.78)"
+    isCorrect: true
+    rationale: |
+      The RI range 1.620–1.637 is clearly above the maximum beryl RI of 1.583 by
+      approximately 0.037 units — a large discrepancy on the refractometer [ref:read-gemmology-3e]. Beryl RI
+      is 1.577–1.583 with birefringence 0.005–0.009; the measured birefringence of
+      ~0.017 is too high for beryl [ref:read-gemmology-3e]. SG 3.06 matches tourmaline (SG 3.02–3.10) and is
+      well above beryl (2.67–2.78) [ref:read-gemmology-3e]. Chrome tourmaline (Cr-bearing elbaite) is a vivid
+      green gem that can appear visually similar to fine emerald in colour.
+  - text: "Fine Colombian emerald; Colombian emeralds sometimes give higher RI readings due to their high chromium content raising the index"
+    isCorrect: false
+    rationale: |
+      Chromium content does not raise beryl's RI to 1.620–1.637. Chromium substitutes
+      for aluminium in the beryl structure and is present in concentrations of typically
+      less than 1% — too little to measurably shift the RI away from the beryl range
+      of 1.577–1.583 [ref:read-gemmology-3e]. An RI of 1.620–1.637 cannot be beryl of any composition.
+  - text: "Synthetic emerald (hydrothermal); hydrothermal emeralds have higher RI than natural beryl because the growth solution deposits additional silica in the lattice"
+    isCorrect: false
+    rationale: |
+      Hydrothermal synthetic emerald (Chatham, Biron, etc.) has essentially the same RI
+      as natural beryl — approximately 1.560–1.570 (slightly lower than natural due to
+      lower chromium and lower iron content relative to some natural emeralds) [ref:read-gemmology-3e]. The RI
+      of hydrothermal synthetic emerald is never 1.620–1.637; that range is tourmaline.
+      Additional silica in the lattice is not how hydrothermal growth affects RI, and the
+      beryl structure does not incorporate free silica above stoichiometric Be3Al2Si6O18 [ref:read-gemmology-3e].
+rationaleCorrect: |
+  Chrome tourmaline is the most important visual near-miss for fine emerald in the trade:
+  both are vivid green, both show dichroism, both can be found in similar size ranges
+  and cuts. The discrimination is straightforward with instruments — beryl RI 1.577–1.583,
+  tourmaline RI 1.620–1.640 [ref:read-gemmology-3e], a gap of approximately 0.04 units — but relies on the
+  gemmologist actually measuring the RI rather than accepting the seller's description.
+  Chrome tourmaline offered as "Colombian emerald" has occurred in the trade. The SG
+  difference (beryl 2.67–2.78 vs tourmaline 3.06) [ref:read-gemmology-3e] provides additional confirmation.
+difficulty: 3
+category: species
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - pleochroism
+  - emerald
+  - beryl
+  - tourmaline
+  - uniaxial
+sourceArticle: species/beryl
+examRelevance: FGA-foundation
+confusionPairs:
+  - green-stone-001
+  - green-stone-003
+  - green-stone-004
+similarTo:
+  - green-stone-001
+  - green-stone-003
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 118–130, 173–178."
