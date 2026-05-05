@@ -149,14 +149,29 @@ interface UseFiltersResult {
   loading: boolean;
 }
 
-export function useFilters(): UseFiltersResult {
-  const [systems, setSystems] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [origins, setOrigins] = useState<string[]>([]);
-  const [mineralGroups, setMineralGroups] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+interface UseFiltersInitial {
+  systems?: string[];
+  categories?: string[];
+  origins?: string[];
+  mineralGroups?: string[];
+}
+
+/**
+ * When initial filter lists are provided (SSG case), skips the wasm-DB hit and
+ * serves the filter dropdowns synchronously.
+ */
+export function useFilters(initial: UseFiltersInitial = {}): UseFiltersResult {
+  const hasInitial = Boolean(
+    initial.systems || initial.categories || initial.origins || initial.mineralGroups,
+  );
+  const [systems, setSystems] = useState<string[]>(initial.systems ?? []);
+  const [categories, setCategories] = useState<string[]>(initial.categories ?? []);
+  const [origins, setOrigins] = useState<string[]>(initial.origins ?? []);
+  const [mineralGroups, setMineralGroups] = useState<string[]>(initial.mineralGroups ?? []);
+  const [loading, setLoading] = useState(!hasInitial);
 
   useEffect(() => {
+    if (hasInitial) return;
     (async () => {
       try {
         const [systemsData, categoriesData, originsData, groupsData] = await Promise.all([
@@ -175,7 +190,7 @@ export function useFilters(): UseFiltersResult {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [hasInitial]);
 
   return { systems, categories, origins, mineralGroups, loading };
 }

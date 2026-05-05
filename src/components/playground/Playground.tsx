@@ -269,6 +269,7 @@ export function Playground({ initialCDL }: PlaygroundProps) {
                 loading={previewLoading}
                 error={previewError}
                 className="h-full"
+                onRetry={() => generatePreview(cdlCode)}
               />
             ) : (
               <div className="h-full relative">
