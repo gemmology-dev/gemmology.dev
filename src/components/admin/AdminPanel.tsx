@@ -334,9 +334,9 @@ export function AdminPanel() {
           <Card>
             <CardContent className="p-0">
               {loading ? (
-                <div className="p-8 text-center text-slate-400">Loading...</div>
+                <div className="p-8 text-center text-slate-500">Loading...</div>
               ) : pendingRequests.length === 0 ? (
-                <div className="p-8 text-center text-slate-400">No pending requests</div>
+                <div className="p-8 text-center text-slate-500">No pending requests</div>
               ) : (
                 <div className="divide-y divide-slate-100">
                   {pendingRequests.map((request) => (
@@ -345,7 +345,7 @@ export function AdminPanel() {
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-slate-900">{request.email}</p>
                           <p className="text-sm text-slate-600 mt-1">{request.reason}</p>
-                          <p className="text-xs text-slate-400 mt-2">
+                          <p className="text-xs text-slate-500 mt-2">
                             Submitted: {formatDate(request.submitted)}
                           </p>
                         </div>
@@ -379,27 +379,27 @@ export function AdminPanel() {
           <Card>
             <CardContent className="p-0">
               {loading ? (
-                <div className="p-8 text-center text-slate-400">Loading...</div>
+                <div className="p-8 text-center text-slate-500">Loading...</div>
               ) : codes.length === 0 ? (
-                <div className="p-8 text-center text-slate-400">No codes yet</div>
+                <div className="p-8 text-center text-slate-500">No codes yet</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-slate-100">
-                        <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
                           Code
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
                           Label
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
                           Uses
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
                           Created
                         </th>
-                        <th className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">
+                        <th className="text-right text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
                           Actions
                         </th>
                       </tr>
@@ -421,7 +421,7 @@ export function AdminPanel() {
                             {code.uses}
                             {code.maxUses !== null && ` / ${code.maxUses}`}
                           </td>
-                          <td className="px-4 py-3 text-sm text-slate-400">
+                          <td className="px-4 py-3 text-sm text-slate-500">
                             {formatDate(code.created)}
                           </td>
                           <td className="px-4 py-3 text-right">

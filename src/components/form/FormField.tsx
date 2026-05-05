@@ -84,7 +84,7 @@ function FormFieldLabel({
     >
       {label}
       {unit && (
-        <span className="text-slate-500 font-normal ml-1">({unit})</span>
+        <span className="text-slate-600 font-normal ml-1">({unit})</span>
       )}
       {required && (
         <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
@@ -100,7 +100,7 @@ function FormFieldHint({ hint }: { hint: string }) {
   const { hintId } = useFormField();
 
   return (
-    <p id={hintId} className="text-xs text-slate-500">
+    <p id={hintId} className="text-sm text-slate-600">
       {hint}
     </p>
   );

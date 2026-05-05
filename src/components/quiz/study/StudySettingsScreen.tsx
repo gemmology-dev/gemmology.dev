@@ -55,7 +55,7 @@ export function StudySettingsScreen() {
               <ExportImportPanel store={store} />
             </>
           ) : (
-            <div className="text-center py-12 animate-pulse text-slate-400">
+            <div className="text-center py-12 animate-pulse text-slate-500">
               Loading settings…
             </div>
           )}

@@ -206,7 +206,7 @@ export function LearnQuizWidget({
         <CardContent className="px-5 py-4">
           {/* Rationale teaser (not the testing effect spoiler) */}
           {currentIndex === 0 && !isSubmitted && (
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3 italic">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-3 italic">
               Try these before reading. Getting them wrong here makes the article
               that follows stick better in memory.
             </p>
@@ -247,7 +247,7 @@ export function LearnQuizWidget({
                     showCorrectness && !isThisCorrect && isSelected &&
                       'border-red-400 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300',
                     showCorrectness && !isThisCorrect && !isSelected &&
-                      'border-slate-200 text-slate-500 dark:border-slate-700 dark:text-slate-500',
+                      'border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-400',
                   )}
                 >
                   <span className="inline-flex items-center gap-2">

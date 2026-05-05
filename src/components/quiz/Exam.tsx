@@ -79,7 +79,7 @@ export function Exam({
   if (!currentQuestion) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-500">No questions available</p>
+        <p className="text-slate-600">No questions available</p>
         <Button variant="secondary" onClick={onBack} className="mt-4">
           Go Back
         </Button>
@@ -176,7 +176,7 @@ export function Exam({
         {/* Question header */}
         <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-500">
+            <span className="text-sm font-medium text-slate-600">
               Question {state.currentIndex + 1} of {questions.length}
             </span>
             <div className="flex items-center gap-2">
@@ -199,7 +199,7 @@ export function Exam({
                   'p-1.5 rounded-lg transition-colors',
                   isFlagged
                     ? 'bg-amber-100 text-amber-600'
-                    : 'hover:bg-slate-100 text-slate-400 hover:text-slate-600'
+                    : 'hover:bg-slate-100 text-slate-600 hover:text-slate-700'
                 )}
                 title={isFlagged ? 'Remove flag' : 'Flag for review'}
               >
@@ -313,7 +313,7 @@ export function Exam({
                 </p>
               )}
             </div>
-            <p className="mt-4 text-sm text-slate-500">
+            <p className="mt-4 text-sm text-slate-600">
               Once submitted, you cannot change your answers.
             </p>
             <div className="mt-6 flex gap-3">

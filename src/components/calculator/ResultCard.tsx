@@ -62,7 +62,7 @@ export function ResultCard({
           onClick={handleCopy}
           className={cn(
             'absolute top-2 right-2 p-1.5 rounded-md transition-colors',
-            'text-slate-400 hover:text-slate-600 hover:bg-white/50',
+            'text-slate-500 hover:text-slate-600 hover:bg-white/50',
             'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2'
           )}
           aria-label={copied ? 'Copied!' : 'Copy result'}
@@ -87,7 +87,7 @@ export function ResultCard({
 
       {/* Label */}
       {label && (
-        <p className="text-sm text-slate-500 text-center mb-1">{label}</p>
+        <p className="text-sm text-slate-600 text-center mb-1">{label}</p>
       )}
 
       {/* Main value */}
@@ -120,7 +120,7 @@ interface ResultInlineProps {
 export function ResultInline({ value, unit, label, className }: ResultInlineProps) {
   return (
     <span className={cn('inline-flex items-baseline gap-1', className)}>
-      {label && <span className="text-sm text-slate-500">{label}:</span>}
+      {label && <span className="text-sm text-slate-600">{label}:</span>}
       <span className="font-semibold text-crystal-700">{value}</span>
       {unit && <span className="text-sm text-crystal-700">{unit}</span>}
     </span>
@@ -153,7 +153,7 @@ export function ResultGroup({ results, layout = 'horizontal', className }: Resul
     >
       {results.map((result, index) => (
         <div key={index} className="text-center">
-          <p className="text-sm text-slate-500">{result.label}</p>
+          <p className="text-sm text-slate-600">{result.label}</p>
           <p>
             <span className="text-xl font-bold text-crystal-700">{result.value}</span>
             {result.unit && (

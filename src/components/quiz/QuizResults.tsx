@@ -72,15 +72,15 @@ export function QuizResults({
         <div className="px-6 py-4 border-t border-slate-200 bg-slate-50">
           <div className="flex items-center justify-center gap-8 text-sm">
             <div className="text-center">
-              <p className="text-slate-500">Time</p>
+              <p className="text-slate-600">Time</p>
               <p className="font-medium text-slate-900">{duration}</p>
             </div>
             <div className="text-center">
-              <p className="text-slate-500">Questions</p>
+              <p className="text-slate-600">Questions</p>
               <p className="font-medium text-slate-900">{results.totalQuestions}</p>
             </div>
             <div className="text-center">
-              <p className="text-slate-500">Mode</p>
+              <p className="text-slate-600">Mode</p>
               <p className="font-medium text-slate-900 capitalize">{results.config.mode}</p>
             </div>
           </div>
