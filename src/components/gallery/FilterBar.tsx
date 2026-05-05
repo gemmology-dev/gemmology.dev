@@ -57,7 +57,12 @@ export function FilterBar({
     <div className={clsx('space-y-4', className)}>
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1">
+          <label htmlFor="gallery-search" className="sr-only">
+            Search minerals
+          </label>
           <SearchInput
+            id="gallery-search"
+            name="gallery-search"
             placeholder="Search minerals by name, chemistry, or system..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}

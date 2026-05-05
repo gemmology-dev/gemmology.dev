@@ -221,7 +221,7 @@ export function DichroscopeResults() {
           href="/learn/equipment/dichroscope"
           className="text-purple-600 hover:text-purple-700 underline"
         >
-          Learn dichroscope technique and see full pleochroism reference →
+          Learn dichroscope technique and see full pleochroism reference <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>

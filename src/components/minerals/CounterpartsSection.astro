@@ -5,6 +5,7 @@
  */
 import type { Mineral } from '../../lib/db-server';
 import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
+import { formatLabel } from '../../lib/format-label';
 
 interface Props {
   /** The current mineral being viewed */
@@ -20,6 +21,10 @@ const { mineral, counterparts, naturalCounterpart } = Astro.props;
 const isNatural = !mineral.origin || mineral.origin === 'natural';
 const hasCounterparts = counterparts.length > 0;
 const hasNaturalCounterpart = !!naturalCounterpart;
+
+// Strip the parenthetical expression label (e.g. "Diamond (Octahedron)" → "Diamond")
+// — synthetics list is family-scoped, so the expression name is misleading.
+const familyName = mineral.name.replace(/\s*\([^)]*\)\s*$/, '').trim();
 
 // Don't render if nothing to show
 if (!hasCounterparts && !hasNaturalCounterpart) return;
@@ -39,7 +44,7 @@ const originStyles: Record<string, string> = {
     </h2>
     <p class="text-sm text-slate-600 mt-1">
       {isNatural
-        ? `Known synthetic and simulant versions of ${mineral.name}`
+        ? `Known synthetic and simulant versions of ${familyName}`
         : `The natural gem this ${mineral.origin} imitates`
       }
     </p>
@@ -79,7 +84,7 @@ const originStyles: Record<string, string> = {
               </span>
             </div>
             {cp.growth_method && (
-              <div class="text-sm text-slate-600 capitalize">{cp.growth_method.replace(/_/g, ' ')}</div>
+              <div class="text-sm text-slate-600">{formatLabel(cp.growth_method)}</div>
             )}
           </div>
           <svg class="w-5 h-5 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -140,7 +145,7 @@ const originStyles: Record<string, string> = {
         href="/gallery?origin=synthetic"
         class="text-sm text-sky-600 hover:text-sky-700 font-medium"
       >
-        View all synthetic gems &rarr;
+        View all synthetic gems <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
   )}

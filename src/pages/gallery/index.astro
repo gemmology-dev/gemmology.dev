@@ -18,7 +18,7 @@ const initialOrigin = url.searchParams.get('origin') || '';
 // Always point to base gallery URL as canonical to prevent duplicate content from filters
 const canonicalURL = 'https://gemmology.dev/gallery';
 
-const { familyCount } = await getSiteStats();
+const { familyCount, expressionCount } = await getSiteStats();
 
 // SSG-fetch families + filter dropdowns at build time so the gallery first
 // paint does not block on sql.js + the 8 MB minerals.db. The wasm DB only
@@ -33,14 +33,14 @@ const [initialFamilies, initialSystems, initialOrigins, initialGroups] = await P
 
 <BaseLayout
   title="Crystal Gallery"
-  description={`Explore ${familyCount} mineral families with FGA-accurate crystallographic data and interactive visualizations.`}
+  description={`Explore ${familyCount} mineral families and ${expressionCount} crystal expressions with FGA-accurate crystallographic data.`}
   canonical={canonicalURL}
 >
   <div class="bg-gradient-to-b from-crystal-50 to-white min-h-[80vh]">
     <Container size="xl" padding="md">
       <SectionHeader
         title="Crystal Gallery"
-        description={`Explore ${familyCount} mineral families with FGA-accurate crystallographic data. Click any crystal to view detailed properties and open in the playground.`}
+        description={`Explore ${familyCount} mineral families and ${expressionCount} crystal expressions, with FGA-accurate crystallographic data. Click any crystal to view detailed properties and open in the playground.`}
       />
       <Gallery
         client:load
