@@ -2,11 +2,10 @@
  * StudySettingsScreen — page-level wrapper that wires the StudySettingsPanel
  * and ExportImportPanel against the real LocalStudyStore.
  *
- * Used by `src/pages/study/settings.astro`. Auth-gated via LockGate.
+ * Used by `src/pages/study/settings.astro`.
  */
 
 import { useEffect, useState } from 'react';
-import { LockGate } from '../../auth/LockGate';
 import { StudySettingsPanel } from './StudySettingsPanel';
 import { ExportImportPanel } from './ExportImportPanel';
 import { getStudyStore } from '../../../lib/quiz/store/local';
@@ -39,28 +38,26 @@ export function StudySettingsScreen() {
   };
 
   return (
-    <LockGate>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
-        <div className="max-w-3xl mx-auto px-4 space-y-8">
-          <header>
-            <h1 className="text-3xl font-bold text-slate-900">Study settings</h1>
-            <p className="text-slate-600 mt-2">
-              Customise how the study system schedules and presents practice questions.
-            </p>
-          </header>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+      <div className="max-w-3xl mx-auto px-4 space-y-8">
+        <header>
+          <h1 className="text-3xl font-bold text-slate-900">Study settings</h1>
+          <p className="text-slate-600 mt-2">
+            Customise how the study system schedules and presents practice questions.
+          </p>
+        </header>
 
-          {loaded ? (
-            <>
-              <StudySettingsPanel value={settings} onChange={handleChange} />
-              <ExportImportPanel store={store} />
-            </>
-          ) : (
-            <div className="text-center py-12 animate-pulse text-slate-500">
-              Loading settings…
-            </div>
-          )}
-        </div>
+        {loaded ? (
+          <>
+            <StudySettingsPanel value={settings} onChange={handleChange} />
+            <ExportImportPanel store={store} />
+          </>
+        ) : (
+          <div className="text-center py-12 animate-pulse text-slate-500">
+            Loading settings…
+          </div>
+        )}
       </div>
-    </LockGate>
+    </div>
   );
 }

@@ -3,12 +3,22 @@
  * Lab Equipment tools page.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedLab } from '../../components/auth/ProtectedLab';
+import { LabTools } from '../../components/lab/LabTools';
 ---
 
 <BaseLayout
   title="Lab Equipment"
-  description="Lab equipment reference including Chelsea filter, spectroscope line calculator, and heavy liquid SG separation."
+  description="Reference tools for gemmological lab equipment: Chelsea filter, spectroscope, and heavy liquid SG separation."
 >
-  <ProtectedLab client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Lab Equipment</h1>
+        <p class="text-slate-600 mt-2">
+          Reference tools for gemological lab equipment including Chelsea filter reactions, spectroscope absorption lines, and heavy liquid separation.
+        </p>
+      </div>
+      <LabTools client:load />
+    </div>
+  </div>
 </BaseLayout>

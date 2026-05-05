@@ -3,12 +3,22 @@
  * Advanced Analysis tools page.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedAdvanced } from '../../components/auth/ProtectedAdvanced';
+import { AdvancedTools } from '../../components/advanced/AdvancedTools';
 ---
 
 <BaseLayout
   title="Advanced Analysis"
-  description="Advanced gemmological analysis including treatment detection, origin determination, and cut proportion evaluation."
+  description="Treatment detection, origin determination, and gemstone proportion analysis tools."
 >
-  <ProtectedAdvanced client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Advanced Analysis</h1>
+        <p class="text-slate-600 mt-2">
+          Advanced gemmological analysis tools including treatment detection reference, origin determination characteristics, and gemstone cut proportion analyzer.
+        </p>
+      </div>
+      <AdvancedTools client:load />
+    </div>
+  </div>
 </BaseLayout>
