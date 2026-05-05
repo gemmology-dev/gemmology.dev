@@ -9,8 +9,12 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, CheckCircle2, XCircle } from 'lucide-react';
-import { Card, CardContent } from '../../ui/Card';
 import { cn } from '../../ui/cn';
+import {
+  stripCitations,
+  collectCitations,
+  citationLabel,
+} from '../../../lib/quiz/citations';
 
 export interface OptionRationale {
   /** Display text of this option. */
@@ -46,6 +50,18 @@ export function RationalePanel({
   if (!show) return null;
 
   const toggleLabel = expanded ? 'Collapse explanation' : 'Expand explanation';
+
+  // Strip inline [ref:slug] markers from all rationale strings before render
+  // and collect a single deduped Sources list to surface at the foot.
+  const cleanCorrect = stripCitations(rationaleCorrect);
+  const cleanOptions = optionRationales.map((opt) => ({
+    ...opt,
+    rationale: stripCitations(opt.rationale),
+  }));
+  const sources = collectCitations(
+    rationaleCorrect,
+    ...optionRationales.map((opt) => opt.rationale),
+  );
 
   return (
     <div
@@ -104,13 +120,13 @@ export function RationalePanel({
       >
         {/* Main rationale */}
         <div className="px-4 py-3 text-sm text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">
-          {rationaleCorrect}
+          {cleanCorrect}
         </div>
 
         {/* Per-option breakdown */}
-        {optionRationales.length > 0 && (
+        {cleanOptions.length > 0 && (
           <ul className="divide-y divide-slate-100 dark:divide-slate-800" aria-label="Option breakdown">
-            {optionRationales.map((opt, idx) => {
+            {cleanOptions.map((opt, idx) => {
               const wasChosen = userPickedIndex === idx;
               const isCorrect = opt.isCorrect;
               return (
@@ -164,6 +180,24 @@ export function RationalePanel({
               );
             })}
           </ul>
+        )}
+
+        {/* Sources footer — single deduped citation line at the foot of the body */}
+        {sources.length > 0 && (
+          <p
+            className="px-4 py-2.5 text-xs text-slate-500 dark:text-slate-500 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40"
+            aria-label="Sources"
+          >
+            <span className="font-medium uppercase tracking-wider text-slate-600 dark:text-slate-400 mr-2">
+              Sources
+            </span>
+            {sources.map((slug, idx) => (
+              <span key={slug}>
+                {idx > 0 && <span aria-hidden="true" className="mx-1.5 text-slate-400 dark:text-slate-700">·</span>}
+                {citationLabel(slug)}
+              </span>
+            ))}
+          </p>
         )}
       </div>
     </div>

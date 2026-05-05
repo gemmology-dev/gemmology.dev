@@ -140,4 +140,69 @@ describe('RationalePanel', () => {
       screen.getByRole('region', { name: /answer explanation/i }),
     ).toBeInTheDocument();
   });
+
+  // ── Citation handling ──────────────────────────────────────────────────────
+
+  it('strips inline [ref:slug] markers from the main rationale', () => {
+    render(
+      <RationalePanel
+        correct={true}
+        rationaleCorrect="Tourmaline is trigonal [ref:read-gemmology-3e]. Confirmed by RI."
+        show={true}
+      />,
+    );
+    expect(
+      screen.getByText('Tourmaline is trigonal. Confirmed by RI.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/\[ref:/)).not.toBeInTheDocument();
+  });
+
+  it('strips inline [ref:slug] markers from option rationales', () => {
+    render(
+      <RationalePanel
+        correct={false}
+        rationaleCorrect="Here is why."
+        optionRationales={[
+          { text: 'A', isCorrect: true, rationale: 'Anderson agrees [ref:anderson-gem-testing].' },
+          { text: 'B', isCorrect: false, rationale: 'Plain text.' },
+        ]}
+        userPickedIndex={1}
+        show={true}
+      />,
+    );
+    expect(screen.getByText('Anderson agrees.')).toBeInTheDocument();
+    expect(screen.queryByText(/\[ref:/)).not.toBeInTheDocument();
+  });
+
+  it('renders a single deduped Sources footer collected across all rationales', () => {
+    render(
+      <RationalePanel
+        correct={false}
+        rationaleCorrect="Main [ref:read-gemmology-3e]."
+        optionRationales={[
+          { text: 'A', isCorrect: true, rationale: 'one [ref:gubelin-koivula-vol1].' },
+          { text: 'B', isCorrect: false, rationale: 'two [ref:read-gemmology-3e].' },
+        ]}
+        userPickedIndex={1}
+        show={true}
+      />,
+    );
+    const footer = screen.getByLabelText(/^sources$/i);
+    expect(footer).toHaveTextContent(/Read, Gemmology/);
+    expect(footer).toHaveTextContent(/Gübelin & Koivula, Photoatlas vol\. 1/);
+    // Deduped: "Read, Gemmology" must appear exactly once
+    const matches = footer.textContent?.match(/Read, Gemmology/g) ?? [];
+    expect(matches.length).toBe(1);
+  });
+
+  it('omits the Sources footer when no citations are present', () => {
+    render(
+      <RationalePanel
+        correct={true}
+        rationaleCorrect="Plain rationale with no refs."
+        show={true}
+      />,
+    );
+    expect(screen.queryByLabelText(/^sources$/i)).not.toBeInTheDocument();
+  });
 });
