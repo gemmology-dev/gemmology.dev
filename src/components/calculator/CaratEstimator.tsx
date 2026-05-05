@@ -14,6 +14,37 @@ import { MultiValueResult } from './results';
 
 type Shape = keyof typeof SHAPE_FACTORS;
 
+type GirdleAdjustment =
+  | 'thin'
+  | 'medium'
+  | 'slightly-thick'
+  | 'thick'
+  | 'very-thick'
+  | 'extremely-thick';
+
+/**
+ * Multiplicative correction applied to the L×W×D×SG×factor estimate to account
+ * for extra weight carried in the girdle. Values are the standard trade
+ * adjustments used in cushion / oval / pear weight estimation.
+ */
+const GIRDLE_FACTORS: Record<GirdleAdjustment, number> = {
+  thin: 1.00,
+  medium: 1.02,
+  'slightly-thick': 1.04,
+  thick: 1.06,
+  'very-thick': 1.09,
+  'extremely-thick': 1.12,
+};
+
+const GIRDLE_OPTIONS: { value: GirdleAdjustment; label: string }[] = [
+  { value: 'thin', label: 'Thin (×1.00)' },
+  { value: 'medium', label: 'Medium (×1.02)' },
+  { value: 'slightly-thick', label: 'Slightly thick (×1.04)' },
+  { value: 'thick', label: 'Thick (×1.06)' },
+  { value: 'very-thick', label: 'Very thick (×1.09)' },
+  { value: 'extremely-thick', label: 'Extremely thick (×1.12)' },
+];
+
 // Fallback shape options (used when database not available)
 const FALLBACK_SHAPES: { value: Shape; label: string }[] = [
   { value: 'round-brilliant', label: 'Round Brilliant' },
@@ -44,6 +75,7 @@ const FALLBACK_SG = [
 export function CaratEstimator() {
   const [sgSource, setSgSource] = useState<'preset' | 'custom'>('preset');
   const [sgCustom, setSgCustom] = useState('');
+  const [girdle, setGirdle] = useState<GirdleAdjustment>('medium');
 
   const { shapeFactors, mineralsWithSG, fallbackShapeFactors } = useCalculatorData();
 
@@ -120,10 +152,11 @@ export function CaratEstimator() {
     const shape = values.shape as Shape;
     const dbFactor = shapes.find(s => s.value === shape);
     const factor = dbFactor?.factor ?? fallbackShapeFactors[shape] ?? 0.0061;
-    const carats = length * width * depth * sgValue * factor;
+    const girdleFactor = GIRDLE_FACTORS[girdle];
+    const carats = length * width * depth * sgValue * factor * girdleFactor;
 
-    return { carats, factor, grams: carats * 0.2 };
-  }, [parsedValues, sgSource, sgCustom, values.shape, shapes, fallbackShapeFactors]);
+    return { carats, factor, girdleFactor, grams: carats * 0.2 };
+  }, [parsedValues, sgSource, sgCustom, values.shape, shapes, fallbackShapeFactors, girdle]);
 
   // Custom SG validation
   const sgError = sgSource === 'custom' && sgCustom
@@ -148,7 +181,7 @@ export function CaratEstimator() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FormField name="dim-length" label="Length" unit="mm" error={errors.length}>
           <NumberInput
             value={values.length}
@@ -180,12 +213,20 @@ export function CaratEstimator() {
         </FormField>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField name="shape-select" label="Shape">
           <Select
             options={shapes.map(s => ({ value: s.value, label: s.label }))}
             value={values.shape}
             onChange={(v) => setValue('shape', v)}
+          />
+        </FormField>
+
+        <FormField name="girdle-select" label="Girdle thickness">
+          <Select
+            options={GIRDLE_OPTIONS}
+            value={girdle}
+            onChange={(v) => setGirdle(v as GirdleAdjustment)}
           />
         </FormField>
 
@@ -220,14 +261,15 @@ export function CaratEstimator() {
             { value: result.carats, precision: 2, unit: 'ct', label: 'Estimated Weight', primary: true },
             { value: result.grams, precision: 3, unit: 'g', label: 'Weight in Grams' },
             { value: result.factor, precision: 4, label: 'Shape Factor' },
+            { value: result.girdleFactor, precision: 2, label: 'Girdle correction' },
           ]}
           layout="horizontal"
         />
       )}
 
       <div className="text-sm text-slate-600 space-y-1">
-        <p><strong>Note:</strong> These are estimates. Actual weight varies with exact proportions, girdle thickness, and cut quality.</p>
-        <p><strong>Example (1ct diamond):</strong> 6.5 × 6.5 × 4.0 mm, SG 3.52, Round = ~1.0 ct</p>
+        <p><strong>Note:</strong> These are estimates. Actual weight varies with exact proportions, symmetry, and cut quality. The girdle factor accounts for material carried in a thicker-than-medium girdle.</p>
+        <p><strong>Example (1ct diamond):</strong> 6.5 × 6.5 × 4.0 mm, SG 3.52, Round, medium girdle = ~1.0 ct</p>
       </div>
     </div>
   );

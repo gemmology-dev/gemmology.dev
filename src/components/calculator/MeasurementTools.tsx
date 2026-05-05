@@ -10,6 +10,7 @@ import { CriticalAngleCalc } from './CriticalAngleCalc';
 import { CaratEstimator } from './CaratEstimator';
 import { DispersionCalculator } from './DispersionCalculator';
 import { DensityEstimator } from './DensityEstimator';
+import { HannemanRI } from './HannemanRI';
 import { ToolSection } from '../ui/ToolSection';
 
 const ICON_PATHS = {
@@ -94,6 +95,43 @@ export function MeasurementTools() {
       >
         <DensityEstimator />
       </ToolSection>
+
+      <ToolSection
+        id="hanneman-ri"
+        title="Hanneman / Hodgkinson Short-cut RI"
+        description="Bracket RI with contact-liquid relief for over-the-limit and rough stones"
+        iconPath={ICON_PATHS.beaker}
+        accent="emerald"
+      >
+        <HannemanRI />
+      </ToolSection>
+
+      {/* Learn More section */}
+      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-emerald-900 mb-2">Learn More</h4>
+        <ul className="text-sm text-emerald-800 space-y-1">
+          <li>
+            <a href="/learn/equipment/sg-measurement" className="underline hover:text-emerald-600">
+              Hydrostatic SG measurement technique <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="/learn/equipment/refractometer" className="underline hover:text-emerald-600">
+              Refractometer use, double readings, and the over-the-limit case <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="/learn/fundamentals/optical-properties" className="underline hover:text-emerald-600">
+              Optical properties: RI, birefringence, dispersion, critical angle <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="/learn/fundamentals/physical-properties" className="underline hover:text-emerald-600">
+              Physical properties: SG, hardness, density <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

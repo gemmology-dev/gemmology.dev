@@ -30,7 +30,11 @@ interface SimulationGem {
 export function RefractometerSimulator() {
   const { mineralsForRefractometer, dbAvailable, loading } = useCalculatorData();
 
-  // Convert database minerals to simulation format
+  // Standard refractometer scale upper limit (limited by the contact-liquid RI of ~1.81)
+  const REFRACTOMETER_LIMIT = 1.81;
+
+  // Convert database minerals to simulation format. Keep over-the-limit gems
+  // — the OTL state is itself a teaching moment.
   const simulationGems = useMemo((): SimulationGem[] => {
     if (dbAvailable && mineralsForRefractometer.length > 0) {
       return mineralsForRefractometer
@@ -41,7 +45,7 @@ export function RefractometerSimulator() {
           ri_high: Number(m.ri_max) || 0,
           isotropic: m.optical_character === 'Isotropic',
         }))
-        .filter(g => g.ri_low > 0 && g.ri_high <= 1.81);
+        .filter(g => g.ri_low > 0);
     }
     return FALLBACK_GEMS;
   }, [dbAvailable, mineralsForRefractometer]);
@@ -50,6 +54,7 @@ export function RefractometerSimulator() {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const birefringence = selectedGem.ri_high - selectedGem.ri_low;
+  const isOverTheLimit = selectedGem.ri_low > REFRACTOMETER_LIMIT;
 
   // Calculate visual position (1.40 to 1.80 scale for display)
   const scale_min = 1.40;
@@ -132,18 +137,28 @@ export function RefractometerSimulator() {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-slate-600 text-sm">Click "Show Reading" to see shadow edge</div>
             </div>
+          ) : isOverTheLimit ? (
+            // Over-the-limit: a continuously bright field, no shadow edge.
+            <div className="absolute inset-0 flex items-center justify-center bg-amber-50">
+              <div className="text-center px-4">
+                <div className="text-sm font-semibold text-amber-900">Over the limit</div>
+                <div className="text-xs text-amber-800 mt-1">
+                  RI {selectedGem.ri_low.toFixed(3)} exceeds the contact-liquid limit (~1.81). The field stays continuously bright with no shadow edge.
+                </div>
+              </div>
+            </div>
           ) : (
             <>
               {/* Dark area (low RI side) */}
               <div
                 className="absolute inset-y-0 left-0 bg-slate-800 bg-opacity-80"
-                style={{ width: `${pos_low}%` }}
+                style={{ width: `${Math.min(pos_low, 100)}%` }}
               />
 
               {/* Shadow edge marker (low) */}
               <div
                 className="absolute inset-y-0 w-1 bg-red-500 shadow-lg"
-                style={{ left: `${pos_low}%` }}
+                style={{ left: `${Math.min(pos_low, 100)}%` }}
               >
                 <div className="absolute -top-8 left-0 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold whitespace-nowrap">
                   {selectedGem.ri_low.toFixed(3)}
@@ -151,7 +166,7 @@ export function RefractometerSimulator() {
               </div>
 
               {/* If DR, show high edge */}
-              {!selectedGem.isotropic && birefringence > 0.001 && (
+              {!selectedGem.isotropic && birefringence > 0.001 && selectedGem.ri_high <= REFRACTOMETER_LIMIT && (
                 <>
                   <div
                     className="absolute inset-y-0 bg-slate-700 bg-opacity-60"

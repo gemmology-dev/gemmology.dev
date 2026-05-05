@@ -16,14 +16,14 @@ const tools = [
   },
   {
     title: 'Unit Conversions',
-    description: 'Convert between carats, grams, millimeters, inches, Celsius, Fahrenheit, and calculate price per carat.',
+    description: 'Convert between carats, grams, millimeters, inches, Celsius, and Fahrenheit.',
     href: '/tools/conversions',
     icon: 'arrows',
     variant: 'sapphire' as const,
   },
   {
     title: 'Optical Properties',
-    description: 'Dichroscope results, polariscope interpretation, refractometer simulator, and pleochroism reference.',
+    description: 'Dichroscope results, polariscope interpretation, refractometer simulator, and pleochroism reasoner.',
     href: '/tools/optical',
     icon: 'eye',
     variant: 'amethyst' as const,
@@ -37,14 +37,14 @@ const tools = [
   },
   {
     title: 'Gem Identification',
-    description: 'Compare gems side-by-side, hardness reference, and fracture/cleavage identification guide.',
+    description: 'Identify gems by optical and physical properties, hardness reference, and fracture/cleavage guide.',
     href: '/tools/identification',
     icon: 'search',
     variant: 'topaz' as const,
   },
   {
     title: 'Advanced Analysis',
-    description: 'Treatment detection checklist, origin characteristics guide, and proportion analyzer.',
+    description: 'Treatment detection checklist and proportion analyzer (origin guidance lives in the Learn section).',
     href: '/tools/advanced',
     icon: 'chart',
     variant: 'crystal' as const,
