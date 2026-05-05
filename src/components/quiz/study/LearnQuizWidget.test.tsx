@@ -114,7 +114,7 @@ describe('LearnQuizWidget', () => {
     render(
       <LearnQuizWidget slug="slug" pretestEnabled={true} questions={QUESTIONS} />,
     );
-    expect(screen.getByText(/1 of 3/i)).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: /question 1 of 3/i })).toBeInTheDocument();
   });
 
   it('renders answer options as radio buttons', () => {
@@ -197,7 +197,7 @@ describe('LearnQuizWidget', () => {
     await answerQuestion(user, 'Cubic');
     await user.click(screen.getByRole('button', { name: /next question/i }));
     expect(screen.getByText(Q2.questionText)).toBeInTheDocument();
-    expect(screen.getByText(/2 of 3/i)).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: /question 2 of 3/i })).toBeInTheDocument();
   });
 
   // ── Q3 and completion ─────────────────────────────────────────────────────
@@ -244,7 +244,8 @@ describe('LearnQuizWidget', () => {
     await user.click(screen.getByRole('button', { name: /continue to article/i }));
 
     // 2 correct out of 3
-    expect(screen.getByText(/2 of 3 correct/i)).toBeInTheDocument();
+    expect(screen.getByText(/pretest complete/i)).toBeInTheDocument();
+    expect(screen.getByText(/2\s*\/\s*3/)).toBeInTheDocument();
   });
 
   // ── Store integration ─────────────────────────────────────────────────────
@@ -295,7 +296,7 @@ describe('LearnQuizWidget', () => {
         questions={[Q1, Q2, Q3, extraQ]}
       />,
     );
-    expect(screen.getByText(/1 of 3/i)).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: /question 1 of 3/i })).toBeInTheDocument();
   });
 
   // ── a11y ──────────────────────────────────────────────────────────────────
