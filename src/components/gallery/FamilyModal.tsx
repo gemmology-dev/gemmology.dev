@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import { useFamilyExpressions } from '../../hooks/useFamilies';
 import type { MineralFamily, MineralExpression } from '../../lib/db';
 import { sanitizeSvg } from '../../lib/sanitize-svg';
+import { formatLabel } from '../../lib/format-label';
 import { clsx } from 'clsx';
 
 interface FamilyModalProps {
@@ -297,7 +298,7 @@ export function FamilyModal({ family, onClose }: FamilyModalProps) {
                 {family.growth_method && (
                   <div className="flex justify-between items-baseline">
                     <span className="text-sm text-slate-600">Growth Method</span>
-                    <span className="text-sm font-medium text-slate-900 capitalize">{family.growth_method.replace(/_/g, ' ')}</span>
+                    <span className="text-sm font-medium text-slate-900">{formatLabel(family.growth_method)}</span>
                   </div>
                 )}
                 {family.manufacturer && (

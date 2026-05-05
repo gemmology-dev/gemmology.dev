@@ -15,6 +15,7 @@ import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
 import TagList from '../../components/minerals/TagList.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getAllFamilies, getPrimaryExpressionId, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
+import { formatLabel } from '../../lib/format-label';
 
 export async function getStaticPaths() {
   const minerals = await getAllMinerals();
@@ -78,20 +79,6 @@ const title = `${mineral.name} Crystal Structure`;
 const description = `Explore the ${mineral.name} crystal structure, properties, and CDL notation. ${mineral.system} system${mineral.chemistry ? `, ${mineral.chemistry}` : ''}.`;
 const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
 
-// Acronym-aware formatter for free-text identification fields (CVD, HPHT, FTIR, …) — P2-7
-const ACRONYMS = new Set(['CVD', 'HPHT', 'FTIR', 'HPLC', 'GIA', 'FGA', 'AGTA', 'EDXRF', 'XRF', 'EDS', 'SEM', 'UV', 'IR', 'NIR', 'YAG', 'GGG', 'CZ']);
-function formatLabel(value: string | null | undefined): string {
-  if (!value) return '';
-  return value
-    .replace(/_/g, ' ')
-    .split(' ')
-    .map(word => {
-      const upper = word.toUpperCase();
-      if (ACRONYMS.has(upper)) return upper;
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
-}
 ---
 
 <BaseLayout title={title} description={description}>
@@ -106,6 +93,9 @@ function formatLabel(value: string | null | undefined): string {
       <div class="grid lg:grid-cols-3 gap-8">
         <!-- Left Column: Crystal Structure & Properties -->
         <div class="lg:col-span-2 space-y-8">
+          <!-- Crystal Structure (rendered SVG above the fold on every viewport) -->
+          <CrystalStructureCard mineral={mineral} />
+
           <!-- Quick Facts -->
           <QuickFacts mineral={mineral} />
 
@@ -113,9 +103,6 @@ function formatLabel(value: string | null | undefined): string {
           <div class="lg:hidden">
             <PlaygroundLink mineral={mineral} />
           </div>
-
-          <!-- Crystal Structure -->
-          <CrystalStructureCard mineral={mineral} />
 
           <!-- Physical Properties -->
           <PropertyTable

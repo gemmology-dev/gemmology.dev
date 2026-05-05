@@ -12,7 +12,7 @@ const { familyCount } = await getSiteStats();
 const popularPages = [
   { title: 'Crystal Gallery', href: '/gallery', description: `Explore ${familyCount} mineral crystal structures` },
   { title: 'Learn Gemmology', href: '/learn', description: 'FGA curriculum and educational content' },
-  { title: 'CDL Playground', href: '/playground', description: 'Interactive crystal visualization' },
+  { title: 'Quiz', href: '/quiz', description: 'Practice and exam-mode questions across the FGA syllabus' },
   { title: 'Documentation', href: '/docs', description: 'API reference and guides' },
 ];
 ---
@@ -32,11 +32,11 @@ const popularPages = [
     </div>
     <h1 class="text-3xl sm:text-4xl font-semibold text-slate-900 mb-3">Lost in the lattice</h1>
     <p class="text-slate-600 mb-8 max-w-md">
-      The page you're looking for doesn't exist or has been moved. Try one of the routes below or head back to the gallery.
+      This page doesn&apos;t crystallise. The URL you followed doesn&apos;t correspond to a known structure &mdash; it may have been moved or never existed.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4 mb-12">
-      <Button href="/" variant="primary">Go Home</Button>
+      <Button href="/" variant="primary">Return to homepage</Button>
       <Button href="/gallery" variant="secondary">Browse Gallery</Button>
       <Button href="/learn" variant="ghost">Open Learn</Button>
     </div>

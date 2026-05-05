@@ -53,17 +53,17 @@ export function OpticalTools() {
         <ul className="text-sm text-purple-800 space-y-1">
           <li>
             <a href="/learn/equipment/dichroscope" className="underline hover:text-purple-600">
-              Dichroscope technique and pleochroism reference →
+              Dichroscope technique and pleochroism reference <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
             <a href="/learn/fundamentals/optical-properties" className="underline hover:text-purple-600">
-              Optical properties fundamentals →
+              Optical properties fundamentals <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
             <a href="/learn/equipment/polariscope" className="underline hover:text-purple-600">
-              Polariscope interpretation guide →
+              Polariscope interpretation guide <span aria-hidden="true">→</span>
             </a>
           </li>
         </ul>

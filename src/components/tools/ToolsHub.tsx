@@ -67,7 +67,7 @@ export function ToolsHub() {
         <div className="max-w-3xl pb-8 border-b border-slate-200">
           <h1 className="text-4xl font-bold text-slate-900">Tools</h1>
           <p className="mt-4 text-lg text-slate-600">
-            Professional gemmological tools for calculations, conversions, and reference.
+            Calculators for the bench: SG by hydrostatic weighing, RI lookup, birefringence, critical angle, carat estimation, and unit conversion &mdash; alongside dichroscope, polariscope, and Chelsea-filter references.
           </p>
         </div>
 
