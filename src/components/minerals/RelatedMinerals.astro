@@ -68,7 +68,7 @@ const { minerals, currentSystem } = Astro.props;
       href={`/gallery?system=${currentSystem.toLowerCase()}`}
       class="text-sm text-sky-600 hover:text-sky-700 font-medium"
     >
-      View all {currentSystem} minerals &rarr;
+      View all {currentSystem} minerals <span aria-hidden="true">&rarr;</span>
     </a>
   </div>
 </div>

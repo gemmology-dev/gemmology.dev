@@ -195,7 +195,7 @@ export function SpectroscopeCalculator() {
           href="/learn/equipment/spectroscope"
           className="text-crystal-700 hover:text-crystal-700 underline"
         >
-          Learn spectroscope technique and absorption spectrum interpretation →
+          Learn spectroscope technique and absorption spectrum interpretation <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>

@@ -243,7 +243,7 @@ export function HardnessReference() {
           href="/learn/fundamentals/physical-properties"
           className="text-amber-600 hover:text-amber-700 underline"
         >
-          Learn more about hardness, toughness, and gem durability →
+          Learn more about hardness, toughness, and gem durability <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>

@@ -45,22 +45,22 @@ export function AdvancedTools() {
         <ul className="text-sm text-cyan-800 space-y-1">
           <li>
             <a href="/learn/origin/overview" className="underline hover:text-cyan-600">
-              Origin determination overview →
+              Origin determination overview <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
             <a href="/learn/origin/burma/ruby" className="underline hover:text-cyan-600">
-              Burmese ruby characteristics →
+              Burmese ruby characteristics <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
             <a href="/learn/origin/kashmir" className="underline hover:text-cyan-600">
-              Kashmir sapphire identification →
+              Kashmir sapphire identification <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
             <a href="/learn/origin/colombia" className="underline hover:text-cyan-600">
-              Colombian emerald features →
+              Colombian emerald features <span aria-hidden="true">→</span>
             </a>
           </li>
         </ul>
