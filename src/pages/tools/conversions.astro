@@ -1,15 +1,24 @@
 ---
 /**
  * Unit Conversions tools page.
- * Protected by LockGate - requires authentication to access.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedConversions } from '../../components/auth/ProtectedConversions';
+import { ConversionTools } from '../../components/calculator';
 ---
 
 <BaseLayout
   title="Unit Conversions"
-  description="Unit conversion tools for weight, length, temperature, and price calculations."
+  description="Convert between carats, grams, millimeters, inches, Celsius, Fahrenheit, and calculate price per carat with markup."
 >
-  <ProtectedConversions client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Unit Conversions</h1>
+        <p class="text-slate-600 mt-2">
+          Convert between carats, grams, millimeters, inches, Celsius, Fahrenheit, and calculate price per carat with markup.
+        </p>
+      </div>
+      <ConversionTools client:load />
+    </div>
+  </div>
 </BaseLayout>

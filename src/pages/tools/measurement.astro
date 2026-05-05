@@ -1,15 +1,24 @@
 ---
 /**
  * Measurement & Calculation tools page.
- * Protected by LockGate - requires authentication to access.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedMeasurement } from '../../components/auth/ProtectedMeasurement';
+import { MeasurementTools } from '../../components/calculator';
 ---
 
 <BaseLayout
   title="Measurement & Calculation"
   description="Gemmological measurement and calculation tools including SG, RI, birefringence, dispersion, critical angle, carat estimation, and density."
 >
-  <ProtectedMeasurement client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Measurement & Calculation</h1>
+        <p class="text-slate-600 mt-2">
+          Essential measurement and calculation tools for gem identification, including SG, RI, birefringence, dispersion, and carat estimation.
+        </p>
+      </div>
+      <MeasurementTools client:load />
+    </div>
+  </div>
 </BaseLayout>

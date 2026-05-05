@@ -3,12 +3,22 @@
  * Gem Identification tools page.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedIdentification } from '../../components/auth/ProtectedIdentification';
+import { IdentificationTools } from '../../components/identification/IdentificationTools';
 ---
 
 <BaseLayout
   title="Gem Identification"
-  description="Gem identification tools including side-by-side comparison, Mohs hardness reference, and cleavage/fracture guide."
+  description="Side-by-side gem comparison, Mohs hardness reference, and cleavage/fracture identification tools."
 >
-  <ProtectedIdentification client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Gem Identification</h1>
+        <p class="text-slate-600 mt-2">
+          Comprehensive identification tools including side-by-side gem comparison, Mohs hardness reference, and cleavage/fracture patterns.
+        </p>
+      </div>
+      <IdentificationTools client:load />
+    </div>
+  </div>
 </BaseLayout>
