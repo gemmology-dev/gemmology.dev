@@ -4,16 +4,12 @@ import { resolve } from 'path';
 
 export default defineConfig({
   test: {
-    // Default to node; React component tests opt in to jsdom via a header
-    // comment (`// @vitest-environment jsdom`) at the top of each *.test.tsx.
-    environment: 'node',
+    // jsdom is used for everything — node-only tests still work under jsdom,
+    // and React component tests need it. Slightly slower but uniform.
+    environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
-    environmentMatchGlobs: [
-      ['src/components/**/*.test.tsx', 'jsdom'],
-      ['src/components/**/*.test.ts', 'jsdom'],
-    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json-summary'],
