@@ -1,4 +1,7 @@
 ---
+import { statSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Breadcrumb, PageNav } from '../../components/docs';
@@ -23,6 +26,29 @@ interface Props {
 
 const { entry, allEntries } = Astro.props;
 const { data } = entry;
+
+// Resolve dateModified for SEO + visible "Last updated" line.
+// Order of preference: explicit reviewedAt frontmatter → file mtime fallback.
+function resolveDateModified(): string {
+  if (data.reviewedAt) return data.reviewedAt;
+  try {
+    const filePath = (entry as unknown as { filePath?: string }).filePath;
+    if (filePath) {
+      const abs = filePath.startsWith('file:') ? fileURLToPath(filePath) : path.resolve(filePath);
+      return new Date(statSync(abs).mtimeMs).toISOString();
+    }
+  } catch {
+    // fall through
+  }
+  return new Date().toISOString();
+}
+
+const dateModified = resolveDateModified();
+const dateModifiedDisplay = new Date(dateModified).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 
 // Helper to format category/subcategory names for display
 function formatCategoryName(name: string): string {
@@ -155,6 +181,7 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
     subcategory={data.subcategory}
     difficulty={data.difficulty}
     slug={entry.id}
+    dateModified={dateModified}
   />
   <Container size="md" padding="md">
     <Breadcrumb items={breadcrumbItems} />
@@ -168,15 +195,11 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
 
         <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
           <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'gemmology.dev editors'}</a></span>
-          {data.reviewedAt && (
-            <span>
-              Last reviewed
-              <time datetime={data.reviewedAt}>
-                {new Date(data.reviewedAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
-              </time>
-              {data.reviewedBy && <span> by {data.reviewedBy}</span>}
-            </span>
-          )}
+          <span>
+            Last updated
+            <time datetime={dateModified}>{dateModifiedDisplay}</time>
+            {data.reviewedBy && <span> by {data.reviewedBy}</span>}
+          </span>
         </div>
 
         {data.tags && data.tags.length > 0 && (

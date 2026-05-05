@@ -5,7 +5,7 @@
  */
 
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, utimesSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -32,7 +32,27 @@ function error(message: string) {
  * Recursively copy YAML files from source to destination,
  * preserving subdirectory structure (e.g., equipment/, species/, origin/)
  */
-function copyYamlFilesRecursive(sourceDir: string, destDir: string, relativePath: string = ''): number {
+/**
+ * Stamp dest with the source file's last git-commit timestamp so the build can
+ * surface a meaningful "Last updated" date instead of the sync wall-clock time.
+ * Falls back silently if the file is not tracked or git isn't available.
+ */
+function stampGitMtime(sourcePath: string, destPath: string, repoRoot: string): void {
+  try {
+    const isoStamp = execSync(`git log -1 --format=%cI -- "${sourcePath}"`, {
+      cwd: repoRoot,
+      encoding: 'utf-8',
+    }).trim();
+    if (!isoStamp) return;
+    const ts = new Date(isoStamp);
+    if (Number.isNaN(ts.getTime())) return;
+    utimesSync(destPath, ts, ts);
+  } catch {
+    // ignore — leaves cpSync's default mtime in place
+  }
+}
+
+function copyYamlFilesRecursive(sourceDir: string, destDir: string, relativePath: string = '', repoRoot?: string): number {
   let count = 0;
   const currentSource = join(sourceDir, relativePath);
   const currentDest = join(destDir, relativePath);
@@ -50,13 +70,16 @@ function copyYamlFilesRecursive(sourceDir: string, destDir: string, relativePath
 
     if (stat.isDirectory()) {
       // Recurse into subdirectory
-      count += copyYamlFilesRecursive(sourceDir, destDir, join(relativePath, entry));
+      count += copyYamlFilesRecursive(sourceDir, destDir, join(relativePath, entry), repoRoot);
     } else if (entry.endsWith('.yaml') || entry.endsWith('.yml')) {
       // Copy YAML file
       if (!existsSync(currentDest)) {
         mkdirSync(currentDest, { recursive: true });
       }
       cpSync(sourcePath, destPath);
+      if (repoRoot) {
+        stampGitMtime(sourcePath, destPath, repoRoot);
+      }
       const displayPath = relativePath ? `${relativePath}/${entry}` : entry;
       log(`  Copied: ${displayPath}`);
       count++;
@@ -82,7 +105,7 @@ function syncFromLocal(): boolean {
   }
 
   // Copy YAML files recursively (handles flat files and subdirectories)
-  const fileCount = copyYamlFilesRecursive(localSource, CONTENT_DEST);
+  const fileCount = copyYamlFilesRecursive(localSource, CONTENT_DEST, '', LOCAL_KNOWLEDGE_DIR);
 
   if (fileCount === 0) {
     log('No YAML files found in local source');
@@ -129,7 +152,7 @@ function syncFromGit(): boolean {
   }
 
   // Copy YAML files recursively (handles flat files and subdirectories)
-  const fileCount = copyYamlFilesRecursive(CONTENT_SOURCE, CONTENT_DEST);
+  const fileCount = copyYamlFilesRecursive(CONTENT_SOURCE, CONTENT_DEST, '', KNOWLEDGE_DIR);
 
   if (fileCount === 0) {
     log('No YAML files found in source');

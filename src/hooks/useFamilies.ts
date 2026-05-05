@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   getAllFamilies,
   getFamilyById,
@@ -27,13 +27,26 @@ interface UseFamiliesResult {
 /**
  * Hook for loading and filtering mineral families in the gallery.
  * Returns families with expression counts (no duplicates like the old minerals approach).
+ *
+ * When `initialFamilies` is provided (build-time SSG case), skips the initial
+ * sql.js fetch and serves them synchronously on first paint. The wasm DB only
+ * loads on the first dynamic action (search/filter).
  */
-export function useFamilies(): UseFamiliesResult {
-  const [families, setFamilies] = useState<MineralFamily[]>([]);
-  const [loading, setLoading] = useState(true);
+export function useFamilies(initialFamilies?: MineralFamily[]): UseFamiliesResult {
+  const hasInitial = Array.isArray(initialFamilies);
+  const initialRef = useRef<MineralFamily[] | undefined>(initialFamilies);
+  const [families, setFamilies] = useState<MineralFamily[]>(initialFamilies ?? []);
+  const [loading, setLoading] = useState(!hasInitial);
   const [error, setError] = useState<Error | null>(null);
 
   const loadAll = useCallback(async () => {
+    // Reset to SSG-fetched data without touching wasm DB when available.
+    if (initialRef.current) {
+      setFamilies(initialRef.current);
+      setLoading(false);
+      setError(null);
+      return;
+    }
     try {
       setLoading(true);
       setError(null);
@@ -115,8 +128,9 @@ export function useFamilies(): UseFamiliesResult {
   }, [loadAll]);
 
   useEffect(() => {
+    if (hasInitial) return;
     loadAll();
-  }, [loadAll]);
+  }, [loadAll, hasInitial]);
 
   return {
     families,

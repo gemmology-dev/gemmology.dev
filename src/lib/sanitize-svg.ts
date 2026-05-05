@@ -111,6 +111,14 @@ const SVG_CONFIG: DOMPurify.Config = {
 export function sanitizeSvg(svgContent: string): string {
   if (!svgContent) return '';
 
+  // SSR / Node has no window — DOMPurify cannot run without jsdom.
+  // The SVGs we render in SSG come from our own minerals.db (built by
+  // crystal-renderer), so we can pass them through unchanged on the server
+  // and let the browser-side hydration re-sanitise once the DOM is available.
+  if (typeof window === 'undefined') {
+    return svgContent;
+  }
+
   // DOMPurify.sanitize returns a string when not using RETURN_DOM options
   return DOMPurify.sanitize(svgContent, SVG_CONFIG) as string;
 }
