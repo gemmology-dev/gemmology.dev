@@ -1,0 +1,73 @@
+id: crystal-system-002
+stem: |
+  A student studying the 32 crystallographic point groups notes that corundum belongs
+  to point group 3-bar-m (written 3̄m in Hermann-Mauguin notation). The student is
+  asked why corundum is neither optically active nor piezoelectric, and what the
+  "3̄" symbol in its point group indicates about its symmetry. Which answer is correct?
+type: mcq
+options:
+  - text: "The 3̄ indicates a rotoinversion axis (an inversion centre combined with a threefold rotation), giving corundum a centre of symmetry; a centre of symmetry prevents optical activity and piezoelectricity"
+    isCorrect: true
+    rationale: |
+      The Hermann-Mauguin symbol 3̄ (three-bar) denotes a rotoinversion axis: a
+      threefold rotation combined with an inversion through the centre. The 3̄ axis
+      contains a centre of inversion (as all even-fold rotoinversion axes and 3̄
+      specifically do). A centre of inversion (centrosymmetric point group) eliminates
+      the possibility of piezoelectricity (which requires no centre of inversion) and
+      optical activity (which requires an enantiomorphic, non-centrosymmetric class).
+      Corundum in point group 3̄m is centrosymmetric — confirmed by its lack of
+      piezoelectric or optical-activity effects.
+  - text: "The 3̄ indicates a sixfold screw axis, placing corundum in the hexagonal system and making it optically active like quartz"
+    isCorrect: false
+    rationale: |
+      A sixfold screw axis is denoted 6₁, 6₂, etc. — these are space-group notations,
+      not point-group notations. The point group 3̄m belongs to the trigonal system,
+      not hexagonal. Quartz belongs to point group 32 (trigonal), which is enantiomorphic
+      and therefore optically active. Corundum (3̄m) has a centre of inversion that
+      quartz (32) lacks — this is precisely why corundum is not optically active while
+      quartz is. Confusing screw axes (space group) with rotoinversion axes (point group)
+      is a common error at Foundation level.
+  - text: "The 3̄ means corundum has three mirror planes arranged around the c-axis, and mirror planes cause the cancellation of piezoelectric effects"
+    isCorrect: false
+    rationale: |
+      The "m" in 3̄m represents mirror planes (three of them, parallel to the c-axis),
+      not the "3̄" symbol. The 3̄ is the rotoinversion axis — a separate symmetry element.
+      While mirror planes do prevent certain piezoelectric modes, it is the inversion
+      centre (contained in the 3̄ axis) that is the primary reason corundum lacks
+      piezoelectricity and optical activity. Misreading 3̄ as "three mirror planes" is
+      a notation error: in H-M notation the bar above a number specifically means
+      rotoinversion, which is distinct from a mirror plane (written m).
+rationaleCorrect: |
+  Point group 3̄m (trigonal) contains a 3̄ rotoinversion axis, which inherently includes
+  a centre of inversion. Centrosymmetric point groups cannot be piezoelectric or
+  optically active: piezoelectricity requires that the positive and negative charge
+  centres can be separated by stress, which requires no inversion centre; optical
+  activity requires an enantiomorphic class, also absent when a centre of inversion
+  exists. Compare to quartz (point group 32, trigonal): 32 has no inversion centre,
+  is enantiomorphic, and therefore IS optically active (exists in left- and right-handed
+  forms) and piezoelectric. Tourmaline (3m) also lacks an inversion centre (polar axis)
+  and IS piezoelectric. Corundum (3̄m) has the inversion centre and shows neither.
+difficulty: 4
+category: fundamentals
+conceptTags:
+  - point-group
+  - symmetry
+  - crystal-system
+  - trigonal-system
+  - corundum
+sourceArticle: fundamentals/crystal-systems
+examRelevance: FGA-foundation
+confusionPairs:
+  - crystal-system-001
+  - crystal-system-003
+similarTo:
+  - crystal-system-003
+  - crystal-system-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: schwarzenbach-2003
+    citation: "Schwarzenbach, D. (2003). Journal of Applied Crystallography, 36(1), 1–3. DOI: 10.1107/s0021889803014778"
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 17–30."

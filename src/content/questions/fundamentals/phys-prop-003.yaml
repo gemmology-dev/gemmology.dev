@@ -1,0 +1,76 @@
+id: phys-prop-003
+stem: |
+  A gemmologist is testing a green oval cabochon. Hydrostatic SG = 3.34. The spot
+  method on the refractometer gives an approximate reading near 1.66. The stone has
+  a vitreous to somewhat greasy lustre, no fluorescence under UV, and shows an
+  uneven fracture. A colleague suggests the stone could be either jadeite or peridot.
+  Which single measurement most efficiently separates these two, and what values
+  would confirm each?
+type: mcq
+options:
+  - text: "Jadeite SG is 3.25–3.35, while peridot (olivine) SG is 3.28–3.48; the spot RI is the better discriminator — jadeite RI approximately 1.65–1.67, peridot RI 1.654–1.690 — but both overlap so SG plus RI together give highest confidence"
+    isCorrect: false
+    rationale: |
+      This answer correctly notes the overlap in both SG and RI ranges for jadeite and
+      peridot, making it a partially correct observation. However, the question asks
+      for the MOST efficient single measurement to separate them. The key discriminator
+      is not one property in isolation but the combination — and the answer underestimates
+      the value of spectroscopic testing (peridot's characteristic absorption spectrum
+      with iron bands is highly diagnostic) or the crystal form under the microscope
+      (jadeite is polycrystalline with interlocking grain texture; peridot is single
+      crystal with lily-pad inclusions). Accepting this as correct would reward a
+      response that hedges rather than identifies the best single test.
+  - text: "SG is the most efficient single discriminator for this pair: jadeite peaks at 3.25–3.35 (mean ~3.34), peridot ranges 3.28–3.48 with a typical mean near 3.34 too — they overlap significantly, so the spectroscope showing peridot's iron absorption at 493 nm is the most efficient single definitive test"
+    isCorrect: true
+    rationale: |
+      Jadeite SG 3.25–3.35 and peridot SG 3.28–3.48 overlap substantially, and the
+      measured SG of 3.34 falls in both ranges. Similarly, spot RI near 1.66 falls in
+      both species' ranges. The spectroscope provides a definitive single test: peridot
+      shows a characteristic iron absorption spectrum with bands at approximately 493 nm
+      and related features in the blue-green; jadeite lacks this spectrum. Additionally,
+      peridot's single-crystal nature means it will show birefringence (which a cabochon
+      spot reading may approximate), whereas jadeite's polycrystalline aggregate produces
+      no birefringence. The most efficient single test is the spectroscope.
+  - text: "Hardness testing: jadeite has hardness 6.5–7 and peridot 6.5–7, so hardness testing is the fastest single test and will separate them"
+    isCorrect: false
+    rationale: |
+      Both jadeite and peridot have virtually identical Mohs hardness ranges (jadeite
+      6.5–7; peridot 6.5–7). Hardness testing would not separate them and is also a
+      damaging test — inappropriate for a finished cabochon submitted by a client.
+      Recommending hardness testing on a finished gem is poor laboratory practice when
+      non-destructive optical and spectroscopic methods are available. A student who
+      chooses this answer has either confused the hardness values or forgotten that
+      hardness testing scratches the surface of the stone.
+rationaleCorrect: |
+  The jadeite-versus-peridot discrimination is one of the classic "overlapping SG and RI"
+  problems in gemmology. Both cluster around SG 3.3 and RI 1.65–1.67 in spot readings.
+  The decisive non-destructive tests are: (1) spectroscope — peridot shows iron absorption
+  bands (particularly ~493 nm); jadeite shows a different pattern or may be featureless in
+  the visible range; (2) microscopy — peridot is single crystal with characteristic lily-pad
+  chromite inclusions; jadeite is polycrystalline with an interlocking "sugary" texture;
+  (3) birefringence — peridot (biaxial positive, birefringence 0.036) will show strong
+  birefringence effects on the refractometer on a polished facet; jadeite as a polycrystalline
+  aggregate shows no net birefringence. In practice, a combination of spectroscope and
+  microscopy resolves the case definitively.
+difficulty: 4
+category: fundamentals
+conceptTags:
+  - specific-gravity
+  - refractive-index
+  - hardness
+  - peridot
+  - biaxial
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-004
+  - phys-prop-005
+similarTo:
+  - phys-prop-001
+  - phys-prop-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

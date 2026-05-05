@@ -1,0 +1,71 @@
+id: ri-reading-003
+stem: |
+  Examining a green faceted stone on the refractometer, a student observes two shadow
+  edges during rotation. Both edges move — one ranging from 1.577 to 1.583 — and the
+  two edges do not touch each other at any point in the rotation. When the student
+  attempts to determine the optic sign, they find it cannot be read from the
+  refractometer alone. Which Sturman pattern matches this observation?
+type: mcq
+options:
+  - text: "Pattern VI — both edges variable, not touching; biaxial, optic sign indeterminate from refractometer"
+    isCorrect: true
+    rationale: |
+      Pattern VI is defined as two variable shadow edges that move during rotation
+      but do not touch each other at any point. Both edges moving confirms biaxial
+      character; the fact that they do not touch means the optic sign cannot be read
+      from this pattern. The RI range 1.577–1.583 and birefringence of approximately
+      0.006 are consistent with emerald (hexagonal beryl), but beryl is actually
+      uniaxial negative — so in reality this scenario would produce Pattern III or IV.
+      The question tests pattern recognition: two moving edges, not touching = Pattern VI.
+  - text: "Pattern VII — both edges variable, touching; biaxial with determinable optic sign"
+    isCorrect: false
+    rationale: |
+      Pattern VII also shows two variable edges, but they touch at one point in the
+      rotation, which allows optic sign determination. The question explicitly states
+      the edges do not touch at any point, ruling out Pattern VII. Students often
+      confuse Pattern VI and VII because both involve two moving edges; the touching/
+      non-touching distinction separates them, exactly as it separates Pattern III
+      from Pattern IV in the uniaxial case.
+  - text: "Pattern IV — one constant, one variable, not touching; uniaxial or biaxial"
+    isCorrect: false
+    rationale: |
+      Pattern IV shows one constant edge and one variable edge that do not touch.
+      The scenario describes both edges as moving (variable), which eliminates any
+      pattern with one constant edge. Pattern IV requires one of the two edges to
+      remain fixed throughout rotation. A student might reach for Pattern IV because
+      it is the most common "ambiguous" pattern taught, but the key discriminator here
+      is that neither edge is constant.
+rationaleCorrect: |
+  Pattern VI is identified by two variable shadow edges that both move during rotation
+  and never meet. Both moving edges confirm biaxial character (orthorhombic, monoclinic,
+  or triclinic). The optic sign cannot be determined from Pattern VI alone — additional
+  testing on a conoscope or polariscope is needed. Pattern VI is often confused with
+  Pattern VII (both moving, but touching in VII), so always check whether the two
+  moving edges reach a point where they touch. A practical aid: if you can read an
+  optic sign from the refractometer pattern, it must be Pattern III or VII; if you
+  cannot, it is Pattern IV, V, or VI.
+difficulty: 3
+category: equipment
+conceptTags:
+  - sturman-patterns
+  - refractive-index
+  - biaxial
+  - optic-sign
+  - optic-character
+sourceArticle: equipment/refractometer
+examRelevance: FGA-foundation
+confusionPairs:
+  - ri-reading-001
+  - ri-reading-002
+  - ri-reading-004
+similarTo:
+  - ri-reading-002
+  - ri-reading-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: sturman-patterns-ref
+    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."

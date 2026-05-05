@@ -1,0 +1,72 @@
+id: phys-prop-007
+stem: |
+  A student receives an unset faceted green stone. Testing reveals: RI 1.577–1.583,
+  birefringence 0.006, uniaxial negative, SG 2.71, hardness approximately 7.5–8,
+  inert under both LWUV and SWUV. A second green stone gives: RI 1.620–1.640,
+  birefringence approximately 0.020, uniaxial negative, SG 3.06. Both are vivid
+  medium-dark green. Which identification is correct for each stone?
+type: mcq
+options:
+  - text: "Stone 1: emerald (beryl, uniaxial negative, RI 1.577–1.583, SG 2.67–2.78, hardness 7.5–8); Stone 2: green tourmaline (indicolite/verdelite, uniaxial negative, RI 1.620–1.640, SG 3.06)"
+    isCorrect: true
+    rationale: |
+      Stone 1 matches emerald (green beryl): hexagonal, uniaxial negative, RI 1.577–1.583,
+      SG 2.67–2.78, hardness 7.5–8. The inert UV response is typical for non-Cr/non-V
+      beryl varieties or some treated emeralds; Cr-bearing Colombian emeralds often show
+      red fluorescence LWUV, but the UV response alone does not exclude emerald. Stone 2
+      matches green tourmaline (verdelite or chrome tourmaline): trigonal, uniaxial negative,
+      RI 1.620–1.640, birefringence up to 0.020 (one of the highest of common gems), SG 3.06.
+      Both stones are uniaxial negative — the key discriminator is RI range and SG.
+  - text: "Stone 1: green tourmaline; Stone 2: emerald"
+    isCorrect: false
+    rationale: |
+      The two identifications are reversed. Green tourmaline RI is 1.620–1.640, not
+      1.577–1.583. Emerald (beryl) RI is 1.577–1.583, not 1.620–1.640. The RI ranges
+      are well separated (by 0.04–0.06 units) and represent one of the most important
+      pairings in FGA examination practice. Swapping them is a common error when students
+      memorise a list of "green gems" without anchoring each species to its specific RI
+      range. The birefringence values also differ: emerald 0.005–0.009, tourmaline up
+      to 0.020 — a clear numerical discriminator.
+  - text: "Both stones are green sapphire (corundum); the RI range 1.577–1.583 represents omega only, while 1.620–1.640 represents different cut orientations of corundum"
+    isCorrect: false
+    rationale: |
+      Corundum RI is 1.762–1.770 — neither 1.577–1.583 nor 1.620–1.640 is within
+      corundum's published range by a large margin (0.18+ units difference). No
+      orientation of corundum can give an RI reading of 1.577 on a standard refractometer;
+      the minimum omega for corundum is 1.762. This distractor is designed to catch
+      students who have confused beryl or tourmaline RI values with corundum, which
+      would represent a serious property recall failure with significant practical
+      consequences.
+rationaleCorrect: |
+  Green beryl (emerald) and green tourmaline are both uniaxial negative — a property
+  they share. The discrimination rests entirely on RI range and SG: emerald RI 1.577–1.583,
+  SG 2.67–2.78; tourmaline RI 1.620–1.640, SG 3.06. The ~0.04 RI gap between maximum
+  emerald (1.583) and minimum tourmaline (1.620) is large enough to be read clearly on
+  the refractometer even in the absence of SG data. In a practical exam, a student who
+  sees 1.577–1.583 with uniaxial negative should write "beryl/emerald" without hesitation.
+  A value of 1.620–1.640 with uniaxial negative and birefringence 0.020 is tourmaline.
+  UV fluorescence adds information (Cr-bearing emerald may fluoresce red LWUV) but is not
+  needed for the fundamental species identification.
+difficulty: 2
+category: fundamentals
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - uniaxial
+  - birefringence
+  - emerald
+  - tourmaline
+sourceArticle: fundamentals/physical-properties
+examRelevance: FGA-foundation
+confusionPairs:
+  - phys-prop-005
+  - phys-prop-008
+similarTo:
+  - phys-prop-005
+  - phys-prop-008
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 29–43."

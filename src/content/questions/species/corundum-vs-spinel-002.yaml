@@ -1,0 +1,79 @@
+id: corundum-vs-spinel-002
+stem: |
+  A gemmologist examines a faceted red stone that gives a single constant shadow edge
+  on the refractometer at approximately 1.718, remains uniformly dark on the polariscope
+  throughout a full rotation, and has SG 3.60. Under LWUV it gives a moderate red
+  fluorescence. The stone's owner insists it is a valuable natural ruby inherited from
+  their grandmother. How should the gemmologist respond, and which three properties
+  collectively eliminate ruby as the identification?
+type: mcq
+options:
+  - text: "The stone is spinel, not ruby; RI 1.718 (not 1.762–1.770), isotropic polariscope (not doubly refractive), and SG 3.60 (not 4.00) all simultaneously exclude corundum"
+    isCorrect: true
+    rationale: |
+      All three measured properties exclude ruby: (1) RI 1.718 is the published value
+      for spinel, not corundum (1.762–1.770 — a gap of 0.044 RI units, easily read on
+      a calibrated instrument); (2) isotropic polariscope (stays uniformly dark = no
+      double refraction) rules out corundum, which is uniaxial negative and lights up
+      between crossed polars; (3) SG 3.60 matches spinel (3.58–3.61) and is far below
+      corundum (3.99–4.01). The red LWUV fluorescence is consistent with both species
+      and does not establish the identification. The gemmologist should explain tactfully
+      that the stone is red spinel — historically often more beautiful than ruby, and
+      valuable in its own right.
+  - text: "The stone could be ruby; the grandmother may have owned a thermally treated ruby where heat treatment lowers the SG and RI to spinel-like values"
+    isCorrect: false
+    rationale: |
+      Heat treatment of ruby does not alter its RI or SG to match spinel values. These
+      are intrinsic properties of the crystal structure (Al2O3 for corundum vs. MgAl2O4
+      for spinel) — they cannot be changed by any heat treatment. A heat-treated ruby
+      still has RI 1.762–1.770 and SG 3.99–4.01. The measured values (RI 1.718, SG
+      3.60) cannot be corundum before or after treatment. This suggestion, if made to
+      a client, would constitute professional misinformation and potentially expose the
+      gemmologist to liability.
+  - text: "The stone might be a synthetic ruby; synthetic rubies have lower RI and SG than natural rubies because the flux growth process dilutes the aluminium oxide with flux material"
+    isCorrect: false
+    rationale: |
+      Synthetic ruby, whether flame-fusion (Verneuil), flux-grown, or hydrothermal,
+      has exactly the same chemical composition (Al2O3) and therefore the same RI
+      (1.762–1.770) and SG (3.99–4.01) as natural ruby. The growth process does not
+      dilute the corundum lattice — the resulting crystal is pure Al2O3 with the same
+      physical properties. Flux inclusions may be present as inclusions, but the host
+      crystal's RI and SG are indistinguishable from natural. The measured 1.718 and
+      3.60 cannot be any form of corundum, natural or synthetic.
+rationaleCorrect: |
+  This is the classic red spinel/ruby confusion — the most commercially important
+  gem misidentification in history. Red spinel (MgAl2O4) and ruby (Al2O3) were
+  considered the same gem for centuries because both are red and often found together
+  in alluvial deposits in Myanmar. The three-property elimination: (1) RI 1.718 is
+  spinel; (2) isotropic polariscope is spinel (cubic); (3) SG 3.60 is spinel. All
+  three are required — any one alone could theoretically be argued, but all three
+  together are conclusive. The gemmologist's communication must be tactful: the
+  stone is fine red spinel, which is valuable and beautiful in its own right — in
+  recent years fine red spinel has achieved prices per carat approaching those of
+  ruby. Reframing the conversation from "it is not ruby" to "it is rare fine spinel"
+  is better gemmological practice.
+difficulty: 3
+category: species
+conceptTags:
+  - refractive-index
+  - specific-gravity
+  - optic-character
+  - fluorescence-LWUV
+  - spinel
+  - ruby
+  - corundum
+sourceArticle: species/spinel
+examRelevance: FGA-foundation
+confusionPairs:
+  - corundum-vs-spinel-001
+  - corundum-vs-spinel-003
+  - red-stone-garnet-001
+similarTo:
+  - corundum-vs-spinel-001
+  - red-stone-garnet-001
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
