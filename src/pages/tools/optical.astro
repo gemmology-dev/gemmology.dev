@@ -3,12 +3,22 @@
  * Optical Properties tools page.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedOptical } from '../../components/auth/ProtectedOptical';
+import { OpticalTools } from '../../components/optical/OpticalTools';
 ---
 
 <BaseLayout
   title="Optical Properties"
-  description="Optical property tools including dichroscope, polariscope, refractometer simulator, and pleochroism reference."
+  description="Interactive tools for optical testing: dichroscope, polariscope, refractometer simulator, and pleochroism reference."
 >
-  <ProtectedOptical client:load />
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Optical Properties</h1>
+        <p class="text-slate-600 mt-2">
+          Interactive tools for optical testing including dichroscope interpretation, polariscope reactions, refractometer reading practice, and pleochroism reference.
+        </p>
+      </div>
+      <OpticalTools client:load />
+    </div>
+  </div>
 </BaseLayout>

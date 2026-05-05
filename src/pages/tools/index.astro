@@ -1,15 +1,14 @@
 ---
 /**
  * Tools hub page.
- * Lists available tools and calculators.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ProtectedTools } from '../../components/auth/ProtectedTools';
+import { ToolsHub } from '../../components/tools/ToolsHub';
 ---
 
 <BaseLayout
   title="Tools"
   description="Gemmological tools and calculators for professionals and students."
 >
-  <ProtectedTools client:load />
+  <ToolsHub client:load />
 </BaseLayout>

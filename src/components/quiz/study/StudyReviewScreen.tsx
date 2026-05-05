@@ -1,7 +1,7 @@
 /**
  * StudyReviewScreen — page-level wrapper that surfaces SM-2 due items.
  *
- * Used by `src/pages/study/review.astro`. Auth-gated via LockGate.
+ * Used by `src/pages/study/review.astro`.
  *
  * Behaviour:
  *  - Generate the full question pool from learn entries
@@ -11,7 +11,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import { LockGate } from '../../auth/LockGate';
 import { Quiz } from '../Quiz';
 import { Button } from '../../ui/Button';
 import {
@@ -53,34 +52,32 @@ export function StudyReviewScreen({ learnEntries }: StudyReviewScreenProps) {
   };
 
   return (
-    <LockGate>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
-        <div className="max-w-4xl mx-auto px-4">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-slate-900">Review</h1>
-            <p className="text-slate-600 mt-2">
-              Spaced-repetition queue — items the scheduler says you should see today.
-            </p>
-          </header>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+      <div className="max-w-4xl mx-auto px-4">
+        <header className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-900">Review</h1>
+          <p className="text-slate-600 mt-2">
+            Spaced-repetition queue — items the scheduler says you should see today.
+          </p>
+        </header>
 
-          {dueQuestions === null ? (
-            <div className="text-center py-12 animate-pulse text-slate-400">
-              Loading due items…
-            </div>
-          ) : dueQuestions.length === 0 ? (
-            <EmptyReviewState />
-          ) : (
-            <Quiz
-              config={config}
-              questions={dueQuestions}
-              onBack={() => {
-                window.location.href = '/quiz';
-              }}
-            />
-          )}
-        </div>
+        {dueQuestions === null ? (
+          <div className="text-center py-12 animate-pulse text-slate-400">
+            Loading due items…
+          </div>
+        ) : dueQuestions.length === 0 ? (
+          <EmptyReviewState />
+        ) : (
+          <Quiz
+            config={config}
+            questions={dueQuestions}
+            onBack={() => {
+              window.location.href = '/quiz';
+            }}
+          />
+        )}
       </div>
-    </LockGate>
+    </div>
   );
 }
 
