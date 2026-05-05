@@ -1,0 +1,69 @@
+id: ri-reading-001
+stem: |
+  A student places a polished faceted stone on the refractometer and rotates it through
+  a full 360 degrees. Throughout the entire rotation, a single shadow edge remains
+  completely stationary at 1.544. Which Sturman pattern is observed, and what does
+  it indicate about the stone's optical character?
+type: mcq
+options:
+  - text: "Pattern I — the stone is isotropic"
+    isCorrect: false
+    rationale: |
+      Pattern I does produce a single constant shadow edge, but the RI of 1.544 is
+      consistent with quartz, not an isotropic gem. Quartz is uniaxial positive,
+      not isotropic. A single constant edge can arise from Pattern I (isotropic) or
+      from Pattern II (uniaxial with c-axis perpendicular to table, where both omega
+      and epsilon happen to read together). At RI 1.544, quartz (Pattern II or III
+      reading omega) is a more accurate interpretation — but this distractor tests
+      whether students conflate "one constant edge" with isotropic character exclusively.
+  - text: "Pattern II — the stone is uniaxial with its c-axis perpendicular to the table facet"
+    isCorrect: false
+    rationale: |
+      Pattern II shows two constant, parallel edges that remain fixed during rotation.
+      The scenario describes only one shadow edge throughout the entire rotation, which
+      rules out Pattern II. A student might choose this because they know quartz is
+      uniaxial and assume any uniaxial reading shows two edges, but Pattern II requires
+      exactly two constant parallel edges to be visible simultaneously.
+  - text: "Pattern I — the stone displays one constant shadow edge, consistent with isotropic or a uniaxial stone viewed down its optic axis"
+    isCorrect: true
+    rationale: |
+      Pattern I is defined as a single shadow edge that remains constant during full
+      rotation. This can indicate either an isotropic material or a uniaxial stone
+      viewed exactly down the optic axis (c-axis), where omega = epsilon in that
+      viewing direction. At 1.544, isotropic fluorite (1.434) is excluded; quartz
+      omega (1.544) viewed down c-axis fits. The correct interpretation is Pattern I
+      with the caveat that isotropic and c-axis-oriented uniaxial cannot be distinguished
+      without re-examining the stone on a different facet.
+rationaleCorrect: |
+  Pattern I is defined as one constant shadow edge throughout full rotation. The key
+  teaching point is that Pattern I does NOT prove isotropic character — it could also
+  mean a uniaxial stone is oriented with its c-axis perpendicular to the hemisphere
+  (i.e. you are looking down the optic axis). At RI 1.544, quartz omega is the classic
+  match: to determine whether this is an isotropic gem or quartz viewed down c, the
+  gemmologist must turn the stone and examine it on a different facet, or test on the
+  polariscope. Note: the student should resist the temptation to call it "definitely
+  isotropic" from a single constant edge alone.
+difficulty: 3
+category: equipment
+conceptTags:
+  - sturman-patterns
+  - refractive-index
+  - isotropic
+  - uniaxial
+  - optic-character
+sourceArticle: equipment/refractometer
+examRelevance: FGA-foundation
+confusionPairs:
+  - ri-reading-002
+  - ri-reading-003
+similarTo:
+  - ri-reading-002
+  - ri-reading-004
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: sturman-patterns-ref
+    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."
