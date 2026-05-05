@@ -148,7 +148,7 @@ export function CaratEstimator() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FormField name="dim-length" label="Length" unit="mm" error={errors.length}>
           <NumberInput
             value={values.length}
@@ -180,7 +180,7 @@ export function CaratEstimator() {
         </FormField>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField name="shape-select" label="Shape">
           <Select
             options={shapes.map(s => ({ value: s.value, label: s.label }))}
