@@ -15,14 +15,14 @@ options:
       (a ≠ b ≠ c) [ref:read-gemmology-3e]. A crystal with three pairs of rectangular faces, all meeting at right
       angles but of different sizes, perfectly expresses this geometry. The tetragonal
       system also has all right angles but requires two axes of equal length (a = b ≠ c),
-      which would produce two identical pairs of faces and one different pair — not three
+      which would produce two identical pairs of faces and one different pair – not three
       different pairs [ref:read-gemmology-3e]. Cubic requires all three axes equal.
   - text: "Tetragonal; tetragonal crystals have three axes at 90° and commonly show different face sizes"
     isCorrect: false
     rationale: |
       Tetragonal crystals have two equal horizontal axes and one unique vertical axis
       (a = b ≠ c), with all three axes at 90° [ref:read-gemmology-3e]. This means the four faces parallel to
-      the a and b axes are equivalent, producing only two pairs of different face sizes —
+      the a and b axes are equivalent, producing only two pairs of different face sizes –
       not three pairs as described. If all three pinacoid pairs are different sizes, the
       two horizontal axes cannot be equal, which rules out tetragonal.
   - text: "Cubic; the 90° inter-axial angles and pairs of opposite faces confirm cubic symmetry"
@@ -36,7 +36,7 @@ options:
 rationaleCorrect: |
   The orthorhombic system is uniquely identified by its axial definition: three unequal
   axes (a ≠ b ≠ c) that are all mutually perpendicular (alpha = beta = gamma = 90°) [ref:read-gemmology-3e].
-  The crystal habit described — three different-sized pinacoid pairs at all right angles —
+  The crystal habit described – three different-sized pinacoid pairs at all right angles –
   perfectly expresses orthorhombic geometry. Gemmologically important orthorhombic gems:
   topaz (perfect basal cleavage), peridot (olivine), tanzanite (zoisite), chrysoberyl
   (alexandrite, cat's-eye), andalusite, danburite [ref:read-gemmology-3e]. All are biaxial and show true

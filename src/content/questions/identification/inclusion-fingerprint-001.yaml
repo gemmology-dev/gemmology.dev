@@ -9,15 +9,15 @@ stem: |
   cloud-like appearance. What do these two different fingerprint appearances indicate?
 type: mcq
 options:
-  - text: "Stone 1 (sharp, well-defined network) has a natural fingerprint from a healed fracture; Stone 2 (fuzzy, cotton-like pattern) shows flux fingerprints — the different texture indicates heat treatment in the presence of flux material"
+  - text: "Stone 1 (sharp, well-defined network) has a natural fingerprint from a healed fracture; Stone 2 (fuzzy, cotton-like pattern) shows flux fingerprints – the different texture indicates heat treatment in the presence of flux material"
     isCorrect: true
     rationale: |
       Natural fingerprint inclusions form when a fracture heals around residual fluid,
       trapping droplets in a regular lace-like pattern [ref:gubelin-koivula-vol1]. The healing process in natural
       conditions (geological time, groundwater or metamorphic fluid) produces sharp,
       well-defined droplet edges because the healing is complete and the fluid droplets
-      are clearly bounded. Flux fingerprints — formed when fractures are healed during
-      high-temperature treatment in the presence of a flux (e.g. borax) — show a
+      are clearly bounded. Flux fingerprints – formed when fractures are healed during
+      high-temperature treatment in the presence of a flux (e.g. borax) – show a
       distinctly different texture: fuzzy, cottony, or cloud-like edges because the
       molten flux material partially fills the fracture and leaves an irregular,
       glassy residue with less well-defined droplet boundaries [ref:gubelin-koivula-vol1].
@@ -25,11 +25,11 @@ options:
     isCorrect: false
     rationale: |
       Curved growth striae in Verneuil synthetic corundum are fine curved lines that
-      extend across the stone parallel to the growth front — they do not form lace-like
+      extend across the stone parallel to the growth front – they do not form lace-like
       droplet networks resembling fingerprints [ref:gubelin-koivula-vol1]. Fingerprint inclusions in both natural
       and flux-treated corundums form from healed fractures containing fluid; their
       origin is mechanical (a fracture that healed), not from the initial growth process [ref:read-gemmology-3e].
-      Stone 2's fuzzy appearance is not from a "partially healed fissure" — a partially
+      Stone 2's fuzzy appearance is not from a "partially healed fissure" – a partially
       healed fracture would show clear fluid or open fracture areas, not a cottony
       texture throughout the fingerprint.
   - text: "Both fingerprints are identical in nature; the apparent texture difference is an artefact of different illumination angles during observation and has no diagnostic significance"
@@ -37,7 +37,7 @@ options:
     rationale: |
       The textural difference between natural fingerprints (sharp, well-defined droplets)
       and flux fingerprints (fuzzy, cottony) is a genuine physical difference in the
-      nature of the included material — not an illumination artefact [ref:gubelin-koivula-vol1]. This distinction
+      nature of the included material – not an illumination artefact [ref:gubelin-koivula-vol1]. This distinction
       is documented in the gemmological literature as a treatment indicator. Experienced
       gemmologists deliberately use both darkfield and fibre-optic illumination to
       confirm the textures are stable across lighting conditions.
@@ -49,7 +49,7 @@ rationaleCorrect: |
   borax or other fluxes; the flux melt partially fills the fracture, producing an
   irregular glassy residue with fuzzy boundaries [ref:gubelin-koivula-vol1]. The difference is reproducible
   across lighting conditions and magnifications. A laboratory report noting "flux
-  fingerprints observed" means heat treatment with a flux material is indicated —
+  fingerprints observed" means heat treatment with a flux material is indicated –
   this affects disclosure requirements in the trade [ref:read-gemmology-3e].
 difficulty: 4
 category: identification

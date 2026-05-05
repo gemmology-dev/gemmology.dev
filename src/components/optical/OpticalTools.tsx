@@ -20,7 +20,7 @@ export function OpticalTools() {
       <ToolSection
         id="dichroscope"
         title="Dichroscope Results"
-        description="Input observed colors to identify dichroic gem candidates"
+        description="Input observed colours to identify dichroic gem candidates"
         iconPath={ICON_PATHS.eye}
         accent="purple"
       >

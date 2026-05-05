@@ -3,17 +3,17 @@ stem: |
   During a practical session, a student examines a rough zircon crystal. The crystal
   shows a strongly developed tetragonal prism habit with four equivalent rectangular
   side faces and two square terminal faces. On the refractometer, the student records
-  RI values of 1.931 and 1.984 — a birefringence of 0.053. On the polariscope, it
+  RI values of 1.931 and 1.984 – a birefringence of 0.053. On the polariscope, it
   lights up strongly. Which crystal system does zircon belong to, and which optic
   character is consistent with the tetragonal system?
 type: mcq
 options:
-  - text: "Tetragonal; uniaxial positive — tetragonal gems are always uniaxial, and high zircon is uniaxial positive with the very high birefringence of 0.053"
+  - text: "Tetragonal; uniaxial positive – tetragonal gems are always uniaxial, and high zircon is uniaxial positive with the very high birefringence of 0.053"
     isCorrect: true
     rationale: |
       Zircon (ZrSiO4) belongs to the tetragonal system (point group 4/mmm), which
-      is always uniaxial [ref:read-gemmology-3e]. The tetragonal crystal habit — four-fold symmetry in the
-      horizontal plane, one four-fold axis — is consistent with the prism+terminal
+      is always uniaxial [ref:read-gemmology-3e]. The tetragonal crystal habit – four-fold symmetry in the
+      horizontal plane, one four-fold axis – is consistent with the prism+terminal
       habit described. Tetragonal gems are uniaxial; zircon specifically is uniaxial
       positive (epsilon > omega) [ref:read-gemmology-3e]. High zircon's birefringence of 0.053 is the largest
       of common gem-quality stones, making the strongly lit polariscope response expected.
@@ -21,7 +21,7 @@ options:
     isCorrect: false
     rationale: |
       Hexagonal and tetragonal systems are different. Hexagonal crystals show six-fold
-      symmetry — six equivalent side faces on the prism — while tetragonal crystals
+      symmetry – six equivalent side faces on the prism – while tetragonal crystals
       show four-fold symmetry, as in the described crystal with four equivalent side
       faces [ref:read-gemmology-3e]. The crystal habit described (four side faces, square terminals) is
       tetragonal, not hexagonal. Both are uniaxial, but the crystal habit and the
@@ -34,11 +34,11 @@ options:
       numerical difference between maximum and minimum RI) can be large in both
       uniaxial and biaxial gems [ref:read-gemmology-3e]. Zircon's 0.053 is large but it is a uniaxial stone
       measured between omega and epsilon. An orthorhombic gem with similar birefringence
-      would show a biaxial interference figure and three distinct RI values — zircon
+      would show a biaxial interference figure and three distinct RI values – zircon
       gives two RI values on the refractometer and a uniaxial figure on the conoscope [ref:read-gemmology-3e].
 rationaleCorrect: |
   Zircon is tetragonal (4/mmm), uniaxial positive [ref:read-gemmology-3e], with one of the highest birefringences
-  of any gem — high zircon 0.053 [ref:read-gemmology-3e], so strong that doubling of back facets is visible to
+  of any gem – high zircon 0.053 [ref:read-gemmology-3e], so strong that doubling of back facets is visible to
   the naked eye through the table. Tetragonal crystals always have one four-fold axis
   and are uniaxial. The RI of high zircon (1.931–1.984) is above the standard
   refractometer range [ref:read-gemmology-3e]. Zircon is diagnostically identified by: tetragonal

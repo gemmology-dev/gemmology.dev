@@ -12,8 +12,8 @@ options:
   - text: "Colombian emerald (beryl); three-phase inclusions with a halite cube are virtually diagnostic of Colombian origin; the jardin and two-phase inclusions confirm natural emerald"
     isCorrect: true
     rationale: |
-      The three-phase inclusion — liquid + gas bubble + solid cubic crystal (halite,
-      NaCl) — is one of the most celebrated diagnostic features in gemmology: it is
+      The three-phase inclusion – liquid + gas bubble + solid cubic crystal (halite,
+      NaCl) – is one of the most celebrated diagnostic features in gemmology: it is
       virtually diagnostic of Colombian origin for emerald [ref:gubelin-koivula-vol1]. The RI ~1.58 (beryl range
       1.577–1.583), SG 2.71 (beryl range 2.67–2.78) [ref:read-gemmology-3e], dichroism in blue-green and
       yellow-green, and parallel growth tubes all confirm emerald [ref:read-gemmology-3e]. The jardin (from
@@ -22,14 +22,14 @@ options:
     isCorrect: false
     rationale: |
       Chrome tourmaline (Cr-bearing elbaite/dravite) is vivid green with strong
-      dichroism — correct. However, tourmaline RI is 1.620–1.640, not approximately
+      dichroism – correct. However, tourmaline RI is 1.620–1.640, not approximately
       1.58 [ref:read-gemmology-3e]. A spot reading of 1.58 falls well below tourmaline's minimum RI.
-      Three-phase inclusions with a halite cube are not a known feature of tourmaline —
+      Three-phase inclusions with a halite cube are not a known feature of tourmaline –
       they are specific to the saline-fluid formation environment of Colombian emerald [ref:gubelin-koivula-vol1].
   - text: "Tsavorite garnet (grossular); tsavorite is vivid green, has SG approximately 3.61, and shows strong dichroism"
     isCorrect: false
     rationale: |
-      Tsavorite (chrome/vanadium grossular garnet) is cubic and therefore isotropic —
+      Tsavorite (chrome/vanadium grossular garnet) is cubic and therefore isotropic –
       it shows no dichroism or pleochroism [ref:read-gemmology-3e]. The strong dichroism observed in this stone
       eliminates any cubic gem, including all garnets. Additionally, tsavorite SG is
       approximately 3.58–3.73, clearly higher than the measured 2.71 [ref:read-gemmology-3e]. The spot RI of
@@ -41,7 +41,7 @@ rationaleCorrect: |
   evidence of Colombian origin [ref:gubelin-koivula-vol1]. The jardin of inclusions and two-phase cavities adds
   supporting natural-origin evidence. Beryl RI 1.577–1.583, SG 2.67–2.78 confirms the
   species [ref:read-gemmology-3e]. The dichroism (blue-green / yellow-green) is characteristic of Cr-bearing
-  emerald [ref:read-gemmology-3e]. Note: UV response varies — some Colombian emeralds fluoresce, others do
+  emerald [ref:read-gemmology-3e]. Note: UV response varies – some Colombian emeralds fluoresce, others do
   not, depending on iron content, so UV inertness does not exclude Colombia [ref:read-gemmology-3e].
 difficulty: 4
 category: species

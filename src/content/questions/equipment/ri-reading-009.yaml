@@ -29,7 +29,7 @@ options:
   - text: "The optic sign cannot be determined from Pattern VII without a conoscope"
     isCorrect: false
     rationale: |
-      Pattern VII — two variable edges that touch — is specifically the pattern from
+      Pattern VII (two variable edges that touch) is specifically the pattern from
       which biaxial optic sign CAN be read directly from the refractometer, without
       a conoscope [ref:read-gemmology-3e]. The student correctly identifies Pattern VII and measures the three
       RI values (alpha, beta, gamma), which is exactly the information needed to apply
@@ -41,7 +41,7 @@ rationaleCorrect: |
   all three RI values (alpha, beta, gamma) to be read from the refractometer [ref:read-gemmology-3e]. The
   optic sign is then determined by beta's position: beta close to alpha = biaxial
   positive; beta close to gamma = biaxial negative [ref:read-gemmology-3e]. Here: alpha 1.619, beta 1.622,
-  gamma 1.627. Beta is 0.003 from alpha and 0.005 from gamma — closer to alpha,
+  gamma 1.627. Beta is 0.003 from alpha and 0.005 from gamma, closer to alpha,
   therefore biaxial positive [ref:read-gemmology-3e]. Topaz (orthorhombic, biaxial positive) fits the RI
   range [ref:read-gemmology-3e]. The common error is inverting the rule [ref:anderson-gem-testing].
 difficulty: 4

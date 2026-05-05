@@ -1,13 +1,13 @@
 id: ri-reading-005
 stem: |
   While testing an orange faceted stone on the refractometer, a student notices the
-  two shadow edges appear to cross each other — one edge passes through the position
-  of the other as the stone is rotated. Neither edge is constant. The student records
+  two shadow edges appear to cross each other (one edge passes through the position
+  of the other as the stone is rotated). Neither edge is constant. The student records
   an approximate RI range of 1.619–1.627. Which Sturman pattern is this, and what
   optic character does it confirm?
 type: mcq
 options:
-  - text: "Pattern V — shadow edges intersect; confirms biaxial character"
+  - text: "Pattern V: shadow edges intersect; confirms biaxial character"
     isCorrect: true
     rationale: |
       Pattern V is specifically defined as two shadow edges that cross (intersect)
@@ -16,15 +16,15 @@ options:
       The RI range 1.619–1.627 with birefringence of approximately 0.008 is consistent
       with topaz, an orthorhombic (biaxial positive) gem [ref:read-gemmology-3e]. The intersection of edges is
       the key visual observation distinguishing Pattern V from Patterns IV and VI [ref:anderson-gem-testing].
-  - text: "Pattern IV — one constant, one variable, not touching; uniaxial or biaxial ambiguous"
+  - text: "Pattern IV: one constant, one variable, not touching; uniaxial or biaxial ambiguous"
     isCorrect: false
     rationale: |
       Pattern IV requires one edge to remain constant (not move) during rotation [ref:read-gemmology-3e].
-      The question states neither edge is constant — both move. This rules out any
+      The question states neither edge is constant; both move. This rules out any
       pattern featuring a constant edge. A student might choose Pattern IV because
       it is also "ambiguous" and involves non-touching edges, but the defining feature
       here is the crossing/intersection of the edges, which Pattern IV never shows [ref:read-gemmology-3e].
-  - text: "Pattern VII — both edges variable, touching; biaxial with determinable optic sign"
+  - text: "Pattern VII: both edges variable, touching; biaxial with determinable optic sign"
     isCorrect: false
     rationale: |
       Pattern VII shows two variable edges that touch at one point [ref:read-gemmology-3e]. Touching means
@@ -35,13 +35,13 @@ options:
       for Pattern V [ref:anderson-gem-testing]. Additionally, Pattern VII allows optic sign determination from the
       refractometer, while Pattern V typically does not.
 rationaleCorrect: |
-  Pattern V is uniquely identified by shadow edges that cross each other during rotation —
+  Pattern V is uniquely identified by shadow edges that cross each other during rotation;
   one edge appears to pass through the position of the other [ref:read-gemmology-3e]. This crossing proves biaxial
   character. The distinction from Pattern VII (touching) is that in Pattern V the edges
   physically intersect, while in Pattern VII they touch at a single tangent point [ref:read-gemmology-3e].
   At RI 1.619–1.627 with birefringence ~0.008, imperial topaz (orthorhombic, biaxial
   positive) is the textbook match [ref:read-gemmology-3e]. Always confirm Pattern V by looking for the moment
-  the edges appear to swap positions — that exchange of position is the crossing event [ref:anderson-gem-testing].
+  the edges appear to swap positions; that exchange of position is the crossing event [ref:anderson-gem-testing].
   Pattern V is less common than IV or VI in routine testing and is often missed by
   candidates who only rotate the stone through 90° rather than a full 360° [ref:anderson-gem-testing].
 difficulty: 4

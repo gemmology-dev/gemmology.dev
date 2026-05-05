@@ -16,7 +16,7 @@ interface Props {
 
 const {
   title,
-  description = 'Crystal structure visualization and gemmological reference for FGA students and professionals.',
+  description = 'Crystal structure visualisation and gemmological reference for FGA students and professionals.',
   image,
   canonical,
   type = 'website',
@@ -35,8 +35,8 @@ const ogImage = image || new URL('/og-default.jpg', Astro.site).href;
 // brand IS the title (avoids "gemmology.dev — gemmology.dev" duplication).
 const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 const fullTitle = isHome
-  ? `gemmology.dev — Crystal Visualization & FGA Reference`
-  : `gemmology.dev — ${title}`;
+  ? `gemmology.dev – Crystal Visualisation & FGA Reference`
+  : `gemmology.dev – ${title}`;
 ---
 
 <!doctype html>

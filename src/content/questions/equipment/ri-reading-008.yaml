@@ -37,7 +37,7 @@ options:
 rationaleCorrect: |
   The spot method is a practical compromise for curved surfaces: it gives an approximate
   RI (±0.01) useful for screening, but the result should always be recorded as approximate [ref:anderson-gem-testing].
-  The critical limitation is the inability to measure birefringence — birefringence
+  The critical limitation is the inability to measure birefringence; birefringence
   requires rotating the stone to find two distinct edge positions, which requires a
   polished flat facet and the standard technique [ref:read-gemmology-3e]. A cabochon RI reading of approximately
   1.71 could indicate spinel, chrysoberyl, or other species; the gemmologist must note

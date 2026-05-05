@@ -10,21 +10,21 @@ options:
   - text: "A healed fingerprint shows a regular network of tiny fluid droplets and remains internal with no light leakage from the surface; a fissure shows continuity to the surface (visible as a bright line under reflected light) and often shows iridescence from thin-film interference or allows contact liquid to enter the fracture during refractometer testing"
     isCorrect: true
     rationale: |
-      The key discriminators are: (1) internal vs. surface-reaching — a fingerprint is
+      The key discriminators are: (1) internal vs. surface-reaching – a fingerprint is
       fully enclosed within the gem [ref:gubelin-koivula-vol1]; under fibre-optic or reflected light, a fissure
-      shows bright light leakage where it reaches the surface; (2) iridescence — open
+      shows bright light leakage where it reaches the surface; (2) iridescence – open
       or partially open fissures show interference colours (iridescence) from a thin
       air gap within the fracture; healed fingerprints have no air gap and show no
-      iridescence [ref:gubelin-koivula-vol1]; (3) contact liquid test — when testing on the refractometer, contact
+      iridescence [ref:gubelin-koivula-vol1]; (3) contact liquid test – when testing on the refractometer, contact
       liquid can enter a surface-reaching fissure and may affect the reading [ref:anderson-gem-testing];
-      (4) the network pattern — a true fingerprint shows the characteristic lace-like
+      (4) the network pattern – a true fingerprint shows the characteristic lace-like
       droplet pattern [ref:gubelin-koivula-vol1]. The distinction matters for appraisal: a surface-reaching fissure
       reduces durability and value; an internal fingerprint is less concerning [ref:read-gemmology-3e].
   - text: "Rotate the stone under crossed polars; a fingerprint shows birefringence effects, while a fissure does not"
     isCorrect: false
     rationale: |
       Neither a fingerprint inclusion nor a fissure shows intrinsic birefringence effects
-      between crossed polars — these are not inherently birefringent features [ref:read-gemmology-3e]. The host
+      between crossed polars – these are not inherently birefringent features [ref:read-gemmology-3e]. The host
       gem's birefringence is what is observed on the polariscope, not the inclusion type.
       A birefringent host (e.g. sapphire) shows birefringence across the whole stone,
       regardless of whether it contains fingerprints or fissures. Using the polariscope
@@ -43,7 +43,7 @@ options:
 rationaleCorrect: |
   The fingerprint/fissure distinction is fundamental to gem appraisal because the two
   features have very different implications for durability and value [ref:read-gemmology-3e]. A fully internal
-  fingerprint does not reach the surface — it cannot be a point of entry for cleaning
+  fingerprint does not reach the surface – it cannot be a point of entry for cleaning
   solutions, setting prongs, or mechanical stress propagation. A surface-reaching fissure
   is a vulnerability: it can extend with use, trap foreign material, and reduce the gem's
   useful life in jewellery. The practical tests are: (1) low-power reflected light scanning

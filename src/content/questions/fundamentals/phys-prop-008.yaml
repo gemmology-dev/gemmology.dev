@@ -2,7 +2,7 @@ id: phys-prop-008
 stem: |
   A kyanite crystal is being assessed for cutting. A student measures the hardness
   in two directions: parallel to the length of the crystal (along the c-axis) and
-  perpendicular to the length. The readings are markedly different — approximately
+  perpendicular to the length. The readings are markedly different – approximately
   4.5–5 parallel to the c-axis and 6.5–7 perpendicular. The student asks why the
   hardness differs so dramatically in a single mineral species. What is the correct
   mineralogical explanation?
@@ -17,7 +17,7 @@ options:
       produces weaker planes parallel to the length (c-axis direction), giving hardness
       4.5–5 in that direction, and stronger planes perpendicular, giving 6.5–7 [ref:read-gemmology-3e].
       This property gave kyanite its historical name "disthene" (two strengths). The
-      same mineral — same crystal, same composition — scratches easily along one
+      same mineral – same crystal, same composition – scratches easily along one
       direction and resists scratching in another.
   - text: "The two measurements were taken on different zones of the crystal that have different compositions due to chemical zoning, causing the hardness variation"
     isCorrect: false
@@ -43,8 +43,8 @@ rationaleCorrect: |
   it can vary by 2 full Mohs units depending on the direction of the test [ref:read-gemmology-3e]. This has
   significant practical implications: cutting and polishing kyanite is challenging because
   the polishing wheel must be oriented correctly for each facet. Directional hardness is
-  not unique to kyanite — diamond also varies by direction (hardest along octahedral,
-  softest across dodecahedral) [ref:read-gemmology-3e] — but kyanite is the most extreme and pedagogically
+  not unique to kyanite – diamond also varies by direction (hardest along octahedral,
+  softest across dodecahedral) [ref:read-gemmology-3e] – but kyanite is the most extreme and pedagogically
   useful example in gemmology.
 difficulty: 2
 category: fundamentals

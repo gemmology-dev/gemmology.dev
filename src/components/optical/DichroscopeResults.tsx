@@ -22,16 +22,16 @@ const FALLBACK_DICHROIC_GEMS: DichroscopeData[] = [
   { gem: 'Ruby', color1: 'Red', color2: 'Orange-red', strength: 'Strong', notes: 'Best seen in thick stones' },
   { gem: 'Sapphire (Blue)', color1: 'Blue', color2: 'Greenish-blue', strength: 'Strong', notes: 'Varies with saturation' },
   { gem: 'Emerald', color1: 'Blue-green', color2: 'Yellow-green', strength: 'Moderate', notes: 'More visible in darker stones' },
-  { gem: 'Alexandrite', color1: 'Red/Purple', color2: 'Orange/Green', color3: 'Green', strength: 'Very Strong', notes: 'Color change + pleochroism' },
-  { gem: 'Tanzanite', color1: 'Blue/Violet', color2: 'Purple/Red', color3: 'Bronze', strength: 'Very Strong', notes: 'Trichroic — see 3 colors' },
+  { gem: 'Alexandrite', color1: 'Red/Purple', color2: 'Orange/Green', color3: 'Green', strength: 'Very Strong', notes: 'Colour change + pleochroism' },
+  { gem: 'Tanzanite', color1: 'Blue/Violet', color2: 'Purple/Red', color3: 'Bronze', strength: 'Very Strong', notes: 'Trichroic; shows 3 colours' },
   { gem: 'Tourmaline (Green)', color1: 'Dark green', color2: 'Light green', strength: 'Strong', notes: 'Best down c-axis' },
   { gem: 'Tourmaline (Pink)', color1: 'Dark pink', color2: 'Light pink', strength: 'Strong', notes: 'Visible in most directions' },
-  { gem: 'Iolite', color1: 'Violet-blue', color2: 'Pale yellow', color3: 'Colorless', strength: 'Very Strong', notes: 'Dramatic color shift' },
-  { gem: 'Andalusite', color1: 'Red-brown', color2: 'Yellow-green', color3: 'Green', strength: 'Very Strong', notes: 'Distinctive colors' },
-  { gem: 'Kunzite', color1: 'Violet', color2: 'Colorless/Pink', strength: 'Strong', notes: 'Fades in light' },
+  { gem: 'Iolite', color1: 'Violet-blue', color2: 'Pale yellow', color3: 'Colourless', strength: 'Very Strong', notes: 'Striking colour shift' },
+  { gem: 'Andalusite', color1: 'Red-brown', color2: 'Yellow-green', color3: 'Green', strength: 'Very Strong', notes: 'Distinctive colours' },
+  { gem: 'Kunzite', color1: 'Violet', color2: 'Colourless/Pink', strength: 'Strong', notes: 'Fades in light' },
   { gem: 'Peridot', color1: 'Green', color2: 'Yellow-green', strength: 'Weak', notes: 'Subtle difference' },
-  { gem: 'Aquamarine', color1: 'Blue', color2: 'Colorless/Pale blue', strength: 'Weak', notes: 'Often not visible' },
-  { gem: 'Topaz (Blue)', color1: 'Colorless', color2: 'Pale blue', strength: 'Weak', notes: 'Difficult to detect' },
+  { gem: 'Aquamarine', color1: 'Blue', color2: 'Colourless/Pale blue', strength: 'Weak', notes: 'Often not visible' },
+  { gem: 'Topaz (Blue)', color1: 'Colourless', color2: 'Pale blue', strength: 'Weak', notes: 'Difficult to detect' },
   { gem: 'Morganite', color1: 'Pink', color2: 'Pale pink', strength: 'Weak', notes: 'Requires good stone' },
 ];
 
@@ -116,7 +116,7 @@ export function DichroscopeResults() {
       {/* Filter bar — single row across full width */}
       <div className="flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-[140px]">
-          <label className="block text-xs font-semibold text-slate-600 mb-1">First Color</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1">First Colour</label>
           <input
             type="text"
             value={color1}
@@ -126,7 +126,7 @@ export function DichroscopeResults() {
           />
         </div>
         <div className="flex-1 min-w-[140px]">
-          <label className="block text-xs font-semibold text-slate-600 mb-1">Second Color</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1">Second Colour</label>
           <input
             type="text"
             value={color2}
@@ -205,14 +205,14 @@ export function DichroscopeResults() {
           )}
         </>
       ) : (
-        <div className="text-center py-6 text-slate-600 text-sm">No matching gems found. Try different color terms.</div>
+        <div className="text-center py-6 text-slate-600 text-sm">No matching gems found. Try different colour terms.</div>
       )}
 
       {/* Usage tips — inline */}
       <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
         <span>• Isotropic gems (cubic) show no pleochroism</span>
-        <span>• Uniaxial gems show 2 colors</span>
-        <span>• Biaxial gems can show 2–3 colors</span>
+        <span>• Uniaxial gems show 2 colours</span>
+        <span>• Biaxial gems can show 2–3 colours</span>
         <span>• Best viewed in strong light against white</span>
       </div>
 

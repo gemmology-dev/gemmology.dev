@@ -12,7 +12,7 @@ options:
     isCorrect: true
     rationale: |
       Almandine (Fe-Al garnet) is cubic and isotropic, with RI typically 1.770–1.830
-      and SG 3.9–4.2 [ref:read-gemmology-3e] — the measured 1.75 and 3.82 fall within the lower end of almandine
+      and SG 3.9–4.2 [ref:read-gemmology-3e] – the measured 1.75 and 3.82 fall within the lower end of almandine
       or could indicate a pyrope-almandine intermediate (rhodolite). The single constant
       edge confirms isotropic (cubic) behaviour. The patchy, irregular lightening on the
       polariscope is anomalous double refraction (ADR): strain birefringence from growth
@@ -22,7 +22,7 @@ options:
     isCorrect: false
     rationale: |
       A uniaxial stone examined exactly down its optic axis (the c-axis) would appear
-      uniformly dark between crossed polars — it would not show patchy, irregular
+      uniformly dark between crossed polars – it would not show patchy, irregular
       lightening [ref:read-gemmology-3e]. Patchy lightening is specifically the pattern of ADR (anomalous double
       refraction) in cubic minerals, not the pattern of a uniaxial stone viewed down
       its optic axis. Moreover, ruby has RI 1.762–1.770 and SG 3.99–4.01 [ref:read-gemmology-3e]; the measured
@@ -41,7 +41,7 @@ rationaleCorrect: |
   Almandine garnet (or pyrope-almandine rhodolite) is the correct identification.
   The single constant shadow edge confirms isotropic (cubic) behaviour [ref:read-gemmology-3e]; the RI ~1.75
   and SG 3.82 are consistent with almandine or a pyrope-rich intermediate. The patchy
-  polariscope response is anomalous double refraction (ADR) — a strain birefringence
+  polariscope response is anomalous double refraction (ADR) – a strain birefringence
   effect common in cubic garnets, particularly almandine [ref:read-gemmology-3e]. ADR looks like irregular
   patches of light and dark rather than the systematic four-fold lightening of a doubly
   refractive gem. The absence of LWUV fluorescence is typical for iron-bearing garnet [ref:read-gemmology-3e].

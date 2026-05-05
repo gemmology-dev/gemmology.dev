@@ -7,15 +7,15 @@ stem: |
   synthetic origin." A supervisor disagrees. Who is correct, and why?
 type: mcq
 options:
-  - text: "The supervisor is correct; two-phase inclusions (liquid + mobile gas bubble) are natural features found in many gem minerals including topaz, aquamarine, and quartz — they confirm natural origin, not synthetic"
+  - text: "The supervisor is correct; two-phase inclusions (liquid + mobile gas bubble) are natural features found in many gem minerals including topaz, aquamarine, and quartz – they confirm natural origin, not synthetic"
     isCorrect: true
     rationale: |
       Two-phase inclusions (liquid + gas bubble) form when growing crystals trap small
-      pockets of surrounding fluid — hydrothermal solutions, metamorphic fluids, or
+      pockets of surrounding fluid – hydrothermal solutions, metamorphic fluids, or
       magmatic volatiles [ref:gubelin-koivula-vol1]. The gas bubble forms because the trapped fluid contracts on
       cooling, leaving a vapour bubble in equilibrium with the liquid [ref:read-gemmology-3e]. This is a natural
       geological process. Synthetic gems produced by flame fusion (Verneuil) contain
-      gas bubbles trapped as round or elongated voids — but these are single-phase
+      gas bubbles trapped as round or elongated voids – but these are single-phase
       gas inclusions, not liquid + mobile gas [ref:read-gemmology-3e]. Hydrothermal synthetic stones may
       contain two-phase inclusions, but the morphology, distribution, and accompanying
       features differ from natural stones and require expert discrimination [ref:gubelin-koivula-vol1].
@@ -23,20 +23,20 @@ options:
     isCorrect: false
     rationale: |
       Verneuil flame-fusion synthetic stones contain gas bubbles as single-phase gas
-      voids within the solidified melt — they do not contain two-phase liquid + gas
+      voids within the solidified melt – they do not contain two-phase liquid + gas
       inclusions [ref:read-gemmology-3e]. The gas voids in Verneuil synthetics are typically round, appear as
       bright spheres in darkfield, and show no liquid phase [ref:read-gemmology-3e]. Natural two-phase inclusions
       have a distinctly liquid-dominated appearance with a mobile bubble (the bubble is
       smaller relative to the liquid volume and moves freely) [ref:gubelin-koivula-vol1]. The presence of liquid is
       a key distinguishing feature: liquid is geologically trapped fluid; pure round gas
       bubbles are characteristic of melt-origin synthesis [ref:read-gemmology-3e].
-  - text: "Neither is correct; two-phase inclusions with mobile bubbles are always diagnostic of fracture filling — a treatment indicator — not natural origin"
+  - text: "Neither is correct; two-phase inclusions with mobile bubbles are always diagnostic of fracture filling – a treatment indicator – not natural origin"
     isCorrect: false
     rationale: |
       Fracture-filling treatments introduce glass or resin into open surface fractures;
       the filler may contain gas bubbles trapped in the filler, not mobile liquid +
       bubble two-phase inclusions [ref:read-gemmology-3e]. More importantly, the elongated cavities with liquid
-      and mobile bubble described here are in the interior of the stone — not along
+      and mobile bubble described here are in the interior of the stone – not along
       fractures. Fracture fill is a surface-related treatment and produces a different
       microscopic appearance (flow lines in the filler, flattened irregular fracture
       planes filled with glass or resin) [ref:read-gemmology-3e]. Natural two-phase inclusions in the interior
@@ -49,9 +49,9 @@ rationaleCorrect: |
   Their presence confirms natural trapping of geological fluid and is therefore a natural
   origin indicator. The mobility of the gas bubble (visibly moving when the stone is
   tilted) confirms that the cavity contains liquid, not just gas [ref:read-gemmology-3e]. Single-phase gas
-  bubbles in synthetic Verneuil stones are round, fixed, and contain no liquid — visually
+  bubbles in synthetic Verneuil stones are round, fixed, and contain no liquid – visually
   and physically different from natural two-phase inclusions [ref:read-gemmology-3e]. The student's error of
-  labelling natural inclusions as synthetic would lead to a false treatment/origin report —
+  labelling natural inclusions as synthetic would lead to a false treatment/origin report –
   a serious professional consequence.
 difficulty: 3
 category: identification

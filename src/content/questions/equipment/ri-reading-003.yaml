@@ -1,13 +1,13 @@
 id: ri-reading-003
 stem: |
   Examining a green faceted stone on the refractometer, a student observes two shadow
-  edges during rotation. Both edges move — one ranging from 1.577 to 1.583 — and the
+  edges during rotation. Both edges move (one ranging from 1.577 to 1.583) and the
   two edges do not touch each other at any point in the rotation. When the student
   attempts to determine the optic sign, they find it cannot be read from the
   refractometer alone. Which Sturman pattern matches this observation?
 type: mcq
 options:
-  - text: "Pattern VI — both edges variable, not touching; biaxial, optic sign indeterminate from refractometer"
+  - text: "Pattern VI: both edges variable, not touching; biaxial, optic sign indeterminate from refractometer"
     isCorrect: true
     rationale: |
       Pattern VI is defined as two variable shadow edges that move during rotation
@@ -15,9 +15,9 @@ options:
       character; the fact that they do not touch means the optic sign cannot be read
       from this pattern [ref:read-gemmology-3e]. The RI range 1.577–1.583 and birefringence of approximately
       0.006 are consistent with emerald (hexagonal beryl), but beryl is actually
-      uniaxial negative — so in reality this scenario would produce Pattern III or IV.
+      uniaxial negative, so in reality this scenario would produce Pattern III or IV.
       The question tests pattern recognition: two moving edges, not touching = Pattern VI [ref:anderson-gem-testing].
-  - text: "Pattern VII — both edges variable, touching; biaxial with determinable optic sign"
+  - text: "Pattern VII: both edges variable, touching; biaxial with determinable optic sign"
     isCorrect: false
     rationale: |
       Pattern VII also shows two variable edges, but they touch at one point in the
@@ -26,7 +26,7 @@ options:
       confuse Pattern VI and VII because both involve two moving edges; the touching/
       non-touching distinction separates them [ref:read-gemmology-3e], exactly as it separates Pattern III
       from Pattern IV in the uniaxial case.
-  - text: "Pattern IV — one constant, one variable, not touching; uniaxial or biaxial"
+  - text: "Pattern IV: one constant, one variable, not touching; uniaxial or biaxial"
     isCorrect: false
     rationale: |
       Pattern IV shows one constant edge and one variable edge that do not touch [ref:read-gemmology-3e].
@@ -36,7 +36,7 @@ options:
 rationaleCorrect: |
   Pattern VI is identified by two variable shadow edges that both move during rotation
   and never meet [ref:read-gemmology-3e]. Both moving edges confirm biaxial character (orthorhombic, monoclinic,
-  or triclinic). The optic sign cannot be determined from Pattern VI alone — additional
+  or triclinic). The optic sign cannot be determined from Pattern VI alone; additional
   testing on a conoscope or polariscope is needed [ref:read-gemmology-3e]. Pattern VI is often confused with
   Pattern VII (both moving, but touching in VII), so always check whether the two
   moving edges reach a point where they touch [ref:anderson-gem-testing]. A practical aid: if you can read an

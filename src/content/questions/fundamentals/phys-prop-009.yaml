@@ -18,7 +18,7 @@ options:
       distinguish them on the refractometer with reasonable care, making the spot RI
       the most practical single test [ref:read-gemmology-3e]. SG also separates them (nephrite 2.95–3.10 vs
       jadeite 3.25–3.35) but requires hydrostatic weighing equipment.
-  - text: "Stone A is jadeite; Stone B is nephrite — the RI values for jade types are frequently confused"
+  - text: "Stone A is jadeite; Stone B is nephrite – the RI values for jade types are frequently confused"
     isCorrect: false
     rationale: |
       The assignment is reversed. Jadeite has the higher RI (~1.65 spot) because of its
@@ -34,16 +34,16 @@ options:
       Nephrite's fibrous, interlocking amphibole structure gives it exceptional toughness
       but does not prevent a polished surface suitable for gemmological testing.
       The spot reading technique is specifically designed for curved and flat polished
-      surfaces that are not faceted — it works well on both jade types [ref:read-gemmology-3e].
+      surfaces that are not faceted – it works well on both jade types [ref:read-gemmology-3e].
 rationaleCorrect: |
-  Nephrite and jadeite are both "jade" but are entirely different minerals — nephrite is
+  Nephrite and jadeite are both "jade" but are entirely different minerals – nephrite is
   an amphibole aggregate (tremolite-actinolite), jadeite is a pyroxene single mineral [ref:read-gemmology-3e].
   Their separation is one of the most practically important distinctions in gem trade,
   as top-quality "Imperial" jadeite (translucent vivid green, Myanmar) commands prices
   far exceeding nephrite. The spot RI is the most immediately accessible test: nephrite
   ~1.60–1.63, jadeite ~1.65–1.68 [ref:read-gemmology-3e]. SG confirms: nephrite 2.95–3.10, jadeite 3.25–3.35 [ref:read-gemmology-3e].
   Both show polycrystalline texture under the microscope; spectroscopy (jadeite
-  absorption at 437 nm — always present, even in non-green jadeite) provides additional
+  absorption at 437 nm – always present, even in non-green jadeite) provides additional
   confirmation [ref:read-gemmology-3e]. Never identify jade by colour alone: dyed quartzite and glass can
   mimic green colour convincingly.
 difficulty: 3

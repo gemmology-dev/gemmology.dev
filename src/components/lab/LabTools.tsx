@@ -20,7 +20,7 @@ export function LabTools() {
       <ToolSection
         id="chelsea"
         title="Chelsea Filter"
-        description="Expected color reactions for gem identification"
+        description="Expected colour reactions for gem identification"
         iconPath={ICON_PATHS.filter}
         accent="rose"
       >
@@ -30,7 +30,7 @@ export function LabTools() {
       <ToolSection
         id="spectroscope"
         title="Spectroscope Calculator"
-        description="Wavelength ↔ color converter and absorption line reference"
+        description="Wavelength ↔ colour converter and absorption line reference"
         iconPath={ICON_PATHS.spectrum}
         accent="rose"
       >

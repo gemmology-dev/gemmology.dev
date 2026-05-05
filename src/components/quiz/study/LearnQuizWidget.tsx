@@ -168,7 +168,7 @@ export function LearnQuizWidget({
               </p>
               <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
                 The article below covers each of these topics in depth. Pay particular
-                attention to any questions you got wrong — the pretesting effect makes
+                attention to any questions you got wrong; the pretesting effect makes
                 the content that follows measurably stickier.
               </p>
             </div>
