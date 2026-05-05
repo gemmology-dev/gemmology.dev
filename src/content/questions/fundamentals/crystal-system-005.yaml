@@ -12,38 +12,34 @@ options:
     rationale: |
       The orthorhombic system is defined by three mutually perpendicular crystallographic
       axes (all inter-axial angles = 90°) with all three axes of different lengths
-      (a ≠ b ≠ c). A crystal with three pairs of rectangular faces, all meeting at right
+      (a ≠ b ≠ c) [ref:read-gemmology-3e]. A crystal with three pairs of rectangular faces, all meeting at right
       angles but of different sizes, perfectly expresses this geometry. The tetragonal
       system also has all right angles but requires two axes of equal length (a = b ≠ c),
       which would produce two identical pairs of faces and one different pair — not three
-      different pairs. Cubic requires all three axes equal.
+      different pairs [ref:read-gemmology-3e]. Cubic requires all three axes equal.
   - text: "Tetragonal; tetragonal crystals have three axes at 90° and commonly show different face sizes"
     isCorrect: false
     rationale: |
       Tetragonal crystals have two equal horizontal axes and one unique vertical axis
-      (a = b ≠ c), with all three axes at 90°. This means the four faces parallel to
+      (a = b ≠ c), with all three axes at 90° [ref:read-gemmology-3e]. This means the four faces parallel to
       the a and b axes are equivalent, producing only two pairs of different face sizes —
       not three pairs as described. If all three pinacoid pairs are different sizes, the
-      two horizontal axes cannot be equal, which rules out tetragonal. A student might
-      choose tetragonal because "three axes at 90°" matches both orthorhombic and
-      tetragonal, but the size criterion (a = b in tetragonal) is decisive.
+      two horizontal axes cannot be equal, which rules out tetragonal.
   - text: "Cubic; the 90° inter-axial angles and pairs of opposite faces confirm cubic symmetry"
     isCorrect: false
     rationale: |
-      Cubic crystals have all three axes equal in length (a = b = c) at 90°. This means
+      Cubic crystals have all three axes equal in length (a = b = c) at 90° [ref:read-gemmology-3e]. This means
       all six faces of a simple cubic form (the cube) are identical in size. If the three
       face pairs are all different sizes (implying unequal axes), the crystal cannot be
-      cubic. A student might reach for cubic because 90° angles are present, but the
-      defining feature of cubic — equal axes — directly contradicts three different
-      face sizes. Cubic gem crystals (garnet octahedra, spinel octahedra) show faces
+      cubic. Cubic gem crystals (garnet octahedra, spinel octahedra) show faces
       that are all equivalent by symmetry.
 rationaleCorrect: |
   The orthorhombic system is uniquely identified by its axial definition: three unequal
-  axes (a ≠ b ≠ c) that are all mutually perpendicular (alpha = beta = gamma = 90°).
+  axes (a ≠ b ≠ c) that are all mutually perpendicular (alpha = beta = gamma = 90°) [ref:read-gemmology-3e].
   The crystal habit described — three different-sized pinacoid pairs at all right angles —
   perfectly expresses orthorhombic geometry. Gemmologically important orthorhombic gems:
   topaz (perfect basal cleavage), peridot (olivine), tanzanite (zoisite), chrysoberyl
-  (alexandrite, cat's-eye), andalusite, danburite. All are biaxial and show true
+  (alexandrite, cat's-eye), andalusite, danburite [ref:read-gemmology-3e]. All are biaxial and show true
   trichroism. The distinction from tetragonal (a = b ≠ c) is the key: equal horizontal
   axes in tetragonal force two of the three face-pair sizes to be the same.
 difficulty: 2

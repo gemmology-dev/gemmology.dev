@@ -12,43 +12,35 @@ options:
     isCorrect: true
     rationale: |
       Demantoid (andradite garnet, Ca3Fe2(SiO4)3) is cubic and isotropic with RI
-      approximately 1.855–1.900 — well above the standard refractometer limit of ~1.81.
-      Its SG of 3.82–3.85 separates it from diamond (SG 3.52 — lighter, not heavier)
+      approximately 1.855–1.900 — well above the standard refractometer limit of ~1.81 [ref:read-gemmology-3e].
+      Its SG of 3.82–3.85 separates it from diamond (SG 3.52 — lighter, not heavier) [ref:read-gemmology-3e]
       and confirms the garnet identification. The dispersion of 0.057 is the highest
-      of any natural garnet and produces vivid fire visible as coloured flashes. Diamond
-      has dispersion 0.044 (lower than demantoid) and is inert to LWUV. The orange LWUV
-      fluorescence is sometimes seen in demantoid containing chromium, though response
-      varies; diamond fluorescence is typically blue LWUV, not orange.
+      of any natural garnet [ref:read-gemmology-3e] and produces vivid fire visible as coloured flashes.
+      Diamond has dispersion 0.044 (lower than demantoid) [ref:read-gemmology-3e] and is inert to LWUV.
   - text: "Tsavorite garnet (grossular); tsavorite has high RI above the refractometer range and bright green colour similar to demantoid"
     isCorrect: false
     rationale: |
       Tsavorite (green grossular) has RI approximately 1.740–1.760, which IS within the
       standard refractometer range — it gives a clear shadow edge in the 1.740–1.760
-      region. Tsavorite does not exceed the refractometer limit. Additionally, tsavorite
-      SG is approximately 3.57–3.73, clearly lower than the measured 3.84. Tsavorite
-      dispersion is also lower than demantoid. A student who knows both are green garnets
-      might confuse them, but the measurable RI (tsavorite on scale, demantoid off scale)
-      and SG values separate them definitively.
+      region [ref:read-gemmology-3e]. Tsavorite does not exceed the refractometer limit. Additionally, tsavorite
+      SG is approximately 3.57–3.73, clearly lower than the measured 3.84 [ref:read-gemmology-3e].
   - text: "Diamond; colourless diamonds can appear green from colouring inclusions, and the above-range RI and isotropic behaviour both confirm diamond"
     isCorrect: false
     rationale: |
-      Diamond SG is 3.52, clearly below the measured 3.84. Diamond dispersion is 0.044,
-      lower than the dramatic fire described (consistent with demantoid's 0.057). Diamond
+      Diamond SG is 3.52, clearly below the measured 3.84 [ref:read-gemmology-3e]. Diamond dispersion is 0.044,
+      lower than the dramatic fire described (consistent with demantoid's 0.057) [ref:read-gemmology-3e]. Diamond
       is inert to LWUV (or shows blue LWUV fluorescence) — orange LWUV is not a diamond
-      response. While diamond is isotropic and above the refractometer range (confirming
-      those two observations), the SG eliminates it: at SG 3.84, the stone is denser
-      than diamond. The "no refractometer reading + isotropic" combination does not
-      uniquely identify diamond — any high-RI isotropic material (including garnets) fits.
-      The SG is the decisive test.
+      response [ref:read-gemmology-3e]. The SG is the decisive test: at SG 3.84, the stone is denser than
+      diamond [ref:read-gemmology-3e].
 rationaleCorrect: |
   Demantoid identification relies on the combination of: (1) above-range refractometer
-  (RI ~1.89, beyond contact-liquid limit); (2) cubic/isotropic on polariscope; (3) SG
-  3.82–3.85 — heavier than diamond (3.52), which is a key discriminator; (4) high
-  dispersion producing vivid fire (0.057, higher than diamond's 0.044); (5) characteristic
-  "horsetail" inclusions under the microscope — byssolite/actinolite fibres radiating from
-  a chromite crystal, virtually diagnostic for demantoid. The absence of a refractometer
-  reading is often the first clue: always go to SG and microscopy next when the
-  refractometer gives no reading on a green isotropic stone.
+  (RI ~1.89, beyond contact-liquid limit) [ref:read-gemmology-3e]; (2) cubic/isotropic on polariscope;
+  (3) SG 3.82–3.85 — heavier than diamond (3.52) [ref:read-gemmology-3e], which is a key discriminator;
+  (4) high dispersion producing vivid fire (0.057, higher than diamond's 0.044) [ref:read-gemmology-3e];
+  (5) characteristic "horsetail" inclusions under the microscope — byssolite/actinolite
+  fibres radiating from a chromite crystal, virtually diagnostic for demantoid [ref:gubelin-koivula-vol1].
+  The absence of a refractometer reading is often the first clue: always go to SG and
+  microscopy next when the refractometer gives no reading on a green isotropic stone.
 difficulty: 4
 category: species
 conceptTags:
@@ -74,3 +66,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 165–172."
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 244–268."

@@ -14,41 +14,38 @@ options:
     rationale: |
       Rutile silk (TiO2 needles at 60° intersections) is an exsolution feature formed
       during slow natural cooling of corundum — the rutile exsolves from the corundum
-      lattice as the crystal cools. This process cannot occur in the rapid Verneuil
+      lattice as the crystal cools [ref:read-gemmology-3e]. This process cannot occur in the rapid Verneuil
       (flame fusion) synthesis, which produces a boule in hours. Flux-grown synthetic
       ruby shows flux fingerprints (curved or irregular growth planes with flux residue)
-      and wispy flux inclusions, not straight intersecting needles. Octahedral negative
-      crystals are voids with the crystal habit of the host mineral — a natural feature.
-      None of these are diagnostic of synthetic origin.
+      and wispy flux inclusions, not straight intersecting needles [ref:gubelin-koivula-vol1].
+      Octahedral negative crystals are voids with the crystal habit of the host mineral —
+      a natural feature [ref:read-gemmology-3e].
   - text: "Synthetic ruby; the high SG of 4.00 suggests flux contamination increased the density above natural ruby values"
     isCorrect: false
     rationale: |
       SG 4.00 is the standard value for natural ruby (corundum, Al2O3) — it is not
-      "above natural" and it does not indicate flux contamination. Flux-grown synthetic
+      "above natural" and it does not indicate flux contamination [ref:read-gemmology-3e]. Flux-grown synthetic
       ruby has the same SG as natural ruby because the host crystal is pure Al2O3;
-      any flux inclusions present are minor and would slightly lower SG (if flux-rich
-      inclusions are lighter) or have negligible effect. The premise of this distractor
-      is factually incorrect. This tests whether students apply correct reasoning to
-      SG values for corundum, rather than misinterpreting a routine value as anomalous.
+      any flux inclusions present would slightly lower SG rather than raise it [ref:read-gemmology-3e].
   - text: "Synthetic ruby (Verneuil process); Verneuil rubies routinely show rutile silk inclusions because the process uses TiO2 as a dopant to produce the characteristic silk"
     isCorrect: false
     rationale: |
       The Verneuil (flame fusion) process does not use TiO2 as a dopant and does not
-      produce true rutile silk. Verneuil rubies show characteristic curved growth striae
-      — fine curved lines visible under darkfield illumination, reflecting the curved
-      growth front of the boule. They may contain minute gas bubbles and occasionally
-      unmelted powder. The presence of straight, intersecting rutile needles at 60°
-      is a natural formation indicator, not a Verneuil feature. Claiming that Verneuil
-      synthesis produces silk would be a factual error in a gemmological report.
+      produce true rutile silk [ref:read-gemmology-3e]. Verneuil rubies show characteristic curved growth striae —
+      fine curved lines visible under darkfield illumination, reflecting the curved
+      growth front of the boule [ref:gubelin-koivula-vol1]. They may contain minute gas bubbles and
+      occasionally unmelted powder. The presence of straight, intersecting rutile needles
+      at 60° is a natural formation indicator, not a Verneuil feature [ref:read-gemmology-3e].
 rationaleCorrect: |
   The microscopic features described — rutile silk at 60° intersections and octahedral
   negative crystals — are both natural inclusion types that cannot be replicated by
-  synthetic processes. Rutile silk arises from exsolution during slow geological cooling;
-  it is one of the most important natural origin indicators in corundum. Synthetic rubies
+  synthetic processes [ref:read-gemmology-3e]. Rutile silk arises from exsolution during slow geological cooling;
+  it is one of the most important natural origin indicators in corundum [ref:gubelin-koivula-vol1]. Synthetic rubies
   have their own diagnostic inclusion suites: Verneuil shows curved growth striae and
   gas bubbles; flux-grown shows flux fingerprints, wispy flux, and sometimes flux-filled
-  fractures; hydrothermal shows chevron growth patterns. Knowing these diagnostic inclusions
-  is fundamental to the FGA practical examination and to responsible laboratory reporting.
+  fractures; hydrothermal shows chevron growth patterns [ref:gubelin-koivula-vol1]. Knowing these diagnostic
+  inclusions is fundamental to the FGA practical examination and to responsible
+  laboratory reporting.
 difficulty: 4
 category: species
 conceptTags:
@@ -74,3 +71,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 88–126."

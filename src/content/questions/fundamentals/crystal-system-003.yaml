@@ -13,43 +13,40 @@ options:
     isCorrect: true
     rationale: |
       Both orthorhombic and monoclinic systems are biaxial and show trichroism, so
-      optical properties alone cannot separate them in this scenario. The diagnostic
+      optical properties alone cannot separate them in this scenario [ref:read-gemmology-3e]. The diagnostic
       is the axial geometry: orthorhombic has a ≠ b ≠ c but all angles = 90°; monoclinic
-      has a ≠ b ≠ c with alpha = gamma = 90° but beta ≠ 90°. The student's observation
+      has a ≠ b ≠ c with alpha = gamma = 90° but beta ≠ 90° [ref:read-gemmology-3e]. The student's observation
       that all three axes meet at 90° confirms orthorhombic. In practice this is
       determined from the crystal morphology or X-ray diffraction, not directly from
-      gemmological instruments — but the axial angle definition is fundamental
-      crystallography that the FGA examination tests.
+      gemmological instruments.
   - text: "Orthorhombic gems always show stronger trichroism than monoclinic gems, and the strength of trichroism confirms the system"
     isCorrect: false
     rationale: |
       The intensity of pleochroism depends on the chromophore concentration and crystal
       chemistry, not directly on the crystal system. Monoclinic gems (e.g. spodumene,
       diopside) can show strong trichroism; orthorhombic gems (e.g. topaz) may show weak
-      trichroism. There is no rule that orthorhombic gems have systematically stronger
+      trichroism [ref:read-gemmology-3e]. There is no rule that orthorhombic gems have systematically stronger
       pleochroism. Both systems are biaxial and support trichroism; the degree of
-      trichroism is not a reliable crystal-system discriminator. The axial angle geometry
-      is the correct structural criterion.
+      trichroism is not a reliable crystal-system discriminator.
   - text: "Orthorhombic gems give a centred optic axis figure with a straight isogyre, while monoclinic gems always give a Bxa figure with curved isogyres"
     isCorrect: false
     rationale: |
       The shape of isogyres on a conoscope figure depends on crystal orientation relative
-      to the optical section, not on whether the crystal is orthorhombic or monoclinic.
+      to the optical section, not on whether the crystal is orthorhombic or monoclinic [ref:read-gemmology-3e].
       Both systems can produce Bxa, Bxo, or optic axis figures depending on the cut
       orientation. Straight versus curved isogyres reflect 2V (the optic axial angle) —
       a 2V of approximately 90° gives nearly straight isogyres in a Bxa figure, but this
-      occurs in both orthorhombic and monoclinic gems. Curved isogyres are related to
-      small 2V, again independent of the crystal system.
+      occurs in both orthorhombic and monoclinic gems.
 rationaleCorrect: |
   Both orthorhombic and monoclinic systems are biaxial, show trichroism, and give similar
   interference figures. The defining structural distinction is the inter-axial angles:
   orthorhombic has all three angles at exactly 90° (a ≠ b ≠ c; alpha = beta = gamma = 90°);
-  monoclinic has two right angles but one oblique angle (alpha = gamma = 90°, beta ≠ 90°).
+  monoclinic has two right angles but one oblique angle (alpha = gamma = 90°, beta ≠ 90°) [ref:read-gemmology-3e].
   In gemmological practice, individual gem identification uses RI, SG, and spectroscopic
   tests rather than direct axial angle measurement; but the crystal-system definition is
   tested at FGA level as pure crystallographic knowledge. Common orthorhombic gems:
   topaz, peridot, tanzanite, chrysoberyl. Common monoclinic gems: orthoclase, spodumene,
-  jadeite, diopside.
+  jadeite, diopside [ref:read-gemmology-3e].
 difficulty: 3
 category: fundamentals
 conceptTags:

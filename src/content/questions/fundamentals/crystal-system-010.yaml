@@ -9,42 +9,38 @@ options:
   - text: "Almandine: cubic/isotropic; blue sapphire: trigonal/uniaxial negative; aquamarine: hexagonal/uniaxial negative; tanzanite: orthorhombic/biaxial positive; jadeite: monoclinic/biaxial"
     isCorrect: true
     rationale: |
-      All five assignments are correct: almandine garnet is cubic (isometric) and
+      All five assignments are correct [ref:read-gemmology-3e]: almandine garnet is cubic (isometric) and
       isotropic (single RI, no birefringence); corundum (sapphire) is trigonal, uniaxial
       negative; beryl (aquamarine) is hexagonal, uniaxial negative; tanzanite (zoisite)
       is orthorhombic, biaxial positive; jadeite is monoclinic, biaxial. The two
       uniaxial negative species (corundum and beryl) are a common confusion point
       because both are uniaxial negative but belong to different uniaxial systems
-      (trigonal vs. hexagonal).
+      (trigonal vs. hexagonal) [ref:read-gemmology-3e].
   - text: "Almandine: cubic/isotropic; blue sapphire: hexagonal/uniaxial positive; aquamarine: trigonal/uniaxial negative; tanzanite: monoclinic/biaxial; jadeite: orthorhombic/biaxial"
     isCorrect: false
     rationale: |
       Two species are swapped and one optic sign is wrong. Corundum (sapphire) belongs
-      to the trigonal system, not hexagonal — it shares point group 3̄m with other
+      to the trigonal system, not hexagonal [ref:read-gemmology-3e] — it shares point group 3̄m with other
       trigonal minerals. Beryl (aquamarine) is hexagonal (point group 6/mmm). Both are
       uniaxial negative; it is the crystal system that differs. Tanzanite (zoisite) is
-      orthorhombic, not monoclinic; jadeite is monoclinic, not orthorhombic. This
-      distractor tests the specific system-vs-sign combinations that students frequently
-      mix up, particularly the trigonal/hexagonal pair for corundum and beryl.
+      orthorhombic, not monoclinic; jadeite is monoclinic, not orthorhombic [ref:read-gemmology-3e].
   - text: "Almandine: trigonal/uniaxial; blue sapphire: cubic/isotropic; aquamarine: hexagonal/uniaxial negative; tanzanite: orthorhombic/biaxial; jadeite: monoclinic/biaxial"
     isCorrect: false
     rationale: |
       Almandine garnet is cubic (isometric), not trigonal, and is isotropic — not
-      uniaxial. Blue sapphire (corundum) is trigonal, uniaxial negative — not cubic.
+      uniaxial [ref:read-gemmology-3e]. Blue sapphire (corundum) is trigonal, uniaxial negative — not cubic.
       Swapping garnet and corundum is a particularly meaningful error: both can be red
       or blue in appropriate varieties, and the species discrimination depends critically
-      on the correct system assignment. A student who confuses garnet's cubic isotropy
-      with corundum's trigonal uniaxial character would fail to distinguish them on
-      the polariscope, which is a practical identification failure.
+      on the correct system assignment.
 rationaleCorrect: |
   Memorising the crystal systems and optic characters of the major gem species is a
-  Foundation-level requirement. The key pairings to anchor: (1) all garnets — cubic,
+  Foundation-level requirement. The key pairings to anchor [ref:read-gemmology-3e]: (1) all garnets — cubic,
   isotropic (with anomalous double refraction); (2) corundum (ruby, sapphire) — trigonal,
   uniaxial negative; (3) beryl (emerald, aquamarine) — hexagonal, uniaxial negative;
   (4) tanzanite/zoisite, topaz, peridot — orthorhombic, biaxial; (5) jadeite, spodumene,
   orthoclase — monoclinic, biaxial. The two common errors are: confusing trigonal with
   hexagonal for corundum/beryl (they differ in system but share uniaxial negative), and
-  placing garnets in trigonal rather than cubic.
+  placing garnets in trigonal rather than cubic [ref:read-gemmology-3e].
 difficulty: 2
 category: fundamentals
 conceptTags:

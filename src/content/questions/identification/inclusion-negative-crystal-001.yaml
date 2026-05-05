@@ -13,47 +13,43 @@ options:
     isCorrect: true
     rationale: |
       Negative crystals are fluid-filled or empty cavities that have the geometric shape
-      of the host mineral's own crystal form. Spinel is cubic (point group m3̄m) and
+      of the host mineral's own crystal form [ref:gubelin-koivula-vol1]. Spinel is cubic (point group m3̄m) and
       crystallises characteristically as octahedra — so cavities that formed by
       dissolution or incomplete crystal growth within spinel take on the octahedral
-      habit. The octahedral shape is an expression of the host crystal's symmetry and
+      habit [ref:read-gemmology-3e]. The octahedral shape is an expression of the host crystal's symmetry and
       bond strengths — the surfaces of the cavity form along the {111} crystal faces,
-      which represent the low-surface-energy planes of the cubic structure. Calling
+      which represent the low-surface-energy planes of the cubic structure [ref:read-gemmology-3e]. Calling
       them "diamond-shaped" is colloquially used by non-specialists but is incorrect
       gemmological terminology.
   - text: "Fluid inclusions; the octahedral shape indicates the trapped fluid crystallised into an octahedral halite crystal, similar to three-phase inclusions in emerald"
     isCorrect: false
     rationale: |
       Halite (NaCl) crystallises in the cubic system with a cube habit — cubic (isometric)
-      halite forms cubes, not octahedra. More importantly, what the student describes
+      halite forms cubes, not octahedra [ref:read-gemmology-3e]. More importantly, what the student describes
       are not solid halite crystals but geometric voids (cavities) with the spinel crystal
-      form. The distinction between a negative crystal (a void with host-crystal form)
-      and a three-phase inclusion (a cavity containing liquid + gas + solid daughter
-      crystal) is fundamental. Confusing the octahedral shape with "crystallised halite"
-      misidentifies both the shape (cube vs. octahedron) and the nature of the feature
-      (solid daughter crystal vs. an empty/fluid-filled void).
+      form. The distinction between a negative crystal (a void with host-crystal form) and
+      a three-phase inclusion (a cavity containing liquid + gas + solid daughter crystal)
+      is fundamental [ref:gubelin-koivula-vol1]. Confusing the octahedral shape with "crystallised halite"
+      misidentifies both the shape (cube vs. octahedron) and the nature of the feature.
   - text: "Cleavage voids; the octahedral faces of the cavities are {111} cleavage planes in spinel, which have opened up to form empty octahedral cleavage-bounded cavities"
     isCorrect: false
     rationale: |
       Spinel does have imperfect octahedral cleavage on {111}, but cleavage voids would
       appear as flat, irregular planar gaps rather than perfect multi-faced enclosed
-      cavities. True octahedral negative crystals are enclosed geometric forms with all
+      cavities [ref:read-gemmology-3e]. True octahedral negative crystals are enclosed geometric forms with all
       eight faces meeting cleanly — they are not cleavage features, which are planar and
-      open-ended. The distinction is important: cleavage affects the gem's durability and
-      is usually visible as flat planes extending to or toward the surface; negative
-      crystals are enclosed internal voids with no connection to the surface.
+      open-ended [ref:gubelin-koivula-vol1].
 rationaleCorrect: |
   Negative crystals in spinel are one of the classic microscopic features of this species
   and are also seen in other cubic gems (diamond, garnet) and in non-cubic gems where the
-  void shape reflects the host crystal symmetry. In spinel (cubic, octahedral habit),
-  negative crystals take the octahedral form. They may be empty (showing total internal
+  void shape reflects the host crystal symmetry [ref:gubelin-koivula-vol1]. In spinel (cubic, octahedral habit),
+  negative crystals take the octahedral form [ref:read-gemmology-3e]. They may be empty (showing total internal
   reflection at the {111} faces, giving them a mirror-bright appearance) or partially
   filled with residual fluid. Their presence is a natural origin indicator — synthetic
   spinel (flame fusion or hydrothermal) rarely if ever shows perfect natural negative
-  crystals of this kind, though synthetic material may show other growth features. The
-  term "negative crystal" is standard in gemmological and mineralogical literature;
-  students should recognise it and be able to explain the shape relationship to the host
-  crystal's habit.
+  crystals of this kind [ref:gubelin-koivula-vol1]. The term "negative crystal" is standard in gemmological
+  and mineralogical literature; students should recognise it and be able to explain
+  the shape relationship to the host crystal's habit [ref:read-gemmology-3e].
 difficulty: 3
 category: identification
 conceptTags:
@@ -76,5 +72,7 @@ unvetted: false
 authorReviewed: "FGA-reviewer-1"
 lastReviewed: "2026-05-05T10:00:00Z"
 references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 374–398."
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."

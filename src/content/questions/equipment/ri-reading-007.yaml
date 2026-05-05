@@ -12,42 +12,39 @@ options:
     rationale: |
       The standard gemmological refractometer, using methylene iodide contact liquid
       (RI ~1.79–1.81), cannot display shadow edges for stones whose RI exceeds the
-      contact liquid's own refractive index. For colourless stones with adamantine
+      contact liquid's own refractive index [ref:read-gemmology-3e]. For colourless stones with adamantine
       lustre and no refractometer reading, the principal candidates are diamond (RI
-      2.417, SG 3.52), high zircon (RI up to 1.984, SG 4.69), and some synthetic
-      simulants (CZ: RI 2.17). Hydrostatic SG and a thermal probe distinguish these
-      rapidly without damaging the stone.
+      2.417, SG 3.52) [ref:read-gemmology-3e], high zircon (RI up to 1.984, SG 4.69) [ref:read-gemmology-3e], and some synthetic
+      simulants (CZ: RI 2.17) [ref:read-gemmology-3e]. Hydrostatic SG and a thermal probe distinguish these
+      rapidly without damaging the stone [ref:anderson-gem-testing].
   - text: "The stone is amorphous glass; amorphous materials do not give shadow edges"
     isCorrect: false
     rationale: |
       Amorphous glass does give a shadow edge on the refractometer — glass has an RI
-      typically between 1.44 and 1.70 depending on composition, well within the
+      typically between 1.44 and 1.70 depending on composition [ref:read-gemmology-3e], well within the
       instrument's range. A stone with no refractometer reading and adamantine lustre
       cannot be common silicate glass; glass has a vitreous, not adamantine, lustre and
-      would produce a clear single constant edge (Pattern I). The absence of a reading
-      combined with adamantine lustre points specifically to a high-RI material beyond
-      the instrument range.
+      would produce a clear single constant edge (Pattern I) [ref:read-gemmology-3e].
   - text: "The contact liquid has evaporated; repeat the test after applying fresh liquid"
     isCorrect: false
     rationale: |
       Evaporated contact liquid is a valid troubleshooting step when no reading is
       obtained, but it produces a different symptom: a very faint or absent contact
       (the stone lifts off the hemisphere), resulting in a faint or patchy image rather
-      than a uniformly bright scale. More importantly, it does not explain the
+      than a uniformly bright scale [ref:anderson-gem-testing]. More importantly, it does not explain the
       adamantine lustre. If reapplying fresh contact liquid also gives no shadow edge,
       and lustre and other observations point to a high-RI stone, the above-range
-      interpretation is correct. Evaporation as a first diagnosis ignores the
-      diagnostic information from lustre.
+      interpretation is correct.
 rationaleCorrect: |
   When no shadow edge appears on the refractometer scale, and the stone has adamantine
   lustre (RI > 1.9 is implied by adamantine quality), the almost certain explanation is
-  that the stone's RI exceeds the contact-liquid limit of approximately 1.79–1.81.
+  that the stone's RI exceeds the contact-liquid limit of approximately 1.79–1.81 [ref:read-gemmology-3e].
   This is not a fault in the instrument — it is a diagnostic result in itself. The
   priority next tests are: (1) SG by hydrostatic weighing — diamond 3.52, CZ 5.8,
-  high zircon 4.69; (2) thermal probe — diamond conducts heat rapidly, CZ does not.
+  high zircon 4.69 [ref:read-gemmology-3e]; (2) thermal probe — diamond conducts heat rapidly, CZ does not [ref:anderson-gem-testing].
   The polariscope reading (uniformly dark = isotropic) rules out high zircon (which
   would show birefringence on polariscope), narrowing the candidates to diamond or
-  an isotropic simulant. This is a classic Foundation examination scenario.
+  an isotropic simulant [ref:read-gemmology-3e].
 difficulty: 3
 category: equipment
 conceptTags:
@@ -71,3 +68,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."
