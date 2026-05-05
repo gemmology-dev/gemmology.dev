@@ -13,38 +13,37 @@ options:
     rationale: |
       For biaxial gems, the optic sign is determined by the position of beta relative
       to alpha and gamma: if beta is closer to alpha, the stone is biaxial positive;
-      if beta is closer to gamma, it is biaxial negative. Here beta = 1.622, alpha =
+      if beta is closer to gamma, it is biaxial negative [ref:read-gemmology-3e]. Here beta = 1.622, alpha =
       1.619, gamma = 1.627. Distance from alpha = 0.003; distance from gamma = 0.005.
-      Beta is closer to alpha, so the stone is biaxial positive. RI range 1.619–1.627
-      with beta ~1.622 is consistent with topaz (orthorhombic, biaxial positive).
+      Beta is closer to alpha, so the stone is biaxial positive [ref:read-gemmology-3e]. RI range 1.619–1.627
+      with beta ~1.622 is consistent with topaz (orthorhombic, biaxial positive) [ref:read-gemmology-3e].
   - text: "Biaxial negative, because beta is closer to alpha than to gamma"
     isCorrect: false
     rationale: |
       The rule is the opposite: biaxial negative means beta is closer to gamma (the
-      higher RI value), not alpha. Choosing "negative" here applies the rule in reverse.
+      higher RI value), not alpha [ref:read-gemmology-3e]. Choosing "negative" here applies the rule in reverse.
       A student who has learned "beta closer to alpha = negative" has inverted the
       mnemonic. The correct association is: biaxial positive = beta close to alpha
-      (the minimum, alpha end); biaxial negative = beta close to gamma (the maximum).
-      This is one of the most commonly reversed rules in FGA optical property testing.
+      (the minimum, alpha end); biaxial negative = beta close to gamma (the maximum) [ref:read-gemmology-3e].
+      This is one of the most commonly reversed rules in FGA optical property testing [ref:anderson-gem-testing].
   - text: "The optic sign cannot be determined from Pattern VII without a conoscope"
     isCorrect: false
     rationale: |
       Pattern VII — two variable edges that touch — is specifically the pattern from
       which biaxial optic sign CAN be read directly from the refractometer, without
-      a conoscope. The student correctly identifies Pattern VII and measures the three
+      a conoscope [ref:read-gemmology-3e]. The student correctly identifies Pattern VII and measures the three
       RI values (alpha, beta, gamma), which is exactly the information needed to apply
-      the beta-position rule. Pattern VI (two variable, not touching) is the pattern
+      the beta-position rule [ref:read-gemmology-3e]. Pattern VI (two variable, not touching) is the pattern
       where sign cannot be determined from the refractometer; choosing this answer
-      confuses VI and VII.
+      confuses VI and VII [ref:anderson-gem-testing].
 rationaleCorrect: |
   Pattern VII gives two moving edges that touch at one rotation position, allowing
-  all three RI values (alpha, beta, gamma) to be read from the refractometer. The
+  all three RI values (alpha, beta, gamma) to be read from the refractometer [ref:read-gemmology-3e]. The
   optic sign is then determined by beta's position: beta close to alpha = biaxial
-  positive; beta close to gamma = biaxial negative. Here: alpha 1.619, beta 1.622,
+  positive; beta close to gamma = biaxial negative [ref:read-gemmology-3e]. Here: alpha 1.619, beta 1.622,
   gamma 1.627. Beta is 0.003 from alpha and 0.005 from gamma — closer to alpha,
-  therefore biaxial positive. Topaz (orthorhombic, biaxial positive) fits the RI
-  range. The common error is inverting the rule. A useful anchor: "alpha is the
-  minimum — biaxial positive means beta pulls toward the minimum end."
+  therefore biaxial positive [ref:read-gemmology-3e]. Topaz (orthorhombic, biaxial positive) fits the RI
+  range [ref:read-gemmology-3e]. The common error is inverting the rule [ref:anderson-gem-testing].
 difficulty: 4
 category: equipment
 conceptTags:
@@ -68,5 +67,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
-  - id: sturman-patterns-ref
-    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

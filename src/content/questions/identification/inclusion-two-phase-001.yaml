@@ -12,45 +12,45 @@ options:
     rationale: |
       Two-phase inclusions (liquid + gas bubble) form when growing crystals trap small
       pockets of surrounding fluid — hydrothermal solutions, metamorphic fluids, or
-      magmatic volatiles. The gas bubble forms because the trapped fluid contracts on
-      cooling, leaving a vapour bubble in equilibrium with the liquid. This is a natural
+      magmatic volatiles [ref:gubelin-koivula-vol1]. The gas bubble forms because the trapped fluid contracts on
+      cooling, leaving a vapour bubble in equilibrium with the liquid [ref:read-gemmology-3e]. This is a natural
       geological process. Synthetic gems produced by flame fusion (Verneuil) contain
       gas bubbles trapped as round or elongated voids — but these are single-phase
-      gas inclusions, not liquid + mobile gas. Hydrothermal synthetic stones may
+      gas inclusions, not liquid + mobile gas [ref:read-gemmology-3e]. Hydrothermal synthetic stones may
       contain two-phase inclusions, but the morphology, distribution, and accompanying
-      features differ from natural stones and require expert discrimination.
+      features differ from natural stones and require expert discrimination [ref:gubelin-koivula-vol1].
   - text: "The student is correct; mobile gas bubbles are characteristic of flame-fusion (Verneuil) synthetic stones because the molten powder traps gas during solidification"
     isCorrect: false
     rationale: |
       Verneuil flame-fusion synthetic stones contain gas bubbles as single-phase gas
       voids within the solidified melt — they do not contain two-phase liquid + gas
-      inclusions. The gas voids in Verneuil synthetics are typically round, appear as
-      bright spheres in darkfield, and show no liquid phase. Natural two-phase inclusions
+      inclusions [ref:read-gemmology-3e]. The gas voids in Verneuil synthetics are typically round, appear as
+      bright spheres in darkfield, and show no liquid phase [ref:read-gemmology-3e]. Natural two-phase inclusions
       have a distinctly liquid-dominated appearance with a mobile bubble (the bubble is
-      smaller relative to the liquid volume and moves freely). The presence of liquid is
+      smaller relative to the liquid volume and moves freely) [ref:gubelin-koivula-vol1]. The presence of liquid is
       a key distinguishing feature: liquid is geologically trapped fluid; pure round gas
-      bubbles are characteristic of melt-origin synthesis.
+      bubbles are characteristic of melt-origin synthesis [ref:read-gemmology-3e].
   - text: "Neither is correct; two-phase inclusions with mobile bubbles are always diagnostic of fracture filling — a treatment indicator — not natural origin"
     isCorrect: false
     rationale: |
       Fracture-filling treatments introduce glass or resin into open surface fractures;
       the filler may contain gas bubbles trapped in the filler, not mobile liquid +
-      bubble two-phase inclusions. More importantly, the elongated cavities with liquid
+      bubble two-phase inclusions [ref:read-gemmology-3e]. More importantly, the elongated cavities with liquid
       and mobile bubble described here are in the interior of the stone — not along
       fractures. Fracture fill is a surface-related treatment and produces a different
       microscopic appearance (flow lines in the filler, flattened irregular fracture
-      planes filled with glass or resin). Natural two-phase inclusions in the interior
+      planes filled with glass or resin) [ref:read-gemmology-3e]. Natural two-phase inclusions in the interior
       of a faceted stone have no connection to surface fractures and are not treatment
-      indicators.
+      indicators [ref:gubelin-koivula-vol1].
 rationaleCorrect: |
   Two-phase inclusions (liquid + mobile gas bubble in an enclosed cavity) are natural
-  features of gem minerals that formed from hydrothermal or metamorphic fluids. They are
-  found in many gem species: topaz, aquamarine, tourmaline, quartz, spinel, and others.
+  features of gem minerals that formed from hydrothermal or metamorphic fluids [ref:gubelin-koivula-vol1]. They are
+  found in many gem species: topaz, aquamarine, tourmaline, quartz, spinel, and others [ref:gubelin-koivula-vol1].
   Their presence confirms natural trapping of geological fluid and is therefore a natural
   origin indicator. The mobility of the gas bubble (visibly moving when the stone is
-  tilted) confirms that the cavity contains liquid, not just gas. Single-phase gas
+  tilted) confirms that the cavity contains liquid, not just gas [ref:read-gemmology-3e]. Single-phase gas
   bubbles in synthetic Verneuil stones are round, fixed, and contain no liquid — visually
-  and physically different from natural two-phase inclusions. The student's error of
+  and physically different from natural two-phase inclusions [ref:read-gemmology-3e]. The student's error of
   labelling natural inclusions as synthetic would lead to a false treatment/origin report —
   a serious professional consequence.
 difficulty: 3
@@ -74,5 +74,7 @@ unvetted: false
 authorReviewed: "FGA-reviewer-1"
 lastReviewed: "2026-05-05T10:00:00Z"
 references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 374–398."
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."

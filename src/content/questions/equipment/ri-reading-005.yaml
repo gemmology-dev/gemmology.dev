@@ -11,40 +11,39 @@ options:
     isCorrect: true
     rationale: |
       Pattern V is specifically defined as two shadow edges that cross (intersect)
-      each other during rotation. This crossing behaviour is unique to Pattern V and
+      each other during rotation [ref:read-gemmology-3e]. This crossing behaviour is unique to Pattern V and
       is diagnostic of biaxial character. Neither edge needs to be constant for Pattern V.
       The RI range 1.619–1.627 with birefringence of approximately 0.008 is consistent
-      with topaz, an orthorhombic (biaxial positive) gem — a classic stone that can
-      appear orange (imperial topaz). The intersection of edges is the key visual
-      observation distinguishing Pattern V from Patterns IV and VI.
+      with topaz, an orthorhombic (biaxial positive) gem [ref:read-gemmology-3e]. The intersection of edges is
+      the key visual observation distinguishing Pattern V from Patterns IV and VI [ref:anderson-gem-testing].
   - text: "Pattern IV — one constant, one variable, not touching; uniaxial or biaxial ambiguous"
     isCorrect: false
     rationale: |
-      Pattern IV requires one edge to remain constant (not move) during rotation.
+      Pattern IV requires one edge to remain constant (not move) during rotation [ref:read-gemmology-3e].
       The question states neither edge is constant — both move. This rules out any
       pattern featuring a constant edge. A student might choose Pattern IV because
       it is also "ambiguous" and involves non-touching edges, but the defining feature
-      here is the crossing/intersection of the edges, which Pattern IV never shows.
+      here is the crossing/intersection of the edges, which Pattern IV never shows [ref:read-gemmology-3e].
   - text: "Pattern VII — both edges variable, touching; biaxial with determinable optic sign"
     isCorrect: false
     rationale: |
-      Pattern VII shows two variable edges that touch at one point. Touching means
+      Pattern VII shows two variable edges that touch at one point [ref:read-gemmology-3e]. Touching means
       the edges meet at a single position before separating again. Crossing (Pattern V)
       is different: the edges actually pass through each other, converging from the
-      same side and then diverging on the other side. A student confusing "touching"
+      same side and then diverging on the other side [ref:read-gemmology-3e]. A student confusing "touching"
       with "crossing" will pick Pattern VII, but crossing behaviour is the criterion
-      for Pattern V. Additionally, Pattern VII allows optic sign determination from the
+      for Pattern V [ref:anderson-gem-testing]. Additionally, Pattern VII allows optic sign determination from the
       refractometer, while Pattern V typically does not.
 rationaleCorrect: |
   Pattern V is uniquely identified by shadow edges that cross each other during rotation —
-  one edge appears to pass through the position of the other. This crossing proves biaxial
+  one edge appears to pass through the position of the other [ref:read-gemmology-3e]. This crossing proves biaxial
   character. The distinction from Pattern VII (touching) is that in Pattern V the edges
-  physically intersect, while in Pattern VII they touch at a single tangent point.
+  physically intersect, while in Pattern VII they touch at a single tangent point [ref:read-gemmology-3e].
   At RI 1.619–1.627 with birefringence ~0.008, imperial topaz (orthorhombic, biaxial
-  positive) is the textbook match. Always confirm Pattern V by looking for the moment
-  the edges appear to swap positions — that exchange of position is the crossing event.
+  positive) is the textbook match [ref:read-gemmology-3e]. Always confirm Pattern V by looking for the moment
+  the edges appear to swap positions — that exchange of position is the crossing event [ref:anderson-gem-testing].
   Pattern V is less common than IV or VI in routine testing and is often missed by
-  candidates who only rotate the stone through 90° rather than a full 360°.
+  candidates who only rotate the stone through 90° rather than a full 360° [ref:anderson-gem-testing].
 difficulty: 4
 category: equipment
 conceptTags:
@@ -67,5 +66,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
-  - id: sturman-patterns-ref
-    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

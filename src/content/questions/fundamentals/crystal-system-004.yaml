@@ -12,45 +12,42 @@ options:
     isCorrect: true
     rationale: |
       Uniform darkness on the polariscope throughout full rotation confirms isotropic
-      optical behaviour. Only two types of material are optically isotropic: (1) cubic
+      optical behaviour [ref:read-gemmology-3e]. Only two types of material are optically isotropic: (1) cubic
       crystals, which have equal optical properties in all directions due to their highest
       symmetry; and (2) amorphous materials (glass, natural glass, amber, opal) which
       have no regular crystal structure. Both give a single constant shadow edge on the
       refractometer. The RI value narrows the species; SG measurement confirms identity
-      by ruling out glass (low SG ~2.5) versus a specific cubic mineral.
+      by ruling out glass (low SG ~2.5) versus a specific cubic mineral [ref:read-gemmology-3e].
   - text: "Cubic and tetragonal systems; tetragonal gems can appear isotropic when viewed down the c-axis"
     isCorrect: false
     rationale: |
       A tetragonal gem viewed exactly down its c-axis would appear isotropic on the
       polariscope in that specific orientation. However, the question states the test
       was confirmed on two different facets, making it very unlikely that both facets
-      happen to be cut perpendicular to the c-axis. Furthermore, a tetragonal gem would
-      give two shadow edges on the refractometer (a birefringence reading) in any
-      orientation that is not exactly down the optic axis — the refractometer reading
-      of a single constant edge on multiple facets strongly implies true isotropy, not
-      an accident of orientation.
+      happen to be cut perpendicular to the c-axis [ref:read-gemmology-3e]. Furthermore, a tetragonal gem would
+      give two shadow edges on the refractometer in any orientation that is not exactly
+      down the optic axis — the refractometer reading of a single constant edge on
+      multiple facets strongly implies true isotropy, not an accident of orientation.
   - text: "Trigonal system only; the polariscope is unreliable for distinguishing trigonal from cubic"
     isCorrect: false
     rationale: |
       Trigonal gems are uniaxial — they are optically anisotropic and will show lightening
-      on the polariscope when rotated, unless viewed exactly down the c-axis. The claim
+      on the polariscope when rotated, unless viewed exactly down the c-axis [ref:read-gemmology-3e]. The claim
       that the polariscope is unreliable for distinguishing trigonal from cubic is
       incorrect; the polariscope is precisely the instrument used to make this distinction.
       A trigonal gem examined on multiple facets will show double refraction somewhere
-      unless every facet is coincidentally cut exactly perpendicular to the c-axis,
-      which is an extraordinary coincidence. The result consistent with trigonal would
-      be lightening at 45° intervals during rotation.
+      unless every facet is coincidentally cut exactly perpendicular to the c-axis.
 rationaleCorrect: |
   Isotropic behaviour on the polariscope (uniformly dark at all rotation positions,
   confirmed on multiple facets) is definitive for either a cubic crystal or an amorphous
-  material. No other crystal system can produce this result consistently across multiple
+  material [ref:read-gemmology-3e]. No other crystal system can produce this result consistently across multiple
   facets. The refractometer gives a single constant edge (Pattern I), consistent with
   both. To distinguish cubic from amorphous: compare the RI value to known cubic gems
   (diamond 2.417, spinel 1.718, garnet 1.73–1.89) and amorphous materials (glass
-  1.44–1.70, amber ~1.54, opal 1.44–1.46). If the RI is diagnostic, SG confirms.
+  1.44–1.70, amber ~1.54, opal 1.44–1.46) [ref:read-gemmology-3e]. If the RI is diagnostic, SG confirms.
   Anomalous double refraction (ADR) in some cubic gems (e.g. garnets) shows as
   patchy rather than fully uniform behaviour — distinguished from true isotropy by
-  the irregular, strain-related pattern rather than uniform dark.
+  the irregular, strain-related pattern rather than uniform dark [ref:read-gemmology-3e].
 difficulty: 3
 category: fundamentals
 conceptTags:

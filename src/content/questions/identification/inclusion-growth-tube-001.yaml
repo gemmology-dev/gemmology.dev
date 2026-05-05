@@ -13,46 +13,43 @@ options:
     rationale: |
       Growth tubes are a characteristic natural inclusion type in tourmaline, formed
       parallel to the c-axis during crystal growth as the growing face traps channels
-      of surrounding fluid or grows around fine particles. They are not rutile TiO2
+      of surrounding fluid or grows around fine particles [ref:gubelin-koivula-vol3]. They are not rutile TiO2
       needles — they are structural growth features. Rutile silk is specific to corundum
       (and some garnets) and exsolves from the host lattice as the crystal cools;
-      it does not occur in tourmaline. The two are easily distinguished: silk needles
+      it does not occur in tourmaline [ref:read-gemmology-3e]. The two are easily distinguished: silk needles
       in corundum are solid TiO2, oriented at 60° intersections; tourmaline growth tubes
-      are hollow or fluid-filled, parallel to c, and do not intersect at 60°. The
-      presence of growth tubes supports natural origin because synthetic tourmaline is
-      extremely rarely produced commercially and does not contain these features.
+      are hollow or fluid-filled, parallel to c, and do not intersect at 60° [ref:gubelin-koivula-vol3].
   - text: "Rutile silk; tourmaline also exsolves rutile from its lattice during cooling, producing needles parallel to the c-axis in the same way as corundum"
     isCorrect: false
     rationale: |
       Rutile silk (TiO2 exsolution) is primarily known in corundum and to a lesser
-      extent in some garnets (almandine). It does not occur in tourmaline via the same
+      extent in some garnets (almandine) [ref:read-gemmology-3e]. It does not occur in tourmaline via the same
       exsolution mechanism. Tourmaline's boron-silicate lattice chemistry does not
       support titanium exsolution as rutile in the way corundum's aluminium oxide
-      lattice does. What the student calls "rutile silk" in tourmaline are growth tubes —
+      lattice does [ref:read-gemmology-3e]. What the student calls "rutile silk" in tourmaline are growth tubes —
       physically distinct features (hollow or fluid-filled, parallel to c-axis, formed
-      during growth, not on cooling). Mislabelling growth tubes as silk is a
-      misconception that would lead to incorrect diagnostic reports.
+      during growth, not on cooling) [ref:gubelin-koivula-vol3].
   - text: "Cleavage traces; tourmaline has perfect prismatic cleavage parallel to c, producing the parallel lines observed"
     isCorrect: false
     rationale: |
-      Tourmaline has poor to indistinct prismatic cleavage — not perfect cleavage.
+      Tourmaline has poor to indistinct prismatic cleavage — not perfect cleavage [ref:read-gemmology-3e].
       What cleavage exists is rarely expressed as clean, regular parallel lines inside
       a polished gem. More importantly, cleavage traces would appear as flat, planar
       reflective surfaces cutting through the stone, not as fine channels containing
       fluid with visible mobile bubbles. The presence of a mobile bubble within the
       feature is definitive evidence of a fluid-filled channel — a growth tube —
-      not a cleavage trace. Cleavage traces do not contain liquid or bubbles.
+      not a cleavage trace [ref:gubelin-koivula-vol3].
 rationaleCorrect: |
   Growth tubes are one of the most characteristic and commonly observed inclusions in
-  tourmaline. They form during crystal growth when the advancing crystal face traps
+  tourmaline [ref:gubelin-koivula-vol3]. They form during crystal growth when the advancing crystal face traps
   channels of surrounding fluid or mineral particles. In finished gems, growth tubes
   appear as fine parallel channels along the c-axis — some hollow and reflecting light,
-  others filled with residual fluid containing a mobile gas bubble (making them
-  two-phase inclusions within a growth tube). Their presence confirms natural origin:
-  synthetic tourmaline is essentially non-existent commercially (tourmaline synthesis
-  is technically challenging and economically impractical at gem quality). The
-  distinction from rutile silk is critical: silk is solid TiO2 in corundum at 60°
-  intersections; growth tubes are hollow/fluid channels in tourmaline parallel to c-axis.
+  others filled with residual fluid containing a mobile gas bubble (making them two-phase
+  inclusions within a growth tube) [ref:gubelin-koivula-vol3]. Their presence confirms natural origin: synthetic
+  tourmaline is essentially non-existent commercially (tourmaline synthesis is technically
+  challenging and economically impractical at gem quality) [ref:read-gemmology-3e]. The distinction from
+  rutile silk is critical: silk is solid TiO2 in corundum at 60° intersections;
+  growth tubes are hollow/fluid channels in tourmaline parallel to c-axis [ref:gubelin-koivula-vol3].
 difficulty: 2
 category: identification
 conceptTags:
@@ -74,5 +71,7 @@ unvetted: false
 authorReviewed: "FGA-reviewer-1"
 lastReviewed: "2026-05-05T10:00:00Z"
 references:
+  - id: gubelin-koivula-vol3
+    citation: "Gübelin, E.J. & Koivula, J.I. (2005). Photoatlas of Inclusions in Gemstones, Vol. 3. Opinio Verlag, Basel. pp. 424–458."
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."

@@ -12,42 +12,37 @@ options:
     rationale: |
       Pattern III is characterised by one constant and one variable edge that touch
       at one point during rotation, confirming uniaxial character with the c-axis
-      parallel to the table facet. The optic sign rule is: if epsilon (the variable
-      edge) is greater than omega (the constant edge), the stone is uniaxial positive.
+      parallel to the table facet [ref:read-gemmology-3e]. The optic sign rule is: if epsilon (the variable
+      edge) is greater than omega (the constant edge), the stone is uniaxial positive [ref:read-gemmology-3e].
       Here epsilon 1.691 > omega 1.662, so the stone is uniaxial positive. Birefringence
-      is 1.691 − 1.662 = 0.029, consistent with peridot.
+      is 1.691 − 1.662 = 0.029.
   - text: "Pattern IV; uniaxial or biaxial — optic sign indeterminate"
     isCorrect: false
     rationale: |
       Pattern IV shows one constant and one variable edge that do NOT touch during
-      rotation. The critical distinction from Pattern III is whether the edges meet.
+      rotation [ref:read-gemmology-3e]. The critical distinction from Pattern III is whether the edges meet.
       In this scenario the edges are explicitly described as coming together at one
-      point, which is the defining criterion for Pattern III. A student might confuse
+      point, which is the defining criterion for Pattern III [ref:read-gemmology-3e]. A student might confuse
       the two patterns because both show one constant and one variable edge, but the
       touching/non-touching distinction is decisive. Pattern IV is also ambiguous
-      between uniaxial and biaxial; Pattern III is unambiguously uniaxial.
+      between uniaxial and biaxial; Pattern III is unambiguously uniaxial [ref:anderson-gem-testing].
   - text: "Pattern III; uniaxial negative (omega > epsilon)"
     isCorrect: false
     rationale: |
       For uniaxial negative, the constant omega must be greater than the variable
       epsilon — that is, the constant edge must lie at a higher RI than the variable
-      one. In this case, the constant edge is at 1.662 and the variable edge rises
+      one [ref:read-gemmology-3e]. In this case, the constant edge is at 1.662 and the variable edge rises
       to 1.691, meaning epsilon > omega. Choosing "negative" reverses the sign rule.
-      This is a common exam error: students remember the rule but apply it backwards
-      when they see numbers. The mnemonic is: positive = epsilon exceeds omega (both
-      starting with vowel-sounds — epsilon is "extra", so positive).
+      The mnemonic is: positive = epsilon exceeds omega [ref:anderson-gem-testing].
 rationaleCorrect: |
   Pattern III is identified by one constant shadow edge (omega), one variable edge
-  (epsilon), and the edges touching at exactly one point in the rotation. This is the
+  (epsilon), and the edges touching at exactly one point in the rotation [ref:read-gemmology-3e]. This is the
   only pattern that unambiguously confirms uniaxial character AND allows optic sign
   determination from the refractometer alone. The sign rule: epsilon > omega = positive;
-  omega > epsilon = negative. Here epsilon 1.691 > omega 1.662, giving uniaxial positive.
-  The birefringence of 0.029 fits peridot (olivine, orthorhombic) or high tourmaline —
-  but peridot is actually biaxial, so the reading would look like Pattern IV, V, VI, or VII
-  in reality. The properties given here match a theoretical uniaxial positive scenario
-  for illustration. Note: never confuse Pattern III (edges touch) with Pattern IV (edges
-  do not touch) — the touch/no-touch test is the single most tested distinction in
-  FGA refractometer questions.
+  omega > epsilon = negative [ref:read-gemmology-3e]. Here epsilon 1.691 > omega 1.662, giving uniaxial positive.
+  Note: never confuse Pattern III (edges touch) with Pattern IV (edges do not touch) —
+  the touch/no-touch test is the single most tested distinction in FGA refractometer
+  questions [ref:anderson-gem-testing].
 difficulty: 3
 category: equipment
 conceptTags:
@@ -71,5 +66,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
-  - id: sturman-patterns-ref
-    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

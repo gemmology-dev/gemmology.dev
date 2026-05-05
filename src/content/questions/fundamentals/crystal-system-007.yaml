@@ -11,43 +11,38 @@ options:
     isCorrect: true
     rationale: |
       Topaz has perfect cleavage in only one direction — the basal pinacoid {001},
-      perpendicular to the c-axis. In a standard oval or round brilliant cut, the table
+      perpendicular to the c-axis [ref:read-gemmology-3e]. In a standard oval or round brilliant cut, the table
       facet is typically cut approximately perpendicular to the c-axis, meaning the
       cleavage plane runs nearly parallel to the girdle — a position where blows from
       above or setting pressure directly exploits the cleavage. Diamond has four {111}
       cleavage directions arranged as octahedral faces, distributing vulnerability more
-      evenly. Hardness (diamond 10, topaz 8) also reduces scratch damage, but the
+      evenly [ref:read-gemmology-3e]. Hardness (diamond 10, topaz 8) also reduces scratch damage, but the
       single-direction cleavage is the key durability issue for topaz in daily wear.
   - text: "Topaz has lower hardness than diamond (8 vs 10), and hardness directly determines cleavage fragility"
     isCorrect: false
     rationale: |
       Hardness (resistance to scratching) and cleavage (tendency to split along bond
-      planes under impact) are independent properties. Hardness does not determine
+      planes under impact) are independent properties [ref:read-gemmology-3e]. Hardness does not determine
       cleavage fragility — these are different aspects of durability. A gem with hardness
       10 but perfect cleavage (diamond) can still split cleanly from a sharp blow;
       a gem with hardness 6.5 but no cleavage (jadeite) resists fracture well.
-      The question specifically asks about cleavage fragility, not scratch resistance.
-      Conflating hardness with cleavage fragility is a common student error that
-      this question is designed to address.
   - text: "Diamond does not have true cleavage — what appears as cleavage in diamond is actually fracture, making it more impact-resistant than topaz"
     isCorrect: false
     rationale: |
       Diamond absolutely has perfect octahedral cleavage on {111} — this is one of the
-      most established facts in gemmology. Diamond cleavage has been used in the gem
+      most established facts in gemmology [ref:read-gemmology-3e]. Diamond cleavage has been used in the gem
       trade for centuries to split rough diamonds before faceting. What diamond lacks
       is easy cleavage in everyday ring-wear orientations (because four directions
       distribute risk), but it is factually incorrect to say diamond does not have
-      cleavage. Misidentifying diamond's flat fracture surfaces as "fracture rather
-      than cleavage" contradicts the mineralogical record and would be marked wrong
-      in an FGA examination.
+      cleavage.
 rationaleCorrect: |
   Both topaz and diamond have "perfect" cleavage, but the geometry differs critically.
   Topaz has one cleavage direction: {001} basal, a single plane running across the
-  entire crystal. In a ring stone cut with the table perpendicular to c, the cleavage
+  entire crystal [ref:read-gemmology-3e]. In a ring stone cut with the table perpendicular to c, the cleavage
   plane is roughly horizontal — any sharp blow from above drives directly along the
   cleavage. Diamond has four equivalent {111} cleavage directions; no common ring
   orientation is perpendicular to all four simultaneously, so cleavage is harder to
-  exploit accidentally. Additionally, topaz hardness 8 (vs. diamond 10) means
+  exploit accidentally [ref:read-gemmology-3e]. Additionally, topaz hardness 8 (vs. diamond 10) means
   topaz surfaces wear more quickly. For ring settings: topaz should be set in
   protective bezels; diamond in prong settings is acceptable given its superior
   hardness and distributed cleavage geometry.
