@@ -102,7 +102,7 @@ export function QuizSetup({
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'practice' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-500'
+                    mode === 'practice' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-600'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,7 +111,7 @@ export function QuizSetup({
                 </div>
                 <div>
                   <p className="font-medium text-slate-900">Practice</p>
-                  <p className="text-sm text-slate-500">Immediate feedback</p>
+                  <p className="text-sm text-slate-600">Immediate feedback</p>
                 </div>
               </div>
             </button>
@@ -130,7 +130,7 @@ export function QuizSetup({
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'exam' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-500'
+                    mode === 'exam' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-600'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +139,7 @@ export function QuizSetup({
                 </div>
                 <div>
                   <p className="font-medium text-slate-900">Exam</p>
-                  <p className="text-sm text-slate-500">Timed, no feedback</p>
+                  <p className="text-sm text-slate-600">Timed, no feedback</p>
                 </div>
               </div>
             </button>
@@ -185,7 +185,7 @@ export function QuizSetup({
       <div>
         <h3 className="text-lg font-medium text-slate-900 mb-3">
           Difficulty
-          <span className="text-sm font-normal text-slate-500 ml-2">(optional)</span>
+          <span className="text-sm font-normal text-slate-600 ml-2">(optional)</span>
         </h3>
         <div className="flex gap-2">
           {DIFFICULTIES.map(difficulty => (
@@ -205,7 +205,7 @@ export function QuizSetup({
           ))}
         </div>
         {selectedDifficulties.length === 0 && (
-          <p className="text-sm text-slate-500 mt-2">All difficulties will be included</p>
+          <p className="text-sm text-slate-600 mt-2">All difficulties will be included</p>
         )}
       </div>
 
@@ -230,7 +230,7 @@ export function QuizSetup({
             </button>
           ))}
         </div>
-        <p className="text-sm text-slate-500 mt-2">
+        <p className="text-sm text-slate-600 mt-2">
           {totalAvailable} questions available from selected categories
         </p>
       </div>
@@ -256,7 +256,7 @@ export function QuizSetup({
               </button>
             ))}
           </div>
-          <p className="text-sm text-slate-500 mt-2">
+          <p className="text-sm text-slate-600 mt-2">
             Approximately {Math.round((timeLimit / 60) / questionCount * 10) / 10} minutes per question
           </p>
         </div>

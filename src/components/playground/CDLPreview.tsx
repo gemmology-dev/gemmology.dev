@@ -30,7 +30,7 @@ export function CDLPreview({ svgContent, loading, error, className }: CDLPreview
     >
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-10">
-          <div className="flex items-center gap-3 text-slate-500">
+          <div className="flex items-center gap-3 text-slate-600">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path
@@ -62,7 +62,7 @@ export function CDLPreview({ svgContent, loading, error, className }: CDLPreview
 
       {!loading && !error && !svgContent && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-slate-400">
+          <div className="text-center text-slate-500">
             <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"

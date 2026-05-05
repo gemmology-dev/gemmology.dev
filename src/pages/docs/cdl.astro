@@ -25,7 +25,7 @@ import { Container, Button, Card } from '../../components/ui-astro';
       </p>
 
       <div class="not-prose my-8 bg-slate-50 border border-slate-200 rounded-xl p-6">
-        <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-2">Current version</p>
+        <p class="text-sm font-medium text-slate-600 uppercase tracking-wide mb-2">Current version</p>
         <p class="text-lg font-semibold text-slate-900">CDL v2.0</p>
         <p class="text-sm text-slate-600 mt-1">
           Includes comments (v1.1), features and phenomena (v1.2), grouping, labels, and definitions (v1.3),
@@ -458,7 +458,7 @@ cubic[m3m]:{111} | elongate(c:1.5), taper(top:0.3)`} />
       <!-- COMMENTS (v1.1) -->
       <!-- ============================================================ -->
 
-      <h2 id="comments">Comments <span class="text-sm font-normal text-slate-400">(v1.1)</span></h2>
+      <h2 id="comments">Comments <span class="text-sm font-normal text-slate-500">(v1.1)</span></h2>
 
       <p>CDL supports three comment styles, stripped before parsing:</p>
 
@@ -508,7 +508,7 @@ cubic[m3m]:{111}@1.0`} />
       <!-- FEATURES (v1.2) -->
       <!-- ============================================================ -->
 
-      <h2 id="features">Features <span class="text-sm font-normal text-slate-400">(v1.2)</span></h2>
+      <h2 id="features">Features <span class="text-sm font-normal text-slate-500">(v1.2)</span></h2>
 
       <p>
         Features annotate individual crystal forms with surface markings, growth patterns,
@@ -532,19 +532,19 @@ cubic[m3m]:{111}[phantom:3, white]`} />
 
       <div class="not-prose my-8 grid grid-cols-2 md:grid-cols-4 gap-3">
         <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Growth</p>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Growth</p>
           <p class="text-sm text-slate-700 mt-1"><code>phantom</code>, <code>sector</code>, <code>zoning</code>, <code>skeletal</code>, <code>dendritic</code></p>
         </div>
         <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Surface</p>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Surface</p>
           <p class="text-sm text-slate-700 mt-1"><code>striation</code>, <code>trigon</code>, <code>etch_pit</code>, <code>growth_hillock</code></p>
         </div>
         <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Inclusions</p>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Inclusions</p>
           <p class="text-sm text-slate-700 mt-1"><code>inclusion</code>, <code>needle</code>, <code>silk</code>, <code>fluid</code>, <code>bubble</code></p>
         </div>
         <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wide">Colour</p>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Colour</p>
           <p class="text-sm text-slate-700 mt-1"><code>colour</code>, <code>colour_zone</code>, <code>pleochroism</code>, <code>lamellar</code>, <code>banding</code></p>
         </div>
       </div>
@@ -553,7 +553,7 @@ cubic[m3m]:{111}[phantom:3, white]`} />
       <!-- PHENOMENA (v1.2) -->
       <!-- ============================================================ -->
 
-      <h2 id="phenomena">Phenomena <span class="text-sm font-normal text-slate-400">(v1.2)</span></h2>
+      <h2 id="phenomena">Phenomena <span class="text-sm font-normal text-slate-500">(v1.2)</span></h2>
 
       <p>
         Optical phenomena are crystal-level annotations (not per-form).
@@ -637,7 +637,7 @@ trigonal[-3m]:{10-11}@1.0[silk:dense] | phenomenon[asterism:6]`} />
       <!-- GROUPING (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="grouping">Grouping <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+      <h2 id="grouping">Grouping <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
 
       <p>
         Parenthesized groups allow shared features to be applied to multiple forms at once.
@@ -666,7 +666,7 @@ cubic[m3m]:({111}[trigon:dense] + {100})[phantom:3]`} />
       <!-- LABELS (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="labels">Labels <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+      <h2 id="labels">Labels <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
 
       <p>
         Labels assign descriptive names to forms or groups using a <code>label:</code> prefix.
@@ -689,7 +689,7 @@ cubic[m3m]:core:({111} + {100})[phantom:3]`} />
       <!-- DEFINITIONS (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="definitions">Definitions <span class="text-sm font-normal text-slate-400">(v1.3)</span></h2>
+      <h2 id="definitions">Definitions <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
 
       <p>
         Named definitions let you assign a form expression to a name with <code>@name = expr</code>,
@@ -727,7 +727,7 @@ cubic[m3m]:$oct`} />
       <!-- AMORPHOUS MATERIALS (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="amorphous">Amorphous Materials <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+      <h2 id="amorphous">Amorphous Materials <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
 
       <p>
         CDL v2.0 introduces the <code>amorphous</code> system for non-crystalline materials.
@@ -823,7 +823,7 @@ amorphous[glassy]:{massive, conchoidal}[colour:black]`} />
       <!-- NESTED GROWTH (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="nested-growth">Nested Growth <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+      <h2 id="nested-growth">Nested Growth <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
 
       <p>
         The nested growth operator <code>&gt;</code> describes overgrowth relationships where one
@@ -861,7 +861,7 @@ cubic[m3m]:({111} > {111}@0.6) + {100}@1.3`} />
       <!-- AGGREGATES (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="aggregates">Aggregates <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+      <h2 id="aggregates">Aggregates <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
 
       <p>
         The aggregate operator <code>~</code> describes clusters or arrangements of multiple
@@ -936,7 +936,7 @@ tetragonal[4/mmm]:({110}@1.0 + {101}@0.9 | elongate(c:2.5)) ~ epitaxial[3][align
       <!-- GROUP-LEVEL TWINS (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="group-twins">Group-Level Twins <span class="text-sm font-normal text-slate-400">(v2.0)</span></h2>
+      <h2 id="group-twins">Group-Level Twins <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
 
       <p>
         In v1.3, twin laws could only be applied globally to the entire crystal.

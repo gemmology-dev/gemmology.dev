@@ -150,7 +150,7 @@ export function DichroscopeResults() {
           </select>
         </div>
         <div className="flex items-center gap-2 shrink-0 pb-1">
-          <span className="text-xs text-slate-400">{filtered.length} gem{filtered.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600">{filtered.length} gem{filtered.length !== 1 ? 's' : ''}</span>
           {dbAvailable && paginatedData && (
             <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
               {paginatedData.pagination.total} in database
@@ -161,7 +161,7 @@ export function DichroscopeResults() {
 
       {/* Results — responsive grid */}
       {loading ? (
-        <div className="text-center py-6 text-slate-500 text-sm">Loading pleochroism data...</div>
+        <div className="text-center py-6 text-slate-600 text-sm">Loading pleochroism data...</div>
       ) : filtered.length > 0 ? (
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -175,22 +175,22 @@ export function DichroscopeResults() {
                 </div>
                 <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs mb-1.5">
                   <div>
-                    <span className="text-slate-500">1:</span>{' '}
+                    <span className="text-slate-600">1:</span>{' '}
                     <span className="font-medium text-slate-800">{gem.color1}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500">2:</span>{' '}
+                    <span className="text-slate-600">2:</span>{' '}
                     <span className="font-medium text-slate-800">{gem.color2}</span>
                   </div>
                   {gem.color3 && (
                     <div>
-                      <span className="text-slate-500">3:</span>{' '}
+                      <span className="text-slate-600">3:</span>{' '}
                       <span className="font-medium text-slate-800">{gem.color3}</span>
                       <span className="text-purple-500 ml-1">(trichroic)</span>
                     </div>
                   )}
                 </div>
-                {gem.notes && <p className="text-xs text-slate-500">{gem.notes}</p>}
+                {gem.notes && <p className="text-xs text-slate-600">{gem.notes}</p>}
               </div>
             ))}
           </div>
@@ -205,11 +205,11 @@ export function DichroscopeResults() {
           )}
         </>
       ) : (
-        <div className="text-center py-6 text-slate-500 text-sm">No matching gems found. Try different color terms.</div>
+        <div className="text-center py-6 text-slate-600 text-sm">No matching gems found. Try different color terms.</div>
       )}
 
       {/* Usage tips — inline */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
         <span>• Isotropic gems (cubic) show no pleochroism</span>
         <span>• Uniaxial gems show 2 colors</span>
         <span>• Biaxial gems can show 2–3 colors</span>

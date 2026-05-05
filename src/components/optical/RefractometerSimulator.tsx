@@ -79,7 +79,7 @@ export function RefractometerSimulator() {
           )}
         </div>
         {loading ? (
-          <div className="w-full px-3 py-2 text-sm text-slate-500 bg-slate-100 rounded-lg">
+          <div className="w-full px-3 py-2 text-sm text-slate-600 bg-slate-100 rounded-lg">
             Loading gems...
           </div>
         ) : (
@@ -130,7 +130,7 @@ export function RefractometerSimulator() {
           {/* Shadow edge(s) */}
           {!showAnswer ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-slate-400 text-sm">Click "Show Reading" to see shadow edge</div>
+              <div className="text-slate-600 text-sm">Click "Show Reading" to see shadow edge</div>
             </div>
           ) : (
             <>
@@ -184,17 +184,17 @@ export function RefractometerSimulator() {
       {showAnswer && (
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-500 mb-1">Low RI</div>
+            <div className="text-xs text-slate-600 mb-1">Low RI</div>
             <div className="text-2xl font-bold text-slate-900">{selectedGem.ri_low.toFixed(3)}</div>
           </div>
 
           <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-500 mb-1">High RI</div>
+            <div className="text-xs text-slate-600 mb-1">High RI</div>
             <div className="text-2xl font-bold text-slate-900">{selectedGem.ri_high.toFixed(3)}</div>
           </div>
 
           <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-500 mb-1">Birefringence</div>
+            <div className="text-xs text-slate-600 mb-1">Birefringence</div>
             <div className="text-2xl font-bold text-slate-900">{birefringence.toFixed(3)}</div>
             <div className="text-xs text-slate-600 mt-1">
               {selectedGem.isotropic ? 'Isotropic (SR)' : 'Anisotropic (DR)'}

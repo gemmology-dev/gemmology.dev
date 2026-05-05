@@ -86,7 +86,7 @@ export function PolariscopeGuide() {
                 <h5 className="font-semibold text-sm text-slate-900">{proc.title}</h5>
               </div>
               <p className="text-xs text-slate-600">{proc.description}</p>
-              <p className="text-xs text-slate-500 mt-1">{proc.details}</p>
+              <p className="text-xs text-slate-600 mt-1">{proc.details}</p>
             </div>
           ))}
         </div>

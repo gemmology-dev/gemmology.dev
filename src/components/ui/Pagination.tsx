@@ -58,7 +58,7 @@ export function Pagination({
             'px-2 py-1 text-sm rounded border transition-colors',
             hasPrev
               ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-              : 'border-slate-200 text-slate-400 cursor-not-allowed'
+              : 'border-slate-200 text-slate-500 cursor-not-allowed'
           )}
           aria-label="Previous page"
         >
@@ -84,7 +84,7 @@ export function Pagination({
               pageNum === 'ellipsis' ? (
                 <span
                   key={`ellipsis-${i}`}
-                  className="px-2 py-1 text-slate-400"
+                  className="px-2 py-1 text-slate-500"
                 >
                   ...
                 </span>
@@ -121,7 +121,7 @@ export function Pagination({
             'px-2 py-1 text-sm rounded border transition-colors',
             hasNext
               ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-              : 'border-slate-200 text-slate-400 cursor-not-allowed'
+              : 'border-slate-200 text-slate-500 cursor-not-allowed'
           )}
           aria-label="Next page"
         >

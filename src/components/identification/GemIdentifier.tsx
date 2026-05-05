@@ -247,7 +247,7 @@ export function GemIdentifier() {
 
   if (loading) {
     return (
-      <div className="p-4 text-center text-slate-500">
+      <div className="p-4 text-center text-slate-600">
         Loading mineral database...
       </div>
     );
@@ -269,7 +269,7 @@ export function GemIdentifier() {
           Start by selecting the optic character from your polariscope observation.
         </p>
         {dbAvailable && (
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Searching {mineralsCount} minerals in database
           </p>
         )}
@@ -496,7 +496,7 @@ export function GemIdentifier() {
         >
           Clear all
         </button>
-        <span className="text-sm text-slate-500">
+        <span className="text-sm text-slate-600">
           {activeCriteria} {activeCriteria === 1 ? 'property' : 'properties'} entered
         </span>
       </div>
@@ -519,7 +519,7 @@ export function GemIdentifier() {
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-xs text-slate-500 hover:text-slate-700"
+              className="text-sm text-slate-600 hover:text-slate-700"
             >
               {showAdvanced ? 'Hide' : 'Show'} details
             </button>
@@ -556,7 +556,7 @@ export function GemIdentifier() {
           <li>Note other properties (pleochroism, spectrum, inclusions)</li>
           <li>Compare against database matches</li>
         </ol>
-        <p className="text-xs text-slate-500 mt-3">
+        <p className="text-sm text-slate-600 mt-3">
           Confidence: 90%+ excellent, 70-89% good, 50-69% partial
         </p>
       </div>

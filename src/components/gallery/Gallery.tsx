@@ -134,7 +134,7 @@ export function Gallery({ initialSystem = '', initialSearch = '', initialOrigin 
           </svg>
         </div>
         <h3 className="text-lg font-medium text-slate-900">Failed to load families</h3>
-        <p className="mt-2 text-slate-500">{error.message}</p>
+        <p className="mt-2 text-slate-600">{error.message}</p>
         <button
           onClick={() => window.location.reload()}
           className="mt-4 text-crystal-700 hover:text-crystal-700 font-medium"

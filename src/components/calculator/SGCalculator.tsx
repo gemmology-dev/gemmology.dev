@@ -54,7 +54,7 @@ export function SGCalculator() {
     <div className="space-y-6">
       <div className="text-sm text-slate-600">
         <p>Enter the weight of your stone in air and water to calculate its specific gravity.</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-sm text-slate-600">
           Formula: SG = Weight in air ÷ (Weight in air − Weight in water)
         </p>
       </div>
@@ -110,7 +110,7 @@ export function SGCalculator() {
         </NumberResult>
       )}
 
-      <div className="text-xs text-slate-500 space-y-1">
+      <div className="text-sm text-slate-600 space-y-1">
         <p><strong>Example (Diamond):</strong> 3.52g in air, 2.52g in water = SG 3.52</p>
         <p><strong>Tip:</strong> Ensure the stone is fully submerged and free of air bubbles.</p>
       </div>

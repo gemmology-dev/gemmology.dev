@@ -29,7 +29,7 @@ export function CriticalAngleCalc() {
     <div className="space-y-6">
       <div className="text-sm text-slate-600">
         <p>Enter the refractive index to calculate the critical angle for total internal reflection.</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-sm text-slate-600">
           Formula: θc = arcsin(1 ÷ RI)
         </p>
       </div>
@@ -81,7 +81,7 @@ export function CriticalAngleCalc() {
         </p>
       </div>
 
-      <div className="text-xs text-slate-500 space-y-1">
+      <div className="text-sm text-slate-600 space-y-1">
         <p><strong>Diamond (RI 2.417):</strong> θc = 24.4° — Excellent light return</p>
         <p><strong>Corundum (RI 1.77):</strong> θc = 34.4° — Good light return</p>
         <p><strong>Quartz (RI 1.55):</strong> θc = 40.2° — Moderate light return</p>

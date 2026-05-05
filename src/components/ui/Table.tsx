@@ -72,7 +72,7 @@ export function Table({
     <div className={cn(wrapperStyles[variant], className)} {...props}>
       <table className="w-full text-sm">
         {caption && (
-          <caption className="text-sm text-slate-500 mb-2 text-left px-4 py-2">
+          <caption className="text-sm text-slate-600 mb-2 text-left px-4 py-2">
             {caption}
           </caption>
         )}
@@ -240,7 +240,7 @@ export function PaginatedTable<T>({
 
       {/* Loading state */}
       {loading && (
-        <div className="text-center py-8 text-slate-500 text-sm">
+        <div className="text-center py-8 text-slate-600 text-sm">
           Loading...
         </div>
       )}
@@ -252,7 +252,7 @@ export function PaginatedTable<T>({
 
       {/* Empty state */}
       {!loading && !hasData && (
-        <div className="text-center py-8 text-slate-500 text-sm border border-slate-200 rounded-xl">
+        <div className="text-center py-8 text-slate-600 text-sm border border-slate-200 rounded-xl">
           {emptyMessage}
         </div>
       )}

@@ -1,8 +1,7 @@
 /**
- * Protected Tools Hub - Wraps Tools hub with LockGate
+ * ToolsHub - landing page listing all gemmological tool categories.
  */
 
-import { LockGate } from './LockGate';
 import { Container } from '../ui/Container';
 import { Card, CardTitle, CardDescription } from '../ui/Card';
 import { IconBox } from '../ui/IconBox';
@@ -61,45 +60,41 @@ const iconPaths: Record<string, string> = {
   chart: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
 };
 
-export function ProtectedTools() {
+export function ToolsHub() {
   return (
-    <LockGate>
-      <div className="bg-gradient-to-b from-slate-50 to-white min-h-screen py-12">
-        <Container size="xl" padding="md">
-          {/* Header */}
-          <div className="max-w-3xl pb-8 border-b border-slate-200">
-            <h1 className="text-4xl font-bold text-slate-900">Tools</h1>
-            <p className="mt-4 text-lg text-slate-600">
-              Professional gemmological tools for calculations, conversions, and reference.
-            </p>
-          </div>
+    <div className="bg-gradient-to-b from-slate-50 to-white min-h-screen py-12">
+      <Container size="xl" padding="md">
+        <div className="max-w-3xl pb-8 border-b border-slate-200">
+          <h1 className="text-4xl font-bold text-slate-900">Tools</h1>
+          <p className="mt-4 text-lg text-slate-600">
+            Professional gemmological tools for calculations, conversions, and reference.
+          </p>
+        </div>
 
-          {/* Tools Grid */}
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tools.map((tool) => (
-              <a key={tool.title} href={tool.href} className="group">
-                <Card hover padding="lg" className="h-full">
-                  <div className="flex items-start gap-4">
-                    <IconBox variant={tool.variant} size="md" className="shrink-0 group-hover:scale-105 transition-transform">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={iconPaths[tool.icon]} />
-                      </svg>
-                    </IconBox>
-                    <div className="flex-1 min-w-0">
-                      <CardTitle className="text-lg group-hover:text-crystal-700 transition-colors">
-                        {tool.title}
-                      </CardTitle>
-                      <CardDescription className="mt-2">
-                        {tool.description}
-                      </CardDescription>
-                    </div>
+        <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tools.map((tool) => (
+            <a key={tool.title} href={tool.href} className="group">
+              <Card hover padding="lg" className="h-full">
+                <div className="flex items-start gap-4">
+                  <IconBox variant={tool.variant} size="md" className="shrink-0 group-hover:scale-105 transition-transform">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={iconPaths[tool.icon]} />
+                    </svg>
+                  </IconBox>
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-lg group-hover:text-crystal-700 transition-colors">
+                      {tool.title}
+                    </CardTitle>
+                    <CardDescription className="mt-2">
+                      {tool.description}
+                    </CardDescription>
                   </div>
-                </Card>
-              </a>
-            ))}
-          </div>
-        </Container>
-      </div>
-    </LockGate>
+                </div>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </div>
   );
 }

@@ -37,7 +37,7 @@ const originStyles: Record<string, string> = {
     <h2 class="text-lg font-semibold text-slate-900">
       {isNatural ? 'Synthetics & Simulants' : 'Natural Counterpart'}
     </h2>
-    <p class="text-sm text-slate-500 mt-1">
+    <p class="text-sm text-slate-600 mt-1">
       {isNatural
         ? `Known synthetic and simulant versions of ${mineral.name}`
         : `The natural gem this ${mineral.origin} imitates`
@@ -79,10 +79,10 @@ const originStyles: Record<string, string> = {
               </span>
             </div>
             {cp.growth_method && (
-              <div class="text-sm text-slate-500 capitalize">{cp.growth_method.replace(/_/g, ' ')}</div>
+              <div class="text-sm text-slate-600 capitalize">{cp.growth_method.replace(/_/g, ' ')}</div>
             )}
           </div>
-          <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </a>
@@ -123,10 +123,10 @@ const originStyles: Record<string, string> = {
               </span>
             </div>
             {naturalCounterpart.chemistry && (
-              <div class="text-sm text-slate-500 font-mono truncate">{naturalCounterpart.chemistry}</div>
+              <div class="text-sm text-slate-600 font-mono truncate">{naturalCounterpart.chemistry}</div>
             )}
           </div>
-          <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </a>

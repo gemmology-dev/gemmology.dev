@@ -85,7 +85,7 @@ export function GemMatchCard({
               prop.matched && 'bg-crystal-100'
             )}
           >
-            <p className="text-slate-500">{prop.label}</p>
+            <p className="text-slate-600">{prop.label}</p>
             <p
               className={cn(
                 'font-medium',

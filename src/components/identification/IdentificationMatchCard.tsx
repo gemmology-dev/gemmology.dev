@@ -108,7 +108,7 @@ export function IdentificationMatchCard({
                       />
                     </svg>
                   ) : (
-                    <svg className="h-4 w-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-4 w-4 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -116,21 +116,21 @@ export function IdentificationMatchCard({
                       />
                     </svg>
                   )}
-                  <span className={detail.matched ? 'text-slate-900' : 'text-slate-500'}>
+                  <span className={detail.matched ? 'text-slate-900' : 'text-slate-600'}>
                     {detail.property}
                   </span>
                 </span>
                 <span className="text-right">
                   <span className={cn(
                     'font-mono text-xs',
-                    detail.matched ? 'text-slate-700' : 'text-slate-500'
+                    detail.matched ? 'text-slate-700' : 'text-slate-600'
                   )}>
                     {detail.measured}
                   </span>
-                  <span className="text-slate-400 mx-1">→</span>
+                  <span className="text-slate-600 mx-1">→</span>
                   <span className={cn(
                     'font-mono text-xs',
-                    detail.matched ? 'text-slate-700' : 'text-slate-500'
+                    detail.matched ? 'text-slate-700' : 'text-slate-600'
                   )}>
                     {detail.expected}
                   </span>
@@ -188,7 +188,7 @@ export function IdentificationMatchCardCompact({
         <h4 className="font-medium text-slate-900 truncate">
           {mineral.name}
         </h4>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-xs text-slate-600 mt-0.5">
           {matchedProperties.length} of {result.matchDetails.length} properties match
         </p>
       </div>
