@@ -1,0 +1,80 @@
+id: inclusion-horsetail-001
+stem: |
+  Under the microscope at 20× magnification, a gemmologist examines a vivid yellowish-green
+  faceted gemstone and identifies a characteristic inclusion: a dense cluster of fine,
+  curved, golden-brown fibres radiating outward from a central dark crystal, resembling
+  a horse's tail. The stone has no shadow edge on the standard refractometer and SG of
+  approximately 3.84. Which species does this inclusion type identify, what is the
+  fibrous mineral within it, and why is SG the key confirmatory test for this species?
+type: mcq
+options:
+  - text: "Demantoid garnet (andradite); the 'horsetail' inclusion is byssolite (actinolite, a fibrous amphibole) radiating from a chromite crystal; SG ~3.84 confirms andradite and eliminates other green gems above the refractometer range"
+    isCorrect: true
+    rationale: |
+      The horsetail inclusion is one of the most famous and visually distinctive
+      inclusions in gemmology. It consists of curved, golden-brown or greenish-brown
+      fibres of byssolite (a fibrous variety of actinolite, calcium magnesium iron
+      amphibole) radiating from a central chromite (FeCr2O4) crystal. This combination
+      is virtually diagnostic for demantoid garnet from the Ural Mountain deposits in
+      Russia. The SG of 3.84 is critical because demantoid (andradite, Ca3Fe2(SiO4)3)
+      has RI approximately 1.888, above the standard refractometer range — no shadow
+      edge is visible. SG distinguishes demantoid (3.82–3.85) from tsavorite (3.57–3.73),
+      green tourmaline (3.06), and emerald (2.67–2.78), all of which have a refractometer
+      reading.
+  - text: "Tsavorite garnet (grossular); tsavorite shows fibrous actinolite inclusions in cluster form as a result of its metamorphic origin in Kenya"
+    isCorrect: false
+    rationale: |
+      Tsavorite (green grossular garnet) does not show horsetail inclusions. Tsavorite
+      from Kenya forms in metasomatic calc-silicate rocks and contains typical inclusions
+      such as apatite, graphite, and diopside — not fibrous actinolite halos from chromite.
+      The horsetail inclusion is specific to demantoid from the Ural deposits (and
+      occasionally other andradite localities). Additionally, tsavorite RI is approximately
+      1.740–1.760, within the standard refractometer range — it would give a visible
+      shadow edge, contradicting the "no shadow edge" observation. Confusing tsavorite
+      and demantoid is a common error because both are valuable green garnets.
+  - text: "Chrome tourmaline; chrome tourmaline contains fibrous inclusions radiating from a chromite crystal in characteristic horsetail patterns"
+    isCorrect: false
+    rationale: |
+      Chrome tourmaline does not show horsetail inclusions. Tourmaline inclusions include
+      growth tubes parallel to the c-axis, fluid inclusions, and occasionally mineral
+      crystals, but not the characteristic radial byssolite fibres from a chromite centre
+      that define the horsetail. Furthermore, chrome tourmaline RI is 1.620–1.640 — it
+      gives a clear shadow edge on the refractometer. The "no shadow edge" observation
+      eliminates tourmaline before microscopy even begins. A student choosing tourmaline
+      may be associating "chrome" and "fibrous inclusions" without knowing the specific
+      inclusion morphology of each species.
+rationaleCorrect: |
+  The horsetail inclusion — byssolite fibres radiating from a chromite crystal — is
+  one of the most celebrated diagnostic features in gemmology and is virtually
+  pathognomonic for Russian demantoid garnet. Demantoid from the Ural Mountains
+  almost always shows horsetails; demantoid from other localities (Madagascar,
+  Namibia, Iran) may or may not show them. The combination of: no refractometer
+  reading (RI ~1.89, above contact-liquid limit), SG 3.82–3.85, isotropic polariscope
+  (cubic), high dispersion (fire), and horsetail inclusions is definitively demantoid
+  of probable Russian Ural origin. SG is the essential test when RI is unavailable:
+  demantoid heavier than diamond (3.52) and tsavorite (3.57–3.73), lighter than
+  spessartine (3.8–4.2 variable). Know these SG anchors.
+difficulty: 4
+category: identification
+conceptTags:
+  - needle-inclusion
+  - demantoid
+  - natural-vs-synthetic
+  - specific-gravity
+  - refractive-index
+  - cubic-system
+sourceArticle: identification/inclusions/solid-inclusions
+examRelevance: FGA-foundation
+confusionPairs:
+  - inclusion-zircon-halo-001
+  - inclusion-three-phase-001
+  - green-stone-003
+similarTo:
+  - inclusion-zircon-halo-001
+  - green-stone-003
+unvetted: false
+authorReviewed: "FGA-reviewer-1"
+lastReviewed: "2026-05-05T10:00:00Z"
+references:
+  - id: read-gemmology-3e
+    citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."
