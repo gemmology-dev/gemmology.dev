@@ -11,41 +11,39 @@ options:
     isCorrect: true
     rationale: |
       Pattern II shows exactly two constant, parallel shadow edges that do not move
-      during rotation. This orientation means the c-axis is perpendicular to the
+      during rotation [ref:read-gemmology-3e]. This orientation means the c-axis is perpendicular to the
       table facet — the stone is being viewed along a direction where both omega and
       epsilon are simultaneously visible as fixed values. Because neither edge varies
       with rotation in this orientation, there is no way to identify which is the
       constant omega and which is the variable epsilon, making optic sign determination
-      impossible from this facet alone. The readings 1.544 and 1.553 confirm quartz.
+      impossible from this facet alone [ref:read-gemmology-3e]. The readings 1.544 and 1.553 confirm quartz
+      (birefringence 0.009) [ref:anderson-gem-testing].
   - text: "Pattern III; c-axis is parallel to the table, and the optic sign is determinable as positive"
     isCorrect: false
     rationale: |
-      Pattern III requires one constant and one variable edge that touch at one point.
+      Pattern III requires one constant and one variable edge that touch at one point [ref:read-gemmology-3e].
       The scenario describes both edges as completely constant and parallel — no movement.
       This is the opposite of Pattern III, where one edge moves. A student might
       choose Pattern III for quartz because they know quartz is uniaxial positive and
       that optic sign IS determinable from Pattern III — but in this specific orientation
       (c-axis perpendicular to table), neither edge varies, which is the defining
-      criterion for Pattern II, not III.
+      criterion for Pattern II, not III [ref:read-gemmology-3e].
   - text: "Pattern I; the stone is isotropic with two internal stress cracks producing two readings"
     isCorrect: false
     rationale: |
-      Pattern I produces only one shadow edge. Two separate, parallel constant edges
+      Pattern I produces only one shadow edge [ref:read-gemmology-3e]. Two separate, parallel constant edges
       cannot arise from Pattern I; a single constant edge is the hallmark of Pattern I.
       The suggestion that two constant edges could come from stress cracks is incorrect —
       cracks affect the sharpness of the reading or cause anomalous double refraction,
-      not duplicate well-defined shadow edges at different RI values. Two constant
-      edges separated by a measurable interval are diagnostic of Pattern II, not an
-      artefact.
+      not duplicate well-defined shadow edges at different RI values [ref:read-gemmology-3e].
 rationaleCorrect: |
   Pattern II is the only Sturman pattern with two constant, parallel, non-moving shadow
-  edges. It occurs when the stone's c-axis is perpendicular to the hemisphere — the
+  edges [ref:read-gemmology-3e]. It occurs when the stone's c-axis is perpendicular to the hemisphere — the
   observer is looking down the c-axis. The birefringence can be calculated (1.553 − 1.544
-  = 0.009, confirming quartz), but the optic sign cannot be read because neither edge
+  = 0.009, confirming quartz) [ref:read-gemmology-3e], but the optic sign cannot be read because neither edge
   is variable; you cannot identify which value is omega and which is epsilon from this
-  pattern alone. To determine sign, the stone must be re-examined on a different facet
-  where Pattern III is obtained (touching edges, sign determinable). This is a critical
-  distinction: knowing the birefringence does not tell you the sign.
+  pattern alone [ref:read-gemmology-3e]. To determine sign, the stone must be re-examined on a different facet
+  where Pattern III is obtained (touching edges, sign determinable) [ref:anderson-gem-testing].
 difficulty: 4
 category: equipment
 conceptTags:
@@ -69,5 +67,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
-  - id: sturman-patterns-ref
-    citation: "Sturman, D. (1987). Refractometer shadow-edge patterns. Journal of Gemmology, 20(6), 369–382."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

@@ -11,47 +11,41 @@ options:
   - text: "Red glass; RI ~1.59 is well below any corundum or garnet value and is consistent with common silica glass; foiled settings are diagnostic of glass stones used in antique jewellery before synthetic gem production"
     isCorrect: true
     rationale: |
-      RI approximately 1.59 is far below ruby (1.762–1.770), spinel (1.712–1.720), and
-      almandine garnet (1.770–1.830) — all three cannot produce this reading. The value
+      RI approximately 1.59 is far below ruby (1.762–1.770) [ref:read-gemmology-3e], spinel (1.712–1.720) [ref:read-gemmology-3e], and
+      almandine garnet (1.770–1.830) [ref:read-gemmology-3e] — all three cannot produce this reading. The value
       1.59 falls within the range for silicate glass (typically 1.44–1.70 depending on
-      composition). Foiled settings — metal foil behind the stone to enhance brightness
+      composition) [ref:read-gemmology-3e]. Foiled settings — metal foil behind the stone to enhance brightness
       — were a standard technique for glass stones in Georgian and early Victorian
-      jewellery before synthetic stones became available. The isotropic polariscope
-      result is consistent with amorphous glass. The combination of low RI, isotropic
-      behaviour, and foiled setting is diagnostic of red glass paste in Georgian
-      jewellery.
+      jewellery before synthetic stones became available [ref:read-gemmology-3e]. The isotropic polariscope
+      result is consistent with amorphous glass.
   - text: "Natural ruby; Georgian jewellers often cut rubies with foiled settings to enhance the colour, and heat treatment has reduced the RI to 1.59"
     isCorrect: false
     rationale: |
       Heat treatment does not alter the RI or crystal structure of corundum. Ruby RI is
       determined by the Al2O3 crystal lattice and cannot be changed by any thermal
-      treatment to reach 1.59 — a difference of over 0.17 from corundum's 1.762. Foiled
+      treatment to reach 1.59 — a difference of over 0.17 from corundum's 1.762 [ref:read-gemmology-3e]. Foiled
       settings were not typically used for genuine rubies in Georgian jewellery; they
       were used for glass, paste, and composite stones to improve brilliance where the
-      material's own lustre was insufficient. A genuine Georgian ruby in a foiled setting
-      would be highly unusual and would still give RI 1.762–1.770.
+      material's own lustre was insufficient [ref:read-gemmology-3e].
   - text: "Synthetic ruby (flame fusion); Verneuil synthesis was available to Georgian craftsmen and produces lower RI than natural ruby"
     isCorrect: false
     rationale: |
       The Verneuil flame-fusion process was developed by Auguste Verneuil and became
-      commercially available in 1902 — well after the Georgian era (approximately
-      1714–1830). Georgian jewellers did not have access to synthetic ruby. More
-      importantly, Verneuil synthetic ruby has exactly the same RI as natural ruby
-      (1.762–1.770) because it is chemically identical Al2O3. No form of synthetic
-      corundum produces RI 1.59. This distractor tests both historical knowledge
-      (when synthetic ruby became available) and basic property knowledge (synthetic
-      ruby RI = natural ruby RI).
+      commercially available approximately 1902 — well after the Georgian era
+      (approximately 1714–1830) [ref:read-gemmology-3e]. Georgian jewellers did not have access to synthetic
+      ruby. More importantly, Verneuil synthetic ruby has exactly the same RI as natural
+      ruby (1.762–1.770) because it is chemically identical Al2O3 [ref:read-gemmology-3e]. No form of synthetic
+      corundum produces RI 1.59.
 rationaleCorrect: |
   Red glass paste in foiled settings is one of the most common finds in Georgian antique
-  jewellery. The RI of approximately 1.59 is approximately 0.17 units below corundum
+  jewellery. The RI of approximately 1.59 is approximately 0.17 units below corundum [ref:read-gemmology-3e]
   and is consistent with lead-free silicate glass. The foiled setting is a key contextual
   clue: before synthetic gems were available, jewellers used glass paste (pâte de verre)
   as a colour-true simulant, backing it with reflective metal foil to compensate for
-  the lower lustre. This technique was perfected by the Strass/Stras workshops in
-  18th-century France and widely used in Georgian jewellery. The gemmologist should
-  report: red glass paste in foil-back setting, consistent with 18th–early 19th century
-  production; no evidence of ruby. This has significant implications for the piece's
-  value and insurance.
+  the lower lustre [ref:read-gemmology-3e]. The Verneuil commercial production date of approximately 1902 means
+  any piece described as Georgian (pre-1830) cannot be Verneuil synthetic [ref:read-gemmology-3e]. The
+  gemmologist should report: red glass paste in foil-back setting, consistent with
+  18th–early 19th century production; no evidence of ruby [ref:anderson-gem-testing].
 difficulty: 3
 category: species
 conceptTags:
@@ -75,3 +69,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 102–115."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

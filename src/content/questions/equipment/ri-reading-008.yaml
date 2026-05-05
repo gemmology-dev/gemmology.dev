@@ -11,42 +11,37 @@ options:
     isCorrect: true
     rationale: |
       The spot method, used for curved surfaces such as cabochons, reads a diffuse
-      spot of light rather than a sharp shadow edge. The position of the spot centre
+      spot of light rather than a sharp shadow edge [ref:read-gemmology-3e]. The position of the spot centre
       can be estimated but is inherently less precise than a sharp edge, giving an
-      accuracy of approximately ±0.01 RI unit. More importantly, the curved surface
+      accuracy of approximately ±0.01 RI unit [ref:anderson-gem-testing]. More importantly, the curved surface
       averages light from multiple orientations simultaneously, making it impossible
-      to rotate the stone and measure omega and epsilon separately. Birefringence
+      to rotate the stone and measure omega and epsilon separately [ref:read-gemmology-3e]. Birefringence
       measurement requires two distinct shadow edge positions, which the spot method
-      cannot deliver.
+      cannot deliver [ref:anderson-gem-testing].
   - text: "The spot method reads only the extraordinary ray (epsilon) and misses the ordinary ray (omega)"
     isCorrect: false
     rationale: |
       The spot method does not selectively measure epsilon; it integrates light from
       many directions at once due to the curved surface, giving an average or mean RI
-      rather than individual ray velocities. It does not preferentially select epsilon
+      rather than individual ray velocities [ref:read-gemmology-3e]. It does not preferentially select epsilon
       any more than omega. The statement about epsilon-only readings applies to
       specific cut orientations in doubly refractive stones tested by the standard
-      technique, not to the spot method per se. A student might confuse this with the
-      general principle that rotating a faceted stone isolates omega and epsilon.
+      technique, not to the spot method per se [ref:anderson-gem-testing].
   - text: "The spot method cannot be used on stones with RI above 1.70, making it useless for spinel"
     isCorrect: false
     rationale: |
       The spot method works across the full RI range of the contact liquid (~1.35–1.79),
-      the same as the faceted-stone technique. Spinel at RI 1.718 is well within range
+      the same as the faceted-stone technique [ref:read-gemmology-3e]. Spinel at RI 1.718 is well within range
       and can be tested by the spot method as a cabochon. The limitation is accuracy
-      and inability to measure birefringence, not an upper RI cutoff. A reading of
-      approximately 1.71 on a cabochon is entirely plausible for spinel and would
-      guide further testing, even if it cannot confirm birefringence.
+      and inability to measure birefringence, not an upper RI cutoff [ref:anderson-gem-testing].
 rationaleCorrect: |
   The spot method is a practical compromise for curved surfaces: it gives an approximate
-  RI (±0.01) useful for screening, but the result should always be recorded as approximate.
+  RI (±0.01) useful for screening, but the result should always be recorded as approximate [ref:anderson-gem-testing].
   The critical limitation is the inability to measure birefringence — birefringence
   requires rotating the stone to find two distinct edge positions, which requires a
-  polished flat facet and the standard technique. A cabochon RI reading of approximately
+  polished flat facet and the standard technique [ref:read-gemmology-3e]. A cabochon RI reading of approximately
   1.71 could indicate spinel, chrysoberyl, or other species; the gemmologist must note
-  the uncertainty and use SG or other tests to confirm. The ±0.01 precision means values
-  near diagnostic boundaries (e.g. spinel 1.718 vs tourmaline at ~1.62) must be treated
-  with caution.
+  the uncertainty and use SG or other tests to confirm [ref:anderson-gem-testing].
 difficulty: 2
 category: equipment
 conceptTags:
@@ -68,3 +63,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

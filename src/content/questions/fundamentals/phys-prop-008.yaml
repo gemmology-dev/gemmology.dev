@@ -13,9 +13,9 @@ options:
     rationale: |
       Directional hardness (also called anisotropic hardness) occurs in minerals whose
       crystal structure has different bond strengths in different crystallographic
-      directions. In kyanite (Al2SiO5, triclinic), the aluminium-oxygen bond geometry
+      directions [ref:read-gemmology-3e]. In kyanite (Al2SiO5, triclinic), the aluminium-oxygen bond geometry
       produces weaker planes parallel to the length (c-axis direction), giving hardness
-      4.5–5 in that direction, and stronger planes perpendicular, giving 6.5–7.
+      4.5–5 in that direction, and stronger planes perpendicular, giving 6.5–7 [ref:read-gemmology-3e].
       This property gave kyanite its historical name "disthene" (two strengths). The
       same mineral — same crystal, same composition — scratches easily along one
       direction and resists scratching in another.
@@ -24,34 +24,28 @@ options:
     rationale: |
       Chemical zoning (compositional variation across a crystal from core to rim)
       can affect colour and sometimes RI in gem minerals, but it does not cause the
-      strong, reproducible, direction-specific hardness variation seen in kyanite.
-      If the hardness difference were from zoning, it would vary from crystal to crystal
-      and from zone to zone — not reliably in the same directions across different crystals
-      of the same species. Kyanite's directional hardness is a fundamental, repeatable
-      crystallographic property that every kyanite crystal displays, not an artefact of
-      individual chemical variation.
+      strong, reproducible, direction-specific hardness variation seen in kyanite [ref:read-gemmology-3e].
+      Kyanite's directional hardness is a fundamental, repeatable crystallographic
+      property that every kyanite crystal displays, not an artefact of individual
+      chemical variation.
   - text: "Kyanite has a perfect cleavage in the c-axis direction, and the hardness tester scratches along the cleavage plane, producing a false low reading"
     isCorrect: false
     rationale: |
       Kyanite does have good to perfect cleavage in two directions ({100} and {010}),
-      but this does not explain the hardness measurement result through a "false reading."
+      but this does not explain the hardness measurement result through a "false reading" [ref:read-gemmology-3e].
       Cleavage affects how the mineral fractures, not how it resists a scratch. The
       hardness tester measures resistance to a scratch groove, which is a genuine material
       property measured in the direction of the test. The 4.5–5 value parallel to c is a
-      real, reproducible hardness value, not a measurement artefact from the cleavage.
-      The two properties — cleavage and directional hardness — coexist independently in
-      kyanite's structure.
+      real, reproducible hardness value, not a measurement artefact from the cleavage [ref:read-gemmology-3e].
 rationaleCorrect: |
   Kyanite is the classic gemmological demonstration of directional hardness (anisotropic
-  hardness). The Mohs scale assumes hardness is a single value per mineral; kyanite shows
-  it can vary by 2 full Mohs units depending on the direction of the test. This has
+  hardness) [ref:read-gemmology-3e]. The Mohs scale assumes hardness is a single value per mineral; kyanite shows
+  it can vary by 2 full Mohs units depending on the direction of the test [ref:read-gemmology-3e]. This has
   significant practical implications: cutting and polishing kyanite is challenging because
-  the polishing wheel must be oriented correctly for each facet. Diamond polishing powder
-  works regardless of direction because the random orientation of grit particles always
-  presents some particles in their hardest direction. Directional hardness is not unique
-  to kyanite — diamond also varies by direction (hardest along octahedral, softest across
-  dodecahedral) — but kyanite is the most extreme and pedagogically useful example in
-  gemmology.
+  the polishing wheel must be oriented correctly for each facet. Directional hardness is
+  not unique to kyanite — diamond also varies by direction (hardest along octahedral,
+  softest across dodecahedral) [ref:read-gemmology-3e] — but kyanite is the most extreme and pedagogically
+  useful example in gemmology.
 difficulty: 2
 category: fundamentals
 conceptTags:

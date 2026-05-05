@@ -10,39 +10,39 @@ options:
   - text: "Blue sapphire (corundum); Pattern III (uniaxial negative)"
     isCorrect: false
     rationale: |
-      Corundum (sapphire) has an RI of 1.762–1.770, not 1.718. It is uniaxial negative,
+      Corundum (sapphire) has an RI of 1.762–1.770, not 1.718 [ref:read-gemmology-3e]. It is uniaxial negative,
       which would produce Pattern II or III on the refractometer — not a single constant
       edge at 1.718. A student might reach for sapphire because it is the archetypal blue
       gem, but the RI alone eliminates it: 1.718 is clearly lower than the minimum
-      corundum RI of 1.762. The polariscope confirming uniform darkness (isotropic) also
+      corundum RI of 1.762 [ref:read-gemmology-3e]. The polariscope confirming uniform darkness (isotropic) also
       rules out the doubly refractive corundum.
   - text: "Spinel; Pattern I (isotropic, single constant edge)"
     isCorrect: true
     rationale: |
-      Spinel (MgAl2O4) is cubic and therefore isotropic, with RI typically 1.712–1.720.
+      Spinel (MgAl2O4) is cubic and therefore isotropic, with RI typically 1.712–1.720 [ref:read-gemmology-3e].
       A single constant shadow edge at 1.718 matches spinel's published range. Pattern I
-      is confirmed when the edge remains constant throughout a full 360° rotation.
+      is confirmed when the edge remains constant throughout a full 360° rotation [ref:read-gemmology-3e].
       The polariscope reading (uniformly dark between crossed polars, confirming isotropic)
       and absence of LWUV fluorescence (spinel generally inert, though some show red)
-      are consistent. The combination of Pattern I + RI ~1.718 is diagnostically reliable
-      for spinel in the absence of other indicators.
+      are consistent [ref:read-gemmology-3e]. The combination of Pattern I + RI ~1.718 is diagnostically
+      reliable for spinel.
   - text: "Tanzanite (zoisite); Pattern VI (biaxial, two variable edges)"
     isCorrect: false
     rationale: |
       Tanzanite (zoisite) is orthorhombic and biaxial, with RI 1.691–1.704 and very
-      strong trichroism (blue/violet/burgundy). Its RI range does not reach 1.718, and
+      strong trichroism (blue/violet/burgundy) [ref:read-gemmology-3e]. Its RI range does not reach 1.718, and
       it would show two variable shadow edges (Pattern VI or VII) on the refractometer,
       not a single constant edge. Additionally, tanzanite shows striking pleochroism —
       described as one of the strongest trichroic gems — which would be immediately
-      apparent when rotating the stone, contradicting the single constant reading.
+      apparent when rotating the stone, contradicting the single constant reading [ref:read-gemmology-3e].
 rationaleCorrect: |
   The diagnostic chain here is: (1) single constant RI ~1.718 on refractometer = Pattern I,
-  consistent with an isotropic gem; (2) polariscope uniformly dark between crossed polars
-  confirms isotropic character; (3) RI ~1.718 matches spinel's published range (1.712–1.720)
+  consistent with an isotropic gem [ref:read-gemmology-3e]; (2) polariscope uniformly dark between crossed polars
+  confirms isotropic character; (3) RI ~1.718 matches spinel's published range (1.712–1.720) [ref:read-gemmology-3e]
   and eliminates corundum (too low) and tanzanite (wrong pattern and wrong RI). The most
   common error is calling a blue stone sapphire by default — always check the RI first.
   Spinel at 1.718 is one of the most important reference values in FGA Foundation: it is the
-  calibration standard for refractometer verification.
+  calibration standard for refractometer verification [ref:anderson-gem-testing].
 difficulty: 2
 category: equipment
 conceptTags:
@@ -67,3 +67,5 @@ lastReviewed: "2026-05-05T10:00:00Z"
 references:
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 44–52, 102."
+  - id: anderson-gem-testing
+    citation: "Anderson, B.W. (1990). Gem Testing (10th ed., revised by E. A. Jobbins). Butterworth-Heinemann. pp. 35–52."

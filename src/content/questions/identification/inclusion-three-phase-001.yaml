@@ -14,47 +14,46 @@ options:
     rationale: |
       The three phases are: (1) liquid (saline solution, predominantly NaCl brine);
       (2) gas — a mobile CO2 bubble that moves freely when the stone is tilted;
-      (3) solid — a small cuboid (cubic) crystal of halite (NaCl). The cuboid habit
+      (3) solid — a small cuboid (cubic) crystal of halite (NaCl) [ref:gubelin-koivula-vol1]. The cuboid habit
       of the solid crystal is diagnostic: halite crystallises in the cubic system and
-      produces perfect cube-shaped crystals. This exact combination — irregular jagged
+      produces perfect cube-shaped crystals [ref:read-gemmology-3e]. This exact combination — irregular jagged
       cavity (reflecting the host rock environment), saline fluid, CO2 bubble, and
       halite cube — is characteristic of Colombian emerald from the sedimentary-hosted
-      deposits of Muzo, Chivor, and Coscuez. Zambian emerald (hosted in schist) shows
-      a different inclusion suite dominated by two-phase inclusions without halite.
+      deposits of Muzo, Chivor, and Coscuez [ref:gubelin-koivula-vol1]. Zambian emerald (hosted in schist) shows
+      a different inclusion suite dominated by two-phase inclusions without halite [ref:gubelin-koivula-vol1].
   - text: "Synthetic flux-grown emerald; the three-phase inclusion is characteristic of flux-grown material where the flux solidifies as a cube-shaped crystal inside the void"
     isCorrect: false
     rationale: |
       Flux-grown synthetic emerald does not produce three-phase inclusions with a cuboid
-      NaCl crystal. Flux inclusions in synthetic emerald appear as wispy, irregular,
+      NaCl crystal [ref:gubelin-koivula-vol1]. Flux inclusions in synthetic emerald appear as wispy, irregular,
       feather-like or needle-like concentrations of the molten flux that were trapped
-      during growth. The flux used (typically lithium molybdate or lead oxide-based
+      during growth [ref:read-gemmology-3e]. The flux used (typically lithium molybdate or lead oxide-based
       fluxes) crystallises as irregular masses or is vitreous (glassy), not as perfect
-      cubes. The cuboid shape of the solid in the described inclusion is characteristic
-      of halite, which is geologically formed — not from a synthetic flux medium. Synthetic
+      cubes [ref:read-gemmology-3e]. The cuboid shape of the solid in the described inclusion is characteristic
+      of halite, which is geologically formed — not from a synthetic flux medium [ref:gubelin-koivula-vol1]. Synthetic
       emerald inclusions are fundamentally different in appearance from Colombian three-phase
       inclusions.
   - text: "Zambian emerald; Zambian emeralds commonly show three-phase inclusions with halite cubes from the saline formation environment in Zambia"
     isCorrect: false
     rationale: |
       Zambian emerald is hosted in metasomatic schist (Kafubu/Kagem deposit) and forms
-      in a different geochemical environment from Colombia. Zambian emeralds show
+      in a different geochemical environment from Colombia [ref:gubelin-koivula-vol1]. Zambian emeralds show
       predominantly two-phase inclusions (liquid + gas bubble) and solid inclusions
       (biotite, actinolite, dolomite, pyrite), but NOT three-phase inclusions with
-      halite cubes. The NaCl-rich three-phase inclusions are linked to the Colombian
+      halite cubes [ref:gubelin-koivula-vol1]. The NaCl-rich three-phase inclusions are linked to the Colombian
       geological setting where emeralds formed in an evaporite-bearing sedimentary
-      environment with saline fluids. This is a key geographic origin distinction
+      environment with saline fluids [ref:read-gemmology-3e]. This is a key geographic origin distinction
       tested in the FGA examination.
 rationaleCorrect: |
   Three-phase inclusions containing a cuboid halite crystal are virtually diagnostic of
-  Colombian emerald origin — this is one of the most celebrated and reliably diagnostic
-  features in gemmology. The three phases are: liquid (saline NaCl solution), gas (CO2
-  bubble, mobile), and solid (halite cube in cubic habit). The irregular, jagged cavity
-  walls reflect the surrounding rock fabric. When present, this inclusion type alone
-  provides compelling evidence for Colombian origin; it is not found in Zambian, Brazilian,
-  or synthetic emeralds. The Colombian geological setting — where emeralds formed in
-  hydrothermal veins cutting through halite-rich black shales — explains the saline
-  inclusion chemistry. Origin reports from major laboratories (GIA, Gübelin, SSEF) list
-  three-phase inclusions with halite as a primary Colombian indicator.
+  Colombian emerald origin [ref:gubelin-koivula-vol1] — this is one of the most celebrated and reliably
+  diagnostic features in gemmology. The three phases are: liquid (saline NaCl solution),
+  gas (CO2 bubble, mobile), and solid (halite cube in cubic habit) [ref:gubelin-koivula-vol1]. The irregular,
+  jagged cavity walls reflect the surrounding rock fabric. When present, this inclusion type
+  alone provides compelling evidence for Colombian origin; it is not found in Zambian,
+  Brazilian, or synthetic emeralds [ref:gubelin-koivula-vol1]. The Colombian geological setting — where emeralds
+  formed in hydrothermal veins cutting through halite-rich black shales — explains the
+  saline inclusion chemistry [ref:read-gemmology-3e].
 difficulty: 3
 category: identification
 conceptTags:
@@ -76,5 +75,7 @@ unvetted: false
 authorReviewed: "FGA-reviewer-1"
 lastReviewed: "2026-05-05T10:00:00Z"
 references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 118–145."
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 118–130, 233–248."

@@ -13,44 +13,42 @@ options:
     rationale: |
       Sri Lankan (Ceylon) corundums typically show longer, more widely spaced, prominent
       rutile needles that are easily visible individually under the microscope and often
-      produce strong asterism in asteriated stones. Burmese Mogok corundums show much
+      produce strong asterism in asteriated stones [ref:gubelin-koivula-vol1]. Burmese Mogok corundums show much
       finer, denser, shorter needles — so fine that they scatter light to produce a soft,
-      slightly diffused glow called "velvety" or "sleepy" appearance. This velvet effect
+      slightly diffused glow called "velvety" or "sleepy" appearance [ref:gubelin-koivula-vol1]. This velvet effect
       is associated with the finest Burmese stones and is one of the visual qualities
       gemmologists look for in premium rubies and sapphires. The silk characteristics
-      are an origin indicator, though not conclusive on their own.
+      are an origin indicator, though not conclusive on their own [ref:read-gemmology-3e].
   - text: "Stone A is Burmese Mogok (long needles for maximum asterism); Stone B is Sri Lankan (fine needles for clarity)"
     isCorrect: false
     rationale: |
       The origin descriptions are reversed. Mogok Burmese corundums are known for their
-      fine, delicate silk — not long, prominent needles. Long, clearly separated needles
+      fine, delicate silk — not long, prominent needles [ref:gubelin-koivula-vol1]. Long, clearly separated needles
       producing strong asterism are more characteristic of Sri Lankan material. Asterism
       in Burmese star rubies does occur, but the silk type that produces the prized
-      "velvety" quality in non-asteriated Mogok stones is fine and dense. A student
-      who memorises "Burma = fine silk" and "Ceylon = long silk" has the correct
-      directional association; reversing them is the specific error this question tests.
+      "velvety" quality in non-asteriated Mogok stones is fine and dense [ref:gubelin-koivula-vol1].
   - text: "Both stones are Kashmir sapphire; Kashmir sapphires show fine silk in all specimens, and 'velvety' is the exclusive Kashmir descriptor"
     isCorrect: false
     rationale: |
       The velvety appearance of Kashmir sapphire is caused by a different mechanism
       from rutile silk: Kashmir sapphires contain extremely fine, microscopic particles
       (not classic rutile needles at 60°) that scatter light, producing the famous
-      velvety or sleepy appearance. The term "velvety" is most associated with Kashmir,
+      velvety or sleepy appearance [ref:gubelin-koivula-vol1]. The term "velvety" is most associated with Kashmir,
       but fine Burmese silk can produce a similar soft quality. The question describes
       two stones with classic rutile silk at 60° intersections — this matches Burmese
       and Sri Lankan origin, not Kashmir. Kashmir sapphire has a different inclusion
       suite with specific tourmaline inclusions and zircon halos alongside the fine
-      particulate scattering.
+      particulate scattering [ref:gubelin-koivula-vol1].
 rationaleCorrect: |
   Silk characteristics in corundum are origin indicators because the geological environment
-  of crystallisation controls rutile exsolution. Mogok Burmese corundum forms in a
+  of crystallisation controls rutile exsolution [ref:gubelin-koivula-vol1]. Mogok Burmese corundum forms in a
   marble-hosted environment with relatively slow cooling, producing fine, dense, short
   needles. Sri Lankan placer corundums originate from a different geological context
-  (high-temperature metamorphic, alluvial) and show longer, more prominent needles.
+  (high-temperature metamorphic, alluvial) and show longer, more prominent needles [ref:gubelin-koivula-vol1].
   The "velvety" trade descriptor for fine Burmese and Kashmir stones refers to this
-  light-scattering silk effect. For a complete origin determination, silk character is
+  light-scattering silk effect [ref:read-gemmology-3e]. For a complete origin determination, silk character is
   combined with other microscopic features, UV fluorescence, spectroscopy, and where
-  required, trace-element geochemistry. Silk alone is not conclusive for origin.
+  required, trace-element geochemistry. Silk alone is not conclusive for origin [ref:read-gemmology-3e].
 difficulty: 3
 category: identification
 conceptTags:
@@ -70,5 +68,7 @@ unvetted: false
 authorReviewed: "FGA-reviewer-1"
 lastReviewed: "2026-05-05T10:00:00Z"
 references:
+  - id: gubelin-koivula-vol1
+    citation: "Gübelin, E.J. & Koivula, J.I. (1986). Photoatlas of Inclusions in Gemstones, Vol. 1. ABC Edition, Zurich. pp. 88–126."
   - id: read-gemmology-3e
     citation: "Read, P.G. (2008). Gemmology (3rd ed.). Butterworth-Heinemann. pp. 233–248."
