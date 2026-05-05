@@ -89,9 +89,9 @@ export function RationalePanel({
         </span>
         <span aria-label={toggleLabel}>
           {expanded ? (
-            <ChevronUp className="w-4 h-4 text-slate-500" aria-hidden="true" />
+            <ChevronUp className="w-4 h-4 text-slate-600" aria-hidden="true" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-slate-500" aria-hidden="true" />
+            <ChevronDown className="w-4 h-4 text-slate-600" aria-hidden="true" />
           )}
         </span>
       </button>
@@ -134,7 +134,7 @@ export function RationalePanel({
                           'w-4 h-4 flex-shrink-0 mt-0.5',
                           wasChosen
                             ? 'text-red-600 dark:text-red-400'
-                            : 'text-slate-400 dark:text-slate-600',
+                            : 'text-slate-600 dark:text-slate-600',
                         )}
                         aria-label={wasChosen ? 'Your choice — incorrect' : 'Incorrect option'}
                       />

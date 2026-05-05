@@ -213,7 +213,7 @@ export function TreatmentDetection() {
               ))}
             </select>
           </div>
-          <span className="text-xs text-slate-400 shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600 shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
         </div>
 
         {filteredTreatments.length > 0 ? (
@@ -228,7 +228,7 @@ export function TreatmentDetection() {
               treatment: (
                 <div>
                   <p className="font-medium text-slate-900 text-xs">{treatment.treatment}</p>
-                  <p className="text-xs text-slate-500">{treatment.gems}</p>
+                  <p className="text-xs text-slate-600">{treatment.gems}</p>
                 </div>
               ),
               visual: <span className="text-xs">{treatment.visualIndicators}</span>,
@@ -245,7 +245,7 @@ export function TreatmentDetection() {
             variant="default"
           />
         ) : (
-          <div className="text-center text-slate-500 text-sm py-4 border border-slate-200 rounded-xl">
+          <div className="text-center text-slate-600 text-sm py-4 border border-slate-200 rounded-xl">
             No treatments found matching your criteria.
           </div>
         )}

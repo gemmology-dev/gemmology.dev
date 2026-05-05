@@ -26,7 +26,7 @@ export function InfoPanel({ name, system, properties, cdl, className }: InfoPane
       <div className="space-y-3">
         {filteredProperties.map(({ label, value }) => (
           <div key={label} className="flex justify-between items-baseline">
-            <span className="text-sm text-slate-500">{label}</span>
+            <span className="text-sm text-slate-600">{label}</span>
             <span className="text-sm font-medium text-slate-900">{value}</span>
           </div>
         ))}

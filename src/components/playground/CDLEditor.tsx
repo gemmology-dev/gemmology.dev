@@ -80,7 +80,7 @@ export function CDLEditor({ value, onChange, errors = [], className }: CDLEditor
 
   const loadingPlaceholder = (
     <div className="flex items-center justify-center h-full bg-slate-50">
-      <div className="text-slate-400">Loading editor...</div>
+      <div className="text-slate-500">Loading editor...</div>
     </div>
   );
 

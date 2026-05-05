@@ -106,7 +106,7 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
                   dangerouslySetInnerHTML={{ __html: selected.model_svg }}
                 />
               ) : (
-                <div className="text-center text-slate-400">
+                <div className="text-center text-slate-600">
                   <CrystalPlaceholder className="w-32 h-32 mx-auto mb-4" />
                   <p className="text-sm">No preview available</p>
                 </div>
@@ -131,7 +131,7 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
             {selected?.cdl && (
               <div className="bg-slate-900 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-slate-400">CDL Expression</span>
+                  <span className="text-xs font-medium text-slate-600">CDL Expression</span>
                   <button
                     onClick={handleCopyCDL}
                     className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
@@ -167,7 +167,7 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
                 </p>
               )}
               {family.chemistry && (
-                <p className="text-lg text-slate-500 font-mono mt-2">
+                <p className="text-lg text-slate-600 font-mono mt-2">
                   {family.chemistry}
                 </p>
               )}
@@ -203,7 +203,7 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
                 </h3>
                 <p className="text-sm text-slate-600">{selected.form_description}</p>
                 {selected.habit && (
-                  <p className="text-xs text-slate-500 mt-2">
+                  <p className="text-xs text-slate-600 mt-2">
                     Habit: <span className="font-medium">{selected.habit}</span>
                   </p>
                 )}
@@ -288,7 +288,7 @@ function QuickFact({
     <div className="bg-white rounded-lg p-3 border border-slate-200">
       <div className="flex items-center gap-2 mb-1">
         <span className={cn('text-sm font-bold', iconColor)}>{icon}</span>
-        <span className="text-xs text-slate-500">{label}</span>
+        <span className="text-xs text-slate-600">{label}</span>
       </div>
       <div className="text-lg font-semibold text-slate-900">{value}</div>
     </div>
@@ -325,7 +325,7 @@ function PropertyRow({
 
   return (
     <div className="flex justify-between items-center px-4 py-2.5">
-      <span className="text-sm text-slate-500">{label}</span>
+      <span className="text-sm text-slate-600">{label}</span>
       <span className="text-sm font-medium text-slate-900">{value}</span>
     </div>
   );

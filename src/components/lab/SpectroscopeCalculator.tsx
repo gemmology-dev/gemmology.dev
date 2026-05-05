@@ -137,7 +137,7 @@ export function SpectroscopeCalculator() {
               className="w-full h-24 rounded-lg border-2 border-slate-300 shadow-inner"
               style={{ backgroundColor: color }}
             />
-            <div className="mt-3 text-sm text-slate-500">
+            <div className="mt-3 text-sm text-slate-600">
               {wl < 450 ? 'Violet-Blue' :
                wl < 495 ? 'Blue' :
                wl < 570 ? 'Green' :
@@ -167,7 +167,7 @@ export function SpectroscopeCalculator() {
                   <div className="text-sm text-slate-600">
                     <span className="font-mono font-medium">{line.wavelength}nm</span> — {line.color}
                   </div>
-                  <p className="text-xs text-slate-500 mt-1">{line.notes}</p>
+                  <p className="text-xs text-slate-600 mt-1">{line.notes}</p>
                 </div>
                 <div
                   className="w-12 h-12 rounded border-2 border-slate-300 shrink-0"

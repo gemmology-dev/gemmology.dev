@@ -82,7 +82,7 @@ export function QuestionNav({
                 // Answered
                 answered && !isCurrent && 'bg-emerald-100 text-emerald-700',
                 // Not answered
-                !answered && !isCurrent && 'bg-slate-100 text-slate-500 hover:bg-slate-200',
+                !answered && !isCurrent && 'bg-slate-100 text-slate-600 hover:bg-slate-200',
                 // Current + answered
                 isCurrent && answered && 'bg-emerald-500 text-white',
                 // Current + not answered
@@ -114,7 +114,7 @@ export function QuestionNav({
 function QuestionLegend() {
   return (
     // Hide on mobile, show on desktop
-    <div className="hidden sm:flex items-center gap-3 text-xs text-slate-500" aria-hidden="true">
+    <div className="hidden sm:flex items-center gap-3 text-xs text-slate-600" aria-hidden="true">
       <div className="flex items-center gap-1">
         <span className="w-3 h-3 rounded bg-emerald-100 border border-emerald-200" />
         <span>Answered</span>

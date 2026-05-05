@@ -279,7 +279,7 @@ export function Crystal3DViewer({
   if (!isClient) {
     return (
       <div className={`flex items-center justify-center bg-slate-100 ${className}`}>
-        <div className="text-slate-400">Loading 3D viewer...</div>
+        <div className="text-slate-500">Loading 3D viewer...</div>
       </div>
     );
   }
@@ -317,7 +317,7 @@ export function Crystal3DViewer({
       </Canvas>
 
       {/* Viewer controls overlay */}
-      <div className="absolute bottom-4 left-4 text-xs text-slate-500 bg-white/80 px-2 py-1 rounded">
+      <div className="absolute bottom-4 left-4 text-xs text-slate-600 bg-white/80 px-2 py-1 rounded">
         Drag to rotate • Scroll to zoom
       </div>
     </div>

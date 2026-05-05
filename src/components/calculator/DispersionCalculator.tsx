@@ -98,7 +98,7 @@ export function DispersionCalculator() {
         <p className="text-sm text-slate-600">
           Enter the refractive index at red (C-line, 656nm) and violet (F-line, 486nm) wavelengths to calculate dispersion.
         </p>
-        <p className="text-xs text-slate-500 mt-2">
+        <p className="text-sm text-slate-600 mt-2">
           <strong>Formula:</strong> Dispersion = RI(violet) − RI(red)
         </p>
       </div>

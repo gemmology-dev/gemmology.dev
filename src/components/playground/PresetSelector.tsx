@@ -94,11 +94,11 @@ export function PresetSelector({ presets, onSelect, className }: PresetSelectorP
 
           <div className="max-h-80 overflow-y-auto">
             {Object.keys(groupedPresets).length === 0 ? (
-              <div className="p-4 text-center text-slate-500 text-sm">No presets found</div>
+              <div className="p-4 text-center text-slate-600 text-sm">No presets found</div>
             ) : (
               Object.entries(groupedPresets).map(([system, systemPresets]) => (
                 <div key={system}>
-                  <div className="px-3 py-2 bg-slate-50 text-xs font-semibold text-slate-500 uppercase tracking-wider sticky top-0">
+                  <div className="px-3 py-2 bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wider sticky top-0">
                     {system}
                   </div>
                   {systemPresets.map((preset) => (

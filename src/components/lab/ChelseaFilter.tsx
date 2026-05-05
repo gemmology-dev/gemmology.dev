@@ -169,7 +169,7 @@ export function ChelseaFilter() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-8 text-slate-500">
+        <div className="text-center py-8 text-slate-600">
           No gems match your search.
         </div>
       )}

@@ -39,7 +39,7 @@ export function GalleryGrid({ families, loading }: GalleryGridProps) {
     return (
       <div className="text-center py-16">
         <svg
-          className="mx-auto h-12 w-12 text-slate-400"
+          className="mx-auto h-12 w-12 text-slate-500"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -52,7 +52,7 @@ export function GalleryGrid({ families, loading }: GalleryGridProps) {
           />
         </svg>
         <h3 className="mt-4 text-lg font-medium text-slate-900">No families found</h3>
-        <p className="mt-2 text-slate-500">Try adjusting your search or filters.</p>
+        <p className="mt-2 text-slate-600">Try adjusting your search or filters.</p>
       </div>
     );
   }

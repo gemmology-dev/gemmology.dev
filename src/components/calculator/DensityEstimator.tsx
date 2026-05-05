@@ -88,7 +88,7 @@ export function DensityEstimator() {
         <p className="text-sm text-slate-600">
           Calculate density (SG) for irregular or fragile stones using volume estimation methods.
         </p>
-        <p className="text-xs text-slate-500 mt-2">
+        <p className="text-sm text-slate-600 mt-2">
           <strong>Formula:</strong> Density = Weight ÷ Volume
         </p>
       </div>
