@@ -8,18 +8,16 @@ import StructuredData from '../components/seo/StructuredData.astro';
 
 const { familyCount, expressionCount } = await getSiteStats();
 
-// TODO(author): replace with real maintainer name + credentials before deploy
-const AUTHOR_NAME       = "Editorial Team, gemmology.dev";
-const AUTHOR_TITLE      = "Editor";
-const AUTHOR_CREDENTIALS = ["FGA (placeholder)", "Gem-A graduate (placeholder)"];
-const AUTHOR_SAMEAS     = ["https://github.com/Bissbert/gemmology-dev"];
+const AUTHOR_NAME       = "Bissbert";
+const AUTHOR_TITLE      = "Maintainer & Editor";
+const AUTHOR_CREDENTIALS: string[] = [];
+const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
 ---
 
 <BaseLayout
   title="About"
   description="About gemmology.dev — an open, FGA-aligned reference and study toolkit for coloured gemstones, with editorial standards and source attribution."
 >
-  <!-- TODO(author): replace with real maintainer name + credentials before deploy -->
   <StructuredData
     slot="head"
     breadcrumbs={[
@@ -53,27 +51,12 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert/gemmology-dev"];
         free and open-source.
       </p>
 
-      <!-- TODO(author): replace with real maintainer name + credentials before deploy -->
-      <h2>Maintainers &amp; Editors</h2>
+      <h2>Maintainer</h2>
       <p>
-        The following contributors are responsible for the accuracy and
-        currency of content on gemmology.dev.
+        <strong>{AUTHOR_NAME}</strong> — {AUTHOR_TITLE}.
+        Contributions, corrections, and source citations from the gemmological
+        community are welcomed via <a href={AUTHOR_SAMEAS[0]} rel="noopener noreferrer">GitHub</a>.
       </p>
-      <ul>
-        <li>
-          <strong>{AUTHOR_NAME}</strong>
-          {' '}—{' '}
-          <span>{AUTHOR_TITLE}</span>
-          <ul>
-            {AUTHOR_CREDENTIALS.map((cred) => (
-              <li>{cred}</li>
-            ))}
-          </ul>
-          <a href={AUTHOR_SAMEAS[0]} rel="noopener noreferrer">
-            {AUTHOR_SAMEAS[0]}
-          </a>
-        </li>
-      </ul>
 
       <h2>Who maintains this</h2>
       <p>
