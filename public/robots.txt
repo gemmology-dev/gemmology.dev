@@ -3,6 +3,8 @@
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
 
 # Sitemap location
 Sitemap: https://gemmology.dev/sitemap-index.xml
@@ -10,13 +12,60 @@ Sitemap: https://gemmology.dev/sitemap-index.xml
 # LLM crawler index (https://llmstxt.org/)
 LLM-Content: https://gemmology.dev/llms.txt
 
-# Disallow API endpoints (served by separate worker)
-Disallow: /api/
+# Named AI-crawler stanzas.
+# Several AI agents (notably PerplexityBot) require an explicit Allow per
+# named User-agent in addition to the wildcard rule above before content
+# is eligible for answer-engine surfacing.
 
-# Disallow admin surface
+# OpenAI ChatGPT / GPTBot — training crawler
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
 Disallow: /admin/
 
-# Allow all crawlers to access static assets
+# OpenAI on-demand search crawler (ChatGPT browsing / SearchGPT)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Anthropic Claude — training/answer crawler
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Anthropic on-demand fetcher (claude.ai citations)
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Perplexity AI answer engine — requires named Allow per their docs
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Google AI Overviews / Gemini training opt-in
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Common Crawl — feeds many AI training corpora
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Apple Intelligence on-demand fetcher
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Static assets are explicitly allowed for all crawlers above.
 Allow: /crystals/
 Allow: /og-images/
 Allow: /favicon.svg
