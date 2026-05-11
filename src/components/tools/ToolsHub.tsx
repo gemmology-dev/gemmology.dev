@@ -44,7 +44,7 @@ const tools = [
   },
   {
     title: 'Advanced Analysis',
-    description: 'Treatment detection checklist and proportion analyzer (origin guidance lives in the Learn section).',
+    description: 'Treatment detection checklist and proportion analyser (origin guidance lives in the Learn section).',
     href: '/tools/advanced',
     icon: 'chart',
     variant: 'crystal' as const,
