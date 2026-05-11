@@ -44,6 +44,9 @@ function resolveDateModified(): string {
 }
 
 const dateModified = resolveDateModified();
+// datePublished: use explicit publishedAt frontmatter, fall back to dateModified.
+const datePublished = data.publishedAt ?? dateModified;
+
 const dateModifiedDisplay = new Date(dateModified).toLocaleDateString('en-GB', {
   year: 'numeric',
   month: 'long',
@@ -181,7 +184,10 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
     subcategory={data.subcategory}
     difficulty={data.difficulty}
     slug={entry.id}
+    datePublished={datePublished}
     dateModified={dateModified}
+    pretestQuestionCount={pretestQuestions.length}
+    pretestQuestions={pretestQuestions}
   />
   <Container size="md" padding="md">
     <Breadcrumb items={breadcrumbItems} />

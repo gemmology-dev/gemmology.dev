@@ -7,12 +7,19 @@ import { getSiteStats } from '../lib/stats';
 import StructuredData from '../components/seo/StructuredData.astro';
 
 const { familyCount, expressionCount } = await getSiteStats();
+
+// TODO(author): replace with real maintainer name + credentials before deploy
+const AUTHOR_NAME       = "Editorial Team, gemmology.dev";
+const AUTHOR_TITLE      = "Editor";
+const AUTHOR_CREDENTIALS = ["FGA (placeholder)", "Gem-A graduate (placeholder)"];
+const AUTHOR_SAMEAS     = ["https://github.com/Bissbert/gemmology-dev"];
 ---
 
 <BaseLayout
   title="About"
   description="About gemmology.dev: an open, FGA-aligned reference and study toolkit for coloured gemstones, with editorial standards and source attribution."
 >
+  <!-- TODO(author): replace with real maintainer name + credentials before deploy -->
   <StructuredData
     slot="head"
     breadcrumbs={[
@@ -23,6 +30,12 @@ const { familyCount, expressionCount } = await getSiteStats();
       name: 'About gemmology.dev',
       description: 'Editorial standards, sourcing, and contributors behind gemmology.dev.',
       url: 'https://gemmology.dev/about/',
+    }}
+    person={{
+      name: AUTHOR_NAME,
+      jobTitle: AUTHOR_TITLE,
+      credentials: AUTHOR_CREDENTIALS,
+      sameAs: AUTHOR_SAMEAS,
     }}
   />
 
@@ -39,6 +52,28 @@ const { familyCount, expressionCount } = await getSiteStats();
         Description Language (CDL), the calculators, and the quiz – is
         free and open-source.
       </p>
+
+      <!-- TODO(author): replace with real maintainer name + credentials before deploy -->
+      <h2>Maintainers &amp; Editors</h2>
+      <p>
+        The following contributors are responsible for the accuracy and
+        currency of content on gemmology.dev.
+      </p>
+      <ul>
+        <li>
+          <strong>{AUTHOR_NAME}</strong>
+          {' '}—{' '}
+          <span>{AUTHOR_TITLE}</span>
+          <ul>
+            {AUTHOR_CREDENTIALS.map((cred) => (
+              <li>{cred}</li>
+            ))}
+          </ul>
+          <a href={AUTHOR_SAMEAS[0]} rel="noopener noreferrer">
+            {AUTHOR_SAMEAS[0]}
+          </a>
+        </li>
+      </ul>
 
       <h2>Who maintains this</h2>
       <p>

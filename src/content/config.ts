@@ -176,6 +176,7 @@ const learnCollection = defineCollection({
     author: z.string().optional(),
     reviewedBy: z.string().optional(),
     reviewedAt: z.string().optional(),
+    publishedAt: z.string().optional(),
     sections: z.array(sectionSchema),
   }),
 });

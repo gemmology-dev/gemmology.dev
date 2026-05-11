@@ -1,0 +1,49 @@
+---
+/**
+ * ToolsSchema — JSON-LD SoftwareApplication structured data for tool category pages.
+ * Emit via <ToolsSchema slot="head" ... /> inside a BaseLayout to inject into <head>.
+ */
+
+interface ToolItem {
+  name: string;
+  description: string;
+}
+
+interface Props {
+  category: string;
+  name: string;
+  description: string;
+  tools: ToolItem[];
+  url: string;
+}
+
+const { category, name, description, tools, url } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": name,
+  "description": description,
+  "url": url,
+  "applicationCategory": "EducationalApplication",
+  "applicationSubCategory": category,
+  "operatingSystem": "Any (web-based)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "gemmology.dev",
+    "url": "https://gemmology.dev"
+  },
+  "featureList": tools.map(t => t.name).join(", "),
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student"
+  }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
