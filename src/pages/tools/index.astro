@@ -39,35 +39,40 @@ const tools = [
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-8">
-        <p>
-          This toolkit covers every quantitative and qualitative test a practising gemmologist needs
-          for systematic identification. All calculations run client-side in the browser using the
-          same mineral database that powers the mineral reference pages — 96 families including
-          natural species, lab-grown synthetics, simulants, and composite stones. No data is
-          transmitted to any server; readings stay on your device.
-        </p>
-        <p>
-          The tools are organised across six categories. Measurement &amp; Calculation handles the
-          two primary quantitative tests — specific gravity and refractive index — alongside
-          birefringence, critical angle, carat estimation, and the Hanneman/Hodgkinson over-the-limit
-          shortcut for stones with RI above 1.81. Optical Properties supports the polariscope and
-          dichroscope workflow, with a refractometer simulator, pleochroism reasoner, and optic-sign
-          determination. Lab Equipment covers spectroscope absorption-band reading, an inverse
-          band-matcher for species lookup, and UV fluorescence interpretation. Gem Identification
-          provides a filtered database query to narrow candidates by RI, SG, crystal system, and
-          optical character. Advanced Analysis integrates treatment-detection evidence weighting and
-          GIA cut-grade proportion analysis. Unit Conversions handles metric/troy/decimal-carat and
-          temperature scales used in refractometer corrections.
-        </p>
-        <p>
-          The workflow mirrors the FGA Diploma practical examination protocol: start with
-          non-destructive observations, then RI, then SG, then spectroscope for ambiguous cases, and
-          apply qualitative confirmatory tests last. Each tool includes a brief methodology note so
-          students building examination technique can understand not just the result but the reasoning
-          behind it.
-        </p>
-      </section>
+      <details class="group mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 open:bg-white">
+        <summary class="cursor-pointer select-none text-sm font-medium text-crystal-700 hover:text-crystal-900 marker:text-slate-400">
+          About the gemmology toolkit
+        </summary>
+        <div class="prose prose-slate prose-sm mt-3 max-w-none">
+          <p>
+            This toolkit covers every quantitative and qualitative test a practising gemmologist needs
+            for systematic identification. All calculations run client-side in the browser using the
+            same mineral database that powers the mineral reference pages — 96 families including
+            natural species, lab-grown synthetics, simulants, and composite stones. No data is
+            transmitted to any server; readings stay on your device.
+          </p>
+          <p>
+            The tools are organised across six categories. Measurement &amp; Calculation handles the
+            two primary quantitative tests — specific gravity and refractive index — alongside
+            birefringence, critical angle, carat estimation, and the Hanneman/Hodgkinson over-the-limit
+            shortcut for stones with RI above 1.81. Optical Properties supports the polariscope and
+            dichroscope workflow, with a refractometer simulator, pleochroism reasoner, and optic-sign
+            determination. Lab Equipment covers spectroscope absorption-band reading, an inverse
+            band-matcher for species lookup, and UV fluorescence interpretation. Gem Identification
+            provides a filtered database query to narrow candidates by RI, SG, crystal system, and
+            optical character. Advanced Analysis integrates treatment-detection evidence weighting and
+            GIA cut-grade proportion analysis. Unit Conversions handles metric/troy/decimal-carat and
+            temperature scales used in refractometer corrections.
+          </p>
+          <p>
+            The workflow mirrors the FGA Diploma practical examination protocol: start with
+            non-destructive observations, then RI, then SG, then spectroscope for ambiguous cases, and
+            apply qualitative confirmatory tests last. Each tool includes a brief methodology note so
+            students building examination technique can understand not just the result but the reasoning
+            behind it.
+          </p>
+        </div>
+      </details>
 
       <nav aria-label="Tool categories" class="mb-8">
         <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">

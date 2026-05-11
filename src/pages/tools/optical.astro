@@ -38,61 +38,66 @@ const tools = [
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-8">
-        <p>
-          The polariscope and dichroscope answer different questions. The polariscope tests
-          whether a stone is singly or doubly refractive, which separates isotropic species
-          (diamond, spinel, garnet) from all others at a glance. The dichroscope reveals how
-          many distinct body colours a stone shows in different vibration directions — a
-          tanzanite shows blue, violet, and bronze in three directions, while a synthetic blue
-          spinel shows only one colour. Neither instrument requires a prepared surface, making
-          them ideal first-pass tests that can be applied in seconds to any loose or mounted
-          stone.
-        </p>
-        <p>
-          The refractometer simulator lets students practise reading the critical-angle shadow
-          edge before working on a physical instrument. It renders realistic shadow positions
-          for both the ordinary and extraordinary rays of doubly refractive stones, and
-          explicitly models over-the-limit behaviour — when the RI of the stone exceeds the
-          refractive index of the contact liquid, the shadow edge vanishes from the scale. This
-          is the point at which the Hanneman/Hodgkinson shortcut (available in the Measurement
-          section) must be applied. Understanding why the shadow edge disappears is essential
-          examination knowledge: the refractometer measures the critical angle of the
-          stone-liquid interface, so a stone with RI above the liquid RI produces total
-          internal reflection across the full scale.
-        </p>
-        <p>
-          The pleochroism reasoner performs a tolerant colour match against the
-          <em>pleochroism_color1</em>, <em>pleochroism_color2</em>, and
-          <em>pleochroism_color3</em> fields stored in the mineral database for each species.
-          Enter the observed colours — for example, red, orange, and yellow for hessonite
-          garnet, or blue, colourless, and yellow for aquamarine — and the tool returns a
-          ranked list of matching species. Pleochroism alone is rarely conclusive, but it
-          effectively eliminates cubic species and focuses the investigation within a much
-          narrower group.
-        </p>
-        <p>
-          The optic-sign reasoner handles both uniaxial and biaxial determinations. For
-          uniaxial stones, sign is determined by comparing the extraordinary ray index
-          (&epsilon;) with the ordinary ray index (&omega;): positive when &epsilon; &gt;
-          &omega; (quartz, zircon, corundum), negative when &epsilon; &lt; &omega; (calcite,
-          tourmaline). For biaxial stones, the sign depends on whether the &beta; index lies
-          closer to &alpha; (optically positive) or to &gamma; (optically negative). The 2V
-          angle — the angle between the two optic axes — is calculated via the Mallard
-          cos&sup2;V&sub;z; formula when all three principal indices are available. A large 2V
-          (near 90&deg;) places &beta; midway between &alpha; and &gamma;, making sign
-          determination difficult and often requiring interference-figure observation under
-          convergent light.
-        </p>
-        <p>
-          Working through these optical tools in sequence mirrors the systematic approach
-          recommended in the FGA Diploma curriculum: polariscope to establish SR/DR character,
-          dichroscope to count pleochroic colours, refractometer for RI readings, then optic
-          sign to complete the optical description. Each tool explains the underlying
-          principle, not just the outcome, so it functions as a learning aid as much as a
-          reference calculator.
-        </p>
-      </section>
+      <details class="group mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 open:bg-white">
+        <summary class="cursor-pointer select-none text-sm font-medium text-crystal-700 hover:text-crystal-900 marker:text-slate-400">
+          About these optical tools &amp; methodology
+        </summary>
+        <div class="prose prose-slate prose-sm mt-3 max-w-none">
+          <p>
+            The polariscope and dichroscope answer different questions. The polariscope tests
+            whether a stone is singly or doubly refractive, which separates isotropic species
+            (diamond, spinel, garnet) from all others at a glance. The dichroscope reveals how
+            many distinct body colours a stone shows in different vibration directions — a
+            tanzanite shows blue, violet, and bronze in three directions, while a synthetic blue
+            spinel shows only one colour. Neither instrument requires a prepared surface, making
+            them ideal first-pass tests that can be applied in seconds to any loose or mounted
+            stone.
+          </p>
+          <p>
+            The refractometer simulator lets students practise reading the critical-angle shadow
+            edge before working on a physical instrument. It renders realistic shadow positions
+            for both the ordinary and extraordinary rays of doubly refractive stones, and
+            explicitly models over-the-limit behaviour — when the RI of the stone exceeds the
+            refractive index of the contact liquid, the shadow edge vanishes from the scale. This
+            is the point at which the Hanneman/Hodgkinson shortcut (available in the Measurement
+            section) must be applied. Understanding why the shadow edge disappears is essential
+            examination knowledge: the refractometer measures the critical angle of the
+            stone-liquid interface, so a stone with RI above the liquid RI produces total
+            internal reflection across the full scale.
+          </p>
+          <p>
+            The pleochroism reasoner performs a tolerant colour match against the
+            <em>pleochroism_color1</em>, <em>pleochroism_color2</em>, and
+            <em>pleochroism_color3</em> fields stored in the mineral database for each species.
+            Enter the observed colours — for example, red, orange, and yellow for hessonite
+            garnet, or blue, colourless, and yellow for aquamarine — and the tool returns a
+            ranked list of matching species. Pleochroism alone is rarely conclusive, but it
+            effectively eliminates cubic species and focuses the investigation within a much
+            narrower group.
+          </p>
+          <p>
+            The optic-sign reasoner handles both uniaxial and biaxial determinations. For
+            uniaxial stones, sign is determined by comparing the extraordinary ray index
+            (&epsilon;) with the ordinary ray index (&omega;): positive when &epsilon; &gt;
+            &omega; (quartz, zircon, corundum), negative when &epsilon; &lt; &omega; (calcite,
+            tourmaline). For biaxial stones, the sign depends on whether the &beta; index lies
+            closer to &alpha; (optically positive) or to &gamma; (optically negative). The 2V
+            angle — the angle between the two optic axes — is calculated via the Mallard
+            cos&sup2;V&sub;z; formula when all three principal indices are available. A large 2V
+            (near 90&deg;) places &beta; midway between &alpha; and &gamma;, making sign
+            determination difficult and often requiring interference-figure observation under
+            convergent light.
+          </p>
+          <p>
+            Working through these optical tools in sequence mirrors the systematic approach
+            recommended in the FGA Diploma curriculum: polariscope to establish SR/DR character,
+            dichroscope to count pleochroic colours, refractometer for RI readings, then optic
+            sign to complete the optical description. Each tool explains the underlying
+            principle, not just the outcome, so it functions as a learning aid as much as a
+            reference calculator.
+          </p>
+        </div>
+      </details>
 
       <OpticalTools client:load />
     </div>

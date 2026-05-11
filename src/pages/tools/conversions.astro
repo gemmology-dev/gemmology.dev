@@ -36,42 +36,47 @@ const tools = [
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-8">
-        <p>
-          The metric carat was standardised internationally in 1907 at exactly 200&nbsp;mg
-          (0.2&nbsp;g). Before that date, the carat varied by country — the old English carat
-          differed from the French, which differed from the Turkish — making gem weights in
-          historical records difficult to compare. The 1907 standard fixed the unit absolutely,
-          and today a 1.00&nbsp;ct stone means the same weight in every country. In trade, the
-          carat is subdivided into 100 points: a 0.50&nbsp;ct stone is described as
-          fifty points, a 0.35&nbsp;ct stone as thirty-five points. The weight converter on
-          this page handles carats, grams, milligrams, grains, and troy ounces — the full
-          range of units encountered when reading historic inventory records, laboratory
-          reports, and customs documentation.
-        </p>
-        <p>
-          Length conversion between millimetres and inches is a routine need when gem
-          dimensions measured with a metric caliper must be communicated in markets that use
-          imperial measurements, or when a published cutting diagram gives proportions in
-          inches that must be scaled to millimetres before use in the carat estimator. The
-          conversion is straightforward (1&nbsp;inch = 25.4&nbsp;mm exactly), but having a
-          dedicated converter eliminates the mental arithmetic error that can occur when
-          managing multiple measurements at once.
-        </p>
-        <p>
-          Temperature conversion matters in two specific gemmological contexts. First, the
-          specific gravity calculation depends on the density of water at the temperature of
-          the liquid used during hydrostatic weighing: water is densest at 4&nbsp;&deg;C
-          (1.0000&nbsp;g/cm&sup3;) and becomes measurably less dense as temperature rises,
-          reaching 0.9957&nbsp;g/cm&sup3; at 30&nbsp;&deg;C. The SG calculator on the
-          Measurement page applies this water-density correction automatically, and the
-          temperature converter here lets you enter a Fahrenheit reading from a lab thermometer
-          and obtain the Celsius value needed for that correction. Second, some refractometer
-          reference tables and refractive index databases list temperature coefficients in
-          Fahrenheit; converting to Celsius before applying a temperature correction to an RI
-          reading ensures the adjustment is applied in the right direction and magnitude.
-        </p>
-      </section>
+      <details class="group mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 open:bg-white">
+        <summary class="cursor-pointer select-none text-sm font-medium text-crystal-700 hover:text-crystal-900 marker:text-slate-400">
+          About these converters
+        </summary>
+        <div class="prose prose-slate prose-sm mt-3 max-w-none">
+          <p>
+            The metric carat was standardised internationally in 1907 at exactly 200&nbsp;mg
+            (0.2&nbsp;g). Before that date, the carat varied by country — the old English carat
+            differed from the French, which differed from the Turkish — making gem weights in
+            historical records difficult to compare. The 1907 standard fixed the unit absolutely,
+            and today a 1.00&nbsp;ct stone means the same weight in every country. In trade, the
+            carat is subdivided into 100 points: a 0.50&nbsp;ct stone is described as
+            fifty points, a 0.35&nbsp;ct stone as thirty-five points. The weight converter on
+            this page handles carats, grams, milligrams, grains, and troy ounces — the full
+            range of units encountered when reading historic inventory records, laboratory
+            reports, and customs documentation.
+          </p>
+          <p>
+            Length conversion between millimetres and inches is a routine need when gem
+            dimensions measured with a metric caliper must be communicated in markets that use
+            imperial measurements, or when a published cutting diagram gives proportions in
+            inches that must be scaled to millimetres before use in the carat estimator. The
+            conversion is straightforward (1&nbsp;inch = 25.4&nbsp;mm exactly), but having a
+            dedicated converter eliminates the mental arithmetic error that can occur when
+            managing multiple measurements at once.
+          </p>
+          <p>
+            Temperature conversion matters in two specific gemmological contexts. First, the
+            specific gravity calculation depends on the density of water at the temperature of
+            the liquid used during hydrostatic weighing: water is densest at 4&nbsp;&deg;C
+            (1.0000&nbsp;g/cm&sup3;) and becomes measurably less dense as temperature rises,
+            reaching 0.9957&nbsp;g/cm&sup3; at 30&nbsp;&deg;C. The SG calculator on the
+            Measurement page applies this water-density correction automatically, and the
+            temperature converter here lets you enter a Fahrenheit reading from a lab thermometer
+            and obtain the Celsius value needed for that correction. Second, some refractometer
+            reference tables and refractive index databases list temperature coefficients in
+            Fahrenheit; converting to Celsius before applying a temperature correction to an RI
+            reading ensures the adjustment is applied in the right direction and magnitude.
+          </p>
+        </div>
+      </details>
 
       <ConversionTools client:load />
     </div>

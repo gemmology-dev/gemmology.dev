@@ -36,48 +36,53 @@ const tools = [
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-8">
-        <p>
-          Treatment detection requires correlating multiple lines of evidence. Heat treatment
-          in corundum leaves characteristic stress fractures around rutile inclusions and
-          healed fingerprints, but not all heated stones show these features — a clean,
-          well-heated stone may show no internal evidence at all. Fracture filling in emerald
-          suppresses the fingerprint inclusions that would otherwise be visible under
-          magnification, but the filling material itself can be identified by its flash effect
-          and RI mismatch with the host. Diffusion treatment in sapphire concentrates
-          colour at the surface, visible as concentrated colour at facet edges when the stone
-          is immersed. Each treatment leaves a different combination of positive and negative
-          evidence, and confident treatment assessment depends on accumulating independent
-          observations rather than relying on any single clue.
-        </p>
-        <p>
-          The treatment wizard on this page formalises this evidence-accumulation approach.
-          It covers 18 observable clues — including inclusion type, surface texture, colour
-          distribution, spectral absorption anomalies, fluorescence pattern, and magnification
-          features — mapped against 11 treatment categories: heat, fracture filling, surface
-          coating, diffusion, irradiation, oiling, waxing, bleaching, impregnation, laser
-          drilling, and flux healing. Each clue carries positive or negative evidence weights
-          for each treatment type. Submit the clues you have observed and the wizard sums the
-          weights per treatment, producing a confidence-banded conclusion — high confidence
-          when three or more independent indicators align, low confidence when evidence is
-          mixed or a single clue stands alone. This mirrors the reasoning process used in
-          major gemmological laboratories and makes the logic explicit rather than implicit.
-        </p>
-        <p>
-          The proportion analyzer applies a different kind of multi-parameter assessment to
-          cut quality in round brilliant diamonds. The GIA cut-grade system evaluates seven
-          proportions independently: table percentage, total depth percentage, crown angle,
-          pavilion angle, girdle thickness, culet size, and star length. Each parameter falls
-          into one of five grade bands (Excellent, Very Good, Good, Fair, Poor) according to
-          published GIA thresholds, and the overall cut grade is determined by the
-          lowest-grading individual parameter. Enter the measured proportions from a
-          proportion scope or grading report and the tool displays the per-parameter band for
-          each value, highlights the limiting parameter, and returns the resulting cut grade.
-          Understanding which proportion is pulling the grade down — crown angle too shallow,
-          table too wide, or girdle too thick — gives a precise basis for cut-quality
-          assessment and client communication.
-        </p>
-      </section>
+      <details class="group mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 open:bg-white">
+        <summary class="cursor-pointer select-none text-sm font-medium text-crystal-700 hover:text-crystal-900 marker:text-slate-400">
+          About these advanced tools &amp; methodology
+        </summary>
+        <div class="prose prose-slate prose-sm mt-3 max-w-none">
+          <p>
+            Treatment detection requires correlating multiple lines of evidence. Heat treatment
+            in corundum leaves characteristic stress fractures around rutile inclusions and
+            healed fingerprints, but not all heated stones show these features — a clean,
+            well-heated stone may show no internal evidence at all. Fracture filling in emerald
+            suppresses the fingerprint inclusions that would otherwise be visible under
+            magnification, but the filling material itself can be identified by its flash effect
+            and RI mismatch with the host. Diffusion treatment in sapphire concentrates
+            colour at the surface, visible as concentrated colour at facet edges when the stone
+            is immersed. Each treatment leaves a different combination of positive and negative
+            evidence, and confident treatment assessment depends on accumulating independent
+            observations rather than relying on any single clue.
+          </p>
+          <p>
+            The treatment wizard on this page formalises this evidence-accumulation approach.
+            It covers 18 observable clues — including inclusion type, surface texture, colour
+            distribution, spectral absorption anomalies, fluorescence pattern, and magnification
+            features — mapped against 11 treatment categories: heat, fracture filling, surface
+            coating, diffusion, irradiation, oiling, waxing, bleaching, impregnation, laser
+            drilling, and flux healing. Each clue carries positive or negative evidence weights
+            for each treatment type. Submit the clues you have observed and the wizard sums the
+            weights per treatment, producing a confidence-banded conclusion — high confidence
+            when three or more independent indicators align, low confidence when evidence is
+            mixed or a single clue stands alone. This mirrors the reasoning process used in
+            major gemmological laboratories and makes the logic explicit rather than implicit.
+          </p>
+          <p>
+            The proportion analyzer applies a different kind of multi-parameter assessment to
+            cut quality in round brilliant diamonds. The GIA cut-grade system evaluates seven
+            proportions independently: table percentage, total depth percentage, crown angle,
+            pavilion angle, girdle thickness, culet size, and star length. Each parameter falls
+            into one of five grade bands (Excellent, Very Good, Good, Fair, Poor) according to
+            published GIA thresholds, and the overall cut grade is determined by the
+            lowest-grading individual parameter. Enter the measured proportions from a
+            proportion scope or grading report and the tool displays the per-parameter band for
+            each value, highlights the limiting parameter, and returns the resulting cut grade.
+            Understanding which proportion is pulling the grade down — crown angle too shallow,
+            table too wide, or girdle too thick — gives a precise basis for cut-quality
+            assessment and client communication.
+          </p>
+        </div>
+      </details>
 
       <AdvancedTools client:load />
     </div>
