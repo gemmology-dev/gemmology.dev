@@ -4,20 +4,75 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ConversionTools } from '../../components/calculator';
+import ToolsSchema from '../../components/seo/ToolsSchema.astro';
+
+const tools = [
+  { name: "Weight Converter", description: "Convert between metric carats, grams, milligrams, grains, and troy ounces" },
+  { name: "Length Converter", description: "Convert between millimetres and inches for caliper gem measurements" },
+  { name: "Temperature Converter", description: "Convert between Celsius and Fahrenheit for refractometer correction and SG water-density tables" },
+];
 ---
 
 <BaseLayout
   title="Unit Conversions"
-  description="Convert between carats, grams, millimeters, inches, Celsius, Fahrenheit, and calculate price per carat with markup."
+  description="Gemmological unit converters for weight (carat, gram, milligram), length (mm, inch), and temperature (Celsius, Fahrenheit) — covering the metric carat standard, decimal-point carat trade usage, and temperature correction for SG and RI measurements."
 >
+  <ToolsSchema
+    slot="head"
+    name="Gemmological Unit Conversion Tools"
+    description="Unit converters for gemmological practice: weight in carats, grams, and milligrams; gem dimensions in millimetres and inches; temperature in Celsius and Fahrenheit for refractometer and specific gravity corrections."
+    category="Conversions"
+    url="https://gemmology.dev/tools/conversions"
+    tools={tools}
+  />
+
   <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="mb-8">
+
+      <header class="mb-8">
         <h1 class="text-3xl font-bold text-slate-900">Unit Conversions</h1>
         <p class="text-slate-600 mt-2">
-          Convert between carats, grams, millimeters, inches, Celsius, Fahrenheit, and calculate price per carat with markup.
+          Weight, length, and temperature converters calibrated to the units actually used in gemmological measurement and gem trade.
         </p>
-      </div>
+      </header>
+
+      <section class="prose prose-slate max-w-none mb-8">
+        <p>
+          The metric carat was standardised internationally in 1907 at exactly 200&nbsp;mg
+          (0.2&nbsp;g). Before that date, the carat varied by country — the old English carat
+          differed from the French, which differed from the Turkish — making gem weights in
+          historical records difficult to compare. The 1907 standard fixed the unit absolutely,
+          and today a 1.00&nbsp;ct stone means the same weight in every country. In trade, the
+          carat is subdivided into 100 points: a 0.50&nbsp;ct stone is described as
+          fifty points, a 0.35&nbsp;ct stone as thirty-five points. The weight converter on
+          this page handles carats, grams, milligrams, grains, and troy ounces — the full
+          range of units encountered when reading historic inventory records, laboratory
+          reports, and customs documentation.
+        </p>
+        <p>
+          Length conversion between millimetres and inches is a routine need when gem
+          dimensions measured with a metric caliper must be communicated in markets that use
+          imperial measurements, or when a published cutting diagram gives proportions in
+          inches that must be scaled to millimetres before use in the carat estimator. The
+          conversion is straightforward (1&nbsp;inch = 25.4&nbsp;mm exactly), but having a
+          dedicated converter eliminates the mental arithmetic error that can occur when
+          managing multiple measurements at once.
+        </p>
+        <p>
+          Temperature conversion matters in two specific gemmological contexts. First, the
+          specific gravity calculation depends on the density of water at the temperature of
+          the liquid used during hydrostatic weighing: water is densest at 4&nbsp;&deg;C
+          (1.0000&nbsp;g/cm&sup3;) and becomes measurably less dense as temperature rises,
+          reaching 0.9957&nbsp;g/cm&sup3; at 30&nbsp;&deg;C. The SG calculator on the
+          Measurement page applies this water-density correction automatically, and the
+          temperature converter here lets you enter a Fahrenheit reading from a lab thermometer
+          and obtain the Celsius value needed for that correction. Second, some refractometer
+          reference tables and refractive index databases list temperature coefficients in
+          Fahrenheit; converting to Celsius before applying a temperature correction to an RI
+          reading ensures the adjustment is applied in the right direction and magnitude.
+        </p>
+      </section>
+
       <ConversionTools client:load />
     </div>
   </div>
