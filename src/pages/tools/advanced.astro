@@ -4,20 +4,81 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { AdvancedTools } from '../../components/advanced/AdvancedTools';
+import ToolsSchema from '../../components/seo/ToolsSchema.astro';
+
+const tools = [
+  { name: "Treatment Detection", description: "Reference table of observable features for 11 treatment types across common gem species" },
+  { name: "Treatment Wizard", description: "Evidence-weighted wizard: enter 18 observable clues to receive a confidence-banded treatment conclusion" },
+  { name: "Proportion Analyzer", description: "GIA cut-grade overlay for round brilliants with per-parameter band lookup against published thresholds" },
+];
 ---
 
 <BaseLayout
   title="Advanced Analysis"
-  description="Treatment detection, origin determination, and gemstone proportion analysis tools."
+  description="Advanced gemmological analysis tools: evidence-weighted treatment detection across 18 clues and 11 treatments, and a GIA cut-grade proportion analyzer for round brilliants."
 >
+  <ToolsSchema
+    slot="head"
+    name="Advanced Gemmological Analysis Tools"
+    description="Evidence-weighted treatment detection wizard covering 18 observable clues across 11 treatment types, plus a GIA cut-grade proportion analyzer with per-parameter band lookup for round brilliant diamonds."
+    category="Advanced Analysis"
+    url="https://gemmology.dev/tools/advanced"
+    tools={tools}
+  />
+
   <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="mb-8">
+
+      <header class="mb-8">
         <h1 class="text-3xl font-bold text-slate-900">Advanced Analysis</h1>
         <p class="text-slate-600 mt-2">
-          Advanced gemmological analysis tools including treatment detection reference, origin determination characteristics, and gemstone cut proportion analyzer.
+          Treatment detection and proportion analysis — the two areas of advanced gemmological assessment that require correlating multiple lines of evidence rather than reading a single instrument.
         </p>
-      </div>
+      </header>
+
+      <section class="prose prose-slate max-w-none mb-8">
+        <p>
+          Treatment detection requires correlating multiple lines of evidence. Heat treatment
+          in corundum leaves characteristic stress fractures around rutile inclusions and
+          healed fingerprints, but not all heated stones show these features — a clean,
+          well-heated stone may show no internal evidence at all. Fracture filling in emerald
+          suppresses the fingerprint inclusions that would otherwise be visible under
+          magnification, but the filling material itself can be identified by its flash effect
+          and RI mismatch with the host. Diffusion treatment in sapphire concentrates
+          colour at the surface, visible as concentrated colour at facet edges when the stone
+          is immersed. Each treatment leaves a different combination of positive and negative
+          evidence, and confident treatment assessment depends on accumulating independent
+          observations rather than relying on any single clue.
+        </p>
+        <p>
+          The treatment wizard on this page formalises this evidence-accumulation approach.
+          It covers 18 observable clues — including inclusion type, surface texture, colour
+          distribution, spectral absorption anomalies, fluorescence pattern, and magnification
+          features — mapped against 11 treatment categories: heat, fracture filling, surface
+          coating, diffusion, irradiation, oiling, waxing, bleaching, impregnation, laser
+          drilling, and flux healing. Each clue carries positive or negative evidence weights
+          for each treatment type. Submit the clues you have observed and the wizard sums the
+          weights per treatment, producing a confidence-banded conclusion — high confidence
+          when three or more independent indicators align, low confidence when evidence is
+          mixed or a single clue stands alone. This mirrors the reasoning process used in
+          major gemmological laboratories and makes the logic explicit rather than implicit.
+        </p>
+        <p>
+          The proportion analyzer applies a different kind of multi-parameter assessment to
+          cut quality in round brilliant diamonds. The GIA cut-grade system evaluates seven
+          proportions independently: table percentage, total depth percentage, crown angle,
+          pavilion angle, girdle thickness, culet size, and star length. Each parameter falls
+          into one of five grade bands (Excellent, Very Good, Good, Fair, Poor) according to
+          published GIA thresholds, and the overall cut grade is determined by the
+          lowest-grading individual parameter. Enter the measured proportions from a
+          proportion scope or grading report and the tool displays the per-parameter band for
+          each value, highlights the limiting parameter, and returns the resulting cut grade.
+          Understanding which proportion is pulling the grade down — crown angle too shallow,
+          table too wide, or girdle too thick — gives a precise basis for cut-quality
+          assessment and client communication.
+        </p>
+      </section>
+
       <AdvancedTools client:load />
     </div>
   </div>

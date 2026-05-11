@@ -1,12 +1,19 @@
 ---
 /**
- * StructuredData - emit a BreadcrumbList plus optional WebPage JSON-LD.
+ * StructuredData - emit a BreadcrumbList, optional WebPage, and optional Person JSON-LD.
  * Use for non-mineral / non-learn pages that still benefit from breadcrumbs.
  */
 
 interface Crumb {
   name: string;
   url: string;
+}
+
+interface PersonData {
+  name: string;
+  jobTitle?: string;
+  credentials?: string[];
+  sameAs?: string[];
 }
 
 interface Props {
@@ -16,9 +23,13 @@ interface Props {
     description?: string;
     url: string;
   };
+  /**
+   * Optional Person JSON-LD — used on /about to signal E-E-A-T authorship.
+   */
+  person?: PersonData;
 }
 
-const { breadcrumbs = [], webPage } = Astro.props;
+const { breadcrumbs = [], webPage, person } = Astro.props;
 
 const breadcrumbSchema = breadcrumbs.length > 0
   ? {
@@ -48,7 +59,40 @@ const webPageSchema = webPage
       },
     }
   : null;
+
+const personSchema = person
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: person.name,
+      ...(person.jobTitle ? { jobTitle: person.jobTitle } : {}),
+      knowsAbout: [
+        "Gemmology",
+        "Mineralogy",
+        "Crystallography",
+        "Gemstone identification",
+      ],
+      ...(person.credentials && person.credentials.length > 0
+        ? {
+            hasCredential: person.credentials.map((c) => ({
+              "@type": "EducationalOccupationalCredential",
+              credentialCategory: "certificate",
+              name: c,
+            })),
+          }
+        : {}),
+      ...(person.sameAs && person.sameAs.length > 0
+        ? { sameAs: person.sameAs }
+        : {}),
+      worksFor: {
+        "@type": "Organization",
+        name: "gemmology.dev",
+        url: "https://gemmology.dev",
+      },
+    }
+  : null;
 ---
 
 {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 {webPageSchema && <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />}
+{personSchema && <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />}

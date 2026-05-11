@@ -153,6 +153,80 @@ const startHereTopics = startHereSlugs
 
 const totalTopicCount = topics.length;
 
+// -----------------------------------------------------------------------
+// JSON-LD schema objects for the learn hub
+// -----------------------------------------------------------------------
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Gemmology: FGA-aligned curriculum",
+  "description": "FGA curriculum-aligned content covering crystallography, physical and optical properties, inclusions, treatments, and synthetics.",
+  "provider": {
+    "@type": "Organization",
+    "name": "gemmology.dev",
+    "url": "https://gemmology.dev"
+  },
+  "educationalCredentialAwarded": {
+    "@type": "EducationalOccupationalCredential",
+    "name": "FGA Diploma Preparation",
+    "credentialCategory": "certificate"
+  },
+  "teaches": [
+    "Crystal systems",
+    "Equipment usage",
+    "Gem species identification",
+    "Diagnostic procedures",
+    "Optical phenomena",
+    "Geographic origin",
+    "Market and grading",
+    "Care and durability"
+  ],
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT100H"
+  }
+};
+
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Learn Gemmology",
+  "description": "FGA curriculum-aligned content on crystallography and gemmology.",
+  "url": "https://gemmology.dev/learn/",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": topics.map((topic, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": `https://gemmology.dev${topic.href}/`,
+      "name": topic.title
+    }))
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://gemmology.dev"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Learn",
+      "item": "https://gemmology.dev/learn/"
+    }
+  ]
+};
+
 // Icon SVG paths (shared with topic cards)
 const iconPaths: Record<string, string> = {
   cube: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
@@ -176,6 +250,9 @@ const iconPaths: Record<string, string> = {
   title="Learn"
   description="FGA curriculum-aligned content on crystallography and gemmology."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
   <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
     <Container size="xl" padding="md">
       <!-- Header -->

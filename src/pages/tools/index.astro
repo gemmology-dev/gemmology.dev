@@ -4,11 +4,113 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ToolsHub } from '../../components/tools/ToolsHub';
+import ToolsSchema from '../../components/seo/ToolsSchema.astro';
+
+const tools = [
+  { name: "Measurement & Calculation", description: "SG, RI, birefringence, critical angle, carat estimator, Hanneman shortcut" },
+  { name: "Optical Properties", description: "Dichroscope, polariscope, refractometer simulator, pleochroism reasoner, optic sign" },
+  { name: "Lab Equipment", description: "Spectroscope calculator, band-matcher, UV fluorescence lookup" },
+  { name: "Gem Identification", description: "Filtered database query across 96 mineral families" },
+  { name: "Advanced Analysis", description: "Treatment detection, treatment wizard, proportion analyzer with GIA cut grades" },
+  { name: "Unit Conversions", description: "Weight, length, and temperature converters for gemmological use" },
+];
 ---
 
 <BaseLayout
-  title="Tools"
-  description="Gemmological tools and calculators for professionals and students."
+  title="Gemmological Tools"
+  description="Free browser-based gemmological tools for measurement, optical testing, spectroscopy, identification, and unit conversion. Aligned with FGA curriculum."
 >
-  <ToolsHub client:load />
+  <ToolsSchema
+    slot="head"
+    name="Gemmological Tools — gemmology.dev"
+    description="Free browser-based tools for coloured-gemstone identification: specific gravity, refractive index, birefringence, spectroscope analysis, treatment detection, and more."
+    category="Gemmology"
+    url="https://gemmology.dev/tools"
+    tools={tools}
+  />
+
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Gemmological Tools</h1>
+        <p class="text-slate-600 mt-2">
+          Free, browser-based instruments for coloured-gemstone identification, optical testing, and lab analysis — no login required.
+        </p>
+      </header>
+
+      <section class="prose prose-slate max-w-none mb-8">
+        <p>
+          This toolkit covers every quantitative and qualitative test a practising gemmologist needs
+          for systematic identification. All calculations run client-side in the browser using the
+          same mineral database that powers the mineral reference pages — 96 families including
+          natural species, lab-grown synthetics, simulants, and composite stones. No data is
+          transmitted to any server; readings stay on your device.
+        </p>
+        <p>
+          The tools are organised across six categories. Measurement &amp; Calculation handles the
+          two primary quantitative tests — specific gravity and refractive index — alongside
+          birefringence, critical angle, carat estimation, and the Hanneman/Hodgkinson over-the-limit
+          shortcut for stones with RI above 1.81. Optical Properties supports the polariscope and
+          dichroscope workflow, with a refractometer simulator, pleochroism reasoner, and optic-sign
+          determination. Lab Equipment covers spectroscope absorption-band reading, an inverse
+          band-matcher for species lookup, and UV fluorescence interpretation. Gem Identification
+          provides a filtered database query to narrow candidates by RI, SG, crystal system, and
+          optical character. Advanced Analysis integrates treatment-detection evidence weighting and
+          GIA cut-grade proportion analysis. Unit Conversions handles metric/troy/decimal-carat and
+          temperature scales used in refractometer corrections.
+        </p>
+        <p>
+          The workflow mirrors the FGA Diploma practical examination protocol: start with
+          non-destructive observations, then RI, then SG, then spectroscope for ambiguous cases, and
+          apply qualitative confirmatory tests last. Each tool includes a brief methodology note so
+          students building examination technique can understand not just the result but the reasoning
+          behind it.
+        </p>
+      </section>
+
+      <nav aria-label="Tool categories" class="mb-8">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
+          <li>
+            <a href="/tools/measurement" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Measurement &amp; Calculation</span>
+              <span class="block text-sm text-slate-600 mt-1">SG, RI, birefringence, critical angle, carat estimator, Hanneman shortcut</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tools/optical" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Optical Properties</span>
+              <span class="block text-sm text-slate-600 mt-1">Dichroscope, polariscope, refractometer simulator, pleochroism reasoner, optic sign</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tools/lab" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Lab Equipment</span>
+              <span class="block text-sm text-slate-600 mt-1">Spectroscope calculator, band-matcher, UV fluorescence lookup</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tools/identification" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Gem Identification</span>
+              <span class="block text-sm text-slate-600 mt-1">Filtered database query across 96 mineral families</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tools/advanced" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Advanced Analysis</span>
+              <span class="block text-sm text-slate-600 mt-1">Treatment detection, treatment wizard, proportion analyzer with GIA cut grades</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tools/conversions" class="block p-4 rounded-lg border border-slate-200 hover:border-sky-400 hover:bg-sky-50 transition-colors">
+              <span class="font-semibold text-slate-900">Unit Conversions</span>
+              <span class="block text-sm text-slate-600 mt-1">Weight, length, and temperature converters for gemmological use</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <ToolsHub client:load />
+    </div>
+  </div>
 </BaseLayout>

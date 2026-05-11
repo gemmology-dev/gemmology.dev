@@ -4,20 +4,85 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { LabTools } from '../../components/lab/LabTools';
+import ToolsSchema from '../../components/seo/ToolsSchema.astro';
+
+const tools = [
+  { name: "Spectroscope Calculator", description: "Display absorption bands for 16 gem species from the reference table" },
+  { name: "Spectroscope Band-Matcher", description: "Enter observed wavelengths to identify the gem species by inverse lookup" },
+  { name: "UV Fluorescence Lookup", description: "Parse LWUV and SWUV reactions with intensity scoring and phosphorescence flag" },
+];
 ---
 
 <BaseLayout
   title="Lab Equipment"
-  description="Reference tools for gemmological lab equipment: Chelsea filter, spectroscope, and heavy liquid SG separation."
+  description="Gemmological lab tools for spectroscope absorption-band reference, inverse band-matching across 16 species, and UV fluorescence interpretation with LWUV/SWUV intensity scoring."
 >
+  <ToolsSchema
+    slot="head"
+    name="Gemmological Lab Equipment Tools"
+    description="Browser-based lab reference tools for spectroscope absorption bands, inverse band-matching across 16 gem species, and UV fluorescence parsing with LWUV/SWUV/phosphorescence intensity scoring."
+    category="Lab Equipment"
+    url="https://gemmology.dev/tools/lab"
+    tools={tools}
+  />
+
   <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="mb-8">
+
+      <header class="mb-8">
         <h1 class="text-3xl font-bold text-slate-900">Lab Equipment</h1>
         <p class="text-slate-600 mt-2">
-          Reference tools for gemological lab equipment including Chelsea filter reactions, spectroscope absorption lines, and heavy liquid separation.
+          Spectroscope reference, inverse band-matching, and UV fluorescence interpretation — the three lab-instrument tools used alongside RI and SG to confirm a gemmological identification.
         </p>
-      </div>
+      </header>
+
+      <section class="prose prose-slate max-w-none mb-8">
+        <p>
+          The spectroscope records which wavelengths of visible light a gem absorbs. Strong
+          selective absorption bands are diagnostic: the 693&nbsp;nm doublet in ruby, the
+          450&nbsp;nm band in synthetic blue spinel, the 415&nbsp;nm line in cape diamonds.
+          Each species produces a characteristic pattern determined by the transition-metal
+          impurities or rare-earth elements present in its crystal structure. The spectroscope
+          calculator on this page displays the expected absorption pattern for 16 commonly
+          encountered gem species, drawing from a curated reference table that lists band
+          positions, relative strengths, and the diagnostic significance of each line. Viewing
+          known patterns before working at the bench helps calibrate the eye and sets a
+          reliable expectation for what a positive identification looks like.
+        </p>
+        <p>
+          The band-matcher inverts this workflow. Rather than looking up a known species and
+          reading off its bands, you enter the wavelengths you actually observe and the tool
+          returns the species whose reference pattern best matches your input. Matching is
+          tolerance-windowed — a band recorded at 692&nbsp;nm will still match the 693&nbsp;nm
+          ruby reference — and selective diagnostic bands are weighted more heavily than broad
+          general-absorption regions. This makes the band-matcher especially useful when a
+          stone shows one strong diagnostic line alongside several weaker features that might
+          be confused for another species. The output lists confidence-ranked candidates, not a
+          single forced answer, which mirrors the conditional reasoning a trained gemmologist
+          applies at the bench.
+        </p>
+        <p>
+          UV fluorescence adds a complementary data point without any contact with the stone.
+          A strong blue long-wave (LWUV) reaction in diamond, absent under short-wave (SWUV),
+          points away from moissanite or cubic zirconia. Conversely, a strong SWUV reaction
+          with weak or absent LWUV is characteristic of certain synthetic ruby flux products.
+          The UV fluorescence lookup parses the freeform fluorescence descriptions stored in
+          the mineral database — for example, "inert to strong blue LWUV, weak yellow SWUV" —
+          into structured fields: LWUV colour and intensity, SWUV colour and intensity, and a
+          phosphorescence flag for materials such as natural hyalite opal that continue to
+          glow after the UV source is removed. Intensity is scored on a four-step scale
+          (inert, weak, moderate, strong) to allow ranked comparison across species.
+        </p>
+        <p>
+          Together the spectroscope and UV fluorescence instruments cover complementary parts
+          of the electromagnetic spectrum and together with RI and SG they form the core
+          analytical toolkit of the FGA Diploma practical examination. These tools are designed
+          to function as both learning aids and bench references: they explain the underlying
+          physics, display the reference data, and support the step-by-step reasoning process
+          that moves an observation toward a confident, defensible identification.
+        </p>
+      </section>
+
       <LabTools client:load />
     </div>
   </div>
