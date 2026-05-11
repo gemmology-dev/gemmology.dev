@@ -39,56 +39,61 @@ const tools = [
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-8">
-        <p>
-          Specific gravity and refractive index are the two primary quantitative tests in
-          coloured-gemstone identification. SG is determined hydrostatically using
-          Archimedes' principle — the gem is weighed in air and in water, and the ratio
-          reveals density to two decimal places, enough to separate spinel (3.60) from
-          synthetic spinel (3.52) or glass fills. RI is read directly from a critical-angle
-          refractometer and narrows identification to a handful of species within seconds.
-          Together they form a measurement pair that, for most coloured stones, is sufficient
-          to establish a confident working identification before any other test is applied.
-        </p>
-        <p>
-          Birefringence — the difference between the maximum and minimum refractive indices —
-          is a direct optical constant of the crystal structure. High birefringence causes
-          visible doubling of back facet edges, a feature diagnostic for zircon (BR up to
-          0.059), sphene (up to 0.051), and peridot (up to 0.038). The birefringence
-          calculator on this page takes two RI readings and returns the value alongside a
-          qualitative interpretation. The critical angle calculator converts an RI reading
-          into the total-internal-reflection angle, useful when working with a polarimeter or
-          verifying refractometer calibration against a known standard.
-        </p>
-        <p>
-          The carat estimator uses the formula <em>ct = L &times; W &times; D &times; SG &times;
-          shape_factor &times; girdle_factor</em> to give a weight estimate from dimensional
-          measurements when a scale is unavailable. Nine shape-correction factors are built in
-          — round brilliant, oval, pear, marquise, cushion, emerald cut, heart, trillion, and
-          cabochon — and the girdle-thickness multiplier runs from 1.00 (thin) to 1.12 (very
-          thick) to account for the mass contribution of deep girdles. This is particularly
-          useful when assessing parcels where individual weighing is impractical.
-        </p>
-        <p>
-          For stones with RI above the refractometer range (commonly 1.81 for contact liquids),
-          the Hanneman/Hodgkinson shortcut provides an indirect RI estimate. The technique
-          infers RI from the position of the liquid-relief shadow band when a known liquid is
-          used as the contact medium. The tool covers five standard liquid values — water
-          (1.33), methylene iodide variants, and monobromonaphthalene (1.66) — and maps each
-          relief position to the corresponding RI range for demantoid, sphene, zircon, and
-          high-index synthetics including strontium titanate and rutile. Correct application
-          of this shortcut requires understanding that it yields a range, not a single value,
-          and should always be combined with SG and spectroscope data.
-        </p>
-        <p>
-          All calculators on this page reference the same mineral database used throughout
-          gemmology.dev — 96 families covering natural species, synthetics, simulants, and
-          composite stones. Matching results are shown with origin badges (natural /
-          synthetic / simulant / composite) so that the distinction between, for example,
-          natural alexandrite (Cr-bearing chrysoberyl) and its synthetic counterpart is
-          immediately visible in the output.
-        </p>
-      </section>
+      <details class="group mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 open:bg-white">
+        <summary class="cursor-pointer select-none text-sm font-medium text-crystal-700 hover:text-crystal-900 marker:text-slate-400">
+          About these calculators &amp; methodology
+        </summary>
+        <div class="prose prose-slate prose-sm mt-3 max-w-none">
+          <p>
+            Specific gravity and refractive index are the two primary quantitative tests in
+            coloured-gemstone identification. SG is determined hydrostatically using
+            Archimedes' principle — the gem is weighed in air and in water, and the ratio
+            reveals density to two decimal places, enough to separate spinel (3.60) from
+            synthetic spinel (3.52) or glass fills. RI is read directly from a critical-angle
+            refractometer and narrows identification to a handful of species within seconds.
+            Together they form a measurement pair that, for most coloured stones, is sufficient
+            to establish a confident working identification before any other test is applied.
+          </p>
+          <p>
+            Birefringence — the difference between the maximum and minimum refractive indices —
+            is a direct optical constant of the crystal structure. High birefringence causes
+            visible doubling of back facet edges, a feature diagnostic for zircon (BR up to
+            0.059), sphene (up to 0.051), and peridot (up to 0.038). The birefringence
+            calculator on this page takes two RI readings and returns the value alongside a
+            qualitative interpretation. The critical angle calculator converts an RI reading
+            into the total-internal-reflection angle, useful when working with a polarimeter or
+            verifying refractometer calibration against a known standard.
+          </p>
+          <p>
+            The carat estimator uses the formula <em>ct = L &times; W &times; D &times; SG &times;
+            shape_factor &times; girdle_factor</em> to give a weight estimate from dimensional
+            measurements when a scale is unavailable. Nine shape-correction factors are built in
+            — round brilliant, oval, pear, marquise, cushion, emerald cut, heart, trillion, and
+            cabochon — and the girdle-thickness multiplier runs from 1.00 (thin) to 1.12 (very
+            thick) to account for the mass contribution of deep girdles. This is particularly
+            useful when assessing parcels where individual weighing is impractical.
+          </p>
+          <p>
+            For stones with RI above the refractometer range (commonly 1.81 for contact liquids),
+            the Hanneman/Hodgkinson shortcut provides an indirect RI estimate. The technique
+            infers RI from the position of the liquid-relief shadow band when a known liquid is
+            used as the contact medium. The tool covers five standard liquid values — water
+            (1.33), methylene iodide variants, and monobromonaphthalene (1.66) — and maps each
+            relief position to the corresponding RI range for demantoid, sphene, zircon, and
+            high-index synthetics including strontium titanate and rutile. Correct application
+            of this shortcut requires understanding that it yields a range, not a single value,
+            and should always be combined with SG and spectroscope data.
+          </p>
+          <p>
+            All calculators on this page reference the same mineral database used throughout
+            gemmology.dev — 96 families covering natural species, synthetics, simulants, and
+            composite stones. Matching results are shown with origin badges (natural /
+            synthetic / simulant / composite) so that the distinction between, for example,
+            natural alexandrite (Cr-bearing chrysoberyl) and its synthetic counterpart is
+            immediately visible in the output.
+          </p>
+        </div>
+      </details>
 
       <MeasurementTools client:load />
     </div>
