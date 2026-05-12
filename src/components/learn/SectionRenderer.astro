@@ -8,12 +8,14 @@ import ComparisonBlock from './ComparisonBlock.astro';
 import CrystalSystemCard from './CrystalSystemCard.astro';
 import { detectCrystalSystem, type CrystalSystem } from './icons';
 import { addMineralLinks } from '../../lib/mineral-linker';
+import { resolveCiteMarkers, formatCiteLabel, type CitationIndex } from '../../lib/citations/index';
 
 interface Item {
   name: string;
   value?: string;
   description?: string;
   examples?: string[];
+  citations?: string[];
 }
 
 interface Table {
@@ -57,13 +59,16 @@ interface Section {
   crystal?: Crystal;
   comparison?: Comparison;
   subsections?: Subsection[];
+  citations?: string[];
 }
 
 interface Props {
   section: Section;
+  /** Optional citation index built in [...slug].astro. Absent = no-op. */
+  citationIndex?: CitationIndex;
 }
 
-const { section } = Astro.props;
+const { section, citationIndex } = Astro.props;
 const sectionId = section.id || section.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
 // Configure marked for safe rendering
@@ -72,13 +77,14 @@ marked.setOptions({
   gfm: true,
 });
 
-// Helper to render markdown with mineral auto-linking
+// Helper to render markdown with mineral auto-linking and optional citation markers.
 const renderMarkdown = async (text: string) => {
   const html = await marked.parse(text);
-  return addMineralLinks(html);
+  const withCites = citationIndex ? resolveCiteMarkers(html, citationIndex) : html;
+  return addMineralLinks(withCites);
 };
 
-// Pre-render all markdown content with mineral links
+// Pre-render all markdown content
 const sectionContent = section.content ? await renderMarkdown(section.content) : null;
 const calloutContent = section.callout?.text ? await renderMarkdown(section.callout.text) : null;
 
@@ -91,10 +97,43 @@ const subsectionContent = section.subsections
       }))
     )
   : null;
+
+// Build section-level citation cluster HTML when section.citations is present.
+function buildCitationCluster(ids: string[]): string {
+  if (!citationIndex || ids.length === 0) return '';
+  return ids
+    .map((id) => {
+      const entry = citationIndex.get(id);
+      if (!entry) return '';
+      const label = formatCiteLabel(entry.ref);
+      return (
+        `<sup>` +
+        `<a class="citation-ref" ` +
+        `href="#cite-${id}" ` +
+        `aria-label="Reference ${entry.n}: ${label}" ` +
+        `data-cite-id="${id}"` +
+        `>[${entry.n}]</a>` +
+        `</sup>`
+      );
+    })
+    .join('');
+}
+
+const sectionCitationCluster =
+  section.citations && section.citations.length > 0
+    ? buildCitationCluster(section.citations)
+    : '';
 ---
 
 <section id={sectionId} class="mb-16">
-  <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200">{section.title}</h2>
+  <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200">
+    {section.title}
+    {sectionCitationCluster && (
+      <span class="section-citation-cluster font-normal" aria-label="Section citations">
+        <Fragment set:html={sectionCitationCluster} />
+      </span>
+    )}
+  </h2>
 
   {section.callout && calloutContent && (
     <Callout variant={section.callout.type} title={section.callout.title}>
@@ -115,7 +154,7 @@ const subsectionContent = section.subsections
   )}
 
   {section.items && (
-    <PropertyList items={section.items} />
+    <PropertyList items={section.items} citationIndex={citationIndex} />
   )}
 
   {section.table && (
@@ -123,6 +162,7 @@ const subsectionContent = section.subsections
       headers={section.table.headers}
       rows={section.table.rows}
       caption={section.table.caption}
+      citationIndex={citationIndex}
     />
   )}
 
@@ -156,8 +196,8 @@ const subsectionContent = section.subsections
             {sub.renderedContent && (
               <div class="prose prose-slate max-w-none mb-4" set:html={sub.renderedContent} />
             )}
-            {sub.items && <PropertyList items={sub.items} headingLevel={4} />}
-            {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} />}
+            {sub.items && <PropertyList items={sub.items} headingLevel={4} citationIndex={citationIndex} />}
+            {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} citationIndex={citationIndex} />}
           </div>
         </div>
       );

@@ -1,12 +1,85 @@
 import { defineCollection, z } from 'astro:content';
 
+// ----------------------------------------------------------------------
+// Citation / reference schema (used by learnCollection)
+// ----------------------------------------------------------------------
+
+const referenceAuthorSchema = z.object({
+  family: z.string(),
+  given: z.string().optional(),
+});
+
+const bookReferenceSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  kind: z.literal('book'),
+  authors: z.array(referenceAuthorSchema),
+  title: z.string(),
+  year: z.number().int(),
+  publisher: z.string().optional(),
+  edition: z.union([z.string(), z.number()]).optional(),
+  isbn: z.string().optional(),
+  doi: z.string().optional(),
+  url: z.string().url().optional(),
+  pages: z.string().optional(),
+});
+
+const journalReferenceSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  kind: z.literal('journal'),
+  authors: z.array(referenceAuthorSchema),
+  title: z.string(),
+  journal: z.string(),
+  year: z.number().int(),
+  volume: z.number().int().optional(),
+  issue: z.number().int().optional(),
+  pages: z.string().optional(),
+  doi: z.string().optional(),
+  url: z.string().url().optional(),
+});
+
+const webReferenceSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  kind: z.literal('web'),
+  authors: z.array(referenceAuthorSchema).optional(),
+  title: z.string(),
+  publisher: z.string().optional(),
+  url: z.string().url(),
+  accessed: z.string().optional(),
+  year: z.number().int().optional(),
+});
+
+const standardReferenceSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  kind: z.literal('standard'),
+  authors: z.array(referenceAuthorSchema).optional(),
+  organization: z.string().optional(),
+  title: z.string(),
+  year: z.number().int(),
+  identifier: z.string().optional(),
+  url: z.string().url().optional(),
+  publisher: z.string().optional(),
+});
+
+// Discriminated union on `kind` — preferred over flat union for type narrowing.
+export const referenceSchema = z.discriminatedUnion('kind', [
+  bookReferenceSchema,
+  journalReferenceSchema,
+  webReferenceSchema,
+  standardReferenceSchema,
+]);
+
+export type ReferenceEntry = z.infer<typeof referenceSchema>;
+
+// ----------------------------------------------------------------------
 // Schema for items within sections (property cards, definition lists)
+// ----------------------------------------------------------------------
 const itemSchema = z.object({
   name: z.string(),
   value: z.string().optional(),
   description: z.string().optional(),
   examples: z.array(z.string()).optional(),
   icon: z.string().optional(),
+  citations: z.array(z.string()).optional(),
 });
 
 // Schema for table data
@@ -66,6 +139,7 @@ const sectionSchema = z.object({
   crystal: crystalSchema.optional(),
   image: imageSchema.optional(),
   subsections: z.array(subsectionSchema).optional(),
+  citations: z.array(z.string()).optional(),
 });
 
 // ----------------------------------------------------------------------
@@ -177,6 +251,7 @@ const learnCollection = defineCollection({
     reviewedBy: z.string().optional(),
     reviewedAt: z.string().optional(),
     publishedAt: z.string().optional(),
+    references: z.array(referenceSchema).optional(),
     sections: z.array(sectionSchema),
   }),
 });

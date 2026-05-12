@@ -1,17 +1,18 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui-astro/Container.astro';
-import { Card } from '../components/ui/Card';
-import { Link } from '../components/ui/Link';
-import { getSiteStats } from '../lib/stats';
-import StructuredData from '../components/seo/StructuredData.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui-astro/Container.astro';
+import { Card } from '../../components/ui/Card';
+import { Link } from '../../components/ui/Link';
+import { getSiteStats } from '../../lib/stats';
+import StructuredData from '../../components/seo/StructuredData.astro';
 
 const { familyCount, expressionCount } = await getSiteStats();
 
-const AUTHOR_NAME       = "Bissbert";
-const AUTHOR_TITLE      = "Maintainer & Editor";
+const AUTHOR_NAME        = "Fabian Moor";
+const AUTHOR_ALTERNATE   = "Bissbert";
+const AUTHOR_TITLE       = "Gemmologist & developer";
 const AUTHOR_CREDENTIALS: string[] = [];
-const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
+const AUTHOR_SAMEAS      = ["https://github.com/Bissbert"];
 ---
 
 <BaseLayout
@@ -31,6 +32,7 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
     }}
     person={{
       name: AUTHOR_NAME,
+      alternateName: AUTHOR_ALTERNATE,
       jobTitle: AUTHOR_TITLE,
       credentials: AUTHOR_CREDENTIALS,
       sameAs: AUTHOR_SAMEAS,
@@ -45,25 +47,18 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
       <h1>About gemmology.dev</h1>
       <p class="lead">
         gemmology.dev is an open, FGA-aligned reference and study toolkit for
-        coloured gemstones. Everything here – the {familyCount}-mineral family
+        coloured gemstones. Everything here &ndash; the {familyCount}-mineral family
         reference, {expressionCount} crystal expressions, the Crystal
-        Description Language (CDL), the calculators, and the quiz – is
+        Description Language (CDL), the calculators, and the quiz &ndash; is
         free and open-source.
       </p>
 
       <h2>Maintainer</h2>
       <p>
-        <strong>{AUTHOR_NAME}</strong>, {AUTHOR_TITLE}.
+        <strong>{AUTHOR_NAME}</strong> (<a href={AUTHOR_SAMEAS[0]} rel="noopener noreferrer">{AUTHOR_ALTERNATE}</a>),
+        {AUTHOR_TITLE}.
         Contributions, corrections, and source citations from the gemmological
-        community are welcomed via <a href={AUTHOR_SAMEAS[0]} rel="noopener noreferrer">GitHub</a>.
-      </p>
-
-      <h2>Who maintains this</h2>
-      <p>
-        gemmology.dev is maintained by the
-        <a href="https://github.com/gemmology-dev">gemmology-dev</a> open-source
-        project. Contributions, corrections, and source citations from the
-        gemmological community are welcomed via GitHub issues and pull requests.
+        community are welcomed via <a href="https://github.com/gemmology-dev/gemmology.dev/issues">GitHub issues</a>.
       </p>
 
       <h2>Editorial standards</h2>
@@ -99,14 +94,13 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
         </li>
       </ul>
 
-      <h2>Sources &amp; further reading</h2>
-      <ul>
-        <li><em>Gem-A:</em> Gem Testing (Anderson / Webster), <em>Gems &amp; Gemmology</em> (FGA notes)</li>
-        <li><em>GIA:</em> <em>Gems &amp; Gemology</em> journal, GIA Reference Guides</li>
-        <li><em>Mindat.org</em> for locality and chemistry cross-checks</li>
-        <li><em>Schumann, Walter.</em> <em>Gemstones of the World</em></li>
-        <li><em>Read, Peter.</em> <em>Gemmology</em></li>
-      </ul>
+      <h2>Sources</h2>
+      <p>
+        All factual claims in the learn articles are sourced from peer-reviewed
+        gemmological literature, FGA curriculum materials, and vetted online
+        references. The complete bibliography is available at{' '}
+        <a href="/about/sources/">Sources &amp; bibliography</a>.
+      </p>
 
       <h2>What is <em>not</em> here</h2>
       <ul>
@@ -118,7 +112,7 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
       <h2>Reporting an error</h2>
       <p>
         Spotted incorrect data, a missing reference, or a broken figure?
-        Open an issue at
+        Open an issue at{' '}
         <a href="https://github.com/gemmology-dev/gemmology.dev/issues">github.com/gemmology-dev/gemmology.dev/issues</a>.
         Corrections are usually shipped within a week.
       </p>
@@ -126,7 +120,7 @@ const AUTHOR_SAMEAS     = ["https://github.com/Bissbert"];
       <h2>Licence</h2>
       <p>
         Code is MIT-licensed. Educational content (the learn articles and
-        curriculum data in
+        curriculum data in{' '}
         <a href="https://github.com/gemmology-dev/gemmology-knowledge"><code>gemmology-knowledge</code></a>)
         is published under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
       </p>

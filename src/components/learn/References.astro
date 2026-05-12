@@ -1,0 +1,132 @@
+---
+/**
+ * References - renders the bibliography section for a learn article.
+ *
+ * Placed after the final SectionRenderer and before the Related Topics card
+ * in [...slug].astro. Renders nothing when the citation index is empty.
+ *
+ * Accessibility:
+ *   - section[role="doc-bibliography"] is a DPUB ARIA landmark.
+ *   - aria-labelledby points to the h2 inside the same section.
+ *   - Each back-link has role="doc-backlink" and an aria-label.
+ *   - External links carry rel="external noopener noreferrer".
+ *   - <cite> wraps source titles only — never the [n] marker.
+ */
+import type { CitationIndex } from '../../lib/citations/index';
+import type { ReferenceEntry } from '../../content/config';
+
+interface Props {
+  citationIndex: CitationIndex;
+}
+
+const { citationIndex } = Astro.props;
+const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
+
+// Format author list as "Family, G.; Family2, G2." — single authors use family only.
+function formatAuthors(authors: Array<{ family: string; given?: string }> | undefined): string {
+  if (!authors || authors.length === 0) return '';
+  return authors
+    .map((a) => (a.given ? `${a.family}, ${a.given[0]}.` : a.family))
+    .join('; ');
+}
+
+// Build a DOI anchor string (already HTML-safe; DOIs contain no HTML special chars).
+function doiLink(doi: string): string {
+  return (
+    `DOI: <a href="https://doi.org/${doi}" ` +
+    `rel="external noopener noreferrer">${doi}</a>`
+  );
+}
+
+// Build an ISBN WorldCat anchor.
+function isbnLink(isbn: string): string {
+  const bare = isbn.replace(/-/g, '');
+  return (
+    `ISBN: <a href="https://www.worldcat.org/isbn/${bare}" ` +
+    `rel="external noopener noreferrer">${isbn}</a>`
+  );
+}
+
+// Build a plain URL anchor.
+function urlLink(url: string, label?: string): string {
+  const text = label ?? url;
+  return `<a href="${url}" rel="external noopener noreferrer">${text}</a>`;
+}
+
+// Format a full reference entry as an HTML string.
+function formatReference(ref: ReferenceEntry): string {
+  switch (ref.kind) {
+    case 'book': {
+      const authors = formatAuthors(ref.authors);
+      const edition = ref.edition ? ` (${ref.edition} ed.)` : '';
+      const pub = ref.publisher ? ` ${ref.publisher}.` : '';
+      const isbn = ref.isbn ? ` ${isbnLink(ref.isbn)}.` : '';
+      const doi = ref.doi ? ` ${doiLink(ref.doi)}.` : '';
+      return `${authors} (${ref.year}). <cite>${ref.title}</cite>${edition}.${pub}${isbn}${doi}`;
+    }
+    case 'journal': {
+      const authors = formatAuthors(ref.authors);
+      const vol = ref.volume != null ? `, ${ref.volume}` : '';
+      const iss = ref.issue != null ? `(${ref.issue})` : '';
+      const pages = ref.pages ? `, ${ref.pages}` : '';
+      const doi = ref.doi ? `. ${doiLink(ref.doi)}` : '';
+      const url = !ref.doi && ref.url ? `. ${urlLink(ref.url)}` : '';
+      return (
+        `${authors} (${ref.year}). ${ref.title}. ` +
+        `<cite>${ref.journal}</cite>${vol}${iss}${pages}${doi}${url}.`
+      );
+    }
+    case 'web': {
+      const authors = formatAuthors(ref.authors ?? []);
+      const year = ref.year ? `(${ref.year})` : '(n.d.)';
+      const pub = ref.publisher ? ` ${ref.publisher}.` : '';
+      const accessed = ref.accessed ? ` Retrieved ${ref.accessed}, from` : '';
+      const link = ref.url ? ` ${urlLink(ref.url)}` : '';
+      return `${authors} ${year}. <cite>${ref.title}</cite>.${pub}${accessed}${link}`;
+    }
+    case 'standard': {
+      const org =
+        ref.organization ??
+        formatAuthors(ref.authors ?? []) ??
+        (ref.publisher ?? '');
+      const pub = ref.publisher && ref.publisher !== org ? ` ${ref.publisher}.` : '';
+      const id = ref.identifier ? ` ${ref.identifier}.` : '';
+      const url = ref.url ? ` ${urlLink(ref.url)}.` : '';
+      return `${org} (${ref.year}). <cite>${ref.title}</cite>.${id}${pub}${url}`;
+    }
+  }
+}
+---
+
+{citations.length > 0 && (
+  <section
+    class="mt-16 border-t border-slate-200 pt-8"
+    role="doc-bibliography"
+    aria-labelledby="references-heading"
+  >
+    <h2
+      id="references-heading"
+      class="text-lg font-semibold text-slate-900 mb-4"
+    >
+      References
+    </h2>
+    <ol class="references space-y-3 text-sm text-slate-600 list-none pl-0">
+      {citations.map(({ id, n, ref }) => (
+        <li id={`cite-${id}`} class="flex gap-3 items-baseline">
+          <a
+            href={`#citeref-${id}-${n}`}
+            role="doc-backlink"
+            class="flex-shrink-0 text-slate-400 hover:text-crystal-700 transition-colors"
+            aria-label={`Back to citation ${n} in text`}
+          >
+            ↑
+          </a>
+          <span class="flex-shrink-0 font-mono text-slate-400 select-none w-6 text-right">
+            {n}.
+          </span>
+          <span set:html={formatReference(ref)} />
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

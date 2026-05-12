@@ -1,11 +1,13 @@
 ---
 /**
- * PropertyList - Displays a grid of property items with icons
- * Used for general property lists outside of crystal system cards
+ * PropertyList - Displays a grid of property items with icons.
+ * Accepts an optional citationIndex prop to resolve {cite:id} markers in
+ * item description strings and render item-level citation clusters.
  */
 import Card from '../ui-astro/Card.astro';
 import Badge from '../ui-astro/Badge.astro';
 import { getIconForProperty, iconPaths } from './icons';
+import { resolveCiteMarkers, formatCiteLabel, type CitationIndex } from '../../lib/citations/index';
 
 interface Item {
   name: string;
@@ -13,15 +15,17 @@ interface Item {
   description?: string;
   examples?: string[];
   icon?: string;
+  citations?: string[];
 }
 
 interface Props {
   items: Item[];
   variant?: 'default' | 'compact';
   headingLevel?: 3 | 4;
+  citationIndex?: CitationIndex;
 }
 
-const { items, variant = 'default', headingLevel = 3 } = Astro.props;
+const { items, variant = 'default', headingLevel = 3, citationIndex } = Astro.props;
 const HeadingTag = `h${headingLevel}` as 'h3' | 'h4';
 
 // Detect if value looks like CDL notation
@@ -41,10 +45,44 @@ function getIconPath(name: string): string {
   const iconType = getIconForProperty(name);
   return svgIcons[iconType] || svgIcons.default;
 }
+
+// Build item-level citation cluster HTML.
+function buildItemCiteCluster(ids: string[]): string {
+  if (!citationIndex || ids.length === 0) return '';
+  return ids
+    .map((id) => {
+      const entry = citationIndex.get(id);
+      if (!entry) return '';
+      const label = formatCiteLabel(entry.ref);
+      return (
+        `<sup>` +
+        `<a class="citation-ref" ` +
+        `href="#cite-${id}" ` +
+        `aria-label="Reference ${entry.n}: ${label}" ` +
+        `data-cite-id="${id}"` +
+        `>[${entry.n}]</a>` +
+        `</sup>`
+      );
+    })
+    .join('');
+}
+
+// Process each item's description through the citation marker resolver when needed.
+const processedItems = items.map((item) => {
+  const hasCiteInDesc = citationIndex && item.description && /\{cite:/.test(item.description);
+  const resolvedDesc = hasCiteInDesc
+    ? resolveCiteMarkers(item.description!, citationIndex!)
+    : (item.description ?? null);
+  const citeCluster =
+    item.citations && item.citations.length > 0
+      ? buildItemCiteCluster(item.citations)
+      : '';
+  return { ...item, resolvedDesc, citeCluster, descIsHtml: Boolean(hasCiteInDesc) };
+});
 ---
 
 <div class={`grid gap-4 ${variant === 'compact' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'} my-6`}>
-  {items.map(item => (
+  {processedItems.map(item => (
     <div class="group bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 p-4 hover:border-slate-300 hover:shadow-sm transition-all">
       <div class="flex items-start gap-3">
         <!-- Icon -->
@@ -65,9 +103,18 @@ function getIconPath(name: string): string {
             )}
           </div>
 
-          {/* Description */}
-          {item.description && (
-            <p class="text-sm text-slate-600 mt-1">{item.description}</p>
+          {/* Description — rendered as HTML when cite markers are present */}
+          {item.resolvedDesc && (
+            item.descIsHtml
+              ? <p class="text-sm text-slate-600 mt-1" set:html={item.resolvedDesc} />
+              : <p class="text-sm text-slate-600 mt-1">{item.resolvedDesc}</p>
+          )}
+
+          {/* Item-level citation cluster */}
+          {item.citeCluster && (
+            <span class="item-citation-cluster" aria-label="Item citations">
+              <Fragment set:html={item.citeCluster} />
+            </span>
           )}
 
           {/* CDL value block */}

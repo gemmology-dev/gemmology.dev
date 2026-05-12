@@ -1,16 +1,27 @@
 ---
 /**
- * DataTable - Displays tabular data
- * Updated to use consistent styling with Astro UI
+ * DataTable - Displays tabular data.
+ * Updated to use consistent styling with Astro UI.
+ * Accepts an optional citationIndex prop; cells containing {cite:id} markers
+ * are rendered via set:html after marker resolution. All other cells remain
+ * plain text nodes to avoid any XSS risk.
  */
+import { resolveCiteMarkers, type CitationIndex } from '../../lib/citations/index';
 
 interface Props {
   headers: string[];
   rows: string[][];
   caption?: string;
+  citationIndex?: CitationIndex;
 }
 
-const { headers, rows, caption } = Astro.props;
+const { headers, rows, caption, citationIndex } = Astro.props;
+
+// Process cell: only resolve if the cell actually contains a marker.
+function processCellHtml(cell: string): string {
+  if (!citationIndex || !/\{cite:/.test(cell)) return cell;
+  return resolveCiteMarkers(cell, citationIndex);
+}
 ---
 
 <div class="overflow-x-auto my-6 rounded-xl border border-slate-200">
@@ -30,11 +41,16 @@ const { headers, rows, caption } = Astro.props;
     <tbody class="bg-white divide-y divide-slate-100">
       {rows.map(row => (
         <tr class="hover:bg-slate-50 transition-colors">
-          {row.map((cell, i) => (
-            <td class={`px-4 py-3 text-sm ${i === 0 ? 'font-medium text-slate-900' : 'text-slate-600'}`}>
-              {cell}
-            </td>
-          ))}
+          {row.map((cell, i) => {
+            const hasCite = citationIndex && /\{cite:/.test(cell);
+            return (
+              <td class={`px-4 py-3 text-sm ${i === 0 ? 'font-medium text-slate-900' : 'text-slate-600'}`}>
+                {hasCite
+                  ? <Fragment set:html={processCellHtml(cell)} />
+                  : cell}
+              </td>
+            );
+          })}
         </tr>
       ))}
     </tbody>
