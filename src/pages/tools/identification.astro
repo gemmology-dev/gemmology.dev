@@ -13,12 +13,12 @@ const tools = [
 
 <BaseLayout
   title="Gem Identification"
-  description="Systematic gem identification tool that filters 96 mineral families by refractive index, specific gravity, crystal system, and optic character — with natural, synthetic, simulant, and composite origin badges."
+  description="Systematic gem identification tool that filters 96 mineral families by refractive index, specific gravity, crystal system, and optic character, with natural, synthetic, simulant, and composite origin badges."
 >
   <ToolsSchema
     slot="head"
     name="Gemmological Gem Identification Tool"
-    description="Systematic gem identification by filtering the 96-family mineral database across refractive index, specific gravity, crystal system, and optic character, with origin badges distinguishing natural, synthetic, simulant, and composite stones."
+    description="Systematic gem identification by filtering the 96-family mineral database by refractive index, specific gravity, crystal system, and optic character, with origin badges distinguishing natural, synthetic, simulant, and composite stones."
     category="Identification"
     url="https://gemmology.dev/tools/identification"
     tools={tools}
@@ -43,12 +43,12 @@ const tools = [
         <div class="prose prose-slate prose-sm mt-3 max-w-none">
           <p>
             Systematic gem identification follows a fixed sequence to avoid confirmation bias.
-            Start with non-destructive observations — colour, transparency, lustre — then move
+            Start with non-destructive observations (colour, transparency, lustre), then move
             to refractive index, then specific gravity, then the spectroscope if the RI falls in
             an ambiguous range. Only after these quantitative steps should qualitative tests
             (Chelsea filter, fluorescence) be applied to confirm or refute a working hypothesis.
             This sequence matches the FGA Diploma practical examination protocol, and it matters
-            because qualitative tests are sensitive to treatment, coating, and imitation —
+            because qualitative tests are sensitive to treatment, coating, and imitation,
             whereas RI and SG are intrinsic physical constants of the material itself.
           </p>
           <p>
@@ -57,7 +57,7 @@ const tools = [
             if known from polariscope behaviour, and the optic character (singly refractive,
             uniaxial, or biaxial). Each parameter constrains the search independently, and the
             tool returns every family in the 96-entry mineral database that satisfies all the
-            criteria you supply simultaneously. You do not need to fill in every field — a single
+            criteria you supply simultaneously. You do not need to fill in every field; a single
             RI reading already eliminates the majority of species, and adding SG typically
             reduces the candidate list to three or fewer families. The underlying database
             includes all 93 natural mineral families as well as 13 synthetic, 11 simulant, and
@@ -70,16 +70,16 @@ const tools = [
             a simulant made from a different material, or a composite assembled stone. This
             distinction is critical at the identification stage: a stone with an RI of 1.762 and
             SG of 3.99 could be natural ruby, flux-grown synthetic ruby, or a garnet-topped
-            doublet — three very different commercial situations that require different follow-up
+            doublet, which are three very different commercial situations that require different follow-up
             tests. Seeing all three in a single ranked results table prevents the common error
             of stopping investigation once a plausible natural species is found.
           </p>
           <p>
             After the identifier narrows the field, the results table provides direct links to
             the relevant entries in the spectroscope band-matcher and UV fluorescence lookup, so
-            the next logical test is always one click away. This end-to-end workflow — from
+            the next logical test is always one click away. This end-to-end workflow, from
             first observation to a confirmed identification supported by multiple independent
-            properties — is the foundation of professional gemmological practice and the
+            properties, is the foundation of professional gemmological practice and the
             standard taught at the Gemmological Association of Great Britain.
           </p>
         </div>
