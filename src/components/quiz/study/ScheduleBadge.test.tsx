@@ -34,7 +34,7 @@ describe('ScheduleBadge', () => {
 
   it('"New" badge has an appropriate aria-label', () => {
     render(<ScheduleBadge entry={null} now={NOW} />);
-    expect(screen.getByLabelText(/new — never seen before/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/new, never seen before/i)).toBeInTheDocument();
   });
 
   // ── Due state ─────────────────────────────────────────────────────────────

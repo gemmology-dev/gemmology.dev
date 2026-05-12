@@ -39,7 +39,7 @@ export function AdvancedTools() {
 
       <ToolSection
         id="proportion"
-        title="Proportion Analyzer"
+        title="Proportion Analyser"
         description="Evaluate cut quality from proportion measurements"
         iconPath={ICON_PATHS.ruler}
         accent="cyan"
@@ -51,8 +51,8 @@ export function AdvancedTools() {
       <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4">
         <h4 className="text-sm font-semibold text-cyan-900 mb-2">Origin Determination</h4>
         <p className="text-sm text-cyan-800 mb-3">
-          Geographic origin determination requires comprehensive knowledge of inclusion suites,
-          trace element chemistry, and regional characteristics. See our in-depth learn section:
+          Geographic origin determination requires detailed knowledge of inclusion suites,
+          trace element chemistry, and regional characteristics. See the learn section:
         </p>
         <ul className="text-sm text-cyan-800 space-y-1">
           <li>

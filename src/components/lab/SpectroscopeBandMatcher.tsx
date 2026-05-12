@@ -92,7 +92,7 @@ export function SpectroscopeBandMatcher() {
                 className={`text-xs px-2.5 py-1 rounded font-mono border transition ${
                   isOn ? `${swatch} border-slate-700 ring-2 ring-slate-400` : `${swatch} border-transparent opacity-60 hover:opacity-100`
                 }`}
-                title={`${wl} nm — ${colourFor(wl)} region`}
+                title={`${wl} nm, ${colourFor(wl)} region`}
               >
                 {wl} nm
               </button>

@@ -101,7 +101,7 @@ export function RationalePanel({
           ) : (
             <XCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
           )}
-          {correct ? 'Correct — here is why' : 'Not quite — here is why'}
+          {correct ? 'Correct: here is why' : 'Not quite: here is why'}
         </span>
         <span aria-label={toggleLabel}>
           {expanded ? (
@@ -152,7 +152,7 @@ export function RationalePanel({
                             ? 'text-red-600 dark:text-red-400'
                             : 'text-slate-600 dark:text-slate-600',
                         )}
-                        aria-label={wasChosen ? 'Your choice — incorrect' : 'Incorrect option'}
+                        aria-label={wasChosen ? 'Your choice, incorrect' : 'Incorrect option'}
                       />
                     )}
                     <div>

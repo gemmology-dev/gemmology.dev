@@ -57,7 +57,7 @@ export function StudyReviewScreen({ learnEntries }: StudyReviewScreenProps) {
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900">Review</h1>
           <p className="text-slate-600 mt-2">
-            Spaced-repetition queue — items the scheduler says you should see today.
+            Spaced-repetition queue: items the scheduler says you should see today.
           </p>
         </header>
 
@@ -86,7 +86,7 @@ function EmptyReviewState() {
     <div className="rounded-xl border border-slate-200 bg-white p-10 text-center">
       <h2 className="text-xl font-semibold text-slate-900">Nothing due right now</h2>
       <p className="text-slate-600 mt-2 max-w-prose mx-auto">
-        Your spaced-repetition queue is empty — every item you've seen is still
+        Your spaced-repetition queue is empty; every item you've seen is still
         within its scheduled interval. Practice new questions to grow the queue.
       </p>
       <div className="mt-6">

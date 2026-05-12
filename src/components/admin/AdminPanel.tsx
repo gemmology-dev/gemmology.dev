@@ -261,7 +261,7 @@ export function AdminPanel() {
       <div className="min-h-[60vh] flex items-center justify-center px-4">
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center">
-            <CardTitle>Admin Login</CardTitle>
+            <CardTitle>Admin Access</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -286,7 +286,7 @@ export function AdminPanel() {
                 )}
               </div>
               <Button type="submit" className="w-full" loading={authLoading}>
-                Login
+                Enter
               </Button>
             </form>
           </CardContent>
@@ -303,7 +303,7 @@ export function AdminPanel() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Admin Panel</h1>
         <Button variant="ghost" onClick={handleLogout}>
-          Logout
+          Exit
         </Button>
       </div>
 

@@ -20,9 +20,9 @@ import { usePagination } from '../../hooks/usePagination';
 import { Pagination } from '../ui';
 
 const COLOUR_COUNT_OPTIONS = [
-  { value: '1', label: '1 — single colour' },
-  { value: '2', label: '2 — dichroic' },
-  { value: '3', label: '3 — trichroic' },
+  { value: '1', label: '1: single colour' },
+  { value: '2', label: '2: dichroic' },
+  { value: '3', label: '3: trichroic' },
 ];
 
 const STRENGTH_OPTIONS: { value: PleochroismStrength; label: string }[] = [

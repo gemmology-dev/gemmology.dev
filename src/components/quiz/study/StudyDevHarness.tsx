@@ -86,12 +86,12 @@ const OPTION_RATIONALES: OptionRationale[] = [
   {
     text: 'Natural ruby (corundum)',
     isCorrect: true,
-    rationale: 'RI 1.762–1.770, SG 4.00, uniaxial negative — all diagnostic of corundum.',
+    rationale: 'RI 1.762–1.770, SG 4.00, uniaxial negative: all diagnostic of corundum.',
   },
   {
     text: 'Spinel',
     isCorrect: false,
-    rationale: 'Spinel is isotropic (single RI ≈ 1.718) — no uniaxial reading possible.',
+    rationale: 'Spinel is isotropic (single RI ≈ 1.718); no uniaxial reading possible.',
   },
   {
     text: 'Pyrope garnet',
@@ -118,7 +118,7 @@ const MOCK_QUESTIONS: WidgetQuestion[] = [
     correctAnswer: 'Cubic',
     rationaleCorrect: 'Diamond crystallises in the cubic (isometric) system with point group m3m.',
     optionRationales: [
-      { text: 'Cubic', isCorrect: true, rationale: 'Correct — m3m symmetry.' },
+      { text: 'Cubic', isCorrect: true, rationale: 'Correct: m3m symmetry.' },
       { text: 'Hexagonal', isCorrect: false, rationale: '6-fold symmetry axis; does not apply to diamond.' },
       { text: 'Trigonal', isCorrect: false, rationale: '3-fold symmetry; quartz and corundum, not diamond.' },
     ],
@@ -174,7 +174,7 @@ function InteractiveConfidenceTap() {
     <div>
       <ConfidenceTap value={value} onChange={setValue} />
       <p className="text-xs text-slate-600 mt-1">
-        Selected: <code>{value ?? 'null'}</code> — try keyboard Q/W/E
+        Selected: <code>{value ?? 'null'}</code>. Try keyboard Q/W/E.
       </p>
     </div>
   );
@@ -203,7 +203,7 @@ export function StudyDevHarness() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
       <header className="border-b border-slate-200 pb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Study Components — Dev Harness</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Study Components: Dev Harness</h1>
         <p className="text-sm text-slate-600 mt-1">
           Only served in development (<code>import.meta.env.DEV</code>). All components rendered
           with mocked data.
@@ -228,7 +228,7 @@ export function StudyDevHarness() {
           <Sub label="disabled=true (value='certain')">
             <ConfidenceTap value="certain" onChange={() => {}} disabled={true} />
           </Sub>
-          <Sub label="Interactive — keyboard shortcuts Q/W/E active">
+          <Sub label="Interactive: keyboard shortcuts Q/W/E active">
             <InteractiveConfidenceTap />
           </Sub>
         </div>
@@ -320,10 +320,10 @@ export function StudyDevHarness() {
       {/* ── ExportImportPanel ─────────────────────────────────────────────── */}
       <Section title="ExportImportPanel">
         <div className="space-y-6">
-          <Sub label="Mock store — export succeeds, download triggers">
+          <Sub label="Mock store: export succeeds, download triggers">
             <ExportImportPanel store={makeMockStore(false)} />
           </Sub>
-          <Sub label="Mock store — export fails (error toast)">
+          <Sub label="Mock store: export fails (error toast)">
             <ExportImportPanel store={makeMockStore(true)} />
           </Sub>
         </div>
@@ -332,7 +332,7 @@ export function StudyDevHarness() {
       {/* ── LearnQuizWidget ───────────────────────────────────────────────── */}
       <Section title="LearnQuizWidget">
         <div className="space-y-8">
-          <Sub label="3 questions — full interactive flow">
+          <Sub label="3 questions: full interactive flow">
             <LearnQuizWidget
               slug="species/corundum"
               pretestEnabled={true}

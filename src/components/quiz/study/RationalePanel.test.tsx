@@ -37,18 +37,18 @@ describe('RationalePanel', () => {
     expect(screen.getByText('Great diagnostic chain.')).toBeInTheDocument();
   });
 
-  it('shows "Correct — here is why" heading when correct=true', () => {
+  it('shows "Correct: here is why" heading when correct=true', () => {
     render(
       <RationalePanel correct={true} rationaleCorrect="test" show={true} />,
     );
-    expect(screen.getByText(/correct — here is why/i)).toBeInTheDocument();
+    expect(screen.getByText(/correct: here is why/i)).toBeInTheDocument();
   });
 
-  it('shows "Not quite — here is why" heading when correct=false', () => {
+  it('shows "Not quite: here is why" heading when correct=false', () => {
     render(
       <RationalePanel correct={false} rationaleCorrect="test" show={true} />,
     );
-    expect(screen.getByText(/not quite — here is why/i)).toBeInTheDocument();
+    expect(screen.getByText(/not quite: here is why/i)).toBeInTheDocument();
   });
 
   // ── Collapse / expand ──────────────────────────────────────────────────────
