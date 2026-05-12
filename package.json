@@ -19,7 +19,8 @@
     "question:new": "node scripts/new-question.mjs",
     "validate:questions": "node scripts/validate-questions.mjs",
     "questions:coverage": "node scripts/questions-coverage.mjs",
-    "schema:questions": "node scripts/generate-question-schema.mjs"
+    "schema:questions": "node scripts/generate-question-schema.mjs",
+    "validate:citations": "node scripts/validate-citations.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.2",
