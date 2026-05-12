@@ -9,6 +9,8 @@ import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, utimesSyn
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { KNOWLEDGE_VERSION } from '../src/lib/knowledge-version.ts';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = resolve(__dirname, '..');
 const CACHE_DIR = join(ROOT_DIR, '.cache');
@@ -124,8 +126,8 @@ function syncFromGit(): boolean {
 
   try {
     if (existsSync(KNOWLEDGE_DIR)) {
-      log('Pulling latest from gemmology-knowledge...');
-      execSync('git pull origin main', {
+      log(`Fetching gemmology-knowledge tag ${KNOWLEDGE_VERSION}...`);
+      execSync('git fetch --tags --force origin', {
         cwd: KNOWLEDGE_DIR,
         stdio: 'inherit',
       });
@@ -135,8 +137,13 @@ function syncFromGit(): boolean {
         stdio: 'inherit',
       });
     }
+    log(`Checking out ${KNOWLEDGE_VERSION}...`);
+    execSync(`git checkout --detach tags/${KNOWLEDGE_VERSION}`, {
+      cwd: KNOWLEDGE_DIR,
+      stdio: 'inherit',
+    });
   } catch (err) {
-    error('Failed to sync git repository');
+    error(`Failed to sync git repository at tag ${KNOWLEDGE_VERSION}`);
     return false;
   }
 
