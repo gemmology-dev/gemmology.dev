@@ -114,7 +114,7 @@ export function combineBands(observations: HannemanCriteria[]): RIBand | null {
     return {
       min: lo,
       max: hi,
-      rationale: `Conflicting observations — please re-test. ${reasons.join(' ')}`,
+      rationale: `Conflicting observations. Please re-test. ${reasons.join(' ')}`,
     };
   }
   return {
