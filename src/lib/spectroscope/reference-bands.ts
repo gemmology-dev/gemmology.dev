@@ -45,7 +45,7 @@ export const SPECTROSCOPE_REFERENCE: SpectroscopeReference[] = [
     familyId: 'corundum',
     name: 'Ruby (Cr-corundum)',
     bands: [
-      { wavelength: 692, also: [694], intensity: 'strong', cause: 'Cr³⁺ doublet (R-lines)', selective: true, note: 'Sharp red doublet at 692/694 nm — the textbook ruby fingerprint.' },
+      { wavelength: 692, also: [694], intensity: 'strong', cause: 'Cr³⁺ doublet (R-lines)', selective: true, note: 'Sharp red doublet at 692/694 nm: the textbook ruby fingerprint.' },
       { wavelength: 660, intensity: 'weak', cause: 'Cr³⁺' },
       { wavelength: 555, intensity: 'moderate', cause: 'Cr³⁺ broad absorption', note: 'Wide green absorption band.' },
       { wavelength: 476, intensity: 'moderate', cause: 'Cr³⁺' },
@@ -93,7 +93,7 @@ export const SPECTROSCOPE_REFERENCE: SpectroscopeReference[] = [
       { wavelength: 460, intensity: 'moderate', cause: 'Fe³⁺' },
       { wavelength: 470, intensity: 'weak', cause: 'Fe³⁺' },
     ],
-    observationNotes: 'Synthetic flame-fusion sapphire often lacks the 450 nm line — useful diagnostic.',
+    observationNotes: 'Synthetic flame-fusion sapphire often lacks the 450 nm line; useful diagnostic.',
   },
   // Almandine garnet — Fe²⁺.
   {
@@ -132,7 +132,7 @@ export const SPECTROSCOPE_REFERENCE: SpectroscopeReference[] = [
     familyId: 'zircon',
     name: 'Zircon (high type)',
     bands: [
-      { wavelength: 653, intensity: 'strong', cause: 'U⁴⁺', selective: true, note: 'Classic uranium-line at 653.5 nm — strongest in heat-treated blue zircon.' },
+      { wavelength: 653, intensity: 'strong', cause: 'U⁴⁺', selective: true, note: 'Classic uranium-line at 653.5 nm; strongest in heat-treated blue zircon.' },
       { wavelength: 659, intensity: 'moderate', cause: 'U⁴⁺' },
       { wavelength: 691, intensity: 'weak', cause: 'U⁴⁺' },
       { wavelength: 588, intensity: 'weak', cause: 'U⁴⁺' },
@@ -157,7 +157,7 @@ export const SPECTROSCOPE_REFERENCE: SpectroscopeReference[] = [
     familyId: 'diamond',
     name: 'Cape-series diamond (N3)',
     bands: [
-      { wavelength: 415, intensity: 'strong', cause: 'N3 centre', selective: true, note: 'Cape line at 415.5 nm — diagnostic of natural type-Ia diamond.' },
+      { wavelength: 415, intensity: 'strong', cause: 'N3 centre', selective: true, note: 'Cape line at 415.5 nm: diagnostic of natural type-Ia diamond.' },
       { wavelength: 478, intensity: 'weak', cause: 'N3 / H3' },
       { wavelength: 504, intensity: 'weak', cause: 'H3 (irradiated)' },
     ],

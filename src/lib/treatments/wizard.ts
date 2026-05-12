@@ -172,7 +172,7 @@ export const CLUES: ClueDef[] = [
   },
   {
     id: 'jadeite-acid-etch',
-    label: 'Jadeite — acid-etched / honeycomb surface texture',
+    label: 'Jadeite: acid-etched / honeycomb surface texture',
     effects: { bleaching: 4, 'oil-resin': 3 },
     applicableTo: ['jadeite'],
   },

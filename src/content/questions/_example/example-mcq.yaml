@@ -1,5 +1,5 @@
 # ──────────────────────────────────────────────────────────────────────────────
-# EXAMPLE QUESTION — for curator reference and scaffolder template only.
+# EXAMPLE QUESTION: for curator reference and scaffolder template only.
 #
 # This file lives in _example/ so Astro's glob-loader ignores it (the loader
 # pattern excludes paths starting with _). It is NOT loaded into the question
@@ -79,8 +79,8 @@ rationaleCorrect: |
   (isotropic reading eliminates spinel and pyrope, leaving only corundum as
   a uniaxial negative species in the red gem range), then SG 4.00 (matches
   corundum's 3.99–4.00, excludes pyrope at 3.7–3.9).
-  Note: fluorescence alone is never diagnostic — some Burma spinel also
-  fluoresces red — so it confirms but does not establish the identification.
+  Note: fluorescence alone is never diagnostic; some Burma spinel also
+  fluoresces red, so it confirms but does not establish the identification.
 
 # difficulty: integer 1 (trivial / recall) to 5 (expert / complex reasoning)
 difficulty: 3
@@ -108,7 +108,7 @@ sourceArticle: species/corundum
 examRelevance: FGA-diploma
 
 # confusionPairs: ids of near-miss questions (drives interleaving).
-# High-value metadata — populate whenever there is a known confusion pair.
+# High-value metadata: populate whenever there is a known confusion pair.
 confusionPairs:
   - spinel-ri-001
   - pyrope-sg-001

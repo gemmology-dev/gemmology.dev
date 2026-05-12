@@ -193,10 +193,10 @@ export function matchPleochroism(
     const reasonParts: string[] = [];
     reasonParts.push(
       storedCount === 3
-        ? 'Trichroic — biaxial (orthorhombic, monoclinic, or triclinic).'
+        ? 'Trichroic: biaxial (orthorhombic, monoclinic, or triclinic).'
         : storedCount === 2
-          ? 'Dichroic — uniaxial (trigonal, tetragonal, or hexagonal).'
-          : 'Single observed colour — pleochroism not detectable.',
+          ? 'Dichroic: uniaxial (trigonal, tetragonal, or hexagonal).'
+          : 'Single observed colour: pleochroism not detectable.',
     );
     if (mineral.pleochroism_strength) {
       reasonParts.push(
@@ -232,7 +232,7 @@ export function interpretColourCount(count: ObservedColourCount): {
       return {
         title: 'One colour observed',
         body:
-          'The gem may be isotropic (cubic or amorphous — diamond, garnet, spinel, glass, opal), or anisotropic but viewed along its optic axis. Rotate the dichroscope and the stone; if no second colour appears at any orientation, isotropic is most likely.',
+          'The gem may be isotropic (cubic or amorphous: diamond, garnet, spinel, glass, opal), or anisotropic but viewed along its optic axis. Rotate the dichroscope and the stone; if no second colour appears at any orientation, isotropic is most likely.',
       };
     case 2:
       return {

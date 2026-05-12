@@ -133,8 +133,8 @@ function describe(parameter: string, value: string, grade: CutGradeBand): Parame
     Excellent: 'within ideal range',
     'Very Good': 'slightly outside ideal',
     Good: 'noticeably outside ideal',
-    Fair: 'well outside ideal — visible light leakage likely',
-    Poor: 'severe deviation — significant performance impact',
+    Fair: 'well outside ideal; visible light leakage likely',
+    Poor: 'severe deviation; significant performance impact',
   };
   return {
     parameter,
