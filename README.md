@@ -53,7 +53,6 @@ src/
 │   ├── playground/   # CDL Playground components
 │   ├── quiz/         # Quiz and exam components
 │   ├── calculator/   # Gemmological calculator components
-│   ├── auth/         # Authentication and protected routes
 │   └── layout/       # Layout components (Header, Footer)
 ├── hooks/            # React hooks (useCrystalDB, useQuiz, useExam, etc.)
 ├── layouts/          # Astro layouts

@@ -1,6 +1,6 @@
 /**
  * SVG Sanitization utility using DOMPurify
- * Provides defense-in-depth against XSS in SVG content
+ * Provides defence-in-depth against XSS in SVG content
  */
 import DOMPurify from 'dompurify';
 
