@@ -18,6 +18,7 @@ import {
   sortKeyYear,
 } from '../../../lib/citations/format';
 import type { ReferenceEntry } from '../../../lib/citations/format';
+import { KNOWLEDGE_VERSION, KNOWLEDGE_RELEASE_URL } from '../../../lib/knowledge-version';
 
 // ── Collect and deduplicate references ───────────────────────────────────────
 
@@ -114,6 +115,15 @@ const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string
       </nav>
 
       <h1>Sources &amp; bibliography</h1>
+
+      <p class="not-prose text-sm text-slate-500">
+        Content version
+        <a
+          href={KNOWLEDGE_RELEASE_URL}
+          rel="external noopener noreferrer"
+          class="font-mono text-crystal-700 hover:text-crystal-800 underline underline-offset-2"
+        >gemmology-knowledge {KNOWLEDGE_VERSION}</a>
+      </p>
 
       <p class="lead">
         This page lists every peer-reviewed article, book, standard, and vetted
