@@ -1,0 +1,57 @@
+---
+/**
+ * References - renders the bibliography section for a learn article.
+ *
+ * Placed after the final SectionRenderer and before the Related Topics card
+ * in [...slug].astro. Renders nothing when the citation index is empty.
+ *
+ * Accessibility:
+ *   - section[role="doc-bibliography"] is a DPUB ARIA landmark.
+ *   - aria-labelledby points to the h2 inside the same section.
+ *   - Each back-link has role="doc-backlink" and an aria-label.
+ *   - External links carry rel="external noopener noreferrer".
+ *   - <cite> wraps source titles only — never the [n] marker.
+ */
+import type { CitationIndex } from '../../lib/citations/index';
+import { formatReference } from '../../lib/citations/format';
+
+interface Props {
+  citationIndex: CitationIndex;
+}
+
+const { citationIndex } = Astro.props;
+const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
+---
+
+{citations.length > 0 && (
+  <section
+    class="mt-16 border-t border-slate-200 pt-8"
+    role="doc-bibliography"
+    aria-labelledby="references-heading"
+  >
+    <h2
+      id="references-heading"
+      class="text-lg font-semibold text-slate-900 mb-4"
+    >
+      References
+    </h2>
+    <ol class="references space-y-3 text-sm text-slate-600 list-none pl-0">
+      {citations.map(({ id, n, ref }) => (
+        <li id={`cite-${id}`} class="flex gap-3 items-baseline">
+          <a
+            href={`#citeref-${id}-${n}`}
+            role="doc-backlink"
+            class="flex-shrink-0 text-slate-400 hover:text-crystal-700 transition-colors"
+            aria-label={`Back to citation ${n} in text`}
+          >
+            ↑
+          </a>
+          <span class="flex-shrink-0 font-mono text-slate-400 select-none w-6 text-right">
+            {n}.
+          </span>
+          <span set:html={formatReference(ref)} />
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

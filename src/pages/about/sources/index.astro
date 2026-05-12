@@ -1,0 +1,176 @@
+---
+/**
+ * /about/sources/ — aggregate bibliography page.
+ *
+ * Collects every reference from every learn article, deduplicates by id,
+ * groups by kind (Journal articles / Books / Web sources / Standards), and
+ * sorts within each group by author family name then year.
+ *
+ * Each entry shows which learn slug(s) cite it as a small list of links.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Container from '../../../components/ui-astro/Container.astro';
+import StructuredData from '../../../components/seo/StructuredData.astro';
+import {
+  formatReference,
+  sortKeyAuthor,
+  sortKeyYear,
+} from '../../../lib/citations/format';
+import type { ReferenceEntry } from '../../../lib/citations/format';
+
+// ── Collect and deduplicate references ───────────────────────────────────────
+
+const learnEntries = await getCollection('learn');
+
+/**
+ * Map from reference id → { ref, slugs[] }
+ * Using a Map preserves insertion order and gives O(1) dedup.
+ */
+const refMap = new Map<string, { ref: ReferenceEntry; slugs: string[] }>();
+
+for (const entry of learnEntries) {
+  const refs: ReferenceEntry[] = entry.data.references ?? [];
+  for (const ref of refs) {
+    if (refMap.has(ref.id)) {
+      refMap.get(ref.id)!.slugs.push(entry.id);
+    } else {
+      refMap.set(ref.id, { ref, slugs: [entry.id] });
+    }
+  }
+}
+
+// ── Group by kind ─────────────────────────────────────────────────────────────
+
+type KindLabel = 'Journal articles' | 'Books' | 'Web sources' | 'Standards';
+
+const KIND_ORDER: KindLabel[] = ['Journal articles', 'Books', 'Web sources', 'Standards'];
+
+const KIND_MAP: Record<ReferenceEntry['kind'], KindLabel> = {
+  journal:  'Journal articles',
+  book:     'Books',
+  web:      'Web sources',
+  standard: 'Standards',
+};
+
+const grouped = new Map<KindLabel, Array<{ ref: ReferenceEntry; slugs: string[] }>>(
+  KIND_ORDER.map((k) => [k, []]),
+);
+
+for (const item of refMap.values()) {
+  const label = KIND_MAP[item.ref.kind];
+  grouped.get(label)!.push(item);
+}
+
+// Sort each group by author family name then year.
+for (const group of grouped.values()) {
+  group.sort((a, b) => {
+    const aKey = sortKeyAuthor(a.ref);
+    const bKey = sortKeyAuthor(b.ref);
+    if (aKey !== bKey) return aKey.localeCompare(bKey);
+    return sortKeyYear(a.ref) - sortKeyYear(b.ref);
+  });
+}
+
+const totalRefs = refMap.size;
+
+// Build a slug → human-readable title map for link labels.
+const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string]));
+---
+
+<BaseLayout
+  title="Sources &amp; bibliography"
+  description="Complete bibliography of peer-reviewed and authoritative sources cited across all /learn/ articles on gemmology.dev."
+>
+  <StructuredData
+    slot="head"
+    breadcrumbs={[
+      { name: 'Home',   url: 'https://gemmology.dev' },
+      { name: 'About',  url: 'https://gemmology.dev/about/' },
+      { name: 'Sources', url: 'https://gemmology.dev/about/sources/' },
+    ]}
+    webPage={{
+      name: 'Sources &amp; bibliography',
+      description: 'All peer-reviewed and authoritative sources cited across the gemmology.dev learn articles.',
+      url: 'https://gemmology.dev/about/sources/',
+    }}
+  />
+
+  <Container size="md" padding="lg">
+    <article
+      class="prose prose-slate prose-lg max-w-none
+             prose-headings:text-slate-900
+             prose-p:text-slate-600 prose-p:leading-relaxed
+             prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700"
+    >
+      <nav class="not-prose text-sm text-slate-500 mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-crystal-700 transition-colors">Home</a></li>
+          <li aria-hidden="true" class="select-none">/</li>
+          <li><a href="/about/" class="hover:text-crystal-700 transition-colors">About</a></li>
+          <li aria-hidden="true" class="select-none">/</li>
+          <li class="text-slate-700 font-medium" aria-current="page">Sources</li>
+        </ol>
+      </nav>
+
+      <h1>Sources &amp; bibliography</h1>
+
+      <p class="lead">
+        This page lists every peer-reviewed article, book, standard, and vetted
+        online reference cited across the <a href="/learn/">learn</a> section of
+        gemmology.dev. All factual claims in those articles -- numerical data,
+        optical constants, crystal properties, and identification criteria -- are
+        traceable to one or more entries below. DOIs link to the authoritative
+        record via <a href="https://doi.org" rel="external noopener noreferrer">doi.org</a>;
+        ISBNs link to the WorldCat catalogue. Each entry shows which learn
+        articles cite it so you can trace a claim back to its source.
+      </p>
+
+      {totalRefs === 0 ? (
+        <p class="rounded-xl border border-slate-200 bg-slate-50 px-6 py-8 text-center text-slate-500 not-prose">
+          Sources will appear here as <a href="/learn/" class="text-crystal-700 underline underline-offset-2">/learn/</a> articles are annotated with citations.
+        </p>
+      ) : (
+        <>
+          {KIND_ORDER.map((kindLabel) => {
+            const items = grouped.get(kindLabel)!;
+            if (items.length === 0) return null;
+            return (
+              <section aria-labelledby={`bib-${kindLabel.toLowerCase().replace(/\s+/g, '-')}`}>
+                <h2 id={`bib-${kindLabel.toLowerCase().replace(/\s+/g, '-')}`}>
+                  {kindLabel}
+                </h2>
+                <ol class="not-prose space-y-6 list-none pl-0">
+                  {items.map(({ ref, slugs }) => (
+                    <li id={`source-${ref.id}`} class="group flex flex-col gap-1.5">
+                      <p
+                        class="text-sm text-slate-700 leading-relaxed"
+                        set:html={formatReference(ref)}
+                      />
+                      {slugs.length > 0 && (
+                        <p class="text-xs text-slate-400">
+                          Cited in:{' '}
+                          {slugs.map((slug, i) => (
+                            <>
+                              <a
+                                href={`/learn/${slug}/`}
+                                class="text-crystal-600 hover:text-crystal-800 underline underline-offset-1 transition-colors"
+                              >
+                                {slugTitles.get(slug) ?? slug}
+                              </a>
+                              {i < slugs.length - 1 && <span class="mx-1 text-slate-300">&middot;</span>}
+                            </>
+                          ))}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            );
+          })}
+        </>
+      )}
+    </article>
+  </Container>
+</BaseLayout>

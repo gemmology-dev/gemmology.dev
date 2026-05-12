@@ -8,8 +8,10 @@ import { Breadcrumb, PageNav } from '../../components/docs';
 import { SectionRenderer } from '../../components/learn';
 import { Container, Card, Badge } from '../../components/ui-astro';
 import LearnSchema from '../../components/seo/LearnSchema.astro';
+import References from '../../components/learn/References.astro';
 import { LearnQuizWidget } from '../../components/quiz/study/LearnQuizWidget';
 import type { WidgetQuestion } from '../../components/quiz/study/LearnQuizWidget';
+import { buildCitationIndex } from '../../lib/citations/index';
 
 export async function getStaticPaths() {
   const entries = await getCollection('learn');
@@ -173,6 +175,21 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
       unvetted: q.data.unvetted ?? false,
     };
   });
+
+// Build citation index — wrapped in try/catch so a malformed YAML references
+// block cannot 404 any page. Returns an empty map on error.
+let citationIndex = new Map();
+try {
+  citationIndex = buildCitationIndex(data.sections, data.references ?? []);
+} catch {
+  // intentionally swallowed
+}
+const hasCitations = citationIndex.size > 0;
+
+// Collect ordered references for JSON-LD emission.
+const orderedRefs = hasCitations
+  ? [...citationIndex.values()].sort((a, b) => a.n - b.n).map((e) => e.ref)
+  : [];
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -188,6 +205,8 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
     dateModified={dateModified}
     pretestQuestionCount={pretestQuestions.length}
     pretestQuestions={pretestQuestions}
+    articleAuthor={data.author}
+    references={orderedRefs}
   />
   <Container size="md" padding="md">
     <Breadcrumb items={breadcrumbItems} />
@@ -200,7 +219,7 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
         </p>
 
         <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
-          <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'gemmology.dev editors'}</a></span>
+          <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'Fabian Moor'}</a></span>
           <span>
             Last updated
             <time datetime={dateModified}>{dateModifiedDisplay}</time>
@@ -234,9 +253,11 @@ const pretestQuestions: WidgetQuestion[] = articleQuestions
                   prose-strong:text-slate-900 prose-strong:font-semibold
                   prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700">
         {data.sections.map(section => (
-          <SectionRenderer section={section} />
+          <SectionRenderer section={section} citationIndex={citationIndex} />
         ))}
       </div>
+
+      {hasCitations && <References citationIndex={citationIndex} />}
 
       {data.related && data.related.length > 0 && (
         <Card padding="md" class="mt-16 bg-slate-50 border-slate-200">
