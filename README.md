@@ -29,18 +29,26 @@ Crystal structure visualization and gemmological reference for FGA students and 
 # Install dependencies
 npm install
 
+# Sync learn content from gemmology-knowledge at the pinned tag
+npm run sync
+
 # Copy database files
 npm run copy-db
+
+# Validate inline {cite:id} markers resolve and references parse
+npm run validate:citations
 
 # Start development server
 npm run dev
 
-# Build for production
+# Build for production (auto-runs sync + copy-db)
 npm run build
 
 # Preview production build
 npm run preview
 ```
+
+`npm run sync` is also invoked automatically by `npm run dev` and `npm run build`; you only need to run it by hand after bumping the knowledge pin (see [Knowledge content & citations](#knowledge-content--citations)).
 
 ## Project Structure
 
@@ -117,6 +125,34 @@ Generate and take quizzes from the gemmology knowledge base:
 | Weight Converter | Carat ↔ Gram ↔ Milligram |
 | Length Converter | mm ↔ inches |
 | Temperature Converter | °C ↔ °F |
+
+## Knowledge content & citations
+
+Learn articles are sourced from [gemmology-knowledge](https://github.com/gemmology-dev/gemmology-knowledge) and pinned to a specific release tag — never `main` — so a content regression upstream never breaks the production site.
+
+### Pinning
+
+The pin is a single string constant:
+
+```ts
+// src/lib/knowledge-version.ts
+export const KNOWLEDGE_VERSION = 'v1.2.0';
+```
+
+`scripts/sync-knowledge.ts` reads this constant, runs `git fetch --tags --force` against the knowledge clone, and checks out the matching tag in detached-HEAD state before copying `docs/learn/**/*.yaml` into `src/content/learn/`.
+
+### Bumping the version
+
+1. Edit `src/lib/knowledge-version.ts` and bump `KNOWLEDGE_VERSION` to the new tag.
+2. `npm run sync` — checks out the new tag and refreshes `src/content/learn/`.
+3. `npm run validate:citations` — fails the build if any `{cite:id}` marker is dangling or any `references:` entry violates the Zod schema (`book | journal | web | standard`).
+4. `npm run build` — final check that the bibliography page renders.
+
+### Bibliography & inline citations
+
+Every learn article that cites sources declares them in a top-level `references:` array; prose embeds inline `{cite:id}` markers that render as numbered superscripts backlinking to the article footer (`role="doc-bibliography"`). The aggregated bibliography across all articles lives at [/about/sources/](https://gemmology.dev/about/sources/) and shows the active knowledge version with a link to the release tag.
+
+The reference schema (CSL-JSON-inspired, four `kind`s, full field table) is documented in the upstream knowledge README under [Learn Content (YAML)](https://github.com/gemmology-dev/gemmology-knowledge#learn-content-yaml).
 
 ## Related Packages
 
