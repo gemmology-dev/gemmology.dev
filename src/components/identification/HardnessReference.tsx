@@ -22,16 +22,16 @@ interface GemHardness {
 }
 
 const MOHS_SCALE: MohsLevel[] = [
-  { hardness: 10, mineral: 'Diamond', wearResistance: 'Excellent for all jewelry' },
-  { hardness: 9, mineral: 'Corundum (Ruby/Sapphire)', wearResistance: 'Excellent for all jewelry' },
+  { hardness: 10, mineral: 'Diamond', wearResistance: 'Excellent for all jewellery' },
+  { hardness: 9, mineral: 'Corundum (Ruby/Sapphire)', wearResistance: 'Excellent for all jewellery' },
   { hardness: 8, mineral: 'Topaz / Spinel', wearResistance: 'Excellent for daily wear' },
-  { hardness: 7.5, mineral: 'Beryl (Emerald / Aquamarine)', wearResistance: 'Good for most jewelry' },
-  { hardness: 7, mineral: 'Quartz', wearResistance: 'Good for most jewelry' },
+  { hardness: 7.5, mineral: 'Beryl (Emerald / Aquamarine)', wearResistance: 'Good for most jewellery' },
+  { hardness: 7, mineral: 'Quartz', wearResistance: 'Good for most jewellery' },
   { hardness: 6.5, mineral: 'Tanzanite / Peridot', wearResistance: 'Fair: avoid rings' },
   { hardness: 6, mineral: 'Feldspar (Moonstone)', wearResistance: 'Fair: pendants/earrings' },
   { hardness: 5, mineral: 'Apatite', wearResistance: 'Poor: collector only' },
   { hardness: 4, mineral: 'Fluorite', wearResistance: 'Poor: collector only' },
-  { hardness: 3, mineral: 'Calcite', wearResistance: 'Not suitable for jewelry' },
+  { hardness: 3, mineral: 'Calcite', wearResistance: 'Not suitable for jewellery' },
 ];
 
 // Fallback data if database is unavailable

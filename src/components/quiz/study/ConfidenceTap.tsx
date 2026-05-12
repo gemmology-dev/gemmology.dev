@@ -113,7 +113,7 @@ export function ConfidenceTap({ value, onChange, disabled = false }: ConfidenceT
               type="button"
               role="radio"
               aria-checked={isSelected}
-              aria-label={`${opt.label} — ${opt.description}`}
+              aria-label={`${opt.label}: ${opt.description}`}
               disabled={disabled}
               onClick={() => onChange(opt.value)}
               className={cn(

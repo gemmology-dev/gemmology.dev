@@ -87,7 +87,7 @@ export function ExportImportPanel({ store }: ExportImportPanelProps) {
       } else {
         showToast({
           kind: 'error',
-          message: result.warnings[0] ?? 'Import failed — the file may be invalid.',
+          message: result.warnings[0] ?? 'Import failed. The file may be invalid.',
         });
       }
     } catch {

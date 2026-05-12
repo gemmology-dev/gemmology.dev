@@ -1,5 +1,5 @@
 /**
- * Gemstone Cut Proportion Analyzer
+ * Gemstone Cut Proportion Analyser
  * Evaluate cut quality based on proportion measurements
  */
 
@@ -291,7 +291,7 @@ export function ProportionAnalyzer() {
       </div>
 
       <div className="border-t border-slate-200 pt-6">
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Proportion Analyzer</h4>
+        <h4 className="text-sm font-semibold text-slate-900 mb-3">Proportion Analyser</h4>
 
         <div className="space-y-4">
           <div>
@@ -462,7 +462,7 @@ export function ProportionAnalyzer() {
                     </ul>
                   </div>
                   <p className="text-xs text-slate-600 mt-2 italic">
-                    Educational reference only — formal GIA grading also weighs symmetry, polish, and overall appeal.
+                    Educational reference only. Formal GIA grading also weighs symmetry, polish, and overall appeal.
                   </p>
                 </div>
               )}

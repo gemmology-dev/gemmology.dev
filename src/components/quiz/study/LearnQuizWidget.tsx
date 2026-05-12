@@ -192,7 +192,7 @@ export function LearnQuizWidget({
     : undefined;
 
   return (
-    <aside className="my-6" aria-label={`Pretest — question ${currentIndex + 1} of ${visibleQuestions.length}`}>
+    <aside className="my-6" aria-label={`Pretest, question ${currentIndex + 1} of ${visibleQuestions.length}`}>
       <Card
         padding="none"
         className="overflow-hidden border-slate-200 dark:border-slate-800 dark:bg-slate-900"

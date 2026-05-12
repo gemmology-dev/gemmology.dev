@@ -30,7 +30,7 @@ const RELIEF_OPTIONS: { value: Relief; label: string }[] = [
 
 const liquidOptions = CONTACT_LIQUIDS.map((l) => ({
   value: l.id,
-  label: `${l.name} — RI ${l.ri.toFixed(3)}`,
+  label: `${l.name}: RI ${l.ri.toFixed(3)}`,
 }));
 
 export function HannemanRI() {
@@ -106,7 +106,7 @@ export function HannemanRI() {
       <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
         {rows.map((row, i) => (
           <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <FormField name={`hl-liquid-${i}`} label={`Observation ${i + 1} — liquid`}>
+            <FormField name={`hl-liquid-${i}`} label={`Observation ${i + 1}: liquid`}>
               <Select
                 options={liquidOptions}
                 value={row.liquidId}

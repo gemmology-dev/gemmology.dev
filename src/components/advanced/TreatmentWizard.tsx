@@ -130,8 +130,8 @@ export function TreatmentWizard() {
         </div>
       ) : verdicts.length === 0 ? (
         <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm text-center">
-          Selected clues do not point to any common treatment — likely natural / untreated within
-          the limits of these observations.
+          Selected clues do not point to any common treatment; the stone is likely natural or untreated
+          within the limits of these observations.
         </div>
       ) : (
         <div className="space-y-3">

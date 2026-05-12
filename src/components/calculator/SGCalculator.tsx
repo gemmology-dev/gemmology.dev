@@ -28,7 +28,7 @@ const WATER_DENSITY_TABLE: { tempC: number; density: number }[] = [
 
 const TEMP_OPTIONS = [
   { value: '20', label: '20 °C (room temperature, default)' },
-  { value: '4', label: '4 °C (max density — ideal but cold)' },
+  { value: '4', label: '4 °C (max density, ideal but cold)' },
   { value: '15', label: '15 °C (cool tap water)' },
   { value: '25', label: '25 °C (warm room)' },
   { value: '30', label: '30 °C (warm)' },

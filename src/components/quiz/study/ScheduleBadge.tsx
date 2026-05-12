@@ -28,7 +28,7 @@ export function ScheduleBadge({ entry, now: nowOverride }: ScheduleBadgeProps) {
 
   if (!entry || entry.totalReviews === 0) {
     return (
-      <Badge variant="crystal" size="sm" aria-label="Question status: New — never seen before">
+      <Badge variant="crystal" size="sm" aria-label="Question status: New, never seen before">
         New
       </Badge>
     );

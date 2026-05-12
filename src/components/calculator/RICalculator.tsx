@@ -73,8 +73,8 @@ export function RICalculator() {
       character,
       characterLabel:
         character === 'DR'
-          ? 'Doubly refractive (anisotropic — uniaxial or biaxial)'
-          : 'Singly refractive within reading tolerance — likely cubic, amorphous, or read along an optic axis',
+          ? 'Doubly refractive (anisotropic: uniaxial or biaxial)'
+          : 'Singly refractive within reading tolerance; likely cubic, amorphous, or read along an optic axis',
       lookupRI,
     };
   }, [mode, result?.ri, ri2]);
@@ -163,7 +163,7 @@ export function RICalculator() {
             ({doubleReadingResult.classification})
           </div>
           <div className="text-emerald-800">
-            Optic character: <strong>{doubleReadingResult.character}</strong> — {doubleReadingResult.characterLabel}
+            Optic character: <strong>{doubleReadingResult.character}</strong>. {doubleReadingResult.characterLabel}
           </div>
           <div className="text-xs text-emerald-700">
             Matches below use the average RI ({doubleReadingResult.lookupRI.toFixed(3)}) ± {values.tolerance}.

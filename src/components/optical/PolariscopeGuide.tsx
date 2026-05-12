@@ -142,7 +142,7 @@ export function PolariscopeGuide() {
         <ul className="text-sm text-amber-800 space-y-1">
           <li>• If no reaction at all, check polarizers are properly crossed</li>
           <li>• Weak reactions may need immersion fluid to reduce surface reflections</li>
-          <li>• Multiple orientations needed for comprehensive testing</li>
+          <li>• Multiple orientations needed for thorough testing</li>
           <li>• Clean polarizers and stone surface for best results</li>
         </ul>
       </div>

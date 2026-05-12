@@ -189,10 +189,10 @@ export function OpticSignReasoner() {
 
       {character === 'uniaxial' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField name="omega" label="ω (omega — ordinary ray)">
+          <FormField name="omega" label="ω (omega, ordinary ray)">
             <NumberInput value={omega} onChange={setOmega} step={0.001} placeholder="e.g., 1.544" />
           </FormField>
-          <FormField name="epsilon" label="ε (epsilon — extraordinary ray)">
+          <FormField name="epsilon" label="ε (epsilon, extraordinary ray)">
             <NumberInput
               value={epsilon}
               onChange={setEpsilon}
@@ -208,7 +208,7 @@ export function OpticSignReasoner() {
           <FormField name="alpha" label="α (lowest RI)">
             <NumberInput value={alpha} onChange={setAlpha} step={0.001} placeholder="e.g., 1.635" />
           </FormField>
-          <FormField name="beta" label="β (middle RI — optional)">
+          <FormField name="beta" label="β (middle RI, optional)">
             <NumberInput value={beta} onChange={setBeta} step={0.001} placeholder="e.g., 1.651" />
           </FormField>
           <FormField name="gamma" label="γ (highest RI)">
@@ -244,7 +244,7 @@ export function OpticSignReasoner() {
       {/* Candidate list */}
       {dbError && (
         <div className="p-3 rounded bg-rose-50 border border-rose-200 text-rose-700 text-sm">
-          Database unavailable — candidate ranking disabled. ({dbError})
+          Database unavailable; candidate ranking is disabled. ({dbError})
         </div>
       )}
       {loading ? (
