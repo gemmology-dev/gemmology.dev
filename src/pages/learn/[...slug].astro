@@ -14,11 +14,21 @@ import type { WidgetQuestion } from '../../components/quiz/study/LearnQuizWidget
 import { buildCitationIndex } from '../../lib/citations/index';
 
 export async function getStaticPaths() {
+  // Slugs handled by static hub pages under src/pages/learn/. Excluding them here
+  // prevents a duplicate-route build error; the article content still lives in
+  // the collection and is referenced by the corresponding hub (e.g. Hub 5).
+  // Declared inside getStaticPaths because Astro hoists this function into its
+  // own module scope and outer consts are not accessible.
+  const STATIC_HUB_SLUGS = new Set<string>([
+    'identification/treatments',
+  ]);
   const entries = await getCollection('learn');
-  return entries.map(entry => ({
-    params: { slug: entry.id },
-    props: { entry, allEntries: entries },
-  }));
+  return entries
+    .filter((entry) => !STATIC_HUB_SLUGS.has(entry.id))
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry, allEntries: entries },
+    }));
 }
 
 interface Props {

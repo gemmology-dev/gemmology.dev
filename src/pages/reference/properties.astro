@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { IconBox } from '../../components/ui/IconBox';
+import { Container } from '../../components/ui/Container';
+import { Breadcrumb } from '../../components/docs';
+
+interface GemRow {
+  name: string;
+  species: string;
+  formula: string;
+  system: 'Cubic' | 'Tetragonal' | 'Hexagonal' | 'Trigonal' | 'Orthorhombic' | 'Monoclinic' | 'Triclinic' | 'Amorphous';
+  ri: string;
+  birefringence: string;
+  sg: string;
+  hardness: string;
+  cleavage: string;
+}
+
+// 50 of the most-queried gemstones for a properties chart, in alphabetical order.
+// Values are drawn from Webster's Gems (Reade, 7th ed.), Read's Gemmology (3rd ed.),
+// O'Donoghue's Gems (6th ed.), Schumann's Gemstones of the World, and the LMHC
+// terminology guide. Ranges are stated where the species shows compositional variation.
+const gems: GemRow[] = [
+  { name: 'Agate', species: 'Quartz (chalcedony)', formula: 'SiO₂', system: 'Trigonal', ri: '1.535–1.539', birefringence: '0.004 (aggregate)', sg: '2.58–2.64', hardness: '6.5–7', cleavage: 'None' },
+  { name: 'Alexandrite', species: 'Chrysoberyl', formula: 'BeAl₂O₄', system: 'Orthorhombic', ri: '1.745–1.755', birefringence: '0.008–0.010', sg: '3.70–3.73', hardness: '8.5', cleavage: 'Distinct (1 direction)' },
+  { name: 'Almandine garnet', species: 'Garnet', formula: 'Fe₃Al₂(SiO₄)₃', system: 'Cubic', ri: '1.770–1.830', birefringence: 'None', sg: '3.95–4.30', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Amazonite', species: 'Feldspar (microcline)', formula: 'KAlSi₃O₈', system: 'Triclinic', ri: '1.522–1.530', birefringence: '0.008', sg: '2.56–2.58', hardness: '6–6.5', cleavage: 'Perfect (2 directions)' },
+  { name: 'Amber', species: 'Fossil resin', formula: 'C₁₀H₁₆O', system: 'Amorphous', ri: '1.539–1.545', birefringence: 'None', sg: '1.05–1.10', hardness: '2–2.5', cleavage: 'None' },
+  { name: 'Amethyst', species: 'Quartz', formula: 'SiO₂', system: 'Trigonal', ri: '1.544–1.553', birefringence: '0.009', sg: '2.65', hardness: '7', cleavage: 'None' },
+  { name: 'Andalusite', species: 'Andalusite', formula: 'Al₂SiO₅', system: 'Orthorhombic', ri: '1.634–1.643', birefringence: '0.007–0.013', sg: '3.12–3.18', hardness: '7–7.5', cleavage: 'Distinct (1 direction)' },
+  { name: 'Apatite', species: 'Apatite', formula: 'Ca₅(PO₄)₃(F,Cl,OH)', system: 'Hexagonal', ri: '1.628–1.649', birefringence: '0.002–0.013', sg: '3.16–3.23', hardness: '5', cleavage: 'Indistinct' },
+  { name: 'Aquamarine', species: 'Beryl', formula: 'Be₃Al₂Si₆O₁₈', system: 'Hexagonal', ri: '1.564–1.596', birefringence: '0.005–0.009', sg: '2.68–2.91', hardness: '7.5–8', cleavage: 'Indistinct' },
+  { name: 'Aventurine', species: 'Quartz', formula: 'SiO₂', system: 'Trigonal', ri: '1.544–1.553', birefringence: '0.009 (aggregate)', sg: '2.64–2.69', hardness: '7', cleavage: 'None' },
+  { name: 'Beryl (heliodor)', species: 'Beryl', formula: 'Be₃Al₂Si₆O₁₈', system: 'Hexagonal', ri: '1.566–1.591', birefringence: '0.005–0.008', sg: '2.66–2.83', hardness: '7.5–8', cleavage: 'Indistinct' },
+  { name: 'Carnelian', species: 'Quartz (chalcedony)', formula: 'SiO₂', system: 'Trigonal', ri: '1.535–1.539', birefringence: '0.004 (aggregate)', sg: '2.58–2.64', hardness: '6.5–7', cleavage: 'None' },
+  { name: 'Chrysoberyl', species: 'Chrysoberyl', formula: 'BeAl₂O₄', system: 'Orthorhombic', ri: '1.746–1.755', birefringence: '0.008–0.011', sg: '3.71–3.75', hardness: '8.5', cleavage: 'Distinct (1 direction)' },
+  { name: 'Chrysoprase', species: 'Quartz (chalcedony)', formula: 'SiO₂', system: 'Trigonal', ri: '1.535–1.539', birefringence: '0.004 (aggregate)', sg: '2.58–2.64', hardness: '6.5–7', cleavage: 'None' },
+  { name: 'Citrine', species: 'Quartz', formula: 'SiO₂', system: 'Trigonal', ri: '1.544–1.553', birefringence: '0.009', sg: '2.65', hardness: '7', cleavage: 'None' },
+  { name: 'Coral (precious)', species: 'Calcium carbonate', formula: 'CaCO₃', system: 'Trigonal', ri: '1.486–1.658', birefringence: '0.160 (aggregate)', sg: '2.60–2.70', hardness: '3–4', cleavage: 'None' },
+  { name: 'Demantoid garnet', species: 'Garnet (andradite)', formula: 'Ca₃Fe₂(SiO₄)₃', system: 'Cubic', ri: '1.880–1.889', birefringence: 'None', sg: '3.82–3.85', hardness: '6.5–7', cleavage: 'None' },
+  { name: 'Diamond', species: 'Diamond', formula: 'C', system: 'Cubic', ri: '2.417', birefringence: 'None', sg: '3.51–3.53', hardness: '10', cleavage: 'Perfect (4 directions)' },
+  { name: 'Diopside', species: 'Pyroxene', formula: 'CaMgSi₂O₆', system: 'Monoclinic', ri: '1.664–1.730', birefringence: '0.024–0.030', sg: '3.22–3.40', hardness: '5–6', cleavage: 'Good (2 directions)' },
+  { name: 'Emerald', species: 'Beryl', formula: 'Be₃Al₂Si₆O₁₈', system: 'Hexagonal', ri: '1.570–1.590', birefringence: '0.005–0.009', sg: '2.67–2.78', hardness: '7.5–8', cleavage: 'Indistinct' },
+  { name: 'Fluorite', species: 'Fluorite', formula: 'CaF₂', system: 'Cubic', ri: '1.433–1.435', birefringence: 'None', sg: '3.18', hardness: '4', cleavage: 'Perfect (4 directions)' },
+  { name: 'Hessonite garnet', species: 'Garnet (grossular)', formula: 'Ca₃Al₂(SiO₄)₃', system: 'Cubic', ri: '1.736–1.745', birefringence: 'None', sg: '3.60–3.68', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Iolite', species: 'Cordierite', formula: '(Mg,Fe)₂Al₃[AlSi₅O₁₈]', system: 'Orthorhombic', ri: '1.522–1.578', birefringence: '0.008–0.012', sg: '2.57–2.66', hardness: '7–7.5', cleavage: 'Distinct (1 direction)' },
+  { name: 'Jadeite', species: 'Pyroxene', formula: 'NaAlSi₂O₆', system: 'Monoclinic', ri: '1.652–1.688', birefringence: '0.012 (aggregate)', sg: '3.30–3.38', hardness: '6.5–7', cleavage: 'Good (none in aggregate)' },
+  { name: 'Kunzite', species: 'Spodumene', formula: 'LiAlSi₂O₆', system: 'Monoclinic', ri: '1.660–1.681', birefringence: '0.014–0.016', sg: '3.15–3.21', hardness: '6.5–7', cleavage: 'Perfect (2 directions)' },
+  { name: 'Labradorite', species: 'Feldspar', formula: '(Ca,Na)(Al,Si)₄O₈', system: 'Triclinic', ri: '1.559–1.572', birefringence: '0.008–0.010', sg: '2.69–2.72', hardness: '6–6.5', cleavage: 'Perfect (2 directions)' },
+  { name: 'Lapis lazuli', species: 'Rock (lazurite + others)', formula: '(Na,Ca)₈(Al,Si)₁₂O₂₄(S,SO₄)', system: 'Cubic (aggregate)', ri: '1.50 (mean)', birefringence: 'None (aggregate)', sg: '2.50–3.00', hardness: '5–6', cleavage: 'None' },
+  { name: 'Malachite', species: 'Malachite', formula: 'Cu₂CO₃(OH)₂', system: 'Monoclinic', ri: '1.655–1.909', birefringence: '0.254 (aggregate)', sg: '3.95–4.10', hardness: '3.5–4', cleavage: 'Perfect (aggregate)' },
+  { name: 'Moonstone', species: 'Feldspar (orthoclase)', formula: 'KAlSi₃O₈', system: 'Monoclinic', ri: '1.518–1.526', birefringence: '0.005–0.008', sg: '2.56–2.59', hardness: '6–6.5', cleavage: 'Perfect (2 directions)' },
+  { name: 'Morganite', species: 'Beryl', formula: 'Be₃Al₂Si₆O₁₈', system: 'Hexagonal', ri: '1.585–1.594', birefringence: '0.008–0.009', sg: '2.71–2.90', hardness: '7.5–8', cleavage: 'Indistinct' },
+  { name: 'Opal (precious)', species: 'Hydrated silica', formula: 'SiO₂·nH₂O', system: 'Amorphous', ri: '1.37–1.47', birefringence: 'None', sg: '1.98–2.25', hardness: '5.5–6.5', cleavage: 'None' },
+  { name: 'Pearl', species: 'Aragonite (organic)', formula: 'CaCO₃', system: 'Orthorhombic (aggregate)', ri: '1.530–1.685', birefringence: '0.155 (aggregate)', sg: '2.66–2.78', hardness: '2.5–4', cleavage: 'None' },
+  { name: 'Peridot', species: 'Olivine (forsterite)', formula: '(Mg,Fe)₂SiO₄', system: 'Orthorhombic', ri: '1.654–1.690', birefringence: '0.033–0.038', sg: '3.27–3.48', hardness: '6.5–7', cleavage: 'Indistinct' },
+  { name: 'Pyrope garnet', species: 'Garnet', formula: 'Mg₃Al₂(SiO₄)₃', system: 'Cubic', ri: '1.714–1.760', birefringence: 'None', sg: '3.65–3.87', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Quartz (rock crystal)', species: 'Quartz', formula: 'SiO₂', system: 'Trigonal', ri: '1.544–1.553', birefringence: '0.009', sg: '2.65', hardness: '7', cleavage: 'None' },
+  { name: 'Rhodochrosite', species: 'Rhodochrosite', formula: 'MnCO₃', system: 'Trigonal', ri: '1.578–1.840', birefringence: '0.201–0.220', sg: '3.45–3.70', hardness: '3.5–4', cleavage: 'Perfect (3 directions)' },
+  { name: 'Rhodolite garnet', species: 'Garnet (pyrope-almandine)', formula: '(Mg,Fe)₃Al₂(SiO₄)₃', system: 'Cubic', ri: '1.745–1.760', birefringence: 'None', sg: '3.74–3.94', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Rhodonite', species: 'Rhodonite', formula: 'MnSiO₃', system: 'Triclinic', ri: '1.711–1.751', birefringence: '0.011–0.014', sg: '3.40–3.74', hardness: '5.5–6.5', cleavage: 'Perfect (2 directions)' },
+  { name: 'Ruby', species: 'Corundum', formula: 'Al₂O₃', system: 'Trigonal', ri: '1.762–1.770', birefringence: '0.008–0.009', sg: '3.99–4.05', hardness: '9', cleavage: 'None (parting)' },
+  { name: 'Sapphire (blue)', species: 'Corundum', formula: 'Al₂O₃', system: 'Trigonal', ri: '1.762–1.770', birefringence: '0.008–0.009', sg: '3.95–4.03', hardness: '9', cleavage: 'None (parting)' },
+  { name: 'Sphene (titanite)', species: 'Titanite', formula: 'CaTiSiO₅', system: 'Monoclinic', ri: '1.900–2.034', birefringence: '0.105–0.135', sg: '3.45–3.55', hardness: '5–5.5', cleavage: 'Distinct (1 direction)' },
+  { name: 'Spinel', species: 'Spinel', formula: 'MgAl₂O₄', system: 'Cubic', ri: '1.712–1.736', birefringence: 'None', sg: '3.58–3.61', hardness: '8', cleavage: 'None' },
+  { name: 'Spodumene (hiddenite)', species: 'Spodumene', formula: 'LiAlSi₂O₆', system: 'Monoclinic', ri: '1.660–1.681', birefringence: '0.014–0.016', sg: '3.16–3.20', hardness: '6.5–7', cleavage: 'Perfect (2 directions)' },
+  { name: 'Sunstone', species: 'Feldspar (oligoclase)', formula: '(Na,Ca)(Al,Si)₄O₈', system: 'Triclinic', ri: '1.537–1.547', birefringence: '0.007–0.010', sg: '2.64–2.66', hardness: '6–6.5', cleavage: 'Perfect (2 directions)' },
+  { name: 'Tanzanite', species: 'Zoisite', formula: 'Ca₂Al₃(SiO₄)₃(OH)', system: 'Orthorhombic', ri: '1.691–1.700', birefringence: '0.009', sg: '3.10–3.38', hardness: '6–7', cleavage: 'Perfect (1 direction)' },
+  { name: 'Topaz', species: 'Topaz', formula: 'Al₂SiO₄(F,OH)₂', system: 'Orthorhombic', ri: '1.609–1.638', birefringence: '0.008–0.011', sg: '3.49–3.57', hardness: '8', cleavage: 'Perfect (1 direction)' },
+  { name: 'Tourmaline (elbaite)', species: 'Tourmaline', formula: 'Na(Li,Al)₃Al₆(BO₃)₃Si₆O₁₈(OH)₄', system: 'Trigonal', ri: '1.624–1.644', birefringence: '0.014–0.024', sg: '3.00–3.10', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Tsavorite garnet', species: 'Garnet (grossular)', formula: 'Ca₃Al₂(SiO₄)₃', system: 'Cubic', ri: '1.734–1.760', birefringence: 'None', sg: '3.60–3.68', hardness: '7–7.5', cleavage: 'None' },
+  { name: 'Turquoise', species: 'Turquoise', formula: 'CuAl₆(PO₄)₄(OH)₈·4H₂O', system: 'Triclinic', ri: '1.610–1.650 (mean 1.62)', birefringence: '0.040 (aggregate)', sg: '2.60–2.85', hardness: '5–6', cleavage: 'None' },
+  { name: 'Zircon (high)', species: 'Zircon', formula: 'ZrSiO₄', system: 'Tetragonal', ri: '1.925–1.984', birefringence: '0.058–0.059', sg: '4.60–4.80', hardness: '7.5', cleavage: 'Indistinct' },
+];
+
+const properties = ['Refractive index', 'Specific gravity', 'Mohs hardness', 'Birefringence', 'Crystal system', 'Cleavage'];
+
+const tableJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Gemstone Properties Reference Chart',
+  description:
+    'Refractive index, specific gravity, Mohs hardness, birefringence, crystal system, and cleavage for 50 commonly encountered gemstones, drawn from standard FGA-curriculum references.',
+  url: 'https://gemmology.dev/reference/properties/',
+  keywords: [
+    'gemstone properties chart',
+    'gem refractive index table',
+    'specific gravity gems',
+    'Mohs hardness gemstones',
+    'birefringence gems',
+  ],
+  creator: {
+    '@type': 'Organization',
+    name: 'gemmology.dev',
+    url: 'https://gemmology.dev',
+  },
+  license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  isAccessibleForFree: true,
+  variableMeasured: properties,
+};
+
+const webPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Gemstone Properties Chart',
+  url: 'https://gemmology.dev/reference/properties/',
+  description:
+    'Free reference table of refractive index, specific gravity, Mohs hardness, birefringence, crystal system, and cleavage for 50 commonly encountered gemstones.',
+  inLanguage: 'en',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'gemmology.dev',
+    url: 'https://gemmology.dev',
+  },
+  primaryImageOfPage: undefined,
+  mainEntity: {
+    '@type': 'Table',
+    about: 'Gemstone optical and physical properties',
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://gemmology.dev' },
+    { '@type': 'ListItem', position: 2, name: 'Reference', item: 'https://gemmology.dev/reference/properties/' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Gemstone properties chart',
+      item: 'https://gemmology.dev/reference/properties/',
+    },
+  ],
+};
+
+const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties chart' }];
+---
+
+<BaseLayout
+  title="Gemstone Properties Chart — RI, SG, Hardness, Birefringence (50 gems)"
+  description="Free reference chart of 50 gemstones with refractive index, specific gravity, Mohs hardness, birefringence, crystal system, and cleavage. FGA curriculum data sourced from Webster, Read, O'Donoghue, and Schumann."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(tableJsonLd)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+    <Container size="xl" padding="md">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200">
+        <h1 class="text-4xl font-bold text-slate-900">Gemstone properties chart</h1>
+        <p class="mt-3 text-lg font-medium text-crystal-700">
+          50 commonly encountered gems — RI, SG, hardness, birefringence, crystal system, cleavage
+        </p>
+        <p class="mt-5 text-base text-slate-700 leading-relaxed">
+          A single-page reference table of the six diagnostic gemmological constants — refractive
+          index, specific gravity, Mohs hardness, birefringence, crystal system, and cleavage — for
+          50 of the most commonly encountered gemstones in commercial and FGA-curriculum practice.
+          Values are stated as Webster and Read report them, with ranges where compositional
+          variation is significant (e.g. tourmaline 1.624–1.644 reflecting elbaite chemistry).
+          Cabochon and aggregate readings are flagged separately because the refractometer reports
+          a spot reading rather than a birefringence in those cases. For interactive lookup against
+          your own measured values, try the
+          <a href="/tools/measurement/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">RI calculator</a>
+          or the <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Gem Identifier</a>,
+          both of which run entirely in your browser. For deeper coverage of each species and full
+          mineralogical context, follow the species links on the
+          <a href="/minerals/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Mineral Database</a>
+          (159 expressions across 121 families). See the source-citation note below the table for
+          our data lineage.
+        </p>
+      </header>
+
+      <!-- 50-row properties table — table-rich result eligibility -->
+      <section class="mt-10">
+        <div class="flex items-center gap-3 mb-5">
+          <IconBox variant="crystal" size="sm" className="shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 10h18M3 6h18M3 14h18M3 18h18"
+              />
+            </svg>
+          </IconBox>
+          <h2 class="text-2xl font-bold text-slate-900">Reference table — 50 gemstones</h2>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0">
+              <tr>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">Name</th>
+                <th class="px-3 py-3 text-left font-semibold">Species</th>
+                <th class="px-3 py-3 text-left font-semibold">Formula</th>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">Crystal system</th>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">RI</th>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">Birefringence</th>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">SG</th>
+                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">Hardness</th>
+                <th class="px-3 py-3 text-left font-semibold">Cleavage</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {gems.map((g) => (
+                <tr class="hover:bg-slate-50">
+                  <td class="px-3 py-2.5 font-semibold text-slate-900 whitespace-nowrap">{g.name}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap">{g.species}</td>
+                  <td class="px-3 py-2.5 text-slate-600 font-mono text-xs">{g.formula}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap">{g.system}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.ri}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.birefringence}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.sg}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.hardness}</td>
+                  <td class="px-3 py-2.5 text-slate-700">{g.cleavage}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-sm text-slate-500">
+          Showing {gems.length} gemstones. Hardness is on the Mohs scale; SG is dimensionless
+          (water = 1.000 at 4 °C); RI is reported under sodium light (589 nm).
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
+          <h2 class="text-xl font-semibold text-slate-900">How to use this table</h2>
+          <ol class="mt-4 list-decimal pl-6 space-y-2 text-slate-700">
+            <li>
+              <strong>Identify by RI first.</strong> Measure the unknown stone on a refractometer
+              (sodium light, contact fluid n=1.81). The midpoint reading locates a row band in this
+              table to roughly ±0.005.
+            </li>
+            <li>
+              <strong>Distinguish by birefringence.</strong> Rotate the stone through 180°. A
+              singly-refractive stone matches an isotropic row ("None"); a doubly-refractive stone
+              gives a birefringence value that further narrows the candidates.
+            </li>
+            <li>
+              <strong>Confirm with SG.</strong> Hydrostatic weighing or heavy liquids resolves
+              ambiguities between species with overlapping RI (e.g. emerald 2.67–2.78 vs aquamarine
+              2.68–2.91 — closely-overlapping; hessonite 3.60–3.68 vs tsavorite 3.60–3.68 — needs
+              colour and inclusion analysis).
+            </li>
+            <li>
+              <strong>Check cleavage for cutting / care.</strong> Topaz (perfect 1-direction),
+              diamond (perfect 4-direction), and spodumene (perfect 2-direction) require careful
+              setting and avoid ultrasonic cleaning.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-xl font-semibold text-slate-900">Related learn material</h2>
+        <p class="mt-2 text-slate-700">
+          Each constant in this table has a dedicated tutorial in the Learn section explaining how
+          it is measured and what its diagnostic limits are:
+        </p>
+        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700">
+          <li><a href="/learn/fundamentals/optical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Optical properties</a> — refractive index, birefringence, dispersion, pleochroism</li>
+          <li><a href="/learn/fundamentals/physical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Physical properties</a> — specific gravity, hardness, cleavage, toughness</li>
+          <li><a href="/learn/fundamentals/crystal-systems" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Crystal systems</a> — the seven systems and what they predict about optics</li>
+          <li><a href="/learn/fundamentals/chemical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Chemical properties</a> — composition, formula, and how chemistry drives property variation</li>
+          <li><a href="/learn/fundamentals/optical-properties-advanced" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Optical properties (advanced)</a> — uniaxial/biaxial behaviour, optic sign, 2V</li>
+          <li><a href="/learn/fundamentals/colour-theory" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Colour theory</a> — chromophore mechanisms and how absorption shapes appearance</li>
+        </ul>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-xl font-semibold text-slate-900">Sources and methodology</h2>
+        <p class="mt-2 text-slate-700">
+          Property values are taken from these standard FGA-curriculum references and cross-checked
+          against the gemmology.dev mineral database:
+        </p>
+        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700">
+          <li>Reade, P. (ed.) (2018). <em>Webster's Gems: Their Sources, Descriptions and Identification</em>, 7th ed., Routledge.</li>
+          <li>Read, P. G. (2014). <em>Gemmology</em>, 3rd ed., Routledge.</li>
+          <li>O'Donoghue, M. (ed.) (2006). <em>Gems: Their Sources, Descriptions and Identification</em>, 6th ed., Butterworth-Heinemann.</li>
+          <li>Schumann, W. (2013). <em>Gemstones of the World</em>, 5th ed., Sterling Publishing.</li>
+          <li>Laboratory Manual Harmonisation Committee (2010). <em>LMHC Standards and Terminology</em>.</li>
+        </ul>
+        <p class="mt-4 text-sm text-slate-600">
+          Source data on this site is published under CC BY-SA 4.0; the supporting tooling and
+          mineral database are MIT-licensed.
+        </p>
+      </section>
+    </Container>
+  </div>
+</BaseLayout>
