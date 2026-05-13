@@ -1,0 +1,354 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Card, CardTitle, CardDescription } from '../../../components/ui/Card';
+import { IconBox } from '../../../components/ui/IconBox';
+import { Container } from '../../../components/ui/Container';
+import { DifficultyBadge } from '../../../components/ui/DifficultyBadge';
+import { Breadcrumb } from '../../../components/docs';
+
+const learnEntries = await getCollection('learn');
+
+interface IdTopic {
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  subcategory?: string;
+}
+
+const identificationEntries: IdTopic[] = learnEntries
+  .filter((e) => e.data.category === 'identification')
+  .map((e) => ({
+    id: e.id,
+    title: e.data.title,
+    description: e.data.description,
+    href: `/learn/${e.id}`,
+    difficulty: e.data.difficulty as IdTopic['difficulty'],
+    subcategory: e.data.subcategory,
+  }))
+  .sort((a, b) => a.title.localeCompare(b.title));
+
+const inclusionTopics = identificationEntries.filter((t) => t.subcategory === 'inclusions');
+const directTopics = identificationEntries.filter((t) => !t.subcategory);
+const deepDiveTopics = identificationEntries.filter((t) => t.subcategory === 'treatments-deep');
+
+const learningResourceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'How to Identify Gemstones',
+  alternateName: ['Gemstone Identification Guide', 'FGA Identification Curriculum'],
+  description:
+    'Step-by-step gemstone identification protocol covering observation, refractive index, specific gravity, polariscope, dichroscope, spectroscope, fluorescence, and microscopic inspection.',
+  url: 'https://gemmology.dev/learn/identification/',
+  learningResourceType: 'Guide',
+  educationalLevel: 'intermediate',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'student',
+  },
+  about: [
+    'Gemstone identification',
+    'Refractive index measurement',
+    'Specific gravity testing',
+    'Optical character determination',
+    'Inclusion analysis',
+    'Treatment detection',
+    'Synthetic versus natural diagnosis',
+  ],
+  teaches: identificationEntries.slice(0, 12).map((t) => t.title),
+  hasPart: identificationEntries.map((t) => ({
+    '@type': 'LearningResource',
+    name: t.title,
+    url: `https://gemmology.dev${t.href}/`,
+    learningResourceType: 'Article',
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://gemmology.dev' },
+    { '@type': 'ListItem', position: 2, name: 'Learn', item: 'https://gemmology.dev/learn/' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Identification',
+      item: 'https://gemmology.dev/learn/identification/',
+    },
+  ],
+};
+
+const breadcrumbItems = [
+  { label: 'Learn', href: '/learn' },
+  { label: 'Identification' },
+];
+
+const stepRows = [
+  {
+    step: 1,
+    test: 'Visual observation',
+    purpose: 'Colour, transparency, lustre, polish quality, surface features',
+    tool: 'Loupe (10×) or low-power microscope',
+  },
+  {
+    step: 2,
+    test: 'Refractive index',
+    purpose: 'Narrow species shortlist; isotropic vs anisotropic; birefringence',
+    tool: 'Standard refractometer + sodium light + RI liquid (n=1.81)',
+  },
+  {
+    step: 3,
+    test: 'Specific gravity',
+    purpose: 'Confirm species or separate same-RI candidates (e.g. emerald vs aquamarine)',
+    tool: 'Hydrostatic balance or heavy liquids (di-iodomethane, bromoform)',
+  },
+  {
+    step: 4,
+    test: 'Polariscope',
+    purpose: 'Optic character: singly refractive, doubly refractive, ADR, aggregate',
+    tool: 'Crossed polars + conoscope attachment for interference figures',
+  },
+  {
+    step: 5,
+    test: 'Dichroscope',
+    purpose: 'Pleochroism colours and intensity — diagnostic for ruby, tanzanite, iolite, andalusite',
+    tool: 'Calcite or polarising-film dichroscope',
+  },
+  {
+    step: 6,
+    test: 'Spectroscope',
+    purpose: 'Absorption-band pattern — chromium, iron, manganese, rare-earth signatures',
+    tool: 'Hand or prism-stand spectroscope with strong transmitted light',
+  },
+  {
+    step: 7,
+    test: 'UV fluorescence',
+    purpose: 'LWUV / SWUV response — separates natural from synthetic and origins',
+    tool: 'LWUV (365 nm) + SWUV (254 nm) lamp; dark cabinet',
+  },
+  {
+    step: 8,
+    test: 'Microscopic inspection',
+    purpose: 'Inclusion suite, growth structure, curved striae, treatment evidence',
+    tool: 'Gemmological microscope with darkfield + diffused transmitted lighting',
+  },
+  {
+    step: 9,
+    test: 'Advanced lab',
+    purpose: 'FTIR, Raman, UV-Vis-NIR, LIBS, photoluminescence for origin and treatment work',
+    tool: 'Submission to gem laboratory (GIA, SSEF, Gübelin, GRS, GIT)',
+  },
+];
+
+const iconPaths: Record<string, string> = {
+  search: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
+  beaker:
+    'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+  fire:
+    'M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z',
+};
+---
+
+<BaseLayout
+  title="How to Identify Gemstones — Free FGA Identification Guide"
+  description="Step-by-step gemstone identification: refractometer, polariscope, dichroscope, spectroscope, fluorescence, and microscope. 14 free articles aligned with the FGA Diploma identification curriculum."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(learningResourceSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+    <Container size="lg" padding="md">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200">
+        <h1 class="text-4xl font-bold text-slate-900">How to identify gemstones</h1>
+        <p class="mt-3 text-lg font-medium text-crystal-700">
+          A structured FGA-aligned diagnostic workflow, free
+        </p>
+        <p class="mt-5 text-base text-slate-700 leading-relaxed">
+          Reliable gemstone identification is a sequential elimination problem rather than a single
+          test: an unknown stone is rarely identifiable from any one measurement alone, but the
+          intersection of <strong>refractive index</strong>, <strong>specific gravity</strong>,
+          optic character, pleochroism, absorption spectrum, fluorescence response, and the
+          microscopic inclusion suite narrows almost every gem species to a unique match. This hub
+          walks the standard nine-step protocol used in FGA laboratory practice and links to the
+          {identificationEntries.length} supporting articles covering inclusions, treatments,
+          synthetics, and composite-stone diagnosis. Every test below is supported by an interactive
+          browser calculator (refractometer simulator, SG calculator with water-temperature
+          correction, spectroscope band-matcher, treatment wizard, optic-sign reasoner) so that
+          theory and applied technique stay paired. If you are revising for the Gem-A Foundation or
+          Diploma examinations, start with the diagnostic-procedure table, then drill into the
+          inclusion atlas (six sub-articles) and the treatment / synthetics deep dives.
+        </p>
+      </header>
+
+      <!-- Step protocol table — table-rich result eligibility -->
+      <section class="mt-12">
+        <div class="flex items-center gap-3 mb-5">
+          <IconBox variant="amethyst" size="sm" className="shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d={iconPaths.search}
+              />
+            </svg>
+          </IconBox>
+          <h2 class="text-2xl font-bold text-slate-900">The nine-step identification protocol</h2>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-700">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold w-12">Step</th>
+                <th class="px-4 py-3 text-left font-semibold">Test</th>
+                <th class="px-4 py-3 text-left font-semibold">What it tells you</th>
+                <th class="px-4 py-3 text-left font-semibold">Tool</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {stepRows.map((row) => (
+                <tr>
+                  <td class="px-4 py-3 font-semibold text-crystal-700">{row.step}</td>
+                  <td class="px-4 py-3 font-medium text-slate-900">{row.test}</td>
+                  <td class="px-4 py-3 text-slate-700">{row.purpose}</td>
+                  <td class="px-4 py-3 text-slate-600">{row.tool}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-sm text-slate-600">
+          Try the workflow against an unknown stone using the
+          <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Gem Identifier</a>,
+          which filters the mineral database by the measurements you enter.
+        </p>
+      </section>
+
+      {directTopics.length > 0 && (
+        <section class="mt-14">
+          <div class="flex items-center gap-3 mb-6">
+            <IconBox variant="amethyst" size="sm" className="shrink-0">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d={iconPaths.beaker}
+                />
+              </svg>
+            </IconBox>
+            <h2 class="text-2xl font-bold text-slate-900">Identification fundamentals</h2>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {directTopics.map((t) => (
+              <a href={t.href} class="group">
+                <Card hover padding="md" className="h-full">
+                  <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
+                    {t.title}
+                  </CardTitle>
+                  <CardDescription className="mt-1.5">{t.description}</CardDescription>
+                  {t.difficulty && <DifficultyBadge level={t.difficulty} className="mt-3" />}
+                </Card>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {inclusionTopics.length > 0 && (
+        <section class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200"></div>
+            <h2 class="text-xl font-semibold text-slate-800">Inclusions atlas</h2>
+            <span class="text-sm text-slate-500">({inclusionTopics.length} articles)</span>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100">
+            {inclusionTopics.map((t) => (
+              <a href={t.href} class="group">
+                <Card hover padding="md" className="h-full">
+                  <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
+                    {t.title}
+                  </CardTitle>
+                  <CardDescription className="mt-1.5">{t.description}</CardDescription>
+                </Card>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {deepDiveTopics.length > 0 && (
+        <section class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <IconBox variant="ruby" size="sm" className="shrink-0">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d={iconPaths.fire}
+                />
+              </svg>
+            </IconBox>
+            <h2 class="text-2xl font-bold text-slate-900">Treatments &amp; synthetics — deep dives</h2>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {deepDiveTopics.map((t) => (
+              <a href={t.href} class="group">
+                <Card hover padding="md" className="h-full">
+                  <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
+                    {t.title}
+                  </CardTitle>
+                  <CardDescription className="mt-1.5">{t.description}</CardDescription>
+                </Card>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="mt-16">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
+          <h2 class="text-xl font-semibold text-slate-900">Hands-on companion tools</h2>
+          <p class="mt-2 text-slate-700">
+            Each step in the protocol above has an interactive widget on this site that runs
+            entirely in your browser — no installation, no account, no upload of stone data:
+          </p>
+          <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/measurement/">Measurement</a>
+              <span class="text-slate-600"> — RI lookup, SG with water-temp correction, birefringence, carat estimator</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/optical/">Optical</a>
+              <span class="text-slate-600"> — refractometer simulator, polariscope guide, pleochroism + optic-sign reasoners</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/lab/">Lab</a>
+              <span class="text-slate-600"> — spectroscope calculator + band-matcher, UV-fluorescence lookup</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/identification/">Identification</a>
+              <span class="text-slate-600"> — Gem Identifier (filtered DB query against your measured RI/SG/system)</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/advanced/">Advanced</a>
+              <span class="text-slate-600"> — Treatment Wizard, Treatment Detection table, Proportion Analyzer</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/quiz/">Practice quiz</a>
+              <span class="text-slate-600"> — SM-2-scheduled spaced-repetition with rationale panels</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </Container>
+  </div>
+</BaseLayout>

@@ -1,0 +1,277 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Card, CardTitle, CardDescription } from '../../../components/ui/Card';
+import { IconBox } from '../../../components/ui/IconBox';
+import { Container } from '../../../components/ui/Container';
+import { DifficultyBadge } from '../../../components/ui/DifficultyBadge';
+import { Breadcrumb } from '../../../components/docs';
+
+const learnEntries = await getCollection('learn');
+
+interface EquipmentTopic {
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+}
+
+const equipmentTopics: EquipmentTopic[] = learnEntries
+  .filter((e) => e.data.category === 'equipment')
+  .map((e) => ({
+    id: e.id,
+    title: e.data.title,
+    description: e.data.description,
+    href: `/learn/${e.id}`,
+    difficulty: e.data.difficulty as EquipmentTopic['difficulty'],
+  }))
+  .sort((a, b) => {
+    if (a.id === 'equipment/overview') return -1;
+    if (b.id === 'equipment/overview') return 1;
+    if (a.id === 'equipment/refractometer') return -1;
+    if (b.id === 'equipment/refractometer') return 1;
+    return a.title.localeCompare(b.title);
+  });
+
+const learningResourceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'How to Use a Refractometer and Other Gemstone Testing Equipment',
+  alternateName: [
+    'Gemmological Equipment Guide',
+    'Refractometer Tutorial',
+    'FGA Equipment Module',
+  ],
+  description:
+    'Comprehensive guide to gemmological testing equipment: refractometer, polariscope, dichroscope, spectroscope, microscope, UV lamp, and advanced laboratory instruments.',
+  url: 'https://gemmology.dev/learn/equipment/',
+  learningResourceType: 'Guide',
+  educationalLevel: 'beginner',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'student',
+  },
+  about: [
+    'Refractometer operation',
+    'Polariscope use',
+    'Dichroscope use',
+    'Spectroscope operation',
+    'Gemmological microscope technique',
+    'UV fluorescence inspection',
+    'Specific gravity measurement',
+  ],
+  teaches: equipmentTopics.map((t) => t.title),
+  hasPart: equipmentTopics.map((t) => ({
+    '@type': 'LearningResource',
+    name: t.title,
+    url: `https://gemmology.dev${t.href}/`,
+    learningResourceType: 'Article',
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://gemmology.dev' },
+    { '@type': 'ListItem', position: 2, name: 'Learn', item: 'https://gemmology.dev/learn/' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Equipment',
+      item: 'https://gemmology.dev/learn/equipment/',
+    },
+  ],
+};
+
+const breadcrumbItems = [
+  { label: 'Learn', href: '/learn' },
+  { label: 'Equipment' },
+];
+
+const refractometerRows = [
+  {
+    step: 1,
+    instruction: 'Clean the prism with the supplied solvent and a soft tissue. Any residue affects the half-shadow boundary.',
+  },
+  {
+    step: 2,
+    instruction: 'Apply one small drop of contact fluid (refractive index 1.79–1.81; di-iodomethane saturated with sulphur) directly to the prism.',
+  },
+  {
+    step: 3,
+    instruction: 'Place the stone polished-table-side-down so it rests fully in the fluid. The table must lie flat — wedge thin stones with a small fluid pool.',
+  },
+  {
+    step: 4,
+    instruction: 'View through the eyepiece under sodium (589 nm) or filtered white light. Adjust the eyepiece focus until the scale and shadow boundary are crisp.',
+  },
+  {
+    step: 5,
+    instruction: 'Rotate the stone through 180° in 45° increments. Singly refractive stones show one stationary shadow; doubly refractive stones show two boundaries that move (the birefringence).',
+  },
+  {
+    step: 6,
+    instruction: 'Record the highest and lowest readings to ±0.002. The difference is the birefringence; the midpoint is the spot reading.',
+  },
+  {
+    step: 7,
+    instruction: 'Cabochons and rough surfaces use the spot method: a tiny droplet on the prism contacts only the dome. Read the point at which the bright field switches to dark.',
+  },
+];
+
+const iconPaths: Record<string, string> = {
+  microscope:
+    'M9 3h6m-6 0v6m6-6v6m-3 0v3m0 0a6 6 0 100 12 6 6 0 000-12zm0 0V9m-3 12h6',
+  beaker:
+    'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+};
+---
+
+<BaseLayout
+  title="How to Use a Refractometer & Gemstone Testing Equipment — Free FGA Guide"
+  description="Free FGA equipment module: how to use a refractometer, polariscope, dichroscope, spectroscope, gemmological microscope, UV lamp, and SG balance. 13 in-depth articles with browser-based simulators."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(learningResourceSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+    <Container size="lg" padding="md">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200">
+        <h1 class="text-4xl font-bold text-slate-900">
+          How to use a refractometer (and the rest of the gemmological toolkit)
+        </h1>
+        <p class="mt-3 text-lg font-medium text-crystal-700">
+          Free FGA equipment module, step-by-step
+        </p>
+        <p class="mt-5 text-base text-slate-700 leading-relaxed">
+          The standard gemmological laboratory uses a small, well-defined set of optical
+          instruments — <strong>refractometer</strong>, polariscope, dichroscope, spectroscope,
+          microscope, UV lamp, and hydrostatic balance — and competence with each is a Gem-A
+          Foundation examination requirement. The refractometer is the workhorse: a single accurate
+          reading of refractive index plus a birefringence value places the unknown stone in a
+          shortlist of typically three or four species, which the polariscope (optic character) and
+          spectroscope (absorption pattern) then resolve. This hub collects the {equipmentTopics.length}
+          equipment articles aligned with the FGA Foundation syllabus — overview, refractometer,
+          polariscope, dichroscope, spectroscope, microscope, UV lamp, SG measurement, conoscope,
+          Chelsea filter, diamond screening, and advanced lab instruments — each paired with a
+          browser-based simulator so theory and applied technique stay tightly coupled. Start with
+          the refractometer workflow table below, then drill into the supporting articles for
+          calibration tips, error sources, and per-instrument worked examples.
+        </p>
+      </header>
+
+      <!-- Refractometer step protocol — table-rich result eligibility -->
+      <section class="mt-12">
+        <div class="flex items-center gap-3 mb-5">
+          <IconBox variant="sapphire" size="sm" className="shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d={iconPaths.microscope}
+              />
+            </svg>
+          </IconBox>
+          <h2 class="text-2xl font-bold text-slate-900">Refractometer workflow — seven steps</h2>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-700">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold w-12">Step</th>
+                <th class="px-4 py-3 text-left font-semibold">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {refractometerRows.map((row) => (
+                <tr>
+                  <td class="px-4 py-3 font-semibold text-crystal-700 align-top">{row.step}</td>
+                  <td class="px-4 py-3 text-slate-700">{row.instruction}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-sm text-slate-600">
+          The standard prism saturates at ~1.78; readings beyond that are over-the-limit (OTL). For
+          OTL stones (diamond, zircon, demantoid, sphene, some garnets, cubic zirconia) use the
+          <a href="/learn/equipment/refractometer/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Hanneman / Hodgkinson short-cut</a>
+          or the
+          <a href="/tools/optical/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">refractometer simulator</a>.
+        </p>
+      </section>
+
+      <section class="mt-14">
+        <div class="flex items-center gap-3 mb-6">
+          <IconBox variant="sapphire" size="sm" className="shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d={iconPaths.beaker}
+              />
+            </svg>
+          </IconBox>
+          <h2 class="text-2xl font-bold text-slate-900">All equipment articles</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {equipmentTopics.map((t) => (
+            <a href={t.href} class="group">
+              <Card hover padding="md" className="h-full">
+                <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
+                  {t.title}
+                </CardTitle>
+                <CardDescription className="mt-1.5">{t.description}</CardDescription>
+                {t.difficulty && <DifficultyBadge level={t.difficulty} className="mt-3" />}
+              </Card>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-16">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
+          <h2 class="text-xl font-semibold text-slate-900">Try the browser-based simulators</h2>
+          <p class="mt-2 text-slate-700">
+            Every instrument in this module has an interactive companion widget — run real
+            measurements without owning the hardware:
+          </p>
+          <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/optical/">Refractometer simulator</a>
+              <span class="text-slate-600"> — RI / birefringence / optic sign / OTL</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/measurement/">SG calculator</a>
+              <span class="text-slate-600"> — hydrostatic weighing with water-temp correction</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/lab/">Spectroscope band-matcher</a>
+              <span class="text-slate-600"> — match absorption pattern to 16 reference species</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/lab/">UV fluorescence lookup</a>
+              <span class="text-slate-600"> — LWUV / SWUV behaviour across the mineral database</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/optical/">Polariscope guide</a>
+              <span class="text-slate-600"> — singly refractive vs doubly refractive vs aggregate</span>
+            </li>
+            <li>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/optical/">Dichroscope</a>
+              <span class="text-slate-600"> — pleochroism colour pair lookup</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </Container>
+  </div>
+</BaseLayout>
