@@ -160,7 +160,8 @@ const totalTopicCount = topics.length;
 const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
-  "name": "Gemmology: FGA-aligned curriculum",
+  "name": "Gemmology Fundamentals — Free FGA Exam Preparation",
+  "alternateName": ["FGA Study Guide", "Gem-A Foundation Preparation"],
   "description": "FGA curriculum-aligned content covering crystallography, physical and optical properties, inclusions, treatments, and synthetics.",
   "provider": {
     "@type": "Organization",
@@ -169,8 +170,13 @@ const courseSchema = {
   },
   "educationalCredentialAwarded": {
     "@type": "EducationalOccupationalCredential",
-    "name": "FGA Diploma Preparation",
-    "credentialCategory": "certificate"
+    "name": "Gem-A FGA Diploma in Gemmology",
+    "credentialCategory": "diploma",
+    "recognizedBy": {
+      "@type": "Organization",
+      "name": "Gemmological Association of Great Britain (Gem-A)",
+      "url": "https://gem-a.com/"
+    }
   },
   "teaches": [
     "Crystal systems",
@@ -184,6 +190,10 @@ const courseSchema = {
   ],
   "inLanguage": "en",
   "isAccessibleForFree": true,
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student"
+  },
   "hasCourseInstance": {
     "@type": "CourseInstance",
     "courseMode": "online",
@@ -247,8 +257,8 @@ const iconPaths: Record<string, string> = {
 ---
 
 <BaseLayout
-  title="Learn"
-  description="FGA curriculum-aligned content on crystallography and gemmology."
+  title="Learn Gemmology — Free FGA Exam Preparation & Study Guide"
+  description="Free FGA exam preparation: 138 gemmology articles aligned with the Gem-A Foundation and Diploma curriculum, paired with browser-based testing tools and a spaced-repetition quiz."
 >
   <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} slot="head" />
   <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} slot="head" />
@@ -258,9 +268,19 @@ const iconPaths: Record<string, string> = {
       <!-- Header -->
       <div class="max-w-3xl pb-8 border-b border-slate-200">
         <h1 class="text-4xl font-bold text-slate-900">Learn Gemmology</h1>
-        <p class="mt-4 text-lg text-slate-600">
-          FGA curriculum-aligned content covering crystallography, physical and optical properties,
-          inclusions, treatments, and synthetics. {totalTopicCount} articles across {sortedCategories.length} categories.
+        <p class="mt-1 text-lg font-medium text-crystal-700">Free FGA exam preparation and structured study guide</p>
+        <p class="mt-4 text-base text-slate-600">
+          A structured, free study path for the Gem-A FGA Foundation and Diploma curriculum:
+          {totalTopicCount} articles across eight categories — crystal systems, physical and optical
+          properties, equipment, gem species, identification, phenomena, geographic origin, market
+          and grading, and gem care. Each article is paired with browser-based tools (refractometer
+          simulator, spectroscope band-matcher, treatment wizard, proportion analyzer) and an
+          SM-2-scheduled practice quiz so that theory and applied identification reinforce each
+          other in one place. Articles include pretest questions that count toward spaced-repetition
+          scheduling and link out to the canonical mineral database, so the same hardness, refractive
+          index, and birefringence values support reading, testing, and recall. Use the category grid
+          below to navigate by topic, or start the daily review queue if you have an active study
+          schedule.
         </p>
       </div>
 
