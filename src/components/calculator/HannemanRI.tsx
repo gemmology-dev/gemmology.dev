@@ -22,7 +22,7 @@ import { usePagination } from '../../hooks/usePagination';
 type Row = HannemanCriteria;
 
 const RELIEF_OPTIONS: { value: Relief; label: string }[] = [
-  { value: 'unknown', label: '— skip this row —' },
+  { value: 'unknown', label: '(skip this row)' },
   { value: 'lower', label: 'Stone shows lower relief (RI < liquid)' },
   { value: 'equal', label: 'Stone disappears / equal (RI ≈ liquid)' },
   { value: 'higher', label: 'Stone shows higher relief (RI > liquid)' },

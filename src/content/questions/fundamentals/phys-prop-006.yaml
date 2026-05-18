@@ -23,8 +23,8 @@ options:
       compositional range (Mg replaced by Fe, Zn, Mn) does slightly shift SG, but
       the maximum for gem spinel is approximately 3.63–3.72 for iron-bearing varieties,
       not 4.00 [ref:read-gemmology-3e]. A difference of 0.40 SG units cannot be explained by locality variation;
-      4.00 is a diagnostic, species-level value for corundum, not spinel [ref:read-gemmology-3e]. Additionally,
-      visible birefringence (double image) under a loupe in Stone B rules out any cubic
+      4.00 is a diagnostic, species-level value for corundum, not spinel [ref:read-gemmology-3e].
+      Visible birefringence (double image) under a loupe in Stone B rules out any cubic
       mineral including spinel.
   - text: "Stone A is blue topaz (RI ~1.62, SG ~3.50); Stone B is blue sapphire – blue topaz can appear similar to spinel but is biaxial"
     isCorrect: false

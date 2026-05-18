@@ -20,7 +20,7 @@ import { Pagination } from '../ui';
 import { usePagination } from '../../hooks/usePagination';
 
 const INTENSITY_OPTIONS: { value: UvIntensity; label: string }[] = [
-  { value: 'unknown', label: '— skip this band —' },
+  { value: 'unknown', label: 'skip this band' },
   { value: 'inert', label: 'Inert (no reaction)' },
   { value: 'weak', label: 'Weak' },
   { value: 'moderate', label: 'Moderate' },
@@ -29,7 +29,7 @@ const INTENSITY_OPTIONS: { value: UvIntensity; label: string }[] = [
 ];
 
 const COLOR_OPTIONS = [
-  { value: '', label: '— any colour —' },
+  { value: '', label: 'any colour' },
   { value: 'red', label: 'Red' },
   { value: 'orange', label: 'Orange' },
   { value: 'yellow', label: 'Yellow' },

@@ -22,7 +22,7 @@ options:
     rationale: |
       Tsavorite (green grossular) has RI approximately 1.740–1.760, which IS within the
       standard refractometer range – it gives a clear shadow edge in the 1.740–1.760
-      region [ref:read-gemmology-3e]. Tsavorite does not exceed the refractometer limit. Additionally, tsavorite
+      region [ref:read-gemmology-3e]. Tsavorite does not exceed the refractometer limit. Tsavorite
       SG is approximately 3.57–3.73, clearly lower than the measured 3.84 [ref:read-gemmology-3e].
   - text: "Diamond; colourless diamonds can appear green from colouring inclusions, and the above-range RI and isotropic behaviour both confirm diamond"
     isCorrect: false

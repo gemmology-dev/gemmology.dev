@@ -32,7 +32,7 @@ options:
       is different: the edges actually pass through each other, converging from the
       same side and then diverging on the other side [ref:read-gemmology-3e]. A student confusing "touching"
       with "crossing" will pick Pattern VII, but crossing behaviour is the criterion
-      for Pattern V [ref:anderson-gem-testing]. Additionally, Pattern VII allows optic sign determination from the
+      for Pattern V [ref:anderson-gem-testing]. Pattern VII allows optic sign determination from the
       refractometer, while Pattern V typically does not.
 rationaleCorrect: |
   Pattern V is uniquely identified by shadow edges that cross each other during rotation;

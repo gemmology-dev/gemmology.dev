@@ -12,7 +12,7 @@ import {
 } from '../../lib/calculator/cut-grades';
 
 const GIRDLE_OPTIONS: { value: GirdleThickness | ''; label: string }[] = [
-  { value: '', label: '— not measured —' },
+  { value: '', label: 'not measured' },
   { value: 'extremely-thin', label: 'Extremely thin (chipping risk)' },
   { value: 'very-thin', label: 'Very thin' },
   { value: 'thin', label: 'Thin' },
@@ -24,7 +24,7 @@ const GIRDLE_OPTIONS: { value: GirdleThickness | ''; label: string }[] = [
 ];
 
 const CULET_OPTIONS: { value: CuletSize | ''; label: string }[] = [
-  { value: '', label: '— not measured —' },
+  { value: '', label: 'not measured' },
   { value: 'none', label: 'None / pointed' },
   { value: 'very-small', label: 'Very small' },
   { value: 'small', label: 'Small' },
