@@ -56,7 +56,15 @@ const fullTitle = isHome
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Fonts (self-hosted via @fontsource-variable to avoid CLS / third-party hop) -->
+    <!-- Fonts: self-hosted Inter latin subset, preloaded for above-the-fold body text.
+         The @font-face block lives in src/styles/global.css (font-display: optional). -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/inter-latin-variable.woff2"
+    />
 
     <title>{fullTitle}</title>
 
