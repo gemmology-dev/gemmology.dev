@@ -95,6 +95,8 @@ export function FamilyCard({
             <img
               src={`/crystals/${family.id}.svg`}
               alt={family.name}
+              width="568"
+              height="568"
               className="w-full h-full object-contain"
               onError={() => setImageError(true)}
             />

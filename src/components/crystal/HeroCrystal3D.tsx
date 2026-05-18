@@ -188,6 +188,7 @@ export function HeroCrystal3D({
     return (
       <div
         className={`flex items-center justify-center bg-gradient-to-br from-crystal-50 to-slate-50 ${className}`}
+        style={{ aspectRatio: '1 / 1' }}
         aria-hidden="true"
       />
     );
