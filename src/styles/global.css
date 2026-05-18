@@ -1,5 +1,20 @@
-@import '@fontsource-variable/inter/wght.css';
 @import '@fontsource-variable/jetbrains-mono/wght.css';
+
+/*
+ * Inter Variable — latin subset only, self-hosted from /public/fonts/.
+ * Preloaded in BaseLayout.astro <head>. font-display: optional avoids any
+ * FOUT/CLS contribution: if the font is not ready within ~100 ms the system
+ * font is used and Inter only swaps in on subsequent navigations (it's
+ * cached by then). With the preload tag the latin subset typically beats
+ * that window on first paint anyway.
+ */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 100 900;
+  src: url('/fonts/inter-latin-variable.woff2') format('woff2-variations');
+}
 
 @tailwind base;
 @tailwind components;
