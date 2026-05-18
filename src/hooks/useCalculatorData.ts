@@ -106,13 +106,17 @@ interface UseCalculatorDataReturn {
   // Fallback data
   fallbackGems: GemReference[];
   fallbackShapeFactors: typeof SHAPE_FACTORS;
+
+  /** Call once on first user interaction to trigger the DB fetch. */
+  initiate: () => void;
 }
 
 /**
  * Hook to access calculator reference data with database integration.
  */
 export function useCalculatorData(): UseCalculatorDataReturn {
-  const [loading, setLoading] = useState(true);
+  const [hasInitiated, setHasInitiated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dbAvailable, setDbAvailable] = useState(false);
 
@@ -126,8 +130,13 @@ export function useCalculatorData(): UseCalculatorDataReturn {
   const [mineralsForRefractometer, setMineralsForRefractometer] = useState<Mineral[]>([]);
   const [mineralsWithPleochroism, setMineralsWithPleochroism] = useState<Mineral[]>([]);
 
-  // Load reference data on mount
+  const initiate = useCallback(() => {
+    setHasInitiated(true);
+  }, []);
+
+  // Load reference data only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     async function loadData() {
       try {
         setLoading(true);
@@ -176,7 +185,7 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     }
 
     loadData();
-  }, []);
+  }, [hasInitiated]);
 
   // RI lookup with database or fallback (uses families to avoid duplicates)
   const findByRI = useCallback(async (ri: number, tolerance: number = 0.01): Promise<GemReference[]> => {
@@ -236,5 +245,6 @@ export function useCalculatorData(): UseCalculatorDataReturn {
     mineralsWithPleochroism,
     fallbackGems: COMMON_GEMS,
     fallbackShapeFactors: SHAPE_FACTORS,
+    initiate,
   };
 }

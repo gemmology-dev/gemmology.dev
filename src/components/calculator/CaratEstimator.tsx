@@ -77,7 +77,7 @@ export function CaratEstimator() {
   const [sgCustom, setSgCustom] = useState('');
   const [girdle, setGirdle] = useState<GirdleAdjustment>('medium');
 
-  const { shapeFactors, mineralsWithSG, fallbackShapeFactors } = useCalculatorData();
+  const { shapeFactors, mineralsWithSG, fallbackShapeFactors, initiate } = useCalculatorData();
 
   // Use database shape factors if available, otherwise fallback
   const shapes = useMemo(() => {
@@ -173,7 +173,7 @@ export function CaratEstimator() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={initiate}>
       <div className="text-sm text-slate-600">
         <p>Enter stone dimensions to estimate carat weight.</p>
         <p className="mt-2 text-sm text-slate-600">

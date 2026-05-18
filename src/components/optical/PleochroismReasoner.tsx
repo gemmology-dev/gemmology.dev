@@ -41,8 +41,9 @@ const STRENGTH_BADGE: Record<string, string> = {
 };
 
 export function PleochroismReasoner() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [minerals, setMinerals] = useState<Mineral[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbError, setDbError] = useState<string | null>(null);
 
   const [colourCount, setColourCount] = useState<ObservedColourCount>(2);
@@ -52,6 +53,7 @@ export function PleochroismReasoner() {
   const [strength, setStrength] = useState<PleochroismStrength>('unknown');
 
   useEffect(() => {
+    if (!hasInitiated) return;
     let mounted = true;
     (async () => {
       try {
@@ -68,7 +70,7 @@ export function PleochroismReasoner() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [hasInitiated]);
 
   const interpretation = useMemo(() => interpretColourCount(colourCount), [colourCount]);
 
@@ -103,7 +105,7 @@ export function PleochroismReasoner() {
   const observedColoursEntered = [c1, c2, c3].slice(0, colourCount).filter((s) => s.trim()).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <p className="text-sm text-slate-600">
         Report what you saw through the dichroscope. The reasoner explains what your observation implies and ranks
         candidate species from the mineral database.

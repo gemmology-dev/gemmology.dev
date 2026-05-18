@@ -69,8 +69,9 @@ const FALLBACK_GEMS = [
 ];
 
 export function HeavyLiquidReference() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [selectedSG, setSelectedSG] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbAvailable, setDbAvailable] = useState(false);
   const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
@@ -78,8 +79,9 @@ export function HeavyLiquidReference() {
     initialPageSize: 15,
   });
 
-  // Fetch paginated data from database
+  // Fetch paginated data only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     async function loadData() {
       setLoading(true);
       try {
@@ -95,7 +97,7 @@ export function HeavyLiquidReference() {
       }
     }
     loadData();
-  }, [params]);
+  }, [hasInitiated, params]);
 
   // Convert database minerals to simple gem format
   const gems = useMemo(() => {
@@ -116,7 +118,7 @@ export function HeavyLiquidReference() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <div>
         <p className="text-sm text-slate-600">
           Heavy liquids separate gems by specific gravity. Select a liquid to see which gems float or sink.

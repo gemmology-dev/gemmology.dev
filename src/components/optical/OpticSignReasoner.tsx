@@ -47,8 +47,9 @@ const SIGN_LABEL: Record<OpticSign, string> = {
 };
 
 export function OpticSignReasoner() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [minerals, setMinerals] = useState<Mineral[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbError, setDbError] = useState<string | null>(null);
 
   const [character, setCharacter] = useState<OpticCharacterKind>('uniaxial');
@@ -60,6 +61,7 @@ export function OpticSignReasoner() {
   const tolerance = 0.005;
 
   useEffect(() => {
+    if (!hasInitiated) return;
     let mounted = true;
     (async () => {
       try {
@@ -76,7 +78,7 @@ export function OpticSignReasoner() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [hasInitiated]);
 
   const computed = useMemo(() => {
     if (character === 'isotropic') {
@@ -170,7 +172,7 @@ export function OpticSignReasoner() {
   const { paged, page, setPage, totalPages } = usePagination(matches, 10);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <p className="text-sm text-slate-600">
         Pick what you saw in the polariscope. For uniaxial gems, enter ω and ε from the
         refractometer; for biaxial, enter α and γ (β is optional). The reasoner derives optic

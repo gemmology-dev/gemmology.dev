@@ -20,15 +20,17 @@ function classifyDispersion(dispersion: number): { category: string; level: 'low
 }
 
 export function DispersionCalculator() {
-  const [loading, setLoading] = useState(true);
+  const [hasInitiated, setHasInitiated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
   const { params, onPageChange, onPageSizeChange } = usePagination<Mineral>({
     initialPageSize: 15,
   });
 
-  // Fetch paginated data from database
+  // Fetch paginated data only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     async function loadData() {
       setLoading(true);
       try {
@@ -42,7 +44,7 @@ export function DispersionCalculator() {
       }
     }
     loadData();
-  }, [params]);
+  }, [hasInitiated, params]);
 
   const { values, errors, result, setValue } = useCalculatorForm({
     fields: {
@@ -93,7 +95,7 @@ export function DispersionCalculator() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <div>
         <p className="text-sm text-slate-600">
           Enter the refractive index at red (C-line, 656nm) and violet (F-line, 486nm) wavelengths to calculate dispersion.

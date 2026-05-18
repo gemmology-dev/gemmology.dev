@@ -51,10 +51,11 @@ const STRENGTH_COLORS: Record<string, string> = {
 };
 
 export function DichroscopeResults() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [color1, setColor1] = useState('');
   const [color2, setColor2] = useState('');
   const [strengthFilter, setStrengthFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbAvailable, setDbAvailable] = useState(false);
   const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
@@ -62,8 +63,9 @@ export function DichroscopeResults() {
     initialPageSize: 15,
   });
 
-  // Fetch paginated data from database
+  // Fetch paginated data only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     async function loadData() {
       setLoading(true);
       try {
@@ -79,7 +81,7 @@ export function DichroscopeResults() {
       }
     }
     loadData();
-  }, [params]);
+  }, [hasInitiated, params]);
 
   // Reset to first page when filters change
   useEffect(() => {
@@ -112,7 +114,7 @@ export function DichroscopeResults() {
   });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" onPointerDown={() => setHasInitiated(true)}>
       {/* Filter bar — single row across full width */}
       <div className="flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-[140px]">

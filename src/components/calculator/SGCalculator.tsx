@@ -95,7 +95,7 @@ export function SGCalculator() {
   });
 
   // Gem lookup with debouncing
-  const { matches, lookup } = useGemLookup({
+  const { matches, lookup, initiate } = useGemLookup({
     type: 'sg',
     tolerance: 0.05,
   });
@@ -106,7 +106,7 @@ export function SGCalculator() {
   }, [result, lookup]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={initiate}>
       <div className="text-sm text-slate-600">
         <p>Enter the weight of your stone in air and water to calculate its specific gravity.</p>
         <p className="mt-2 text-sm text-slate-600">
