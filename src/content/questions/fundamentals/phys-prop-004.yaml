@@ -21,7 +21,7 @@ options:
     isCorrect: false
     rationale: |
       Glass can achieve RI 1.718 by adding heavy-metal oxides, but glass SG at that RI
-      would be approximately 4.5–5.0 (high-lead glass), not 3.42 [ref:read-gemmology-3e]. Additionally, quartz
+      would be approximately 4.5–5.0 (high-lead glass), not 3.42 [ref:read-gemmology-3e]. Quartz
       has RI 1.544–1.553, not 1.434 [ref:read-gemmology-3e] – Stone B's RI of 1.434 is far below any quartz value.
   - text: "Stone A: grossular garnet (RI ~1.73–1.76, SG ~3.58); Stone B: apatite (RI ~1.63, SG ~3.20) – both close matches by SG"
     isCorrect: false

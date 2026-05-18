@@ -681,7 +681,7 @@ cubic[m3m]:core:({111} + {100})[phantom:3]`} />
 
       <p>
         Named forms (like <code>octahedron</code>, <code>prism</code>) are not treated as
-        labels &mdash; they are resolved to their Miller indices directly. Labels must be identifiers
+        labels; they are resolved to their Miller indices directly. Labels must be identifiers
         that are not known named forms.
       </p>
 
@@ -1013,12 +1013,12 @@ value       = NUMBER | IDENTIFIER`} />
       <p>CDL text is processed through these stages:</p>
 
       <ol>
-        <li><strong>Doc comment extraction</strong> &mdash; <code>#!</code> lines are captured as metadata</li>
-        <li><strong>Comment stripping</strong> &mdash; <code>#</code> and <code>/* */</code> are removed</li>
-        <li><strong>Definition pre-processing</strong> &mdash; <code>@name = ...</code> lines are extracted and <code>$name</code> references are resolved by text substitution</li>
-        <li><strong>Lexing</strong> &mdash; remaining text is tokenized</li>
-        <li><strong>Parsing</strong> &mdash; tokens are parsed into the AST: system, point group, form tree, modifications, twin, phenomenon</li>
-        <li><strong>Validation</strong> &mdash; point group checked against system</li>
+        <li><strong>Doc comment extraction:</strong> <code>#!</code> lines are captured as metadata</li>
+        <li><strong>Comment stripping:</strong> <code>#</code> and <code>/* */</code> are removed</li>
+        <li><strong>Definition pre-processing:</strong> <code>@name = ...</code> lines are extracted and <code>$name</code> references are resolved by text substitution</li>
+        <li><strong>Lexing:</strong> remaining text is tokenised</li>
+        <li><strong>Parsing:</strong> tokens are parsed into the AST (system, point group, form tree, modifications, twin, phenomenon)</li>
+        <li><strong>Validation:</strong> point group checked against system</li>
       </ol>
 
       <Card padding="md" class="mt-12 bg-crystal-50 border-crystal-200">

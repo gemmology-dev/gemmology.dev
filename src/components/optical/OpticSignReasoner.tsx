@@ -43,7 +43,7 @@ const SIGN_LABEL: Record<OpticSign, string> = {
   '+': 'positive',
   '-': 'negative',
   '+/-': 'either sign (variable)',
-  'n/a': '— not applicable —',
+  'n/a': '(not applicable)',
 };
 
 export function OpticSignReasoner() {
