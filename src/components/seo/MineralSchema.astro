@@ -11,7 +11,7 @@ interface Props {
 
 const { mineral } = Astro.props;
 
-const url = `https://gemmology.dev/minerals/${mineral.id}`;
+const url = `https://gemmology.dev/minerals/${mineral.id}/`;
 const imageUrl = `https://gemmology.dev/crystals/${mineral.id}.svg`;
 
 // Build the JSON-LD schema — Schema.org has no Mineral type, so we use Thing
@@ -80,7 +80,7 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 2,
       "name": "Gallery",
-      "item": "https://gemmology.dev/gallery"
+      "item": "https://gemmology.dev/gallery/"
     },
     {
       "@type": "ListItem",
