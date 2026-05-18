@@ -4,7 +4,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { IconBox } from '../components/ui/IconBox';
-import { SectionHeader } from '../components/ui/SectionHeader';
+import SectionHeader from '../components/ui-astro/SectionHeader.astro';
 import Container from '../components/ui-astro/Container.astro';
 import { Link } from '../components/ui/Link';
 import { HeroCrystal3D } from '../components/crystal/HeroCrystal3D';
@@ -154,7 +154,6 @@ const iconPaths: Record<string, string> = {
       <SectionHeader
         title="Built for the full FGA curriculum, and the developers who work with it."
         description="A complete toolkit for FGA students, gemmologists, and crystal enthusiasts."
-        client:load
       />
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -239,7 +238,6 @@ const iconPaths: Record<string, string> = {
       <SectionHeader
         title="Seven Crystal Systems"
         description="Comprehensive coverage of all crystal systems with accurate symmetry operations."
-        client:load
       />
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
