@@ -39,3 +39,8 @@ public/minerals.db
 # Synced content from gemmology-knowledge
 .cache/
 src/content/learn/
+
+# Local-only directories
+.tmp/
+.trees/
+.claude/
