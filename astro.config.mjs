@@ -41,6 +41,7 @@ export default defineConfig({
           manualChunks: {
             monaco: ['monaco-editor', '@monaco-editor/react'],
             sqljs: ['sql.js'],
+            three: ['three', '@react-three/fiber', '@react-three/drei'],
           },
         },
       },
