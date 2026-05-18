@@ -3,14 +3,18 @@
 
 User-agent: *
 Allow: /
+Allow: /crystals/
+Allow: /og-images/
+Allow: /favicon.svg
 Disallow: /api/
 Disallow: /admin/
 
 # Sitemap location
 Sitemap: https://gemmology.dev/sitemap-index.xml
 
-# LLM crawler index (https://llmstxt.org/)
-LLM-Content: https://gemmology.dev/llms.txt
+# LLM crawler index (https://llmstxt.org/) — discoverable at /llms.txt directly.
+# The LLM-Content directive is non-standard for robots.txt parsers, so we
+# advertise the location via a comment plus the well-known /llms.txt path.
 
 # Named AI-crawler stanzas.
 # Several AI agents (notably PerplexityBot) require an explicit Allow per
@@ -65,7 +69,3 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-# Static assets are explicitly allowed for all crawlers above.
-Allow: /crystals/
-Allow: /og-images/
-Allow: /favicon.svg
