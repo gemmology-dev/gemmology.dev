@@ -37,17 +37,25 @@ interface UseGemIdentificationReturn {
   mineralsCount: number;
   /** Whether database is available */
   dbAvailable: boolean;
+  /** Call once on first user interaction to trigger the DB fetch. */
+  initiate: () => void;
 }
 
 export function useGemIdentification(): UseGemIdentificationReturn {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [minerals, setMinerals] = useState<Mineral[]>([]);
   const [crystalSystems, setCrystalSystems] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dbAvailable, setDbAvailable] = useState(false);
 
-  // Load minerals and crystal systems on mount
+  const initiate = useCallback(() => {
+    setHasInitiated(true);
+  }, []);
+
+  // Load minerals and crystal systems only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     let mounted = true;
 
     async function loadData() {
@@ -83,7 +91,7 @@ export function useGemIdentification(): UseGemIdentificationReturn {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [hasInitiated]);
 
   // Memoized find function
   const findMatches = useCallback(
@@ -109,6 +117,7 @@ export function useGemIdentification(): UseGemIdentificationReturn {
     error,
     mineralsCount,
     dbAvailable,
+    initiate,
   };
 }
 

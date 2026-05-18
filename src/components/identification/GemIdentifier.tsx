@@ -85,7 +85,7 @@ export function GemIdentifier() {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Hook for matching
-  const { findMatches, crystalSystems, loading, error, mineralsCount, dbAvailable } = useGemIdentification();
+  const { findMatches, crystalSystems, loading, error, mineralsCount, dbAvailable, initiate } = useGemIdentification();
 
   // Determine if we're using single or dual RI mode
   const isDualRIMode = opticCharacter === 'uniaxial' || opticCharacter === 'biaxial';
@@ -245,14 +245,6 @@ export function GemIdentifier() {
     setOpticSign('');
   };
 
-  if (loading) {
-    return (
-      <div className="p-4 text-center text-slate-600">
-        Loading mineral database...
-      </div>
-    );
-  }
-
   if (error && !dbAvailable) {
     return (
       <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
@@ -262,7 +254,7 @@ export function GemIdentifier() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={initiate}>
       <div>
         <p className="text-sm text-slate-600">
           Enter measured gemmological properties to find matching gemstones.

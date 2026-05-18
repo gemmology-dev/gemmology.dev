@@ -82,7 +82,7 @@ export function RICalculator() {
   // Use the average of the two readings when in double mode, otherwise the single reading.
   const lookupTarget = doubleReadingResult?.lookupRI ?? result?.ri ?? null;
 
-  const { matches, lookup } = useGemLookup({
+  const { matches, lookup, initiate } = useGemLookup({
     type: 'ri',
     tolerance: parseFloat(values.tolerance) || 0.01,
   });
@@ -92,7 +92,7 @@ export function RICalculator() {
   }, [lookupTarget, lookup]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={initiate}>
       <div className="text-sm text-slate-600">
         <p>Enter an RI reading to find matching gemstones. Toggle <strong>Double reading</strong> to enter both shadow-edge readings (ω/ε or α/γ) and infer birefringence + optic character automatically.</p>
       </div>

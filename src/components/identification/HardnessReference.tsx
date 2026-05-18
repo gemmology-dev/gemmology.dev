@@ -75,9 +75,10 @@ const WEARABILITY_COLORS: Record<string, string> = {
 };
 
 export function HardnessReference() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterWearability, setFilterWearability] = useState<string>('all');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbAvailable, setDbAvailable] = useState(false);
   const [paginatedData, setPaginatedData] = useState<PaginatedResult<Mineral> | null>(null);
 
@@ -85,8 +86,9 @@ export function HardnessReference() {
     initialPageSize: 20,
   });
 
-  // Fetch paginated data from database
+  // Fetch paginated data only after first user interaction
   useEffect(() => {
+    if (!hasInitiated) return;
     async function loadData() {
       setLoading(true);
       try {
@@ -102,7 +104,7 @@ export function HardnessReference() {
       }
     }
     loadData();
-  }, [params]);
+  }, [hasInitiated, params]);
 
   // Reset to first page when search or filter changes
   useEffect(() => {
@@ -135,7 +137,7 @@ export function HardnessReference() {
   });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" onPointerDown={() => setHasInitiated(true)}>
       {/* Two-column layout: Mohs scale | Gem lookup */}
       <div className="grid lg:grid-cols-[auto_1fr] gap-5">
         {/* Left: Mohs scale — compact table */}

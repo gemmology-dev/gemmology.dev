@@ -34,8 +34,9 @@ const liquidOptions = CONTACT_LIQUIDS.map((l) => ({
 }));
 
 export function HannemanRI() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [minerals, setMinerals] = useState<Mineral[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbError, setDbError] = useState<string | null>(null);
 
   const [rows, setRows] = useState<Row[]>([
@@ -45,6 +46,7 @@ export function HannemanRI() {
   ]);
 
   useEffect(() => {
+    if (!hasInitiated) return;
     let mounted = true;
     (async () => {
       try {
@@ -61,7 +63,7 @@ export function HannemanRI() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [hasInitiated]);
 
   const usable = useMemo(() => rows.filter((r) => r.relief !== 'unknown'), [rows]);
   const band = useMemo(() => (usable.length === 0 ? null : combineBands(usable)), [usable]);
@@ -94,7 +96,7 @@ export function HannemanRI() {
     setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <div className="text-sm text-slate-600">
         <p>
           For stones above the refractometer scale (RI {'>'} 1.81) or rough material with no

@@ -46,6 +46,8 @@ interface UseGemLookupReturn {
   clear: () => void;
   /** The value that was last looked up */
   lastValue: number | null;
+  /** Call once on first user interaction to trigger DB fetch. */
+  initiate: () => void;
 }
 
 const DEFAULT_TOLERANCES: Record<LookupType, number> = {
@@ -61,7 +63,7 @@ export function useGemLookup(options: UseGemLookupOptions): UseGemLookupReturn {
     maxResults,
   } = options;
 
-  const { findByRI, findBySG } = useCalculatorData();
+  const { findByRI, findBySG, initiate } = useCalculatorData();
 
   const [matches, setMatches] = useState<GemReference[]>([]);
   const [loading, setLoading] = useState(false);
@@ -173,6 +175,7 @@ export function useGemLookup(options: UseGemLookupOptions): UseGemLookupReturn {
     lookup,
     clear,
     lastValue,
+    initiate,
   };
 }
 

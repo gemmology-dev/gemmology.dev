@@ -62,8 +62,9 @@ function detectTreatmentFlag(family: MineralFamily, swuvColor: string): string |
 }
 
 export function UvFluorescenceLookup() {
+  const [hasInitiated, setHasInitiated] = useState(false);
   const [families, setFamilies] = useState<MineralFamily[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dbError, setDbError] = useState<string | null>(null);
 
   const [lwuvIntensity, setLwuvIntensity] = useState<UvIntensity>('strong');
@@ -72,6 +73,7 @@ export function UvFluorescenceLookup() {
   const [swuvColor, setSwuvColor] = useState('');
 
   useEffect(() => {
+    if (!hasInitiated) return;
     let mounted = true;
     (async () => {
       try {
@@ -88,7 +90,7 @@ export function UvFluorescenceLookup() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [hasInitiated]);
 
   const obs = { lwuvIntensity, lwuvColor, swuvIntensity, swuvColor };
   const hasObservation = lwuvIntensity !== 'unknown' || swuvIntensity !== 'unknown';
@@ -131,7 +133,7 @@ export function UvFluorescenceLookup() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <p className="text-sm text-slate-600">
         Observe the stone under both long-wave (365 nm) and short-wave (254 nm) UV in a darkened
         cabinet and report what you see. The reasoner ranks species whose stored fluorescence text
