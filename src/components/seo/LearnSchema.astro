@@ -54,13 +54,13 @@ const {
 
 const url = `https://gemmology.dev/learn/${slug}`;
 
-// Canonical author entity — referenced by @id so it is declared once on /about/.
+// Canonical author entity — referenced by @id so it is declared once on the homepage.
 const AUTHOR_NAME = articleAuthor ?? 'Fabian Moor';
 const authorNode = {
   "@type": "Person",
-  "@id": "https://gemmology.dev/about#author",
+  "@id": "https://gemmology.dev/#fabian",
   "name": AUTHOR_NAME,
-  "alternateName": "Bissbert",
+  "alternateName": "Fabian",
   "url": "https://gemmology.dev/about/",
   "knowsAbout": ["Gemmology", "Mineralogy", "Gemstone identification"],
 };
