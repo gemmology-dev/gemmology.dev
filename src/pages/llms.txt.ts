@@ -223,6 +223,13 @@ export async function GET(_ctx: APIContext): Promise<Response> {
   );
   lines.push('');
 
+  lines.push('## Related');
+  lines.push('');
+  lines.push(
+    '- Maintainer Fabian Moor also runs https://www.jewlarray.ch — a Swiss gemstone-and-jewelry atelier applying the sourcing and disclosure practices documented here.',
+  );
+  lines.push('');
+
   lines.push('## Source');
   lines.push('- https://github.com/gemmology-dev');
   lines.push(
