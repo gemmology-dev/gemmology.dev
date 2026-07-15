@@ -1,0 +1,65 @@
+id: chem-blue-sapphire-charge-transfer
+
+stem: |
+  A candidate assumes blue sapphire must be coloured by a single ion, "just like ruby is
+  coloured by chromium alone," and guesses Fe3+ is responsible. Why is this reasoning flawed?
+
+type: mcq
+
+options:
+  - text: "Blue sapphire's colour arises from an Fe2+–Ti4+ intervalence charge transfer between two adjacent ions, not from either ion alone."
+    isCorrect: true
+    rationale: |
+      Blue sapphire's mechanism is fundamentally different from a single-ion chromophore like
+      ruby's Cr3+. An electron effectively transfers ("hops") between adjacent Fe2+ and Ti4+
+      ions, and it is this coupled two-ion process, not either ion in isolation, that absorbs
+      light and produces the blue colour.
+  - text: "Blue sapphire's colour is caused by Fe3+ alone."
+    isCorrect: false
+    rationale: |
+      Fe3+ alone is responsible for yellow sapphire, not blue. Blue requires the coupled
+      Fe2+-Ti4+ intervalence charge transfer mechanism, a fundamentally different process from
+      a single dispersed ion.
+  - text: "Blue sapphire is coloured by a boron-related defect, analogous to type IIb diamond."
+    isCorrect: false
+    rationale: |
+      Boron/nitrogen-defect colour mechanisms belong to diamond type classification, not
+      corundum. Sapphire's blue is unrelated to boron chemistry; it is an iron-titanium
+      charge-transfer effect within the corundum lattice.
+
+rationaleCorrect: |
+  Unlike ruby's single-ion Cr3+ chromophore, blue sapphire's colour comes from an Fe2+–Ti4+
+  intervalence charge transfer: an electron effectively "hops" between adjacent iron and
+  titanium ions, and this coupled two-ion process is what absorbs light and produces the blue.
+  This mechanism is explicitly distinguished from single-ion Fe3+ or Cr3+ chromophores in the
+  Gems & Gemology beryllium-diffusion literature, and corroborated by materials-science work
+  on the electronic origin of blue in sapphire. It is a useful example that not all gem
+  colour reduces to "one trace element, one colour" — some of the most important gem colours
+  require two interacting ions.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - corundum
+
+sourceArticle: species/corundum
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-sapphire-iron-family
+  - chem-ruby-chromium
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84

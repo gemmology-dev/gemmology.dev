@@ -1,0 +1,62 @@
+id: chem-diamond-purity
+
+stem: |
+  A first-year student claims that diamond owes part of its exceptional hardness to "a trace
+  of silica (SiO2) locking the carbon lattice together." Which statement correctly describes
+  diamond's chemical composition?
+
+type: mcq
+
+options:
+  - text: "Diamond is pure carbon (C); no silica or other compound is structurally essential."
+    isCorrect: true
+    rationale: |
+      Diamond crystallises in the isometric system as pure carbon. Its hardness comes from the
+      strength and geometry of carbon-carbon covalent bonding throughout the lattice, not from
+      any second compound.
+  - text: "Diamond contains trace silica (SiO2) as an essential structural component."
+    isCorrect: false
+    rationale: |
+      This is the claim in the stem, and it is incorrect. Diamond's lattice is carbon
+      throughout; silica plays no structural role. This distractor likely arises from
+      confusing diamond with silicate gems, where SiO4 groups genuinely are essential.
+  - text: "Diamond is a carbide of boron."
+    isCorrect: false
+    rationale: |
+      Boron can occur as a trace impurity (and is responsible for Type IIb diamond's blue
+      colour and semiconductivity), but it is never an essential, structural part of diamond's
+      formula. Diamond is not a carbide of any element — it is a single-element mineral.
+
+rationaleCorrect: |
+  Diamond's formula is simply C. A 2009 Gems & Gemology paper on diamond type classification
+  describes lattice vacancies as carbon sites left unoccupied, confirming the lattice is built
+  of carbon atoms throughout — there is no second compound or bonding element woven into the
+  structure. Trace elements like nitrogen and boron can substitute into that carbon lattice
+  (this is the basis of the type classification system), but they are impurities, not
+  essential formula components.
+
+difficulty: 1
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - diamond
+
+sourceArticle: species/diamond
+
+examRelevance: FGA-foundation
+
+confusionPairs:
+  - chem-diamond-type-iib-boron
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: breeding-shigley-2009
+    citation: "Breeding, C.M. & Shigley, J.E. (2009). The 'Type' Classification System of Diamonds and Its Importance in Gemology. Gems & Gemology, 45(2), 96–111."
+    url: https://doi.org/10.5741/gems.45.2.96

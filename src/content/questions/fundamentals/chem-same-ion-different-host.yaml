@@ -1,0 +1,66 @@
+id: chem-same-ion-different-host
+
+stem: |
+  Ruby is red and emerald is green, yet both owe their colour to the same chromophore ion,
+  Cr3+. A candidate is asked to explain how one ion can cause two such different colours.
+  Which explanation is correct?
+
+type: mcq
+
+options:
+  - text: "The different host lattice (corundum vs. beryl) changes the crystal environment around the Cr3+ ion, shifting its absorption and the perceived colour."
+    isCorrect: true
+    rationale: |
+      Chromium is the chromophore in both ruby (corundum host) and emerald (beryl host).
+      Placing the same ion in two different crystal structures changes how its surrounding
+      atoms interact with it, shifting where it absorbs light and therefore what colour is
+      transmitted — the essence of the "same ion, different host, different colour" principle.
+  - text: "Emerald green comes from V3+ only; chromium is exclusive to ruby."
+    isCorrect: false
+    rationale: |
+      Chromium is documented as the emerald chromophore in the Gems & Gemology colour-origin
+      literature, describing "an atom (chromium in emerald)" directly. Restricting chromium to
+      ruby only misses this well-established shared chromophore relationship.
+  - text: "Emerald's colour is a diffraction/interference phenomenon, not an absorption-based chromophore."
+    isCorrect: false
+    rationale: |
+      Emerald's green is a classic dispersed-ion absorption colour, the same broad category as
+      ruby's red — not a physical (diffraction/interference) colour like the iridescence seen
+      in some other gem phenomena.
+
+rationaleCorrect: |
+  The same Cr3+ ion produces two completely different perceived colours depending on its
+  host: red in corundum (ruby) and green in beryl (emerald). Fritsch & Rossman's Gems &
+  Gemology series on colour origin identifies chromium explicitly as the emerald chromophore,
+  the same element already established for ruby. The underlying reason is that a
+  transition-metal ion's absorption spectrum depends on the surrounding crystal field, which
+  differs between corundum's and beryl's structures — so identical trace chemistry can
+  produce strikingly different gem colours purely because of the host lattice.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - corundum
+  - beryl
+
+sourceArticle: fundamentals/colour-theory
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-ruby-chromium
+  - chem-morganite-manganese
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: fritsch-rossman-1988-pt1
+    citation: "Fritsch, E. & Rossman, G.R. (1987). An Update on Color in Gems. Part 1: Introduction and Colors Caused by Dispersed Metal Ions. Gems & Gemology, 23(3), 126–139."
+    url: https://doi.org/10.5741/gems.23.3.126

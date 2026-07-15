@@ -1,0 +1,66 @@
+id: chem-sapphire-iron-family
+
+stem: |
+  A candidate is shown a green sapphire and a purple/violet sapphire and asked to explain both
+  colours using the same short list of chromophores already established for yellow and blue
+  sapphire. Which explanation correctly accounts for both?
+
+type: mcq
+
+options:
+  - text: "Green sapphire combines Fe3+ yellow with Fe2+–Ti4+ blue; purple/violet combines Cr3+ red with Fe2+–Ti4+ blue."
+    isCorrect: true
+    rationale: |
+      Both unusual sapphire colours are combinations of the same chromophores already
+      established for yellow (Fe3+ at high concentration) and blue (Fe2+-Ti4+ charge transfer),
+      with chromium's red added for the purple/violet case. No new chromophore is needed to
+      explain either colour.
+  - text: "Green sapphire always indicates a chromium-vanadium mix, as in emerald."
+    isCorrect: false
+    rationale: |
+      Green sapphire's mechanism (Fe3+ yellow plus Fe2+-Ti4+ blue) is unrelated to emerald's
+      chromium/vanadium chemistry. Assuming any green gem must share emerald's chromophore
+      ignores that green can arise from combining two different colour components within one
+      host.
+  - text: "Iron plays no role in sapphire colour; only titanium matters."
+    isCorrect: false
+    rationale: |
+      Iron is central to at least three sapphire colours: yellow (Fe3+ alone), blue (in
+      combination with Ti4+), and green (Fe3+ yellow plus Fe2+-Ti4+ blue). Titanium alone,
+      without iron, does not explain any of these established sapphire colours.
+
+rationaleCorrect: |
+  Corundum's colour chemistry, as documented in the Gems & Gemology study of beryllium
+  diffusion treatment, builds every unusual sapphire colour from the same small set of
+  chromophores. Fe3+ at high concentration (roughly 2,500 ppma or more) gives yellow; combined
+  with the Fe2+-Ti4+ blue component it gives green sapphire; and Cr3+ red combined with that
+  same Fe2+-Ti4+ blue component gives purple or violet sapphire. Recognising this compositional
+  logic — rather than treating every colour as needing its own unique chromophore — is central
+  to understanding sapphire's colour range as variations on a small chemical theme.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - corundum
+
+sourceArticle: species/corundum
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-blue-sapphire-charge-transfer
+  - chem-element-colour-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84

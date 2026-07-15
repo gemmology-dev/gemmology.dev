@@ -1,0 +1,91 @@
+# Gem Chemistry challenge track — three staged sessions covering chemical
+# formulas & classification, chromophore/colour-origin chemistry, and
+# bench-relevant chemistry (behaviour, diamond types, treatments, simulants).
+#
+# Destined for src/content/challenges/gem-chemistry-track.yaml.
+# All 30 questionIds referenced here correspond 1:1 to the 30 curated
+# chem-*.yaml files delivered alongside this track (destined for
+# src/content/questions/fundamentals/).
+
+id: gem-chemistry
+
+title: "Gem Chemistry"
+
+description: >
+  Three staged sessions on the chemistry behind gemstones: chemical formulas and
+  mineral classification, the trace-element chemistry that causes gem colour, and
+  the chemistry behind treatments, simulants, and diamond type — grounded in
+  peer-reviewed mineralogical and gemmological literature.
+
+icon: "🧪"
+
+categoryAffinity: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - chromophores
+  - colour-origin
+  - classification
+  - silicates
+  - diamond-types
+  - treatments-chemistry
+
+estimatedMinutes: 30
+
+stages:
+  - id: formulas-and-families
+    title: "Formulas & families"
+    description: >
+      Chemical formulas of the major gem species and the silicate/oxide/phosphate
+      classification scheme that groups them.
+    questionIds:
+      - chem-diamond-purity
+      - chem-corundum-formula
+      - chem-beryl-formula
+      - chem-zircon-formula
+      - chem-spinel-formula
+      - chem-topaz-formula
+      - chem-turquoise-formula
+      - chem-species-formula-match
+      - chem-silicate-subclass-match
+      - chem-chrysoberyl-oxide-not-silicate
+    passThreshold: 0.7
+
+  - id: why-gems-have-colour
+    title: "Why gems have colour"
+    description: >
+      Chromophore chemistry: how trace ions like Cr3+, Fe3+, Fe2+/Ti4+, Cu2+ and Mn
+      produce (and sometimes share) gem colour, and the idiochromatic/allochromatic
+      distinction.
+    questionIds:
+      - chem-ruby-chromium
+      - chem-same-ion-different-host
+      - chem-blue-sapphire-charge-transfer
+      - chem-alexandrite-chromium-not-vanadium
+      - chem-morganite-manganese
+      - chem-paraiba-copper
+      - chem-amethyst-colour-centre
+      - chem-sapphire-iron-family
+      - chem-element-colour-match
+      - chem-idiochromatic-allochromatic-match
+    passThreshold: 0.7
+
+  - id: chemistry-at-the-bench
+    title: "Chemistry at the bench"
+    description: >
+      Applied chemistry for practising gemmologists: chain-silicate structure and
+      toughness, garnet-supergroup formulas, diamond type, treatment mechanisms,
+      and simulant composition.
+    questionIds:
+      - chem-jadeite-formula
+      - chem-jadeite-nephrite-toughness
+      - chem-garnet-general-formula
+      - chem-diamond-type-iib-boron
+      - chem-tsavorite-vanadium-caution
+      - chem-be-diffusion-mechanism
+      - chem-cz-stabilization
+      - chem-moissanite-natural-occurrence
+      - chem-organic-hydrous-classification-match
+      - chem-bench-chemistry-match
+    passThreshold: 0.7

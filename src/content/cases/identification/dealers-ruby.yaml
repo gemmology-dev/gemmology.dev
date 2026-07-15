@@ -1,0 +1,232 @@
+id: dealers-ruby
+title: "The Dealer's Ruby"
+difficulty: intermediate
+estimatedMinutes: 10
+
+backstory: |
+  A dealer brings a loose 2.10ct transparent red stone to your bench, claiming it is an
+  untreated natural ruby from Mogok and asking for a written identification before he lists it.
+  You have full access to the standard gemmological lab.
+
+specimenSummary: |
+  A 2.10ct oval mixed-cut transparent red stone, eye-clean at 10x with faint silky reflections
+  visible from certain angles when tilted under a fibre-optic light.
+
+groundTruth:
+  speciesFamilyId: corundum
+  variety: ruby
+  treatment: heated
+  originNote: >
+    Property evidence confirms corundum with heat-treatment indicators; the evidence gathered in
+    this case does not by itself establish a specific geographic origin.
+
+steps:
+  - id: choose-first-test
+    type: choose-next-test
+    prompt: "What's the most efficient first test to run on this stone?"
+    options:
+      - id: reach-refractometer
+        text: "Refractometer"
+        weight: optimal
+        score: 10
+        rationale: >
+          RI is fast, non-destructive, and reads directly from the polished facet. On a red
+          stone it immediately separates corundum from the two most common isotropic
+          look-alikes, garnet and spinel, because only corundum gives a birefringent (doubly
+          refractive) reading.
+        revealsEvidenceIds: [ri-reading]
+        timeCost: 1
+      - id: reach-spectroscope
+        text: "Spectroscope"
+        weight: acceptable
+        score: 5
+        rationale: >
+          The spectroscope will eventually confirm chromium absorption, but without an RI
+          reading first there is no anchor to narrow the candidate field — it is corroborating
+          evidence, not a starting point.
+        timeCost: 2
+      - id: reach-hardness-pick
+        text: "Hardness pick"
+        weight: poor
+        score: 0
+        rationale: >
+          A hardness test risks damaging a faceted, saleable stone and is rarely justified when
+          non-destructive optical tests (RI, SG, spectroscope) are available and more diagnostic.
+        timeCost: 3
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: ri-reading
+        kind: ri
+        label: "Refractometer reading"
+        value: "1.762–1.770"
+        detail: "Uniaxial negative; birefringence 0.008."
+        toolHref: /tools/measurement
+    toolLinks:
+      - href: /tools/measurement
+        label: "Try the RI calculator"
+
+  - id: interpret-ri
+    type: reading-interpretation
+    prompt: >
+      The refractometer reads 1.762–1.770, uniaxial negative. What does this reading rule in or
+      out among the common red-stone candidates?
+    options:
+      - id: corundum-only
+        text: "Consistent with corundum only; rules out garnet and spinel"
+        weight: optimal
+        score: 10
+        rationale: >
+          Garnet and spinel are both singly refractive (isotropic) and cannot produce a uniaxial
+          reading at all — this RI range together with the uniaxial negative optic character is
+          diagnostic of corundum among the common red-stone confusion set.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+      - id: still-three-way
+        text: "Still consistent with corundum, garnet, or spinel"
+        weight: poor
+        score: 0
+        rationale: >
+          Garnet (~1.73–1.76) and spinel (~1.718) are isotropic and would show a single
+          stationary shadow edge on the refractometer, not a uniaxial split — this option
+          ignores half of the evidence just read.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+          - familyId: garnet
+            name: Garnet
+          - familyId: spinel
+            name: Spinel
+    pointsMultiplier: 1
+
+  - id: narrow-by-sg
+    type: candidate-narrowing
+    prompt: "Hydrostatic weighing gives SG 4.00. How does this affect the candidate list?"
+    options:
+      - id: confirms-corundum
+        text: "Confirms corundum; no other candidate remains"
+        weight: optimal
+        score: 10
+        rationale: >
+          SG 4.00 sits at the top of corundum's published range (3.99–4.00) and is not reached by
+          garnet or spinel, both already excluded by optic character in the previous step — this
+          measurement independently corroborates the RI-based conclusion.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+      - id: sg-irrelevant
+        text: "SG doesn't add anything beyond the RI reading"
+        weight: acceptable
+        score: 5
+        rationale: >
+          The RI reading was already sufficient to reach corundum, so this option isn't wrong
+          about the conclusion — but treating SG as pointless undervalues it as an independent,
+          corroborating measurement that is always worth taking to protect against a
+          misread or contaminated refractometer contact.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: sg-reading
+        kind: sg
+        label: "Specific gravity"
+        value: "4.00"
+        detail: "Hydrostatic weighing; corundum reference range 3.99–4.00."
+        toolHref: /tools/measurement
+
+  - id: assess-treatment
+    type: treatment-call
+    prompt: >
+      Under 10x magnification you see fine rutile silk disrupted into discoid stress halos
+      around a small included crystal, and the stone reads red through the Chelsea colour
+      filter. What is your treatment call?
+    options:
+      - id: heated
+        text: "Heat-treated"
+        weight: optimal
+        score: 10
+        rationale: >
+          Discoid ("snowball") stress halos around an included crystal form specifically when
+          heat-induced expansion disrupts the surrounding silk — this is a classic, widely
+          documented heat-treatment indicator in corundum, distinct from sharp, undamaged silk.
+        revealsEvidenceIds: [inclusion-evidence, chelsea-evidence]
+      - id: unheated
+        text: "Unheated / natural colour, no treatment"
+        weight: poor
+        score: 0
+        rationale: >
+          Sharp, undisturbed rutile silk would argue against strong heating, but that is not
+          what was observed here — discoid halos around included crystals are themselves the
+          heat signature, not a neutral or ambiguous feature.
+    pointsMultiplier: 2
+    evidenceRevealed:
+      - id: inclusion-evidence
+        kind: inclusion
+        label: "Microscopic inclusions"
+        value: "Fine rutile silk disrupted into discoid stress halos around an included crystal"
+      - id: chelsea-evidence
+        kind: chelsea-filter
+        label: "Chelsea filter reaction"
+        value: "Red"
+    learnLinks: [identification/treatments]
+    toolLinks:
+      - href: /tools/advanced
+        label: "Try the Treatment Wizard"
+
+  - id: final-call
+    type: final-identification
+    prompt: "What is your final identification and disclosure to the dealer?"
+    options:
+      - id: natural-ruby-heated
+        text: "Natural ruby (corundum), heat-treated"
+        weight: optimal
+        score: 10
+        rationale: >
+          Every property gathered agrees: RI 1.762–1.770 uniaxial negative, SG 4.00, and the
+          discoid stress-halo inclusions with a red Chelsea reaction are all textbook corundum
+          with heat-treatment evidence — species and treatment must both be disclosed.
+      - id: natural-ruby-undisclosed
+        text: "Natural ruby (corundum); treatment not stated"
+        weight: acceptable
+        score: 5
+        rationale: >
+          The species call is correct and the RI/SG evidence supports it fully, but omitting the
+          treatment determination after clear discoid-halo evidence falls short of the disclosure
+          standard the dealer is asking for.
+      - id: red-spinel
+        text: "Red spinel, natural colour"
+        weight: poor
+        score: 0
+        rationale: >
+          Spinel is isotropic and cannot give the uniaxial refractometer reading obtained in
+          step 2 — this candidate was already excluded well before this final step.
+    pointsMultiplier: 2
+
+debrief:
+  summary: >
+    The stone is a heat-treated natural ruby (corundum). The refractive index, specific gravity,
+    and inclusion evidence are all mutually consistent, and the discoid stress halos around
+    silk-adjacent inclusions are a well-established heat-treatment signature that must be
+    disclosed alongside the species identification.
+  expertPath:
+    - "Reach for the refractometer first — it is fast, non-destructive, and its optic character alone eliminates the isotropic look-alikes (garnet, spinel)."
+    - "Confirm with specific gravity — an independent measurement that should agree with the RI-based candidate before you commit to it."
+    - "Examine the inclusions under magnification specifically for treatment evidence — disc-shaped stress halos around included crystals are diagnostic of heating."
+    - "State both species and treatment in the final identification — disclosure is part of a correct answer, not an optional addendum."
+  furtherReading:
+    - "Hughes, R.W. Ruby & Sapphire: A Gemologist's Guide, ch. 4 (heat treatment) and ch. 6 (inclusions)."
+
+conceptTags:
+  - corundum
+  - refractive-index
+  - specific-gravity
+  - treatments
+  - inclusions
+  - chelsea-filter
+
+references:
+  - id: hughes-ruby-sapphire
+    citation: "Hughes, R.W. (1997). Ruby & Sapphire: A Gemologist's Guide. RWH Publishing."
+
+unvetted: true

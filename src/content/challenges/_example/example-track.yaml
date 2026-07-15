@@ -1,0 +1,53 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# EXAMPLE CHALLENGE TRACK: schema reference only — not a real, authored track.
+#
+# This file lives in _example/ so Astro's glob-loader ignores it (same
+# convention as src/content/questions/_example/example-mcq.yaml — the loader
+# pattern excludes paths starting with _). It is NOT loaded into the
+# challenges collection at build time and never appears on /study/challenges.
+#
+# Its only purpose is to exercise the challengeTrackSchema shape (both the
+# explicit-questionIds stage type and the tag-fallback stage type) so the
+# schema and validate-challenges.mjs tooling have something concrete to check
+# against. It deliberately uses conceptTags ("example-only-tag") that will
+# not match any real curated question, so if it were ever accidentally
+# included, its tag-fallback stage would simply resolve to zero questions
+# rather than silently pulling in unrelated real content.
+#
+# A real, researched track (e.g. gem chemistry) is authored separately —
+# see CLAUDE.md's Study Challenge Tracks section.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# id: must match the filename slug, lowercase, digits and hyphens only.
+id: example-track
+
+title: "Example Track (schema reference only)"
+
+description: >
+  Placeholder track used only to validate the challenge-track schema and
+  build pipeline. Not a real study track.
+
+icon: "🧪"
+
+categoryAffinity: fundamentals
+
+estimatedMinutes: 5
+
+stages:
+  # Stage 1: explicit-ids selection path.
+  - id: stage-one
+    title: "Stage One (explicit question ids)"
+    description: "Demonstrates the explicit questionIds selection path."
+    questionIds:
+      - example-track-placeholder-question-001
+    passThreshold: 0.7
+
+  # Stage 2: tag-fallback selection path.
+  - id: stage-two
+    title: "Stage Two (tag fallback)"
+    description: "Demonstrates the conceptTags + count tag-fallback selection path."
+    conceptTags:
+      - example-only-tag
+    tagMatch: all
+    count: 3
+    passThreshold: 0.8

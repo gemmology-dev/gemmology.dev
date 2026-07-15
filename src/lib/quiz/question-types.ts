@@ -88,6 +88,8 @@ export interface Question {
   optionRationales?: OptionRationale[];
   /** Whether this question is auto-generated and not yet expert-reviewed. */
   unvetted?: boolean;
+  /** Concept tags carried from the curated question bank (Study Challenge Tracks). */
+  conceptTags?: string[];
 }
 
 /** Configuration for starting a quiz */

@@ -1,0 +1,12 @@
+---
+/**
+ * /study/cases — redirect stub.
+ *
+ * Lab Simulation cases are unified into the Study Challenge Tracks hub
+ * (`/study/challenges`, "Lab Cases" section) rather than having their own
+ * standalone hub, per the Phase 3 coordination decision. This route only
+ * exists so the semantic `/study/cases` URL isn't a 404 for anyone who
+ * guesses it or follows an old link.
+ */
+return Astro.redirect('/study/challenges#lab-cases', 301);
+---

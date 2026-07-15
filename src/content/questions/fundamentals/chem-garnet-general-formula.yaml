@@ -1,0 +1,65 @@
+id: chem-garnet-general-formula
+
+stem: |
+  An exam question gives an unfamiliar garnet-supergroup mineral and asks the candidate to
+  identify the general site pattern any garnet formula must follow, without relying on any one
+  named end-member (pyrope, almandine, etc.). Which general formula is correct?
+
+type: mcq
+
+options:
+  - text: "{X3}[Y2](Z3)φ12, where X, Y, Z are dodecahedral, octahedral and tetrahedral sites and φ = O, OH, or F."
+    isCorrect: true
+    rationale: |
+      This is the IMA-recognised general structural formula for the entire garnet supergroup,
+      covering not just the familiar silicate end-members but also non-silicate garnet-group
+      minerals where φ can be OH or F rather than O.
+  - text: "Mg3Al2Si3O12, a single fixed formula shared by every garnet species."
+    isCorrect: false
+    rationale: |
+      This is only pyrope's specific end-member formula, not a general formula for the
+      supergroup. Treating all garnets as chemically identical ignores the wide compositional
+      range covered by the X, Y, Z site substitutions (Mg, Fe2+, Mn2+, Ca in X; Al, Fe3+, Cr3+
+      in Y, and so on).
+  - text: "A formula requiring essential chromium in every garnet species, as in uvarovite."
+    isCorrect: false
+    rationale: |
+      Chromium is essential only in a chromium end-member such as uvarovite; it is not part of
+      the general garnet formula, and most garnet species (pyrope, almandine, spessartine,
+      grossular, andradite) contain no essential chromium at all.
+
+rationaleCorrect: |
+  The garnet supergroup's general structural formula, as established by the IMA nomenclature
+  review, is {X3}[Y2](Z3)φ12, where X, Y and Z denote the dodecahedral, octahedral and
+  tetrahedral sites respectively, and φ represents O, OH, or F. This general pattern is what
+  allows dozens of named garnet species — silicate end-members like pyrope, almandine,
+  spessartine, grossular and andradite among them — to be classified within one supergroup
+  despite very different site occupancies. A candidate should be able to recognise this
+  general pattern independent of memorising every specific end-member subscript formula.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - garnet
+  - nesosilicate
+
+sourceArticle: species/garnet
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-tsavorite-vanadium-caution
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: grew-2013
+    citation: "Grew, E.S., Locock, A.J., Mills, S.J., Galuskina, I.O., Galuskin, E.V. & Hålenius, U. (2013). Nomenclature of the garnet supergroup. American Mineralogist, 98(4), 785–811."
+    url: https://doi.org/10.2138/am.2013.4201

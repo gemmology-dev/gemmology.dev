@@ -1,0 +1,71 @@
+id: chem-jadeite-formula
+
+stem: |
+  A trainee, revising "jade," writes down a single formula and calls it "jade's chemical
+  formula," without distinguishing jadeite from nephrite. Which formula correctly belongs to
+  jadeite specifically?
+
+type: mcq
+
+options:
+  - text: "NaAlSi2O6 — a single-chain inosilicate in the pyroxene group."
+    isCorrect: true
+    rationale: |
+      Jadeite's formula is NaAlSi2O6, placing it in the pyroxene group as a single-chain
+      inosilicate. This is chemically and structurally distinct from nephrite, which belongs
+      to a different silicate chain group entirely.
+  - text: "Ca(Mg,Fe)Si2O6, the diopside formula."
+    isCorrect: false
+    rationale: |
+      This is diopside's formula, another pyroxene-group member. Diopside and jadeite are both
+      single-chain pyroxenes but are chemically distinct species (sodium-aluminium jadeite vs.
+      calcium-magnesium-iron diopside), and diopside is not what is meant by gem "jade."
+  - text: "A double-chain silicate formula identical to nephrite's."
+    isCorrect: false
+    rationale: |
+      Jadeite and nephrite do not share a formula or even a chain type: jadeite is a
+      single-chain pyroxene, while nephrite (a compact tremolite-actinolite amphibole) is a
+      double-chain silicate. Treating "jade" as one chemical substance obscures this
+      important structural difference.
+
+rationaleCorrect: |
+  Jadeite's formula is NaAlSi2O6, an inosilicate belonging to the pyroxene group (a
+  single-chain silicate), as confirmed both by the IMA pyroxene nomenclature and by
+  crystal-growth literature on synthetic jadeite. "Jade" is a market umbrella term covering
+  two chemically and structurally distinct minerals: jadeite (single-chain pyroxene) and
+  nephrite (double-chain amphibole, from the tremolite-actinolite series). Treating jade as a
+  single chemical species, or assuming jadeite's green colour requires essential chromium in
+  its formula, are both common errors — jadeite's own end-member formula contains no
+  chromium; trace Cr3+ is an allochromatic addition responsible for the finest "imperial"
+  green jadeite jade.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - silicates
+  - jadeite
+
+sourceArticle: origin/burma/jadeite
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-jadeite-nephrite-toughness
+  - chem-silicate-subclass-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: zhao-2018
+    citation: "Zhao, D., Ma, C., Fang, C., Ding, X. & Jia, X. (2018). Synthesis and characterization of purple NaAlSi2O6 jadeite under high pressure and high temperature. Journal of Crystal Growth, 499, 30–34."
+    url: https://doi.org/10.1016/j.jcrysgro.2018.07.034
+  - id: morimoto-1988
+    citation: "Morimoto, N., Fabries, J., Ferguson, A.K., Ginzburg, I.V., Ross, M., Seifert, F.A., Zussman, J., Aoki, K. & Gottardi, G. (1988). Nomenclature of Pyroxenes. Mineralogical Magazine, 52(367), 535–550."
+    url: https://doi.org/10.1180/minmag.1988.052.367.15

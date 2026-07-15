@@ -1,0 +1,259 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# EXAMPLE CASE: for curator reference and scaffolder template only.
+#
+# This file lives in _example/ so Astro's glob-loader ignores it (the loader
+# pattern excludes paths starting with _). It is NOT loaded into the cases
+# collection. Run `npx astro sync` to confirm no schema errors.
+#
+# To create a real case, run:
+#   npm run case:new -- --category=<dir> --slug=<your-slug>
+#
+# See docs/authoring-cases.md for the full curator guide.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# id: must match the filename slug, lowercase, digits and hyphens only,
+# no leading hyphen. Regex: /^[a-z0-9][a-z0-9-]*$/
+id: example-case-001
+
+# title: shown on the case card and the case run screen.
+title: "The Dealer's Ruby"
+
+# difficulty: one of foundation | intermediate | diploma
+difficulty: intermediate
+
+# estimatedMinutes: shown on the hub card; a rough time budget.
+estimatedMinutes: 10
+
+# backstory: sets the scene. One or two sentences, written as a real
+# consulting-room / lab-bench situation, not a bare property list.
+backstory: |
+  A dealer brings in a 2.10ct transparent red faceted stone, claiming it is
+  an untreated natural ruby from Mogok. You have full lab access.
+
+# specimenSummary: what the learner can see before any testing — shape,
+# colour, transparency, approximate weight. No instrument readings here;
+# those belong in each step's evidenceRevealed.
+specimenSummary: |
+  A 2.10ct oval mixed-cut transparent red stone, eye-clean under 10x loupe
+  with faint silky reflections visible at certain angles.
+
+# groundTruth: the actual answer, used for internal bookkeeping/QA (not
+# shown to the learner directly — the debrief communicates it in prose).
+# speciesFamilyId must be a valid id in the mineral-database (see
+# `mineral-db list` / `mineral-db info <id>`).
+groundTruth:
+  speciesFamilyId: corundum
+  variety: ruby
+  treatment: heated
+  originNote: "Consistent with Mogok-type corundum; origin is not fully determinable from this evidence alone."
+
+# ── Steps ─────────────────────────────────────────────────────────────────────
+# Minimum 3 steps. Exactly one step must have type: final-identification.
+# Every property value cited in prompts/rationales/evidence MUST match
+# mineral_families data or SPECTROSCOPE_REFERENCE, with a citation in the
+# `references` block below. See docs/authoring-cases.md's verification
+# checklist before setting unvetted: false.
+
+steps:
+  # Step 1 — choose-next-test: the learner picks which instrument to reach
+  # for first. Weight/score convention: optimal=10, acceptable=5, poor=0
+  # (validate-cases.mjs enforces this unless allowScoreOverride: true).
+  - id: choose-first-test
+    type: choose-next-test
+    prompt: "What's the most efficient first test on this stone?"
+    options:
+      - id: reach-refractometer
+        text: "Refractometer"
+        weight: optimal
+        score: 10
+        rationale: |
+          RI is fast, non-destructive, and immediately separates corundum
+          from most red-stone look-alikes (spinel, garnet, glass).
+        revealsEvidenceIds: [ri-reading]
+        timeCost: 1
+      - id: reach-spectroscope
+        text: "Spectroscope"
+        weight: acceptable
+        score: 5
+        rationale: |
+          Useful for confirming chromium absorption later, but without an RI
+          or SG anchor first it doesn't narrow the field on its own.
+        timeCost: 2
+      - id: reach-hardness-pick
+        text: "Hardness pick"
+        weight: poor
+        score: 0
+        rationale: |
+          Destructive and rarely necessary on a faceted stone when
+          non-destructive optical tests are available.
+        timeCost: 3
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: ri-reading
+        kind: ri
+        label: "Refractometer reading"
+        value: "1.762–1.770"
+        detail: "Uniaxial negative; birefringence 0.008."
+        toolHref: /tools/measurement
+    toolLinks:
+      - href: /tools/measurement
+        label: "Try the RI calculator"
+
+  # Step 2 — reading-interpretation: the learner interprets the RI reading
+  # just revealed. candidatesAfter narrows the working candidate list.
+  - id: interpret-ri
+    type: reading-interpretation
+    prompt: "The RI reads 1.762–1.770, uniaxial negative. What does this rule in or out?"
+    options:
+      - id: corundum-only
+        text: "Consistent with corundum; rules out garnet and spinel (both isotropic)"
+        weight: optimal
+        score: 10
+        rationale: |
+          Garnet and spinel are singly refractive (isotropic) and cannot
+          produce a uniaxial reading — this RI range and optic character
+          are diagnostic of corundum among common red stones.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+      - id: still-three-way
+        text: "Still consistent with corundum, garnet, or spinel"
+        weight: poor
+        score: 0
+        rationale: |
+          Garnet (~1.73–1.76) and spinel (~1.718) are both isotropic and
+          would not show a uniaxial reading at all — this option ignores
+          the optic character half of the evidence.
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+          - familyId: garnet
+            name: Garnet
+          - familyId: spinel
+            name: Spinel
+    pointsMultiplier: 1
+
+  # Step 3 — candidate-narrowing: SG confirms/narrows further. Note the
+  # candidatesAfter count here (1) must not exceed the previous narrowing
+  # step's count (also 1) — validate-cases.mjs checks this.
+  - id: narrow-by-sg
+    type: candidate-narrowing
+    prompt: "Hydrostatic weighing gives SG 4.00. How does this affect the candidate list?"
+    options:
+      - id: confirms-corundum
+        text: "Confirms corundum (SG 3.99–4.00); no other candidate remains"
+        weight: optimal
+        score: 10
+        rationale: "SG 4.00 sits exactly at corundum's published range and is not reached by any remaining candidate."
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+      - id: irrelevant
+        text: "SG doesn't add anything beyond the RI reading"
+        weight: poor
+        score: 0
+        rationale: "SG is an independent, corroborating measurement — always worth taking even after a strong RI read."
+        candidatesAfter:
+          - familyId: corundum
+            name: Corundum
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: sg-reading
+        kind: sg
+        label: "Specific gravity"
+        value: "4.00"
+        toolHref: /tools/measurement
+
+  # Step 4 — treatment-call: a higher-stakes decision, weighted 2x.
+  - id: assess-treatment
+    type: treatment-call
+    prompt: "Under 10x you see fine rutile silk with discoid stress halos around a mineral inclusion, and the stone reads red through the Chelsea filter. What's your treatment call?"
+    options:
+      - id: heated
+        text: "Heat-treated"
+        weight: optimal
+        score: 10
+        rationale: |
+          Discoid stress halos around included crystals form specifically
+          under heat-induced expansion; intact, undisturbed silk without
+          halos would instead argue against heating.
+        revealsEvidenceIds: [inclusion-evidence, chelsea-evidence]
+      - id: unheated
+        text: "Unheated / natural colour"
+        weight: poor
+        score: 0
+        rationale: |
+          Intact silk alone can be consistent with no heat, but discoid
+          halos specifically are a heat signature and were explicitly
+          described here.
+    pointsMultiplier: 2
+    evidenceRevealed:
+      - id: inclusion-evidence
+        kind: inclusion
+        label: "Microscopic inclusions"
+        value: "Fine rutile silk with discoid stress halos"
+      - id: chelsea-evidence
+        kind: chelsea-filter
+        label: "Chelsea filter reaction"
+        value: "Red"
+    learnLinks: [treatments/heat-treatment]
+    toolLinks:
+      - href: /tools/advanced
+        label: "Try the Treatment Wizard"
+
+  # Step 5 — final-identification: exactly one such step is required per case.
+  - id: final-call
+    type: final-identification
+    prompt: "What is your final identification and disclosure?"
+    options:
+      - id: natural-ruby-heated
+        text: "Natural ruby (corundum), heat-treated"
+        weight: optimal
+        score: 10
+        rationale: "Matches every property gathered: RI, SG, optic character, and the treatment evidence all agree."
+      - id: natural-ruby-undisclosed
+        text: "Natural ruby (corundum); treatment not stated"
+        weight: acceptable
+        score: 5
+        rationale: "Correct species, but omitting the treatment call after clear heat evidence falls short of full disclosure."
+      - id: red-spinel
+        text: "Red spinel"
+        weight: poor
+        score: 0
+        rationale: "Spinel is isotropic and would not give a uniaxial RI reading; already excluded in step 2."
+    pointsMultiplier: 2
+
+# ── Debrief ───────────────────────────────────────────────────────────────────
+
+debrief:
+  summary: |
+    The stone is a heat-treated natural ruby (corundum). The RI, SG, optic
+    character, and inclusion evidence are all internally consistent, and the
+    discoid stress halos around silk inclusions are a specific heat
+    signature that must be disclosed.
+  expertPath:
+    - "Check RI first — fast, non-destructive, and immediately separates corundum from isotropic look-alikes."
+    - "Confirm with SG — an independent measurement that should agree with the RI-based candidate."
+    - "Examine inclusions under magnification for treatment evidence before concluding."
+    - "State both species and treatment in the final identification — disclosure is part of the answer, not an afterthought."
+  furtherReading:
+    - "Hughes, R.W. Ruby & Sapphire: A Gemologist's Guide, ch. 4 (heat treatment) and ch. 6 (inclusions)."
+
+# conceptTags: optional, used for future cross-linking / search.
+conceptTags:
+  - corundum
+  - refractive-index
+  - specific-gravity
+  - treatments
+  - inclusions
+
+# references: full citations for any property value or diagnostic rule
+# asserted in this case.
+references:
+  - id: hughes-ruby-sapphire
+    citation: "Hughes, R.W. (1997). Ruby & Sapphire: A Gemologist's Guide. RWH Publishing."
+
+# unvetted: true = auto-generated or not yet FGA-reviewed; false = expert-vetted.
+# New stubs should default to true. Only set false after review AND after
+# verifying every property value against mineral_families / SPECTROSCOPE_REFERENCE.
+unvetted: true

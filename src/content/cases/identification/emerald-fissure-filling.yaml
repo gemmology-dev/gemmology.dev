@@ -1,0 +1,336 @@
+id: emerald-fissure-filling
+title: "The Filled Emerald"
+difficulty: intermediate
+estimatedMinutes: 12
+
+backstory: |
+  A regular client returns with a green stone she inherited; a previous lab report on file
+  already confirms it as natural emerald (beryl), so species is not in question today. She
+  wants to know exactly what treatment it has had, whether it's safe to send to an ultrasonic
+  cleaner before an upcoming event, and what you'll write on the disclosure line if she decides
+  to sell it.
+
+specimenSummary: |
+  A medium-toned green, transparent, oval mixed-cut stone of moderate size, previously
+  identified as natural emerald. Under the naked eye it shows a visible internal "garden"
+  (jardin) typical of the species, with several surface-reaching fissures across the pavilion.
+  No instrument readings taken yet in today's session.
+
+groundTruth:
+  speciesFamilyId: emerald
+  treatment: "resin-filled, moderate (LMHC F3)"
+  originNote: >
+    Species (natural emerald) was established in a prior lab report and is not re-derived in
+    this case; the evidence gathered here is scoped entirely to the treatment call and its
+    disclosure and care consequences.
+
+steps:
+  - id: choose-first-test
+    type: choose-next-test
+    prompt: >
+      The client's real question today is about treatment, not species. What's the most
+      efficient first step?
+    options:
+      - id: loupe-darkfield
+        text: "10x loupe and darkfield microscope examination of the fissures"
+        weight: optimal
+        score: 10
+        rationale: >
+          Magnified examination of the surface-reaching fissures is the standard starting point
+          for an emerald treatment call: it lets you assess fissure lustre, look for trapped
+          bubbles or flow structures, and set up the darkfield flash-effect test, which is the
+          primary in-lab indicator for fracture filling.
+        revealsEvidenceIds: [fissure-evidence]
+        timeCost: 1
+      - id: gentle-warming
+        text: "Gently warm the stone and check for oil sweating at the fissures"
+        weight: acceptable
+        score: 5
+        rationale: >
+          A warmth "sweat test" can reveal liquid oil sweating from fissures, but it only
+          detects traditional oils, not the polymer resins (e.g. Opticon) that are at least as
+          common in commercial emerald today — starting with magnification is more broadly
+          diagnostic before reaching for a heat-based test on a stone with known fissures.
+        timeCost: 2
+      - id: refractometer-recheck
+        text: "Re-run the refractometer to reconfirm species"
+        weight: poor
+        score: 0
+        rationale: >
+          Species was already established on file; re-testing RI answers a question the client
+          didn't ask and doesn't move the treatment determination forward at all.
+        timeCost: 1
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: fissure-evidence
+        kind: inclusion
+        label: "Fissure examination"
+        value: "Surface-reaching fissures forming a jardin pattern, concentrated in the pavilion"
+        detail: >
+          A subtle lustre difference is visible at several fracture mouths (slightly resinous
+          rather than vitreous), and small spherical bubble-like inclusions sit within the
+          largest fissures.
+        toolHref: /tools/lab
+    toolLinks:
+      - href: /tools/lab
+        label: "Open the Lab tools"
+
+  - id: fissure-interpretation
+    type: reading-interpretation
+    prompt: >
+      The fissure mouths show a lustre difference from the surrounding facets, and small
+      spherical bubbles sit within the largest fissures — no natural fluid inclusions of that
+      rounded, isolated form were noted. What does this rule in or out?
+    options:
+      - id: favours-filled
+        text: "Favours a filled fissure network over untreated natural fissures"
+        weight: optimal
+        score: 10
+        rationale: >
+          A lustre mismatch at the fracture mouth, together with spherical bubbles trapped
+          within a fissure, is specifically diagnostic of a filler (polymer or oil) rather than
+          an open, unfilled natural fissure — round trapped bubbles of this kind do not occur
+          in natural fluid inclusions.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — filled (oil or resin)"
+      - id: normal-jardin
+        text: "This is just a normal jardin; no filling can be inferred yet"
+        weight: poor
+        score: 0
+        rationale: >
+          Understates the evidence. A jardin alone would not include a lustre mismatch at the
+          fracture surface or spherical bubbles sitting inside a fissure — both features point
+          specifically to a filler, not to untreated natural inclusions.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — untreated"
+          - familyId: emerald
+            name: "Emerald — filled (oil or resin)"
+    pointsMultiplier: 1
+
+  - id: flash-effect-interpretation
+    type: reading-interpretation
+    prompt: >
+      Tilting the stone under the darkfield microscope at 40x produces an orange-to-yellowish
+      orange iridescent flash where light crosses the fissure surfaces. How do you read this?
+    options:
+      - id: confirms-filler
+        text: "Confirms a filler is present at the fissures; oil vs resin still needs a further check"
+        weight: optimal
+        score: 10
+        rationale: >
+          The orange/yellowish-orange flash effect at the filler-crystal interface is the
+          textbook, primary in-lab indicator of fracture filling in emerald. It confirms a
+          filler is present, but the flash effect itself doesn't reliably distinguish cedar oil
+          from a polymer resin — that distinction needs a further test such as UV fluorescence.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — filled (oil or resin)"
+      - id: natural-color-play
+        text: "This is just natural colour play in the jardin, unrelated to any filler"
+        weight: poor
+        score: 0
+        rationale: >
+          Misreads a well-established treatment indicator. The orange/yellowish-orange flash
+          seen specifically when tilting the stone at the fissure surface — not a general
+          bodycolour effect — is the classic flash-effect signature of a fracture filler.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — untreated"
+          - familyId: emerald
+            name: "Emerald — filled (oil or resin)"
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: flash-evidence
+        kind: other
+        label: "Darkfield flash-effect observation"
+        value: "Orange-to-yellowish-orange iridescent flash at fissure surfaces when tilted at 40x"
+
+  - id: uv-follow-up
+    type: reading-interpretation
+    prompt: >
+      Under long-wave UV, the stone's overall body fluorescence is inert, but the fissure
+      network itself shows a distinct chalky blue-to-yellowish-green glow. How does this narrow
+      the filler type?
+    options:
+      - id: favours-resin
+        text: "Favours a synthetic resin/polymer filler (e.g. Opticon-type) over cedar oil"
+        weight: optimal
+        score: 10
+        rationale: >
+          Opticon and similar resins typically show a chalky-blue or yellowish-green glow under
+          UV, while cedar oil shows negligible fluorescence. The inert body colour is also
+          consistent with this specimen (many non-Colombian emeralds fluoresce weakly or not at
+          all), so the glow is coming specifically from the filler in the fissures, pointing to
+          resin rather than oil.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — resin-filled"
+      - id: ignore-uv-generic-oil
+        text: "Call it generic oil filling; UV fluorescence isn't worth factoring in"
+        weight: poor
+        score: 0
+        rationale: >
+          Ignores directly relevant evidence: cedar oil is specifically known for negligible UV
+          fluorescence, so a distinct chalky-blue/yellowish-green glow at the fissures is
+          inconsistent with a plain-oil call and should shift the working hypothesis toward a
+          resin filler.
+        candidatesAfter:
+          - familyId: emerald
+            name: "Emerald — oil-filled"
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: uv-evidence
+        kind: uv-fluorescence
+        label: "Long-wave UV fluorescence"
+        value: "Body inert; fissure network shows chalky blue-to-yellowish-green glow"
+        detail: "Cedar oil typically shows negligible fluorescence; Opticon-type resins typically show chalky-blue or yellowish-green fluorescence."
+
+  - id: treatment-call
+    type: treatment-call
+    prompt: >
+      Tilting the stone across several angles, the filler's reflected-light glint is visible
+      across roughly a third of the pavilion facets — concentrated, not confined to a single
+      fissure, but not pervasive either. What is your treatment call?
+    options:
+      - id: resin-moderate
+        text: "Resin filling (Opticon-type polymer), moderate extent — LMHC F3"
+        weight: optimal
+        score: 10
+        rationale: >
+          The flash effect confirms a filler; the chalky-blue/yellowish-green UV fluorescence
+          points specifically to a synthetic resin rather than cedar oil; and filler visible
+          across roughly a third of the pavilion — clearly present but not pervasive — matches
+          the LMHC scale's "moderate" (F3) band, where the filling is clearly present and
+          requires disclosure.
+        revealsEvidenceIds: [extent-evidence]
+      - id: resin-unspecified-extent
+        text: "Resin filling present, but hold off calling a level until FTIR confirms it"
+        weight: acceptable
+        score: 5
+        rationale: >
+          Correctly identifies resin over oil from the UV evidence, and appropriately notes
+          FTIR would give a fully instrumented confirmation — but the visual extent evidence
+          already gathered (filler visible across roughly a third of the pavilion) is enough to
+          place this at a "moderate" level without waiting on further testing.
+      - id: cedar-oil-minor
+        text: "Cedar oil, minor level"
+        weight: poor
+        score: 0
+        rationale: >
+          Contradicted by the UV evidence just gathered: cedar oil produces negligible
+          fluorescence, but a distinct chalky-blue/yellowish-green glow was observed at the
+          fissures — that glow is specifically associated with resin fillers, not oil.
+      - id: no-filling
+        text: "No filling; these are untreated natural fissures"
+        weight: poor
+        score: 0
+        rationale: >
+          Contradicted by the fissure lustre mismatch, the trapped spherical bubbles, the
+          orange flash effect, and the fissure-specific UV fluorescence — all four
+          observations independently point to a filler being present.
+    pointsMultiplier: 2
+    evidenceRevealed:
+      - id: extent-evidence
+        kind: other
+        label: "Filler extent assessment"
+        value: "Reflected-light glint visible across roughly a third of pavilion facets when tilted"
+        detail: "Concentrated but not pervasive — consistent with the LMHC 'moderate' (F3) fracture-fill band."
+    learnLinks: [identification/treatments]
+    toolLinks:
+      - href: /tools/advanced
+        label: "Try the Treatment Wizard"
+
+  - id: final-call
+    type: final-identification
+    prompt: >
+      What is your final identification and disclosure statement to the client, including her
+      question about ultrasonic cleaning?
+    options:
+      - id: natural-emerald-resin-moderate
+        text: >
+          Natural emerald, moderate (F3) resin filling — disclose the filling on any sale
+          documentation, and advise against ultrasonic or steam cleaning and against
+          acetone/alcohol-based cleaners
+        weight: optimal
+        score: 10
+        rationale: >
+          Names both species and treatment level, which is what full disclosure requires.
+          Durability studies of filled emeralds (Johnson, 2007) found liquid- and resin-filled
+          stones alike are vulnerable to ultrasonic and steam cleaning and to solvents such as
+          acetone and alcohol, so the care advice follows directly from the treatment call, not
+          as a separate afterthought.
+      - id: natural-emerald-treated-vague
+        text: "Natural emerald, some treatment present — advise general caution with cleaning"
+        weight: acceptable
+        score: 5
+        rationale: >
+          Gets the species right and is appropriately cautious about cleaning, which is the
+          single most important safety message for the client — but falls short of full
+          disclosure practice by not naming the filler type or extent that the case evidence
+          actually supports.
+      - id: resin-ultrasonic-fine
+        text: "Natural emerald, resin filling — ultrasonic cleaning is fine since resin is more durable than oil"
+        weight: poor
+        score: 0
+        rationale: >
+          Actively dangerous advice. Filled emeralds — resin-filled included — are consistently
+          documented as vulnerable to ultrasonic and steam cleaning; recommending ultrasonic
+          cleaning here risks damaging the stone and directly contradicts the durability
+          literature (Johnson, 2007).
+      - id: untreated-ultrasonic-fine
+        text: "Natural emerald, untreated — ultrasonic cleaning is fine"
+        weight: poor
+        score: 0
+        rationale: >
+          Contradicted by every piece of evidence gathered in this case — the flash effect, the
+          fissure-specific UV fluorescence, and the reflected-light filler extent all confirm a
+          resin filling is present; calling the stone untreated ignores the whole examination.
+    pointsMultiplier: 2
+
+debrief:
+  summary: >
+    The stone is a natural emerald with a moderate (LMHC F3) resin filling in its surface-reaching
+    fissures. The fissure lustre mismatch, trapped bubbles, orange flash effect, and
+    fissure-specific chalky-blue/yellowish-green UV fluorescence are all mutually consistent with
+    an Opticon-type polymer filler rather than cedar oil or an untreated stone. Both the species
+    and the treatment level must be disclosed, and the client should be advised against
+    ultrasonic, steam, and solvent-based cleaning.
+  expertPath:
+    - "Start with a loupe and darkfield exam of the fissures — this is the standard first step for an emerald treatment call, not a re-check of species."
+    - "Use the darkfield flash effect as the primary indicator that a filler is present at all, before trying to identify which filler."
+    - "Follow up with UV fluorescence to separate cedar oil (negligible fluorescence) from resin fillers (chalky-blue/yellowish-green glow)."
+    - "Assess the extent of the filler across the pavilion to place the case on the LMHC F1–F5 disclosure scale, rather than only calling 'filled' or 'not filled.'"
+    - "Let the treatment call drive the care advice directly — filled emeralds should never go through ultrasonic or steam cleaning, and disclosure must name both species and treatment level."
+  furtherReading:
+    - "Kammerling, R.C., Koivula, J.I., Kane, R.E., Maddison, P., Shigley, J.E., Fritsch, E. (1991). Fracture Filling of Emeralds: Opticon and Traditional \"Oils.\" Gems & Gemology 27(2), 70–85."
+    - "Johnson, M.L. (2007). Durability Testing of Filled Emeralds. Gems & Gemology 43(2), 120–137."
+
+conceptTags:
+  - emerald
+  - fracture-filling
+  - flash-effect
+  - uv-fluorescence
+  - treatments
+  - disclosure
+  - care-and-durability
+
+references:
+  - id: kammerling-1991-emerald
+    citation: >
+      Kammerling, R.C., Koivula, J.I., Kane, R.E., Maddison, P., Shigley, J.E., Fritsch, E.
+      (1991). Fracture Filling of Emeralds: Opticon and Traditional "Oils." Gems & Gemology
+      27(2), 70–85.
+    url: "https://doi.org/10.5741/gems.27.2.70"
+  - id: johnson-2007-durability-filled-emeralds
+    citation: >
+      Johnson, M.L. (2007). Durability Testing of Filled Emeralds. Gems & Gemology 43(2),
+      120–137.
+    url: "https://doi.org/10.5741/gems.43.2.120"
+  - id: mineral-db-emerald
+    citation: "Emerald reference data (RI 1.577–1.583, SG 2.72, uniaxial negative; treatments include oiling, resin filling, surface coating). gemmology-mineral-database, data/source/minerals/emerald.yaml."
+  - id: wizard-treatment-clues
+    citation: "Flash-effect, surface-bubbles, and sweat-test clue weights for emerald fracture treatments. src/lib/treatments/wizard.ts, CLUES table."
+
+unvetted: false

@@ -1,0 +1,47 @@
+id: chem-topaz-formula
+
+stem: |
+  A candidate writes topaz's formula as "Al2SiO5, the same as andalusite, kyanite and
+  sillimanite." Their tutor says this is incomplete. Write the formula that correctly
+  distinguishes topaz from that Al2SiO5 group.
+
+type: fill-blank
+
+acceptedAnswers:
+  - "Al2SiO4(F,OH)2"
+  - "Al2SiO4(OH,F)2"
+  - "Al₂SiO₄(F,OH)₂"
+  - "al2sio4(f,oh)2"
+  - "Al2[SiO4](OH,F)2"
+  - "Al2[SiO4](F,OH)2"
+
+rationaleCorrect: |
+  Topaz is Al2SiO4(F,OH)2 — a nesosilicate that, unlike the Al2SiO5 polymorphs (andalusite,
+  kyanite, sillimanite), has essential fluorine and/or hydroxyl in its formula instead of the
+  extra oxygen. Dropping the (F,OH) group and writing Al2SiO5 is a common shorthand error that
+  erases exactly the feature that makes topaz a distinct species rather than a fourth Al2SiO5
+  polymorph.
+
+difficulty: 2
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - topaz
+  - nesosilicate
+
+sourceArticle: species/topaz
+
+examRelevance: FGA-foundation
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: dhz-topaz-2013
+    citation: "Deer, W.A., Howie, R.A. & Zussman, J. (2013). Topaz Al2[SiO4](OH,F)2. In An Introduction to the Rock-Forming Minerals (3rd ed.). Mineralogical Society of Great Britain and Ireland."
+    url: https://doi.org/10.1180/dhz.10

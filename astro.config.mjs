@@ -27,7 +27,9 @@ export default defineConfig({
         !page.includes('/og/') &&
         !page.includes('/og-image/') &&
         !page.includes('/study/review') &&
-        !page.includes('/study/settings'),
+        !page.includes('/study/settings') &&
+        !page.includes('/study/challenges') &&
+        !page.includes('/study/cases'),
       lastmod: new Date(),
     }),
   ],

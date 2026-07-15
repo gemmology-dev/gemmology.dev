@@ -1,0 +1,66 @@
+id: chem-silicate-subclass-match
+
+stem: |
+  Match each species to its correct silicate structural subclass (or, for one of them, its
+  non-silicate class). Think about how the SiO4 tetrahedra (if present) are linked together.
+
+type: matching
+
+pairs:
+  - left: "Beryl"
+    right: "Cyclosilicate (ring)"
+  - left: "Zircon"
+    right: "Nesosilicate (isolated tetrahedra)"
+  - left: "Jadeite"
+    right: "Inosilicate (single chain)"
+  - left: "Turquoise"
+    right: "Phosphate (not a silicate)"
+
+rationaleCorrect: |
+  Beryl's Be3Al2Si6O18 formula is built of six-membered [Si6O18] rings — a cyclosilicate.
+  Zircon's ZrSiO4 has isolated SiO4 tetrahedra sharing no oxygens with each other — a
+  nesosilicate, the same class as garnet and topaz. Jadeite, NaAlSi2O6, is a pyroxene: a
+  single-chain inosilicate, distinct from double-chain amphiboles like nephrite's
+  tremolite-actinolite. Turquoise, CuAl6(PO4)4(OH)8·4H2O, contains no SiO4 tetrahedra at all —
+  it is a phosphate, a completely different chemical class from every silicate in this list.
+  The classic trap is assuming any gem with "silica-adjacent" hardness or lustre must be a
+  silicate, or mixing up which chain-silicate group (pyroxene vs. amphibole) is single- versus
+  double-chain.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - classification
+  - silicates
+  - beryl
+  - zircon
+  - jadeite
+  - turquoise
+
+sourceArticle: fundamentals/chemical-properties
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-jadeite-nephrite-toughness
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: dhz-beryl-2013
+    citation: "Deer, W.A., Howie, R.A. & Zussman, J. (2013). Beryl Be3Al2[Si6O18]. In An Introduction to the Rock-Forming Minerals (3rd ed.). Mineralogical Society of Great Britain and Ireland."
+    url: https://doi.org/10.1180/dhz.16
+  - id: finch-hanchar-2003
+    citation: "Finch, R.J. & Hanchar, J.M. (2003). Structure and Chemistry of Zircon and Zircon-Group Minerals. Reviews in Mineralogy and Geochemistry, 53(1), 1–25."
+    url: https://doi.org/10.2113/0530001
+  - id: morimoto-1988
+    citation: "Morimoto, N., Fabries, J., Ferguson, A.K., Ginzburg, I.V., Ross, M., Seifert, F.A., Zussman, J., Aoki, K. & Gottardi, G. (1988). Nomenclature of Pyroxenes. Mineralogical Magazine, 52(367), 535–550."
+    url: https://doi.org/10.1180/minmag.1988.052.367.15
+  - id: cid-dresdner-1965
+    citation: "Cid-Dresdner, H. (1965). Determination and refinement of the crystal structure of turquois, CuAl6(PO4)4(OH)8·4H2O. Zeitschrift für Kristallographie, 121(2–4), 87–113."
+    url: https://doi.org/10.1524/zkri.1965.121.2-4.87

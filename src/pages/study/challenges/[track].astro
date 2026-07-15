@@ -1,0 +1,70 @@
+---
+/**
+ * Study Challenge Tracks — per-track stage screen (Phase 1).
+ *
+ * getStaticPaths builds one static page per track in the `challenges`
+ * collection. Each stage's full ordered Question[] is resolved at build
+ * time (via resolveTrackStages against the curated question pool) and
+ * passed as plain data into the client-side <ChallengeTrackScreen/> island.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ChallengeTrackScreen } from '../../../components/quiz/challenges/ChallengeTrackScreen';
+import { mapCuratedQuestions, resolveTrackStages } from '../../../lib/quiz';
+import type { CuratedQuestionSource, ChallengeTrackSource } from '../../../lib/quiz';
+
+export async function getStaticPaths() {
+  const trackEntries = await getCollection('challenges');
+  const curatedEntries = await getCollection('questions');
+  const curatedSources: CuratedQuestionSource[] = curatedEntries.map(entry => ({
+    id: entry.data.id,
+    stem: entry.data.stem,
+    type: entry.data.type,
+    options: entry.data.options,
+    acceptedAnswers: entry.data.acceptedAnswers,
+    pairs: entry.data.pairs,
+    rationaleCorrect: entry.data.rationaleCorrect,
+    difficulty: entry.data.difficulty,
+    category: entry.data.category,
+    sourceArticle: entry.data.sourceArticle,
+    imageRef: entry.data.imageRef,
+    unvetted: entry.data.unvetted,
+    deprecated: entry.data.deprecated,
+    conceptTags: entry.data.conceptTags,
+  }));
+  const pool = mapCuratedQuestions(curatedSources);
+
+  return trackEntries.map(entry => {
+    const track: ChallengeTrackSource = entry.data;
+    const resolvedStages = resolveTrackStages(track, pool);
+
+    return {
+      params: { track: track.id },
+      props: { track, stages: resolvedStages },
+    };
+  });
+}
+
+const { track, stages } = Astro.props;
+
+const pageDescription = track.description;
+---
+
+<BaseLayout title={track.title} description={pageDescription} noindex={true}>
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <ChallengeTrackScreen
+        client:load
+        track={{
+          id: track.id,
+          title: track.title,
+          description: track.description,
+          icon: track.icon,
+          estimatedMinutes: track.estimatedMinutes,
+          categoryAffinity: track.categoryAffinity,
+        }}
+        stages={stages}
+      />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,58 @@
+id: chem-element-colour-match
+
+stem: |
+  Match each chromophore mechanism to the colour it is best known for producing in a major gem
+  species. One pair involves two ions acting together, not a single ion alone.
+
+type: matching
+
+pairs:
+  - left: "Cr3+ in corundum"
+    right: "Red (ruby)"
+  - left: "Fe3+ at high concentration in corundum"
+    right: "Yellow sapphire"
+  - left: "Fe2+–Ti4+ intervalence charge transfer in corundum"
+    right: "Blue sapphire"
+  - left: "Cu2+ in cuprian ('Paraíba') elbaite"
+    right: "Intense blue-to-green"
+
+rationaleCorrect: |
+  Cr3+ substituting for Al3+ in corundum produces ruby's red. Fe3+ at concentrations of
+  roughly 2,500 ppma or more produces yellow sapphire. Blue sapphire is different in kind:
+  it is not caused by either iron or titanium alone but by an Fe2+–Ti4+ intervalence charge
+  transfer, an electron effectively "hopping" between the two adjacent ions. In cuprian
+  elbaite tourmaline, the intense saturated blue-to-green "Paraíba" colour comes from Cu2+ at
+  concentrations far above those of ordinary tourmaline. A common error is crediting Ti4+
+  alone for sapphire blue, or assuming yellow sapphire shares ruby's Cr3+ mechanism just
+  because both are corundum.
+
+difficulty: 2
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - corundum
+  - tourmaline
+
+sourceArticle: fundamentals/colour-theory
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-blue-sapphire-charge-transfer
+  - chem-sapphire-iron-family
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84
+  - id: fritsch-1990
+    citation: "Fritsch, E., Shigley, J.E., Rossman, G.R., Mercer, M.E., Muhlmeister, S.M. & Moon, M. (1990). Gem-Quality Cuprian-Elbaite Tourmalines From São José Da Batalha, Paraíba, Brazil. Gems & Gemology, 26(3), 189–205."
+    url: https://doi.org/10.5741/gems.26.3.189

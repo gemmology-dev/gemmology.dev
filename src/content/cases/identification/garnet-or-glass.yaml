@@ -1,0 +1,266 @@
+id: garnet-or-glass
+title: "Garnet or Glass?"
+difficulty: foundation
+estimatedMinutes: 8
+
+backstory: |
+  A customer brings in an unlabelled 3ct red faceted stone found in an old jewellery box. No
+  papers, no provenance. She wants to know whether it's "a real garnet or just glass," and
+  whether it's worth adding to her home-contents insurance schedule.
+
+specimenSummary: |
+  A deep red, transparent, round brilliant-cut stone of about 3ct. Eye-clean at arm's length,
+  no visible colour zoning, no obvious surface wear. No instrument readings taken yet.
+
+groundTruth:
+  speciesFamilyId: glass-simulant
+  originNote: >
+    This case is deliberately built around a glass (paste) imitation rather than a genuine
+    almandine garnet: red glass is the classic look-alike for red garnet on a jeweller's bench,
+    and the twist here is the disclosure consequence — a customer who assumes "garnet" and asks
+    about insuring it as a gemstone needs to be told, plainly, that the stone is a simulant with
+    replacement-cost rather than gemstone value.
+
+steps:
+  - id: choose-first-test
+    type: choose-next-test
+    prompt: "What's the most efficient first test on this stone?"
+    options:
+      - id: reach-refractometer
+        text: "Refractometer"
+        weight: optimal
+        score: 10
+        rationale: >
+          RI is fast and non-destructive. Even though almandine garnet and glass are both
+          singly refractive (isotropic) and will each give only a single stationary shadow
+          edge, the numeric position of that reading is still highly diagnostic: almandine
+          reads around 1.78–1.81, while typical glass reads much lower, around 1.50–1.70. A
+          single reading already does most of the separating work here.
+        revealsEvidenceIds: [ri-reading]
+        timeCost: 1
+      - id: reach-polariscope
+        text: "Polariscope"
+        weight: acceptable
+        score: 5
+        rationale: >
+          Useful for confirming the stone is singly refractive and for spotting anomalous
+          double refraction (ADR) from internal strain — but ADR can appear in both true
+          crystalline isotropic gems (some garnets) and in cast or moulded glass, so on its
+          own it does not separate this specific pair the way a refractometer reading does.
+          Better used as corroborating evidence after RI.
+        timeCost: 2
+      - id: reach-hardness-pick
+        text: "Hardness pick"
+        weight: poor
+        score: 0
+        rationale: >
+          A scratch test risks damaging a faceted, potentially saleable stone, and is rarely
+          justified when RI, inclusions, and SG are all available as non-destructive tests.
+        timeCost: 3
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: ri-reading
+        kind: ri
+        label: "Refractometer reading"
+        value: "1.54"
+        detail: "Single stationary shadow edge (isotropic); no doubling observed."
+        toolHref: /tools/measurement
+    toolLinks:
+      - href: /tools/measurement
+        label: "Try the RI calculator"
+
+  - id: interpret-ri
+    type: reading-interpretation
+    prompt: >
+      The refractometer gives a single stationary reading at 1.54 — isotropic, no
+      birefringence. Both almandine garnet (RI ≈1.78–1.81) and glass (RI ≈1.50–1.70) are
+      singly refractive, so optic character alone can't separate them here. What does the
+      numeric value itself show?
+    options:
+      - id: favours-glass
+        text: "1.54 sits inside glass's typical range, well below almandine — this favours glass"
+        weight: optimal
+        score: 10
+        rationale: >
+          Even though neither candidate shows birefringence, the position of a single RI
+          reading is diagnostic in its own right. 1.54 sits comfortably inside glass's typical
+          1.50–1.70 range and is far below almandine's 1.78–1.81 — this alone strongly favours
+          a glass identification.
+        candidatesAfter:
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+      - id: reading-inconclusive
+        text: "Since both candidates are isotropic, this reading is inconclusive"
+        weight: poor
+        score: 0
+        rationale: >
+          This ignores that the numeric value of a single RI reading is itself the evidence,
+          independent of whether the stone shows doubling. 1.54 is far outside almandine's
+          1.78–1.81 range, so the reading is anything but inconclusive.
+        candidatesAfter:
+          - familyId: almandine
+            name: "Almandine Garnet"
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+    pointsMultiplier: 1
+
+  - id: inclusion-observation
+    type: candidate-narrowing
+    prompt: >
+      Under 10x magnification you see small round gas bubbles (one small cluster, a few
+      elongated) and faint curved swirl marks; no mineral crystals or fingerprint inclusions
+      are visible anywhere in the stone. How does this affect the candidate list?
+    options:
+      - id: confirms-glass
+        text: "Confirms glass; rules out almandine garnet entirely"
+        weight: optimal
+        score: 10
+        rationale: >
+          Round gas bubbles and swirl (flow) marks are specifically diagnostic of glass
+          manufacture and are never produced by garnet's natural crystal growth. Almandine's
+          typical inclusions — rutile silk, rounded mineral crystals, fingerprint inclusions —
+          are all absent here, so this evidence on its own is enough to exclude garnet.
+        candidatesAfter:
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+      - id: consistent-but-cautious
+        text: "Consistent with glass, but garnet can't be fully excluded without checking SG"
+        weight: acceptable
+        score: 5
+        rationale: >
+          Correctly reads the inclusion evidence, but is overly cautious: gas bubbles and flow
+          lines simply do not occur in garnet, so this evidence alone already excludes it. SG
+          is still worth taking as an independent check — not because the inclusions left any
+          real ambiguity.
+        candidatesAfter:
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+      - id: misreads-crystals
+        text: "Rounded inclusions of any kind indicate a rounded mineral crystal, so this could be almandine"
+        weight: poor
+        score: 0
+        rationale: >
+          Misreads the evidence. Genuine mineral crystal inclusions are angular or show their
+          own crystal faces; they don't take the perfectly spherical (sometimes elongated) form
+          of trapped gas, and garnet never shows the curved flow-line texture that is unique to
+          a once-molten, viscous material.
+        candidatesAfter:
+          - familyId: almandine
+            name: "Almandine Garnet"
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: inclusion-evidence
+        kind: inclusion
+        label: "Microscopic inclusions"
+        value: "Round gas bubbles (one small cluster, some elongated) and faint curved swirl/flow marks"
+        detail: "No crystals or fingerprint inclusions observed."
+
+  - id: narrow-by-sg
+    type: candidate-narrowing
+    prompt: "Hydrostatic weighing gives SG 2.62. How does this affect the candidate list?"
+    options:
+      - id: corroborates-glass
+        text: "Corroborates glass; consistent with RI and inclusion evidence already gathered"
+        weight: optimal
+        score: 10
+        rationale: >
+          Glass covers a very wide SG range (about 2.3–4.5 depending on lead content) — heavily
+          leaded glass can reach as high as almandine's own 4.05–4.30 range, so SG alone is not
+          always decisive for this particular pair. Here, though, 2.62 sits at the low end
+          typical of ordinary soda-lime glass and is clearly separate from any garnet, so it
+          corroborates rather than contradicts the RI and inclusion evidence.
+        candidatesAfter:
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+      - id: sg-redundant
+        text: "SG doesn't add anything beyond the RI and inclusion evidence"
+        weight: acceptable
+        score: 5
+        rationale: >
+          The conclusion isn't wrong — RI and inclusions were already sufficient to reach glass
+          — but this undervalues SG as an independent, corroborating measurement. Given that
+          leaded glass can range up to SG 4.5 and overlap almandine's range, taking SG is
+          actually more important for this specific confusion pair than for most, not less.
+        candidatesAfter:
+          - familyId: glass-simulant
+            name: "Glass (Paste)"
+    pointsMultiplier: 1
+    evidenceRevealed:
+      - id: sg-reading
+        kind: sg
+        label: "Specific gravity"
+        value: "2.62"
+        detail: "Hydrostatic weighing; glass reference range 2.3–4.5 (varies with lead content); almandine reference range 4.05–4.30."
+        toolHref: /tools/measurement
+
+  - id: final-call
+    type: final-identification
+    prompt: >
+      What is your final identification and disclosure to the customer, including how it
+      should be treated for insurance purposes?
+    options:
+      - id: glass-disclosed
+        text: "Glass (paste) imitation of garnet — disclose as a simulant; insure at replacement cost, not gemstone value"
+        weight: optimal
+        score: 10
+        rationale: >
+          The RI (1.54, far below almandine), the gas-bubble and swirl-mark inclusions, and the
+          corroborating SG (2.62) are all internally consistent with glass. Trade practice and
+          CIBJO-aligned disclosure standards require simulants to be named explicitly as such —
+          "glass" or "imitation" — never described using the mineral name they resemble, and
+          insurance value should reflect that.
+      - id: glass-vague
+        text: "It's an imitation — just tell her it isn't a real stone"
+        weight: acceptable
+        score: 5
+        rationale: >
+          The identification itself is correct, but disclosure standards call for naming the
+          specific material ("glass"/"paste"), not a vague dismissal. Precise terminology
+          matters for the customer's insurance and any future resale decisions.
+      - id: natural-almandine
+        text: "Natural almandine garnet, suitable for a full gemstone insurance valuation"
+        weight: poor
+        score: 0
+        rationale: >
+          Contradicted by every property gathered: the RI is far too low for almandine, the
+          inclusions are gas bubbles and flow marks rather than crystals or silk, and the SG is
+          well below almandine's 4.05–4.30 range. Identifying it as garnet risks over-insuring
+          a low-value imitation.
+    pointsMultiplier: 2
+
+debrief:
+  summary: >
+    The stone is a glass (paste) imitation of almandine garnet, not a natural gemstone. The RI
+    (1.54), the gas-bubble and swirl-mark inclusions, and the SG (2.62) are all mutually
+    consistent with glass and clearly separate from almandine's published ranges. As a simulant,
+    it must be disclosed by name and insured at replacement rather than gemstone value.
+  expertPath:
+    - "Reach for the refractometer first — even though almandine garnet and glass are both isotropic, the numeric RI value itself separates them (about 1.78–1.81 vs about 1.50–1.70)."
+    - "Don't discount a single RI reading just because the stone shows no birefringence — the position of the reading is diagnostic in its own right."
+    - "Check inclusions for round gas bubbles and swirl/flow marks (glass) versus crystals, silk, and fingerprints (garnet)."
+    - "Take an SG reading as an independent corroborating check — remember leaded glass can range up to SG 4.5, overlapping garnet's range, so don't rely on SG alone."
+    - "Disclose simulants by name — 'glass' or 'paste', never as the natural mineral they imitate — and set insurance expectations accordingly."
+  furtherReading:
+    - "Read, P.G. (2012). Gemmology (3rd ed.). Routledge. DOI: 10.4324/9780080507224 — glass as a gem simulant; polariscope strain effects."
+
+conceptTags:
+  - garnet
+  - glass-simulant
+  - refractive-index
+  - specific-gravity
+  - inclusions
+  - polariscope
+  - disclosure
+
+references:
+  - id: mineral-db-almandine
+    citation: "Almandine garnet reference data (RI 1.78–1.81, SG 4.05–4.30, isotropic; inclusions: rutile silk, rounded crystals, fingerprints). gemmology-mineral-database, data/source/minerals/almandine.yaml."
+  - id: mineral-db-glass-simulant
+    citation: "Glass (Paste) simulant reference data (RI 1.50–1.70, SG 2.3–4.5, isotropic/amorphous; diagnostic gas bubbles, swirl marks). gemmology-mineral-database, data/source/simulants/glass-simulant.yaml."
+  - id: conversions-gemreference
+    citation: "Garnet (Almandine) cross-check range (RI 1.760–1.830, SG 3.95–4.30). src/lib/calculator/conversions.ts, GemReference table."
+  - id: read-2012-gemmology
+    citation: "Read, P.G. (2012). Gemmology (3rd ed.). Routledge."
+    url: "https://doi.org/10.4324/9780080507224"
+
+unvetted: false

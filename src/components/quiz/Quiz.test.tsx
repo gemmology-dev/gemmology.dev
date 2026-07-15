@@ -242,6 +242,42 @@ describe('Quiz — unrenderable questions and auto-offer banner (A6)', () => {
   });
 });
 
+describe('Quiz — onComplete (Study Challenge Tracks touchpoint)', () => {
+  it('fires onComplete exactly once with the final QuizResult when the quiz completes', async () => {
+    mockStore.getSettings.mockResolvedValue({ ...DEFAULT_STUDY_SETTINGS, requireConfidence: false });
+    const user = userEvent.setup();
+    const onComplete = vi.fn();
+    const question = makeQuestion();
+    render(<Quiz config={makeConfig()} questions={[question]} onComplete={onComplete} />);
+
+    await waitFor(() => expect(mockStore.getSettings).toHaveBeenCalled());
+
+    await user.click(screen.getByRole('button', { name: /Cubic/ }));
+    await user.click(screen.getByRole('button', { name: 'Check Answer' }));
+    await user.click(screen.getByRole('button', { name: 'Finish Quiz' }));
+
+    await waitFor(() => {
+      expect(onComplete).toHaveBeenCalledTimes(1);
+    });
+    expect(onComplete).toHaveBeenCalledWith(
+      expect.objectContaining({ score: 1, totalQuestions: 1 }),
+    );
+  });
+
+  it('does not fire onComplete while the quiz is still in progress', async () => {
+    mockStore.getSettings.mockResolvedValue({ ...DEFAULT_STUDY_SETTINGS, requireConfidence: false });
+    const user = userEvent.setup();
+    const onComplete = vi.fn();
+    const question = makeQuestion();
+    render(<Quiz config={makeConfig()} questions={[question]} onComplete={onComplete} />);
+
+    await waitFor(() => expect(mockStore.getSettings).toHaveBeenCalled());
+    await user.click(screen.getByRole('button', { name: /Cubic/ }));
+
+    expect(onComplete).not.toHaveBeenCalled();
+  });
+});
+
 describe('Quiz — keyboard essentials (A8)', () => {
   it('pressing "1" selects the first option', async () => {
     mockStore.getSettings.mockResolvedValue({ ...DEFAULT_STUDY_SETTINGS, requireConfidence: false });

@@ -29,6 +29,14 @@ jobs:
         if: ${{ hashFiles('src/content/questions/**/*.yaml') != '' }}
         run: npm run validate:questions
 
+      - name: Validate challenge tracks
+        if: ${{ hashFiles('src/content/challenges/**/*.yaml') != '' }}
+        run: npm run validate:challenges
+
+      - name: Validate lab simulation cases
+        if: ${{ hashFiles('src/content/cases/**/*.yaml') != '' }}
+        run: npm run validate:cases
+
       - name: Build
         run: npm run build
 

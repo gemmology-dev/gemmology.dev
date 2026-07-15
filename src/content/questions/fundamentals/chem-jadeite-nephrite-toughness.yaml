@@ -1,0 +1,70 @@
+id: chem-jadeite-nephrite-toughness
+
+stem: |
+  A carver explains that nephrite jade is notably tougher (more resistant to chipping and
+  breaking) than jadeite jade, despite jadeite usually having a slightly higher refractive
+  index and density. What structural chemistry explains nephrite's superior toughness?
+
+type: mcq
+
+options:
+  - text: "Nephrite is a double-chain amphibole (felted fibrous structure); jadeite is a single-chain pyroxene."
+    isCorrect: true
+    rationale: |
+      Nephrite belongs to the tremolite-actinolite amphibole series, a double-chain inosilicate
+      whose interlocking, felted fibrous crystal habit gives it exceptional toughness. Jadeite,
+      a single-chain pyroxene, lacks that double-chain interlocking structure, which is why it
+      is typically less tough despite its higher RI and SG.
+  - text: "Jadeite is the double-chain silicate and nephrite the single-chain silicate."
+    isCorrect: false
+    rationale: |
+      This reverses the correct assignment. Jadeite (a pyroxene) is the single-chain
+      inosilicate; nephrite (an amphibole, from the tremolite-actinolite series) is the
+      double-chain inosilicate whose felted structure produces its superior toughness.
+  - text: "Both are amphiboles, so their toughness difference must come from trace-element content, not structure."
+    isCorrect: false
+    rationale: |
+      Jadeite and nephrite are not both amphiboles — jadeite is a pyroxene. The toughness
+      difference is explained by their different silicate chain structures (single vs.
+      double chain), not by trace-element chemistry.
+
+rationaleCorrect: |
+  Jadeite (NaAlSi2O6) is a pyroxene-group mineral, a single-chain inosilicate, per the IMA
+  pyroxene nomenclature. Nephrite is a compact, fine-grained variety within the
+  tremolite-actinolite series of the amphibole supergroup (general formula AB2C5T8O22W2), a
+  double-chain inosilicate, per the IMA amphibole nomenclature. The double-chain, felted
+  fibrous structure of nephrite's interlocking amphibole crystals gives it markedly greater
+  toughness than jadeite's single-chain structure, even though jadeite typically shows a
+  slightly higher refractive index and specific gravity — a useful reminder that toughness,
+  hardness and optical/density properties are governed by different aspects of crystal
+  chemistry and are not interchangeable.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - classification
+  - silicates
+  - jadeite
+
+sourceArticle: origin/burma/jadeite
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-jadeite-formula
+  - chem-silicate-subclass-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: morimoto-1988
+    citation: "Morimoto, N., Fabries, J., Ferguson, A.K., Ginzburg, I.V., Ross, M., Seifert, F.A., Zussman, J., Aoki, K. & Gottardi, G. (1988). Nomenclature of Pyroxenes. Mineralogical Magazine, 52(367), 535–550."
+    url: https://doi.org/10.1180/minmag.1988.052.367.15
+  - id: hawthorne-2012
+    citation: "Hawthorne, F.C., Oberti, R., Harlow, G.E., Maresch, W.V., Martin, R.F., Schumacher, J.C. & Welch, M.D. (2012). Nomenclature of the amphibole supergroup. American Mineralogist, 97(11-12), 2031–2048."
+    url: https://doi.org/10.2138/am.2012.4276

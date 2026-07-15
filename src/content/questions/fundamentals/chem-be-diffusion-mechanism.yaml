@@ -1,0 +1,64 @@
+id: chem-be-diffusion-mechanism
+
+stem: |
+  A candidate is asked to describe how beryllium diffusion treatment alters corundum colour,
+  and answers, "it's basically a surface coating of chromium sprayed onto the stone." What is
+  the correct mechanism?
+
+type: mcq
+
+options:
+  - text: "The small Be2+ ion is diffused into the corundum lattice at temperatures above 1800°C, altering trace-element colour chemistry throughout, not just the surface."
+    isCorrect: true
+    rationale: |
+      Beryllium diffusion works by driving Be2+ — a very small ion — into the corundum crystal
+      structure at very high temperature, creating yellow, orange or brown colour components
+      (and modifying existing colour) via genuine lattice diffusion, not a surface coating.
+  - text: "Be diffusion works by adding chromium, not beryllium, to the surface."
+    isCorrect: false
+    rationale: |
+      The treatment is named for the element it diffuses — beryllium — not chromium. Chromium
+      is corundum's native red chromophore; Be diffusion introduces a different trace element
+      entirely.
+  - text: "Be diffusion is a surface coating, not a lattice diffusion process."
+    isCorrect: false
+    rationale: |
+      This is the misconception in the stem. The process is a genuine high-temperature lattice
+      diffusion, driving beryllium into the crystal structure itself, which is exactly why it
+      reshaped corundum identification practice after being recognised in 2002 — surface
+      coatings are comparatively easy to detect, but lattice-level diffusion is not.
+
+rationaleCorrect: |
+  Beryllium diffusion treatment works by driving the very small Be2+ ion into the corundum
+  lattice at temperatures above 1800°C, altering the trace-element colour chemistry described
+  for corundum's native chromophores and creating yellow, orange or brown colour components
+  (or modifying existing colour). This is a genuine solid-state lattice diffusion process, not
+  a surface coating — and it is now known that a full range of corundum colours, including
+  yellow and blue as well as ruby, have been produced or altered by this treatment since it
+  reshaped corundum identification practice after 2002.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - treatments-chemistry
+  - corundum
+
+sourceArticle: identification/treatments-deep/beryllium-diffusion
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-bench-chemistry-match
+  - chem-ruby-chromium
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84

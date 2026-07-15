@@ -116,3 +116,28 @@ export { LocalStudyStore, getStudyStore } from './store';
 // Due-aware session selection (A4c)
 export { selectSessionQuestions } from './question-pool';
 export type { QuestionPoolStore } from './question-pool';
+
+// ----------------------------------------------------------------------
+// Study Challenge Tracks (Phase 1)
+// ----------------------------------------------------------------------
+
+export type {
+  ChallengeStageSource,
+  ChallengeTrackSource,
+  ResolvedStage,
+} from './challenges';
+export {
+  resolveStageQuestions,
+  resolveTrackStages,
+  trackStagePassed,
+} from './challenges';
+
+export type {
+  ChallengeStageResult,
+  ChallengeProgress,
+} from './challenge-store';
+export {
+  CHALLENGE_STORAGE_KEY,
+  LocalChallengeStore,
+  getChallengeStore,
+} from './challenge-store';

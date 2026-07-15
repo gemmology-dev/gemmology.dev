@@ -1,0 +1,45 @@
+id: chem-spinel-formula
+
+stem: |
+  A gem dealer's inventory sheet lists a red stone as "spinel, FeAl2O4." Write the formula that
+  should actually appear for gem spinel, the mineral that gives the structure type its name.
+
+type: fill-blank
+
+acceptedAnswers:
+  - "MgAl2O4"
+  - "MgAl₂O₄"
+  - "mgal2o4"
+  - "Mg(AlO2)2"
+
+rationaleCorrect: |
+  Spinel, the mineral that lends its name to the whole "spinel group" of oxides, is MgAl2O4.
+  FeAl2O4 is hercynite, a different (iron-bearing) member of the same structural family — an
+  easy slip to make because both are simple oxides with the general spinel-structure formula
+  AB2O4. Gem spinel's characteristic reds, blues and pinks come from trace Cr, Fe and other
+  cations substituting into this Mg-Al oxide host, not from iron or chromium being essential to
+  the formula itself.
+
+difficulty: 2
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - spinel
+  - oxide
+
+sourceArticle: species/spinel
+
+examRelevance: FGA-foundation
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: stoll-1964
+    citation: "Stoll, E., Fischer, P., Hälg, W. & Maier, G. (1964). Redetermination of the cation distribution of spinel (MgAl2O4) by means of neutron diffraction. Journal de Physique, 25(5), 447–448."
+    url: https://doi.org/10.1051/jphys:01964002505044700
