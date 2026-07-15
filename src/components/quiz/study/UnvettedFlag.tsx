@@ -61,7 +61,8 @@ export function UnvettedFlag({ unvetted }: UnvettedFlagProps) {
         className={cn(
           'absolute bottom-full left-0 mb-2 z-50',
           'w-56 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2',
-          'text-xs text-amber-800 shadow-md',
+          'dark:border-amber-400/20 dark:bg-coffee-raised2',
+          'text-xs text-amber-800 shadow-md dark:text-amber-300',
           'transition-opacity duration-150',
           tooltipVisible ? 'opacity-100' : 'opacity-0 pointer-events-none',
         )}

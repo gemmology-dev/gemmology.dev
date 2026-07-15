@@ -9,6 +9,7 @@ import {
   getOrigins,
   getMineralGroups,
 } from '../../lib/db-server';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 
 const url = Astro.url;
 const initialSystem = url.searchParams.get('system') || '';
@@ -36,11 +37,11 @@ const [initialFamilies, initialSystems, initialOrigins, initialGroups] = await P
   description={`Explore ${familyCount} mineral families and ${expressionCount} crystal expressions with FGA-accurate crystallographic data.`}
   canonical={canonicalURL}
 >
-  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-[80vh]">
+  <div class="bg-gradient-to-b from-crystal-50 to-white dark:from-coffee-raised dark:to-coffee-page min-h-[80vh]">
     <Container size="xl" padding="md">
       <SectionHeader
         title="Crystal Gallery"
-        description={`Explore ${familyCount} mineral families and ${expressionCount} crystal expressions, with FGA-accurate crystallographic data. Click any crystal to view detailed properties and open in the playground.`}
+        description={`Explore ${familyCount} mineral families and ${expressionCount} crystal expressions, with FGA-accurate crystallographic data. Click any crystal to view detailed properties${PLAYGROUND_ENABLED ? ' and open in the playground' : ''}.`}
       />
       <Gallery
         client:load

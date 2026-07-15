@@ -14,10 +14,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-crystal-700 text-white hover:bg-crystal-800 focus:ring-crystal-600',
-  secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500',
-  ghost: 'bg-transparent hover:bg-slate-100 text-slate-700 focus:ring-slate-500',
-  outline: 'border-2 border-crystal-700 text-crystal-700 hover:bg-crystal-50 focus:ring-crystal-600',
+  // Primary keeps the crystal-blue brand color on dark, re-tuned one step
+  // lighter (600) since it reads better against coffee surfaces while
+  // keeping white text at 7:1+ contrast. Do NOT invert.
+  primary:
+    'bg-crystal-700 text-white hover:bg-crystal-800 focus:ring-crystal-600 dark:bg-crystal-600 dark:hover:bg-crystal-500 dark:focus:ring-crystal-400',
+  secondary:
+    'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500 dark:bg-coffee-raised dark:text-cream-primary dark:hover:bg-coffee-raised2 dark:focus:ring-crystal-400',
+  ghost:
+    'bg-transparent hover:bg-slate-100 text-slate-700 focus:ring-slate-500 dark:text-cream-secondary dark:hover:bg-coffee-raised dark:focus:ring-crystal-400',
+  outline:
+    'border-2 border-crystal-700 text-crystal-700 hover:bg-crystal-50 focus:ring-crystal-600 dark:border-crystal-400 dark:text-crystal-400 dark:hover:bg-crystal-400/10 dark:focus:ring-crystal-400',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

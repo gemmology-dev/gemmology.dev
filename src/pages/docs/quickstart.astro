@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
 import { Breadcrumb } from '../../components/docs';
 import { Container, Button, Card } from '../../components/ui-astro';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 ---
 
 <BaseLayout
@@ -15,10 +16,15 @@ import { Container, Button, Card } from '../../components/ui-astro';
       { label: 'Quick Start' }
     ]} />
 
-    <article class="prose prose-slate max-w-none">
+    <article class="prose prose-slate max-w-none
+                    dark:prose-headings:text-cream-primary
+                    dark:prose-p:text-cream-secondary
+                    dark:prose-li:text-cream-secondary
+                    dark:prose-strong:text-cream-primary
+                    dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold">
       <h1>Quick Start</h1>
 
-      <p class="lead text-xl text-slate-600">
+      <p class="lead text-xl text-slate-600 dark:text-cream-secondary">
         Generate your first crystal visualisation in just a few lines of Python code.
       </p>
 
@@ -144,20 +150,24 @@ cdl --list-point-groups
 cdl --list-forms
 cdl --list-twins`} />
 
-      <h2>Try it Interactively</h2>
+      {PLAYGROUND_ENABLED && (
+        <>
+          <h2>Try it Interactively</h2>
 
-      <Card padding="md" class="mt-8 bg-crystal-50 border-crystal-200">
-        <h3 class="text-lg font-semibold text-crystal-900 mt-0">CDL Playground</h3>
-        <p class="text-crystal-700 mb-4">
-          Experiment with CDL expressions directly in your browser (no installation needed).
-        </p>
-        <Button href="/playground" variant="primary" size="md">
-          Open Playground
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </Button>
-      </Card>
+          <Card padding="md" class="not-prose mt-8 bg-crystal-50 border-crystal-200 dark:bg-crystal-400/10 dark:border-crystal-400/20">
+            <h3 class="text-lg font-semibold text-crystal-900 dark:text-crystal-200 mt-0">CDL Playground</h3>
+            <p class="text-crystal-700 dark:text-crystal-300 mb-4">
+              Experiment with CDL expressions directly in your browser (no installation needed).
+            </p>
+            <Button href="/playground" variant="primary" size="md">
+              Open Playground
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Button>
+          </Card>
+        </>
+      )}
 
       <div class="mt-12 flex gap-4">
         <Button href="/docs/installation" variant="outline" size="md">
@@ -176,3 +186,20 @@ cdl --list-twins`} />
     </article>
   </Container>
 </BaseLayout>
+
+<style>
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

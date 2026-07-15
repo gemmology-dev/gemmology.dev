@@ -66,11 +66,12 @@ export function FamilyCard({
       className={clsx(
         'group rounded-xl border border-slate-200 bg-white overflow-hidden cursor-pointer block',
         'transition-all hover:border-crystal-300 hover:shadow-lg',
+        'dark:border-coffee-border dark:bg-coffee-raised dark:hover:border-crystal-400/40',
         className
       )}
     >
-      {/* Preview */}
-      <div className="aspect-square bg-slate-50 p-4 relative overflow-hidden">
+      {/* Preview — permanent light "specimen plate", see docs/dark-mode.md */}
+      <div className="aspect-square bg-slate-50 dark:border-b dark:border-coffee-border p-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle,#e2e8f0_1px,transparent_1px)] bg-[size:16px_16px] opacity-50" />
 
         {/* Expression count badge */}
@@ -113,16 +114,16 @@ export function FamilyCard({
       {/* Info */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-700 transition-colors">
+          <h3 className="font-semibold text-slate-900 dark:text-cream-primary group-hover:text-crystal-700 dark:group-hover:text-crystal-400 transition-colors">
             {family.name}
           </h3>
           <div className="flex gap-1.5 flex-shrink-0">
             {family.origin && family.origin !== 'natural' && (
               <span className={clsx(
                 'px-1.5 py-0.5 text-[10px] font-medium rounded-full border capitalize',
-                family.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200',
-                family.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200',
-                family.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300',
+                family.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-400/10 dark:text-blue-300 dark:border-blue-400/20',
+                family.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/20',
+                family.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300 dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border-strong',
               )}>
                 {family.origin}
               </span>
@@ -133,7 +134,7 @@ export function FamilyCard({
           </div>
         </div>
         {(family.chemistry || hardnessDisplay) && (
-          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600">
+          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600 dark:text-cream-secondary">
             {family.chemistry && <span>{family.chemistry}</span>}
             {hardnessDisplay && <span>H: {hardnessDisplay}</span>}
           </div>

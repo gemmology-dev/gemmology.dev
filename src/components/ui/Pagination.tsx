@@ -42,7 +42,7 @@ export function Pagination({
       )}
     >
       {/* Info text */}
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         Showing <span className="font-medium">{startItem}</span>–
         <span className="font-medium">{endItem}</span> of{' '}
         <span className="font-medium">{total}</span>
@@ -57,8 +57,8 @@ export function Pagination({
           className={cn(
             'px-2 py-1 text-sm rounded border transition-colors',
             hasPrev
-              ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-              : 'border-slate-200 text-slate-500 cursor-not-allowed'
+              ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 dark:border-coffee-border-strong dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:border-coffee-border-strong'
+              : 'border-slate-200 text-slate-500 cursor-not-allowed dark:border-coffee-border dark:text-cream-muted'
           )}
           aria-label="Previous page"
         >
@@ -84,7 +84,7 @@ export function Pagination({
               pageNum === 'ellipsis' ? (
                 <span
                   key={`ellipsis-${i}`}
-                  className="px-2 py-1 text-slate-500"
+                  className="px-2 py-1 text-slate-500 dark:text-cream-muted"
                 >
                   ...
                 </span>
@@ -95,8 +95,8 @@ export function Pagination({
                   className={cn(
                     'min-w-[32px] px-2 py-1 text-sm rounded border transition-colors',
                     pageNum === page
-                      ? 'border-crystal-500 bg-crystal-700 text-white'
-                      : 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
+                      ? 'border-crystal-500 bg-crystal-700 text-white dark:border-crystal-400 dark:bg-crystal-600'
+                      : 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 dark:border-coffee-border-strong dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:border-coffee-border-strong'
                   )}
                   aria-label={`Go to page ${pageNum}`}
                   aria-current={pageNum === page ? 'page' : undefined}
@@ -109,7 +109,7 @@ export function Pagination({
         )}
 
         {/* Mobile page indicator */}
-        <span className="sm:hidden px-2 text-sm text-slate-600">
+        <span className="sm:hidden px-2 text-sm text-slate-600 dark:text-cream-secondary">
           Page {page} of {totalPages}
         </span>
 
@@ -120,8 +120,8 @@ export function Pagination({
           className={cn(
             'px-2 py-1 text-sm rounded border transition-colors',
             hasNext
-              ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-              : 'border-slate-200 text-slate-500 cursor-not-allowed'
+              ? 'border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 dark:border-coffee-border-strong dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:border-coffee-border-strong'
+              : 'border-slate-200 text-slate-500 cursor-not-allowed dark:border-coffee-border dark:text-cream-muted'
           )}
           aria-label="Next page"
         >
@@ -144,14 +144,14 @@ export function Pagination({
       {/* Page size selector */}
       {showPageSize && onPageSizeChange && (
         <div className="flex items-center gap-2">
-          <label htmlFor="page-size" className="text-sm text-slate-600">
+          <label htmlFor="page-size" className="text-sm text-slate-600 dark:text-cream-secondary">
             Per page:
           </label>
           <select
             id="page-size"
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="px-2 py-1 text-sm border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-crystal-400"
+            className="px-2 py-1 text-sm border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-crystal-400 dark:focus:ring-crystal-400 dark:border-coffee-border-strong dark:bg-coffee-sunk dark:text-cream-primary"
           >
             {PAGE_SIZE_OPTIONS.map((size) => (
               <option key={size} value={size}>
@@ -185,8 +185,8 @@ export function PaginationCompact({
         className={cn(
           'p-1 rounded transition-colors',
           hasPrev
-            ? 'text-slate-600 hover:bg-slate-100'
-            : 'text-slate-300 cursor-not-allowed'
+            ? 'text-slate-600 hover:bg-slate-100 dark:text-cream-secondary dark:hover:bg-coffee-raised2'
+            : 'text-slate-300 cursor-not-allowed dark:text-coffee-border-strong'
         )}
         aria-label="Previous page"
       >
@@ -205,7 +205,7 @@ export function PaginationCompact({
         </svg>
       </button>
 
-      <span className="text-sm text-slate-600">
+      <span className="text-sm text-slate-600 dark:text-cream-secondary">
         {page} / {totalPages}
       </span>
 
@@ -215,8 +215,8 @@ export function PaginationCompact({
         className={cn(
           'p-1 rounded transition-colors',
           hasNext
-            ? 'text-slate-600 hover:bg-slate-100'
-            : 'text-slate-300 cursor-not-allowed'
+            ? 'text-slate-600 hover:bg-slate-100 dark:text-cream-secondary dark:hover:bg-coffee-raised2'
+            : 'text-slate-300 cursor-not-allowed dark:text-coffee-border-strong'
         )}
         aria-label="Next page"
       >

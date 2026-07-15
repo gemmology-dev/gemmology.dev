@@ -34,10 +34,10 @@ const STRENGTH_OPTIONS: { value: PleochroismStrength; label: string }[] = [
 ];
 
 const STRENGTH_BADGE: Record<string, string> = {
-  very_strong: 'bg-red-100 text-red-700',
-  strong: 'bg-orange-100 text-orange-700',
-  moderate: 'bg-yellow-100 text-yellow-700',
-  weak: 'bg-slate-100 text-slate-600',
+  very_strong: 'bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-300',
+  strong: 'bg-orange-100 text-orange-700 dark:bg-orange-400/10 dark:text-orange-300',
+  moderate: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-400/10 dark:text-yellow-300',
+  weak: 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary',
 };
 
 export function PleochroismReasoner() {
@@ -106,13 +106,13 @@ export function PleochroismReasoner() {
 
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-slate-600 dark:text-cream-secondary">
         Report what you saw through the dichroscope. The reasoner explains what your observation implies and ranks
         candidate species from the mineral database.
       </p>
 
       {/* Step 1 — colour count */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-4">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border space-y-4">
         <FormField name="pleo-count" label="Step 1: How many distinct colours did you see?">
           <Select
             options={COLOUR_COUNT_OPTIONS}
@@ -121,16 +121,16 @@ export function PleochroismReasoner() {
           />
         </FormField>
 
-        <div className="rounded-md border border-purple-200 bg-purple-50 p-3 text-sm text-purple-900">
+        <div className="rounded-md border border-purple-200 dark:border-purple-400/20 bg-purple-50 dark:bg-purple-400/10 p-3 text-sm text-purple-900 dark:text-purple-300">
           <div className="font-semibold">{interpretation.title}</div>
-          <div className="mt-1 text-purple-800">{interpretation.body}</div>
+          <div className="mt-1 text-purple-800 dark:text-purple-200">{interpretation.body}</div>
         </div>
       </div>
 
       {/* Step 2 — colours */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-3">
-        <h3 className="text-sm font-medium text-slate-700">Step 2: Observed colours</h3>
-        <p className="text-xs text-slate-600">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border space-y-3">
+        <h3 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">Step 2: Observed colours</h3>
+        <p className="text-xs text-slate-600 dark:text-cream-muted">
           Type the colour name in plain English ("yellowish-green", "blue", "pale violet"). Order does not matter.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -139,7 +139,7 @@ export function PleochroismReasoner() {
               type="text"
               value={c1}
               onChange={(e) => setC1(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
               placeholder="e.g., yellow-green"
             />
           </FormField>
@@ -149,7 +149,7 @@ export function PleochroismReasoner() {
                 type="text"
                 value={c2}
                 onChange={(e) => setC2(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
                 placeholder="e.g., blue-green"
               />
             </FormField>
@@ -160,7 +160,7 @@ export function PleochroismReasoner() {
                 type="text"
                 value={c3}
                 onChange={(e) => setC3(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
                 placeholder="e.g., red-brown"
               />
             </FormField>
@@ -169,7 +169,7 @@ export function PleochroismReasoner() {
       </div>
 
       {/* Step 3 — strength */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border">
         <FormField name="pleo-strength" label="Step 3: Perceived strength (optional)">
           <Select
             options={STRENGTH_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
@@ -181,12 +181,12 @@ export function PleochroismReasoner() {
 
       {/* Status / errors */}
       {loading && (
-        <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm">
+        <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm">
           Loading mineral database…
         </div>
       )}
       {dbError && (
-        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 text-red-700 dark:text-red-300 text-sm">
           Database unavailable: {dbError}
         </div>
       )}
@@ -195,16 +195,16 @@ export function PleochroismReasoner() {
       {!loading && !dbError && minerals.length > 0 && (
         <>
           {observedColoursEntered === 0 ? (
-            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm text-center">
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm text-center">
               Enter at least one observed colour to see ranked candidates.
             </div>
           ) : results.length === 0 ? (
-            <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm text-center">
+            <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm text-center">
               No species match these colours. Try broader colour names (e.g. "green" rather than "olive-green").
             </div>
           ) : (
             <div className="space-y-3">
-              <h4 className="text-sm font-medium text-slate-700">
+              <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
                 {results.length} candidate {results.length === 1 ? 'species' : 'species'}
               </h4>
               {paginated.map((m) => {
@@ -214,17 +214,17 @@ export function PleochroismReasoner() {
                   m.mineral.pleochroism_color3,
                 ].filter(Boolean) as string[];
                 const strengthLabel = m.mineral.pleochroism_strength?.replace('_', ' ') ?? '';
-                const badgeClass = STRENGTH_BADGE[m.mineral.pleochroism_strength ?? ''] ?? 'bg-slate-100 text-slate-600';
+                const badgeClass = STRENGTH_BADGE[m.mineral.pleochroism_strength ?? ''] ?? 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary';
                 return (
                   <div
                     key={m.mineral.id}
-                    className="p-3 rounded-lg bg-white border border-slate-200"
+                    className="p-3 rounded-lg bg-white dark:bg-coffee-raised border border-slate-200 dark:border-coffee-border"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-2">
                         <a
                           href={`/minerals/${m.mineral.id}`}
-                          className="font-semibold text-crystal-700 hover:underline"
+                          className="font-semibold text-crystal-700 dark:text-crystal-400 hover:underline"
                         >
                           {m.mineral.name}
                         </a>
@@ -234,14 +234,14 @@ export function PleochroismReasoner() {
                           </span>
                         )}
                       </div>
-                      <div className="text-xs text-slate-600">
+                      <div className="text-xs text-slate-600 dark:text-cream-muted">
                         match {(m.score * 100).toFixed(0)}%
                       </div>
                     </div>
-                    <div className="mt-1 text-xs text-slate-600">
+                    <div className="mt-1 text-xs text-slate-600 dark:text-cream-muted">
                       Stored colours: {stored.join(' / ') || '—'}
                     </div>
-                    <div className="mt-2 text-xs text-slate-700">{m.reason}</div>
+                    <div className="mt-2 text-xs text-slate-700 dark:text-cream-secondary">{m.reason}</div>
                   </div>
                 );
               })}

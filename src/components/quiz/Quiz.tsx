@@ -207,7 +207,7 @@ export function Quiz({
   if (!currentQuestion) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-600">No questions available</p>
+        <p className="text-slate-600 dark:text-cream-secondary">No questions available</p>
         <Button variant="secondary" onClick={onBack} className="mt-4">
           Go Back
         </Button>
@@ -237,8 +237,8 @@ export function Quiz({
 
       {/* Auto-offer banner: only when every remaining question is unrenderable */}
       {allRemainingUnrenderable && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 flex items-center justify-between gap-4">
-          <p className="text-sm text-amber-800">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 flex items-center justify-between gap-4 dark:border-amber-400/20 dark:bg-amber-400/10">
+          <p className="text-sm text-amber-800 dark:text-amber-300">
             This saved session has a display issue — start fresh?
           </p>
           <Button variant="secondary" size="sm" onClick={() => setShowRestartConfirm(true)}>
@@ -328,8 +328,8 @@ export function Quiz({
 
       {/* Quick finish option when all questions are answered */}
       {allAnswered && !isLastQuestion && (
-        <div className="text-center pt-4 border-t border-slate-200">
-          <p className="text-sm text-slate-600 mb-2">
+        <div className="text-center pt-4 border-t border-slate-200 dark:border-coffee-border">
+          <p className="text-sm text-slate-600 mb-2 dark:text-cream-secondary">
             All questions answered!
           </p>
           <Button variant="outline" onClick={submitQuiz}>

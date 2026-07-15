@@ -35,9 +35,9 @@ export function CaseIntro({ caseData, hasSavedProgress, onStart }: CaseIntroProp
         <CardDescription>~{caseData.estimatedMinutes} min &middot; {caseData.steps.length} steps</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-slate-700">{caseData.backstory}</p>
-        <p className="mt-3 text-sm font-medium text-slate-600">Specimen</p>
-        <p className="text-slate-700">{caseData.specimenSummary}</p>
+        <p className="text-slate-700 dark:text-cream-secondary">{caseData.backstory}</p>
+        <p className="mt-3 text-sm font-medium text-slate-600 dark:text-cream-muted">Specimen</p>
+        <p className="text-slate-700 dark:text-cream-secondary">{caseData.specimenSummary}</p>
         {caseData.conceptTags && caseData.conceptTags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-1.5">
             {caseData.conceptTags.map((tag) => (

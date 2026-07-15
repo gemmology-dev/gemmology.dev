@@ -31,7 +31,7 @@ export function CaseDebrief({ caseData, result, onRestart }: CaseDebriefProps) {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-cream-secondary">
             <span>
               Score: <span className="font-medium">{result.rawScore}/{result.maxScore}</span> ({result.percentage}%)
             </span>
@@ -39,10 +39,10 @@ export function CaseDebrief({ caseData, result, onRestart }: CaseDebriefProps) {
               <Badge variant="topaz">+{result.efficiencyBonus} efficiency bonus</Badge>
             )}
           </div>
-          <p className="mt-4 text-slate-700">{caseData.debrief.summary}</p>
+          <p className="mt-4 text-slate-700 dark:text-cream-secondary">{caseData.debrief.summary}</p>
 
-          <p className="mt-4 text-sm font-semibold text-slate-800">Expert path</p>
-          <ol className="mt-2 list-decimal list-inside space-y-1 text-slate-700">
+          <p className="mt-4 text-sm font-semibold text-slate-800 dark:text-cream-primary">Expert path</p>
+          <ol className="mt-2 list-decimal list-inside space-y-1 text-slate-700 dark:text-cream-secondary">
             {caseData.debrief.expertPath.map((step, i) => (
               <li key={i}>{step}</li>
             ))}
@@ -50,8 +50,8 @@ export function CaseDebrief({ caseData, result, onRestart }: CaseDebriefProps) {
 
           {caseData.debrief.furtherReading && caseData.debrief.furtherReading.length > 0 && (
             <>
-              <p className="mt-4 text-sm font-semibold text-slate-800">Further reading</p>
-              <ul className="mt-2 list-disc list-inside space-y-1 text-slate-700">
+              <p className="mt-4 text-sm font-semibold text-slate-800 dark:text-cream-primary">Further reading</p>
+              <ul className="mt-2 list-disc list-inside space-y-1 text-slate-700 dark:text-cream-secondary">
                 {caseData.debrief.furtherReading.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -60,7 +60,7 @@ export function CaseDebrief({ caseData, result, onRestart }: CaseDebriefProps) {
           )}
 
           {caseData.references && caseData.references.length > 0 && (
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-xs text-slate-500 dark:text-cream-muted">
               {caseData.references.map((ref) => ref.citation).join(' ')}
             </p>
           )}
@@ -78,17 +78,17 @@ export function CaseDebrief({ caseData, result, onRestart }: CaseDebriefProps) {
               const option = step?.options.find((o) => o.id === decision.optionId);
               if (!step || !option) return null;
               return (
-                <li key={decision.stepId} className="border-l-2 border-slate-200 pl-4">
-                  <p className="text-sm font-medium text-slate-800">
+                <li key={decision.stepId} className="border-l-2 border-slate-200 pl-4 dark:border-coffee-border">
+                  <p className="text-sm font-medium text-slate-800 dark:text-cream-primary">
                     {i + 1}. {step.prompt}
                   </p>
-                  <p className="mt-1 text-sm text-slate-700">
+                  <p className="mt-1 text-sm text-slate-700 dark:text-cream-secondary">
                     Chosen: {option.text}{' '}
                     <Badge variant={tierBadgeVariant(decision.weight)} size="sm">
                       +{decision.scoreAwarded} pts
                     </Badge>
                   </p>
-                  <p className="mt-1 text-sm text-slate-500">{option.rationale}</p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-cream-muted">{option.rationale}</p>
                 </li>
               );
             })}

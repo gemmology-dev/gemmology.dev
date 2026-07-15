@@ -37,12 +37,12 @@ interface MultiValueResultProps {
 }
 
 const variantTextClasses: Record<ResultVariant, { value: string; unit: string }> = {
-  crystal: { value: 'text-crystal-700', unit: 'text-crystal-700' },
-  emerald: { value: 'text-emerald-700', unit: 'text-emerald-600' },
-  sapphire: { value: 'text-blue-700', unit: 'text-blue-600' },
-  ruby: { value: 'text-red-700', unit: 'text-red-600' },
-  topaz: { value: 'text-amber-700', unit: 'text-amber-600' },
-  neutral: { value: 'text-slate-700', unit: 'text-slate-600' },
+  crystal: { value: 'text-crystal-700 dark:text-crystal-400', unit: 'text-crystal-700 dark:text-crystal-400' },
+  emerald: { value: 'text-emerald-700 dark:text-emerald-300', unit: 'text-emerald-600 dark:text-emerald-300' },
+  sapphire: { value: 'text-blue-700 dark:text-blue-300', unit: 'text-blue-600 dark:text-blue-300' },
+  ruby: { value: 'text-red-700 dark:text-red-300', unit: 'text-red-600 dark:text-red-300' },
+  topaz: { value: 'text-amber-700 dark:text-amber-300', unit: 'text-amber-600 dark:text-amber-300' },
+  neutral: { value: 'text-slate-700 dark:text-cream-secondary', unit: 'text-slate-600 dark:text-cream-secondary' },
 };
 
 const layoutClasses: Record<LayoutMode, string> = {
@@ -71,7 +71,7 @@ export function MultiValueResult({
 
           return (
             <div key={index} className="text-center">
-              <p className="text-sm text-slate-600">{result.label}</p>
+              <p className="text-sm text-slate-600 dark:text-cream-secondary">{result.label}</p>
               <p>
                 <span
                   className={cn(

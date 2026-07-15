@@ -22,12 +22,12 @@ interface ResultContainerProps {
 }
 
 const variantClasses: Record<ResultVariant, string> = {
-  crystal: 'bg-crystal-50 border-crystal-200',
-  emerald: 'bg-emerald-50 border-emerald-200',
-  sapphire: 'bg-blue-50 border-blue-200',
-  ruby: 'bg-red-50 border-red-200',
-  topaz: 'bg-amber-50 border-amber-200',
-  neutral: 'bg-slate-50 border-slate-200',
+  crystal: 'bg-crystal-50 border-crystal-200 dark:bg-crystal-400/10 dark:border-crystal-400/20',
+  emerald: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-400/10 dark:border-emerald-400/20',
+  sapphire: 'bg-blue-50 border-blue-200 dark:bg-blue-400/10 dark:border-blue-400/20',
+  ruby: 'bg-red-50 border-red-200 dark:bg-red-400/10 dark:border-red-400/20',
+  topaz: 'bg-amber-50 border-amber-200 dark:bg-amber-400/10 dark:border-amber-400/20',
+  neutral: 'bg-slate-50 border-slate-200 dark:bg-coffee-raised2 dark:border-coffee-border',
 };
 
 export function ResultContainer({

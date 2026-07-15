@@ -76,11 +76,11 @@ const caseSummaries: CaseSummary[] = caseDefinitions.map((c) => ({
 ---
 
 <BaseLayout title="Challenge Tracks" description={pageDescription} noindex={true}>
-  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-slate-900">Challenge Tracks</h1>
-        <p class="text-slate-600 mt-2 text-lg max-w-prose">
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-cream-primary">Challenge Tracks</h1>
+        <p class="text-slate-600 mt-2 text-lg max-w-prose dark:text-cream-secondary">
           Structured study with staged mastery: work through a themed sequence of quiz stages,
           each one unlocking only once you pass the last. Progress is saved locally in your
           browser.
@@ -92,8 +92,8 @@ const caseSummaries: CaseSummary[] = caseDefinitions.map((c) => ({
       {caseSummaries.length > 0 && (
         <section id="lab-cases" class="mt-16 scroll-mt-24">
           <header class="mb-8">
-            <h2 class="text-2xl font-bold text-slate-900">Lab Cases</h2>
-            <p class="text-slate-600 mt-2 max-w-prose">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">Lab Cases</h2>
+            <p class="text-slate-600 mt-2 max-w-prose dark:text-cream-secondary">
               Scenario-driven identification exercises: work a case the way you would in the
               lab &mdash; choose the next test, interpret readings, narrow candidates, and reach a
               final identification. Scored by decision quality, not just the final answer.

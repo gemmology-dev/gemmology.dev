@@ -161,16 +161,16 @@ const iconPaths: Record<string, string> = {
   <script type="application/ld+json" set:html={JSON.stringify(learningResourceSchema)} slot="head" />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
 
-  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+  <div class="bg-gradient-to-b from-crystal-50 to-white dark:from-coffee-page dark:to-coffee-page min-h-screen">
     <Container size="lg" padding="md">
       <Breadcrumb items={breadcrumbItems} />
 
-      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200">
-        <h1 class="text-4xl font-bold text-slate-900">How to identify gemstones</h1>
-        <p class="mt-3 text-lg font-medium text-crystal-700">
+      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200 dark:border-coffee-border">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">How to identify gemstones</h1>
+        <p class="mt-3 text-lg font-medium text-crystal-700 dark:text-crystal-300">
           A structured FGA-aligned diagnostic workflow, free
         </p>
-        <p class="mt-5 text-base text-slate-700 leading-relaxed">
+        <p class="mt-5 text-base text-slate-700 dark:text-cream-secondary leading-relaxed">
           Reliable gemstone identification is a sequential elimination problem rather than a single
           test: an unknown stone is rarely identifiable from any one measurement alone, but the
           intersection of <strong>refractive index</strong>, <strong>specific gravity</strong>,
@@ -200,11 +200,11 @@ const iconPaths: Record<string, string> = {
               />
             </svg>
           </IconBox>
-          <h2 class="text-2xl font-bold text-slate-900">The nine-step identification protocol</h2>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">The nine-step identification protocol</h2>
         </div>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-raised">
           <table class="min-w-full text-sm">
-            <thead class="bg-slate-50 text-slate-700">
+            <thead class="bg-slate-50 text-slate-700 dark:bg-coffee-raised2 dark:text-cream-primary">
               <tr>
                 <th class="px-4 py-3 text-left font-semibold w-12">Step</th>
                 <th class="px-4 py-3 text-left font-semibold">Test</th>
@@ -212,21 +212,21 @@ const iconPaths: Record<string, string> = {
                 <th class="px-4 py-3 text-left font-semibold">Tool</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-100 dark:divide-coffee-border">
               {stepRows.map((row) => (
                 <tr>
-                  <td class="px-4 py-3 font-semibold text-crystal-700">{row.step}</td>
-                  <td class="px-4 py-3 font-medium text-slate-900">{row.test}</td>
-                  <td class="px-4 py-3 text-slate-700">{row.purpose}</td>
-                  <td class="px-4 py-3 text-slate-600">{row.tool}</td>
+                  <td class="px-4 py-3 font-semibold text-crystal-700 dark:text-crystal-300">{row.step}</td>
+                  <td class="px-4 py-3 font-medium text-slate-900 dark:text-cream-primary">{row.test}</td>
+                  <td class="px-4 py-3 text-slate-700 dark:text-cream-secondary">{row.purpose}</td>
+                  <td class="px-4 py-3 text-slate-600 dark:text-cream-muted">{row.tool}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p class="mt-3 text-sm text-slate-600">
+        <p class="mt-3 text-sm text-slate-600 dark:text-cream-secondary">
           Try the workflow against an unknown stone using the
-          <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Gem Identifier</a>,
+          <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Gem Identifier</a>,
           which filters the mineral database by the measurements you enter.
         </p>
       </section>
@@ -244,7 +244,7 @@ const iconPaths: Record<string, string> = {
                 />
               </svg>
             </IconBox>
-            <h2 class="text-2xl font-bold text-slate-900">Identification fundamentals</h2>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">Identification fundamentals</h2>
           </div>
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {directTopics.map((t) => (
@@ -265,11 +265,11 @@ const iconPaths: Record<string, string> = {
       {inclusionTopics.length > 0 && (
         <section class="mt-12">
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200"></div>
-            <h2 class="text-xl font-semibold text-slate-800">Inclusions atlas</h2>
-            <span class="text-sm text-slate-500">({inclusionTopics.length} articles)</span>
+            <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200 dark:from-coffee-border-strong dark:to-coffee-border"></div>
+            <h2 class="text-xl font-semibold text-slate-800 dark:text-cream-secondary">Inclusions atlas</h2>
+            <span class="text-sm text-slate-500 dark:text-cream-muted">({inclusionTopics.length} articles)</span>
           </div>
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100 dark:border-coffee-border">
             {inclusionTopics.map((t) => (
               <a href={t.href} class="group">
                 <Card hover padding="md" className="h-full">
@@ -297,7 +297,7 @@ const iconPaths: Record<string, string> = {
                 />
               </svg>
             </IconBox>
-            <h2 class="text-2xl font-bold text-slate-900">Treatments &amp; synthetics: deep dives</h2>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">Treatments &amp; synthetics: deep dives</h2>
           </div>
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {deepDiveTopics.map((t) => (
@@ -315,36 +315,36 @@ const iconPaths: Record<string, string> = {
       )}
 
       <section class="mt-16">
-        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
-          <h2 class="text-xl font-semibold text-slate-900">Hands-on companion tools</h2>
-          <p class="mt-2 text-slate-700">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8 dark:bg-coffee-raised dark:border-coffee-border">
+          <h2 class="text-xl font-semibold text-slate-900 dark:text-cream-primary">Hands-on companion tools</h2>
+          <p class="mt-2 text-slate-700 dark:text-cream-secondary">
             Each step in the protocol above has an interactive widget on this site that runs
             entirely in your browser (no installation, no account, no upload of stone data):
           </p>
           <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/measurement/">Measurement</a>
-              <span class="text-slate-600">: RI lookup, SG with water-temp correction, birefringence, carat estimator</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/tools/measurement/">Measurement</a>
+              <span class="text-slate-600 dark:text-cream-muted">: RI lookup, SG with water-temp correction, birefringence, carat estimator</span>
             </li>
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/optical/">Optical</a>
-              <span class="text-slate-600">: refractometer simulator, polariscope guide, pleochroism + optic-sign reasoners</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/tools/optical/">Optical</a>
+              <span class="text-slate-600 dark:text-cream-muted">: refractometer simulator, polariscope guide, pleochroism + optic-sign reasoners</span>
             </li>
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/lab/">Lab</a>
-              <span class="text-slate-600">: spectroscope calculator + band-matcher, UV-fluorescence lookup</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/tools/lab/">Lab</a>
+              <span class="text-slate-600 dark:text-cream-muted">: spectroscope calculator + band-matcher, UV-fluorescence lookup</span>
             </li>
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/identification/">Identification</a>
-              <span class="text-slate-600">: Gem Identifier (filtered DB query against your measured RI/SG/system)</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/tools/identification/">Identification</a>
+              <span class="text-slate-600 dark:text-cream-muted">: Gem Identifier (filtered DB query against your measured RI/SG/system)</span>
             </li>
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/tools/advanced/">Advanced</a>
-              <span class="text-slate-600">: Treatment Wizard, Treatment Detection table, Proportion Analyzer</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/tools/advanced/">Advanced</a>
+              <span class="text-slate-600 dark:text-cream-muted">: Treatment Wizard, Treatment Detection table, Proportion Analyzer</span>
             </li>
             <li>
-              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700" href="/quiz/">Practice quiz</a>
-              <span class="text-slate-600">: SM-2-scheduled spaced-repetition with rationale panels</span>
+              <a class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold" href="/quiz/">Practice quiz</a>
+              <span class="text-slate-600 dark:text-cream-muted">: SM-2-scheduled spaced-repetition with rationale panels</span>
             </li>
           </ul>
         </div>

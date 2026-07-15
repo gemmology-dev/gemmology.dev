@@ -55,20 +55,20 @@ export function GemMatchCard({
   return (
     <div
       className={cn(
-        'p-3 rounded-lg bg-white border border-slate-200',
-        'hover:border-crystal-300 hover:shadow-sm transition-all',
+        'p-3 rounded-lg bg-white dark:bg-coffee-raised border border-slate-200 dark:border-coffee-border',
+        'hover:border-crystal-300 dark:hover:border-crystal-400/40 hover:shadow-sm transition-all',
         className
       )}
     >
       {/* Gem name + origin badge */}
-      <h4 className="font-medium text-slate-900 mb-2">
+      <h4 className="font-medium text-slate-900 dark:text-cream-primary mb-2">
         {gem.name}
         {gem.origin && gem.origin !== 'natural' && (
           <span className={cn(
             'ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded-full border',
-            gem.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200',
-            gem.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200',
-            gem.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300',
+            gem.origin === 'synthetic' && 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-400/10 dark:text-blue-300 dark:border-blue-400/20',
+            gem.origin === 'simulant' && 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/20',
+            gem.origin === 'composite' && 'bg-slate-100 text-slate-600 border-slate-300 dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border-strong',
           )}>
             {gem.origin}
           </span>
@@ -82,14 +82,14 @@ export function GemMatchCard({
             key={prop.key}
             className={cn(
               'text-center p-1 rounded',
-              prop.matched && 'bg-crystal-100'
+              prop.matched && 'bg-crystal-100 dark:bg-crystal-400/10'
             )}
           >
-            <p className="text-slate-600">{prop.label}</p>
+            <p className="text-slate-600 dark:text-cream-muted">{prop.label}</p>
             <p
               className={cn(
                 'font-medium',
-                prop.matched ? 'text-crystal-700' : 'text-slate-700'
+                prop.matched ? 'text-crystal-700 dark:text-crystal-400' : 'text-slate-700 dark:text-cream-secondary'
               )}
             >
               {prop.value}

@@ -36,11 +36,11 @@ function ToggleRow({ id, label, description, checked, onToggle }: ToggleRowProps
       <div className="flex-1 min-w-0">
         <label
           htmlFor={id}
-          className="block text-sm font-medium text-slate-800 cursor-pointer"
+          className="block text-sm font-medium text-slate-800 cursor-pointer dark:text-cream-primary"
         >
           {label}
         </label>
-        <p className="text-sm text-slate-600 mt-0.5">{description}</p>
+        <p className="text-sm text-slate-600 mt-0.5 dark:text-cream-secondary">{description}</p>
       </div>
       {/* Toggle switch */}
       <button
@@ -53,8 +53,8 @@ function ToggleRow({ id, label, description, checked, onToggle }: ToggleRowProps
         className={cn(
           'relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent',
           'cursor-pointer transition-colors duration-200',
-          'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2',
-          checked ? 'bg-crystal-600' : 'bg-slate-200',
+          'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-crystal-400',
+          checked ? 'bg-crystal-600 dark:bg-crystal-600' : 'bg-slate-200 dark:bg-coffee-border-strong',
         )}
       >
         <span
@@ -75,11 +75,11 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
 
   return (
     <Card padding="none" className="overflow-hidden">
-      <CardHeader className="px-6 pt-6 pb-4 mb-0 border-b border-slate-100">
+      <CardHeader className="px-6 pt-6 pb-4 mb-0 border-b border-slate-100 dark:border-coffee-border">
         <CardTitle as="h2">Study settings</CardTitle>
       </CardHeader>
 
-      <CardContent className="px-6 py-2 divide-y divide-slate-100">
+      <CardContent className="px-6 py-2 divide-y divide-slate-100 dark:divide-coffee-border">
         {/* Require confidence */}
         <ToggleRow
           id="setting-require-confidence"
@@ -102,14 +102,14 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
         <div className="py-3">
           <label
             htmlFor="setting-review-mix"
-            className="block text-sm font-medium text-slate-800"
+            className="block text-sm font-medium text-slate-800 dark:text-cream-primary"
           >
             Review mix
-            <span className="ml-2 text-xs font-normal text-slate-600">
+            <span className="ml-2 text-xs font-normal text-slate-600 dark:text-cream-muted">
               {reviewMixPercent}% review / {100 - reviewMixPercent}% new
             </span>
           </label>
-          <p className="text-sm text-slate-600 mt-0.5 mb-2">
+          <p className="text-sm text-slate-600 mt-0.5 mb-2 dark:text-cream-secondary">
             Fraction of due (spaced-repetition) items vs new questions in each session.
           </p>
           <input
@@ -128,11 +128,11 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
             aria-valuetext={`${reviewMixPercent}% review`}
             className={cn(
               'w-full h-2 rounded-full appearance-none cursor-pointer',
-              'bg-slate-200',
-              'accent-crystal-600',
+              'bg-slate-200 dark:bg-coffee-border-strong',
+              'accent-crystal-600 dark:accent-crystal-400',
             )}
           />
-          <div className="flex justify-between text-xs text-slate-600 mt-1">
+          <div className="flex justify-between text-xs text-slate-600 mt-1 dark:text-cream-muted">
             <span>All new</span>
             <span>All review</span>
           </div>
@@ -142,11 +142,11 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
         <div className="py-3">
           <label
             htmlFor="setting-question-count"
-            className="block text-sm font-medium text-slate-800"
+            className="block text-sm font-medium text-slate-800 dark:text-cream-primary"
           >
             Default question count
           </label>
-          <p className="text-sm text-slate-600 mt-0.5 mb-2">
+          <p className="text-sm text-slate-600 mt-0.5 mb-2 dark:text-cream-secondary">
             Pre-filled in the quiz setup screen.
           </p>
           <input
@@ -166,9 +166,10 @@ export function StudySettingsPanel({ value, onChange }: StudySettingsPanelProps)
             aria-valuemax={50}
             className={cn(
               'block w-24 rounded-lg border border-slate-300 px-3 py-1.5 text-sm',
-              'text-slate-800',
-              'bg-white',
-              'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500',
+              'text-slate-800 dark:text-cream-primary',
+              'bg-white dark:bg-coffee-sunk',
+              'dark:border-coffee-border-strong',
+              'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500 dark:focus:ring-crystal-400',
             )}
           />
         </div>

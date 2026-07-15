@@ -85,10 +85,10 @@ export function DensityEstimator() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Calculate density (SG) for irregular or fragile stones using volume estimation methods.
         </p>
-        <p className="text-sm text-slate-600 mt-2">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary mt-2">
           <strong>Formula:</strong> Density = Weight ÷ Volume
         </p>
       </div>
@@ -186,7 +186,7 @@ export function DensityEstimator() {
           </FormField>
 
           {result && (
-            <div className="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">
+            <div className="text-sm text-slate-600 dark:text-cream-secondary bg-slate-50 dark:bg-coffee-raised2 rounded-lg p-3">
               <strong>Calculated Volume:</strong> {result.calculatedVolume.toFixed(3)} cm³
             </div>
           )}
@@ -194,7 +194,7 @@ export function DensityEstimator() {
       )}
 
       {needsMoreInput && (
-        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm">
           Enter weight and {method === 'geometric' ? 'all dimensions' : 'volume'} to calculate density.
         </div>
       )}
@@ -209,9 +209,9 @@ export function DensityEstimator() {
         />
       )}
 
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-amber-900 mb-2">When to Use This Tool</h4>
-        <ul className="text-sm text-amber-800 space-y-1">
+      <div className="bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-amber-900 dark:text-amber-300 mb-2">When to Use This Tool</h4>
+        <ul className="text-sm text-amber-800 dark:text-amber-200 space-y-1">
           <li>• Fragile or porous stones that can't be submerged</li>
           <li>• Irregular rough specimens without standard shapes</li>
           <li>• Quick field estimates when lab equipment isn't available</li>

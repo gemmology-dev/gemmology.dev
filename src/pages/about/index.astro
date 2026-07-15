@@ -41,9 +41,12 @@ const AUTHOR_SAMEAS      = ["https://www.jewlarray.ch/", "https://github.com/Bis
 
   <Container size="md" padding="lg">
     <article class="prose prose-slate prose-lg max-w-none
-                    prose-headings:text-slate-900
-                    prose-p:text-slate-600 prose-p:leading-relaxed
-                    prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700">
+                    prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                    prose-p:text-slate-600 dark:prose-p:text-cream-secondary prose-p:leading-relaxed
+                    prose-li:dark:text-cream-secondary
+                    prose-strong:dark:text-cream-primary
+                    prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700
+                    dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold">
       <h1>About gemmology.dev</h1>
       <p class="lead">
         gemmology.dev is an open, FGA-aligned reference and study toolkit for
@@ -133,3 +136,23 @@ const AUTHOR_SAMEAS      = ["https://www.jewlarray.ch/", "https://github.com/Bis
     </article>
   </Container>
 </BaseLayout>
+
+<style>
+  /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
+     values (tailwind.config.mjs `typography.extend`) — see the identical
+     block in src/pages/learn/[...slug].astro for the full rationale. */
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

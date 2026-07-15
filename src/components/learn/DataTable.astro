@@ -24,27 +24,27 @@ function processCellHtml(cell: string): string {
 }
 ---
 
-<div class="overflow-x-auto my-6 rounded-xl border border-slate-200">
+<div class="overflow-x-auto my-6 rounded-xl border border-slate-200 dark:border-coffee-border">
   {caption && (
-    <div class="text-sm text-slate-600 px-4 py-2 text-left bg-slate-50 border-b border-slate-200">{caption}</div>
+    <div class="text-sm text-slate-600 dark:text-cream-secondary px-4 py-2 text-left bg-slate-50 dark:bg-coffee-raised2 border-b border-slate-200 dark:border-coffee-border">{caption}</div>
   )}
-  <table class="min-w-full divide-y divide-slate-200 !m-0">
-    <thead class="bg-gradient-to-r from-crystal-50 to-slate-50">
+  <table class="min-w-full divide-y divide-slate-200 dark:divide-coffee-border !m-0">
+    <thead class="bg-gradient-to-r from-crystal-50 to-slate-50 dark:from-coffee-raised2 dark:to-coffee-raised2">
       <tr>
         {headers.map(header => (
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider border-b border-slate-200">
+          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-cream-primary uppercase tracking-wider border-b border-slate-200 dark:border-coffee-border">
             {header}
           </th>
         ))}
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-slate-100">
+    <tbody class="bg-white dark:bg-coffee-page divide-y divide-slate-100 dark:divide-coffee-border">
       {rows.map(row => (
-        <tr class="hover:bg-slate-50 transition-colors">
+        <tr class="hover:bg-slate-50 dark:hover:bg-coffee-raised transition-colors">
           {row.map((cell, i) => {
             const hasCite = citationIndex && /\{cite:/.test(cell);
             return (
-              <td class={`px-4 py-3 text-sm ${i === 0 ? 'font-medium text-slate-900' : 'text-slate-600'}`}>
+              <td class={`px-4 py-3 text-sm ${i === 0 ? 'font-medium text-slate-900 dark:text-cream-primary' : 'text-slate-600 dark:text-cream-secondary'}`}>
                 {hasCite
                   ? <Fragment set:html={processCellHtml(cell)} />
                   : cell}

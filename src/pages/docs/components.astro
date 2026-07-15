@@ -18,26 +18,26 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
   title="UI Components"
   description="Complete reference for gemmology.dev UI component library."
 >
-  <div class="bg-gradient-to-b from-slate-50 to-white">
+  <div class="bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
     <Container size="xl" padding="md">
       <div class="max-w-3xl">
-        <h1 class="text-4xl font-bold text-slate-900">UI Component Library</h1>
-        <p class="mt-4 text-lg text-slate-600">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">UI Component Library</h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-cream-secondary">
           A unified set of React components for consistent styling across gemmology.dev.
-          All components are available from <code class="bg-slate-100 px-1.5 py-0.5 rounded text-sm">@/components/ui</code>.
+          All components are available from <code class="bg-slate-100 px-1.5 py-0.5 rounded text-sm dark:bg-coffee-raised2 dark:text-cream-primary">@/components/ui</code>.
         </p>
       </div>
 
       <div class="mt-16 space-y-24">
         <!-- Button -->
         <section id="button">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Button</h2>
-          <p class="text-slate-600 mb-6">Primary interaction element with multiple variants and sizes.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Button</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Primary interaction element with multiple variants and sizes.</p>
 
           <Card padding="lg">
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Variants</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Variants</h3>
                 <div class="flex flex-wrap gap-3">
                   <Button variant="primary">Primary</Button>
                   <Button variant="secondary">Secondary</Button>
@@ -47,7 +47,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
               </div>
 
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Sizes</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Sizes</h3>
                 <div class="flex flex-wrap items-center gap-3">
                   <Button size="sm">Small</Button>
                   <Button size="md">Medium</Button>
@@ -56,7 +56,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
               </div>
 
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">States</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">States</h3>
                 <div class="flex flex-wrap gap-3">
                   <Button disabled>Disabled</Button>
                   <Button loading>Loading</Button>
@@ -65,8 +65,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             </div>
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { Button } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { Button } from '@/components/ui';
 
 <Button variant="primary" size="md">Click me</Button>
 <Button variant="outline" disabled>Disabled</Button>
@@ -76,8 +76,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Card -->
         <section id="card">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Card</h2>
-          <p class="text-slate-600 mb-6">Container component with optional hover effects and subcomponents.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Card</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Container component with optional hover effects and subcomponents.</p>
 
           <div class="grid md:grid-cols-2 gap-6">
             <Card padding="md">
@@ -86,7 +86,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
                 <CardDescription>This is a basic card with header and content.</CardDescription>
               </CardHeader>
               <CardContent>
-                <p class="text-sm text-slate-600">Card content goes here.</p>
+                <p class="text-sm text-slate-600 dark:text-cream-secondary">Card content goes here.</p>
               </CardContent>
             </Card>
 
@@ -96,7 +96,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
                 <CardDescription>This card has hover effects.</CardDescription>
               </CardHeader>
               <CardContent>
-                <p class="text-sm text-slate-600">Hover over me to see the effect.</p>
+                <p class="text-sm text-slate-600 dark:text-cream-secondary">Hover over me to see the effect.</p>
               </CardContent>
               <CardFooter>
                 <Button size="sm">Action</Button>
@@ -104,8 +104,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             </Card>
           </div>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui';
 
 <Card hover padding="md">
   <CardHeader>
@@ -123,13 +123,13 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Badge -->
         <section id="badge">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Badge</h2>
-          <p class="text-slate-600 mb-6">Small labels for categorization, status, and metadata.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Badge</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Small labels for categorization, status, and metadata.</p>
 
           <Card padding="lg">
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Basic Variants</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Basic Variants</h3>
                 <div class="flex flex-wrap gap-2">
                   <Badge variant="default">Default</Badge>
                   <Badge variant="crystal">Crystal</Badge>
@@ -142,7 +142,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
               </div>
 
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Crystal System Variants</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Crystal System Variants</h3>
                 <div class="flex flex-wrap gap-2">
                   <Badge variant="cubic">Cubic</Badge>
                   <Badge variant="hexagonal">Hexagonal</Badge>
@@ -155,7 +155,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
               </div>
 
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Sizes</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Sizes</h3>
                 <div class="flex flex-wrap items-center gap-2">
                   <Badge size="sm">Small</Badge>
                   <Badge size="md">Medium</Badge>
@@ -167,13 +167,13 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- IconBox -->
         <section id="iconbox">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">IconBox</h2>
-          <p class="text-slate-600 mb-6">Styled container for icons with color variants.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">IconBox</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Styled container for icons with color variants.</p>
 
           <Card padding="lg">
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Variants</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Variants</h3>
                 <div class="flex flex-wrap gap-4">
                   <IconBox variant="crystal"><Fragment set:html={exampleIcon} /></IconBox>
                   <IconBox variant="ruby"><Fragment set:html={exampleIcon} /></IconBox>
@@ -185,7 +185,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
               </div>
 
               <div>
-                <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Sizes</h3>
+                <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Sizes</h3>
                 <div class="flex flex-wrap items-center gap-4">
                   <IconBox size="sm"><Fragment set:html={exampleIcon} /></IconBox>
                   <IconBox size="md"><Fragment set:html={exampleIcon} /></IconBox>
@@ -195,8 +195,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             </div>
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { IconBox } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { IconBox } from '@/components/ui';
 
 <IconBox variant="crystal" size="md">
   <CrystalIcon />
@@ -206,8 +206,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- DifficultyBadge -->
         <section id="difficulty-badge">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">DifficultyBadge</h2>
-          <p class="text-slate-600 mb-6">Specialized badge for indicating content difficulty levels.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">DifficultyBadge</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Specialized badge for indicating content difficulty levels.</p>
 
           <Card padding="lg">
             <div class="flex flex-wrap gap-4">
@@ -217,8 +217,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             </div>
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { DifficultyBadge } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { DifficultyBadge } from '@/components/ui';
 
 <DifficultyBadge level="beginner" />
 <DifficultyBadge level="intermediate" size="md" />
@@ -228,28 +228,28 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Container -->
         <section id="container">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Container</h2>
-          <p class="text-slate-600 mb-6">Layout wrapper with consistent max-width and padding.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Container</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Layout wrapper with consistent max-width and padding.</p>
 
           <Card padding="lg">
             <div class="space-y-4">
-              <div class="border border-dashed border-slate-300 rounded-lg p-4">
-                <code class="text-sm text-slate-600">size="sm" → max-w-3xl</code>
+              <div class="border border-dashed border-slate-300 dark:border-coffee-border-strong rounded-lg p-4">
+                <code class="text-sm text-slate-600 dark:text-cream-secondary">size="sm" → max-w-3xl</code>
               </div>
-              <div class="border border-dashed border-slate-300 rounded-lg p-4">
-                <code class="text-sm text-slate-600">size="md" → max-w-4xl</code>
+              <div class="border border-dashed border-slate-300 dark:border-coffee-border-strong rounded-lg p-4">
+                <code class="text-sm text-slate-600 dark:text-cream-secondary">size="md" → max-w-4xl</code>
               </div>
-              <div class="border border-dashed border-slate-300 rounded-lg p-4">
-                <code class="text-sm text-slate-600">size="lg" → max-w-6xl</code>
+              <div class="border border-dashed border-slate-300 dark:border-coffee-border-strong rounded-lg p-4">
+                <code class="text-sm text-slate-600 dark:text-cream-secondary">size="lg" → max-w-6xl</code>
               </div>
-              <div class="border border-dashed border-slate-300 rounded-lg p-4">
-                <code class="text-sm text-slate-600">size="xl" → max-w-7xl (default)</code>
+              <div class="border border-dashed border-slate-300 dark:border-coffee-border-strong rounded-lg p-4">
+                <code class="text-sm text-slate-600 dark:text-cream-secondary">size="xl" → max-w-7xl (default)</code>
               </div>
             </div>
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { Container } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { Container } from '@/components/ui';
 
 <Container size="xl" padding="md">
   Content with max-w-7xl and medium padding
@@ -263,8 +263,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- SectionHeader -->
         <section id="section-header">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">SectionHeader</h2>
-          <p class="text-slate-600 mb-6">Consistent section title and description pattern.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">SectionHeader</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Consistent section title and description pattern.</p>
 
           <Card padding="lg">
             <SectionHeader
@@ -275,8 +275,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             />
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { SectionHeader } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { SectionHeader } from '@/components/ui';
 
 <SectionHeader
   title="Section Title"
@@ -289,8 +289,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Link -->
         <section id="link">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Link</h2>
-          <p class="text-slate-600 mb-6">Styled anchor element with variants and arrow option.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Link</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Styled anchor element with variants and arrow option.</p>
 
           <Card padding="lg">
             <div class="space-y-4">
@@ -306,8 +306,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             </div>
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { Link } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { Link } from '@/components/ui';
 
 <Link href="/page" variant="primary" withArrow>
   Go to page
@@ -321,11 +321,11 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Table -->
         <section id="table">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Table</h2>
-          <p class="text-slate-600 mb-6">Unified table component with multiple variants.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Table</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Unified table component with multiple variants.</p>
 
           <Card padding="lg">
-            <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">DataTable</h3>
+            <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">DataTable</h3>
             <DataTable
               headers={['Property', 'Value', 'Description']}
               rows={[
@@ -338,7 +338,7 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
           </Card>
 
           <Card padding="lg" className="mt-6">
-            <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">PropertyTable</h3>
+            <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">PropertyTable</h3>
             <PropertyTable
               title="Crystal Properties"
               properties={[
@@ -350,8 +350,8 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
             />
           </Card>
 
-          <div class="mt-6 bg-slate-900 rounded-xl p-4 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code>{`import { Table, DataTable, PropertyTable } from '@/components/ui';
+          <div class="mt-6 bg-slate-900 dark:bg-coffee-raised2 dark:border dark:border-coffee-border-strong rounded-xl p-4 overflow-x-auto">
+            <pre class="text-sm font-mono text-slate-300 dark:text-cream-secondary"><code>{`import { Table, DataTable, PropertyTable } from '@/components/ui';
 
 // Simple data table
 <DataTable
@@ -369,41 +369,41 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Design Tokens -->
         <section id="design-tokens">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Design Tokens</h2>
-          <p class="text-slate-600 mb-6">Core color palette and typography scale.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Design Tokens</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Core color palette and typography scale.</p>
 
           <Card padding="lg">
-            <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Crystal Palette</h3>
+            <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-3">Crystal Palette</h3>
             <div class="flex flex-wrap gap-2">
               {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => (
                 <div class="text-center">
                   <div class={`w-12 h-12 rounded-lg bg-crystal-${shade}`}></div>
-                  <span class="text-xs text-slate-600 mt-1">{shade}</span>
+                  <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">{shade}</span>
                 </div>
               ))}
             </div>
 
-            <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mt-6 mb-3">Gem Colors</h3>
+            <h3 class="text-sm font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mt-6 mb-3">Gem Colors</h3>
             <div class="flex flex-wrap gap-2">
               <div class="text-center">
                 <div class="w-12 h-12 rounded-lg bg-gem-ruby"></div>
-                <span class="text-xs text-slate-600 mt-1">Ruby</span>
+                <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">Ruby</span>
               </div>
               <div class="text-center">
                 <div class="w-12 h-12 rounded-lg bg-gem-sapphire"></div>
-                <span class="text-xs text-slate-600 mt-1">Sapphire</span>
+                <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">Sapphire</span>
               </div>
               <div class="text-center">
                 <div class="w-12 h-12 rounded-lg bg-gem-emerald"></div>
-                <span class="text-xs text-slate-600 mt-1">Emerald</span>
+                <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">Emerald</span>
               </div>
               <div class="text-center">
                 <div class="w-12 h-12 rounded-lg bg-gem-amethyst"></div>
-                <span class="text-xs text-slate-600 mt-1">Amethyst</span>
+                <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">Amethyst</span>
               </div>
               <div class="text-center">
                 <div class="w-12 h-12 rounded-lg bg-gem-topaz"></div>
-                <span class="text-xs text-slate-600 mt-1">Topaz</span>
+                <span class="text-xs text-slate-600 dark:text-cream-muted mt-1">Topaz</span>
               </div>
             </div>
           </Card>
@@ -411,11 +411,16 @@ const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke
 
         <!-- Usage Guidelines -->
         <section id="guidelines">
-          <h2 class="text-2xl font-bold text-slate-900 mb-4">Usage Guidelines</h2>
-          <p class="text-slate-600 mb-6">Best practices for using the component library.</p>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-4">Usage Guidelines</h2>
+          <p class="text-slate-600 dark:text-cream-secondary mb-6">Best practices for using the component library.</p>
 
-          <Card padding="lg" className="bg-slate-50">
-            <div class="prose prose-slate max-w-none">
+          <Card padding="lg" className="bg-slate-50 dark:bg-coffee-raised">
+            <div class="prose prose-slate max-w-none
+                        dark:prose-headings:text-cream-primary
+                        dark:prose-p:text-cream-secondary
+                        dark:prose-li:text-cream-secondary
+                        dark:prose-strong:text-cream-primary
+                        dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold">
               <h3>Import from the barrel export</h3>
               <pre><code>import {'{'} Button, Card, Badge {'}'} from '@/components/ui';</code></pre>
 

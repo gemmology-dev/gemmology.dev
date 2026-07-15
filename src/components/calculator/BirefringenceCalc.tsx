@@ -40,9 +40,9 @@ export function BirefringenceCalc() {
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter the maximum and minimum refractive index values to calculate birefringence.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           Formula: Birefringence = RI(max) − RI(min)
         </p>
       </div>
@@ -88,7 +88,7 @@ export function BirefringenceCalc() {
         />
       )}
 
-      <div className="text-sm text-slate-600 space-y-1">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary space-y-1">
         <p><strong>Example (Quartz):</strong> 1.553 − 1.544 = 0.009 (Low)</p>
         <p><strong>Example (Zircon):</strong> 1.984 − 1.925 = 0.059 (Very High)</p>
         <p><strong>Note:</strong> Isotropic gems (cubic system) have no birefringence.</p>

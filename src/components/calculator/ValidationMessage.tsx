@@ -28,9 +28,9 @@ export function ValidationMessage({
     <p
       className={cn(
         'text-xs mt-1',
-        type === 'error' && 'text-red-600',
-        type === 'warning' && 'text-amber-500',
-        type === 'info' && 'text-slate-600',
+        type === 'error' && 'text-red-600 dark:text-red-400',
+        type === 'warning' && 'text-amber-500 dark:text-amber-400',
+        type === 'info' && 'text-slate-600 dark:text-cream-secondary',
         className
       )}
       role={type === 'error' ? 'alert' : 'status'}

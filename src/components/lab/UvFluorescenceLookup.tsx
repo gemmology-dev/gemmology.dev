@@ -134,14 +134,14 @@ export function UvFluorescenceLookup() {
 
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-slate-600 dark:text-cream-secondary">
         Observe the stone under both long-wave (365 nm) and short-wave (254 nm) UV in a darkened
         cabinet and report what you see. The reasoner ranks species whose stored fluorescence text
         matches your observation.
       </p>
 
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
-        <h4 className="text-sm font-semibold text-slate-700">Long-wave (365 nm)</h4>
+      <div className="rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2 p-4 space-y-4">
+        <h4 className="text-sm font-semibold text-slate-700 dark:text-cream-secondary">Long-wave (365 nm)</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <FormField name="lw-int" label="Intensity">
             <Select
@@ -156,8 +156,8 @@ export function UvFluorescenceLookup() {
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
-        <h4 className="text-sm font-semibold text-slate-700">Short-wave (254 nm)</h4>
+      <div className="rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2 p-4 space-y-4">
+        <h4 className="text-sm font-semibold text-slate-700 dark:text-cream-secondary">Short-wave (254 nm)</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <FormField name="sw-int" label="Intensity">
             <Select
@@ -173,12 +173,12 @@ export function UvFluorescenceLookup() {
       </div>
 
       {loading && (
-        <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm">
+        <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm">
           Loading mineral database…
         </div>
       )}
       {dbError && (
-        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 text-red-700 dark:text-red-300 text-sm">
           Database unavailable: {dbError}
         </div>
       )}
@@ -186,39 +186,39 @@ export function UvFluorescenceLookup() {
       {!loading && !dbError && families.length > 0 && (
         <>
           {!hasObservation ? (
-            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm text-center">
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm text-center">
               Select an LW or SW intensity to see ranked candidates.
             </div>
           ) : matches.length === 0 ? (
-            <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm text-center">
+            <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm text-center">
               No species match these UV reactions. Try widening colour or intensity, or recheck observations under darker conditions.
             </div>
           ) : (
             <div className="space-y-3">
-              <h4 className="text-sm font-medium text-slate-700">
+              <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
                 {matches.length} candidate {matches.length === 1 ? 'family' : 'families'}
               </h4>
               {paginated.map((m) => (
                 <div
                   key={m.family.id}
-                  className="p-3 rounded-lg bg-white border border-slate-200"
+                  className="p-3 rounded-lg bg-white dark:bg-coffee-raised border border-slate-200 dark:border-coffee-border"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <a
                       href={`/minerals/${m.family.id}`}
-                      className="font-semibold text-rose-700 hover:underline"
+                      className="font-semibold text-rose-700 dark:text-rose-400 hover:underline"
                     >
                       {m.family.name}
                     </a>
-                    <div className="text-xs text-slate-600">match {(m.score * 100).toFixed(0)}%</div>
+                    <div className="text-xs text-slate-600 dark:text-cream-muted">match {(m.score * 100).toFixed(0)}%</div>
                   </div>
                   {m.family.fluorescence && (
-                    <div className="mt-1 text-xs text-slate-700">
+                    <div className="mt-1 text-xs text-slate-700 dark:text-cream-secondary">
                       Stored: {m.family.fluorescence}
                     </div>
                   )}
                   {m.treatmentFlag && (
-                    <div className="mt-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded p-2">
+                    <div className="mt-2 text-xs text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 rounded p-2">
                       ⚠ {m.treatmentFlag}
                     </div>
                   )}

@@ -38,11 +38,11 @@ export function StudySettingsScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 dark:from-coffee-page dark:to-coffee-page">
       <div className="max-w-3xl mx-auto px-4 space-y-8">
         <header>
-          <h1 className="text-3xl font-bold text-slate-900">Study settings</h1>
-          <p className="text-slate-600 mt-2">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-cream-primary">Study settings</h1>
+          <p className="text-slate-600 mt-2 dark:text-cream-secondary">
             Customise how the study system schedules and presents practice questions.
           </p>
         </header>
@@ -53,7 +53,7 @@ export function StudySettingsScreen() {
             <ExportImportPanel store={store} />
           </>
         ) : (
-          <div className="text-center py-12 animate-pulse text-slate-500">
+          <div className="text-center py-12 animate-pulse text-slate-500 dark:text-cream-muted">
             Loading settings…
           </div>
         )}

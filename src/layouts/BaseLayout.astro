@@ -43,6 +43,84 @@ const fullTitle = isHome
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!--
+      No-FOUC dark mode activation. Must run synchronously, before any CSS
+      paint, so the correct `data-theme` is on <html> before first render.
+      See docs/dark-mode.md for the full architecture (this is the single
+      source of truth for theme state; ThemeToggle.astro only reflects it).
+    -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var STORAGE_KEY = 'theme';
+        var media = window.matchMedia
+          ? window.matchMedia('(prefers-color-scheme: dark)')
+          : null;
+
+        function getStored() {
+          try {
+            var v = localStorage.getItem(STORAGE_KEY);
+            return v === 'dark' || v === 'light' ? v : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function systemTheme() {
+          return media && media.matches ? 'dark' : 'light';
+        }
+
+        function apply(theme) {
+          root.setAttribute('data-theme', theme);
+        }
+
+        // Initial paint.
+        apply(getStored() || systemTheme());
+
+        // Global setter shared by ThemeToggle (and any future theme UI).
+        // `persist=false` is used for changes that originate elsewhere
+        // (another tab, the OS) so we don't re-write a preference the user
+        // never explicitly chose.
+        window.__setTheme = function (theme, persist) {
+          apply(theme);
+          if (persist !== false) {
+            try {
+              localStorage.setItem(STORAGE_KEY, theme);
+            } catch (e) {
+              /* localStorage unavailable (private mode, etc.) - theme still applies for this load */
+            }
+          }
+          document.dispatchEvent(
+            new CustomEvent('themechange', { detail: { theme: theme } })
+          );
+        };
+
+        // Cross-tab sync: another tab changed localStorage.theme.
+        window.addEventListener('storage', function (event) {
+          if (event.key !== STORAGE_KEY) return;
+          var next =
+            event.newValue === 'dark' || event.newValue === 'light'
+              ? event.newValue
+              : systemTheme();
+          window.__setTheme(next, false);
+        });
+
+        // Follow OS theme changes ONLY while no explicit preference is stored.
+        if (media) {
+          var onMediaChange = function (event) {
+            if (getStored()) return; // explicit user preference always wins
+            window.__setTheme(event.matches ? 'dark' : 'light', false);
+          };
+          if (media.addEventListener) {
+            media.addEventListener('change', onMediaChange);
+          } else if (media.addListener) {
+            media.addListener(onMediaChange); // Safari <14 fallback
+          }
+        }
+      })();
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
 

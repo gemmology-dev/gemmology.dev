@@ -278,14 +278,17 @@ export function Crystal3DViewer({
 
   if (!isClient) {
     return (
-      <div className={`flex items-center justify-center bg-slate-100 ${className}`}>
-        <div className="text-slate-500">Loading 3D viewer...</div>
+      <div className={`flex items-center justify-center bg-slate-100 dark:bg-coffee-raised dark:border dark:border-coffee-border ${className}`}>
+        <div className="text-slate-500 dark:text-cream-muted">Loading 3D viewer...</div>
       </div>
     );
   }
 
+  // Specimen plate: the WebGL crystal render surface stays permanently light
+  // in both themes (see docs/dark-mode.md §6) - only a dark border is added
+  // so it doesn't float untethered on the dark page.
   return (
-    <div className={`w-full h-full min-h-[400px] bg-gradient-to-b from-slate-50 to-slate-100 rounded-lg overflow-hidden ${className}`}>
+    <div className={`w-full h-full min-h-[400px] bg-gradient-to-b from-slate-50 to-slate-100 rounded-lg overflow-hidden dark:border dark:border-coffee-border ${className}`}>
       <Canvas
         camera={{ position: [3, 3, 3], fov: 45 }}
         gl={{ antialias: true, alpha: true }}

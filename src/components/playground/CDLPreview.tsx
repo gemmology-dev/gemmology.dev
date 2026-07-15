@@ -23,10 +23,14 @@ interface CDLPreviewProps {
 
 export function CDLPreview({ svgContent, loading, error, className, onRetry }: CDLPreviewProps) {
   return (
+    // Specimen plate: crystal SVG render surface stays permanently light in
+    // both themes (see docs/dark-mode.md §6) - only a dark border is added so
+    // it doesn't float untethered on the dark page.
     <div
       className={clsx(
         'relative bg-slate-50 rounded-lg overflow-hidden',
         'bg-[radial-gradient(circle,#e2e8f0_1px,transparent_1px)] bg-[size:20px_20px]',
+        'dark:border dark:border-coffee-border',
         className
       )}
     >

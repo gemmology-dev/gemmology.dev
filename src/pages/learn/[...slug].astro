@@ -228,13 +228,13 @@ const orderedRefs = hasCitations
 
     <article>
       <header class="mb-10">
-        <h1 class="text-4xl font-bold text-slate-900">{data.title}</h1>
-        <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">{data.title}</h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-cream-secondary leading-relaxed">
           {data.description}
         </p>
 
-        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
-          <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'Fabian Moor'}</a></span>
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600 dark:text-cream-muted">
+          <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:hover:text-crystal-300 dark:decoration-crystal-400/30 dark:hover:decoration-gold">{data.author || 'Fabian Moor'}</a></span>
           {dateModified && dateModifiedDisplay && (
             <span>
               Last updated
@@ -265,11 +265,15 @@ const orderedRefs = hasCitations
       )}
 
       <div class="prose prose-slate prose-lg max-w-none
-                  prose-headings:text-slate-900
-                  prose-p:text-slate-600 prose-p:leading-relaxed prose-p:max-w-[70ch]
-                  prose-li:max-w-[70ch]
-                  prose-strong:text-slate-900 prose-strong:font-semibold
-                  prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700">
+                  prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                  prose-p:text-slate-600 dark:prose-p:text-cream-secondary prose-p:leading-relaxed prose-p:max-w-[70ch]
+                  prose-li:max-w-[70ch] dark:prose-li:text-cream-secondary
+                  prose-strong:text-slate-900 dark:prose-strong:text-cream-primary prose-strong:font-semibold
+                  prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700
+                  dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold
+                  dark:prose-blockquote:border-coffee-border-strong dark:prose-blockquote:text-cream-secondary
+                  dark:prose-hr:border-coffee-border
+                  dark:prose-th:text-cream-primary dark:prose-td:text-cream-secondary">
         {data.sections.map(section => (
           <SectionRenderer section={section} citationIndex={citationIndex} />
         ))}
@@ -278,8 +282,8 @@ const orderedRefs = hasCitations
       {hasCitations && <References citationIndex={citationIndex} />}
 
       {data.related && data.related.length > 0 && (
-        <Card padding="md" class="mt-16 bg-slate-50 border-slate-200">
-          <h3 class="text-lg font-semibold text-slate-900 mb-4">Related Topics</h3>
+        <Card padding="md" class="mt-16 bg-slate-50 border-slate-200 dark:bg-coffee-raised dark:border-coffee-border">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-cream-primary mb-4">Related Topics</h3>
           <div class="flex flex-wrap gap-3">
             {data.related.map(slug => {
               const related = allEntries.find(e => e.id === slug);
@@ -289,7 +293,7 @@ const orderedRefs = hasCitations
                   href={`/learn/${slug}`}
                   hover
                   padding="none"
-                  class="px-4 py-2 text-sm text-slate-700"
+                  class="px-4 py-2 text-sm text-slate-700 dark:text-cream-secondary"
                 >
                   {related.data.title}
                 </Card>
@@ -306,3 +310,26 @@ const orderedRefs = hasCitations
     />
   </Container>
 </BaseLayout>
+
+<style>
+  /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
+     values (tailwind.config.mjs `typography.extend`). These raw CSS colors
+     can't be reached via `dark:prose-*` utility modifiers, and editing
+     tailwind.config.mjs is out of scope for this sweep, so they're overridden
+     here for any `.prose` block on this route (including nested ones
+     rendered by SectionRenderer). */
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

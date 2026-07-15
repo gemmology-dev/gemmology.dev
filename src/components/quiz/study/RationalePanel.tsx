@@ -67,7 +67,7 @@ export function RationalePanel({
     <div
       className={cn(
         'mt-4 rounded-xl border-2 overflow-hidden',
-        correct ? 'border-emerald-200' : 'border-red-200',
+        correct ? 'border-emerald-200 dark:border-emerald-400/20' : 'border-red-200 dark:border-red-400/20',
       )}
       role="region"
       aria-label="Answer explanation"
@@ -80,14 +80,14 @@ export function RationalePanel({
         aria-controls="rationale-body"
         className={cn(
           'w-full flex items-center justify-between px-4 py-3 text-left',
-          'focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-crystal-500',
-          correct ? 'bg-emerald-50' : 'bg-red-50',
+          'focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-crystal-500 dark:focus-visible:ring-crystal-400',
+          correct ? 'bg-emerald-50 dark:bg-emerald-400/10' : 'bg-red-50 dark:bg-red-400/10',
         )}
       >
         <span
           className={cn(
             'flex items-center gap-2 font-semibold text-sm',
-            correct ? 'text-emerald-700' : 'text-red-700',
+            correct ? 'text-emerald-700 dark:text-emerald-300' : 'text-red-700 dark:text-red-300',
           )}
         >
           {correct ? (
@@ -99,9 +99,9 @@ export function RationalePanel({
         </span>
         <span aria-label={toggleLabel}>
           {expanded ? (
-            <ChevronUp className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            <ChevronUp className="w-4 h-4 text-slate-600 dark:text-cream-secondary" aria-hidden="true" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            <ChevronDown className="w-4 h-4 text-slate-600 dark:text-cream-secondary" aria-hidden="true" />
           )}
         </span>
       </button>
@@ -110,16 +110,16 @@ export function RationalePanel({
       <div
         id="rationale-body"
         hidden={!expanded}
-        className="bg-white"
+        className="bg-white dark:bg-coffee-raised2"
       >
         {/* Main rationale */}
-        <div className="px-4 py-3 text-sm text-slate-700 border-b border-slate-100">
+        <div className="px-4 py-3 text-sm text-slate-700 border-b border-slate-100 dark:text-cream-secondary dark:border-coffee-border">
           {cleanCorrect}
         </div>
 
         {/* Per-option breakdown */}
         {cleanOptions.length > 0 && (
-          <ul className="divide-y divide-slate-100" aria-label="Option breakdown">
+          <ul className="divide-y divide-slate-100 dark:divide-coffee-border" aria-label="Option breakdown">
             {cleanOptions.map((opt, idx) => {
               const wasChosen = userPickedIndex === idx;
               const isCorrect = opt.isCorrect;
@@ -128,21 +128,21 @@ export function RationalePanel({
                   key={idx}
                   className={cn(
                     'px-4 py-3 text-sm',
-                    isCorrect && 'bg-emerald-50/50',
-                    wasChosen && !isCorrect && 'bg-red-50/50',
+                    isCorrect && 'bg-emerald-50/50 dark:bg-emerald-400/5',
+                    wasChosen && !isCorrect && 'bg-red-50/50 dark:bg-red-400/5',
                   )}
                 >
                   <div className="flex items-start gap-2">
                     {isCorrect ? (
                       <CheckCircle2
-                        className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5"
+                        className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5 dark:text-emerald-400"
                         aria-label="Correct option"
                       />
                     ) : (
                       <XCircle
                         className={cn(
                           'w-4 h-4 flex-shrink-0 mt-0.5',
-                          wasChosen ? 'text-red-600' : 'text-slate-600',
+                          wasChosen ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-cream-secondary',
                         )}
                         aria-label={wasChosen ? 'Your choice, incorrect' : 'Incorrect option'}
                       />
@@ -152,10 +152,10 @@ export function RationalePanel({
                         className={cn(
                           'font-medium',
                           isCorrect
-                            ? 'text-emerald-700'
+                            ? 'text-emerald-700 dark:text-emerald-300'
                             : wasChosen
-                            ? 'text-red-700'
-                            : 'text-slate-600',
+                            ? 'text-red-700 dark:text-red-300'
+                            : 'text-slate-600 dark:text-cream-secondary',
                         )}
                       >
                         {opt.text}
@@ -164,7 +164,7 @@ export function RationalePanel({
                         )}
                       </p>
                       {opt.rationale && (
-                        <p className="mt-0.5 text-slate-600">{opt.rationale}</p>
+                        <p className="mt-0.5 text-slate-600 dark:text-cream-secondary">{opt.rationale}</p>
                       )}
                     </div>
                   </div>
@@ -177,15 +177,15 @@ export function RationalePanel({
         {/* Sources footer — single deduped citation line at the foot of the body */}
         {sources.length > 0 && (
           <p
-            className="px-4 py-2.5 text-xs text-slate-500 border-t border-slate-100 bg-slate-50/50"
+            className="px-4 py-2.5 text-xs text-slate-500 border-t border-slate-100 bg-slate-50/50 dark:text-cream-muted dark:border-coffee-border dark:bg-coffee-raised2"
             aria-label="Sources"
           >
-            <span className="font-medium uppercase tracking-wider text-slate-600 mr-2">
+            <span className="font-medium uppercase tracking-wider text-slate-600 mr-2 dark:text-cream-secondary">
               Sources
             </span>
             {sources.map((slug, idx) => (
               <span key={slug}>
-                {idx > 0 && <span aria-hidden="true" className="mx-1.5 text-slate-400">·</span>}
+                {idx > 0 && <span aria-hidden="true" className="mx-1.5 text-slate-400 dark:text-coffee-border-strong">·</span>}
                 {citationLabel(slug)}
               </span>
             ))}

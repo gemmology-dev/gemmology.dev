@@ -60,11 +60,12 @@ export function CrystalCard({
       className={clsx(
         'group rounded-xl border border-slate-200 bg-white overflow-hidden cursor-pointer block',
         'transition-all hover:border-crystal-300 hover:shadow-lg',
+        'dark:border-coffee-border dark:bg-coffee-raised dark:hover:border-crystal-400/40',
         className
       )}
     >
-      {/* Preview */}
-      <div className="aspect-square bg-slate-50 p-4 relative overflow-hidden">
+      {/* Preview — permanent light "specimen plate", see docs/dark-mode.md */}
+      <div className="aspect-square bg-slate-50 dark:border-b dark:border-coffee-border p-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle,#e2e8f0_1px,transparent_1px)] bg-[size:16px_16px] opacity-50" />
         <div className="relative w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform">
           {sanitizedSvg ? (
@@ -92,7 +93,7 @@ export function CrystalCard({
       {/* Info */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-slate-900 group-hover:text-crystal-700 transition-colors">
+          <h3 className="font-semibold text-slate-900 dark:text-cream-primary group-hover:text-crystal-700 dark:group-hover:text-crystal-400 transition-colors">
             {name}
           </h3>
           <Badge variant={systemColors[system.toLowerCase()] || 'default'}>
@@ -100,7 +101,7 @@ export function CrystalCard({
           </Badge>
         </div>
         {(chemistry || hardness) && (
-          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600">
+          <div className="mt-2 flex items-center gap-3 text-sm text-slate-600 dark:text-cream-secondary">
             {chemistry && <span>{chemistry}</span>}
             {hardness && <span>H: {hardness}</span>}
           </div>

@@ -174,9 +174,9 @@ export function CaratEstimator() {
 
   return (
     <div className="space-y-6" onPointerDown={initiate}>
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter stone dimensions to estimate carat weight.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           Formula: Weight = L × W × D × SG × Shape Factor
         </p>
       </div>
@@ -267,7 +267,7 @@ export function CaratEstimator() {
         />
       )}
 
-      <div className="text-sm text-slate-600 space-y-1">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary space-y-1">
         <p><strong>Note:</strong> These are estimates. Actual weight varies with exact proportions, symmetry, and cut quality. The girdle factor accounts for material carried in a thicker-than-medium girdle.</p>
         <p><strong>Example (1ct diamond):</strong> 6.5 × 6.5 × 4.0 mm, SG 3.52, Round, medium girdle = ~1.0 ct</p>
       </div>

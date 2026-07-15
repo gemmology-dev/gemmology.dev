@@ -32,11 +32,11 @@ export function QuizResults({
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Main score card */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
         <div
           className={cn(
             'px-6 py-8 text-center',
-            results.percentage >= 70 ? 'bg-emerald-50' : 'bg-amber-50'
+            results.percentage >= 70 ? 'bg-emerald-50 dark:bg-emerald-400/10' : 'bg-amber-50 dark:bg-amber-400/10'
           )}
         >
           {/* Grade circle */}
@@ -54,34 +54,34 @@ export function QuizResults({
 
           {/* Score */}
           <div className="mt-4">
-            <p className="text-3xl font-bold text-slate-900">
+            <p className="text-3xl font-bold text-slate-900 dark:text-cream-primary">
               {results.score} / {results.totalQuestions}
             </p>
-            <p className="text-lg text-slate-600 mt-1">
+            <p className="text-lg text-slate-600 mt-1 dark:text-cream-secondary">
               {results.percentage}% correct
             </p>
           </div>
 
           {/* Feedback */}
-          <p className="mt-4 text-slate-600">
+          <p className="mt-4 text-slate-600 dark:text-cream-secondary">
             {feedback}
           </p>
         </div>
 
         {/* Stats */}
-        <div className="px-6 py-4 border-t border-slate-200 bg-slate-50">
+        <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 dark:border-coffee-border dark:bg-coffee-raised2">
           <div className="flex items-center justify-center gap-8 text-sm">
             <div className="text-center">
-              <p className="text-slate-600">Time</p>
-              <p className="font-medium text-slate-900">{duration}</p>
+              <p className="text-slate-600 dark:text-cream-secondary">Time</p>
+              <p className="font-medium text-slate-900 dark:text-cream-primary">{duration}</p>
             </div>
             <div className="text-center">
-              <p className="text-slate-600">Questions</p>
-              <p className="font-medium text-slate-900">{results.totalQuestions}</p>
+              <p className="text-slate-600 dark:text-cream-secondary">Questions</p>
+              <p className="font-medium text-slate-900 dark:text-cream-primary">{results.totalQuestions}</p>
             </div>
             <div className="text-center">
-              <p className="text-slate-600">Mode</p>
-              <p className="font-medium text-slate-900 capitalize">{results.config.mode}</p>
+              <p className="text-slate-600 dark:text-cream-secondary">Mode</p>
+              <p className="font-medium text-slate-900 capitalize dark:text-cream-primary">{results.config.mode}</p>
             </div>
           </div>
         </div>
@@ -89,9 +89,9 @@ export function QuizResults({
 
       {/* Category breakdown */}
       {results.breakdown.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200">
-            <h3 className="font-semibold text-slate-900">Score by Category</h3>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+          <div className="px-6 py-4 border-b border-slate-200 dark:border-coffee-border">
+            <h3 className="font-semibold text-slate-900 dark:text-cream-primary">Score by Category</h3>
           </div>
           <div className="p-4 space-y-3">
             {results.breakdown.map((breakdown, index) => (
@@ -150,16 +150,16 @@ function CategoryScoreBar({ breakdown, animationDelay = 0 }: CategoryScoreBarPro
       }}
     >
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-600">{label}</span>
-        <span className="font-medium text-slate-900">
+        <span className="text-slate-600 dark:text-cream-secondary">{label}</span>
+        <span className="font-medium text-slate-900 dark:text-cream-primary">
           {breakdown.correct}/{breakdown.total} ({breakdown.percentage}%)
         </span>
       </div>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-raised2">
         <div
           className={cn(
             'h-full rounded-full transition-all duration-700 ease-out',
-            breakdown.percentage >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
+            breakdown.percentage >= 70 ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-amber-500 dark:bg-amber-400'
           )}
           style={{
             width: `${breakdown.percentage}%`,

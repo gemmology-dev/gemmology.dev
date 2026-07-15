@@ -97,10 +97,10 @@ export function DispersionCalculator() {
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Enter the refractive index at red (C-line, 656nm) and violet (F-line, 486nm) wavelengths to calculate dispersion.
         </p>
-        <p className="text-sm text-slate-600 mt-2">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary mt-2">
           <strong>Formula:</strong> Dispersion = RI(violet) − RI(red)
         </p>
       </div>
@@ -148,7 +148,7 @@ export function DispersionCalculator() {
       )}
 
       <div className="mt-6">
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Gem Dispersion Reference</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Gem Dispersion Reference</h4>
         <PaginatedTable
           columns={columns}
           data={paginatedData}
@@ -163,9 +163,9 @@ export function DispersionCalculator() {
         />
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Why Dispersion Matters</h4>
-        <p className="text-sm text-blue-800">
+      <div className="bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Why Dispersion Matters</h4>
+        <p className="text-sm text-blue-800 dark:text-blue-200">
           Dispersion measures how much a gem splits white light into spectral colours. Higher dispersion creates more "fire" (the rainbow flashes seen in a well-cut stone). Diamond's high dispersion (0.044) is why it shows exceptional fire, while quartz's low dispersion (0.013) produces minimal colour flashes.
         </p>
       </div>

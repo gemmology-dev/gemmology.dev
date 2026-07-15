@@ -47,8 +47,8 @@ export function QuizError({
             />
           </svg>
         </IconBox>
-        <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
-        <p className="text-slate-600 mb-6">{message}</p>
+        <h3 className="text-lg font-semibold text-slate-900 mb-2 dark:text-cream-primary">{title}</h3>
+        <p className="text-slate-600 mb-6 dark:text-cream-secondary">{message}</p>
         <div className="flex items-center justify-center gap-3">
           {onBack && (
             <Button variant="ghost" onClick={onBack}>
@@ -123,8 +123,8 @@ export function NoQuestionsError({ onBack, className }: NoQuestionsErrorProps) {
             />
           </svg>
         </IconBox>
-        <h3 className="text-lg font-semibold text-slate-900 mb-2">No questions found</h3>
-        <p className="text-slate-600 mb-6">
+        <h3 className="text-lg font-semibold text-slate-900 mb-2 dark:text-cream-primary">No questions found</h3>
+        <p className="text-slate-600 mb-6 dark:text-cream-secondary">
           No questions match your selected categories and difficulty.
           Try selecting different options.
         </p>

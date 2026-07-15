@@ -18,57 +18,57 @@ const ACCENT_CLASSES: Record<Accent, {
   strip: string;
 }> = {
   emerald: {
-    border: 'border-emerald-200',
-    iconBg: 'bg-emerald-100',
-    iconText: 'text-emerald-600',
-    headerBg: 'bg-emerald-50',
-    headerBorder: 'border-emerald-200',
-    titleText: 'text-emerald-800',
+    border: 'border-emerald-200 dark:border-emerald-400/30',
+    iconBg: 'bg-emerald-100 dark:bg-emerald-400/10',
+    iconText: 'text-emerald-600 dark:text-emerald-300',
+    headerBg: 'bg-emerald-50 dark:bg-emerald-400/10',
+    headerBorder: 'border-emerald-200 dark:border-emerald-400/20',
+    titleText: 'text-emerald-800 dark:text-emerald-300',
     strip: 'bg-emerald-500',
   },
   blue: {
-    border: 'border-blue-200',
-    iconBg: 'bg-blue-100',
-    iconText: 'text-blue-600',
-    headerBg: 'bg-blue-50',
-    headerBorder: 'border-blue-200',
-    titleText: 'text-blue-800',
+    border: 'border-blue-200 dark:border-blue-400/30',
+    iconBg: 'bg-blue-100 dark:bg-blue-400/10',
+    iconText: 'text-blue-600 dark:text-blue-300',
+    headerBg: 'bg-blue-50 dark:bg-blue-400/10',
+    headerBorder: 'border-blue-200 dark:border-blue-400/20',
+    titleText: 'text-blue-800 dark:text-blue-300',
     strip: 'bg-blue-500',
   },
   purple: {
-    border: 'border-purple-200',
-    iconBg: 'bg-purple-100',
-    iconText: 'text-purple-600',
-    headerBg: 'bg-purple-50',
-    headerBorder: 'border-purple-200',
-    titleText: 'text-purple-800',
+    border: 'border-purple-200 dark:border-purple-400/30',
+    iconBg: 'bg-purple-100 dark:bg-purple-400/10',
+    iconText: 'text-purple-600 dark:text-purple-300',
+    headerBg: 'bg-purple-50 dark:bg-purple-400/10',
+    headerBorder: 'border-purple-200 dark:border-purple-400/20',
+    titleText: 'text-purple-800 dark:text-purple-300',
     strip: 'bg-purple-500',
   },
   rose: {
-    border: 'border-rose-200',
-    iconBg: 'bg-rose-100',
-    iconText: 'text-rose-600',
-    headerBg: 'bg-rose-50',
-    headerBorder: 'border-rose-200',
-    titleText: 'text-rose-800',
+    border: 'border-rose-200 dark:border-rose-400/30',
+    iconBg: 'bg-rose-100 dark:bg-rose-400/10',
+    iconText: 'text-rose-600 dark:text-rose-300',
+    headerBg: 'bg-rose-50 dark:bg-rose-400/10',
+    headerBorder: 'border-rose-200 dark:border-rose-400/20',
+    titleText: 'text-rose-800 dark:text-rose-300',
     strip: 'bg-rose-500',
   },
   amber: {
-    border: 'border-amber-200',
-    iconBg: 'bg-amber-100',
-    iconText: 'text-amber-600',
-    headerBg: 'bg-amber-50',
-    headerBorder: 'border-amber-200',
-    titleText: 'text-amber-800',
+    border: 'border-amber-200 dark:border-amber-400/30',
+    iconBg: 'bg-amber-100 dark:bg-amber-400/10',
+    iconText: 'text-amber-600 dark:text-amber-300',
+    headerBg: 'bg-amber-50 dark:bg-amber-400/10',
+    headerBorder: 'border-amber-200 dark:border-amber-400/20',
+    titleText: 'text-amber-800 dark:text-amber-300',
     strip: 'bg-amber-500',
   },
   cyan: {
-    border: 'border-cyan-200',
-    iconBg: 'bg-cyan-100',
-    iconText: 'text-cyan-600',
-    headerBg: 'bg-cyan-50',
-    headerBorder: 'border-cyan-200',
-    titleText: 'text-cyan-800',
+    border: 'border-cyan-200 dark:border-cyan-400/30',
+    iconBg: 'bg-cyan-100 dark:bg-cyan-400/10',
+    iconText: 'text-cyan-600 dark:text-cyan-300',
+    headerBg: 'bg-cyan-50 dark:bg-cyan-400/10',
+    headerBorder: 'border-cyan-200 dark:border-cyan-400/20',
+    titleText: 'text-cyan-800 dark:text-cyan-300',
     strip: 'bg-cyan-500',
   },
 };
@@ -95,7 +95,7 @@ export function ToolSection({
   return (
     <section
       id={`tool-${id}`}
-      className={`rounded-xl border ${colors.border} bg-white shadow-sm`}
+      className={`rounded-xl border ${colors.border} bg-white dark:bg-coffee-raised shadow-sm`}
     >
       {/* Colored accent strip + sticky header */}
       <div className="sticky top-16 z-10 rounded-t-xl">
@@ -114,7 +114,7 @@ export function ToolSection({
           </div>
           <div className="min-w-0">
             <h3 className={`font-semibold text-base ${colors.titleText}`}>{title}</h3>
-            <p className="text-xs text-slate-600 truncate">{description}</p>
+            <p className="text-xs text-slate-700 dark:text-cream-secondary truncate">{description}</p>
           </div>
         </div>
       </div>

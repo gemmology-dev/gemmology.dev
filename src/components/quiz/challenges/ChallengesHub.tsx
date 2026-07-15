@@ -82,7 +82,7 @@ export function ChallengesHub({ trackSummaries }: ChallengesHubProps) {
             </CardHeader>
 
             <CardContent className="flex-1">
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600 dark:text-cream-secondary">
                 <span>
                   {track.stageCount} stage{track.stageCount === 1 ? '' : 's'}
                 </span>
@@ -104,7 +104,7 @@ export function ChallengesHub({ trackSummaries }: ChallengesHubProps) {
                 </Badge>
               )}
 
-              <p className="text-sm text-slate-500 mt-3">
+              <p className="text-sm text-slate-500 mt-3 dark:text-cream-muted">
                 {stagesPassed} / {track.stageCount} stages passed
               </p>
             </CardContent>
@@ -129,9 +129,9 @@ export function ChallengesHub({ trackSummaries }: ChallengesHubProps) {
 
 function EmptyTracksState() {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-10 text-center">
-      <h2 className="text-xl font-semibold text-slate-900">Tracks are coming</h2>
-      <p className="text-slate-600 mt-2 max-w-prose mx-auto">
+    <div className="rounded-xl border border-slate-200 bg-white p-10 text-center dark:border-coffee-border dark:bg-coffee-raised">
+      <h2 className="text-xl font-semibold text-slate-900 dark:text-cream-primary">Tracks are coming</h2>
+      <p className="text-slate-600 mt-2 max-w-prose mx-auto dark:text-cream-secondary">
         Themed challenge tracks are in development — structured, staged-mastery study
         paths built around specific gemmology topics. Check back soon, or head to
         practice and exam mode in the meantime.

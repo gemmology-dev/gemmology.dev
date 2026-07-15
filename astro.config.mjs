@@ -29,7 +29,11 @@ export default defineConfig({
         !page.includes('/study/review') &&
         !page.includes('/study/settings') &&
         !page.includes('/study/challenges') &&
-        !page.includes('/study/cases'),
+        !page.includes('/study/cases') &&
+        // PLAYGROUND_ENABLED (src/lib/feature-flags.ts) is false — the route
+        // renders a "temporarily unavailable" page, so keep it out of the
+        // sitemap. Remove this line when the flag flips back to true.
+        !page.includes('/playground'),
       lastmod: new Date(),
     }),
   ],

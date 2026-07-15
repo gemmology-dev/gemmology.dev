@@ -84,7 +84,7 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
 <BaseLayout title={title} description={description}>
   <MineralSchema mineral={mineral} slot="head" />
 
-  <article class="min-h-screen bg-slate-50">
+  <article class="min-h-screen bg-slate-50 dark:bg-coffee-page">
     <!-- Hero Section -->
     <MineralHero mineral={mineral} />
 
@@ -149,29 +149,29 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
           )}
 
           {/* JSON array sections */}
-          <TagList title="Colours" json={mineral.colors_json} colorClass="bg-sky-50 text-sky-700" />
-          <TagList title="Localities" json={mineral.localities_json} colorClass="bg-emerald-50 text-emerald-700" />
-          <TagList title="Common Inclusions" json={mineral.inclusions_json} colorClass="bg-amber-50 text-amber-700" />
-          <TagList title="Known Treatments" json={mineral.treatments_json} colorClass="bg-rose-50 text-rose-700" />
-          <TagList title="Crystal Forms" json={mineral.forms_json} colorClass="bg-violet-50 text-violet-700" />
+          <TagList title="Colours" json={mineral.colors_json} colorClass="bg-sky-50 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300" />
+          <TagList title="Localities" json={mineral.localities_json} colorClass="bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300" />
+          <TagList title="Common Inclusions" json={mineral.inclusions_json} colorClass="bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300" />
+          <TagList title="Known Treatments" json={mineral.treatments_json} colorClass="bg-rose-50 text-rose-700 dark:bg-rose-400/10 dark:text-rose-300" />
+          <TagList title="Crystal Forms" json={mineral.forms_json} colorClass="bg-violet-50 text-violet-700 dark:bg-violet-400/10 dark:text-violet-300" />
 
           {/* Diagnostic Features (family-level) */}
           {mineral.diagnostic_features && (
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-              <div class="px-6 py-4 border-b border-slate-100">
-                <h2 class="text-lg font-semibold text-slate-900">Diagnostic Features</h2>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+              <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">Diagnostic Features</h2>
               </div>
-              <div class="px-6 py-4 text-slate-700">{mineral.diagnostic_features}</div>
+              <div class="px-6 py-4 text-slate-700 dark:text-cream-secondary">{mineral.diagnostic_features}</div>
             </div>
           )}
 
           {/* Notes */}
           {mineral.note && (
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-              <div class="px-6 py-4 border-b border-slate-100">
-                <h2 class="text-lg font-semibold text-slate-900">Notes</h2>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+              <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">Notes</h2>
               </div>
-              <div class="px-6 py-4 text-slate-700">{mineral.note}</div>
+              <div class="px-6 py-4 text-slate-700 dark:text-cream-secondary">{mineral.note}</div>
             </div>
           )}
         </div>

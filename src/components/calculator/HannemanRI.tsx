@@ -97,7 +97,7 @@ export function HannemanRI() {
 
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>
           For stones above the refractometer scale (RI {'>'} 1.81) or rough material with no
           polished facet. Place the stone in a drop of each liquid and compare relief, then
@@ -105,7 +105,7 @@ export function HannemanRI() {
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
+      <div className="rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2 p-4 space-y-4">
         {rows.map((row, i) => (
           <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <FormField name={`hl-liquid-${i}`} label={`Observation ${i + 1}: liquid`}>
@@ -127,61 +127,61 @@ export function HannemanRI() {
       </div>
 
       {loading && (
-        <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm">
+        <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm">
           Loading mineral database…
         </div>
       )}
       {dbError && (
-        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 text-red-700 dark:text-red-300 text-sm">
           Database unavailable: {dbError}
         </div>
       )}
 
       {usable.length === 0 ? (
-        <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm text-center">
+        <div className="p-3 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm text-center">
           Select at least one observation above to infer an RI band.
         </div>
       ) : !band ? null : band.min > band.max ? (
-        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 text-red-700 dark:text-red-300 text-sm">
           <strong>Conflicting observations.</strong> {band.rationale} Re-test with the suspect liquid.
         </div>
       ) : (
         <>
-          <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
-            <div className="text-sm font-semibold text-emerald-900">
+          <div className="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-400/10 border border-emerald-200 dark:border-emerald-400/20">
+            <div className="text-sm font-semibold text-emerald-900 dark:text-emerald-300">
               Inferred RI band: {band.min.toFixed(2)} – {band.max.toFixed(2)}
             </div>
-            <div className="text-xs text-emerald-800 mt-1">{band.rationale}</div>
+            <div className="text-xs text-emerald-800 dark:text-emerald-200 mt-1">{band.rationale}</div>
           </div>
 
           {!loading && !dbError && (
             <div className="space-y-3">
-              <h4 className="text-sm font-medium text-slate-700">
+              <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
                 {matches.length} candidate {matches.length === 1 ? 'species' : 'species'}
               </h4>
               {matches.length === 0 ? (
-                <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm text-center">
+                <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm text-center">
                   No species match this RI band. Re-check observations or try wider liquids.
                 </div>
               ) : (
                 paginated.map((m) => (
                   <div
                     key={m.mineral.id}
-                    className="p-3 rounded-lg bg-white border border-slate-200"
+                    className="p-3 rounded-lg bg-white dark:bg-coffee-raised border border-slate-200 dark:border-coffee-border"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <a
                         href={`/minerals/${m.mineral.id}`}
-                        className="font-semibold text-emerald-700 hover:underline"
+                        className="font-semibold text-emerald-700 dark:text-emerald-400 hover:underline"
                       >
                         {m.mineral.name}
                       </a>
-                      <div className="text-xs text-slate-600">
+                      <div className="text-xs text-slate-600 dark:text-cream-muted">
                         RI {m.mineral.ri_min?.toFixed(3)} – {m.mineral.ri_max?.toFixed(3)}
                       </div>
                     </div>
                     {m.mineral.optical_character && (
-                      <div className="text-xs text-slate-600 mt-1">
+                      <div className="text-xs text-slate-600 dark:text-cream-muted mt-1">
                         {m.mineral.optical_character}
                       </div>
                     )}

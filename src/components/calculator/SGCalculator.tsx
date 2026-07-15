@@ -107,9 +107,9 @@ export function SGCalculator() {
 
   return (
     <div className="space-y-6" onPointerDown={initiate}>
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter the weight of your stone in air and water to calculate its specific gravity.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           Formula: SG = W<sub>air</sub> ÷ ((W<sub>air</sub> − W<sub>water</sub>) ÷ ρ<sub>water</sub>(T))
         </p>
       </div>
@@ -150,7 +150,7 @@ export function SGCalculator() {
         </FormField>
       </div>
 
-      <div className="text-xs text-slate-500">
+      <div className="text-xs text-slate-500 dark:text-cream-muted">
         ρ<sub>water</sub> at {tempC} °C = <span className="font-mono">{waterDensity.toFixed(5)} g/cm³</span>
       </div>
 
@@ -173,7 +173,7 @@ export function SGCalculator() {
         </NumberResult>
       )}
 
-      <div className="text-sm text-slate-600 space-y-1">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary space-y-1">
         <p><strong>Example (Diamond):</strong> 3.52g in air, 2.52g in water at 20 °C = SG 3.52</p>
         <p><strong>Tip:</strong> Ensure the stone is fully submerged and free of air bubbles. Temperature correction matters most for low-SG materials (opal, amber, beryl).</p>
       </div>

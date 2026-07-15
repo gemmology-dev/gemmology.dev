@@ -30,22 +30,22 @@ export function QuizProgress({
   return (
     <div className={cn('space-y-2', className)}>
       {/* Progress bar */}
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-raised2">
         <div
-          className="h-full bg-crystal-500 transition-all duration-300 ease-out rounded-full"
+          className="h-full bg-crystal-500 transition-all duration-300 ease-out rounded-full dark:bg-crystal-400"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       {/* Stats */}
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-600">
+        <span className="text-slate-600 dark:text-cream-secondary">
           Question {current + 1} of {total}
         </span>
         {showScore && current > 0 && (
-          <span className="text-slate-600">
-            Score: <span className="font-medium text-crystal-700">{score}/{current}</span>
-            <span className="text-slate-600 ml-1">({scorePercentage}%)</span>
+          <span className="text-slate-600 dark:text-cream-secondary">
+            Score: <span className="font-medium text-crystal-700 dark:text-crystal-400">{score}/{current}</span>
+            <span className="text-slate-600 ml-1 dark:text-cream-secondary">({scorePercentage}%)</span>
           </span>
         )}
       </div>
@@ -92,23 +92,23 @@ export function QuizProgressDots({
             disabled={!onNavigate}
             className={cn(
               'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all',
-              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
+              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500 dark:focus:ring-crystal-400',
               // Current question
-              isCurrent && 'ring-2 ring-crystal-500 ring-offset-2',
+              isCurrent && 'ring-2 ring-crystal-500 ring-offset-2 dark:ring-crystal-400',
               // Not answered
-              !isAnswered && !isCurrent && 'bg-slate-100 text-slate-600',
+              !isAnswered && !isCurrent && 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary',
               // Answered correctly
-              isAnswered && isCorrect && 'bg-emerald-100 text-emerald-700',
+              isAnswered && isCorrect && 'bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300',
               // Answered incorrectly
-              isAnswered && !isCorrect && 'bg-red-100 text-red-700',
+              isAnswered && !isCorrect && 'bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-300',
               // Flagged
-              isFlagged && 'ring-2 ring-amber-400',
+              isFlagged && 'ring-2 ring-amber-400 dark:ring-amber-400',
               // Interactive
               onNavigate && 'hover:scale-110 cursor-pointer'
             )}
           >
             {isFlagged ? (
-              <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clipRule="evenodd" />
               </svg>
             ) : (

@@ -36,7 +36,7 @@ const pageDescription = caseData.specimenSummary;
 ---
 
 <BaseLayout title={caseData.title} description={pageDescription} noindex={true}>
-  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <CaseRunner client:load caseData={caseData} />
     </div>

@@ -68,54 +68,59 @@ export const crystalSystemColors: Record<CrystalSystem, {
   text: string;
   accent: string;
 }> = {
+  // Dark variants extend the site's alpha-tint pattern (normally used for
+  // small badge/chip surfaces) to this larger card surface - a deliberate
+  // judgment call flagged in the sweep report: `bgLight`/`border`/`accent`
+  // use the hue's alpha-tinted forms and `text` moves to the lighter -300
+  // step for AA contrast against the dark card background.
   cubic: {
     bg: 'bg-amber-700',
-    bgLight: 'bg-amber-50',
-    border: 'border-amber-200',
-    text: 'text-amber-800',
-    accent: 'bg-amber-100',
+    bgLight: 'bg-amber-50 dark:bg-amber-400/5',
+    border: 'border-amber-200 dark:border-amber-400/20',
+    text: 'text-amber-800 dark:text-amber-300',
+    accent: 'bg-amber-100 dark:bg-amber-400/10',
   },
   hexagonal: {
     bg: 'bg-cyan-700',
-    bgLight: 'bg-cyan-50',
-    border: 'border-cyan-200',
-    text: 'text-cyan-800',
-    accent: 'bg-cyan-100',
+    bgLight: 'bg-cyan-50 dark:bg-cyan-400/5',
+    border: 'border-cyan-200 dark:border-cyan-400/20',
+    text: 'text-cyan-800 dark:text-cyan-300',
+    accent: 'bg-cyan-100 dark:bg-cyan-400/10',
   },
   trigonal: {
     bg: 'bg-violet-700',
-    bgLight: 'bg-violet-50',
-    border: 'border-violet-200',
-    text: 'text-violet-800',
-    accent: 'bg-violet-100',
+    bgLight: 'bg-violet-50 dark:bg-violet-400/5',
+    border: 'border-violet-200 dark:border-violet-400/20',
+    text: 'text-violet-800 dark:text-violet-300',
+    accent: 'bg-violet-100 dark:bg-violet-400/10',
   },
   tetragonal: {
     bg: 'bg-lime-700',
-    bgLight: 'bg-lime-50',
-    border: 'border-lime-200',
-    text: 'text-lime-800',
-    accent: 'bg-lime-100',
+    bgLight: 'bg-lime-50 dark:bg-lime-400/5',
+    border: 'border-lime-200 dark:border-lime-400/20',
+    text: 'text-lime-800 dark:text-lime-300',
+    accent: 'bg-lime-100 dark:bg-lime-400/10',
   },
   orthorhombic: {
     bg: 'bg-orange-700',
-    bgLight: 'bg-orange-50',
-    border: 'border-orange-200',
-    text: 'text-orange-800',
-    accent: 'bg-orange-100',
+    bgLight: 'bg-orange-50 dark:bg-orange-400/5',
+    border: 'border-orange-200 dark:border-orange-400/20',
+    text: 'text-orange-800 dark:text-orange-300',
+    accent: 'bg-orange-100 dark:bg-orange-400/10',
   },
   monoclinic: {
     bg: 'bg-rose-700',
-    bgLight: 'bg-rose-50',
-    border: 'border-rose-200',
-    text: 'text-rose-800',
-    accent: 'bg-rose-100',
+    bgLight: 'bg-rose-50 dark:bg-rose-400/5',
+    border: 'border-rose-200 dark:border-rose-400/20',
+    text: 'text-rose-800 dark:text-rose-300',
+    accent: 'bg-rose-100 dark:bg-rose-400/10',
   },
   triclinic: {
     bg: 'bg-teal-700',
-    bgLight: 'bg-teal-50',
-    border: 'border-teal-200',
-    text: 'text-teal-800',
-    accent: 'bg-teal-100',
+    bgLight: 'bg-teal-50 dark:bg-teal-400/5',
+    border: 'border-teal-200 dark:border-teal-400/20',
+    text: 'text-teal-800 dark:text-teal-300',
+    accent: 'bg-teal-100 dark:bg-teal-400/10',
   },
 };
 

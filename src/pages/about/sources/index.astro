@@ -102,26 +102,29 @@ const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string
       class="prose prose-slate prose-lg max-w-none
              prose-headings:text-slate-900
              prose-p:text-slate-600 prose-p:leading-relaxed
-             prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700"
+             prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700
+             dark:prose-headings:text-cream-primary
+             dark:prose-p:text-cream-secondary
+             dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold"
     >
-      <nav class="not-prose text-sm text-slate-500 mb-8" aria-label="Breadcrumb">
+      <nav class="not-prose text-sm text-slate-500 dark:text-cream-muted mb-8" aria-label="Breadcrumb">
         <ol class="flex items-center gap-1.5 list-none p-0 m-0">
-          <li><a href="/" class="hover:text-crystal-700 transition-colors">Home</a></li>
+          <li><a href="/" class="hover:text-crystal-700 dark:hover:text-crystal-300 transition-colors">Home</a></li>
           <li aria-hidden="true" class="select-none">/</li>
-          <li><a href="/about/" class="hover:text-crystal-700 transition-colors">About</a></li>
+          <li><a href="/about/" class="hover:text-crystal-700 dark:hover:text-crystal-300 transition-colors">About</a></li>
           <li aria-hidden="true" class="select-none">/</li>
-          <li class="text-slate-700 font-medium" aria-current="page">Sources</li>
+          <li class="text-slate-700 dark:text-cream-primary font-medium" aria-current="page">Sources</li>
         </ol>
       </nav>
 
       <h1>Sources &amp; bibliography</h1>
 
-      <p class="not-prose text-sm text-slate-500">
+      <p class="not-prose text-sm text-slate-500 dark:text-cream-muted">
         Content version
         <a
           href={KNOWLEDGE_RELEASE_URL}
           rel="external noopener noreferrer"
-          class="font-mono text-crystal-700 hover:text-crystal-800 underline underline-offset-2"
+          class="font-mono text-crystal-700 hover:text-crystal-800 underline underline-offset-2 dark:text-crystal-400 dark:hover:text-crystal-300"
         >gemmology-knowledge {KNOWLEDGE_VERSION}</a>
       </p>
 
@@ -137,8 +140,8 @@ const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string
       </p>
 
       {totalRefs === 0 ? (
-        <p class="rounded-xl border border-slate-200 bg-slate-50 px-6 py-8 text-center text-slate-500 not-prose">
-          Sources will appear here as <a href="/learn/" class="text-crystal-700 underline underline-offset-2">/learn/</a> articles are annotated with citations.
+        <p class="rounded-xl border border-slate-200 bg-slate-50 px-6 py-8 text-center text-slate-500 not-prose dark:border-coffee-border dark:bg-coffee-raised dark:text-cream-muted">
+          Sources will appear here as <a href="/learn/" class="text-crystal-700 underline underline-offset-2 dark:text-crystal-400">/learn/</a> articles are annotated with citations.
         </p>
       ) : (
         <>
@@ -150,25 +153,25 @@ const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string
                 <h2 id={`bib-${kindLabel.toLowerCase().replace(/\s+/g, '-')}`}>
                   {kindLabel}
                 </h2>
-                <ol class="not-prose space-y-6 list-none pl-0">
+                <ol class="bibliography-list not-prose space-y-6 list-none pl-0">
                   {items.map(({ ref, slugs }) => (
                     <li id={`source-${ref.id}`} class="group flex flex-col gap-1.5">
                       <p
-                        class="text-sm text-slate-700 leading-relaxed"
+                        class="text-sm text-slate-700 dark:text-cream-secondary leading-relaxed"
                         set:html={formatReference(ref)}
                       />
                       {slugs.length > 0 && (
-                        <p class="text-xs text-slate-400">
+                        <p class="text-xs text-slate-400 dark:text-cream-muted">
                           Cited in:{' '}
                           {slugs.map((slug, i) => (
                             <>
                               <a
                                 href={`/learn/${slug}/`}
-                                class="text-crystal-600 hover:text-crystal-800 underline underline-offset-1 transition-colors"
+                                class="text-crystal-600 hover:text-crystal-800 underline underline-offset-1 transition-colors dark:text-crystal-400 dark:hover:text-crystal-300"
                               >
                                 {slugTitles.get(slug) ?? slug}
                               </a>
-                              {i < slugs.length - 1 && <span class="mx-1 text-slate-300">&middot;</span>}
+                              {i < slugs.length - 1 && <span class="mx-1 text-slate-300 dark:text-coffee-border-strong">&middot;</span>}
                             </>
                           ))}
                         </p>
@@ -184,3 +187,16 @@ const slugTitles = new Map(learnEntries.map((e) => [e.id, e.data.title as string
     </article>
   </Container>
 </BaseLayout>
+
+<style>
+  /* Links inside `formatReference()` output (DOI/ISBN/URL anchors) carry no
+     color class - they rely on the browser's default anchor color, left
+     untouched in light mode for pixel parity. Dark mode gets the standard
+     crystal-400 / gold-hover treatment used everywhere else in prose links. */
+  :global([data-theme='dark'] .bibliography-list a) {
+    color: #38bdf8; /* crystal-400 */
+  }
+  :global([data-theme='dark'] .bibliography-list a:hover) {
+    color: #7dd3fc; /* crystal-300 */
+  }
+</style>

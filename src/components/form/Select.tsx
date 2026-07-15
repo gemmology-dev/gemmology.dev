@@ -74,9 +74,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
       aria-invalid={ariaInvalid ?? hasError}
       aria-describedby={describedBy}
       className={cn(
-        'w-full rounded-lg border bg-white transition-colors appearance-none cursor-pointer',
+        'w-full rounded-lg border bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary transition-colors appearance-none cursor-pointer',
         'focus:outline-none focus:ring-2',
-        'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
+        'disabled:bg-slate-50 dark:disabled:bg-coffee-raised2 disabled:text-slate-400 dark:disabled:text-cream-muted disabled:cursor-not-allowed',
         // Arrow icon using CSS
         'bg-no-repeat bg-right',
         "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\")]",
@@ -84,8 +84,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         'pr-10', // Space for arrow
         sizeClasses[size],
         hasError
-          ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
-          : 'border-slate-300 focus:ring-crystal-500 focus:border-crystal-500',
+          ? 'border-red-300 dark:border-red-400/50 focus:ring-red-500 dark:focus:ring-red-400/20 focus:border-red-500 dark:focus:border-red-400'
+          : 'border-slate-300 dark:border-coffee-border focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400',
         className
       )}
       {...props}

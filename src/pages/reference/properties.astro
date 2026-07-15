@@ -145,16 +145,16 @@ const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties c
   <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} slot="head" />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
 
-  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+  <div class="bg-gradient-to-b from-crystal-50 to-white dark:from-coffee-page dark:to-coffee-page min-h-screen">
     <Container size="xl" padding="md">
       <Breadcrumb items={breadcrumbItems} />
 
-      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200">
-        <h1 class="text-4xl font-bold text-slate-900">Gemstone properties chart</h1>
-        <p class="mt-3 text-lg font-medium text-crystal-700">
+      <header class="max-w-3xl pb-8 mt-4 border-b border-slate-200 dark:border-coffee-border">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">Gemstone properties chart</h1>
+        <p class="mt-3 text-lg font-medium text-crystal-700 dark:text-crystal-300">
           50 commonly encountered gems: RI, SG, hardness, birefringence, crystal system, cleavage
         </p>
-        <p class="mt-5 text-base text-slate-700 leading-relaxed">
+        <p class="mt-5 text-base text-slate-700 dark:text-cream-secondary leading-relaxed">
           A single-page reference table of the six diagnostic gemmological constants (refractive
           index, specific gravity, Mohs hardness, birefringence, crystal system, and cleavage) for
           50 of the most commonly encountered gemstones in commercial and FGA-curriculum practice.
@@ -163,11 +163,11 @@ const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties c
           Cabochon and aggregate readings are flagged separately because the refractometer reports
           a spot reading rather than a birefringence in those cases. For interactive lookup against
           your own measured values, try the
-          <a href="/tools/measurement/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">RI calculator</a>
-          or the <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Gem Identifier</a>,
+          <a href="/tools/measurement/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">RI calculator</a>
+          or the <a href="/tools/identification/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Gem Identifier</a>,
           both of which run entirely in your browser. For deeper coverage of each species and full
           mineralogical context, follow the species links on the
-          <a href="/minerals/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Mineral Database</a>
+          <a href="/minerals/" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Mineral Database</a>
           (159 expressions across 121 families). See the source-citation note below the table for
           our data lineage.
         </p>
@@ -186,11 +186,11 @@ const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties c
               />
             </svg>
           </IconBox>
-          <h2 class="text-2xl font-bold text-slate-900">Reference table: 50 gemstones</h2>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">Reference table: 50 gemstones</h2>
         </div>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-raised">
           <table class="min-w-full text-sm">
-            <thead class="bg-slate-50 text-slate-700 sticky top-0">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0 dark:bg-coffee-raised2 dark:text-cream-primary">
               <tr>
                 <th class="px-3 py-3 text-left font-semibold whitespace-nowrap">Name</th>
                 <th class="px-3 py-3 text-left font-semibold">Species</th>
@@ -203,33 +203,33 @@ const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties c
                 <th class="px-3 py-3 text-left font-semibold">Cleavage</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-100 dark:divide-coffee-border">
               {gems.map((g) => (
-                <tr class="hover:bg-slate-50">
-                  <td class="px-3 py-2.5 font-semibold text-slate-900 whitespace-nowrap">{g.name}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap">{g.species}</td>
-                  <td class="px-3 py-2.5 text-slate-600 font-mono text-xs">{g.formula}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap">{g.system}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.ri}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.birefringence}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.sg}</td>
-                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs">{g.hardness}</td>
-                  <td class="px-3 py-2.5 text-slate-700">{g.cleavage}</td>
+                <tr class="hover:bg-slate-50 dark:hover:bg-coffee-raised2">
+                  <td class="px-3 py-2.5 font-semibold text-slate-900 whitespace-nowrap dark:text-cream-primary">{g.name}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap dark:text-cream-secondary">{g.species}</td>
+                  <td class="px-3 py-2.5 text-slate-600 font-mono text-xs dark:text-cream-muted">{g.formula}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap dark:text-cream-secondary">{g.system}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs dark:text-cream-secondary">{g.ri}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs dark:text-cream-secondary">{g.birefringence}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs dark:text-cream-secondary">{g.sg}</td>
+                  <td class="px-3 py-2.5 text-slate-700 whitespace-nowrap font-mono text-xs dark:text-cream-secondary">{g.hardness}</td>
+                  <td class="px-3 py-2.5 text-slate-700 dark:text-cream-secondary">{g.cleavage}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p class="mt-3 text-sm text-slate-500">
+        <p class="mt-3 text-sm text-slate-500 dark:text-cream-muted">
           Showing {gems.length} gemstones. Hardness is on the Mohs scale; SG is dimensionless
           (water = 1.000 at 4 °C); RI is reported under sodium light (589 nm).
         </p>
       </section>
 
       <section class="mt-12">
-        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
-          <h2 class="text-xl font-semibold text-slate-900">How to use this table</h2>
-          <ol class="mt-4 list-decimal pl-6 space-y-2 text-slate-700">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8 dark:bg-coffee-raised dark:border-coffee-border">
+          <h2 class="text-xl font-semibold text-slate-900 dark:text-cream-primary">How to use this table</h2>
+          <ol class="mt-4 list-decimal pl-6 space-y-2 text-slate-700 dark:text-cream-secondary">
             <li>
               <strong>Identify by RI first.</strong> Measure the unknown stone on a refractometer
               (sodium light, contact fluid n=1.81). The midpoint reading locates a row band in this
@@ -256,35 +256,35 @@ const breadcrumbItems = [{ label: 'Reference' }, { label: 'Gemstone properties c
       </section>
 
       <section class="mt-12">
-        <h2 class="text-xl font-semibold text-slate-900">Related learn material</h2>
-        <p class="mt-2 text-slate-700">
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-cream-primary">Related learn material</h2>
+        <p class="mt-2 text-slate-700 dark:text-cream-secondary">
           Each constant in this table has a dedicated tutorial in the Learn section explaining how
           it is measured and what its diagnostic limits are:
         </p>
-        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700">
-          <li><a href="/learn/fundamentals/optical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Optical properties</a>: refractive index, birefringence, dispersion, pleochroism</li>
-          <li><a href="/learn/fundamentals/physical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Physical properties</a>: specific gravity, hardness, cleavage, toughness</li>
-          <li><a href="/learn/fundamentals/crystal-systems" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Crystal systems</a>: the seven systems and what they predict about optics</li>
-          <li><a href="/learn/fundamentals/chemical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Chemical properties</a>: composition, formula, and how chemistry drives property variation</li>
-          <li><a href="/learn/fundamentals/optical-properties-advanced" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Optical properties (advanced)</a>: uniaxial/biaxial behaviour, optic sign, 2V</li>
-          <li><a href="/learn/fundamentals/colour-theory" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">Colour theory</a>: chromophore mechanisms and how absorption shapes appearance</li>
+        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700 dark:text-cream-secondary">
+          <li><a href="/learn/fundamentals/optical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Optical properties</a>: refractive index, birefringence, dispersion, pleochroism</li>
+          <li><a href="/learn/fundamentals/physical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Physical properties</a>: specific gravity, hardness, cleavage, toughness</li>
+          <li><a href="/learn/fundamentals/crystal-systems" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Crystal systems</a>: the seven systems and what they predict about optics</li>
+          <li><a href="/learn/fundamentals/chemical-properties" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Chemical properties</a>: composition, formula, and how chemistry drives property variation</li>
+          <li><a href="/learn/fundamentals/optical-properties-advanced" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Optical properties (advanced)</a>: uniaxial/biaxial behaviour, optic sign, 2V</li>
+          <li><a href="/learn/fundamentals/colour-theory" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700 dark:text-crystal-400 dark:decoration-crystal-400/30 dark:hover:text-crystal-300 dark:hover:decoration-gold">Colour theory</a>: chromophore mechanisms and how absorption shapes appearance</li>
         </ul>
       </section>
 
       <section class="mt-12">
-        <h2 class="text-xl font-semibold text-slate-900">Sources and methodology</h2>
-        <p class="mt-2 text-slate-700">
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-cream-primary">Sources and methodology</h2>
+        <p class="mt-2 text-slate-700 dark:text-cream-secondary">
           Property values are taken from these standard FGA-curriculum references and cross-checked
           against the gemmology.dev mineral database:
         </p>
-        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700">
+        <ul class="mt-3 list-disc pl-6 space-y-1 text-sm text-slate-700 dark:text-cream-secondary">
           <li>Reade, P. (ed.) (2018). <em>Webster's Gems: Their Sources, Descriptions and Identification</em>, 7th ed., Routledge.</li>
           <li>Read, P. G. (2014). <em>Gemmology</em>, 3rd ed., Routledge.</li>
           <li>O'Donoghue, M. (ed.) (2006). <em>Gems: Their Sources, Descriptions and Identification</em>, 6th ed., Butterworth-Heinemann.</li>
           <li>Schumann, W. (2013). <em>Gemstones of the World</em>, 5th ed., Sterling Publishing.</li>
           <li>Laboratory Manual Harmonisation Committee (2010). <em>LMHC Standards and Terminology</em>.</li>
         </ul>
-        <p class="mt-4 text-sm text-slate-600">
+        <p class="mt-4 text-sm text-slate-600 dark:text-cream-muted">
           Source data on this site is published under CC BY-SA 4.0; the supporting tooling and
           mineral database are MIT-licensed.
         </p>

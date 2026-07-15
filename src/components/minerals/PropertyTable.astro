@@ -20,15 +20,15 @@ const validProperties = properties.filter(p => p.value);
 ---
 
 {validProperties.length > 0 && (
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-    <div class="px-6 py-4 border-b border-slate-100">
-      <h2 class="text-lg font-semibold text-slate-900">{title}</h2>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+    <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
     </div>
-    <div class="divide-y divide-slate-100">
+    <div class="divide-y divide-slate-100 dark:divide-coffee-border">
       {validProperties.map((property) => (
         <div class="px-6 py-3 flex justify-between gap-4">
-          <span class="text-slate-600 shrink-0">{property.label}</span>
-          <span class="font-medium text-slate-900 text-right">{property.value}</span>
+          <span class="text-slate-600 shrink-0 dark:text-cream-secondary">{property.label}</span>
+          <span class="font-medium text-slate-900 text-right dark:text-cream-primary">{property.value}</span>
         </div>
       ))}
     </div>

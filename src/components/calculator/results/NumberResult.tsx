@@ -35,12 +35,12 @@ interface NumberResultProps {
 }
 
 const variantTextClasses: Record<ResultVariant, { value: string; unit: string }> = {
-  crystal: { value: 'text-crystal-700', unit: 'text-crystal-700' },
-  emerald: { value: 'text-emerald-700', unit: 'text-emerald-600' },
-  sapphire: { value: 'text-blue-700', unit: 'text-blue-600' },
-  ruby: { value: 'text-red-700', unit: 'text-red-600' },
-  topaz: { value: 'text-amber-700', unit: 'text-amber-600' },
-  neutral: { value: 'text-slate-700', unit: 'text-slate-600' },
+  crystal: { value: 'text-crystal-700 dark:text-crystal-400', unit: 'text-crystal-700 dark:text-crystal-400' },
+  emerald: { value: 'text-emerald-700 dark:text-emerald-300', unit: 'text-emerald-600 dark:text-emerald-300' },
+  sapphire: { value: 'text-blue-700 dark:text-blue-300', unit: 'text-blue-600 dark:text-blue-300' },
+  ruby: { value: 'text-red-700 dark:text-red-300', unit: 'text-red-600 dark:text-red-300' },
+  topaz: { value: 'text-amber-700 dark:text-amber-300', unit: 'text-amber-600 dark:text-amber-300' },
+  neutral: { value: 'text-slate-700 dark:text-cream-secondary', unit: 'text-slate-600 dark:text-cream-secondary' },
 };
 
 export function NumberResult({
@@ -85,14 +85,14 @@ export function NumberResult({
           onClick={handleCopy}
           className={cn(
             'absolute top-2 right-2 p-1.5 rounded-md transition-colors',
-            'text-slate-500 hover:text-slate-600 hover:bg-white/50',
-            'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2'
+            'text-slate-500 dark:text-cream-muted hover:text-slate-600 dark:hover:text-cream-secondary hover:bg-white/50 dark:hover:bg-coffee-raised2/60',
+            'focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400 focus:ring-offset-2'
           )}
           aria-label={copied ? 'Copied!' : 'Copy result'}
           title={copied ? 'Copied!' : 'Copy to clipboard'}
         >
           {copied ? (
-            <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-emerald-500 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : (
@@ -110,7 +110,7 @@ export function NumberResult({
 
       {/* Label */}
       {label && (
-        <p className="text-sm text-slate-600 text-center mb-1">{label}</p>
+        <p className="text-sm text-slate-600 dark:text-cream-secondary text-center mb-1">{label}</p>
       )}
 
       {/* Main value with unit */}
@@ -126,7 +126,7 @@ export function NumberResult({
 
       {/* Description */}
       {description && (
-        <p className="text-sm text-slate-600 text-center mt-1">{description}</p>
+        <p className="text-sm text-slate-600 dark:text-cream-secondary text-center mt-1">{description}</p>
       )}
 
       {/* Additional content */}

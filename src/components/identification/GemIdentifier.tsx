@@ -247,7 +247,7 @@ export function GemIdentifier() {
 
   if (error && !dbAvailable) {
     return (
-      <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+      <div className="p-4 rounded-lg bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 text-red-700 dark:text-red-300 text-sm">
         Failed to load mineral database: {error}
       </div>
     );
@@ -256,19 +256,19 @@ export function GemIdentifier() {
   return (
     <div className="space-y-6" onPointerDown={initiate}>
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Enter measured gemmological properties to find matching gemstones.
           Start by selecting the optic character from your polariscope observation.
         </p>
         {dbAvailable && (
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-sm text-slate-600 dark:text-cream-secondary mt-1">
             Searching {mineralsCount} minerals in database
           </p>
         )}
       </div>
 
       {/* Step 1: Optic Character Selection */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border">
         <FormField
           name="id-optic-character"
           label="Step 1: Optic Character"
@@ -283,8 +283,8 @@ export function GemIdentifier() {
       </div>
 
       {/* Step 2: RI Reading(s) */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-4">
-        <h3 className="text-sm font-medium text-slate-700">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border space-y-4">
+        <h3 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
           Step 2: Refractometer Readings
         </h3>
 
@@ -330,11 +330,11 @@ export function GemIdentifier() {
 
             {/* Auto-calculated birefringence display */}
             {calculatedBirefringence !== null && (
-              <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-                <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-400/10 border border-emerald-200 dark:border-emerald-400/20">
+                <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-sm text-emerald-700">
+                <span className="text-sm text-emerald-700 dark:text-emerald-300">
                   <strong>Birefringence:</strong> {calculatedBirefringence.toFixed(3)}
                   {calculatedBirefringence === 0 && ' (Isotropic?)'}
                   {calculatedBirefringence > 0 && calculatedBirefringence < 0.010 && ' (Low)'}
@@ -378,8 +378,8 @@ export function GemIdentifier() {
       </div>
 
       {/* Step 3: Additional Properties */}
-      <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-4">
-        <h3 className="text-sm font-medium text-slate-700">
+      <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border space-y-4">
+        <h3 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
           Step 3: Additional Properties (Optional)
         </h3>
 
@@ -484,34 +484,34 @@ export function GemIdentifier() {
         <button
           type="button"
           onClick={handleClear}
-          className="text-sm text-slate-600 hover:text-slate-900 underline"
+          className="text-sm text-slate-600 dark:text-cream-secondary hover:text-slate-900 dark:hover:text-cream-primary underline"
         >
           Clear all
         </button>
-        <span className="text-sm text-slate-600">
+        <span className="text-sm text-slate-600 dark:text-cream-secondary">
           {activeCriteria} {activeCriteria === 1 ? 'property' : 'properties'} entered
         </span>
       </div>
 
       {/* Results */}
       {activeCriteria === 0 ? (
-        <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-sm text-center">
+        <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm text-center">
           Enter at least one property to find matches
         </div>
       ) : results.length === 0 ? (
-        <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm text-center">
+        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm text-center">
           No minerals match the given criteria. Try widening the tolerances or reducing the number of properties.
         </div>
       ) : (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium text-slate-700">
+            <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
               {results.length} {results.length === 1 ? 'Match' : 'Matches'} Found
             </h4>
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-slate-600 hover:text-slate-700"
+              className="text-sm text-slate-600 dark:text-cream-secondary hover:text-slate-700 dark:hover:text-cream-primary"
             >
               {showAdvanced ? 'Hide' : 'Show'} details
             </button>
@@ -539,16 +539,16 @@ export function GemIdentifier() {
       )}
 
       {/* Help section */}
-      <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-slate-900 mb-2">Identification Workflow</h4>
-        <ol className="text-sm text-slate-600 space-y-1 list-decimal list-inside">
+      <div className="bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-2">Identification Workflow</h4>
+        <ol className="text-sm text-slate-600 dark:text-cream-secondary space-y-1 list-decimal list-inside">
           <li>Observe optic character with polariscope (isotropic vs anisotropic)</li>
           <li>Take refractometer reading(s) - one for isotropic, two for anisotropic</li>
           <li>Measure SG with hydrostatic weighing</li>
           <li>Note other properties (pleochroism, spectrum, inclusions)</li>
           <li>Compare against database matches</li>
         </ol>
-        <p className="text-sm text-slate-600 mt-3">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary mt-3">
           Confidence: 90%+ excellent, 70-89% good, 50-69% partial
         </p>
       </div>

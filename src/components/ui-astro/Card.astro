@@ -23,9 +23,10 @@ const paddingStyles: Record<CardPadding, string> = {
 };
 
 const baseClasses = [
-  'rounded-xl border border-slate-200 bg-white shadow-sm',
+  'rounded-xl border border-slate-200 bg-white shadow-sm dark:border-coffee-border dark:bg-coffee-raised',
   paddingStyles[padding],
-  hover && 'transition-all hover:border-crystal-300 hover:shadow-md',
+  hover &&
+    'transition-all hover:border-crystal-300 hover:shadow-md dark:hover:border-crystal-400/40 dark:hover:bg-coffee-raised2',
   href && 'cursor-pointer block',
   className,
 ].filter(Boolean).join(' ');

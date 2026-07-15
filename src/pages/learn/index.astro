@@ -263,13 +263,13 @@ const iconPaths: Record<string, string> = {
   <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} slot="head" />
   <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} slot="head" />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
-  <div class="bg-gradient-to-b from-crystal-50 to-white min-h-screen">
+  <div class="bg-gradient-to-b from-crystal-50 to-white dark:from-coffee-page dark:to-coffee-page min-h-screen">
     <Container size="xl" padding="md">
       <!-- Header -->
-      <div class="max-w-3xl pb-8 border-b border-slate-200">
-        <h1 class="text-4xl font-bold text-slate-900">Learn Gemmology</h1>
-        <p class="mt-1 text-lg font-medium text-crystal-700">Free FGA exam preparation and structured study guide</p>
-        <p class="mt-4 text-base text-slate-600">
+      <div class="max-w-3xl pb-8 border-b border-slate-200 dark:border-coffee-border">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">Learn Gemmology</h1>
+        <p class="mt-1 text-lg font-medium text-crystal-700 dark:text-crystal-300">Free FGA exam preparation and structured study guide</p>
+        <p class="mt-4 text-base text-slate-600 dark:text-cream-secondary">
           A structured, free study path for the Gem-A FGA Foundation and Diploma curriculum:
           {totalTopicCount} articles across eight categories: crystal systems, physical and optical
           properties, equipment, gem species, identification, phenomena, geographic origin, market
@@ -289,19 +289,19 @@ const iconPaths: Record<string, string> = {
         <label class="block">
           <span class="sr-only">Filter learn topics</span>
           <div class="relative">
-            <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 dark:text-cream-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
               id="learn-filter"
               type="search"
               placeholder="Filter topics… (e.g. quartz, refractometer, inclusions)"
-              class="w-full max-w-xl pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-700 focus:border-crystal-700"
+              class="w-full max-w-xl pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-700 focus:border-crystal-700 dark:border-coffee-border dark:bg-coffee-raised dark:text-cream-primary dark:placeholder:text-cream-muted dark:focus:ring-crystal-400 dark:focus:border-crystal-400"
               aria-controls="learn-results"
             />
           </div>
         </label>
-        <p id="learn-empty" class="mt-3 text-sm text-slate-600 hidden" role="status">
+        <p id="learn-empty" class="mt-3 text-sm text-slate-600 dark:text-cream-secondary hidden" role="status">
           No topics match your filter. Try a broader term.
         </p>
       </div>
@@ -310,13 +310,13 @@ const iconPaths: Record<string, string> = {
       {startHereTopics.length > 0 && (
         <section class="mt-10" data-no-filter>
           <div class="flex items-center gap-3 mb-4">
-            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-emerald-100 text-emerald-700">
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
               <svg aria-hidden="true" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12" />
               </svg>
             </span>
-            <h2 class="text-lg font-semibold text-slate-900">Start here</h2>
-            <span class="text-sm text-slate-600">Recommended foundations to read first</span>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">Start here</h2>
+            <span class="text-sm text-slate-600 dark:text-cream-secondary">Recommended foundations to read first</span>
           </div>
           <ol class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
             {startHereTopics.map((topic, i) => (
@@ -324,7 +324,7 @@ const iconPaths: Record<string, string> = {
                 <a href={topic.href} class="group block">
                   <Card hover padding="md" className="h-full">
                     <div class="flex items-start gap-3">
-                      <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-crystal-50 text-crystal-700 font-semibold text-sm">{i + 1}</span>
+                      <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-crystal-50 text-crystal-700 font-semibold text-sm dark:bg-crystal-400/10 dark:text-crystal-300">{i + 1}</span>
                       <div class="flex-1 min-w-0">
                         <CardTitle className="text-base leading-tight group-hover:text-crystal-700 transition-colors">
                           {topic.title}
@@ -358,8 +358,8 @@ const iconPaths: Record<string, string> = {
                   </svg>
                 </IconBox>
                 <div class="flex-1">
-                  <h2 class="text-2xl font-bold text-slate-900">{group.title}</h2>
-                  <p class="text-sm text-slate-600">{group.description}</p>
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">{group.title}</h2>
+                  <p class="text-sm text-slate-600 dark:text-cream-secondary">{group.description}</p>
                 </div>
               </div>
 
@@ -404,13 +404,13 @@ const iconPaths: Record<string, string> = {
                 <div class="mt-8 first:mt-0">
                   <!-- Subcategory Header -->
                   <div class="flex items-center gap-3 mb-4 ml-1">
-                    <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200"></div>
-                    <h3 class="text-lg font-semibold text-slate-700">{subcat.title}</h3>
-                    <span class="text-sm text-slate-500">({subcat.topics.length} topics)</span>
+                    <div class="w-1 h-6 rounded-full bg-gradient-to-b from-slate-300 to-slate-200 dark:from-coffee-border-strong dark:to-coffee-border"></div>
+                    <h3 class="text-lg font-semibold text-slate-700 dark:text-cream-secondary">{subcat.title}</h3>
+                    <span class="text-sm text-slate-500 dark:text-cream-muted">({subcat.topics.length} topics)</span>
                   </div>
 
                   <!-- Subcategory Topics Grid -->
-                  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100">
+                  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pl-4 border-l-2 border-slate-100 dark:border-coffee-border">
                     {subcat.topics.map((topic, topicIndex) => (
                       <a
                         href={topic.href}
@@ -449,19 +449,19 @@ const iconPaths: Record<string, string> = {
         </div>
       ) : (
         <Card padding="lg" className="mt-12 text-center">
-          <svg class="w-12 h-12 text-slate-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-12 h-12 text-slate-500 dark:text-cream-muted mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
           <CardTitle>Content Coming Soon</CardTitle>
           <CardDescription className="mt-2">
-            Learn content is being migrated. Run <code class="px-2 py-1 bg-slate-100 rounded text-sm">npm run sync</code> to pull the latest content.
+            Learn content is being migrated. Run <code class="px-2 py-1 bg-slate-100 dark:bg-coffee-raised2 dark:text-cream-primary rounded text-sm">npm run sync</code> to pull the latest content.
           </CardDescription>
         </Card>
       )}
       </div>
 
       <!-- FGA Notice -->
-      <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800">
+      <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800 dark:bg-coffee-raised2 dark:border-coffee-border-strong">
         <div class="flex items-start gap-4">
           <IconBox variant="crystal" size="md" className="shrink-0 !bg-crystal-900/50 !text-crystal-400">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -470,7 +470,7 @@ const iconPaths: Record<string, string> = {
           </IconBox>
           <div>
             <h3 class="text-lg font-semibold">FGA Curriculum Alignment</h3>
-            <p class="mt-2 text-slate-300">
+            <p class="mt-2 text-slate-300 dark:text-cream-secondary">
               This content is aligned with the <a href="https://gem-a.com" target="_blank" rel="noopener noreferrer" class="text-crystal-400 hover:text-crystal-300">Gem-A</a> (Gemmological Association of Great Britain)
               FGA diploma curriculum. This resource is not a substitute for formal
               gemmological education and hands-on training with reference stones.

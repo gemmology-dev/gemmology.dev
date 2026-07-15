@@ -62,7 +62,7 @@ const iconPaths: Record<string, string> = {
 
 export function ToolsHub() {
   return (
-    <div className="bg-gradient-to-b from-slate-50 to-white min-h-screen py-12">
+    <div className="bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page min-h-screen py-12">
       <Container size="xl" padding="md">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool) => (

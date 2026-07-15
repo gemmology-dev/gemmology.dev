@@ -38,21 +38,24 @@ const { columns, rows } = Astro.props;
 
 <style>
   .props-table-wrapper {
-    @apply my-6 overflow-x-auto rounded-xl border border-slate-200;
+    @apply my-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-coffee-border;
   }
 
   .props-table {
     @apply w-full text-sm;
   }
 
+  /* Hard gate: table headers -> coffee-raised2, borders -> coffee-border */
   .props-table th {
     @apply px-4 py-3 text-left font-semibold text-slate-700;
     @apply bg-gradient-to-r from-crystal-50 to-slate-50;
     @apply border-b border-slate-200;
+    @apply dark:text-cream-primary dark:from-coffee-raised2 dark:to-coffee-raised2 dark:border-coffee-border;
   }
 
   .props-table td {
     @apply px-4 py-3 border-b border-slate-100;
+    @apply dark:text-cream-secondary dark:border-coffee-border;
   }
 
   .props-table tr:last-child td {
@@ -61,5 +64,6 @@ const { columns, rows } = Astro.props;
 
   .props-table td.mono code {
     @apply bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono text-slate-700;
+    @apply dark:bg-coffee-raised2 dark:text-cream-primary;
   }
 </style>

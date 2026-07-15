@@ -153,20 +153,20 @@ export function LearnQuizWidget({
       >
         <Card
           padding="md"
-          className="border-emerald-200 bg-emerald-50/40"
+          className="border-emerald-200 bg-emerald-50/40 dark:border-emerald-400/20 dark:bg-emerald-400/10"
         >
           <CardContent className="flex items-start gap-4">
             <span aria-hidden="true">
-              <CheckCircle2 className="w-7 h-7 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-7 h-7 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
             </span>
             <div>
-              <p className="font-semibold text-slate-900 text-sm tracking-tight">
+              <p className="font-semibold text-slate-900 dark:text-cream-primary text-sm tracking-tight">
                 Pretest complete
-                <span className="ml-2 font-mono text-xs font-normal text-emerald-700">
+                <span className="ml-2 font-mono text-xs font-normal text-emerald-700 dark:text-emerald-300">
                   {correctCount} / {visibleQuestions.length}
                 </span>
               </p>
-              <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
+              <p className="text-sm text-slate-600 dark:text-cream-secondary mt-1.5 leading-relaxed">
                 The article below covers each of these topics in depth. Pay particular
                 attention to any questions you got wrong; the pretesting effect makes
                 the content that follows measurably stickier.
@@ -195,10 +195,13 @@ export function LearnQuizWidget({
     <aside className="my-6" aria-label={`Pretest, question ${currentIndex + 1} of ${visibleQuestions.length}`}>
       <Card
         padding="none"
-        className="overflow-hidden border-slate-200"
+        className="overflow-hidden border-slate-200 dark:border-coffee-border"
       >
-        {/* Widget header — instrument-label strip */}
-        <div className="px-5 py-2.5 bg-slate-900 border-b border-slate-900 flex items-center justify-between">
+        {/* Widget header — instrument-label strip. Deliberately dark by
+            design in both themes (an "instrument panel" accent); in site
+            dark mode it's realigned to the coffee ramp so it doesn't clash
+            with the surrounding coffee-page background. */}
+        <div className="px-5 py-2.5 bg-slate-900 border-b border-slate-900 dark:bg-coffee-raised2 dark:border-coffee-border-strong flex items-center justify-between">
           <span
             id={legendId}
             className="flex items-baseline gap-2 text-sm font-semibold tracking-tight text-slate-50"
@@ -219,8 +222,8 @@ export function LearnQuizWidget({
         <CardContent className="px-5 py-5">
           {/* Helper line — guidance, not body */}
           {currentIndex === 0 && !isSubmitted && (
-            <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-              <span aria-hidden="true" className="text-crystal-500 mr-1.5">—</span>
+            <p className="text-sm text-slate-600 dark:text-cream-secondary mb-4 leading-relaxed">
+              <span aria-hidden="true" className="text-crystal-500 dark:text-crystal-400 mr-1.5">—</span>
               Try these before reading. Getting them wrong here makes the article
               that follows stick better in memory.
             </p>
@@ -228,7 +231,7 @@ export function LearnQuizWidget({
 
           {/* Question stem */}
           <p
-            className="text-base font-medium text-slate-900 leading-relaxed mb-4 tracking-tight"
+            className="text-base font-medium text-slate-900 dark:text-cream-primary leading-relaxed mb-4 tracking-tight"
             aria-live="polite"
           >
             {currentQuestion.questionText}
@@ -257,18 +260,18 @@ export function LearnQuizWidget({
                   disabled={isSubmitted}
                   className={cn(
                     'group w-full text-left pl-2 pr-4 py-2.5 rounded-lg text-sm border transition-all duration-150',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 dark:focus-visible:ring-crystal-400 focus-visible:ring-offset-2',
                     'disabled:pointer-events-none',
                     isIdle &&
-                      'border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50',
+                      'border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-coffee-border-strong dark:hover:bg-coffee-raised',
                     isPickedIdle &&
-                      'border-crystal-600 bg-crystal-50 text-crystal-900 ring-1 ring-crystal-600',
+                      'border-crystal-600 bg-crystal-50 text-crystal-900 ring-1 ring-crystal-600 dark:border-crystal-400 dark:bg-crystal-400/10 dark:text-crystal-200 dark:ring-crystal-400',
                     isCorrectReveal &&
-                      'border-emerald-600 bg-emerald-50 text-emerald-900',
+                      'border-emerald-600 bg-emerald-50 text-emerald-900 dark:border-emerald-400 dark:bg-emerald-400/10 dark:text-emerald-200',
                     isWrongChosen &&
-                      'border-red-500 bg-red-50 text-red-900',
+                      'border-red-500 bg-red-50 text-red-900 dark:border-red-400 dark:bg-red-400/10 dark:text-red-200',
                     showCorrectness && !isThisCorrect && !isSelected &&
-                      'border-slate-200 text-slate-500',
+                      'border-slate-200 text-slate-500 dark:border-coffee-border dark:text-cream-muted',
                   )}
                 >
                   <span className="inline-flex items-center gap-3">
@@ -277,7 +280,7 @@ export function LearnQuizWidget({
                       className={cn(
                         'inline-flex h-6 w-6 items-center justify-center rounded font-mono text-[11px] tracking-wider transition-colors duration-150 flex-shrink-0',
                         isIdle &&
-                          'bg-slate-100 text-slate-600 group-hover:bg-slate-200',
+                          'bg-slate-100 text-slate-600 group-hover:bg-slate-200 dark:bg-coffee-raised2 dark:text-cream-secondary dark:group-hover:bg-coffee-border',
                         isPickedIdle &&
                           'bg-crystal-600 text-white',
                         isCorrectReveal &&
@@ -285,7 +288,7 @@ export function LearnQuizWidget({
                         isWrongChosen &&
                           'bg-red-600 text-white',
                         showCorrectness && !isThisCorrect && !isSelected &&
-                          'bg-slate-100 text-slate-400',
+                          'bg-slate-100 text-slate-400 dark:bg-coffee-raised2 dark:text-cream-muted',
                       )}
                     >
                       {letter}

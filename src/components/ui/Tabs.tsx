@@ -42,7 +42,7 @@ export function TabsList({ children, className }: TabsListProps) {
   return (
     <div
       className={twMerge(
-        'inline-flex items-center gap-1 rounded-lg bg-slate-100 p-1',
+        'inline-flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-coffee-raised2 p-1',
         className
       )}
       role="tablist"
@@ -71,8 +71,8 @@ export function TabsTrigger({ value, children, className }: TabsTriggerProps) {
         clsx(
           'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
           isActive
-            ? 'bg-white text-slate-900 shadow-sm'
-            : 'text-slate-600 hover:text-slate-900'
+            ? 'bg-white text-slate-900 shadow-sm dark:bg-coffee-raised dark:text-cream-primary'
+            : 'text-slate-600 hover:text-slate-900 dark:text-cream-muted dark:hover:text-cream-primary'
         ),
         className
       )}

@@ -142,7 +142,7 @@ const sectionCitationCluster =
 ---
 
 <section id={sectionId} class="mb-16">
-  <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200">
+  <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-6 pb-3 border-b border-slate-200 dark:border-coffee-border">
     {section.title}
     {sectionCitationCluster && (
       <span class="section-citation-cluster font-normal" aria-label="Section citations">
@@ -158,7 +158,13 @@ const sectionCitationCluster =
   )}
 
   {sectionContent && (
-    <div class="prose prose-slate max-w-none mb-6" set:html={sectionContent} />
+    <div class="prose prose-slate max-w-none mb-6
+                prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                prose-p:text-slate-600 dark:prose-p:text-cream-secondary
+                prose-li:dark:text-cream-secondary
+                prose-strong:dark:text-cream-primary
+                prose-a:text-crystal-700 dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:hover:prose-a:decoration-gold"
+         set:html={sectionContent} />
   )}
 
   {section.crystal && (
@@ -204,13 +210,19 @@ const sectionCitationCluster =
     } else {
       // Render as a regular subsection with improved styling
       return (
-        <div class="mt-8 rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
-            <h3 class="text-lg font-semibold text-slate-800">{sub.title}</h3>
+        <div class="mt-8 rounded-xl border border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised overflow-hidden">
+          <div class="bg-slate-50 dark:bg-coffee-raised2 px-4 py-3 border-b border-slate-200 dark:border-coffee-border">
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-cream-primary">{sub.title}</h3>
           </div>
           <div class="p-4">
             {sub.renderedContent && (
-              <div class="prose prose-slate max-w-none mb-4" set:html={sub.renderedContent} />
+              <div class="prose prose-slate max-w-none mb-4
+                          prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                          prose-p:text-slate-600 dark:prose-p:text-cream-secondary
+                          prose-li:dark:text-cream-secondary
+                          prose-strong:dark:text-cream-primary
+                          prose-a:text-crystal-700 dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:hover:prose-a:decoration-gold"
+                   set:html={sub.renderedContent} />
             )}
             {sub.items && <PropertyList items={sub.items} headingLevel={4} citationIndex={citationIndex} />}
             {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} citationIndex={citationIndex} />}
@@ -220,3 +232,32 @@ const sectionCitationCluster =
     }
   })}
 </section>
+
+<style>
+  /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
+     values (tailwind.config.mjs `typography.extend`) — same rationale/values
+     as the identical block in src/pages/learn/[...slug].astro. Duplicated
+     here (rather than relying solely on the parent page) since this
+     component renders its own nested `.prose` blocks per section/subsection. */
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+
+  /* `.citation-ref` (section-heading citation cluster) has no CSS definition
+     anywhere - relies on the browser's default anchor color in light mode
+     (left untouched for pixel parity). Add only the dark-mode color. */
+  :global([data-theme='dark'] .citation-ref) {
+    color: #38bdf8; /* crystal-400 */
+  }
+</style>

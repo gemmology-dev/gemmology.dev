@@ -33,11 +33,11 @@ export function SectionHeader({
           {badge}
         </Badge>
       )}
-      <h2 className="text-3xl font-bold text-slate-900">{title}</h2>
+      <h2 className="text-3xl font-bold text-slate-900 dark:text-cream-primary">{title}</h2>
       {description && (
         <p
           className={cn(
-            'mt-4 text-lg text-slate-600',
+            'mt-4 text-lg text-slate-600 dark:text-cream-secondary',
             align === 'center' && 'max-w-2xl mx-auto'
           )}
         >

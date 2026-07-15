@@ -66,7 +66,7 @@ export function ExpressionSelector({
         ref={scrollRef}
         className={cn(
           'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
-          'scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent'
+          'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-coffee-border-strong scrollbar-track-transparent'
         )}
       >
         {expressions.map((expr) => (
@@ -76,16 +76,16 @@ export function ExpressionSelector({
             onClick={() => onSelect(expr.id)}
             className={cn(
               'flex-shrink-0 w-24 rounded-lg overflow-hidden transition-all duration-200',
-              'border-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+              'border-2 bg-white dark:bg-coffee-raised focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2',
               selected === expr.id
-                ? 'border-blue-500 shadow-md shadow-blue-500/20 scale-105'
-                : 'border-slate-200 hover:border-slate-300 hover:shadow-sm'
+                ? 'border-blue-500 dark:border-blue-400 shadow-md shadow-blue-500/20 dark:shadow-none scale-105'
+                : 'border-slate-200 dark:border-coffee-border hover:border-slate-300 dark:hover:border-coffee-border-strong hover:shadow-sm'
             )}
             title={expr.name}
             aria-pressed={selected === expr.id}
           >
-            {/* Thumbnail */}
-            <div className="aspect-square bg-slate-50 p-2">
+            {/* Thumbnail — permanent light "specimen plate", see docs/dark-mode.md */}
+            <div className="aspect-square bg-slate-50 dark:border-b dark:border-coffee-border p-2">
               {expr.model_svg ? (
                 <div
                   className="w-full h-full [&>svg]:w-full [&>svg]:h-full"
@@ -99,10 +99,10 @@ export function ExpressionSelector({
             </div>
 
             {/* Label */}
-            <div className="px-2 py-1.5 text-center border-t border-slate-100">
+            <div className="px-2 py-1.5 text-center border-t border-slate-100 dark:border-coffee-border">
               <span className={cn(
                 'text-xs font-medium truncate block',
-                selected === expr.id ? 'text-blue-700' : 'text-slate-600'
+                selected === expr.id ? 'text-blue-700 dark:text-blue-300' : 'text-slate-600 dark:text-cream-secondary'
               )}>
                 {expr.name}
               </span>
@@ -114,13 +114,13 @@ export function ExpressionSelector({
       {/* Fade edges on scroll */}
       <div
         className={cn(
-          'absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none transition-opacity',
+          'absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-white dark:from-coffee-page to-transparent pointer-events-none transition-opacity',
           showLeftFade ? 'opacity-100' : 'opacity-0'
         )}
       />
       <div
         className={cn(
-          'absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none transition-opacity',
+          'absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white dark:from-coffee-page to-transparent pointer-events-none transition-opacity',
           showRightFade ? 'opacity-100' : 'opacity-0'
         )}
       />
