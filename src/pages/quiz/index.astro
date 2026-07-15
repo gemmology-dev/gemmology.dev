@@ -142,15 +142,6 @@ const quizSchema = {
           items with no setup screen, making it easy to fit a focused five-minute review into any
           break between study sessions.
         </p>
-
-        <h2 class="text-xl font-semibold text-slate-800 mt-8 mb-3">Quiz categories</h2>
-        <ul class="space-y-1">
-          {categories.map(cat => (
-            <li class="text-slate-700">
-              <strong>{cat.name}:</strong> {cat.description}
-            </li>
-          ))}
-        </ul>
       </section>
 
       <QuizPage client:idle learnEntries={entries} curatedQuestions={curatedQuestions} />

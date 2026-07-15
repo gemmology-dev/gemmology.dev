@@ -33,7 +33,7 @@ export function FieldError({
       id={errorId}
       className={cn(
         'text-xs mt-1',
-        type === 'error' && 'text-red-500',
+        type === 'error' && 'text-red-600',
         type === 'warning' && 'text-amber-500',
         type === 'info' && 'text-slate-600',
         className

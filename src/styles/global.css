@@ -35,6 +35,15 @@
     scroll-behavior: smooth;
   }
 
+  /*
+   * The sticky header (h-16 + border = ~65px) hides anchor-jump targets
+   * (citation backlinks, jump-nav) without this. 5rem (80px) covers the
+   * header height plus a small visual buffer.
+   */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     @apply bg-white text-slate-900 antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';

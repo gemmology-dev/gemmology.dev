@@ -104,7 +104,7 @@ export function ExportImportPanel({ store }: ExportImportPanelProps) {
 
   return (
     <Card padding="none" className="overflow-hidden">
-      <CardHeader className="px-6 pt-6 pb-4 mb-0 border-b border-slate-100 dark:border-slate-800">
+      <CardHeader className="px-6 pt-6 pb-4 mb-0 border-b border-slate-100">
         <CardTitle as="h2">Export &amp; Import</CardTitle>
         <CardDescription>
           Back up your study history, schedule, and settings to a JSON file, or
@@ -158,11 +158,11 @@ export function ExportImportPanel({ store }: ExportImportPanelProps) {
           className={cn(
             'mx-6 mb-4 rounded-lg px-4 py-3 text-sm flex items-start gap-2',
             toast.kind === 'success' &&
-              'bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800',
+              'bg-emerald-50 text-emerald-800 border border-emerald-200',
             (toast.kind === 'warning') &&
-              'bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800',
+              'bg-amber-50 text-amber-800 border border-amber-200',
             toast.kind === 'error' &&
-              'bg-red-50 text-red-800 border border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900',
+              'bg-red-50 text-red-800 border border-red-200',
           )}
         >
           {toast.kind === 'success' && (
