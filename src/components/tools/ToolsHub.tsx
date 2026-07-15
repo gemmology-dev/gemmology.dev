@@ -64,14 +64,7 @@ export function ToolsHub() {
   return (
     <div className="bg-gradient-to-b from-slate-50 to-white min-h-screen py-12">
       <Container size="xl" padding="md">
-        <div className="max-w-3xl pb-8 border-b border-slate-200">
-          <h1 className="text-4xl font-bold text-slate-900">Tools</h1>
-          <p className="mt-4 text-lg text-slate-600">
-            Calculators for the bench: SG by hydrostatic weighing, RI lookup, birefringence, critical angle, carat estimation, and unit conversion. Also includes dichroscope, polariscope, and Chelsea-filter references.
-          </p>
-        </div>
-
-        <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool) => (
             <a key={tool.title} href={tool.href} className="group">
               <Card hover padding="lg" className="h-full">

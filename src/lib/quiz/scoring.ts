@@ -22,28 +22,37 @@ export function calculateResults(
 ): QuizResult {
   const results: QuestionResult[] = [];
   let score = 0;
+  let scoredCount = 0;
 
   for (const question of state.questions) {
+    const isSkipped = state.skippedQuestions.has(question.id);
     const userAnswer = state.answers.get(question.id) || null;
-    const isCorrect = userAnswer !== null && checkAnswer(question, userAnswer);
+    // Skipped questions are never scored, regardless of a stray answer.
+    const isCorrect = !isSkipped && userAnswer !== null && checkAnswer(question, userAnswer);
     const wasFlagged = state.flaggedQuestions.has(question.id);
 
-    if (isCorrect) score++;
+    if (!isSkipped) {
+      scoredCount++;
+      if (isCorrect) score++;
+    }
 
     results.push({
       question,
       userAnswer,
       isCorrect,
       wasFlagged,
+      skipped: isSkipped,
     });
   }
 
-  const totalQuestions = state.questions.length;
+  // totalQuestions/percentage exclude skipped questions from the denominator;
+  // with no skips this is identical to state.questions.length (regression-tested).
+  const totalQuestions = scoredCount;
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
   const timeTaken = (state.endTime || Date.now()) - state.startTime;
 
-  // Calculate breakdown by category
-  const breakdown = calculateCategoryBreakdown(results);
+  // Calculate breakdown by category (skipped questions excluded)
+  const breakdown = calculateCategoryBreakdown(results.filter(r => !r.skipped));
 
   return {
     results,
@@ -148,6 +157,7 @@ export function getWrongAnswerStats(results: QuestionResult[]): {
   const difficulties = new Map<string, number>();
 
   for (const result of results) {
+    if (result.skipped) continue;
     if (!result.isCorrect) {
       const { topic, category, difficulty } = result.question;
 

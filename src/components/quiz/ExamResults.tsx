@@ -8,6 +8,7 @@ import type { QuizResult, QuestionResult } from '../../lib/quiz';
 import { getGrade, getFeedback, formatDuration, getPassStatus, CATEGORY_LABELS } from '../../lib/quiz';
 import { Button } from '../ui/Button';
 import { cn } from '../ui/cn';
+import { RationalePanel } from './study/RationalePanel';
 
 interface ExamResultsProps {
   /** The exam results */
@@ -292,6 +293,14 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
     ? question.correctAnswer[0]
     : question.correctAnswer;
 
+  // Rationale is exam-mode's only surface for RationalePanel (never shown
+  // mid-exam) — only rendered when the question carries curated rationale data.
+  const userPickedIndex =
+    (question.type === 'multiple-choice' || question.type === 'true-false') &&
+    typeof userAnswer === 'string' && question.options
+      ? question.options.indexOf(userAnswer)
+      : undefined;
+
   return (
     <div
       className={cn(
@@ -358,11 +367,22 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
             </div>
           )}
 
-          {/* Explanation */}
-          {question.explanation && (
-            <div className="mt-3 p-3 bg-slate-50 rounded-lg">
-              <p className="text-sm text-slate-600">{question.explanation}</p>
-            </div>
+          {/* Rationale (curated questions) — falls back to plain explanation
+              (auto-generated questions) when no rationale fields are present. */}
+          {question.rationaleCorrect ? (
+            <RationalePanel
+              correct={isCorrect}
+              rationaleCorrect={question.rationaleCorrect}
+              optionRationales={question.optionRationales}
+              userPickedIndex={userPickedIndex}
+              show={true}
+            />
+          ) : (
+            question.explanation && (
+              <div className="mt-3 p-3 bg-slate-50 rounded-lg">
+                <p className="text-sm text-slate-600">{question.explanation}</p>
+              </div>
+            )
           )}
 
           {/* Source link */}

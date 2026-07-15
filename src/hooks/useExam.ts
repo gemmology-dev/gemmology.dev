@@ -24,6 +24,8 @@ import {
 import { useLocalStorage, STORAGE_KEYS } from './useLocalStorage';
 import { getStudyStore } from '../lib/quiz/store';
 import { updateProgress } from '../lib/quiz/progress-tracker';
+import { qualityOf, applySM2 } from '../lib/quiz/scheduler';
+import { newScheduleEntry } from '../lib/quiz/study-types';
 import type { Confidence } from '../lib/quiz/study-types';
 
 interface UseExamOptions {
@@ -89,6 +91,8 @@ interface UseExamReturn {
   pauseTimer: () => void;
   /** Resume the timer */
   resumeTimer: () => void;
+  /** Mark the current question as skipped (not scored) and advance if possible */
+  skipQuestion: () => void;
 }
 
 interface SerializedExamState {
@@ -128,7 +132,11 @@ export function useExam({
     if (savedState) {
       try {
         const parsed: SerializedExamState = JSON.parse(savedState);
-        return deserializeQuizState(JSON.parse(parsed.quizState));
+        const restored = deserializeQuizState(JSON.parse(parsed.quizState));
+        // Never restore an already-submitted exam as the current session.
+        if (!restored.submitted) {
+          return restored;
+        }
       } catch {
         // Ignore parse errors
       }
@@ -141,6 +149,7 @@ export function useExam({
       startTime: Date.now(),
       flaggedQuestions: new Set(),
       submitted: false,
+      skippedQuestions: new Set(),
     };
   });
 
@@ -304,6 +313,26 @@ export function useExam({
   }, [state.answers]);
 
   /**
+   * Mark the current question as skipped (e.g. structurally unrenderable).
+   * Skipped questions are excluded from scoring but remain visible in results.
+   * Advances to the next question when one is available.
+   */
+  const skipQuestion = useCallback(() => {
+    if (!currentQuestion) return;
+
+    setState(prev => {
+      const newSkipped = new Set(prev.skippedQuestions);
+      newSkipped.add(currentQuestion.id);
+      const hasNext = prev.currentIndex < prev.questions.length - 1;
+      return {
+        ...prev,
+        skippedQuestions: newSkipped,
+        currentIndex: hasNext ? prev.currentIndex + 1 : prev.currentIndex,
+      };
+    });
+  }, [currentQuestion]);
+
+  /**
    * Submit the exam.
    *
    * Logs one ResponseRecord per answered question to the study store, then
@@ -356,6 +385,16 @@ export function useExam({
       }).catch((err: unknown) => {
         console.warn('[useExam] appendResponse failed:', err);
       });
+
+      // --- Study v1: update the SM-2 schedule for this question ---
+      store.getSchedule(questionId).then(existing => {
+        const previous = existing ?? newScheduleEntry(questionId);
+        const quality = qualityOf(correct, confidence);
+        const next = applySM2(previous, quality);
+        return store.updateSchedule(next);
+      }).catch((err: unknown) => {
+        console.warn('[useExam] updateSchedule failed:', err);
+      });
     }
 
     // --- Study v1: update progress ---
@@ -383,6 +422,7 @@ export function useExam({
       startTime: Date.now(),
       flaggedQuestions: new Set(),
       submitted: false,
+      skippedQuestions: new Set(),
     });
   }, [questions, timeLimit, clearSavedState]);
 
@@ -419,5 +459,6 @@ export function useExam({
     resetExam,
     pauseTimer,
     resumeTimer,
+    skipQuestion,
   };
 }

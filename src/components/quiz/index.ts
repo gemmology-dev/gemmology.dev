@@ -5,6 +5,7 @@
 // Practice mode components
 export { AnswerOption, OPTION_LABELS } from './AnswerOption';
 export { QuestionCard } from './QuestionCard';
+export { UnrenderableQuestionCard } from './UnrenderableQuestionCard';
 export { QuizProgress, QuizProgressDots } from './QuizProgress';
 export { QuizResults } from './QuizResults';
 export { QuizSetup } from './QuizSetup';

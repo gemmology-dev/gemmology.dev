@@ -48,6 +48,16 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   care: 'Care & Durability',
 };
 
+/** Per-option rationale, shown in the post-submit RationalePanel. */
+export interface OptionRationale {
+  /** Display text of this option. */
+  text: string;
+  /** Whether this is the correct answer. */
+  isCorrect: boolean;
+  /** Per-distractor or correct-answer rationale. */
+  rationale: string;
+}
+
 /** A single quiz question */
 export interface Question {
   /** Unique identifier for this question */
@@ -72,6 +82,12 @@ export interface Question {
   sourceRef?: string;
   /** For matching questions: items to match */
   matchingPairs?: Array<{ left: string; right: string }>;
+  /** Overall rationale for the correct answer (Study v1 — curated questions). */
+  rationaleCorrect?: string;
+  /** Per-option rationales (Study v1 — curated questions). */
+  optionRationales?: OptionRationale[];
+  /** Whether this question is auto-generated and not yet expert-reviewed. */
+  unvetted?: boolean;
 }
 
 /** Configuration for starting a quiz */
@@ -117,6 +133,8 @@ export interface QuizState {
   flaggedQuestions: Set<string>;
   /** Whether the quiz has been submitted */
   submitted: boolean;
+  /** Questions the user explicitly skipped (unrenderable or user choice). Not scored. */
+  skippedQuestions: Set<string>;
 }
 
 /** Result for a single answered question */
@@ -131,6 +149,8 @@ export interface QuestionResult {
   timeTaken?: number;
   /** Whether the question was flagged for review (exam mode) */
   wasFlagged?: boolean;
+  /** Whether the question was skipped (unrenderable or user choice). Excluded from scoring. */
+  skipped?: boolean;
 }
 
 /** Final results after completing a quiz */
@@ -214,6 +234,8 @@ export interface SerializedQuizState {
   endTime?: number;
   flaggedQuestions: string[];
   submitted: boolean;
+  /** New in Study v1. Absent in pre-v1 blobs — defaulted to [] on deserialize. */
+  skippedQuestions?: string[];
 }
 
 /** Convert QuizState to serializable format */
@@ -226,6 +248,7 @@ export function serializeQuizState(state: QuizState): SerializedQuizState {
     endTime: state.endTime,
     flaggedQuestions: Array.from(state.flaggedQuestions),
     submitted: state.submitted,
+    skippedQuestions: Array.from(state.skippedQuestions),
   };
 }
 
@@ -239,5 +262,7 @@ export function deserializeQuizState(data: SerializedQuizState): QuizState {
     endTime: data.endTime,
     flaggedQuestions: new Set(data.flaggedQuestions),
     submitted: data.submitted,
+    // Backward-compatible: old localStorage blobs predate this field.
+    skippedQuestions: new Set(data.skippedQuestions ?? []),
   };
 }

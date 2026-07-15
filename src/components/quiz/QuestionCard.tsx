@@ -1,11 +1,14 @@
 /**
  * Question card component for displaying a single quiz question.
- * Handles multiple-choice and true/false question types.
+ * Handles multiple-choice, true/false, fill-blank, and matching question types.
  */
 
-import { useState, useCallback } from 'react';
-import type { Question } from '../../lib/quiz';
+import type { ReactNode } from 'react';
+import { useState, useEffect, useId } from 'react';
+import type { Question, OptionRationale as QuestionOptionRationale } from '../../lib/quiz';
+import { checkAnswer } from '../../lib/quiz';
 import { AnswerOption, OPTION_LABELS } from './AnswerOption';
+import { RationalePanel } from './study/RationalePanel';
 import { cn } from '../ui/cn';
 
 interface QuestionCardProps {
@@ -15,16 +18,115 @@ interface QuestionCardProps {
   questionNumber: number;
   /** Total number of questions */
   totalQuestions: number;
-  /** The user's current answer (if any) */
-  selectedAnswer?: string;
+  /** The user's current answer (if any). String for MCQ/true-false/fill-blank, string[] for matching. */
+  selectedAnswer?: string | string[];
   /** Whether to show feedback (practice mode) */
   showFeedback: boolean;
   /** Whether this question has been submitted */
   isSubmitted: boolean;
   /** Callback when an answer is selected */
-  onSelectAnswer: (answer: string) => void;
+  onSelectAnswer: (answer: string | string[]) => void;
   /** Callback when the question is submitted (practice mode) */
   onSubmit?: () => void;
+  /** Extra content rendered in the header, next to the difficulty/category badges (e.g. a flag button) */
+  headerExtra?: ReactNode;
+  /** SM-2 schedule status badge, rendered in the header (practice mode, Study v1) */
+  scheduleBadge?: ReactNode;
+  /** When true, renders the collapsible RationalePanel instead of the plain feedback box. Default false. */
+  showRationalePanel?: boolean;
+}
+
+/** Inline fill-blank text input. */
+function FillBlankInput({
+  value,
+  onChange,
+  disabled,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  disabled: boolean;
+}) {
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      disabled={disabled}
+      placeholder="Type your answer..."
+      className={cn(
+        'w-full px-4 py-3 rounded-lg border-2 text-slate-900',
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
+        'border-slate-200 bg-white',
+        disabled && 'opacity-70 cursor-not-allowed bg-slate-50'
+      )}
+      aria-label="Your answer"
+    />
+  );
+}
+
+/** Inline matching-question rows: each left item gets a dropdown of right-side options. */
+function MatchingRows({
+  pairs,
+  value,
+  onChange,
+  disabled,
+}: {
+  pairs: Array<{ left: string; right: string }>;
+  value: string[];
+  onChange: (value: string[]) => void;
+  disabled: boolean;
+}) {
+  const uid = useId();
+  // value entries are `${left}:${right}` strings, matching the generator convention.
+  const selections = new Map<string, string>();
+  for (const entry of value) {
+    const idx = entry.indexOf(':');
+    if (idx === -1) continue;
+    selections.set(entry.slice(0, idx), entry.slice(idx + 1));
+  }
+
+  const rightOptions = pairs.map(p => p.right);
+
+  const handleSelect = (left: string, right: string) => {
+    const next = new Map(selections);
+    if (right) {
+      next.set(left, right);
+    } else {
+      next.delete(left);
+    }
+    onChange(Array.from(next.entries()).map(([l, r]) => `${l}:${r}`));
+  };
+
+  return (
+    <div className="space-y-3">
+      {pairs.map((pair, index) => (
+        <div key={pair.left} className="flex items-center gap-3">
+          <span className="flex-1 text-sm text-slate-700">{pair.left}</span>
+          <select
+            id={`${uid}-match-${index}`}
+            name={`${uid}-match-${index}`}
+            value={selections.get(pair.left) ?? ''}
+            onChange={(e) => handleSelect(pair.left, e.target.value)}
+            disabled={disabled}
+            aria-label={`Match for ${pair.left}`}
+            className={cn(
+              'flex-1 px-3 py-2 rounded-lg border-2 text-sm text-slate-900',
+              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
+              'border-slate-200 bg-white',
+              disabled && 'opacity-70 cursor-not-allowed bg-slate-50'
+            )}
+          >
+            <option value="">Choose a match...</option>
+            {rightOptions.map((right) => (
+              <option key={right} value={right}>
+                {right}
+              </option>
+            ))}
+          </select>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function QuestionCard({
@@ -36,14 +138,36 @@ export function QuestionCard({
   isSubmitted,
   onSelectAnswer,
   onSubmit,
+  headerExtra,
+  scheduleBadge,
+  showRationalePanel = false,
 }: QuestionCardProps) {
   const options = question.options || [];
-  const correctAnswer = Array.isArray(question.correctAnswer)
+  const selectedString = typeof selectedAnswer === 'string' ? selectedAnswer : undefined;
+  const selectedArray = Array.isArray(selectedAnswer) ? selectedAnswer : [];
+
+  // Local text state for fill-blank so the input stays controlled even before
+  // the parent has recorded a first answer.
+  const [fillBlankValue, setFillBlankValue] = useState(selectedString ?? '');
+  useEffect(() => {
+    setFillBlankValue(selectedString ?? '');
+  }, [selectedString, question.id]);
+
+  const hasAnswer = selectedAnswer !== undefined;
+  const isAnswered = isSubmitted && showFeedback;
+  const isCorrectAnswer = hasAnswer && checkAnswer(question, selectedAnswer);
+
+  // For single-value display purposes (feedback text, RationalePanel highlighting).
+  const correctAnswerDisplay = Array.isArray(question.correctAnswer)
     ? question.correctAnswer[0]
     : question.correctAnswer;
 
-  // Determine if the selected answer is correct
-  const isCorrectAnswer = selectedAnswer === correctAnswer;
+  const userPickedIndex =
+    (question.type === 'multiple-choice' || question.type === 'true-false') && selectedString
+      ? options.indexOf(selectedString)
+      : undefined;
+
+  const optionRationales: QuestionOptionRationale[] | undefined = question.optionRationales;
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
@@ -54,6 +178,7 @@ export function QuestionCard({
             Question {questionNumber} of {totalQuestions}
           </span>
           <div className="flex items-center gap-2">
+            {scheduleBadge}
             <span
               className={cn(
                 'px-2 py-1 text-xs font-medium rounded-full',
@@ -67,6 +192,7 @@ export function QuestionCard({
             <span className="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600">
               {question.category}
             </span>
+            {headerExtra}
           </div>
         </div>
       </div>
@@ -78,24 +204,60 @@ export function QuestionCard({
         </h2>
       </div>
 
-      {/* Answer options */}
-      <div className="px-6 pb-6 space-y-3">
-        {options.map((option, index) => (
-          <AnswerOption
-            key={option}
-            text={option}
-            label={OPTION_LABELS[index]}
-            isSelected={selectedAnswer === option}
-            isCorrect={option === correctAnswer}
-            isAnswered={isSubmitted && showFeedback}
-            disabled={isSubmitted && showFeedback}
-            onClick={() => onSelectAnswer(option)}
+      {/* Answer input, branched by question type */}
+      <div className="px-6 pb-6">
+        {(question.type === 'multiple-choice' || question.type === 'true-false') && (
+          <div className="space-y-3">
+            {options.map((option, index) => (
+              <AnswerOption
+                key={option}
+                text={option}
+                label={OPTION_LABELS[index]}
+                isSelected={selectedString === option}
+                isCorrect={option === correctAnswerDisplay}
+                isAnswered={isAnswered}
+                disabled={isAnswered}
+                onClick={() => onSelectAnswer(option)}
+              />
+            ))}
+          </div>
+        )}
+
+        {question.type === 'fill-blank' && (
+          <FillBlankInput
+            value={fillBlankValue}
+            onChange={(value) => {
+              setFillBlankValue(value);
+              onSelectAnswer(value);
+            }}
+            disabled={isAnswered}
           />
-        ))}
+        )}
+
+        {question.type === 'matching' && question.matchingPairs && (
+          <MatchingRows
+            pairs={question.matchingPairs}
+            value={selectedArray}
+            onChange={onSelectAnswer}
+            disabled={isAnswered}
+          />
+        )}
       </div>
 
       {/* Feedback section (practice mode) */}
-      {isSubmitted && showFeedback && (
+      {isAnswered && showRationalePanel && question.rationaleCorrect && (
+        <div className="px-6 pb-6">
+          <RationalePanel
+            correct={isCorrectAnswer}
+            rationaleCorrect={question.rationaleCorrect}
+            optionRationales={optionRationales}
+            userPickedIndex={userPickedIndex}
+            show={true}
+          />
+        </div>
+      )}
+
+      {isAnswered && (!showRationalePanel || !question.rationaleCorrect) && (
         <div
           className={cn(
             'px-6 py-4 border-t',
@@ -125,7 +287,7 @@ export function QuestionCard({
               </p>
               {!isCorrectAnswer && (
                 <p className="text-sm text-red-600 mt-1">
-                  The correct answer is: <strong>{correctAnswer}</strong>
+                  The correct answer is: <strong>{correctAnswerDisplay}</strong>
                 </p>
               )}
               {question.explanation && (
@@ -154,6 +316,7 @@ export function QuestionCard({
           </a>
         </div>
       )}
+
     </div>
   );
 }

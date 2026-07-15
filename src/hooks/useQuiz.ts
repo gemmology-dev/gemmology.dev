@@ -24,6 +24,8 @@ import {
 import { useLocalStorage, STORAGE_KEYS } from './useLocalStorage';
 import { getStudyStore } from '../lib/quiz/store';
 import { updateProgress } from '../lib/quiz/progress-tracker';
+import { qualityOf, applySM2 } from '../lib/quiz/scheduler';
+import { newScheduleEntry } from '../lib/quiz/study-types';
 import type { Confidence } from '../lib/quiz/study-types';
 
 interface UseQuizOptions {
@@ -66,6 +68,8 @@ interface UseQuizReturn {
   submitQuiz: () => void;
   /** Reset the quiz */
   resetQuiz: () => void;
+  /** Mark the current question as skipped (not scored) and advance if possible */
+  skipQuestion: () => void;
 }
 
 /** Generate a random session identifier. */
@@ -98,10 +102,15 @@ export function useQuiz({
 
   // Initialize quiz state
   const [state, setState] = useState<QuizState>(() => {
-    // Try to restore from localStorage if persisting
+    // Try to restore from localStorage if persisting. Never restore an
+    // already-submitted session — a completed quiz must not resurrect as
+    // the current session when a new one starts.
     if (persist && savedState) {
       try {
-        return deserializeQuizState(JSON.parse(savedState));
+        const restored = deserializeQuizState(JSON.parse(savedState));
+        if (!restored.submitted) {
+          return restored;
+        }
       } catch {
         // Ignore parse errors
       }
@@ -114,6 +123,7 @@ export function useQuiz({
       startTime: Date.now(),
       flaggedQuestions: new Set(),
       submitted: false,
+      skippedQuestions: new Set(),
     };
   });
 
@@ -203,6 +213,17 @@ export function useQuiz({
     }).catch((err: unknown) => {
       console.warn('[useQuiz] appendResponse failed:', err);
     });
+
+    // --- Study v1: update the SM-2 schedule for this question ---
+    const questionId = currentQuestion.id;
+    store.getSchedule(questionId).then(existing => {
+      const previous = existing ?? newScheduleEntry(questionId);
+      const quality = qualityOf(correct, confidence);
+      const next = applySM2(previous, quality);
+      return store.updateSchedule(next);
+    }).catch((err: unknown) => {
+      console.warn('[useQuiz] updateSchedule failed:', err);
+    });
   }, [currentQuestion, hasAnswer, state.answers, store, sessionId]);
 
   // Navigate to next question; reset the per-question timer.
@@ -255,6 +276,29 @@ export function useQuiz({
   }, [currentQuestion, state, saveState]);
 
   /**
+   * Mark the current question as skipped (e.g. structurally unrenderable).
+   * Skipped questions are excluded from scoring but remain visible in results.
+   * Advances to the next question when one is available.
+   */
+  const skipQuestion = useCallback(() => {
+    if (!currentQuestion) return;
+
+    const newSkipped = new Set(state.skippedQuestions);
+    newSkipped.add(currentQuestion.id);
+
+    const hasNext = state.currentIndex < state.questions.length - 1;
+    if (hasNext) {
+      questionStartTime.current = Date.now();
+    }
+
+    saveState({
+      ...state,
+      skippedQuestions: newSkipped,
+      currentIndex: hasNext ? state.currentIndex + 1 : state.currentIndex,
+    });
+  }, [currentQuestion, state, saveState]);
+
+  /**
    * Submit the entire quiz.
    * After state update, wires progress-tracker and persists via the store.
    */
@@ -289,6 +333,7 @@ export function useQuiz({
       startTime: Date.now(),
       flaggedQuestions: new Set(),
       submitted: false,
+      skippedQuestions: new Set(),
     });
   }, [questions, clearSavedState]);
 
@@ -308,5 +353,6 @@ export function useQuiz({
     toggleFlag,
     submitQuiz,
     resetQuiz,
+    skipQuestion,
   };
 }

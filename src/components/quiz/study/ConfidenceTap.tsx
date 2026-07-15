@@ -40,7 +40,7 @@ const OPTIONS: ConfidenceOption[] = [
     label: 'Unsure',
     shortcut: 'Q',
     selectedClass: 'border-red-500 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300 dark:border-red-500',
-    idleClass: 'border-slate-200 text-slate-600 hover:border-red-300 hover:bg-red-50/50 dark:border-slate-700 dark:text-slate-400 dark:hover:border-red-700',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-red-300 hover:bg-red-50/50 dark:border-slate-700 dark:text-slate-300 dark:hover:border-red-700',
     description: 'I guessed or am not confident',
   },
   {
@@ -48,7 +48,7 @@ const OPTIONS: ConfidenceOption[] = [
     label: 'Fairly sure',
     shortcut: 'W',
     selectedClass: 'border-amber-500 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500',
-    idleClass: 'border-slate-200 text-slate-600 hover:border-amber-300 hover:bg-amber-50/50 dark:border-slate-700 dark:text-slate-400 dark:hover:border-amber-700',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-amber-300 hover:bg-amber-50/50 dark:border-slate-700 dark:text-slate-300 dark:hover:border-amber-700',
     description: 'I am reasonably confident',
   },
   {
@@ -56,7 +56,7 @@ const OPTIONS: ConfidenceOption[] = [
     label: 'Certain',
     shortcut: 'E',
     selectedClass: 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-500',
-    idleClass: 'border-slate-200 text-slate-600 hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-slate-700 dark:text-slate-400 dark:hover:border-emerald-700',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-700',
     description: 'I am very confident in this answer',
   },
 ];

@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { QuizPage } from '../../components/quiz/QuizPage';
 import type { LearnEntry } from '../../lib/quiz';
+import { mapCuratedQuestions, type CuratedQuestionSource } from '../../lib/quiz';
 
 const learnEntries = await getCollection('learn');
 
@@ -19,6 +20,26 @@ const entries: LearnEntry[] = learnEntries.map(entry => ({
     sections: entry.data.sections,
   },
 }));
+
+// Curated, expert-vetted (or explicitly unvetted-flagged) question bank —
+// loaded curated-first ahead of the auto-generated pool in QuizPage.
+const curatedEntries = await getCollection('questions');
+const curatedSources: CuratedQuestionSource[] = curatedEntries.map(entry => ({
+  id: entry.data.id,
+  stem: entry.data.stem,
+  type: entry.data.type,
+  options: entry.data.options,
+  acceptedAnswers: entry.data.acceptedAnswers,
+  pairs: entry.data.pairs,
+  rationaleCorrect: entry.data.rationaleCorrect,
+  difficulty: entry.data.difficulty,
+  category: entry.data.category,
+  sourceArticle: entry.data.sourceArticle,
+  imageRef: entry.data.imageRef,
+  unvetted: entry.data.unvetted,
+  deprecated: entry.data.deprecated,
+}));
+const curatedQuestions = mapCuratedQuestions(curatedSources);
 
 const pageDescription =
   'Practice and exam-mode quizzes aligned with the FGA diploma curriculum, covering all eight gemmology topic areas with SM-2 spaced-repetition scheduling.';
@@ -131,7 +152,7 @@ const quizSchema = {
         </ul>
       </section>
 
-      <QuizPage client:idle learnEntries={entries} />
+      <QuizPage client:idle learnEntries={entries} curatedQuestions={curatedQuestions} />
 
     </div>
   </div>

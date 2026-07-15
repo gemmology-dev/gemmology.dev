@@ -11,6 +11,8 @@ import type {
   QuizConfig,
 } from './question-types';
 import { shuffle, pickRandom, generateWrongAnswers } from './shuffle';
+import { isRenderable } from './question-validity';
+import { normalizeAnswer } from './answer-normalize';
 
 /** Section structure from learn YAML content */
 interface LearnSection {
@@ -419,6 +421,11 @@ export function selectQuestions(
 ): Question[] {
   let filtered = allQuestions;
 
+  // Filter out structurally unrenderable questions (e.g. a matching question
+  // that lost its pairs, or an MCQ with fewer than 2 options) before anything
+  // else so they never occupy a slot in the selected session.
+  filtered = filtered.filter(isRenderable);
+
   // Filter by categories
   if (config.categories.length > 0) {
     filtered = filtered.filter(q => config.categories.includes(q.category));
@@ -449,9 +456,8 @@ export function checkAnswer(
 
   // For fill-blank with multiple valid answers
   if (Array.isArray(correct) && typeof userAnswer === 'string') {
-    return correct.some(c =>
-      c.toLowerCase().trim() === userAnswer.toLowerCase().trim()
-    );
+    const normalizedUser = normalizeAnswer(userAnswer);
+    return correct.some(c => normalizeAnswer(c) === normalizedUser);
   }
 
   // For matching questions
@@ -462,7 +468,7 @@ export function checkAnswer(
 
   // Standard comparison
   if (typeof correct === 'string' && typeof userAnswer === 'string') {
-    return correct.toLowerCase().trim() === userAnswer.toLowerCase().trim();
+    return normalizeAnswer(correct) === normalizeAnswer(userAnswer);
   }
 
   return false;
