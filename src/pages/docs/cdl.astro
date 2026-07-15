@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
 import { Breadcrumb } from '../../components/docs';
 import { Container, Button, Card } from '../../components/ui-astro';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 ---
 
 <BaseLayout
@@ -15,19 +16,25 @@ import { Container, Button, Card } from '../../components/ui-astro';
       { label: 'CDL Specification' }
     ]} />
 
-    <article class="prose prose-slate max-w-none">
+    <article class="prose prose-slate max-w-none
+                    dark:prose-headings:text-cream-primary
+                    dark:prose-p:text-cream-secondary
+                    dark:prose-li:text-cream-secondary
+                    dark:prose-strong:text-cream-primary
+                    dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold
+                    dark:prose-th:text-cream-primary dark:prose-td:text-cream-secondary">
       <h1>Crystal Description Language (CDL)</h1>
 
-      <p class="lead text-xl text-slate-600">
+      <p class="lead text-xl text-slate-600 dark:text-cream-secondary">
         CDL is a domain-specific language for describing crystal morphology using crystallographic
         notation. It combines crystal systems, point groups, Miller indices, and optional modifiers
         to precisely define crystal forms for 3D visualisation.
       </p>
 
-      <div class="not-prose my-8 bg-slate-50 border border-slate-200 rounded-xl p-6">
-        <p class="text-sm font-medium text-slate-600 uppercase tracking-wide mb-2">Current version</p>
-        <p class="text-lg font-semibold text-slate-900">CDL v2.0</p>
-        <p class="text-sm text-slate-600 mt-1">
+      <div class="not-prose my-8 bg-slate-50 border border-slate-200 rounded-xl p-6 dark:bg-coffee-raised dark:border-coffee-border">
+        <p class="text-sm font-medium text-slate-600 uppercase tracking-wide mb-2 dark:text-cream-secondary">Current version</p>
+        <p class="text-lg font-semibold text-slate-900 dark:text-cream-primary">CDL v2.0</p>
+        <p class="text-sm text-slate-600 mt-1 dark:text-cream-secondary">
           Includes comments (v1.1), features and phenomena (v1.2), grouping, labels, and definitions (v1.3),
           amorphous materials, nested growth, aggregates, and group-level twins (v2.0).
         </p>
@@ -165,12 +172,12 @@ import { Container, Button, Card } from '../../components/ui-astro';
         </tbody>
       </table>
 
-      <div class="not-prose my-6 bg-blue-50 border border-blue-200 rounded-xl p-5">
-        <p class="text-sm font-medium text-blue-800 mb-1">New in v2.0: Amorphous materials</p>
-        <p class="text-sm text-blue-700">
-          CDL now supports the <code class="bg-blue-100 px-1 rounded">amorphous</code> system for non-crystalline
+      <div class="not-prose my-6 bg-blue-50 border border-blue-200 rounded-xl p-5 dark:bg-blue-400/10 dark:border-blue-400/20">
+        <p class="text-sm font-medium text-blue-800 mb-1 dark:text-blue-300">New in v2.0: Amorphous materials</p>
+        <p class="text-sm text-blue-700 dark:text-blue-300/90">
+          CDL now supports the <code class="bg-blue-100 px-1 rounded dark:bg-blue-400/15 dark:text-blue-200">amorphous</code> system for non-crystalline
           materials like opal, obsidian, and turquoise. Amorphous materials use shape descriptors instead of Miller
-          indices. See <a href="#amorphous" class="text-blue-800 underline">Amorphous Materials</a> below.
+          indices. See <a href="#amorphous" class="text-blue-800 underline dark:text-blue-300">Amorphous Materials</a> below.
         </p>
       </div>
 
@@ -458,7 +465,7 @@ cubic[m3m]:{111} | elongate(c:1.5), taper(top:0.3)`} />
       <!-- COMMENTS (v1.1) -->
       <!-- ============================================================ -->
 
-      <h2 id="comments">Comments <span class="text-sm font-normal text-slate-500">(v1.1)</span></h2>
+      <h2 id="comments">Comments <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.1)</span></h2>
 
       <p>CDL supports three comment styles, stripped before parsing:</p>
 
@@ -508,7 +515,7 @@ cubic[m3m]:{111}@1.0`} />
       <!-- FEATURES (v1.2) -->
       <!-- ============================================================ -->
 
-      <h2 id="features">Features <span class="text-sm font-normal text-slate-500">(v1.2)</span></h2>
+      <h2 id="features">Features <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.2)</span></h2>
 
       <p>
         Features annotate individual crystal forms with surface markings, growth patterns,
@@ -531,21 +538,21 @@ cubic[m3m]:{111}[phantom:3, white]`} />
       <h3>Feature Types</h3>
 
       <div class="not-prose my-8 grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Growth</p>
-          <p class="text-sm text-slate-700 mt-1"><code>phantom</code>, <code>sector</code>, <code>zoning</code>, <code>skeletal</code>, <code>dendritic</code></p>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 dark:bg-coffee-raised dark:border-coffee-border">
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide dark:text-cream-muted">Growth</p>
+          <p class="text-sm text-slate-700 mt-1 dark:text-cream-secondary"><code>phantom</code>, <code>sector</code>, <code>zoning</code>, <code>skeletal</code>, <code>dendritic</code></p>
         </div>
-        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Surface</p>
-          <p class="text-sm text-slate-700 mt-1"><code>striation</code>, <code>trigon</code>, <code>etch_pit</code>, <code>growth_hillock</code></p>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 dark:bg-coffee-raised dark:border-coffee-border">
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide dark:text-cream-muted">Surface</p>
+          <p class="text-sm text-slate-700 mt-1 dark:text-cream-secondary"><code>striation</code>, <code>trigon</code>, <code>etch_pit</code>, <code>growth_hillock</code></p>
         </div>
-        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Inclusions</p>
-          <p class="text-sm text-slate-700 mt-1"><code>inclusion</code>, <code>needle</code>, <code>silk</code>, <code>fluid</code>, <code>bubble</code></p>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 dark:bg-coffee-raised dark:border-coffee-border">
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide dark:text-cream-muted">Inclusions</p>
+          <p class="text-sm text-slate-700 mt-1 dark:text-cream-secondary"><code>inclusion</code>, <code>needle</code>, <code>silk</code>, <code>fluid</code>, <code>bubble</code></p>
         </div>
-        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Colour</p>
-          <p class="text-sm text-slate-700 mt-1"><code>colour</code>, <code>colour_zone</code>, <code>pleochroism</code>, <code>lamellar</code>, <code>banding</code></p>
+        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 dark:bg-coffee-raised dark:border-coffee-border">
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wide dark:text-cream-muted">Colour</p>
+          <p class="text-sm text-slate-700 mt-1 dark:text-cream-secondary"><code>colour</code>, <code>colour_zone</code>, <code>pleochroism</code>, <code>lamellar</code>, <code>banding</code></p>
         </div>
       </div>
 
@@ -553,7 +560,7 @@ cubic[m3m]:{111}[phantom:3, white]`} />
       <!-- PHENOMENA (v1.2) -->
       <!-- ============================================================ -->
 
-      <h2 id="phenomena">Phenomena <span class="text-sm font-normal text-slate-500">(v1.2)</span></h2>
+      <h2 id="phenomena">Phenomena <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.2)</span></h2>
 
       <p>
         Optical phenomena are crystal-level annotations (not per-form).
@@ -637,7 +644,7 @@ trigonal[-3m]:{10-11}@1.0[silk:dense] | phenomenon[asterism:6]`} />
       <!-- GROUPING (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="grouping">Grouping <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
+      <h2 id="grouping">Grouping <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.3)</span></h2>
 
       <p>
         Parenthesized groups allow shared features to be applied to multiple forms at once.
@@ -666,7 +673,7 @@ cubic[m3m]:({111}[trigon:dense] + {100})[phantom:3]`} />
       <!-- LABELS (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="labels">Labels <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
+      <h2 id="labels">Labels <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.3)</span></h2>
 
       <p>
         Labels assign descriptive names to forms or groups using a <code>label:</code> prefix.
@@ -689,7 +696,7 @@ cubic[m3m]:core:({111} + {100})[phantom:3]`} />
       <!-- DEFINITIONS (v1.3) -->
       <!-- ============================================================ -->
 
-      <h2 id="definitions">Definitions <span class="text-sm font-normal text-slate-500">(v1.3)</span></h2>
+      <h2 id="definitions">Definitions <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v1.3)</span></h2>
 
       <p>
         Named definitions let you assign a form expression to a name with <code>@name = expr</code>,
@@ -727,7 +734,7 @@ cubic[m3m]:$oct`} />
       <!-- AMORPHOUS MATERIALS (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="amorphous">Amorphous Materials <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
+      <h2 id="amorphous">Amorphous Materials <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v2.0)</span></h2>
 
       <p>
         CDL v2.0 introduces the <code>amorphous</code> system for non-crystalline materials.
@@ -823,7 +830,7 @@ amorphous[glassy]:{massive, conchoidal}[colour:black]`} />
       <!-- NESTED GROWTH (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="nested-growth">Nested Growth <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
+      <h2 id="nested-growth">Nested Growth <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v2.0)</span></h2>
 
       <p>
         The nested growth operator <code>&gt;</code> describes overgrowth relationships where one
@@ -861,7 +868,7 @@ cubic[m3m]:({111} > {111}@0.6) + {100}@1.3`} />
       <!-- AGGREGATES (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="aggregates">Aggregates <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
+      <h2 id="aggregates">Aggregates <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v2.0)</span></h2>
 
       <p>
         The aggregate operator <code>~</code> describes clusters or arrangements of multiple
@@ -936,7 +943,7 @@ tetragonal[4/mmm]:({110}@1.0 + {101}@0.9 | elongate(c:2.5)) ~ epitaxial[3][align
       <!-- GROUP-LEVEL TWINS (v2.0) -->
       <!-- ============================================================ -->
 
-      <h2 id="group-twins">Group-Level Twins <span class="text-sm font-normal text-slate-500">(v2.0)</span></h2>
+      <h2 id="group-twins">Group-Level Twins <span class="text-sm font-normal text-slate-500 dark:text-cream-muted">(v2.0)</span></h2>
 
       <p>
         In v1.3, twin laws could only be applied globally to the entire crystal.
@@ -1021,16 +1028,38 @@ value       = NUMBER | IDENTIFIER`} />
         <li><strong>Validation:</strong> point group checked against system</li>
       </ol>
 
-      <Card padding="md" class="mt-12 bg-crystal-50 border-crystal-200">
-        <h3 class="text-lg font-semibold text-crystal-900 mt-0">Try it yourself</h3>
-        <p class="text-crystal-700 mb-4">Open the CDL Playground to experiment with these expressions.</p>
-        <Button href="/playground" variant="primary" size="md">
-          Open Playground
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </Button>
-      </Card>
+      {PLAYGROUND_ENABLED && (
+        <Card padding="md" class="not-prose mt-12 bg-crystal-50 border-crystal-200 dark:bg-crystal-400/10 dark:border-crystal-400/20">
+          <h3 class="text-lg font-semibold text-crystal-900 dark:text-crystal-200 mt-0">Try it yourself</h3>
+          <p class="text-crystal-700 dark:text-crystal-300 mb-4">Open the CDL Playground to experiment with these expressions.</p>
+          <Button href="/playground" variant="primary" size="md">
+            Open Playground
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Button>
+        </Card>
+      )}
     </article>
   </Container>
 </BaseLayout>
+
+<style>
+  /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
+     values (tailwind.config.mjs `typography.extend`) — same canonical block
+     used across every raw `.prose` wrapper in the dark-mode sweep. */
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

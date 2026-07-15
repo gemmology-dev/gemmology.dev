@@ -58,7 +58,7 @@ export function PresetSelector({ presets, onSelect, className }: PresetSelectorP
     <div className={clsx('relative', className)} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors dark:bg-coffee-raised dark:border-coffee-border-strong dark:text-cream-secondary dark:hover:bg-coffee-raised2"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -80,32 +80,32 @@ export function PresetSelector({ presets, onSelect, className }: PresetSelectorP
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl border border-slate-200 shadow-xl z-50 overflow-hidden">
-          <div className="p-2 border-b border-slate-100">
+        <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl border border-slate-200 shadow-xl z-50 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+          <div className="p-2 border-b border-slate-100 dark:border-coffee-border">
             <input
               type="search"
               placeholder="Search presets..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-500/20 focus:border-crystal-500"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-500/20 focus:border-crystal-500 dark:bg-coffee-sunk dark:border-coffee-border dark:text-cream-primary dark:placeholder-cream-muted dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
               autoFocus
             />
           </div>
 
           <div className="max-h-80 overflow-y-auto">
             {Object.keys(groupedPresets).length === 0 ? (
-              <div className="p-4 text-center text-slate-600 text-sm">No presets found</div>
+              <div className="p-4 text-center text-slate-600 text-sm dark:text-cream-muted">No presets found</div>
             ) : (
               Object.entries(groupedPresets).map(([system, systemPresets]) => (
                 <div key={system}>
-                  <div className="px-3 py-2 bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wider sticky top-0">
+                  <div className="px-3 py-2 bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wider sticky top-0 dark:bg-coffee-raised2 dark:text-cream-muted">
                     {system}
                   </div>
                   {systemPresets.map((preset) => (
                     <button
                       key={preset.name}
                       onClick={() => handleSelect(preset)}
-                      className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-crystal-50 hover:text-crystal-700 transition-colors"
+                      className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-crystal-50 hover:text-crystal-700 transition-colors dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:text-crystal-400"
                     >
                       {preset.name}
                     </button>

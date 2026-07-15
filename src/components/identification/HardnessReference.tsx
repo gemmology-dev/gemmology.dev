@@ -68,10 +68,10 @@ function getWearability(hardness: string): 'Excellent' | 'Good' | 'Fair' | 'Poor
 }
 
 const WEARABILITY_COLORS: Record<string, string> = {
-  Excellent: 'bg-green-100 text-green-700',
-  Good: 'bg-blue-100 text-blue-700',
-  Fair: 'bg-amber-100 text-amber-700',
-  Poor: 'bg-red-100 text-red-700',
+  Excellent: 'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300',
+  Good: 'bg-blue-100 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300',
+  Fair: 'bg-amber-100 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300',
+  Poor: 'bg-red-100 dark:bg-red-400/10 text-red-700 dark:text-red-300',
 };
 
 export function HardnessReference() {
@@ -141,17 +141,17 @@ export function HardnessReference() {
       {/* Two-column layout: Mohs scale | Gem lookup */}
       <div className="grid lg:grid-cols-[auto_1fr] gap-5">
         {/* Left: Mohs scale — compact table */}
-        <div className="rounded-lg border border-slate-200 overflow-hidden">
-          <div className="px-4 py-2 bg-slate-50 border-b border-slate-200">
-            <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Mohs Scale</h4>
+        <div className="rounded-lg border border-slate-200 dark:border-coffee-border overflow-hidden">
+          <div className="px-4 py-2 bg-slate-50 dark:bg-coffee-raised2 border-b border-slate-200 dark:border-coffee-border">
+            <h4 className="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider">Mohs Scale</h4>
           </div>
           <table className="text-sm">
             <tbody>
               {MOHS_SCALE.map(level => (
-                <tr key={level.hardness} className="border-b border-slate-100 last:border-0">
-                  <td className="px-3 py-2 font-mono font-bold text-amber-600 text-center w-12">{level.hardness}</td>
-                  <td className="px-3 py-2 font-medium text-slate-900 whitespace-nowrap">{level.mineral}</td>
-                  <td className="px-3 py-2 text-xs text-slate-600 hidden lg:table-cell">{level.wearResistance}</td>
+                <tr key={level.hardness} className="border-b border-slate-100 dark:border-coffee-border last:border-0">
+                  <td className="px-3 py-2 font-mono font-bold text-amber-600 dark:text-amber-400 text-center w-12">{level.hardness}</td>
+                  <td className="px-3 py-2 font-medium text-slate-900 dark:text-cream-primary whitespace-nowrap">{level.mineral}</td>
+                  <td className="px-3 py-2 text-xs text-slate-600 dark:text-cream-muted hidden lg:table-cell">{level.wearResistance}</td>
                 </tr>
               ))}
             </tbody>
@@ -167,13 +167,13 @@ export function HardnessReference() {
                 placeholder="Search gemstone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-crystal-400/20 focus:border-amber-400 dark:focus:border-crystal-400"
               />
             </div>
             <select
               value={filterWearability}
               onChange={(e) => setFilterWearability(e.target.value)}
-              className="px-2 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="px-2 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-crystal-400/20 focus:border-amber-400 dark:focus:border-crystal-400"
             >
               <option value="all">All</option>
               <option value="Excellent">Excellent</option>
@@ -182,42 +182,42 @@ export function HardnessReference() {
               <option value="Poor">Poor</option>
             </select>
             {dbAvailable && paginatedData && (
-              <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded whitespace-nowrap">
+              <span className="text-xs text-green-600 dark:text-emerald-300 bg-green-50 dark:bg-emerald-400/10 px-2 py-1 rounded whitespace-nowrap">
                 {paginatedData.pagination.total} gems
               </span>
             )}
           </div>
 
           {loading ? (
-            <div className="text-center py-8 text-slate-600 text-sm">Loading gem data...</div>
+            <div className="text-center py-8 text-slate-600 dark:text-cream-secondary text-sm">Loading gem data...</div>
           ) : (
-            <div className="rounded-lg border border-slate-200 overflow-hidden">
+            <div className="rounded-lg border border-slate-200 dark:border-coffee-border overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
-                    <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Gem</th>
-                    <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Hardness</th>
-                    <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Wear</th>
-                    <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Notes</th>
+                  <tr className="bg-slate-50 dark:bg-coffee-raised2 border-b border-slate-200 dark:border-coffee-border">
+                    <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider">Gem</th>
+                    <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider">Hardness</th>
+                    <th className="px-3 py-2 text-center text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider">Wear</th>
+                    <th className="px-3 py-2 text-left text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider">Notes</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredGems.map((gem, i) => (
-                    <tr key={gem.name} className={`border-b border-slate-100 last:border-0 ${i % 2 === 0 ? '' : 'bg-slate-50/50'}`}>
-                      <td className="px-3 py-2 font-medium text-slate-900">{gem.name}</td>
-                      <td className="px-3 py-2 text-center font-mono text-slate-900">{gem.hardness}</td>
+                    <tr key={gem.name} className={`border-b border-slate-100 dark:border-coffee-border last:border-0 ${i % 2 === 0 ? '' : 'bg-slate-50/50 dark:bg-coffee-raised2/50'}`}>
+                      <td className="px-3 py-2 font-medium text-slate-900 dark:text-cream-primary">{gem.name}</td>
+                      <td className="px-3 py-2 text-center font-mono text-slate-900 dark:text-cream-primary">{gem.hardness}</td>
                       <td className="px-3 py-2 text-center">
                         <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${WEARABILITY_COLORS[gem.wearability]}`}>
                           {gem.wearability}
                         </span>
                       </td>
-                      <td className="px-3 py-2 text-xs text-slate-600">{gem.notes}</td>
+                      <td className="px-3 py-2 text-xs text-slate-600 dark:text-cream-muted">{gem.notes}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
               {filteredGems.length === 0 && (
-                <p className="text-center text-slate-600 text-sm py-4">No matches found.</p>
+                <p className="text-center text-slate-600 dark:text-cream-secondary text-sm py-4">No matches found.</p>
               )}
             </div>
           )}
@@ -227,23 +227,23 @@ export function HardnessReference() {
             <Pagination
               {...getPaginationProps(paginatedData)}
               showPageSize
-              className="border-t border-slate-200 pt-3"
+              className="border-t border-slate-200 dark:border-coffee-border pt-3"
             />
           )}
         </div>
       </div>
 
       {/* Info strip */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600 dark:text-cream-muted">
         <span>• <strong>Hardness</strong> = resistance to scratching</span>
         <span>• <strong>Toughness</strong> = resistance to breaking (not the same thing)</span>
         <span>• Diamond is hard but has perfect cleavage; jade is softer but tougher</span>
       </div>
 
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <a
           href="/learn/fundamentals/physical-properties"
-          className="text-amber-600 hover:text-amber-700 underline"
+          className="text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline"
         >
           Learn more about hardness, toughness, and gem durability <span aria-hidden="true">→</span>
         </a>

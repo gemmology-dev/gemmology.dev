@@ -72,21 +72,21 @@ export function OpticalTools() {
       </ToolSection>
 
       {/* Learn More section */}
-      <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-purple-900 mb-2">Learn More</h4>
-        <ul className="text-sm text-purple-800 space-y-1">
+      <div className="bg-purple-50 dark:bg-purple-400/10 border border-purple-200 dark:border-purple-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-purple-900 dark:text-purple-300 mb-2">Learn More</h4>
+        <ul className="text-sm text-purple-800 dark:text-purple-200 space-y-1">
           <li>
-            <a href="/learn/equipment/dichroscope" className="underline hover:text-purple-600">
+            <a href="/learn/equipment/dichroscope" className="underline hover:text-purple-600 dark:hover:text-purple-300">
               Dichroscope technique and pleochroism reference <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/fundamentals/optical-properties" className="underline hover:text-purple-600">
+            <a href="/learn/fundamentals/optical-properties" className="underline hover:text-purple-600 dark:hover:text-purple-300">
               Optical properties fundamentals <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/equipment/polariscope" className="underline hover:text-purple-600">
+            <a href="/learn/equipment/polariscope" className="underline hover:text-purple-600 dark:hover:text-purple-300">
               Polariscope interpretation guide <span aria-hidden="true">→</span>
             </a>
           </li>

@@ -120,13 +120,13 @@ export function HeavyLiquidReference() {
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Heavy liquids separate gems by specific gravity. Select a liquid to see which gems float or sink.
         </p>
       </div>
 
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Heavy Liquids</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Heavy Liquids</h4>
         <div className="space-y-2">
           {LIQUIDS.map((liquid) => {
             const { floats, sinks } = getFloatsAndSinks(liquid.sg);
@@ -136,21 +136,21 @@ export function HeavyLiquidReference() {
                 onClick={() => setSelectedSG(selectedSG === liquid.sg ? null : liquid.sg)}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                   selectedSG === liquid.sg
-                    ? 'border-crystal-500 bg-crystal-50'
-                    : 'border-slate-200 bg-white hover:border-crystal-300'
+                    ? 'border-crystal-500 dark:border-crystal-400 bg-crystal-50 dark:bg-crystal-400/10'
+                    : 'border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised hover:border-crystal-300 dark:hover:border-crystal-400/40'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h5 className="font-semibold text-slate-900">{liquid.name}</h5>
-                    <div className="text-sm text-slate-600 mt-1">
+                    <h5 className="font-semibold text-slate-900 dark:text-cream-primary">{liquid.name}</h5>
+                    <div className="text-sm text-slate-600 dark:text-cream-secondary mt-1">
                       SG: <span className="font-mono font-medium">{liquid.sg.toFixed(2)}</span>
                     </div>
-                    <p className="text-xs text-slate-600 mt-1">{liquid.notes}</p>
+                    <p className="text-xs text-slate-600 dark:text-cream-muted mt-1">{liquid.notes}</p>
                     <div className={`text-xs mt-2 px-2 py-1 rounded inline-block ${
                       liquid.safety === 'Safe'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
+                        ? 'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300'
+                        : 'bg-red-100 dark:bg-red-400/10 text-red-700 dark:text-red-300'
                     }`}>
                       {liquid.safety}
                     </div>
@@ -158,13 +158,13 @@ export function HeavyLiquidReference() {
                 </div>
 
                 {selectedSG === liquid.sg && (
-                  <div className="mt-4 pt-4 border-t border-slate-200 grid md:grid-cols-2 gap-4">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-coffee-border grid md:grid-cols-2 gap-4">
                     {floats.length > 0 && (
                       <div>
-                        <div className="text-xs font-medium text-green-700 mb-2">↑ Floats (Lower SG)</div>
+                        <div className="text-xs font-medium text-green-700 dark:text-emerald-300 mb-2">↑ Floats (Lower SG)</div>
                         <div className="space-y-1">
                           {floats.map((gem) => (
-                            <div key={gem.name} className="text-sm text-slate-700 bg-green-50 px-2 py-1 rounded">
+                            <div key={gem.name} className="text-sm text-slate-700 dark:text-cream-secondary bg-green-50 dark:bg-emerald-400/10 px-2 py-1 rounded">
                               {gem.name} ({gem.sg.toFixed(2)})
                             </div>
                           ))}
@@ -173,10 +173,10 @@ export function HeavyLiquidReference() {
                     )}
                     {sinks.length > 0 && (
                       <div>
-                        <div className="text-xs font-medium text-red-700 mb-2">↓ Sinks (Higher SG)</div>
+                        <div className="text-xs font-medium text-red-700 dark:text-red-300 mb-2">↓ Sinks (Higher SG)</div>
                         <div className="space-y-1">
                           {sinks.map((gem) => (
-                            <div key={gem.name} className="text-sm text-slate-700 bg-red-50 px-2 py-1 rounded">
+                            <div key={gem.name} className="text-sm text-slate-700 dark:text-cream-secondary bg-red-50 dark:bg-red-400/10 px-2 py-1 rounded">
                               {gem.name} ({gem.sg.toFixed(2)})
                             </div>
                           ))}
@@ -192,7 +192,7 @@ export function HeavyLiquidReference() {
       </div>
 
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Gem SG Reference</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Gem SG Reference</h4>
         <PaginatedTable
           columns={[
             { key: 'name', header: 'Gem' },
@@ -221,9 +221,9 @@ export function HeavyLiquidReference() {
         />
       </div>
 
-      <div className="bg-red-50 border-2 border-red-300 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-red-900 mb-2">⚠️ Safety Warning</h4>
-        <ul className="text-sm text-red-800 space-y-1">
+      <div className="bg-red-50 dark:bg-red-400/10 border-2 border-red-300 dark:border-red-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-red-900 dark:text-red-300 mb-2">⚠️ Safety Warning</h4>
+        <ul className="text-sm text-red-800 dark:text-red-200 space-y-1">
           <li>• Heavy liquids are <strong>highly toxic</strong> - avoid skin contact and fumes</li>
           <li>• Always use gloves, safety glasses, and work in a fume hood</li>
           <li>• Store in sealed containers away from light (causes decomposition)</li>
@@ -232,17 +232,17 @@ export function HeavyLiquidReference() {
         </ul>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Alternative: Hydrostatic Weighing</h4>
-        <p className="text-sm text-blue-800">
+      <div className="bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Alternative: Hydrostatic Weighing</h4>
+        <p className="text-sm text-blue-800 dark:text-blue-200">
           For most gem identification, hydrostatic weighing (measuring weight in air vs water) is safer and more accurate than heavy liquids. Heavy liquids are mainly used for quick separation of parcels or when hydrostatic equipment isn't available.
         </p>
       </div>
 
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <a
           href="/learn/equipment/other-tools"
-          className="text-crystal-700 hover:text-crystal-700 underline"
+          className="text-crystal-700 dark:text-crystal-400 hover:text-crystal-700 dark:hover:text-crystal-300 underline"
         >
           Learn more about heavy liquids and SG measurement <span aria-hidden="true">→</span>
         </a>

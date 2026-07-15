@@ -150,8 +150,8 @@ const MOCK_QUESTIONS_UNVETTED: WidgetQuestion[] = [
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-b border-slate-200 pb-8">
-      <h2 className="text-lg font-semibold text-slate-800 mb-4">{title}</h2>
+    <section className="border-b border-slate-200 pb-8 dark:border-coffee-border">
+      <h2 className="text-lg font-semibold text-slate-800 mb-4 dark:text-cream-primary">{title}</h2>
       {children}
     </section>
   );
@@ -160,7 +160,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Sub({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">{label}</p>
+      <p className="text-xs text-slate-500 uppercase tracking-wider mb-2 dark:text-cream-muted">{label}</p>
       {children}
     </div>
   );
@@ -173,7 +173,7 @@ function InteractiveConfidenceTap() {
   return (
     <div>
       <ConfidenceTap value={value} onChange={setValue} />
-      <p className="text-xs text-slate-600 mt-1">
+      <p className="text-xs text-slate-600 mt-1 dark:text-cream-secondary">
         Selected: <code>{value ?? 'null'}</code>. Try keyboard Q/W/E.
       </p>
     </div>
@@ -190,7 +190,7 @@ function InteractiveSettings() {
         value={settings}
         onChange={(patch) => setSettings((s) => ({ ...s, ...patch }))}
       />
-      <pre className="mt-3 text-xs bg-slate-100 rounded p-3 overflow-auto">
+      <pre className="mt-3 text-xs bg-slate-100 rounded p-3 overflow-auto dark:bg-coffee-raised2 dark:text-cream-secondary">
         {JSON.stringify(settings, null, 2)}
       </pre>
     </div>
@@ -201,10 +201,10 @@ function InteractiveSettings() {
 
 export function StudyDevHarness() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
-      <header className="border-b border-slate-200 pb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Study Components: Dev Harness</h1>
-        <p className="text-sm text-slate-600 mt-1">
+    <div className="max-w-3xl mx-auto px-4 py-8 space-y-12 dark:bg-coffee-page">
+      <header className="border-b border-slate-200 pb-4 dark:border-coffee-border">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-cream-primary">Study Components: Dev Harness</h1>
+        <p className="text-sm text-slate-600 mt-1 dark:text-cream-secondary">
           Only served in development (<code>import.meta.env.DEV</code>). All components rendered
           with mocked data.
         </p>
@@ -268,7 +268,7 @@ export function StudyDevHarness() {
               rationaleCorrect="This should not be visible."
               show={false}
             />
-            <p className="text-xs text-slate-500 italic">^ Nothing above</p>
+            <p className="text-xs text-slate-500 italic dark:text-cream-muted">^ Nothing above</p>
           </Sub>
         </div>
       </Section>
@@ -277,23 +277,23 @@ export function StudyDevHarness() {
       <Section title="ScheduleBadge">
         <div className="flex flex-wrap gap-3 items-center">
           <div className="flex flex-col gap-1 items-start">
-            <span className="text-xs text-slate-500">null entry</span>
+            <span className="text-xs text-slate-500 dark:text-cream-muted">null entry</span>
             <ScheduleBadge entry={null} now={NOW} />
           </div>
           <div className="flex flex-col gap-1 items-start">
-            <span className="text-xs text-slate-500">totalReviews=0</span>
+            <span className="text-xs text-slate-500 dark:text-cream-muted">totalReviews=0</span>
             <ScheduleBadge entry={{ ...SCHEDULE_ENTRIES.mastered7, totalReviews: 0 }} now={NOW} />
           </div>
           <div className="flex flex-col gap-1 items-start">
-            <span className="text-xs text-slate-500">due now</span>
+            <span className="text-xs text-slate-500 dark:text-cream-muted">due now</span>
             <ScheduleBadge entry={SCHEDULE_ENTRIES.due} now={NOW} />
           </div>
           <div className="flex flex-col gap-1 items-start">
-            <span className="text-xs text-slate-500">7 days</span>
+            <span className="text-xs text-slate-500 dark:text-cream-muted">7 days</span>
             <ScheduleBadge entry={SCHEDULE_ENTRIES.mastered7} now={NOW} />
           </div>
           <div className="flex flex-col gap-1 items-start">
-            <span className="text-xs text-slate-500">30 days</span>
+            <span className="text-xs text-slate-500 dark:text-cream-muted">30 days</span>
             <ScheduleBadge entry={SCHEDULE_ENTRIES.mastered30} now={NOW} />
           </div>
         </div>
@@ -307,7 +307,7 @@ export function StudyDevHarness() {
           </Sub>
           <Sub label="unvetted=false (renders nothing)">
             <UnvettedFlag unvetted={false} />
-            <p className="text-xs text-slate-500 italic">^ Nothing above</p>
+            <p className="text-xs text-slate-500 italic dark:text-cream-muted">^ Nothing above</p>
           </Sub>
         </div>
       </Section>
@@ -346,7 +346,7 @@ export function StudyDevHarness() {
               pretestEnabled={false}
               questions={MOCK_QUESTIONS}
             />
-            <p className="text-xs text-slate-500 italic">^ Nothing above</p>
+            <p className="text-xs text-slate-500 italic dark:text-cream-muted">^ Nothing above</p>
           </Sub>
           <Sub label="1 question only">
             <LearnQuizWidget

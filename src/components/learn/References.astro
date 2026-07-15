@@ -25,28 +25,28 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
 
 {citations.length > 0 && (
   <section
-    class="mt-16 border-t border-slate-200 pt-8"
+    class="mt-16 border-t border-slate-200 dark:border-coffee-border pt-8"
     role="doc-bibliography"
     aria-labelledby="references-heading"
   >
     <h2
       id="references-heading"
-      class="text-lg font-semibold text-slate-900 mb-4"
+      class="text-lg font-semibold text-slate-900 dark:text-cream-primary mb-4"
     >
       References
     </h2>
-    <ol class="references space-y-3 text-sm text-slate-600 list-none pl-0">
+    <ol class="references space-y-3 text-sm text-slate-600 dark:text-cream-secondary list-none pl-0">
       {citations.map(({ id, n, ref }) => (
         <li id={`cite-${id}`} class="flex gap-3 items-baseline">
           <a
             href={`#citeref-${id}-${n}`}
             role="doc-backlink"
-            class="flex-shrink-0 text-slate-400 hover:text-crystal-700 transition-colors"
+            class="flex-shrink-0 text-slate-400 hover:text-crystal-700 dark:text-cream-muted dark:hover:text-crystal-400 transition-colors"
             aria-label={`Back to citation ${n} in text`}
           >
             ↑
           </a>
-          <span class="flex-shrink-0 font-mono text-slate-400 select-none w-6 text-right">
+          <span class="flex-shrink-0 font-mono text-slate-400 dark:text-cream-muted select-none w-6 text-right">
             {n}.
           </span>
           <span set:html={formatReference(ref)} />
@@ -55,3 +55,16 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
     </ol>
   </section>
 )}
+
+<style>
+  /* Links inside `formatReference()` output (DOI/ISBN/URL anchors) carry no
+     color class - they rely on the browser's default anchor color, left
+     untouched in light mode for pixel parity. Dark mode gets the standard
+     crystal-400 / gold-hover treatment used everywhere else in prose links. */
+  :global([data-theme='dark'] .references a) {
+    color: #38bdf8; /* crystal-400 */
+  }
+  :global([data-theme='dark'] .references a:hover) {
+    color: #7dd3fc; /* crystal-300 */
+  }
+</style>

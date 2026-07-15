@@ -86,7 +86,7 @@ export function QuizSetup({
       {/* Mode selection */}
       {showExamMode && (
         <div>
-          <h3 className="text-lg font-medium text-slate-900 mb-3">Mode</h3>
+          <h3 className="text-lg font-medium text-slate-900 mb-3 dark:text-cream-primary">Mode</h3>
           <div className="grid grid-cols-2 gap-4">
             <button
               type="button"
@@ -94,15 +94,15 @@ export function QuizSetup({
               className={cn(
                 'p-4 rounded-lg border-2 text-left transition-all',
                 mode === 'practice'
-                  ? 'border-crystal-500 bg-crystal-50'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-crystal-500 bg-crystal-50 dark:border-crystal-400 dark:bg-crystal-400/10'
+                  : 'border-slate-200 hover:border-slate-300 dark:border-coffee-border dark:hover:border-coffee-border-strong'
               )}
             >
               <div className="flex items-center gap-3">
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'practice' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-600'
+                    mode === 'practice' ? 'bg-crystal-700 text-white dark:bg-crystal-600' : 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,8 +110,8 @@ export function QuizSetup({
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">Practice</p>
-                  <p className="text-sm text-slate-600">Immediate feedback</p>
+                  <p className="font-medium text-slate-900 dark:text-cream-primary">Practice</p>
+                  <p className="text-sm text-slate-600 dark:text-cream-secondary">Immediate feedback</p>
                 </div>
               </div>
             </button>
@@ -122,15 +122,15 @@ export function QuizSetup({
               className={cn(
                 'p-4 rounded-lg border-2 text-left transition-all',
                 mode === 'exam'
-                  ? 'border-crystal-500 bg-crystal-50'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-crystal-500 bg-crystal-50 dark:border-crystal-400 dark:bg-crystal-400/10'
+                  : 'border-slate-200 hover:border-slate-300 dark:border-coffee-border dark:hover:border-coffee-border-strong'
               )}
             >
               <div className="flex items-center gap-3">
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center',
-                    mode === 'exam' ? 'bg-crystal-700 text-white' : 'bg-slate-100 text-slate-600'
+                    mode === 'exam' ? 'bg-crystal-700 text-white dark:bg-crystal-600' : 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary'
                   )}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -138,8 +138,8 @@ export function QuizSetup({
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">Exam</p>
-                  <p className="text-sm text-slate-600">Timed, no feedback</p>
+                  <p className="font-medium text-slate-900 dark:text-cream-primary">Exam</p>
+                  <p className="text-sm text-slate-600 dark:text-cream-secondary">Timed, no feedback</p>
                 </div>
               </div>
             </button>
@@ -149,7 +149,7 @@ export function QuizSetup({
 
       {/* Category selection */}
       <div>
-        <h3 className="text-lg font-medium text-slate-900 mb-3">Categories</h3>
+        <h3 className="text-lg font-medium text-slate-900 mb-3 dark:text-cream-primary">Categories</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2">
           {CATEGORIES.map(category => {
             const count = availableQuestions[category] || 0;
@@ -165,15 +165,15 @@ export function QuizSetup({
                 className={cn(
                   'relative px-4 py-2 rounded-lg text-sm font-medium transition-all',
                   'border-2',
-                  isSelected && 'border-crystal-500 bg-crystal-50 text-crystal-700',
-                  !isSelected && count > 0 && 'border-slate-200 text-slate-600 hover:border-slate-300',
-                  count === 0 && 'border-slate-100 text-slate-300 cursor-not-allowed'
+                  isSelected && 'border-crystal-500 bg-crystal-50 text-crystal-700 dark:border-crystal-400 dark:bg-crystal-400/10 dark:text-crystal-300',
+                  !isSelected && count > 0 && 'border-slate-200 text-slate-600 hover:border-slate-300 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-coffee-border-strong',
+                  count === 0 && 'border-slate-100 text-slate-300 cursor-not-allowed dark:border-coffee-border dark:text-cream-muted/50'
                 )}
               >
                 {isSelected && (
                   <span
                     aria-hidden="true"
-                    className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 rounded-full bg-crystal-500 text-white"
+                    className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 rounded-full bg-crystal-500 text-white dark:bg-crystal-500"
                   >
                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -186,7 +186,7 @@ export function QuizSetup({
             );
           })}
         </div>
-        <p className="text-sm text-slate-600 mt-2">
+        <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">
           {selectedCategories.length} of {CATEGORIES.length} categories selected
         </p>
       </div>
@@ -197,9 +197,9 @@ export function QuizSetup({
 
       {/* Difficulty filter */}
       <div>
-        <h3 className="text-lg font-medium text-slate-900 mb-3">
+        <h3 className="text-lg font-medium text-slate-900 mb-3 dark:text-cream-primary">
           Difficulty
-          <span className="text-sm font-normal text-slate-600 ml-2">(optional)</span>
+          <span className="text-sm font-normal text-slate-600 ml-2 dark:text-cream-secondary">(optional)</span>
         </h3>
         <div className="flex gap-2">
           {DIFFICULTIES.map(difficulty => (
@@ -210,8 +210,8 @@ export function QuizSetup({
               className={cn(
                 'px-4 py-2 rounded-lg text-sm font-medium transition-all border-2',
                 selectedDifficulties.includes(difficulty)
-                  ? 'border-crystal-500 bg-crystal-50 text-crystal-700'
-                  : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                  ? 'border-crystal-500 bg-crystal-50 text-crystal-700 dark:border-crystal-400 dark:bg-crystal-400/10 dark:text-crystal-300'
+                  : 'border-slate-200 text-slate-600 hover:border-slate-300 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-coffee-border-strong'
               )}
             >
               {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
@@ -219,13 +219,13 @@ export function QuizSetup({
           ))}
         </div>
         {selectedDifficulties.length === 0 && (
-          <p className="text-sm text-slate-600 mt-2">All difficulties will be included</p>
+          <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">All difficulties will be included</p>
         )}
       </div>
 
       {/* Question count */}
       <div>
-        <h3 className="text-lg font-medium text-slate-900 mb-3">Number of Questions</h3>
+        <h3 className="text-lg font-medium text-slate-900 mb-3 dark:text-cream-primary">Number of Questions</h3>
         <div className="flex flex-wrap gap-2">
           {QUESTION_COUNTS.map(count => (
             <button
@@ -235,16 +235,16 @@ export function QuizSetup({
               disabled={count > totalAvailable}
               className={cn(
                 'px-4 py-2 rounded-lg text-sm font-medium transition-all border-2',
-                questionCount === count && 'border-crystal-500 bg-crystal-50 text-crystal-700',
-                questionCount !== count && count <= totalAvailable && 'border-slate-200 text-slate-600 hover:border-slate-300',
-                count > totalAvailable && 'border-slate-100 text-slate-300 cursor-not-allowed'
+                questionCount === count && 'border-crystal-500 bg-crystal-50 text-crystal-700 dark:border-crystal-400 dark:bg-crystal-400/10 dark:text-crystal-300',
+                questionCount !== count && count <= totalAvailable && 'border-slate-200 text-slate-600 hover:border-slate-300 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-coffee-border-strong',
+                count > totalAvailable && 'border-slate-100 text-slate-300 cursor-not-allowed dark:border-coffee-border dark:text-cream-muted/50'
               )}
             >
               {count}
             </button>
           ))}
         </div>
-        <p className="text-sm text-slate-600 mt-2">
+        <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">
           {totalAvailable} questions available from selected categories
         </p>
       </div>
@@ -252,7 +252,7 @@ export function QuizSetup({
       {/* Time limit (exam mode only) */}
       {mode === 'exam' && (
         <div>
-          <h3 className="text-lg font-medium text-slate-900 mb-3">Time Limit</h3>
+          <h3 className="text-lg font-medium text-slate-900 mb-3 dark:text-cream-primary">Time Limit</h3>
           <div className="flex flex-wrap gap-2">
             {TIME_LIMITS.map(({ value, label }) => (
               <button
@@ -262,15 +262,15 @@ export function QuizSetup({
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm font-medium transition-all border-2',
                   timeLimit === value
-                    ? 'border-crystal-500 bg-crystal-50 text-crystal-700'
-                    : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                    ? 'border-crystal-500 bg-crystal-50 text-crystal-700 dark:border-crystal-400 dark:bg-crystal-400/10 dark:text-crystal-300'
+                    : 'border-slate-200 text-slate-600 hover:border-slate-300 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-coffee-border-strong'
                 )}
               >
                 {label}
               </button>
             ))}
           </div>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">
             Approximately {Math.round((timeLimit / 60) / questionCount * 10) / 10} minutes per question
           </p>
         </div>

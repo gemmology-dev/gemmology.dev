@@ -100,17 +100,23 @@ const quizSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(quizSchema)} />
   </Fragment>
 
-  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-slate-900">Gemmology Quiz</h1>
-        <p class="text-slate-600 mt-2 text-lg">
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-cream-primary">Gemmology Quiz</h1>
+        <p class="text-slate-600 mt-2 text-lg dark:text-cream-secondary">
           Test and consolidate your gemmology knowledge across all eight FGA-aligned topic areas.
         </p>
       </header>
 
-      <section class="prose prose-slate max-w-none mb-10">
+      <section class="prose prose-slate max-w-none mb-10
+                      prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                      prose-p:text-slate-600 dark:prose-p:text-cream-secondary prose-p:leading-relaxed
+                      prose-li:dark:text-cream-secondary
+                      prose-strong:dark:text-cream-primary
+                      prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700
+                      dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold">
         <p>
           The gemmology quiz draws questions from a curated bank aligned with the
           <strong>FGA diploma curriculum</strong>. Questions span eight topic areas: Fundamentals
@@ -149,3 +155,24 @@ const quizSchema = {
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
+     values (tailwind.config.mjs `typography.extend`) — see the identical
+     block in src/pages/learn/[...slug].astro and src/pages/about/index.astro
+     for the full rationale. */
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

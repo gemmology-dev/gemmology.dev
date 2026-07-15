@@ -83,11 +83,11 @@ const processedItems = items.map((item) => {
 
 <div class={`grid gap-4 ${variant === 'compact' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'} my-6`}>
   {processedItems.map(item => (
-    <div class="group bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 p-4 hover:border-slate-300 hover:shadow-sm transition-all">
+    <div class="group bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-coffee-raised dark:to-coffee-raised rounded-xl border border-slate-200 dark:border-coffee-border p-4 hover:border-slate-300 dark:hover:border-coffee-border-strong hover:shadow-sm dark:hover:shadow-none transition-all">
       <div class="flex items-start gap-3">
         <!-- Icon -->
-        <div class="w-9 h-9 rounded-lg bg-slate-200/70 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-300/70 transition-colors">
-          <svg class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div class="w-9 h-9 rounded-lg bg-slate-200/70 dark:bg-coffee-raised2 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-300/70 dark:group-hover:bg-coffee-border transition-colors">
+          <svg class="w-5 h-5 text-slate-600 dark:text-cream-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d={getIconPath(item.name)} />
           </svg>
         </div>
@@ -95,9 +95,9 @@ const processedItems = items.map((item) => {
         <div class="flex-1 min-w-0">
           <!-- Header row -->
           <div class="flex items-start justify-between gap-2">
-            <HeadingTag class="font-semibold text-slate-900">{item.name}</HeadingTag>
+            <HeadingTag class="font-semibold text-slate-900 dark:text-cream-primary">{item.name}</HeadingTag>
             {item.value && !isCDL(item.value) && (
-              <span class="text-sm font-mono bg-white text-slate-700 px-2 py-0.5 rounded border border-slate-200 whitespace-nowrap">
+              <span class="text-sm font-mono bg-white dark:bg-coffee-sunk text-slate-700 dark:text-cream-secondary px-2 py-0.5 rounded border border-slate-200 dark:border-coffee-border whitespace-nowrap">
                 {item.value}
               </span>
             )}
@@ -106,8 +106,8 @@ const processedItems = items.map((item) => {
           {/* Description — rendered as HTML when cite markers are present */}
           {item.resolvedDesc && (
             item.descIsHtml
-              ? <p class="text-sm text-slate-600 mt-1" set:html={item.resolvedDesc} />
-              : <p class="text-sm text-slate-600 mt-1">{item.resolvedDesc}</p>
+              ? <p class="text-sm text-slate-600 dark:text-cream-secondary mt-1" set:html={item.resolvedDesc} />
+              : <p class="text-sm text-slate-600 dark:text-cream-secondary mt-1">{item.resolvedDesc}</p>
           )}
 
           {/* Item-level citation cluster */}
@@ -117,9 +117,10 @@ const processedItems = items.map((item) => {
             </span>
           )}
 
-          {/* CDL value block */}
+          {/* CDL value block — already dark ("terminal" style); add a border so it
+              doesn't float unbounded against the coffee-raised card in dark mode. */}
           {item.value && isCDL(item.value) && (
-            <code class="block text-xs bg-slate-900 text-green-400 p-2 rounded mt-2 font-mono overflow-x-auto">
+            <code class="block text-xs bg-slate-900 text-green-400 p-2 rounded mt-2 font-mono overflow-x-auto dark:border dark:border-coffee-border-strong">
               {item.value}
             </code>
           )}
@@ -137,3 +138,15 @@ const processedItems = items.map((item) => {
     </div>
   ))}
 </div>
+
+<style>
+  /* `.citation-ref` (item-level citation cluster, e.g. [1]) has no CSS
+     definition anywhere in the codebase - it renders with the browser's
+     default anchor color, which we leave untouched in light mode to stay
+     pixel-identical. Only add the dark-mode color called for in the sweep
+     brief (crystal-400). Superscripts embedded inside `.prose` bodies get
+     this via `prose-a:` inheritance instead - see SectionRenderer.astro. */
+  :global([data-theme='dark'] .citation-ref) {
+    color: #38bdf8; /* crystal-400 */
+  }
+</style>

@@ -57,22 +57,25 @@ export function Table({
   const normalizedColumns = normalizeColumns(columns);
 
   const wrapperStyles = {
-    default: 'overflow-x-auto rounded-xl border border-slate-200',
-    card: 'overflow-x-auto rounded-xl border border-slate-200 shadow-sm',
+    default: 'overflow-x-auto rounded-xl border border-slate-200 dark:border-coffee-border',
+    card: 'overflow-x-auto rounded-xl border border-slate-200 shadow-sm dark:border-coffee-border',
     minimal: 'overflow-x-auto',
   };
 
+  // Header background stays a light-mode gradient on light; on dark it flips
+  // to a flat coffee-raised2 (the gradient stops are neutralized so the flat
+  // background color shows through cleanly - see docs/dark-mode.md).
   const headerBgStyles = {
-    default: 'bg-gradient-to-r from-crystal-50 to-slate-50',
-    card: 'bg-gradient-to-r from-crystal-50 to-slate-50',
-    minimal: 'bg-slate-50',
+    default: 'bg-gradient-to-r from-crystal-50 to-slate-50 dark:bg-coffee-raised2 dark:from-transparent dark:to-transparent',
+    card: 'bg-gradient-to-r from-crystal-50 to-slate-50 dark:bg-coffee-raised2 dark:from-transparent dark:to-transparent',
+    minimal: 'bg-slate-50 dark:bg-coffee-raised2',
   };
 
   return (
     <div className={cn(wrapperStyles[variant], className)} {...props}>
       <table className="w-full text-sm">
         {caption && (
-          <caption className="text-sm text-slate-600 mb-2 text-left px-4 py-2">
+          <caption className="text-sm text-slate-600 mb-2 text-left px-4 py-2 dark:text-cream-muted">
             {caption}
           </caption>
         )}
@@ -83,7 +86,7 @@ export function Table({
                 key={col.key}
                 scope="col"
                 className={cn(
-                  'px-4 py-3 font-semibold text-slate-700 border-b border-slate-200',
+                  'px-4 py-3 font-semibold text-slate-700 border-b border-slate-200 dark:text-cream-secondary dark:border-coffee-border',
                   alignStyles[col.align || 'left']
                 )}
               >
@@ -97,8 +100,8 @@ export function Table({
             <tr
               key={rowIndex}
               className={cn(
-                'border-b border-slate-100 last:border-b-0',
-                hover && 'hover:bg-slate-50 transition-colors'
+                'border-b border-slate-100 last:border-b-0 dark:border-coffee-border',
+                hover && 'hover:bg-slate-50 transition-colors dark:hover:bg-coffee-raised2'
               )}
             >
               {normalizedColumns.map((col, colIndex) => {
@@ -109,11 +112,13 @@ export function Table({
                     className={cn(
                       'px-4 py-3',
                       alignStyles[col.align || 'left'],
-                      colIndex === 0 ? 'font-medium text-slate-900' : 'text-slate-600'
+                      colIndex === 0
+                        ? 'font-medium text-slate-900 dark:text-cream-primary'
+                        : 'text-slate-600 dark:text-cream-secondary'
                     )}
                   >
                     {col.mono ? (
-                      <code className="bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono text-slate-700">
+                      <code className="bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono text-slate-700 dark:bg-coffee-sunk dark:text-cream-secondary">
                         {cell}
                       </code>
                     ) : (
@@ -161,19 +166,19 @@ export function PropertyTable({
   return (
     <div
       className={cn(
-        'bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden',
+        'bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border',
         className
       )}
       {...props}
     >
-      <div className="px-6 py-4 border-b border-slate-100">
-        <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+      <div className="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
       </div>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-slate-100 dark:divide-coffee-border">
         {validProperties.map((property, index) => (
           <div key={index} className="px-6 py-3 flex justify-between items-center">
-            <span className="text-slate-600">{property.label}</span>
-            <span className="font-medium text-slate-900">{property.value}</span>
+            <span className="text-slate-600 dark:text-cream-secondary">{property.label}</span>
+            <span className="font-medium text-slate-900 dark:text-cream-primary">{property.value}</span>
           </div>
         ))}
       </div>
@@ -231,7 +236,7 @@ export function PaginatedTable<T>({
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex-1">{headerContent}</div>
           {showTotalBadge && data && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded whitespace-nowrap">
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded whitespace-nowrap dark:text-green-300 dark:bg-green-400/10">
               {data.pagination.total} total
             </span>
           )}
@@ -240,7 +245,7 @@ export function PaginatedTable<T>({
 
       {/* Loading state */}
       {loading && (
-        <div className="text-center py-8 text-slate-600 text-sm">
+        <div className="text-center py-8 text-slate-600 text-sm dark:text-cream-muted">
           Loading...
         </div>
       )}
@@ -252,7 +257,7 @@ export function PaginatedTable<T>({
 
       {/* Empty state */}
       {!loading && !hasData && (
-        <div className="text-center py-8 text-slate-600 text-sm border border-slate-200 rounded-xl">
+        <div className="text-center py-8 text-slate-600 text-sm border border-slate-200 rounded-xl dark:text-cream-muted dark:border-coffee-border">
           {emptyMessage}
         </div>
       )}

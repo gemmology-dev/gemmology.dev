@@ -266,7 +266,7 @@ export function AdminPanel() {
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label htmlFor="admin-password" className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor="admin-password" className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                   Password
                 </label>
                 <input
@@ -276,13 +276,14 @@ export function AdminPanel() {
                   onChange={(e) => setPassword(e.target.value)}
                   className={cn(
                     'w-full px-3 py-2 rounded-lg border',
-                    'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-transparent',
-                    authError ? 'border-red-300 bg-red-50' : 'border-slate-300'
+                    'focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400 focus:border-transparent',
+                    'dark:bg-coffee-sunk dark:text-cream-primary',
+                    authError ? 'border-red-300 bg-red-50 dark:border-red-400/40 dark:bg-red-400/10' : 'border-slate-300 dark:border-coffee-border-strong'
                   )}
                   autoFocus
                 />
                 {authError && (
-                  <p className="mt-2 text-sm text-red-600">{authError}</p>
+                  <p className="mt-2 text-sm text-red-600 dark:text-red-300">{authError}</p>
                 )}
               </div>
               <Button type="submit" className="w-full" loading={authLoading}>
@@ -301,23 +302,23 @@ export function AdminPanel() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Admin Panel</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-cream-primary">Admin Panel</h1>
         <Button variant="ghost" onClick={handleLogout}>
           Exit
         </Button>
       </div>
 
       {copiedCode && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <p className="text-sm text-green-800">
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg dark:bg-emerald-400/10 dark:border-emerald-400/20">
+          <p className="text-sm text-green-800 dark:text-emerald-300">
             Code copied to clipboard: <span className="font-mono font-bold">{copiedCode}</span>
           </p>
         </div>
       )}
 
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg dark:bg-red-400/10 dark:border-red-400/20">
+          <p className="text-sm text-red-800 dark:text-red-300">{error}</p>
         </div>
       )}
 
@@ -334,18 +335,18 @@ export function AdminPanel() {
           <Card>
             <CardContent className="p-0">
               {loading ? (
-                <div className="p-8 text-center text-slate-500">Loading...</div>
+                <div className="p-8 text-center text-slate-500 dark:text-cream-muted">Loading...</div>
               ) : pendingRequests.length === 0 ? (
-                <div className="p-8 text-center text-slate-500">No pending requests</div>
+                <div className="p-8 text-center text-slate-500 dark:text-cream-muted">No pending requests</div>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-slate-100 dark:divide-coffee-border">
                   {pendingRequests.map((request) => (
                     <div key={request.id} className="p-4">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-slate-900">{request.email}</p>
-                          <p className="text-sm text-slate-600 mt-1">{request.reason}</p>
-                          <p className="text-xs text-slate-500 mt-2">
+                          <p className="font-medium text-slate-900 dark:text-cream-primary">{request.email}</p>
+                          <p className="text-sm text-slate-600 dark:text-cream-secondary mt-1">{request.reason}</p>
+                          <p className="text-xs text-slate-500 dark:text-cream-muted mt-2">
                             Submitted: {formatDate(request.submitted)}
                           </p>
                         </div>
@@ -379,49 +380,49 @@ export function AdminPanel() {
           <Card>
             <CardContent className="p-0">
               {loading ? (
-                <div className="p-8 text-center text-slate-500">Loading...</div>
+                <div className="p-8 text-center text-slate-500 dark:text-cream-muted">Loading...</div>
               ) : codes.length === 0 ? (
-                <div className="p-8 text-center text-slate-500">No codes yet</div>
+                <div className="p-8 text-center text-slate-500 dark:text-cream-muted">No codes yet</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-slate-100">
-                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
+                      <tr className="border-b border-slate-100 dark:border-coffee-border">
+                        <th className="text-left text-xs font-medium text-slate-600 dark:text-cream-muted uppercase tracking-wider px-4 py-3">
                           Code
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 dark:text-cream-muted uppercase tracking-wider px-4 py-3">
                           Label
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 dark:text-cream-muted uppercase tracking-wider px-4 py-3">
                           Uses
                         </th>
-                        <th className="text-left text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
+                        <th className="text-left text-xs font-medium text-slate-600 dark:text-cream-muted uppercase tracking-wider px-4 py-3">
                           Created
                         </th>
-                        <th className="text-right text-xs font-medium text-slate-600 uppercase tracking-wider px-4 py-3">
+                        <th className="text-right text-xs font-medium text-slate-600 dark:text-cream-muted uppercase tracking-wider px-4 py-3">
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-slate-100 dark:divide-coffee-border">
                       {codes.map((code) => (
-                        <tr key={code.code} className="hover:bg-slate-50">
+                        <tr key={code.code} className="hover:bg-slate-50 dark:hover:bg-coffee-raised2">
                           <td className="px-4 py-3">
                             <button
                               onClick={() => copyCode(code.code)}
-                              className="font-mono text-sm text-slate-900 hover:text-crystal-700"
+                              className="font-mono text-sm text-slate-900 hover:text-crystal-700 dark:text-cream-primary dark:hover:text-crystal-400"
                               title="Click to copy"
                             >
                               {code.code}
                             </button>
                           </td>
-                          <td className="px-4 py-3 text-sm text-slate-600">{code.label}</td>
-                          <td className="px-4 py-3 text-sm text-slate-600">
+                          <td className="px-4 py-3 text-sm text-slate-600 dark:text-cream-secondary">{code.label}</td>
+                          <td className="px-4 py-3 text-sm text-slate-600 dark:text-cream-secondary">
                             {code.uses}
                             {code.maxUses !== null && ` / ${code.maxUses}`}
                           </td>
-                          <td className="px-4 py-3 text-sm text-slate-500">
+                          <td className="px-4 py-3 text-sm text-slate-500 dark:text-cream-muted">
                             {formatDate(code.created)}
                           </td>
                           <td className="px-4 py-3 text-right">
@@ -452,7 +453,7 @@ export function AdminPanel() {
             <CardContent>
               <form onSubmit={handleGenerateCode} className="space-y-4">
                 <div>
-                  <label htmlFor="code-label" className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="code-label" className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Label (optional)
                   </label>
                   <input
@@ -461,11 +462,11 @@ export function AdminPanel() {
                     value={newCodeLabel}
                     onChange={(e) => setNewCodeLabel(e.target.value)}
                     placeholder="e.g., FGA Student, Beta Tester"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-transparent"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-coffee-border-strong dark:bg-coffee-sunk dark:text-cream-primary dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400 focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="code-max-uses" className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="code-max-uses" className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Max Uses (optional)
                   </label>
                   <input
@@ -475,7 +476,7 @@ export function AdminPanel() {
                     value={newCodeMaxUses}
                     onChange={(e) => setNewCodeMaxUses(e.target.value)}
                     placeholder="Leave empty for unlimited"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-transparent"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-coffee-border-strong dark:bg-coffee-sunk dark:text-cream-primary dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400 focus:border-transparent"
                   />
                 </div>
                 <Button type="submit" className="w-full" loading={generateLoading}>

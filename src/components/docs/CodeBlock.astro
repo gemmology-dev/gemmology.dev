@@ -26,6 +26,10 @@ const { code, lang = 'text', title } = Astro.props;
 
   .code-title {
     @apply bg-slate-800 text-slate-300 text-sm px-4 py-2 rounded-t-xl border-b border-slate-700;
+    /* Already dark by design (matches the permanently-dark one-dark-pro Shiki
+       theme below it) - in site dark mode, align its slate tones to the
+       coffee ramp so it doesn't clash with the surrounding coffee-page bg. */
+    @apply dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border-strong;
   }
 
   .code-block-wrapper :global(pre) {

@@ -11,10 +11,13 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode;
 }
 
+// `primary` is the only variant carrying the warm gold hover-underline touch
+// (used sparingly, per spec - nowhere else in the link system).
 const variantStyles: Record<LinkVariant, string> = {
-  default: 'text-slate-700 hover:text-slate-900',
-  primary: 'text-crystal-700 hover:text-crystal-800',
-  muted: 'text-slate-600 hover:text-slate-800',
+  default: 'text-slate-700 hover:text-slate-900 dark:text-cream-secondary dark:hover:text-cream-primary',
+  primary:
+    'text-crystal-700 hover:text-crystal-800 dark:text-crystal-400 dark:hover:text-crystal-300 dark:hover:underline dark:hover:underline-offset-4 dark:hover:decoration-gold',
+  muted: 'text-slate-600 hover:text-slate-800 dark:text-cream-muted dark:hover:text-cream-secondary',
 };
 
 function ArrowIcon() {

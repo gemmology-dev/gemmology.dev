@@ -67,24 +67,24 @@ export function RefractometerSimulator() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Practice reading refractometer shadow edges. Select a gem to simulate its reading on the scale.
         </p>
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary">
             Select Gem to Simulate
           </label>
           {dbAvailable && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
+            <span className="text-xs text-green-600 dark:text-emerald-300 bg-green-50 dark:bg-emerald-400/10 px-2 py-0.5 rounded">
               {simulationGems.length} gems from database
             </span>
           )}
         </div>
         {loading ? (
-          <div className="w-full px-3 py-2 text-sm text-slate-600 bg-slate-100 rounded-lg">
+          <div className="w-full px-3 py-2 text-sm text-slate-600 dark:text-cream-secondary bg-slate-100 dark:bg-coffee-raised2 rounded-lg">
             Loading gems...
           </div>
         ) : (
@@ -97,7 +97,7 @@ export function RefractometerSimulator() {
                 setShowAnswer(false);
               }
             }}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
           >
             {simulationGems.map((gem) => (
               <option key={gem.name} value={gem.name}>
@@ -109,11 +109,11 @@ export function RefractometerSimulator() {
       </div>
 
       {/* Simulated Refractometer Scale */}
-      <div className="bg-gradient-to-b from-slate-100 to-slate-50 rounded-lg p-6 border border-slate-300">
-        <h4 className="text-sm font-semibold text-slate-900 mb-4 text-center">Refractometer Scale View</h4>
+      <div className="bg-gradient-to-b from-slate-100 to-slate-50 dark:from-coffee-raised2 dark:to-coffee-raised2 rounded-lg p-6 border border-slate-300 dark:border-coffee-border">
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-4 text-center">Refractometer Scale View</h4>
 
         {/* Scale */}
-        <div className="relative h-32 bg-white rounded border-2 border-slate-400">
+        <div className="relative h-32 bg-white dark:bg-coffee-sunk rounded border-2 border-slate-400 dark:border-coffee-border-strong">
           {/* Scale markings */}
           <div className="absolute inset-0 flex">
             {[1.40, 1.45, 1.50, 1.55, 1.60, 1.65, 1.70, 1.75, 1.80].map((val) => {
@@ -121,10 +121,10 @@ export function RefractometerSimulator() {
               return (
                 <div
                   key={val}
-                  className="absolute h-full border-l border-slate-300"
+                  className="absolute h-full border-l border-slate-300 dark:border-coffee-border"
                   style={{ left: `${pos}%` }}
                 >
-                  <div className="absolute -bottom-6 left-0 transform -translate-x-1/2 text-xs text-slate-600 font-mono">
+                  <div className="absolute -bottom-6 left-0 transform -translate-x-1/2 text-xs text-slate-600 dark:text-cream-muted font-mono">
                     {val.toFixed(2)}
                   </div>
                 </div>
@@ -135,14 +135,14 @@ export function RefractometerSimulator() {
           {/* Shadow edge(s) */}
           {!showAnswer ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-slate-600 text-sm">Click "Show Reading" to see shadow edge</div>
+              <div className="text-slate-600 dark:text-cream-secondary text-sm">Click "Show Reading" to see shadow edge</div>
             </div>
           ) : isOverTheLimit ? (
             // Over-the-limit: a continuously bright field, no shadow edge.
-            <div className="absolute inset-0 flex items-center justify-center bg-amber-50">
+            <div className="absolute inset-0 flex items-center justify-center bg-amber-50 dark:bg-amber-400/10">
               <div className="text-center px-4">
-                <div className="text-sm font-semibold text-amber-900">Over the limit</div>
-                <div className="text-xs text-amber-800 mt-1">
+                <div className="text-sm font-semibold text-amber-900 dark:text-amber-300">Over the limit</div>
+                <div className="text-xs text-amber-800 dark:text-amber-200 mt-1">
                   RI {selectedGem.ri_low.toFixed(3)} exceeds the contact-liquid limit (~1.81). The field stays continuously bright with no shadow edge.
                 </div>
               </div>
@@ -151,7 +151,7 @@ export function RefractometerSimulator() {
             <>
               {/* Dark area (low RI side) */}
               <div
-                className="absolute inset-y-0 left-0 bg-slate-800 bg-opacity-80"
+                className="absolute inset-y-0 left-0 bg-slate-800 bg-opacity-80 dark:bg-coffee-border-strong dark:bg-opacity-90"
                 style={{ width: `${Math.min(pos_low, 100)}%` }}
               />
 
@@ -169,7 +169,7 @@ export function RefractometerSimulator() {
               {!selectedGem.isotropic && birefringence > 0.001 && selectedGem.ri_high <= REFRACTOMETER_LIMIT && (
                 <>
                   <div
-                    className="absolute inset-y-0 bg-slate-700 bg-opacity-60"
+                    className="absolute inset-y-0 bg-slate-700 bg-opacity-60 dark:bg-coffee-border-strong dark:bg-opacity-60"
                     style={{ left: `${pos_low}%`, width: `${pos_high - pos_low}%` }}
                   />
                   <div
@@ -198,29 +198,29 @@ export function RefractometerSimulator() {
 
       {showAnswer && (
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-600 mb-1">Low RI</div>
-            <div className="text-2xl font-bold text-slate-900">{selectedGem.ri_low.toFixed(3)}</div>
+          <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border">
+            <div className="text-xs text-slate-600 dark:text-cream-muted mb-1">Low RI</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{selectedGem.ri_low.toFixed(3)}</div>
           </div>
 
-          <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-600 mb-1">High RI</div>
-            <div className="text-2xl font-bold text-slate-900">{selectedGem.ri_high.toFixed(3)}</div>
+          <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border">
+            <div className="text-xs text-slate-600 dark:text-cream-muted mb-1">High RI</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{selectedGem.ri_high.toFixed(3)}</div>
           </div>
 
-          <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="text-xs text-slate-600 mb-1">Birefringence</div>
-            <div className="text-2xl font-bold text-slate-900">{birefringence.toFixed(3)}</div>
-            <div className="text-xs text-slate-600 mt-1">
+          <div className="p-4 rounded-lg bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border">
+            <div className="text-xs text-slate-600 dark:text-cream-muted mb-1">Birefringence</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{birefringence.toFixed(3)}</div>
+            <div className="text-xs text-slate-600 dark:text-cream-muted mt-1">
               {selectedGem.isotropic ? 'Isotropic (SR)' : 'Anisotropic (DR)'}
             </div>
           </div>
         </div>
       )}
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Reading Tips</h4>
-        <ul className="text-sm text-blue-800 space-y-1">
+      <div className="bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Reading Tips</h4>
+        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
           <li>• <strong>Single shadow edge:</strong> Isotropic gem (cubic or amorphous)</li>
           <li>• <strong>Double shadow edge:</strong> Doubly refractive gem - rotate to see both</li>
           <li>• <strong>Blurry edge:</strong> Poor contact with hemisphere - add RI fluid</li>

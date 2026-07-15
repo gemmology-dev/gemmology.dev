@@ -56,8 +56,8 @@ export function ExamResults({
         {/* Review header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">Question Review</h2>
-            <p className="text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-cream-primary">Question Review</h2>
+            <p className="text-slate-600 mt-1 dark:text-cream-secondary">
               Review your answers and see explanations
             </p>
           </div>
@@ -67,7 +67,7 @@ export function ExamResults({
         </div>
 
         {/* Filter tabs */}
-        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2 dark:border-coffee-border">
           {[
             { value: 'all' as const, label: `All (${results.results.length})` },
             { value: 'incorrect' as const, label: `Incorrect (${incorrectCount})` },
@@ -80,8 +80,8 @@ export function ExamResults({
               className={cn(
                 'px-4 py-2 text-sm font-medium rounded-lg transition-colors',
                 reviewFilter === tab.value
-                  ? 'bg-crystal-100 text-crystal-700'
-                  : 'text-slate-600 hover:bg-slate-100'
+                  ? 'bg-crystal-100 text-crystal-700 dark:bg-crystal-400/10 dark:text-crystal-300'
+                  : 'text-slate-600 hover:bg-slate-100 dark:text-cream-secondary dark:hover:bg-coffee-raised2'
               )}
             >
               {tab.label}
@@ -101,7 +101,7 @@ export function ExamResults({
         </div>
 
         {filteredResults.length === 0 && (
-          <div className="text-center py-12 text-slate-600">
+          <div className="text-center py-12 text-slate-600 dark:text-cream-secondary">
             No questions match this filter.
           </div>
         )}
@@ -115,7 +115,7 @@ export function ExamResults({
       <div
         className={cn(
           'rounded-xl p-6 text-center',
-          passed ? 'bg-emerald-50 border border-emerald-200' : 'bg-amber-50 border border-amber-200'
+          passed ? 'bg-emerald-50 border border-emerald-200 dark:bg-emerald-400/10 dark:border-emerald-400/20' : 'bg-amber-50 border border-amber-200 dark:bg-amber-400/10 dark:border-amber-400/20'
         )}
       >
         <div
@@ -135,65 +135,65 @@ export function ExamResults({
         <h2
           className={cn(
             'mt-4 text-2xl font-bold',
-            passed ? 'text-emerald-700' : 'text-amber-700'
+            passed ? 'text-emerald-700 dark:text-emerald-300' : 'text-amber-700 dark:text-amber-300'
           )}
         >
           {passed ? 'Exam Passed!' : 'Keep Studying'}
         </h2>
-        <p className={cn('mt-2', passed ? 'text-emerald-600' : 'text-amber-600')}>
+        <p className={cn('mt-2', passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400')}>
           {message}
         </p>
       </div>
 
       {/* Score breakdown */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
-          <h3 className="font-semibold text-slate-900">Results Summary</h3>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 dark:border-coffee-border dark:bg-coffee-raised2">
+          <h3 className="font-semibold text-slate-900 dark:text-cream-primary">Results Summary</h3>
         </div>
 
         <div className="p-6">
           {/* Main score */}
-          <div className="text-center pb-6 border-b border-slate-200">
-            <p className="text-4xl font-bold text-slate-900">
+          <div className="text-center pb-6 border-b border-slate-200 dark:border-coffee-border">
+            <p className="text-4xl font-bold text-slate-900 dark:text-cream-primary">
               {results.score} / {results.totalQuestions}
             </p>
-            <p className="text-lg text-slate-600 mt-1">
+            <p className="text-lg text-slate-600 mt-1 dark:text-cream-secondary">
               {results.percentage}% correct
             </p>
-            <p className="text-sm text-slate-600 mt-2">{feedback}</p>
+            <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">{feedback}</p>
           </div>
 
           {/* Stats grid */}
           <div className="grid grid-cols-3 gap-4 pt-6">
             <div className="text-center">
-              <p className="text-2xl font-bold text-slate-900">{grade}</p>
-              <p className="text-sm text-slate-600">Grade</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{grade}</p>
+              <p className="text-sm text-slate-600 dark:text-cream-secondary">Grade</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-slate-900">{duration}</p>
-              <p className="text-sm text-slate-600">Time Used</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{duration}</p>
+              <p className="text-sm text-slate-600 dark:text-cream-secondary">Time Used</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-slate-900">{timeUsedPercent}%</p>
-              <p className="text-sm text-slate-600">Time Usage</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-cream-primary">{timeUsedPercent}%</p>
+              <p className="text-sm text-slate-600 dark:text-cream-secondary">Time Usage</p>
             </div>
           </div>
 
           {/* Time bar */}
           <div className="mt-6">
             <div className="flex items-center justify-between text-sm mb-2">
-              <span className="text-slate-600">Time Used</span>
-              <span className="text-slate-600">
+              <span className="text-slate-600 dark:text-cream-secondary">Time Used</span>
+              <span className="text-slate-600 dark:text-cream-secondary">
                 {timeUnusedSeconds > 0
                   ? `${formatDuration(timeUnusedSeconds * 1000)} remaining`
                   : 'Time limit reached'}
               </span>
             </div>
-            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-raised2">
               <div
                 className={cn(
                   'h-full rounded-full transition-all',
-                  timeUsedPercent >= 90 ? 'bg-amber-500' : 'bg-crystal-500'
+                  timeUsedPercent >= 90 ? 'bg-amber-500 dark:bg-amber-400' : 'bg-crystal-500 dark:bg-crystal-400'
                 )}
                 style={{ width: `${Math.min(timeUsedPercent, 100)}%` }}
               />
@@ -204,9 +204,9 @@ export function ExamResults({
 
       {/* Category breakdown */}
       {results.breakdown.length > 1 && (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
-            <h3 className="font-semibold text-slate-900">Score by Category</h3>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 dark:border-coffee-border dark:bg-coffee-raised2">
+            <h3 className="font-semibold text-slate-900 dark:text-cream-primary">Score by Category</h3>
           </div>
           <div className="p-4 space-y-3">
             {results.breakdown.map((breakdown, index) => {
@@ -223,21 +223,21 @@ export function ExamResults({
                   }}
                 >
                   <div className="flex items-center justify-between text-sm">
-                    <span className={cn('text-slate-600', isWeak && 'text-amber-700 font-medium')}>
+                    <span className={cn('text-slate-600 dark:text-cream-secondary', isWeak && 'text-amber-700 font-medium dark:text-amber-300')}>
                       {label}
                       {isWeak && (
-                        <span className="ml-2 text-xs text-amber-500">Needs review</span>
+                        <span className="ml-2 text-xs text-amber-500 dark:text-amber-400">Needs review</span>
                       )}
                     </span>
-                    <span className="font-medium text-slate-900">
+                    <span className="font-medium text-slate-900 dark:text-cream-primary">
                       {breakdown.correct}/{breakdown.total} ({breakdown.percentage}%)
                     </span>
                   </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-raised2">
                     <div
                       className={cn(
                         'h-full rounded-full transition-all duration-700 ease-out',
-                        breakdown.percentage >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
+                        breakdown.percentage >= 70 ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-amber-500 dark:bg-amber-400'
                       )}
                       style={{
                         width: `${breakdown.percentage}%`,
@@ -305,23 +305,23 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
     <div
       className={cn(
         'rounded-xl border overflow-hidden',
-        isCorrect ? 'border-emerald-200' : 'border-red-200'
+        isCorrect ? 'border-emerald-200 dark:border-emerald-400/20' : 'border-red-200 dark:border-red-400/20'
       )}
     >
       {/* Header */}
       <div
         className={cn(
           'px-4 py-2 flex items-center justify-between',
-          isCorrect ? 'bg-emerald-50' : 'bg-red-50'
+          isCorrect ? 'bg-emerald-50 dark:bg-emerald-400/10' : 'bg-red-50 dark:bg-red-400/10'
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-700">
+          <span className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
             Question {questionNumber}
           </span>
           {wasFlagged && (
             <span
-              className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-700"
+              className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300"
               title="You flagged this question for review"
             >
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -334,7 +334,7 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
         <span
           className={cn(
             'px-2 py-1 text-xs font-medium rounded-full',
-            isCorrect ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+            isCorrect ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300' : 'bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-300'
           )}
         >
           {isCorrect ? 'Correct' : 'Incorrect'}
@@ -343,16 +343,16 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
 
       {/* Question */}
       <div className="p-4">
-        <p className="font-medium text-slate-900">{question.questionText}</p>
+        <p className="font-medium text-slate-900 dark:text-cream-primary">{question.questionText}</p>
 
         <div className="mt-4 space-y-2">
           {/* Your answer */}
           <div className="flex items-start gap-2">
-            <span className="text-sm text-slate-600 w-24 flex-shrink-0">Your answer:</span>
+            <span className="text-sm text-slate-600 w-24 flex-shrink-0 dark:text-cream-secondary">Your answer:</span>
             <span
               className={cn(
                 'text-sm font-medium',
-                isCorrect ? 'text-emerald-600' : 'text-red-600'
+                isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'
               )}
             >
               {userAnswer || '(No answer)'}
@@ -362,8 +362,8 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
           {/* Correct answer (if wrong) */}
           {!isCorrect && (
             <div className="flex items-start gap-2">
-              <span className="text-sm text-slate-600 w-24 flex-shrink-0">Correct:</span>
-              <span className="text-sm font-medium text-emerald-600">{correctAnswer}</span>
+              <span className="text-sm text-slate-600 w-24 flex-shrink-0 dark:text-cream-secondary">Correct:</span>
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">{correctAnswer}</span>
             </div>
           )}
 
@@ -379,8 +379,8 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
             />
           ) : (
             question.explanation && (
-              <div className="mt-3 p-3 bg-slate-50 rounded-lg">
-                <p className="text-sm text-slate-600">{question.explanation}</p>
+              <div className="mt-3 p-3 bg-slate-50 rounded-lg dark:bg-coffee-raised2">
+                <p className="text-sm text-slate-600 dark:text-cream-secondary">{question.explanation}</p>
               </div>
             )
           )}
@@ -391,7 +391,7 @@ function QuestionReviewCard({ result, questionNumber }: QuestionReviewCardProps)
               href={question.sourceRef}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-2 text-sm text-crystal-700 hover:text-crystal-700"
+              className="inline-flex items-center gap-1 mt-2 text-sm text-crystal-700 hover:text-crystal-700 dark:text-crystal-400 dark:hover:text-crystal-300"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />

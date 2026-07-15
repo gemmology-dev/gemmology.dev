@@ -74,19 +74,19 @@ export function CaseCard({ caseSummary }: CaseCardProps) {
       </CardHeader>
 
       <CardContent className="flex-1">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600 dark:text-cream-secondary">
           <DifficultyBadge level={DIFFICULTY_LEVEL_MAP[caseSummary.difficulty]} />
           <span aria-hidden="true">&middot;</span>
           <span>~{caseSummary.estimatedMinutes} min</span>
         </div>
 
         {isComplete && entry?.result && (
-          <p className="text-sm text-slate-500 mt-3">
+          <p className="text-sm text-slate-500 mt-3 dark:text-cream-muted">
             Best result: {entry.result.percentage}% (+{entry.result.efficiencyBonus} efficiency)
           </p>
         )}
         {hasProgress && (
-          <p className="text-sm text-slate-500 mt-3">In progress &mdash; resume where you left off.</p>
+          <p className="text-sm text-slate-500 mt-3 dark:text-cream-muted">In progress &mdash; resume where you left off.</p>
         )}
       </CardContent>
 

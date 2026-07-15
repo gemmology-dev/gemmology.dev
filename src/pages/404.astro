@@ -28,10 +28,10 @@ const popularPages = [
         <line x1="70" y1="160" x2="160" y2="80" stroke-opacity="0.3"/>
         <line x1="130" y1="160" x2="40" y2="80" stroke-opacity="0.3"/>
       </svg>
-      <span class="absolute inset-0 flex items-center justify-center text-4xl font-bold text-slate-700">404</span>
+      <span class="absolute inset-0 flex items-center justify-center text-4xl font-bold text-slate-700 dark:text-cream-secondary">404</span>
     </div>
-    <h1 class="text-3xl sm:text-4xl font-semibold text-slate-900 mb-3">Lost in the lattice</h1>
-    <p class="text-slate-600 mb-8 max-w-md">
+    <h1 class="text-3xl sm:text-4xl font-semibold text-slate-900 dark:text-cream-primary mb-3">Lost in the lattice</h1>
+    <p class="text-slate-600 dark:text-cream-secondary mb-8 max-w-md">
       This page doesn&apos;t crystallise. The URL you followed doesn&apos;t correspond to a known structure; it may have been moved or never existed.
     </p>
 
@@ -42,12 +42,12 @@ const popularPages = [
     </div>
 
     <div class="w-full max-w-2xl">
-      <h2 class="text-lg font-semibold text-slate-900 mb-4">Popular Pages</h2>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary mb-4">Popular Pages</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {popularPages.map(page => (
           <Card href={page.href} hover padding="md">
-            <h3 class="font-medium text-slate-900">{page.title}</h3>
-            <p class="text-sm text-slate-600 mt-1">{page.description}</p>
+            <h3 class="font-medium text-slate-900 dark:text-cream-primary">{page.title}</h3>
+            <p class="text-sm text-slate-600 dark:text-cream-secondary mt-1">{page.description}</p>
           </Card>
         ))}
       </div>

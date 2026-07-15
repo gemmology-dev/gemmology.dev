@@ -20,45 +20,45 @@ export function ViewControls({
   return (
     <div className={clsx('mt-4 space-y-3', className)}>
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-slate-700 w-20">Elevation</label>
+        <label className="text-sm font-medium text-slate-700 dark:text-cream-secondary w-20">Elevation</label>
         <input
           type="range"
           min="-90"
           max="90"
           value={elevation}
           onChange={(e) => onElevationChange(Number(e.target.value))}
-          className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-crystal-600"
+          className="flex-1 h-2 bg-slate-200 dark:bg-coffee-border-strong rounded-lg appearance-none cursor-pointer accent-crystal-600 dark:accent-crystal-400"
         />
-        <span className="text-sm text-slate-600 w-12 text-right">{elevation}°</span>
+        <span className="text-sm text-slate-600 dark:text-cream-secondary w-12 text-right">{elevation}°</span>
       </div>
 
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-slate-700 w-20">Azimuth</label>
+        <label className="text-sm font-medium text-slate-700 dark:text-cream-secondary w-20">Azimuth</label>
         <input
           type="range"
           min="-180"
           max="180"
           value={azimuth}
           onChange={(e) => onAzimuthChange(Number(e.target.value))}
-          className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-crystal-600"
+          className="flex-1 h-2 bg-slate-200 dark:bg-coffee-border-strong rounded-lg appearance-none cursor-pointer accent-crystal-600 dark:accent-crystal-400"
         />
-        <span className="text-sm text-slate-600 w-12 text-right">{azimuth}°</span>
+        <span className="text-sm text-slate-600 dark:text-cream-secondary w-12 text-right">{azimuth}°</span>
       </div>
 
       <div className="flex items-center gap-2">
         <button
           onClick={onReset}
-          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
         >
           Reset view
         </button>
-        <span className="text-slate-300">|</span>
+        <span className="text-slate-300 dark:text-coffee-border-strong">|</span>
         <button
           onClick={() => {
             onElevationChange(90);
             onAzimuthChange(0);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
         >
           Top
         </button>
@@ -67,7 +67,7 @@ export function ViewControls({
             onElevationChange(0);
             onAzimuthChange(0);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
         >
           Front
         </button>
@@ -76,7 +76,7 @@ export function ViewControls({
             onElevationChange(0);
             onAzimuthChange(90);
           }}
-          className="text-sm text-slate-600 hover:text-crystal-700 transition-colors"
+          className="text-sm text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
         >
           Side
         </button>

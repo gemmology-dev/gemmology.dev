@@ -34,7 +34,7 @@ export function CaseStepPanel({
   return (
     <Card>
       <CardContent>
-        <p className="text-lg font-medium text-slate-900">{step.prompt}</p>
+        <p className="text-lg font-medium text-slate-900 dark:text-cream-primary">{step.prompt}</p>
 
         <div className="mt-4">
           <CaseOptionList

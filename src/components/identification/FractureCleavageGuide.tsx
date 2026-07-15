@@ -81,13 +81,13 @@ export function FractureCleavageGuide() {
     <div className="space-y-5">
       {/* Fracture types — responsive grid */}
       <div>
-        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Fracture Types</h4>
+        <h4 className="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-2">Fracture Types</h4>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {FRACTURE_TYPES.map(fracture => (
-            <div key={fracture.type} className="p-3 rounded-lg border border-slate-200 bg-slate-50">
-              <h5 className="font-semibold text-slate-900 text-xs mb-1">{fracture.type}</h5>
-              <p className="text-xs text-slate-600 mb-1">{fracture.description}</p>
-              <p className="text-xs text-slate-600">{fracture.examples}</p>
+            <div key={fracture.type} className="p-3 rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2">
+              <h5 className="font-semibold text-slate-900 dark:text-cream-primary text-xs mb-1">{fracture.type}</h5>
+              <p className="text-xs text-slate-600 dark:text-cream-secondary mb-1">{fracture.description}</p>
+              <p className="text-xs text-slate-600 dark:text-cream-muted">{fracture.examples}</p>
             </div>
           ))}
         </div>
@@ -95,7 +95,7 @@ export function FractureCleavageGuide() {
 
       {/* Cleavage reference — filter bar + full-width table */}
       <div>
-        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Cleavage Reference</h4>
+        <h4 className="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-2">Cleavage Reference</h4>
 
         <div className="flex flex-wrap gap-2 items-end mb-3">
           <div className="flex-1 min-w-[180px]">
@@ -104,14 +104,14 @@ export function FractureCleavageGuide() {
               placeholder="Search gemstone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400"
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-crystal-400/20 focus:border-amber-400 dark:focus:border-crystal-400"
             />
           </div>
           <div className="w-36 shrink-0">
             <select
               value={filterCleavage}
               onChange={(e) => setFilterCleavage(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400"
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-crystal-400/20 focus:border-amber-400 dark:focus:border-crystal-400"
             >
               <option value="all">All Cleavage</option>
               <option value="Perfect">Perfect</option>
@@ -120,7 +120,7 @@ export function FractureCleavageGuide() {
               <option value="None">None</option>
             </select>
           </div>
-          <span className="text-xs text-slate-600 shrink-0 pb-0.5">{filteredGems.length} gem{filteredGems.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600 dark:text-cream-muted shrink-0 pb-0.5">{filteredGems.length} gem{filteredGems.length !== 1 ? 's' : ''}</span>
         </div>
 
         {filteredGems.length > 0 ? (
@@ -136,29 +136,29 @@ export function FractureCleavageGuide() {
               gem: gem.gem,
               cleavage: (
                 <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                  gem.cleavage === 'Perfect' ? 'bg-red-100 text-red-700' :
-                  gem.cleavage === 'Distinct' ? 'bg-amber-100 text-amber-700' :
-                  gem.cleavage === 'Indistinct' ? 'bg-blue-100 text-blue-700' :
-                  'bg-green-100 text-green-700'
+                  gem.cleavage === 'Perfect' ? 'bg-red-100 dark:bg-red-400/10 text-red-700 dark:text-red-300' :
+                  gem.cleavage === 'Distinct' ? 'bg-amber-100 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300' :
+                  gem.cleavage === 'Indistinct' ? 'bg-blue-100 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300' :
+                  'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300'
                 }`}>
                   {gem.cleavage}
                 </span>
               ),
-              directions: <span className="text-xs">{gem.directions}</span>,
-              fracture: <span className="text-xs">{gem.fracture}</span>,
-              notes: <span className="text-xs text-slate-600">{gem.notes}</span>,
+              directions: <span className="text-xs dark:text-cream-secondary">{gem.directions}</span>,
+              fracture: <span className="text-xs dark:text-cream-secondary">{gem.fracture}</span>,
+              notes: <span className="text-xs text-slate-600 dark:text-cream-muted">{gem.notes}</span>,
             }))}
             variant="default"
           />
         ) : (
-          <div className="text-center text-slate-600 text-sm py-4 border border-slate-200 rounded-xl">
+          <div className="text-center text-slate-600 dark:text-cream-secondary text-sm py-4 border border-slate-200 dark:border-coffee-border rounded-xl">
             No gemstones found matching your criteria.
           </div>
         )}
       </div>
 
       {/* Tips — compact inline strips */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600 dark:text-cream-muted">
         <span>• <strong>Perfect</strong> cleavage splits easily along smooth planes</span>
         <span>• <strong>Cleavage</strong> = along crystal planes; <strong>Fracture</strong> = random breaking</span>
         <span>• Avoid ultrasonic cleaning for gems with perfect cleavage</span>

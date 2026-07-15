@@ -23,9 +23,9 @@ export function UnrenderableQuestionCard({
   onSkip,
 }: UnrenderableQuestionCardProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
-        <span className="text-sm font-medium text-slate-600">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+      <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 dark:bg-coffee-raised2 dark:border-coffee-border">
+        <span className="text-sm font-medium text-slate-600 dark:text-cream-secondary">
           Question {questionNumber} of {totalQuestions}
         </span>
       </div>
@@ -35,8 +35,8 @@ export function UnrenderableQuestionCard({
           <AlertTriangle className="w-5 h-5" aria-hidden="true" />
         </IconBox>
         <div>
-          <p className="font-medium text-slate-900">This question could not be displayed</p>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="font-medium text-slate-900 dark:text-cream-primary">This question could not be displayed</p>
+          <p className="mt-1 text-sm text-slate-600 dark:text-cream-secondary">
             It is missing data required for its question type. It has not been scored — skip
             ahead to continue.
           </p>

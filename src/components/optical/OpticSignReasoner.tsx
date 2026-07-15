@@ -173,7 +173,7 @@ export function OpticSignReasoner() {
 
   return (
     <div className="space-y-6" onPointerDown={() => setHasInitiated(true)}>
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-slate-600 dark:text-cream-secondary">
         Pick what you saw in the polariscope. For uniaxial gems, enter ω and ε from the
         refractometer; for biaxial, enter α and γ (β is optional). The reasoner derives optic
         sign, birefringence, and 2V where defined, then ranks candidate species.
@@ -221,21 +221,21 @@ export function OpticSignReasoner() {
 
       {/* Computed-output panel */}
       {character !== 'isotropic' && character !== 'aggregate' && (
-        <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 space-y-1">
-          <h4 className="text-sm font-semibold text-emerald-900">Computed</h4>
-          <div className="text-sm text-emerald-900">
+        <div className="rounded-lg border border-emerald-200 dark:border-emerald-400/20 bg-emerald-50 dark:bg-emerald-400/10 p-4 space-y-1">
+          <h4 className="text-sm font-semibold text-emerald-900 dark:text-emerald-300">Computed</h4>
+          <div className="text-sm text-emerald-900 dark:text-emerald-200">
             Optic sign:{' '}
             <span className="font-mono font-semibold">{SIGN_LABEL[computed.sign]}</span>
           </div>
           {computed.birefringence !== null && computed.birefringence > 0 && (
-            <div className="text-sm text-emerald-900">
+            <div className="text-sm text-emerald-900 dark:text-emerald-200">
               Birefringence: <span className="font-mono">{computed.birefringence.toFixed(3)}</span>
             </div>
           )}
           {computed.twoV !== null && (
-            <div className="text-sm text-emerald-900">
+            <div className="text-sm text-emerald-900 dark:text-emerald-200">
               2V (Vz, Mallard): <span className="font-mono">{computed.twoV.toFixed(1)}°</span>{' '}
-              <span className="text-xs text-emerald-700">
+              <span className="text-xs text-emerald-700 dark:text-emerald-300">
                 (acute 2V around γ for biaxial+, around α for biaxial−)
               </span>
             </div>
@@ -245,55 +245,55 @@ export function OpticSignReasoner() {
 
       {/* Candidate list */}
       {dbError && (
-        <div className="p-3 rounded bg-rose-50 border border-rose-200 text-rose-700 text-sm">
+        <div className="p-3 rounded bg-rose-50 dark:bg-rose-400/10 border border-rose-200 dark:border-rose-400/20 text-rose-700 dark:text-rose-300 text-sm">
           Database unavailable; candidate ranking is disabled. ({dbError})
         </div>
       )}
       {loading ? (
-        <div className="p-3 rounded bg-slate-50 border border-slate-200 text-slate-600 text-sm text-center">
+        <div className="p-3 rounded bg-slate-50 dark:bg-coffee-raised2 border border-slate-200 dark:border-coffee-border text-slate-600 dark:text-cream-secondary text-sm text-center">
           Loading mineral database…
         </div>
       ) : matches.length === 0 ? (
-        <div className="p-3 rounded bg-amber-50 border border-amber-200 text-amber-700 text-sm text-center">
+        <div className="p-3 rounded bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm text-center">
           No species in the database match these readings. Try widening the tolerance, double-check
           the optic character, or confirm the RI readings.
         </div>
       ) : (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-slate-700">
+          <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary">
             {matches.length} candidate species
           </h4>
           {paged.map(({ mineral, riOverlap, birefringenceOverlap }) => (
-            <div key={mineral.id} className="p-3 rounded-lg bg-white border border-slate-200">
+            <div key={mineral.id} className="p-3 rounded-lg bg-white dark:bg-coffee-raised border border-slate-200 dark:border-coffee-border">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <a
                     href={`/minerals/${mineral.id}`}
-                    className="font-semibold text-rose-700 hover:underline"
+                    className="font-semibold text-rose-700 dark:text-rose-400 hover:underline"
                   >
                     {mineral.name}
                   </a>
                   {mineral.optical_character && (
-                    <span className="ml-2 text-xs text-slate-500">
+                    <span className="ml-2 text-xs text-slate-500 dark:text-cream-muted">
                       ({mineral.optical_character})
                     </span>
                   )}
                 </div>
                 <div className="flex gap-1.5">
                   {riOverlap && (
-                    <span className="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">
+                    <span className="text-xs px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-300">
                       RI ✓
                     </span>
                   )}
                   {birefringenceOverlap && (
-                    <span className="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">
+                    <span className="text-xs px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-300">
                       BR ✓
                     </span>
                   )}
                 </div>
               </div>
               {(mineral.ri_min !== undefined || mineral.birefringence !== undefined) && (
-                <div className="mt-1 text-xs text-slate-600 font-mono">
+                <div className="mt-1 text-xs text-slate-600 dark:text-cream-muted font-mono">
                   {mineral.ri_min !== undefined &&
                     mineral.ri_max !== undefined &&
                     `RI ${mineral.ri_min.toFixed(3)}–${mineral.ri_max.toFixed(3)}`}

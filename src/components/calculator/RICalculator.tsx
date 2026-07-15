@@ -93,7 +93,7 @@ export function RICalculator() {
 
   return (
     <div className="space-y-6" onPointerDown={initiate}>
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter an RI reading to find matching gemstones. Toggle <strong>Double reading</strong> to enter both shadow-edge readings (ω/ε or α/γ) and infer birefringence + optic character automatically.</p>
       </div>
 
@@ -155,17 +155,17 @@ export function RICalculator() {
       )}
 
       {doubleReadingResult && (
-        <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-sm space-y-1">
-          <div className="font-semibold text-emerald-900">Double-reading inference</div>
-          <div className="text-emerald-800">
+        <div className="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-400/10 border border-emerald-200 dark:border-emerald-400/20 text-sm space-y-1">
+          <div className="font-semibold text-emerald-900 dark:text-emerald-300">Double-reading inference</div>
+          <div className="text-emerald-800 dark:text-emerald-200">
             RI {doubleReadingResult.ri1.toFixed(3)} – {doubleReadingResult.ri2.toFixed(3)},
             birefringence <span className="font-mono">{doubleReadingResult.birefringence.toFixed(3)}</span>{' '}
             ({doubleReadingResult.classification})
           </div>
-          <div className="text-emerald-800">
+          <div className="text-emerald-800 dark:text-emerald-200">
             Optic character: <strong>{doubleReadingResult.character}</strong>. {doubleReadingResult.characterLabel}
           </div>
-          <div className="text-xs text-emerald-700">
+          <div className="text-xs text-emerald-700 dark:text-emerald-300">
             Matches below use the average RI ({doubleReadingResult.lookupRI.toFixed(3)}) ± {values.tolerance}.
           </div>
         </div>
@@ -181,7 +181,7 @@ export function RICalculator() {
               layout="list"
             />
           ) : (
-            <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+            <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm">
               No common gems found near RI {lookupTarget.toFixed(3)} (±{values.tolerance}). Try widening the tolerance or
               checking your readings.
             </div>
@@ -191,7 +191,7 @@ export function RICalculator() {
 
       {/* Reference table */}
       <div>
-        <h4 className="text-sm font-medium text-slate-700 mb-2">Common Gem RI Reference</h4>
+        <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">Common Gem RI Reference</h4>
         <div className="max-h-64 overflow-y-auto">
           <Table
             columns={[

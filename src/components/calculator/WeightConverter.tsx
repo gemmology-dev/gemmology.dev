@@ -47,9 +47,9 @@ export function WeightConverter() {
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter a value in any field to convert between weight units.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           1 carat = 0.2 grams = 200 milligrams
         </p>
       </div>
@@ -107,7 +107,7 @@ export function WeightConverter() {
         </FormField>
       </div>
 
-      <div className="text-sm text-slate-600 space-y-1">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary space-y-1">
         <p><strong>Common weights:</strong></p>
         <p>• 1 carat engagement diamond ≈ 0.2g</p>
         <p>• 5 carat sapphire ≈ 1.0g</p>

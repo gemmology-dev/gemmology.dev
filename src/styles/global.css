@@ -31,8 +31,29 @@
     --color-border: theme('colors.slate.200');
   }
 
+  [data-theme='dark'] {
+    --color-primary: theme('colors.crystal.400');
+    --color-primary-hover: theme('colors.crystal.300');
+    --color-background: theme('colors.coffee.page');
+    --color-surface: theme('colors.coffee.raised');
+    --color-text: theme('colors.cream.primary');
+    --color-text-muted: theme('colors.cream.secondary');
+    --color-border: theme('colors.coffee.border');
+  }
+
   html {
     scroll-behavior: smooth;
+    /*
+     * Tied to data-theme (not a bare `light dark` on the meta tag) so native
+     * form controls/scrollbars follow the *active* theme - which may differ
+     * from the OS preference once the user has toggled explicitly - rather
+     * than the raw prefers-color-scheme signal.
+     */
+    color-scheme: light;
+  }
+
+  html[data-theme='dark'] {
+    color-scheme: dark;
   }
 
   /*
@@ -45,42 +66,66 @@
   }
 
   body {
-    @apply bg-white text-slate-900 antialiased;
+    /*
+     * Body copy defaults to cream-secondary (softer); headings below opt
+     * into the brighter cream-primary. Components with their own explicit
+     * text-slate-* utility classes (Card, Table, SectionHeader, etc.) carry
+     * their own dark: variants and are unaffected by this base rule.
+     */
+    @apply bg-white text-slate-900 antialiased dark:bg-coffee-page dark:text-cream-secondary;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply dark:text-cream-primary;
   }
 
   ::selection {
     @apply bg-crystal-200 text-crystal-900;
   }
+
+  [data-theme='dark'] ::selection {
+    @apply bg-crystal-400/30 text-cream-primary;
+  }
+  /* note: no `dark:` prefix needed above - the [data-theme='dark'] ancestor
+     selector already scopes this rule; `dark:` would just duplicate it. */
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-crystal-400;
   }
 
+  /* Primary keeps the crystal-blue brand color on dark - re-tuned one step
+     lighter (600 instead of 700) since it reads better against coffee
+     surfaces while keeping white text at 7:1+ contrast. Do NOT invert. */
   .btn-primary {
-    @apply btn bg-crystal-700 text-white hover:bg-crystal-800;
+    @apply btn bg-crystal-700 text-white hover:bg-crystal-800 dark:bg-crystal-600 dark:hover:bg-crystal-500;
   }
 
   .btn-secondary {
-    @apply btn bg-slate-100 text-slate-900 hover:bg-slate-200;
+    @apply btn bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-coffee-raised dark:text-cream-primary dark:hover:bg-coffee-raised2;
   }
 
   .btn-ghost {
-    @apply btn bg-transparent hover:bg-slate-100;
+    @apply btn bg-transparent hover:bg-slate-100 dark:text-cream-secondary dark:hover:bg-coffee-raised;
   }
 
   .card {
-    @apply rounded-xl border border-slate-200 bg-white p-6 shadow-sm;
+    @apply rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-coffee-border dark:bg-coffee-raised;
   }
 
   .card-hover {
-    @apply card transition-all hover:border-crystal-300 hover:shadow-md;
+    @apply card transition-all hover:border-crystal-300 hover:shadow-md dark:hover:border-crystal-400/40 dark:hover:bg-coffee-raised2;
   }
 
   .input {
-    @apply rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-500 focus:border-crystal-500 focus:outline-none focus:ring-2 focus:ring-crystal-500/20;
+    @apply rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-500 focus:border-crystal-500 focus:outline-none focus:ring-2 focus:ring-crystal-500/20 dark:border-coffee-border dark:bg-coffee-sunk dark:text-cream-primary dark:placeholder-cream-muted dark:focus:border-crystal-400 dark:focus:ring-crystal-400/20;
   }
 
   .badge {
@@ -88,11 +133,11 @@
   }
 
   .badge-crystal {
-    @apply badge bg-crystal-100 text-crystal-700;
+    @apply badge bg-crystal-100 text-crystal-700 dark:border dark:border-crystal-400/20 dark:bg-crystal-400/10 dark:text-crystal-300;
   }
 
   .prose-cdl code {
-    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono;
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono dark:bg-coffee-sunk dark:text-cream-primary;
   }
 }
 
@@ -109,9 +154,16 @@
     @apply bg-gradient-to-br from-crystal-50 via-white to-slate-50;
   }
 
-  /* Crystal SVG container styles */
+  /*
+   * Crystal SVG container - the "specimen plate" rule. Rendered crystal
+   * strokes are dark-on-transparent, so this surface is a PERMANENT light
+   * plate (like product photography) in both themes - do NOT add a dark:bg
+   * override here, the crystal would disappear against a dark background.
+   * A dark border is added purely so the plate doesn't float untethered
+   * against the dark page.
+   */
   .crystal-svg-container {
-    @apply relative overflow-hidden rounded-lg bg-slate-50;
+    @apply relative overflow-hidden rounded-lg bg-slate-50 dark:border dark:border-coffee-border;
   }
 
   .crystal-svg-container svg {
@@ -140,6 +192,18 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  @apply bg-coffee-page;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  @apply bg-coffee-border-strong;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  @apply bg-cream-muted;
 }
 
 /* Loading skeleton animation */
@@ -175,7 +239,7 @@
 }
 
 .prose .lead {
-  @apply text-xl text-slate-600 mb-8;
+  @apply text-xl text-slate-600 mb-8 dark:text-cream-secondary;
 }
 
 /* Prose inline code styling (not code blocks) */
@@ -230,6 +294,7 @@
 
 .prose th {
   @apply text-left bg-gradient-to-r from-crystal-50 to-slate-50 px-4 py-3 font-semibold text-slate-700 border-b border-slate-200;
+  @apply dark:bg-coffee-raised2 dark:from-transparent dark:to-transparent dark:text-cream-primary dark:border-coffee-border;
 }
 
 .prose td {
@@ -243,8 +308,28 @@
 /* Mineral auto-links in prose content */
 .prose a.mineral-link {
   @apply text-crystal-700 no-underline border-b border-dotted border-crystal-500 font-medium hover:border-solid hover:border-crystal-700 transition-colors;
+  @apply dark:text-crystal-400 dark:border-crystal-400 dark:hover:border-crystal-300;
 }
 
 .prose a.mineral-link:hover {
-  @apply text-crystal-800;
+  @apply text-crystal-800 dark:text-crystal-300;
+}
+
+/* "About this tool/calculator" <details> disclosures (tools/*.astro): a
+   defensive re-assertion of the native details-collapse behavior so the
+   non-summary content never occupies layout/paint space while closed
+   (belt-and-suspenders alongside the native <details>/<summary> contract),
+   plus a scoped dark-mode text-color fix for the plain-.prose body inside —
+   the general `.prose` dark pass is a known gap (see docs/dark-mode.md §10),
+   this targets only the details-disclosure instance of that gap. */
+details:not([open]) > *:not(summary) {
+  display: none;
+}
+
+[data-theme='dark'] details .prose,
+[data-theme='dark'] details .prose p,
+[data-theme='dark'] details .prose li,
+[data-theme='dark'] details .prose em,
+[data-theme='dark'] details .prose strong {
+  color: #c4b4a3; /* cream-secondary */
 }

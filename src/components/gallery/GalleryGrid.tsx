@@ -23,11 +23,11 @@ export function GalleryGrid({ families, loading }: GalleryGridProps) {
     return (
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-slate-200 overflow-hidden">
-            <div className="aspect-square skeleton" />
+          <div key={i} className="rounded-xl border border-slate-200 dark:border-coffee-border overflow-hidden">
+            <div className="aspect-square skeleton dark:from-coffee-raised2 dark:via-coffee-raised dark:to-coffee-raised2" />
             <div className="p-4 space-y-2">
-              <div className="h-5 skeleton rounded w-3/4" />
-              <div className="h-4 skeleton rounded w-1/2" />
+              <div className="h-5 skeleton dark:from-coffee-raised2 dark:via-coffee-raised dark:to-coffee-raised2 rounded w-3/4" />
+              <div className="h-4 skeleton dark:from-coffee-raised2 dark:via-coffee-raised dark:to-coffee-raised2 rounded w-1/2" />
             </div>
           </div>
         ))}
@@ -39,7 +39,7 @@ export function GalleryGrid({ families, loading }: GalleryGridProps) {
     return (
       <div className="text-center py-16">
         <svg
-          className="mx-auto h-12 w-12 text-slate-500"
+          className="mx-auto h-12 w-12 text-slate-500 dark:text-cream-muted"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -51,8 +51,8 @@ export function GalleryGrid({ families, loading }: GalleryGridProps) {
             d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
           />
         </svg>
-        <h3 className="mt-4 text-lg font-medium text-slate-900">No families found</h3>
-        <p className="mt-2 text-slate-600">Try adjusting your search or filters.</p>
+        <h3 className="mt-4 text-lg font-medium text-slate-900 dark:text-cream-primary">No families found</h3>
+        <p className="mt-2 text-slate-600 dark:text-cream-secondary">Try adjusting your search or filters.</p>
       </div>
     );
   }

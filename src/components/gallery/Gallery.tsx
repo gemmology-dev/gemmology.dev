@@ -146,16 +146,16 @@ export function Gallery({
   if (error) {
     return (
       <div className="text-center py-16">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
-          <svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 dark:bg-red-400/10 mb-4">
+          <svg className="w-8 h-8 text-red-600 dark:text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-slate-900">Failed to load families</h3>
-        <p className="mt-2 text-slate-600">{error.message}</p>
+        <h3 className="text-lg font-medium text-slate-900 dark:text-cream-primary">Failed to load families</h3>
+        <p className="mt-2 text-slate-600 dark:text-cream-secondary">{error.message}</p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-4 text-crystal-700 hover:text-crystal-700 font-medium"
+          className="mt-4 text-crystal-700 hover:text-crystal-700 dark:text-crystal-400 dark:hover:text-crystal-300 font-medium"
         >
           Try again
         </button>

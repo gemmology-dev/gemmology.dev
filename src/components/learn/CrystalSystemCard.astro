@@ -5,6 +5,7 @@
  */
 import Badge from '../ui-astro/Badge.astro';
 import { crystalSystemColors, defaultCrystalCDL, type CrystalSystem } from './icons';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 
 interface Item {
   name: string;
@@ -73,17 +74,19 @@ const exampleItem = items.find(item => item.examples && item.examples.length > 0
       </div>
       <span class="text-lg font-semibold text-white leading-none">{title}</span>
     </div>
-    <a
-      href={playgroundUrl}
-      class="text-white/80 hover:text-white transition-colors flex items-center gap-1.5 text-sm leading-none flex-shrink-0"
-      title="View crystal in playground"
-    >
-      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <span class="hidden sm:inline">View Crystal</span>
-    </a>
+    {PLAYGROUND_ENABLED && (
+      <a
+        href={playgroundUrl}
+        class="text-white/80 hover:text-white transition-colors flex items-center gap-1.5 text-sm leading-none flex-shrink-0"
+        title="View crystal in playground"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="hidden sm:inline">View Crystal</span>
+      </a>
+    )}
   </div>
 
   <!-- Content area -->
@@ -103,14 +106,14 @@ const exampleItem = items.find(item => item.examples && item.examples.length > 0
                   <Fragment set:html={getIconPath(item.name)} />
                 </svg>
               </div>
-              <div class="text-xs font-semibold text-slate-600 uppercase tracking-wide">{item.name}</div>
+              <div class="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wide">{item.name}</div>
             </div>
             <div class="text-right">
               {item.value && (
-                <div class="font-mono text-sm text-slate-900">{item.value}</div>
+                <div class="font-mono text-sm text-slate-900 dark:text-cream-primary">{item.value}</div>
               )}
               {item.description && !item.value && (
-                <div class="text-sm text-slate-600">{item.description}</div>
+                <div class="text-sm text-slate-600 dark:text-cream-secondary">{item.description}</div>
               )}
             </div>
           </div>
@@ -120,12 +123,12 @@ const exampleItem = items.find(item => item.examples && item.examples.length > 0
 
     <!-- Example gems section -->
     {exampleItem && exampleItem.examples && (
-      <div class="mt-4 pt-4 border-t border-slate-200/50">
+      <div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-coffee-border">
         <div class="flex items-center gap-2 mb-2">
           <svg class={`w-4 h-4 ${colors.text}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <Fragment set:html={propertyIcons.gems} />
           </svg>
-          <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Example Gems</span>
+          <span class="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wide">Example Gems</span>
         </div>
         <div class="flex flex-wrap gap-1.5">
           {exampleItem.examples.map(gem => (

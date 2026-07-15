@@ -1,20 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Playground } from '../components/playground/Playground';
+import { Container, Button } from '../components/ui-astro';
+import { PLAYGROUND_ENABLED } from '../lib/feature-flags';
 
 // Get CDL from query string if present
 const url = new URL(Astro.request.url);
 const initialCDL = url.searchParams.get('cdl') || undefined;
 ---
 
-<BaseLayout
-  title="CDL Playground"
-  description="Interactive Crystal Description Language editor with live preview, syntax highlighting, and multi-format export."
->
-  <div class="h-[calc(100vh-4rem)]">
-    <Playground client:load initialCDL={initialCDL} />
-  </div>
-</BaseLayout>
+{PLAYGROUND_ENABLED ? (
+  <BaseLayout
+    title="CDL Playground"
+    description="Interactive Crystal Description Language editor with live preview, syntax highlighting, and multi-format export."
+  >
+    <div class="h-[calc(100vh-4rem)]">
+      <Playground client:load initialCDL={initialCDL} />
+    </div>
+  </BaseLayout>
+) : (
+  <BaseLayout
+    title="Playground Unavailable"
+    description="The CDL playground is temporarily offline."
+    noindex={true}
+  >
+    <Container size="sm" padding="lg" class="text-center">
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">
+        Playground temporarily unavailable
+      </h1>
+      <p class="mt-4 text-slate-600 dark:text-cream-secondary">
+        The CDL playground is temporarily offline. The CDL specification and examples remain available in the docs.
+      </p>
+      <div class="mt-8 flex justify-center">
+        <Button href="/docs/cdl/" variant="primary" size="md">
+          View the CDL docs
+        </Button>
+      </div>
+    </Container>
+  </BaseLayout>
+)}
 
 <style>
   /* Make playground take full height */

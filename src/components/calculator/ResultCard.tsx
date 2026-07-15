@@ -51,7 +51,7 @@ export function ResultCard({
   return (
     <div
       className={cn(
-        'relative p-4 rounded-lg bg-crystal-50 border border-crystal-200',
+        'relative p-4 rounded-lg bg-crystal-50 dark:bg-crystal-400/10 border border-crystal-200 dark:border-crystal-400/20',
         className
       )}
     >
@@ -62,14 +62,14 @@ export function ResultCard({
           onClick={handleCopy}
           className={cn(
             'absolute top-2 right-2 p-1.5 rounded-md transition-colors',
-            'text-slate-500 hover:text-slate-600 hover:bg-white/50',
-            'focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:ring-offset-2'
+            'text-slate-500 dark:text-cream-muted hover:text-slate-600 dark:hover:text-cream-secondary hover:bg-white/50 dark:hover:bg-coffee-raised2/60',
+            'focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400 focus:ring-offset-2'
           )}
           aria-label={copied ? 'Copied!' : 'Copy result'}
           title={copied ? 'Copied!' : 'Copy to clipboard'}
         >
           {copied ? (
-            <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-emerald-500 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : (
@@ -87,18 +87,18 @@ export function ResultCard({
 
       {/* Label */}
       {label && (
-        <p className="text-sm text-slate-600 text-center mb-1">{label}</p>
+        <p className="text-sm text-slate-600 dark:text-cream-secondary text-center mb-1">{label}</p>
       )}
 
       {/* Main value */}
       <p className="text-center">
-        <span className="text-3xl font-bold text-crystal-700">{value}</span>
-        {unit && <span className="text-lg text-crystal-700 ml-1">{unit}</span>}
+        <span className="text-3xl font-bold text-crystal-700 dark:text-crystal-400">{value}</span>
+        {unit && <span className="text-lg text-crystal-700 dark:text-crystal-400 ml-1">{unit}</span>}
       </p>
 
       {/* Description */}
       {description && (
-        <p className="text-sm text-slate-600 text-center mt-1">{description}</p>
+        <p className="text-sm text-slate-600 dark:text-cream-secondary text-center mt-1">{description}</p>
       )}
 
       {/* Additional content */}
@@ -120,9 +120,9 @@ interface ResultInlineProps {
 export function ResultInline({ value, unit, label, className }: ResultInlineProps) {
   return (
     <span className={cn('inline-flex items-baseline gap-1', className)}>
-      {label && <span className="text-sm text-slate-600">{label}:</span>}
-      <span className="font-semibold text-crystal-700">{value}</span>
-      {unit && <span className="text-sm text-crystal-700">{unit}</span>}
+      {label && <span className="text-sm text-slate-600 dark:text-cream-secondary">{label}:</span>}
+      <span className="font-semibold text-crystal-700 dark:text-crystal-400">{value}</span>
+      {unit && <span className="text-sm text-crystal-700 dark:text-crystal-400">{unit}</span>}
     </span>
   );
 }
@@ -146,18 +146,18 @@ export function ResultGroup({ results, layout = 'horizontal', className }: Resul
   return (
     <div
       className={cn(
-        'p-4 rounded-lg bg-crystal-50 border border-crystal-200',
+        'p-4 rounded-lg bg-crystal-50 dark:bg-crystal-400/10 border border-crystal-200 dark:border-crystal-400/20',
         layout === 'horizontal' ? 'flex items-center justify-around' : 'space-y-3',
         className
       )}
     >
       {results.map((result, index) => (
         <div key={index} className="text-center">
-          <p className="text-sm text-slate-600">{result.label}</p>
+          <p className="text-sm text-slate-600 dark:text-cream-secondary">{result.label}</p>
           <p>
-            <span className="text-xl font-bold text-crystal-700">{result.value}</span>
+            <span className="text-xl font-bold text-crystal-700 dark:text-crystal-400">{result.value}</span>
             {result.unit && (
-              <span className="text-sm text-crystal-700 ml-1">{result.unit}</span>
+              <span className="text-sm text-crystal-700 dark:text-crystal-400 ml-1">{result.unit}</span>
             )}
           </p>
         </div>

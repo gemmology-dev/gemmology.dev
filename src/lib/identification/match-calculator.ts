@@ -484,12 +484,28 @@ export function getConfidenceClasses(level: 'excellent' | 'good' | 'partial' | '
 } {
   switch (level) {
     case 'excellent':
-      return { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' };
+      return {
+        bg: 'bg-emerald-50 dark:bg-emerald-400/10',
+        text: 'text-emerald-700 dark:text-emerald-300',
+        border: 'border-emerald-200 dark:border-emerald-400/20',
+      };
     case 'good':
-      return { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' };
+      return {
+        bg: 'bg-blue-50 dark:bg-blue-400/10',
+        text: 'text-blue-700 dark:text-blue-300',
+        border: 'border-blue-200 dark:border-blue-400/20',
+      };
     case 'partial':
-      return { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' };
+      return {
+        bg: 'bg-amber-50 dark:bg-amber-400/10',
+        text: 'text-amber-700 dark:text-amber-300',
+        border: 'border-amber-200 dark:border-amber-400/20',
+      };
     case 'weak':
-      return { bg: 'bg-slate-50', text: 'text-slate-600', border: 'border-slate-200' };
+      return {
+        bg: 'bg-slate-50 dark:bg-coffee-raised2',
+        text: 'text-slate-600 dark:text-cream-secondary',
+        border: 'border-slate-200 dark:border-coffee-border',
+      };
   }
 }

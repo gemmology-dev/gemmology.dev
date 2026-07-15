@@ -20,18 +20,18 @@ export function CaseProgressStrip({ current, total, runningScore, className }: C
 
   return (
     <div className={cn('space-y-2', className)}>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-border">
         <div
-          className="h-full bg-crystal-500 transition-all duration-300 ease-out rounded-full"
+          className="h-full bg-crystal-500 transition-all duration-300 ease-out rounded-full dark:bg-crystal-400"
           style={{ width: `${percentage}%` }}
         />
       </div>
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-600">
+        <span className="text-slate-600 dark:text-cream-secondary">
           Step {current + 1} of {total}
         </span>
-        <span className="text-slate-600">
-          Score: <span className="font-medium text-crystal-700">{runningScore}</span>
+        <span className="text-slate-600 dark:text-cream-secondary">
+          Score: <span className="font-medium text-crystal-700 dark:text-crystal-400">{runningScore}</span>
         </span>
       </div>
     </div>

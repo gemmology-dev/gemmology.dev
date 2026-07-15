@@ -48,30 +48,30 @@ export function AdvancedTools() {
       </ToolSection>
 
       {/* Origin determination moved to comprehensive Learn section */}
-      <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-cyan-900 mb-2">Origin Determination</h4>
-        <p className="text-sm text-cyan-800 mb-3">
+      <div className="bg-cyan-50 dark:bg-cyan-400/10 border border-cyan-200 dark:border-cyan-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-cyan-900 dark:text-cyan-300 mb-2">Origin Determination</h4>
+        <p className="text-sm text-cyan-800 dark:text-cyan-200 mb-3">
           Geographic origin determination requires detailed knowledge of inclusion suites,
           trace element chemistry, and regional characteristics. See the learn section:
         </p>
-        <ul className="text-sm text-cyan-800 space-y-1">
+        <ul className="text-sm text-cyan-800 dark:text-cyan-200 space-y-1">
           <li>
-            <a href="/learn/origin/overview" className="underline hover:text-cyan-600">
+            <a href="/learn/origin/overview" className="underline hover:text-cyan-600 dark:hover:text-cyan-300">
               Origin determination overview <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/origin/burma/ruby" className="underline hover:text-cyan-600">
+            <a href="/learn/origin/burma/ruby" className="underline hover:text-cyan-600 dark:hover:text-cyan-300">
               Burmese ruby characteristics <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/origin/kashmir" className="underline hover:text-cyan-600">
+            <a href="/learn/origin/kashmir" className="underline hover:text-cyan-600 dark:hover:text-cyan-300">
               Kashmir sapphire identification <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/origin/colombia" className="underline hover:text-cyan-600">
+            <a href="/learn/origin/colombia" className="underline hover:text-cyan-600 dark:hover:text-cyan-300">
               Colombian emerald features <span aria-hidden="true">→</span>
             </a>
           </li>

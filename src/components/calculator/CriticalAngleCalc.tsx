@@ -27,9 +27,9 @@ export function CriticalAngleCalc() {
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter the refractive index to calculate the critical angle for total internal reflection.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           Formula: θc = arcsin(1 ÷ RI)
         </p>
       </div>
@@ -51,7 +51,7 @@ export function CriticalAngleCalc() {
 
       {/* Hint when no result and no error but has input */}
       {!result && !errors.ri && values.ri && (
-        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-sm">
           Enter a valid RI value (≥ 1.0) to calculate the critical angle.
         </div>
       )}
@@ -71,9 +71,9 @@ export function CriticalAngleCalc() {
         />
       )}
 
-      <div className="bg-slate-50 rounded-lg p-4">
-        <h4 className="text-sm font-medium text-slate-700 mb-2">Why This Matters</h4>
-        <p className="text-xs text-slate-600">
+      <div className="bg-slate-50 dark:bg-coffee-raised2 rounded-lg p-4">
+        <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">Why This Matters</h4>
+        <p className="text-xs text-slate-600 dark:text-cream-muted">
           Light entering a gem at angles greater than the critical angle will be totally internally
           reflected back into the stone. A smaller critical angle means more light is reflected,
           creating more brilliance. This is why diamond (θc = 24.4°) appears more brilliant than
@@ -81,7 +81,7 @@ export function CriticalAngleCalc() {
         </p>
       </div>
 
-      <div className="text-sm text-slate-600 space-y-1">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary space-y-1">
         <p><strong>Diamond (RI 2.417):</strong> θc = 24.4° (excellent light return)</p>
         <p><strong>Corundum (RI 1.77):</strong> θc = 34.4° (good light return)</p>
         <p><strong>Quartz (RI 1.55):</strong> θc = 40.2° (moderate light return)</p>

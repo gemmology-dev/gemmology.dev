@@ -33,7 +33,12 @@ const latticeAttrs = [
       { label: 'crystal-geometry' }
     ]} />
 
-    <article class="prose prose-slate max-w-none">
+    <article class="prose prose-slate max-w-none
+                    dark:prose-headings:text-cream-primary
+                    dark:prose-p:text-cream-secondary
+                    dark:prose-li:text-cream-secondary
+                    dark:prose-strong:text-cream-primary
+                    dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:prose-a:decoration-crystal-400/30 dark:hover:prose-a:decoration-gold">
       <h1>crystal-geometry</h1>
 
       <p class="lead">
@@ -274,3 +279,20 @@ print(get_backend_info()) # Detailed backend information`}
     />
   </Container>
 </BaseLayout>
+
+<style>
+  :global([data-theme='dark'] .prose code) {
+    background-color: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+  }
+  :global([data-theme='dark'] .prose ul > li) {
+    border-bottom-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ul ul) {
+    border-left-color: #362b23; /* coffee-border */
+  }
+  :global([data-theme='dark'] .prose ol > li::before) {
+    color: #7dd3fc; /* crystal-300 */
+    background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
+  }
+</style>

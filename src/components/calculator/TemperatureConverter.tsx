@@ -38,9 +38,9 @@ export function TemperatureConverter() {
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p>Enter a value in either field to convert between temperature units.</p>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-600 dark:text-cream-secondary">
           Formula: °F = (°C × 9/5) + 32
         </p>
       </div>
@@ -82,9 +82,9 @@ export function TemperatureConverter() {
         </FormField>
       </div>
 
-      <div className="bg-slate-50 rounded-lg p-4">
-        <h4 className="text-sm font-medium text-slate-700 mb-2">Heat Treatment Temperatures</h4>
-        <div className="text-xs text-slate-600 space-y-1">
+      <div className="bg-slate-50 dark:bg-coffee-raised2 rounded-lg p-4">
+        <h4 className="text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">Heat Treatment Temperatures</h4>
+        <div className="text-xs text-slate-600 dark:text-cream-muted space-y-1">
           <p>• <strong>Corundum:</strong> 1200-1800°C (2192-3272°F)</p>
           <p>• <strong>Tanzanite:</strong> 550-700°C (1022-1292°F)</p>
           <p>• <strong>Aquamarine:</strong> 400-450°C (752-842°F)</p>
@@ -93,7 +93,7 @@ export function TemperatureConverter() {
         </div>
       </div>
 
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <p><strong>Note:</strong> Heat treatment temperatures are approximate and depend on specific conditions including atmosphere, duration, and starting material.</p>
       </div>
     </div>

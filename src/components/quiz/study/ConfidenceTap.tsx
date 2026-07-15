@@ -39,24 +39,24 @@ const OPTIONS: ConfidenceOption[] = [
     value: 'unsure',
     label: 'Unsure',
     shortcut: 'Q',
-    selectedClass: 'border-red-500 bg-red-50 text-red-700',
-    idleClass: 'border-slate-200 text-slate-700 hover:border-red-300 hover:bg-red-50/50',
+    selectedClass: 'border-red-500 bg-red-50 text-red-700 dark:border-red-400 dark:bg-red-400/10 dark:text-red-300',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-red-300 hover:bg-red-50/50 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-red-400/40 dark:hover:bg-red-400/5',
     description: 'I guessed or am not confident',
   },
   {
     value: 'fairly-sure',
     label: 'Fairly sure',
     shortcut: 'W',
-    selectedClass: 'border-amber-500 bg-amber-50 text-amber-700',
-    idleClass: 'border-slate-200 text-slate-700 hover:border-amber-300 hover:bg-amber-50/50',
+    selectedClass: 'border-amber-500 bg-amber-50 text-amber-700 dark:border-amber-400 dark:bg-amber-400/10 dark:text-amber-300',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-amber-300 hover:bg-amber-50/50 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-amber-400/40 dark:hover:bg-amber-400/5',
     description: 'I am reasonably confident',
   },
   {
     value: 'certain',
     label: 'Certain',
     shortcut: 'E',
-    selectedClass: 'border-emerald-500 bg-emerald-50 text-emerald-700',
-    idleClass: 'border-slate-200 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50',
+    selectedClass: 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-400/10 dark:text-emerald-300',
+    idleClass: 'border-slate-200 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-coffee-border dark:text-cream-secondary dark:hover:border-emerald-400/40 dark:hover:bg-emerald-400/5',
     description: 'I am very confident in this answer',
   },
 ];
@@ -96,7 +96,7 @@ export function ConfidenceTap({ value, onChange, disabled = false }: ConfidenceT
     >
       <legend
         id="confidence-legend"
-        className="text-sm font-medium text-slate-700 mb-2"
+        className="text-sm font-medium text-slate-700 mb-2 dark:text-cream-secondary"
       >
         How confident are you?
       </legend>
@@ -120,7 +120,7 @@ export function ConfidenceTap({ value, onChange, disabled = false }: ConfidenceT
                 'relative flex flex-col items-center justify-center gap-1',
                 'rounded-lg border-2 px-3 py-2.5 text-sm font-medium',
                 'transition-all duration-150',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 dark:focus-visible:ring-crystal-400 focus-visible:ring-offset-2',
                 'disabled:pointer-events-none disabled:opacity-50',
                 isSelected ? opt.selectedClass : opt.idleClass,
               )}

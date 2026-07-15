@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import type { Mineral } from '../../lib/db';
 import { getModelSVG, getModelSTL, getModelGLTF } from '../../lib/db';
 import { sanitizeSvg } from '../../lib/sanitize-svg';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 
 interface MineralModalProps {
   mineral: Mineral;
@@ -126,11 +127,11 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col dark:bg-coffee-raised dark:border dark:border-coffee-border">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 transition-colors shadow-sm"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 transition-colors shadow-sm dark:bg-coffee-raised2/80 dark:hover:bg-coffee-raised2 dark:text-cream-secondary dark:hover:text-cream-primary"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -138,8 +139,8 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
         </button>
 
         <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
-          {/* Crystal Preview */}
-          <div className="lg:w-1/2 bg-slate-50 p-8 flex flex-col">
+          {/* Crystal Preview — permanent light "specimen plate", see docs/dark-mode.md */}
+          <div className="lg:w-1/2 bg-slate-50 p-8 flex flex-col dark:border dark:border-coffee-border">
             {/* Viewer Toggle */}
             <div className="flex justify-center mb-4">
               <ViewerToggle
@@ -227,27 +228,29 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </Button>
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    const encodedCDL = encodeURIComponent(mineral.cdl);
-                    window.location.href = `/playground?cdl=${encodedCDL}`;
-                  }}
-                >
-                  Open in Playground
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
-                </Button>
+                {PLAYGROUND_ENABLED && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      const encodedCDL = encodeURIComponent(mineral.cdl);
+                      window.location.href = `/playground?cdl=${encodedCDL}`;
+                    }}
+                  >
+                    Open in Playground
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </Button>
+                )}
               </div>
 
               {/* Download Buttons */}
-              <div className="border-t border-slate-200 pt-4">
-                <div className="text-sm font-medium text-slate-700 mb-2">Download Models</div>
+              <div className="border-t border-slate-200 dark:border-coffee-border pt-4">
+                <div className="text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">Download Models</div>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={handleDownloadSVG}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors dark:bg-coffee-raised dark:hover:bg-coffee-raised2 dark:text-cream-secondary"
                     title="Download 2D SVG visualisation"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -257,7 +260,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
                   </button>
                   <button
                     onClick={handleDownloadSTL}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors dark:bg-coffee-raised dark:hover:bg-coffee-raised2 dark:text-cream-secondary"
                     title="Download STL for 3D printing"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -267,7 +270,7 @@ export function MineralModal({ mineral, onClose }: MineralModalProps) {
                   </button>
                   <button
                     onClick={handleDownloadGLTF}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors dark:bg-coffee-raised dark:hover:bg-coffee-raised2 dark:text-cream-secondary"
                     title="Download glTF for 3D viewers"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -19,25 +19,27 @@ interface Props {
 const { items, headingLevel = 3 } = Astro.props;
 const HeadingTag = `h${headingLevel}` as 'h3' | 'h4';
 
+// Dark variants follow the alpha-tint pattern (bg-{hue}-400/10, border-{hue}-400/20)
+// used site-wide for badge/chip/callout surfaces (see docs/dark-mode.md).
 const variantClasses = {
-  default: 'bg-slate-50 border-slate-200',
-  success: 'bg-emerald-50 border-emerald-200',
-  warning: 'bg-amber-50 border-amber-200',
-  danger: 'bg-red-50 border-red-200',
+  default: 'bg-slate-50 border-slate-200 dark:bg-coffee-raised dark:border-coffee-border',
+  success: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-400/10 dark:border-emerald-400/20',
+  warning: 'bg-amber-50 border-amber-200 dark:bg-amber-400/10 dark:border-amber-400/20',
+  danger: 'bg-red-50 border-red-200 dark:bg-red-400/10 dark:border-red-400/20',
 };
 
 const titleClasses = {
-  default: 'text-slate-900',
-  success: 'text-emerald-900',
-  warning: 'text-amber-900',
-  danger: 'text-red-900',
+  default: 'text-slate-900 dark:text-cream-primary',
+  success: 'text-emerald-900 dark:text-emerald-300',
+  warning: 'text-amber-900 dark:text-amber-300',
+  danger: 'text-red-900 dark:text-red-300',
 };
 
 const textClasses = {
-  default: 'text-slate-600',
-  success: 'text-emerald-800',
-  warning: 'text-amber-800',
-  danger: 'text-red-800',
+  default: 'text-slate-600 dark:text-cream-secondary',
+  success: 'text-emerald-800 dark:text-emerald-300/90',
+  warning: 'text-amber-800 dark:text-amber-300/90',
+  danger: 'text-red-800 dark:text-red-300/90',
 };
 
 const gridCols = items.length === 2

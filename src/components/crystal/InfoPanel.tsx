@@ -19,23 +19,23 @@ export function InfoPanel({ name, system, properties, cdl, className }: InfoPane
   return (
     <div className={className}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-slate-900">{name}</h2>
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-cream-primary">{name}</h2>
         <Badge variant="crystal">{system}</Badge>
       </div>
 
       <div className="space-y-3">
         {filteredProperties.map(({ label, value }) => (
           <div key={label} className="flex justify-between items-baseline">
-            <span className="text-sm text-slate-600">{label}</span>
-            <span className="text-sm font-medium text-slate-900">{value}</span>
+            <span className="text-sm text-slate-600 dark:text-cream-secondary">{label}</span>
+            <span className="text-sm font-medium text-slate-900 dark:text-cream-primary">{value}</span>
           </div>
         ))}
       </div>
 
       {cdl && (
-        <div className="mt-6 pt-4 border-t border-slate-200">
-          <span className="text-sm font-medium text-slate-700">CDL</span>
-          <pre className="mt-2 bg-slate-100 rounded-lg p-3 text-sm font-mono text-slate-700 overflow-x-auto">
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-coffee-border">
+          <span className="text-sm font-medium text-slate-700 dark:text-cream-secondary">CDL</span>
+          <pre className="mt-2 bg-slate-100 rounded-lg p-3 text-sm font-mono text-slate-700 overflow-x-auto dark:bg-coffee-sunk dark:text-cream-primary">
             <code>{cdl}</code>
           </pre>
         </div>

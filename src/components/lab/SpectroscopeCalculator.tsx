@@ -87,14 +87,14 @@ export function SpectroscopeCalculator() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Enter a wavelength (380-780nm) to see its colour, or browse common absorption lines by gem.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">
             Wavelength (nm)
           </label>
           <input
@@ -104,22 +104,22 @@ export function SpectroscopeCalculator() {
             max="780"
             value={wavelength}
             onChange={(e) => setWavelength(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
             placeholder="e.g., 694"
           />
           {!isValid && wavelength && (
-            <p className="text-xs text-red-600 mt-1">Valid range: 380-780nm</p>
+            <p className="text-xs text-red-600 dark:text-red-400 mt-1">Valid range: 380-780nm</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-2">
             Filter by Gem
           </label>
           <select
             value={gemFilter}
             onChange={(e) => setGemFilter(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-crystal-500 focus:border-crystal-500"
+            className="w-full px-3 py-2 border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400"
           >
             <option value="all">All Gems</option>
             {uniqueGems.map(gem => (
@@ -130,14 +130,16 @@ export function SpectroscopeCalculator() {
       </div>
 
       {isValid && (
-        <div className="p-6 rounded-lg border border-slate-300">
+        <div className="p-6 rounded-lg border border-slate-300 dark:border-coffee-border">
           <div className="text-center">
-            <div className="text-sm text-slate-600 mb-2">Colour at {wl}nm</div>
+            <div className="text-sm text-slate-600 dark:text-cream-secondary mb-2">Colour at {wl}nm</div>
+            {/* Swatch background is the actual computed wavelength colour — physical
+                reference data, so it is intentionally left unthemed in both modes. */}
             <div
-              className="w-full h-24 rounded-lg border-2 border-slate-300 shadow-inner"
+              className="w-full h-24 rounded-lg border-2 border-slate-300 dark:border-coffee-border-strong shadow-inner"
               style={{ backgroundColor: color }}
             />
-            <div className="mt-3 text-sm text-slate-600">
+            <div className="mt-3 text-sm text-slate-600 dark:text-cream-secondary">
               {wl < 450 ? 'Violet-Blue' :
                wl < 495 ? 'Blue' :
                wl < 570 ? 'Green' :
@@ -150,27 +152,29 @@ export function SpectroscopeCalculator() {
       )}
 
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">
           Common Absorption Lines ({filtered.length})
         </h4>
         <div className="space-y-2">
           {filtered.map((line, idx) => (
-            <div key={idx} className="p-3 rounded-lg border border-slate-200 bg-white hover:border-crystal-300 transition-colors">
+            <div key={idx} className="p-3 rounded-lg border border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised hover:border-crystal-300 dark:hover:border-crystal-400/40 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h5 className="font-semibold text-sm text-slate-900">{line.gem}</h5>
-                    <span className="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                    <h5 className="font-semibold text-sm text-slate-900 dark:text-cream-primary">{line.gem}</h5>
+                    <span className="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-coffee-raised2 text-slate-600 dark:text-cream-secondary">
                       {line.strength}
                     </span>
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-slate-600 dark:text-cream-secondary">
                     <span className="font-mono font-medium">{line.wavelength}nm</span> – {line.color}
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{line.notes}</p>
+                  <p className="text-xs text-slate-600 dark:text-cream-muted mt-1">{line.notes}</p>
                 </div>
+                {/* Swatch background is the actual computed wavelength colour — physical
+                    reference data, so it is intentionally left unthemed in both modes. */}
                 <div
-                  className="w-12 h-12 rounded border-2 border-slate-300 shrink-0"
+                  className="w-12 h-12 rounded border-2 border-slate-300 dark:border-coffee-border-strong shrink-0"
                   style={{ backgroundColor: wavelengthToRGB(line.wavelength) }}
                   title={`${line.wavelength}nm`}
                 />
@@ -180,9 +184,9 @@ export function SpectroscopeCalculator() {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Spectroscope Usage</h4>
-        <ul className="text-sm text-blue-800 space-y-1">
+      <div className="bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Spectroscope Usage</h4>
+        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
           <li>• Use a strong white light source for best results</li>
           <li>• Absorption lines appear as dark bands against bright spectrum</li>
           <li>• Some gems show many lines, others show few or none</li>
@@ -190,10 +194,10 @@ export function SpectroscopeCalculator() {
         </ul>
       </div>
 
-      <div className="text-sm text-slate-600">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary">
         <a
           href="/learn/equipment/spectroscope"
-          className="text-crystal-700 hover:text-crystal-700 underline"
+          className="text-crystal-700 dark:text-crystal-400 hover:text-crystal-700 dark:hover:text-crystal-300 underline"
         >
           Learn spectroscope technique and absorption spectrum interpretation <span aria-hidden="true">→</span>
         </a>

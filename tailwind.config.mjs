@@ -2,10 +2,44 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  // Tailwind 3.4.15 syntax: the `selector` strategy (added in 3.4) lets us pair
+  // `dark:` with an arbitrary attribute selector instead of the older 'class'
+  // strategy's fixed `.dark` class. `data-theme="dark"` is set on <html> by the
+  // no-FOUC script in BaseLayout.astro. See docs/dark-mode.md.
+  darkMode: ['selector', '[data-theme="dark"]'],
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
       colors: {
+        // Dark-mode surface ramp ("coffee"), derived from the jewlarray.ch dark
+        // theme (OKLCH-native, warm coffee-brown, hue band 40-75deg). Hex values
+        // are used for maximum browser support (no color-mix() dependency for
+        // opacity modifiers); OKLCH source values are documented per token so
+        // the ramp can be regenerated/adjusted precisely. See
+        // docs/dark-mode.md and the token spec for usage rules.
+        coffee: {
+          sunk: '#0f0704', // oklch(0.14 0.018 55) - inputs/wells, code-adjacent recesses
+          page: '#190f09', // oklch(0.18 0.020 55) - body background
+          raised: '#271d15', // oklch(0.24 0.022 58) - cards, panels, header/footer surfaces
+          raised2: '#332619', // oklch(0.29 0.022 58) - popovers, dropdowns, hover-raised
+          border: '#362b23', // oklch(0.30 0.022 60) - hairline borders, dividers
+          'border-strong': '#4d3f33', // oklch(0.38 0.025 60) - emphasized borders, focus-adjacent
+        },
+        // Dark-mode text ramp ("cream"). Contrast verified against coffee-page
+        // and coffee-raised (see token spec) - all pairs >=4.5:1.
+        cream: {
+          primary: '#ede3d5', // oklch(0.92 0.022 75) - headings, primary text (14.9:1 / 13.0:1)
+          secondary: '#c4b4a3', // oklch(0.78 0.030 70) - body copy, descriptions (9.3:1 / 8.2:1)
+          muted: '#8f8578', // oklch(0.62 0.025 70) - captions/meta/hints (bumped from jewlarray's 0.58, was 4.41:1 borderline); >=5.2:1 / >=4.6:1
+          // Distinct token from `primary` - used ONLY for the single footer
+          // "cream inverse band" (jewlarray signature echo), never for regular
+          // dark-mode text. See docs/dark-mode.md.
+          inverse: '#f3eadd',
+        },
+        // Warm touch accent (from jewlarray), used sparingly: link hover
+        // underline decoration + blockquote/citation accents only. Never as a
+        // text-on-gold or gold-on-text pair without dark ink (coffee-sunk).
+        gold: '#d8a16c', // oklch(0.75 0.095 65)
         crystal: {
           50: '#f0f9ff',
           100: '#e0f2fe',

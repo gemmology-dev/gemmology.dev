@@ -36,11 +36,11 @@ interface ClassifiedResultProps {
 }
 
 const levelBadgeClasses: Record<ClassificationLevel, string> = {
-  'none': 'bg-slate-100 text-slate-700 border-slate-200',
-  'low': 'bg-emerald-100 text-emerald-700 border-emerald-200',
-  'medium': 'bg-blue-100 text-blue-700 border-blue-200',
-  'high': 'bg-amber-100 text-amber-700 border-amber-200',
-  'very-high': 'bg-red-100 text-red-700 border-red-200',
+  'none': 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border',
+  'low': 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:border-emerald-400/20',
+  'medium': 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-400/10 dark:text-blue-300 dark:border-blue-400/20',
+  'high': 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/20',
+  'very-high': 'bg-red-100 text-red-700 border-red-200 dark:bg-red-400/10 dark:text-red-300 dark:border-red-400/20',
 };
 
 /**

@@ -8,14 +8,14 @@ interface Props {
   colorClass?: string;
 }
 
-const { title, json, colorClass = 'bg-slate-100 text-slate-700' } = Astro.props;
+const { title, json, colorClass = 'bg-slate-100 text-slate-700 dark:bg-coffee-raised2 dark:text-cream-secondary' } = Astro.props;
 const items: string[] = json ? JSON.parse(json) : [];
 ---
 
 {items.length > 0 && (
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-    <div class="px-6 py-4 border-b border-slate-100">
-      <h2 class="text-lg font-semibold text-slate-900">{title}</h2>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+    <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
     </div>
     <div class="px-6 py-4 flex flex-wrap gap-2">
       {items.map((item) => (

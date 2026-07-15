@@ -52,17 +52,17 @@ export function StudyReviewScreen({ learnEntries }: StudyReviewScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 dark:from-coffee-page dark:to-coffee-page">
       <div className="max-w-4xl mx-auto px-4">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Review</h1>
-          <p className="text-slate-600 mt-2">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-cream-primary">Review</h1>
+          <p className="text-slate-600 mt-2 dark:text-cream-secondary">
             Spaced-repetition queue: items the scheduler says you should see today.
           </p>
         </header>
 
         {dueQuestions === null ? (
-          <div className="text-center py-12 animate-pulse text-slate-500">
+          <div className="text-center py-12 animate-pulse text-slate-500 dark:text-cream-muted">
             Loading due items…
           </div>
         ) : dueQuestions.length === 0 ? (
@@ -83,9 +83,9 @@ export function StudyReviewScreen({ learnEntries }: StudyReviewScreenProps) {
 
 function EmptyReviewState() {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-10 text-center">
-      <h2 className="text-xl font-semibold text-slate-900">Nothing due right now</h2>
-      <p className="text-slate-600 mt-2 max-w-prose mx-auto">
+    <div className="rounded-xl border border-slate-200 bg-white p-10 text-center dark:border-coffee-border dark:bg-coffee-raised">
+      <h2 className="text-xl font-semibold text-slate-900 dark:text-cream-primary">Nothing due right now</h2>
+      <p className="text-slate-600 mt-2 max-w-prose mx-auto dark:text-cream-secondary">
         Your spaced-repetition queue is empty; every item you've seen is still
         within its scheduled interval. Practice new questions to grow the queue.
       </p>

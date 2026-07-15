@@ -165,22 +165,22 @@ export function TreatmentDetection() {
     <div className="space-y-5">
       {/* Treatment types overview — responsive grid */}
       <div>
-        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Common Treatment Types</h4>
+        <h4 className="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-2">Common Treatment Types</h4>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {TREATMENT_TYPES.map(type => (
-            <div key={type.name} className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+            <div key={type.name} className="p-3 rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2">
               <div className="flex items-start justify-between gap-1 mb-1">
-                <h5 className="font-semibold text-slate-900 text-xs">{type.name}</h5>
+                <h5 className="font-semibold text-slate-900 dark:text-cream-primary text-xs">{type.name}</h5>
                 <span className={`shrink-0 text-xs px-1.5 py-0.5 rounded font-medium ${
-                  type.detectability === 'Easy' ? 'bg-green-100 text-green-700' :
-                  type.detectability === 'Moderate' ? 'bg-blue-100 text-blue-700' :
-                  type.detectability === 'Difficult' ? 'bg-amber-100 text-amber-700' :
-                  'bg-red-100 text-red-700'
+                  type.detectability === 'Easy' ? 'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300' :
+                  type.detectability === 'Moderate' ? 'bg-blue-100 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300' :
+                  type.detectability === 'Difficult' ? 'bg-amber-100 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300' :
+                  'bg-red-100 dark:bg-red-400/10 text-red-700 dark:text-red-300'
                 }`}>
                   {type.detectability}
                 </span>
               </div>
-              <p className="text-xs text-slate-600">{type.purpose}</p>
+              <p className="text-xs text-slate-600 dark:text-cream-secondary">{type.purpose}</p>
             </div>
           ))}
         </div>
@@ -188,7 +188,7 @@ export function TreatmentDetection() {
 
       {/* Detection indicators — filter bar + results table */}
       <div>
-        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Detection Indicators</h4>
+        <h4 className="text-xs font-semibold text-slate-600 dark:text-cream-secondary uppercase tracking-wider mb-2">Detection Indicators</h4>
 
         <div className="flex flex-wrap gap-2 items-end mb-3">
           <div className="flex-1 min-w-[180px]">
@@ -197,14 +197,14 @@ export function TreatmentDetection() {
               placeholder="Search treatment or gem..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-cyan-400 dark:focus:ring-crystal-400/20 focus:border-cyan-400 dark:focus:border-crystal-400"
             />
           </div>
           <div className="w-40 shrink-0">
             <select
               value={selectedGem}
               onChange={(e) => setSelectedGem(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+              className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-cyan-400 dark:focus:ring-crystal-400/20 focus:border-cyan-400 dark:focus:border-crystal-400"
             >
               {uniqueGems.map(gem => (
                 <option key={gem} value={gem}>
@@ -213,7 +213,7 @@ export function TreatmentDetection() {
               ))}
             </select>
           </div>
-          <span className="text-xs text-slate-600 shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600 dark:text-cream-muted shrink-0 pb-0.5">{filteredTreatments.length} treatment{filteredTreatments.length !== 1 ? 's' : ''}</span>
         </div>
 
         {filteredTreatments.length > 0 ? (
@@ -227,16 +227,16 @@ export function TreatmentDetection() {
             rows={filteredTreatments.map(treatment => ({
               treatment: (
                 <div>
-                  <p className="font-medium text-slate-900 text-xs">{treatment.treatment}</p>
-                  <p className="text-xs text-slate-600">{treatment.gems}</p>
+                  <p className="font-medium text-slate-900 dark:text-cream-primary text-xs">{treatment.treatment}</p>
+                  <p className="text-xs text-slate-600 dark:text-cream-muted">{treatment.gems}</p>
                 </div>
               ),
-              visual: <span className="text-xs">{treatment.visualIndicators}</span>,
-              instrumental: <span className="text-xs">{treatment.instrumentalTests}</span>,
+              visual: <span className="text-xs dark:text-cream-secondary">{treatment.visualIndicators}</span>,
+              instrumental: <span className="text-xs dark:text-cream-secondary">{treatment.instrumentalTests}</span>,
               status: (
                 <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                  treatment.permanence.startsWith('Permanent') ? 'bg-green-100 text-green-700' :
-                  'bg-amber-100 text-amber-700'
+                  treatment.permanence.startsWith('Permanent') ? 'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300' :
+                  'bg-amber-100 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300'
                 }`}>
                   {treatment.permanence.startsWith('Permanent') ? 'Permanent' : 'Temporary'}
                 </span>
@@ -245,14 +245,14 @@ export function TreatmentDetection() {
             variant="default"
           />
         ) : (
-          <div className="text-center text-slate-600 text-sm py-4 border border-slate-200 rounded-xl">
+          <div className="text-center text-slate-600 dark:text-cream-secondary text-sm py-4 border border-slate-200 dark:border-coffee-border rounded-xl">
             No treatments found matching your criteria.
           </div>
         )}
       </div>
 
       {/* Disclosure requirements — inline warning */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-400/10 border border-red-200 dark:border-red-400/20 rounded-lg px-4 py-2.5">
         <span className="font-semibold">Disclosure:</span>
         <span>All treatments must be disclosed to buyers</span>
         <span>•</span>

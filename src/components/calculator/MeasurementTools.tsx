@@ -45,7 +45,7 @@ export function MeasurementTools() {
           <a
             key={id}
             href={`#tool-${id}`}
-            className="shrink-0 inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-crystal-300 hover:bg-slate-50 hover:text-crystal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2"
+            className="shrink-0 inline-flex items-center rounded-full border border-slate-300 dark:border-coffee-border-strong bg-white dark:bg-coffee-raised px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-cream-secondary transition-colors hover:border-crystal-300 dark:hover:border-crystal-400 hover:bg-slate-50 dark:hover:bg-coffee-raised2 hover:text-crystal-700 dark:hover:text-crystal-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 dark:focus-visible:ring-crystal-400 focus-visible:ring-offset-2"
           >
             {label}
           </a>
@@ -133,26 +133,26 @@ export function MeasurementTools() {
       </ToolSection>
 
       {/* Learn More section */}
-      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-emerald-900 mb-2">Learn More</h4>
-        <ul className="text-sm text-emerald-800 space-y-1">
+      <div className="bg-emerald-50 dark:bg-emerald-400/10 border border-emerald-200 dark:border-emerald-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-emerald-900 dark:text-emerald-300 mb-2">Learn More</h4>
+        <ul className="text-sm text-emerald-800 dark:text-emerald-200 space-y-1">
           <li>
-            <a href="/learn/equipment/sg-measurement" className="underline hover:text-emerald-600">
+            <a href="/learn/equipment/sg-measurement" className="underline hover:text-emerald-600 dark:hover:text-emerald-300">
               Hydrostatic SG measurement technique <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/equipment/refractometer" className="underline hover:text-emerald-600">
+            <a href="/learn/equipment/refractometer" className="underline hover:text-emerald-600 dark:hover:text-emerald-300">
               Refractometer use, double readings, and the over-the-limit case <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/fundamentals/optical-properties" className="underline hover:text-emerald-600">
+            <a href="/learn/fundamentals/optical-properties" className="underline hover:text-emerald-600 dark:hover:text-emerald-300">
               Optical properties: RI, birefringence, dispersion, critical angle <span aria-hidden="true">→</span>
             </a>
           </li>
           <li>
-            <a href="/learn/fundamentals/physical-properties" className="underline hover:text-emerald-600">
+            <a href="/learn/fundamentals/physical-properties" className="underline hover:text-emerald-600 dark:hover:text-emerald-300">
               Physical properties: SG, hardness, density <span aria-hidden="true">→</span>
             </a>
           </li>

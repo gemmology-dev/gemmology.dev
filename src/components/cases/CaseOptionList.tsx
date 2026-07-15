@@ -8,7 +8,9 @@
  * actually chose gets an additional highlight ring so it stands out among
  * same-tier siblings.
  *
- * Light-only: no `dark:` classes (site convention for new Study components).
+ * Dark mode: tier colours map to alpha-tinted dark variants (emerald-400/10,
+ * amber-400/10, red-400/10 etc.), matching the pattern established in
+ * src/components/quiz/AnswerOption.tsx.
  */
 
 import { cn } from '../ui/cn';
@@ -67,17 +69,17 @@ export function CaseOptionList({
             className={cn(
               'w-full flex items-start gap-3 p-4 rounded-lg border-2 text-left',
               'transform transition-all duration-200 ease-out',
-              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
+              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500 dark:focus:ring-crystal-400',
               // Pre-submit default / selected states.
-              !isSubmitted && !isSelected && 'border-slate-200 bg-white hover:border-crystal-300 hover:bg-crystal-50 active:scale-[0.98]',
-              !isSubmitted && isSelected && 'border-crystal-500 bg-crystal-50 scale-[1.01] shadow-md',
+              !isSubmitted && !isSelected && 'border-slate-200 bg-white hover:border-crystal-300 hover:bg-crystal-50 active:scale-[0.98] dark:border-coffee-border dark:bg-coffee-raised dark:hover:border-crystal-400/40 dark:hover:bg-coffee-raised2',
+              !isSubmitted && isSelected && 'border-crystal-500 bg-crystal-50 scale-[1.01] shadow-md dark:border-crystal-400 dark:bg-crystal-400/10',
               // Post-submit: every option reveals its tier, so the acceptable
               // middle state is never lost even when it wasn't the choice made.
-              isSubmitted && option.weight === 'optimal' && 'border-emerald-500 bg-emerald-50',
-              isSubmitted && option.weight === 'acceptable' && 'border-amber-500 bg-amber-50',
-              isSubmitted && option.weight === 'poor' && 'border-red-500 bg-red-50',
+              isSubmitted && option.weight === 'optimal' && 'border-emerald-500 bg-emerald-50 dark:border-emerald-400 dark:bg-emerald-400/10',
+              isSubmitted && option.weight === 'acceptable' && 'border-amber-500 bg-amber-50 dark:border-amber-400 dark:bg-amber-400/10',
+              isSubmitted && option.weight === 'poor' && 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-400/10',
               // The chosen option gets an extra highlight ring.
-              isChosen && 'ring-2 ring-offset-2 ring-slate-900/60',
+              isChosen && 'ring-2 ring-offset-2 ring-slate-900/60 dark:ring-cream-primary/60',
               isSubmitted && 'cursor-not-allowed',
               !isSubmitted && 'cursor-pointer',
             )}
@@ -85,11 +87,11 @@ export function CaseOptionList({
             <span
               className={cn(
                 'flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold',
-                !isSubmitted && !isSelected && 'bg-slate-100 text-slate-600',
-                !isSubmitted && isSelected && 'bg-crystal-700 text-white',
-                isSubmitted && option.weight === 'optimal' && 'bg-emerald-500 text-white',
-                isSubmitted && option.weight === 'acceptable' && 'bg-amber-500 text-white',
-                isSubmitted && option.weight === 'poor' && 'bg-red-500 text-white',
+                !isSubmitted && !isSelected && 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary',
+                !isSubmitted && isSelected && 'bg-crystal-700 text-white dark:bg-crystal-600',
+                isSubmitted && option.weight === 'optimal' && 'bg-emerald-500 text-white dark:bg-emerald-500',
+                isSubmitted && option.weight === 'acceptable' && 'bg-amber-500 text-white dark:bg-amber-500',
+                isSubmitted && option.weight === 'poor' && 'bg-red-500 text-white dark:bg-red-500',
               )}
             >
               {label}
@@ -99,14 +101,14 @@ export function CaseOptionList({
               <span
                 className={cn(
                   'block',
-                  !isSubmitted && 'text-slate-700',
-                  isSubmitted && option.weight === 'optimal' && 'text-emerald-700 font-medium',
-                  isSubmitted && option.weight === 'acceptable' && 'text-amber-800',
-                  isSubmitted && option.weight === 'poor' && 'text-red-700',
+                  !isSubmitted && 'text-slate-700 dark:text-cream-secondary',
+                  isSubmitted && option.weight === 'optimal' && 'text-emerald-700 font-medium dark:text-emerald-300',
+                  isSubmitted && option.weight === 'acceptable' && 'text-amber-800 dark:text-amber-300',
+                  isSubmitted && option.weight === 'poor' && 'text-red-700 dark:text-red-300',
                 )}
               >
                 {option.text}
-                {isChosen && <span className="ml-2 text-xs font-normal text-slate-500">(your choice)</span>}
+                {isChosen && <span className="ml-2 text-xs font-normal text-slate-500 dark:text-cream-muted">(your choice)</span>}
               </span>
 
               {isSubmitted && (

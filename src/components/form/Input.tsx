@@ -60,13 +60,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       aria-invalid={ariaInvalid ?? hasError}
       aria-describedby={describedBy}
       className={cn(
-        'w-full rounded-lg border bg-white transition-colors',
+        'w-full rounded-lg border bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted transition-colors',
         'focus:outline-none focus:ring-2',
-        'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
+        'disabled:bg-slate-50 dark:disabled:bg-coffee-raised2 disabled:text-slate-400 dark:disabled:text-cream-muted disabled:cursor-not-allowed',
         sizeClasses[size],
         hasError
-          ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
-          : 'border-slate-300 focus:ring-crystal-500 focus:border-crystal-500',
+          ? 'border-red-300 dark:border-red-400/50 focus:ring-red-500 dark:focus:ring-red-400/20 focus:border-red-500 dark:focus:border-red-400'
+          : 'border-slate-300 dark:border-coffee-border focus:ring-crystal-500 dark:focus:ring-crystal-400/20 focus:border-crystal-500 dark:focus:border-crystal-400',
         // When used with addons, remove border radius on addon side
         leftAddon && 'rounded-l-none',
         rightAddon && 'rounded-r-none',
@@ -88,8 +88,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <span
           className={cn(
             'inline-flex items-center px-3 rounded-l-lg border border-r-0',
-            'bg-slate-50 text-slate-600 text-sm',
-            hasError ? 'border-red-300' : 'border-slate-300'
+            'bg-slate-50 dark:bg-coffee-raised2 text-slate-600 dark:text-cream-secondary text-sm',
+            hasError ? 'border-red-300 dark:border-red-400/50' : 'border-slate-300 dark:border-coffee-border'
           )}
         >
           {leftAddon}
@@ -100,8 +100,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <span
           className={cn(
             'inline-flex items-center px-3 rounded-r-lg border border-l-0',
-            'bg-slate-50 text-slate-600 text-sm',
-            hasError ? 'border-red-300' : 'border-slate-300'
+            'bg-slate-50 dark:bg-coffee-raised2 text-slate-600 dark:text-cream-secondary text-sm',
+            hasError ? 'border-red-300 dark:border-red-400/50' : 'border-slate-300 dark:border-coffee-border'
           )}
         >
           {rightAddon}

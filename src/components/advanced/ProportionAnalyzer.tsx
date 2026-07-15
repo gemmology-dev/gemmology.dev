@@ -36,11 +36,11 @@ const CULET_OPTIONS: { value: CuletSize | ''; label: string }[] = [
 ];
 
 const GIA_BADGE: Record<CutGradeBand, string> = {
-  Excellent: 'bg-green-200 text-green-800',
-  'Very Good': 'bg-blue-200 text-blue-800',
-  Good: 'bg-slate-200 text-slate-800',
-  Fair: 'bg-amber-200 text-amber-800',
-  Poor: 'bg-red-200 text-red-800',
+  Excellent: 'bg-green-200 dark:bg-emerald-400/10 text-green-800 dark:text-emerald-300',
+  'Very Good': 'bg-blue-200 dark:bg-blue-400/10 text-blue-800 dark:text-blue-300',
+  Good: 'bg-slate-200 dark:bg-coffee-raised2 text-slate-800 dark:text-cream-secondary',
+  Fair: 'bg-amber-200 dark:bg-amber-400/10 text-amber-800 dark:text-amber-300',
+  Poor: 'bg-red-200 dark:bg-red-400/10 text-red-800 dark:text-red-300',
 };
 
 interface ProportionStandard {
@@ -265,24 +265,24 @@ export function ProportionAnalyzer() {
   return (
     <div className="space-y-6">
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Cut Grade Reference</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Cut Grade Reference</h4>
         <div className="space-y-2">
           {CUT_GRADES.map(grade => (
-            <div key={grade.grade} className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+            <div key={grade.grade} className="p-3 rounded-lg border border-slate-200 dark:border-coffee-border bg-slate-50 dark:bg-coffee-raised2">
               <div className="flex items-start justify-between mb-1">
-                <h5 className="font-semibold text-slate-900 text-sm">{grade.grade}</h5>
+                <h5 className="font-semibold text-slate-900 dark:text-cream-primary text-sm">{grade.grade}</h5>
                 <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                  grade.grade === 'Excellent' ? 'bg-green-100 text-green-700' :
-                  grade.grade === 'Very Good' ? 'bg-blue-100 text-blue-700' :
-                  grade.grade === 'Good' ? 'bg-slate-100 text-slate-700' :
-                  grade.grade === 'Fair' ? 'bg-amber-100 text-amber-700' :
-                  'bg-red-100 text-red-700'
+                  grade.grade === 'Excellent' ? 'bg-green-100 dark:bg-emerald-400/10 text-green-700 dark:text-emerald-300' :
+                  grade.grade === 'Very Good' ? 'bg-blue-100 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300' :
+                  grade.grade === 'Good' ? 'bg-slate-100 dark:bg-coffee-raised2 text-slate-700 dark:text-cream-secondary' :
+                  grade.grade === 'Fair' ? 'bg-amber-100 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300' :
+                  'bg-red-100 dark:bg-red-400/10 text-red-700 dark:text-red-300'
                 }`}>
                   {grade.marketImpact.split(' - ')[0]}
                 </span>
               </div>
-              <p className="text-xs text-slate-700 mb-1">{grade.description}</p>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-slate-700 dark:text-cream-secondary mb-1">{grade.description}</p>
+              <p className="text-xs text-slate-600 dark:text-cream-muted">
                 <strong>Market Impact:</strong> {grade.marketImpact}
               </p>
             </div>
@@ -290,18 +290,18 @@ export function ProportionAnalyzer() {
         </div>
       </div>
 
-      <div className="border-t border-slate-200 pt-6">
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Proportion Analyser</h4>
+      <div className="border-t border-slate-200 dark:border-coffee-border pt-6">
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Proportion Analyser</h4>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
               Select Cut & Gemstone
             </label>
             <select
               value={selectedCut}
               onChange={(e) => setSelectedCut(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
             >
               <option value="">Choose a cut...</option>
               {PROPORTION_STANDARDS.map((std, idx) => (
@@ -314,9 +314,9 @@ export function ProportionAnalyzer() {
 
           {selectedStandard && (
             <>
-              <div className="p-3 rounded-lg bg-blue-50 border border-blue-200">
-                <h5 className="text-sm font-semibold text-blue-900 mb-2">Ideal Proportions</h5>
-                <div className="grid grid-cols-2 gap-2 text-xs text-blue-800">
+              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20">
+                <h5 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Ideal Proportions</h5>
+                <div className="grid grid-cols-2 gap-2 text-xs text-blue-800 dark:text-blue-200">
                   <div>
                     <strong>Table:</strong> {selectedStandard.tablePercent.ideal}
                   </div>
@@ -330,14 +330,14 @@ export function ProportionAnalyzer() {
                     <strong>Pavilion Angle:</strong> {selectedStandard.pavilionAngle.ideal}
                   </div>
                 </div>
-                <p className="text-xs text-blue-700 mt-2">
+                <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
                   <strong>Notes:</strong> {selectedStandard.notes}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Table %
                   </label>
                   <input
@@ -346,11 +346,11 @@ export function ProportionAnalyzer() {
                     placeholder="e.g., 57"
                     value={table}
                     onChange={(e) => setTable(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Depth %
                   </label>
                   <input
@@ -359,11 +359,11 @@ export function ProportionAnalyzer() {
                     placeholder="e.g., 61.5"
                     value={depth}
                     onChange={(e) => setDepth(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Crown Angle ° (optional)
                   </label>
                   <input
@@ -372,11 +372,11 @@ export function ProportionAnalyzer() {
                     placeholder="e.g., 34.5"
                     value={crownAngle}
                     onChange={(e) => setCrownAngle(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                     Pavilion Angle ° (optional)
                   </label>
                   <input
@@ -385,7 +385,7 @@ export function ProportionAnalyzer() {
                     placeholder="e.g., 40.8"
                     value={pavilionAngle}
                     onChange={(e) => setPavilionAngle(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                   />
                 </div>
               </div>
@@ -393,13 +393,13 @@ export function ProportionAnalyzer() {
               {isDiamondRoundBrilliant && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                       Girdle thickness (optional)
                     </label>
                     <select
                       value={girdle}
                       onChange={(e) => setGirdle(e.target.value as GirdleThickness | '')}
-                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                      className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                     >
                       {GIRDLE_OPTIONS.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -409,13 +409,13 @@ export function ProportionAnalyzer() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-cream-secondary mb-1">
                       Culet size (optional)
                     </label>
                     <select
                       value={culet}
                       onChange={(e) => setCulet(e.target.value as CuletSize | '')}
-                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crystal-500"
+                      className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:outline-none focus:ring-2 focus:ring-crystal-500 dark:focus:ring-crystal-400/20 dark:focus:border-crystal-400"
                     >
                       {CULET_OPTIONS.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -429,14 +429,14 @@ export function ProportionAnalyzer() {
 
               {giaResult && giaInputCount > 0 && (
                 <div className={`p-4 rounded-lg border-2 ${
-                  giaResult.grade === 'Excellent' ? 'bg-green-50 border-green-300' :
-                  giaResult.grade === 'Very Good' ? 'bg-blue-50 border-blue-300' :
-                  giaResult.grade === 'Good' ? 'bg-slate-50 border-slate-300' :
-                  giaResult.grade === 'Fair' ? 'bg-amber-50 border-amber-300' :
-                  'bg-red-50 border-red-300'
+                  giaResult.grade === 'Excellent' ? 'bg-green-50 dark:bg-emerald-400/10 border-green-300 dark:border-emerald-400/30' :
+                  giaResult.grade === 'Very Good' ? 'bg-blue-50 dark:bg-blue-400/10 border-blue-300 dark:border-blue-400/30' :
+                  giaResult.grade === 'Good' ? 'bg-slate-50 dark:bg-coffee-raised2 border-slate-300 dark:border-coffee-border' :
+                  giaResult.grade === 'Fair' ? 'bg-amber-50 dark:bg-amber-400/10 border-amber-300 dark:border-amber-400/30' :
+                  'bg-red-50 dark:bg-red-400/10 border-red-300 dark:border-red-400/30'
                 }`}>
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <h5 className="text-lg font-bold text-slate-900">
+                    <h5 className="text-lg font-bold text-slate-900 dark:text-cream-primary">
                       GIA-style Cut Grade: {giaResult.grade}
                     </h5>
                     <span className={`text-xs px-2 py-1 rounded font-medium ${GIA_BADGE[giaResult.grade]}`}>
@@ -444,11 +444,11 @@ export function ProportionAnalyzer() {
                     </span>
                   </div>
                   {giaResult.limitingParameter && giaResult.grade !== 'Excellent' && (
-                    <p className="text-sm text-slate-800 mb-2">
+                    <p className="text-sm text-slate-800 dark:text-cream-secondary mb-2">
                       <strong>Limiting parameter:</strong> {giaResult.limitingParameter.comment}
                     </p>
                   )}
-                  <div className="text-xs text-slate-700">
+                  <div className="text-xs text-slate-700 dark:text-cream-secondary">
                     <strong>Per-parameter:</strong>
                     <ul className="mt-1 space-y-0.5">
                       {giaResult.parameterGrades.map((p, idx) => (
@@ -461,7 +461,7 @@ export function ProportionAnalyzer() {
                       ))}
                     </ul>
                   </div>
-                  <p className="text-xs text-slate-600 mt-2 italic">
+                  <p className="text-xs text-slate-600 dark:text-cream-muted mt-2 italic">
                     Educational reference only. Formal GIA grading also weighs symmetry, polish, and overall appeal.
                   </p>
                 </div>
@@ -469,31 +469,31 @@ export function ProportionAnalyzer() {
 
               {analysis && (
                 <div className={`p-4 rounded-lg border-2 ${
-                  analysis.grade.grade === 'Excellent' ? 'bg-green-50 border-green-300' :
-                  analysis.grade.grade === 'Very Good' ? 'bg-blue-50 border-blue-300' :
-                  analysis.grade.grade === 'Good' ? 'bg-slate-50 border-slate-300' :
-                  analysis.grade.grade === 'Fair' ? 'bg-amber-50 border-amber-300' :
-                  'bg-red-50 border-red-300'
+                  analysis.grade.grade === 'Excellent' ? 'bg-green-50 dark:bg-emerald-400/10 border-green-300 dark:border-emerald-400/30' :
+                  analysis.grade.grade === 'Very Good' ? 'bg-blue-50 dark:bg-blue-400/10 border-blue-300 dark:border-blue-400/30' :
+                  analysis.grade.grade === 'Good' ? 'bg-slate-50 dark:bg-coffee-raised2 border-slate-300 dark:border-coffee-border' :
+                  analysis.grade.grade === 'Fair' ? 'bg-amber-50 dark:bg-amber-400/10 border-amber-300 dark:border-amber-400/30' :
+                  'bg-red-50 dark:bg-red-400/10 border-red-300 dark:border-red-400/30'
                 }`}>
                   <div className="flex items-start justify-between mb-2">
-                    <h5 className="text-lg font-bold text-slate-900">
+                    <h5 className="text-lg font-bold text-slate-900 dark:text-cream-primary">
                       Cut Grade: {analysis.grade.grade}
                     </h5>
                     <span className={`text-xs px-2 py-1 rounded font-medium ${
-                      analysis.grade.grade === 'Excellent' ? 'bg-green-200 text-green-800' :
-                      analysis.grade.grade === 'Very Good' ? 'bg-blue-200 text-blue-800' :
-                      analysis.grade.grade === 'Good' ? 'bg-slate-200 text-slate-800' :
-                      analysis.grade.grade === 'Fair' ? 'bg-amber-200 text-amber-800' :
-                      'bg-red-200 text-red-800'
+                      analysis.grade.grade === 'Excellent' ? 'bg-green-200 dark:bg-emerald-400/10 text-green-800 dark:text-emerald-300' :
+                      analysis.grade.grade === 'Very Good' ? 'bg-blue-200 dark:bg-blue-400/10 text-blue-800 dark:text-blue-300' :
+                      analysis.grade.grade === 'Good' ? 'bg-slate-200 dark:bg-coffee-raised2 text-slate-800 dark:text-cream-secondary' :
+                      analysis.grade.grade === 'Fair' ? 'bg-amber-200 dark:bg-amber-400/10 text-amber-800 dark:text-amber-300' :
+                      'bg-red-200 dark:bg-red-400/10 text-red-800 dark:text-red-300'
                     }`}>
                       {analysis.grade.marketImpact}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-700 mb-2">{analysis.grade.description}</p>
+                  <p className="text-sm text-slate-700 dark:text-cream-secondary mb-2">{analysis.grade.description}</p>
                   {analysis.issues.length > 0 && (
                     <div className="mt-2">
-                      <strong className="text-sm text-slate-900">Issues Detected:</strong>
-                      <ul className="text-sm text-slate-700 mt-1 space-y-0.5">
+                      <strong className="text-sm text-slate-900 dark:text-cream-primary">Issues Detected:</strong>
+                      <ul className="text-sm text-slate-700 dark:text-cream-secondary mt-1 space-y-0.5">
                         {analysis.issues.map((issue, idx) => (
                           <li key={idx}>• {issue}</li>
                         ))}
@@ -507,9 +507,9 @@ export function ProportionAnalyzer() {
         </div>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-amber-900 mb-2">⚠️ Important Notes</h4>
-        <ul className="text-sm text-amber-800 space-y-1">
+      <div className="bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-amber-900 dark:text-amber-300 mb-2">⚠️ Important Notes</h4>
+        <ul className="text-sm text-amber-800 dark:text-amber-200 space-y-1">
           <li>• This is a simplified analysis - full cut grading requires symmetry, polish, and other factors</li>
           <li>• Colored gemstones have wider acceptable ranges than diamonds</li>
           <li>• Some cuts (antique cushions, Portuguese cuts) intentionally vary from modern standards</li>

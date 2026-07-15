@@ -116,7 +116,7 @@ export function Exam({
   if (!currentQuestion) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-600">No questions available</p>
+        <p className="text-slate-600 dark:text-cream-secondary">No questions available</p>
         <Button variant="secondary" onClick={onBack} className="mt-4">
           Go Back
         </Button>
@@ -140,7 +140,7 @@ export function Exam({
   return (
     <div className="max-w-4xl mx-auto space-y-4">
       {/* Header bar */}
-      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-slate-200 -mx-4 px-4 py-3">
+      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-slate-200 -mx-4 px-4 py-3 dark:bg-coffee-page/95 dark:border-coffee-border">
         <div className="flex items-center justify-between gap-4">
           {/* Timer */}
           <ExamTimer
@@ -154,8 +154,8 @@ export function Exam({
             className={cn(
               'hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
               isPacingOk
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-amber-100 text-amber-700'
+                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300'
+                : 'bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300'
             )}
             title={pacingDiff >= 0
               ? `${pacingDiff} question${pacingDiff !== 1 ? 's' : ''} ahead of suggested pace`
@@ -225,8 +225,8 @@ export function Exam({
               className={cn(
                 'p-1.5 rounded-lg transition-colors',
                 isFlagged
-                  ? 'bg-amber-100 text-amber-600'
-                  : 'hover:bg-slate-100 text-slate-600 hover:text-slate-700'
+                  ? 'bg-amber-100 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300'
+                  : 'hover:bg-slate-100 text-slate-600 hover:text-slate-700 dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:text-cream-primary'
               )}
               title={isFlagged ? 'Remove flag' : 'Flag for review'}
             >
@@ -292,10 +292,10 @@ export function Exam({
         }}
       >
         <p>
-          <span className="font-medium text-emerald-600">{answeredCount}</span> of {questions.length} questions answered
+          <span className="font-medium text-emerald-600 dark:text-emerald-400">{answeredCount}</span> of {questions.length} questions answered
         </p>
         {unansweredCount > 0 && (
-          <p className="text-amber-600">
+          <p className="text-amber-600 dark:text-amber-400">
             <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
@@ -303,7 +303,7 @@ export function Exam({
           </p>
         )}
         {flaggedCount > 0 && (
-          <p className="text-amber-600">
+          <p className="text-amber-600 dark:text-amber-400">
             <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clipRule="evenodd" />
             </svg>

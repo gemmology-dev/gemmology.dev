@@ -69,31 +69,31 @@ export function PolariscopeGuide() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-cream-secondary">
           Interactive guide to interpreting polariscope reactions. Select a reaction pattern to learn more.
         </p>
       </div>
 
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Testing Procedure</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Testing Procedure</h4>
         <div className="grid md:grid-cols-4 gap-3">
           {PROCEDURES.map((proc) => (
-            <div key={proc.step} className="bg-slate-50 rounded-lg p-3 border border-slate-200">
+            <div key={proc.step} className="bg-slate-50 dark:bg-coffee-raised2 rounded-lg p-3 border border-slate-200 dark:border-coffee-border">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 rounded-full bg-crystal-700 text-white flex items-center justify-center text-xs font-bold">
+                <div className="w-6 h-6 rounded-full bg-crystal-700 dark:bg-crystal-400 text-white dark:text-coffee-page flex items-center justify-center text-xs font-bold">
                   {proc.step}
                 </div>
-                <h5 className="font-semibold text-sm text-slate-900">{proc.title}</h5>
+                <h5 className="font-semibold text-sm text-slate-900 dark:text-cream-primary">{proc.title}</h5>
               </div>
-              <p className="text-xs text-slate-600">{proc.description}</p>
-              <p className="text-xs text-slate-600 mt-1">{proc.details}</p>
+              <p className="text-xs text-slate-600 dark:text-cream-secondary">{proc.description}</p>
+              <p className="text-xs text-slate-600 dark:text-cream-secondary mt-1">{proc.details}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div>
-        <h4 className="text-sm font-semibold text-slate-900 mb-3">Reaction Patterns</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-cream-primary mb-3">Reaction Patterns</h4>
         <div className="grid md:grid-cols-2 gap-3">
           {REACTIONS.map((reaction) => (
             <button
@@ -101,15 +101,15 @@ export function PolariscopeGuide() {
               onClick={() => setSelectedReaction(selectedReaction === reaction.id ? null : reaction.id)}
               className={`text-left p-4 rounded-lg border-2 transition-all ${
                 selectedReaction === reaction.id
-                  ? 'border-crystal-500 bg-crystal-50'
-                  : 'border-slate-200 bg-white hover:border-crystal-300'
+                  ? 'border-crystal-500 dark:border-crystal-400 bg-crystal-50 dark:bg-crystal-400/10'
+                  : 'border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised hover:border-crystal-300 dark:hover:border-crystal-400/40'
               }`}
             >
-              <h5 className="font-semibold text-slate-900 mb-1">{reaction.name}</h5>
-              <p className="text-sm text-slate-600 mb-2">{reaction.interpretation}</p>
+              <h5 className="font-semibold text-slate-900 dark:text-cream-primary mb-1">{reaction.name}</h5>
+              <p className="text-sm text-slate-600 dark:text-cream-secondary mb-2">{reaction.interpretation}</p>
               {selectedReaction === reaction.id && (
-                <div className="mt-3 pt-3 border-t border-slate-200">
-                  <p className="text-xs font-medium text-slate-700 mb-2">Common Examples:</p>
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-coffee-border">
+                  <p className="text-xs font-medium text-slate-700 dark:text-cream-secondary mb-2">Common Examples:</p>
                   <div className="flex flex-wrap gap-1">
                     {reaction.examples.map((ex) => (
                       <span
@@ -127,9 +127,9 @@ export function PolariscopeGuide() {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-blue-900 mb-2">Important Notes</h4>
-        <ul className="text-sm text-blue-800 space-y-1">
+      <div className="bg-blue-50 dark:bg-blue-400/10 border border-blue-200 dark:border-blue-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Important Notes</h4>
+        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
           <li>• <strong>Optic axis:</strong> Stones viewed down optic axis remain dark even if anisotropic</li>
           <li>• <strong>Thin sections:</strong> Very thin stones may show weak reactions</li>
           <li>• <strong>ADR:</strong> Strain patterns indicate heat treatment or synthetic origin in some cases</li>
@@ -137,9 +137,9 @@ export function PolariscopeGuide() {
         </ul>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <h4 className="text-sm font-semibold text-amber-900 mb-2">Troubleshooting</h4>
-        <ul className="text-sm text-amber-800 space-y-1">
+      <div className="bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/20 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-amber-900 dark:text-amber-300 mb-2">Troubleshooting</h4>
+        <ul className="text-sm text-amber-800 dark:text-amber-200 space-y-1">
           <li>• If no reaction at all, check polarizers are properly crossed</li>
           <li>• Weak reactions may need immersion fluid to reduce surface reflections</li>
           <li>• Multiple orientations needed for thorough testing</li>

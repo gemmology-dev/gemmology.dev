@@ -196,15 +196,15 @@ export function Playground({ initialCDL }: PlaygroundProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-white">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-raised">
         <div className="flex items-center gap-3">
           <PresetSelector presets={SAMPLE_PRESETS} onSelect={handlePresetSelect} />
 
-          <div className="h-6 w-px bg-slate-200" />
+          <div className="h-6 w-px bg-slate-200 dark:bg-coffee-border" />
 
           <div className="flex items-center gap-2 text-sm">
             {validation.isValid ? (
-              <span className="flex items-center gap-1 text-green-600">
+              <span className="flex items-center gap-1 text-green-600 dark:text-emerald-300">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
@@ -215,7 +215,7 @@ export function Playground({ initialCDL }: PlaygroundProps) {
                 Valid CDL
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-red-600">
+              <span className="flex items-center gap-1 text-red-600 dark:text-red-300">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
@@ -239,8 +239,8 @@ export function Playground({ initialCDL }: PlaygroundProps) {
       {/* Main content */}
       <div className="flex-1 flex min-h-0">
         {/* Editor panel */}
-        <div className="w-1/2 border-r border-slate-200 flex flex-col">
-          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 text-sm font-medium text-slate-700">
+        <div className="w-1/2 border-r border-slate-200 dark:border-coffee-border flex flex-col">
+          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 text-sm font-medium text-slate-700 dark:border-coffee-border dark:bg-coffee-raised2 dark:text-cream-secondary">
             CDL Editor
           </div>
           <CDLEditor
@@ -253,8 +253,8 @@ export function Playground({ initialCDL }: PlaygroundProps) {
 
         {/* Preview panel */}
         <div className="w-1/2 flex flex-col">
-          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-700">Preview</span>
+          <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 flex items-center justify-between dark:border-coffee-border dark:bg-coffee-raised2">
+            <span className="text-sm font-medium text-slate-700 dark:text-cream-secondary">Preview</span>
             <ViewerToggle
               mode={viewerMode}
               onModeChange={handleViewerModeChange}

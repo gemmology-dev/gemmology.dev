@@ -44,10 +44,10 @@ const STRENGTH_MAP: Record<string, string> = {
 };
 
 const STRENGTH_COLORS: Record<string, string> = {
-  'Very Strong': 'bg-red-100 text-red-700',
-  'Strong': 'bg-orange-100 text-orange-700',
-  'Moderate': 'bg-yellow-100 text-yellow-700',
-  'Weak': 'bg-slate-100 text-slate-600',
+  'Very Strong': 'bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-300',
+  'Strong': 'bg-orange-100 text-orange-700 dark:bg-orange-400/10 dark:text-orange-300',
+  'Moderate': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-400/10 dark:text-yellow-300',
+  'Weak': 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary',
 };
 
 export function DichroscopeResults() {
@@ -118,31 +118,31 @@ export function DichroscopeResults() {
       {/* Filter bar — single row across full width */}
       <div className="flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-[140px]">
-          <label className="block text-xs font-semibold text-slate-600 mb-1">First Colour</label>
+          <label className="block text-xs font-semibold text-slate-600 dark:text-cream-secondary mb-1">First Colour</label>
           <input
             type="text"
             value={color1}
             onChange={(e) => setColor1(e.target.value)}
-            className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+            className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:ring-2 focus:ring-purple-400 dark:focus:ring-purple-400/30 focus:border-purple-400 dark:focus:border-purple-400"
             placeholder="e.g., blue, red"
           />
         </div>
         <div className="flex-1 min-w-[140px]">
-          <label className="block text-xs font-semibold text-slate-600 mb-1">Second Colour</label>
+          <label className="block text-xs font-semibold text-slate-600 dark:text-cream-secondary mb-1">Second Colour</label>
           <input
             type="text"
             value={color2}
             onChange={(e) => setColor2(e.target.value)}
-            className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+            className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary placeholder-slate-500 dark:placeholder-cream-muted focus:ring-2 focus:ring-purple-400 dark:focus:ring-purple-400/30 focus:border-purple-400 dark:focus:border-purple-400"
             placeholder="e.g., greenish-blue"
           />
         </div>
         <div className="w-36 shrink-0">
-          <label className="block text-xs font-semibold text-slate-600 mb-1">Strength</label>
+          <label className="block text-xs font-semibold text-slate-600 dark:text-cream-secondary mb-1">Strength</label>
           <select
             value={strengthFilter}
             onChange={(e) => setStrengthFilter(e.target.value)}
-            className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+            className="w-full px-3 py-1.5 text-sm border border-slate-300 dark:border-coffee-border rounded-lg bg-white dark:bg-coffee-sunk text-slate-900 dark:text-cream-primary focus:ring-2 focus:ring-purple-400 dark:focus:ring-purple-400/30 focus:border-purple-400 dark:focus:border-purple-400"
           >
             <option value="all">All</option>
             <option value="very strong">Very Strong</option>
@@ -152,9 +152,9 @@ export function DichroscopeResults() {
           </select>
         </div>
         <div className="flex items-center gap-2 shrink-0 pb-1">
-          <span className="text-xs text-slate-600">{filtered.length} gem{filtered.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-600 dark:text-cream-secondary">{filtered.length} gem{filtered.length !== 1 ? 's' : ''}</span>
           {dbAvailable && paginatedData && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">
+            <span className="text-xs text-green-600 dark:text-emerald-300 bg-green-50 dark:bg-emerald-400/10 px-2 py-0.5 rounded">
               {paginatedData.pagination.total} in database
             </span>
           )}
@@ -163,36 +163,36 @@ export function DichroscopeResults() {
 
       {/* Results — responsive grid */}
       {loading ? (
-        <div className="text-center py-6 text-slate-600 text-sm">Loading pleochroism data...</div>
+        <div className="text-center py-6 text-slate-600 dark:text-cream-secondary text-sm">Loading pleochroism data...</div>
       ) : filtered.length > 0 ? (
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {filtered.map((gem, idx) => (
-              <div key={idx} className="p-3 rounded-lg border border-slate-200 bg-white hover:border-purple-300 transition-colors">
+              <div key={idx} className="p-3 rounded-lg border border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised hover:border-purple-300 dark:hover:border-purple-400/40 transition-colors">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <h5 className="font-semibold text-slate-900 text-sm">{gem.gem}</h5>
-                  <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-medium ${STRENGTH_COLORS[gem.strength] || 'bg-slate-100 text-slate-600'}`}>
+                  <h5 className="font-semibold text-slate-900 dark:text-cream-primary text-sm">{gem.gem}</h5>
+                  <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-medium ${STRENGTH_COLORS[gem.strength] || 'bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary'}`}>
                     {gem.strength}
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs mb-1.5">
                   <div>
-                    <span className="text-slate-600">1:</span>{' '}
-                    <span className="font-medium text-slate-800">{gem.color1}</span>
+                    <span className="text-slate-600 dark:text-cream-muted">1:</span>{' '}
+                    <span className="font-medium text-slate-800 dark:text-cream-secondary">{gem.color1}</span>
                   </div>
                   <div>
-                    <span className="text-slate-600">2:</span>{' '}
-                    <span className="font-medium text-slate-800">{gem.color2}</span>
+                    <span className="text-slate-600 dark:text-cream-muted">2:</span>{' '}
+                    <span className="font-medium text-slate-800 dark:text-cream-secondary">{gem.color2}</span>
                   </div>
                   {gem.color3 && (
                     <div>
-                      <span className="text-slate-600">3:</span>{' '}
-                      <span className="font-medium text-slate-800">{gem.color3}</span>
-                      <span className="text-purple-500 ml-1">(trichroic)</span>
+                      <span className="text-slate-600 dark:text-cream-muted">3:</span>{' '}
+                      <span className="font-medium text-slate-800 dark:text-cream-secondary">{gem.color3}</span>
+                      <span className="text-purple-500 dark:text-purple-400 ml-1">(trichroic)</span>
                     </div>
                   )}
                 </div>
-                {gem.notes && <p className="text-xs text-slate-600">{gem.notes}</p>}
+                {gem.notes && <p className="text-xs text-slate-600 dark:text-cream-muted">{gem.notes}</p>}
               </div>
             ))}
           </div>
@@ -207,21 +207,21 @@ export function DichroscopeResults() {
           )}
         </>
       ) : (
-        <div className="text-center py-6 text-slate-600 text-sm">No matching gems found. Try different colour terms.</div>
+        <div className="text-center py-6 text-slate-600 dark:text-cream-secondary text-sm">No matching gems found. Try different colour terms.</div>
       )}
 
       {/* Usage tips — inline */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-600 dark:text-cream-secondary">
         <span>• Isotropic gems (cubic) show no pleochroism</span>
         <span>• Uniaxial gems show 2 colours</span>
         <span>• Biaxial gems can show 2–3 colours</span>
         <span>• Best viewed in strong light against white</span>
       </div>
 
-      <div className="text-sm text-slate-600 pt-2">
+      <div className="text-sm text-slate-600 dark:text-cream-secondary pt-2">
         <a
           href="/learn/equipment/dichroscope"
-          className="text-purple-600 hover:text-purple-700 underline"
+          className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 underline"
         >
           Learn dichroscope technique and see full pleochroism reference <span aria-hidden="true">→</span>
         </a>

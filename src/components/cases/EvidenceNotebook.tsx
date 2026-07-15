@@ -20,23 +20,23 @@ interface EvidenceNotebookProps {
 
 function EvidenceList({ evidence }: { evidence: EvidenceItem[] }) {
   if (evidence.length === 0) {
-    return <p className="text-sm text-slate-500">No evidence gathered yet.</p>;
+    return <p className="text-sm text-slate-500 dark:text-cream-muted">No evidence gathered yet.</p>;
   }
 
   return (
     <ul className="space-y-3">
       {evidence.map((item) => (
-        <li key={item.id} className="rounded-lg border border-slate-200 bg-white p-3">
+        <li key={item.id} className="rounded-lg border border-slate-200 bg-white p-3 dark:border-coffee-border dark:bg-coffee-raised">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm font-medium text-slate-800">{item.label}</span>
+            <span className="text-sm font-medium text-slate-800 dark:text-cream-primary">{item.label}</span>
             <Badge variant="outline" size="sm">{item.kind}</Badge>
           </div>
-          <p className="mt-1 text-sm text-slate-700">{item.value}</p>
-          {item.detail && <p className="mt-1 text-xs text-slate-500">{item.detail}</p>}
+          <p className="mt-1 text-sm text-slate-700 dark:text-cream-secondary">{item.value}</p>
+          {item.detail && <p className="mt-1 text-xs text-slate-500 dark:text-cream-muted">{item.detail}</p>}
           {item.toolHref && (
             <a
               href={item.toolHref}
-              className="mt-1 inline-block text-xs font-medium text-crystal-700 hover:text-crystal-900 hover:underline"
+              className="mt-1 inline-block text-xs font-medium text-crystal-700 hover:text-crystal-900 hover:underline dark:text-crystal-400 dark:hover:text-crystal-300"
             >
               Open tool &rarr;
             </a>
@@ -51,8 +51,8 @@ export function EvidenceNotebook({ evidence }: EvidenceNotebookProps) {
   return (
     <>
       {/* Below lg: collapsible disclosure above the step panel. */}
-      <details className="lg:hidden mb-4 rounded-lg border border-slate-200 bg-slate-50 open:bg-white">
-        <summary className="cursor-pointer select-none px-4 py-3 text-sm font-semibold text-slate-800">
+      <details className="lg:hidden mb-4 rounded-lg border border-slate-200 bg-slate-50 open:bg-white dark:border-coffee-border dark:bg-coffee-raised2 dark:open:bg-coffee-raised">
+        <summary className="cursor-pointer select-none px-4 py-3 text-sm font-semibold text-slate-800 dark:text-cream-primary">
           Evidence ({evidence.length})
         </summary>
         <div className="px-4 pb-4">
@@ -62,8 +62,8 @@ export function EvidenceNotebook({ evidence }: EvidenceNotebookProps) {
 
       {/* lg and up: always-open sticky right rail. */}
       <aside className="hidden lg:block lg:sticky lg:top-24 lg:w-72 lg:flex-shrink-0">
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-coffee-border dark:bg-coffee-raised2">
+          <h3 className="mb-3 text-sm font-semibold text-slate-800 dark:text-cream-primary">
             Evidence ({evidence.length})
           </h3>
           <EvidenceList evidence={evidence} />

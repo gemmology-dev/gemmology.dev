@@ -20,7 +20,7 @@ import {
 } from '../../lib/quiz';
 import { STORAGE_KEYS } from '../../hooks/useLocalStorage';
 import { Card, CardContent } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { cn } from '../ui/cn';
 
 interface QuizPageProps {
   /** Learn content entries for generating questions */
@@ -90,18 +90,18 @@ export function QuizPage({ learnEntries, curatedQuestions = [] }: QuizPageProps)
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 dark:from-coffee-page dark:to-coffee-page">
       <div className="max-w-4xl mx-auto px-4">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-slate-900">Practice and Exam Mode</h2>
-          <p className="text-slate-600 mt-2">
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-cream-primary">Practice and Exam Mode</h2>
+          <p className="text-slate-600 mt-2 dark:text-cream-secondary">
             756 questions across all FGA subject areas. Practise at your own pace, or sit a timed mock exam.
           </p>
         </div>
 
         {isLoading ? (
           <div className="text-center py-12">
-            <div className="animate-pulse text-slate-400">Loading questions...</div>
+            <div className="animate-pulse text-slate-400 dark:text-cream-muted">Loading questions...</div>
           </div>
         ) : config && selectedQuestions.length > 0 ? (
           config.mode === 'exam' ? (
@@ -122,19 +122,25 @@ export function QuizPage({ learnEntries, curatedQuestions = [] }: QuizPageProps)
           <>
             <Card className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <CardContent className="p-0">
-                <h3 className="text-base font-semibold text-slate-900">Challenge Tracks</h3>
-                <p className="text-sm text-slate-600 mt-1">
+                <h3 className="text-base font-semibold text-slate-900 dark:text-cream-primary">Challenge Tracks</h3>
+                <p className="text-sm text-slate-600 mt-1 dark:text-cream-secondary">
                   Themed challenge tracks — structured study with staged mastery.
                 </p>
               </CardContent>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  window.location.href = '/study/challenges';
-                }}
+              {/* Real anchor (not onClick/window.location) so the link exists in
+                  static HTML for SEO/no-JS. Visually matches Button variant="secondary" size="md". */}
+              <a
+                href="/study/challenges"
+                className={cn(
+                  'inline-flex items-center justify-center rounded-lg font-medium transition-colors shrink-0',
+                  'focus:outline-none focus:ring-2 focus:ring-offset-2',
+                  'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500',
+                  'dark:bg-coffee-raised dark:text-cream-primary dark:hover:bg-coffee-raised2 dark:focus:ring-crystal-400',
+                  'px-4 py-2 text-sm gap-2'
+                )}
               >
                 Explore tracks
-              </Button>
+              </a>
             </Card>
             <QuizSetup
               availableQuestions={availableQuestions}

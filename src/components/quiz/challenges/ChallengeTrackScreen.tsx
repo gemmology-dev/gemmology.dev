@@ -131,8 +131,8 @@ export function ChallengeTrackScreen({ track, stages }: ChallengeTrackScreenProp
         <Link href="/study/challenges" variant="muted">
           &larr; All challenge tracks
         </Link>
-        <h1 className="text-3xl font-bold text-slate-900 mt-3">{track.title}</h1>
-        <p className="text-slate-600 mt-2 max-w-prose">{track.description}</p>
+        <h1 className="text-3xl font-bold text-slate-900 mt-3 dark:text-cream-primary">{track.title}</h1>
+        <p className="text-slate-600 mt-2 max-w-prose dark:text-cream-secondary">{track.description}</p>
       </div>
 
       <div className="space-y-4">
@@ -155,7 +155,7 @@ export function ChallengeTrackScreen({ track, stages }: ChallengeTrackScreenProp
                 {stage.description && <CardDescription>{stage.description}</CardDescription>}
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-500 dark:text-cream-muted">
                   {stage.questions.length} question{stage.questions.length === 1 ? '' : 's'} &middot;{' '}
                   {Math.round(stage.passThreshold * 100)}% to pass
                   {result && (
@@ -167,7 +167,7 @@ export function ChallengeTrackScreen({ track, stages }: ChallengeTrackScreenProp
                   )}
                 </p>
                 {locked && (
-                  <p className="text-sm text-amber-700 mt-2">
+                  <p className="text-sm text-amber-700 mt-2 dark:text-amber-300">
                     Complete stage {index} to unlock this stage.
                   </p>
                 )}

@@ -54,10 +54,10 @@ function FillBlankInput({
       disabled={disabled}
       placeholder="Type your answer..."
       className={cn(
-        'w-full px-4 py-3 rounded-lg border-2 text-slate-900',
-        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
-        'border-slate-200 bg-white',
-        disabled && 'opacity-70 cursor-not-allowed bg-slate-50'
+        'w-full px-4 py-3 rounded-lg border-2 text-slate-900 dark:text-cream-primary',
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500 dark:focus:ring-crystal-400',
+        'border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-sunk',
+        disabled && 'opacity-70 cursor-not-allowed bg-slate-50 dark:bg-coffee-raised2'
       )}
       aria-label="Your answer"
     />
@@ -101,7 +101,7 @@ function MatchingRows({
     <div className="space-y-3">
       {pairs.map((pair, index) => (
         <div key={pair.left} className="flex items-center gap-3">
-          <span className="flex-1 text-sm text-slate-700">{pair.left}</span>
+          <span className="flex-1 text-sm text-slate-700 dark:text-cream-secondary">{pair.left}</span>
           <select
             id={`${uid}-match-${index}`}
             name={`${uid}-match-${index}`}
@@ -110,10 +110,10 @@ function MatchingRows({
             disabled={disabled}
             aria-label={`Match for ${pair.left}`}
             className={cn(
-              'flex-1 px-3 py-2 rounded-lg border-2 text-sm text-slate-900',
-              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500',
-              'border-slate-200 bg-white',
-              disabled && 'opacity-70 cursor-not-allowed bg-slate-50'
+              'flex-1 px-3 py-2 rounded-lg border-2 text-sm text-slate-900 dark:text-cream-primary',
+              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-crystal-500 dark:focus:ring-crystal-400',
+              'border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-sunk',
+              disabled && 'opacity-70 cursor-not-allowed bg-slate-50 dark:bg-coffee-raised2'
             )}
           >
             <option value="">Choose a match...</option>
@@ -170,11 +170,11 @@ export function QuestionCard({
   const optionRationales: QuestionOptionRationale[] | undefined = question.optionRationales;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
       {/* Header */}
-      <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
+      <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 dark:bg-coffee-raised2 dark:border-coffee-border">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-slate-600">
+          <span className="text-sm font-medium text-slate-600 dark:text-cream-secondary">
             Question {questionNumber} of {totalQuestions}
           </span>
           <div className="flex items-center gap-2">
@@ -182,14 +182,14 @@ export function QuestionCard({
             <span
               className={cn(
                 'px-2 py-1 text-xs font-medium rounded-full',
-                question.difficulty === 'beginner' && 'bg-emerald-100 text-emerald-700',
-                question.difficulty === 'intermediate' && 'bg-amber-100 text-amber-700',
-                question.difficulty === 'advanced' && 'bg-red-100 text-red-700'
+                question.difficulty === 'beginner' && 'bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300',
+                question.difficulty === 'intermediate' && 'bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300',
+                question.difficulty === 'advanced' && 'bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-300'
               )}
             >
               {question.difficulty}
             </span>
-            <span className="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600">
+            <span className="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 dark:bg-coffee-raised2 dark:text-cream-secondary">
               {question.category}
             </span>
             {headerExtra}
@@ -199,7 +199,7 @@ export function QuestionCard({
 
       {/* Question text */}
       <div className="px-6 py-6">
-        <h2 className="text-lg font-medium text-slate-900 leading-relaxed">
+        <h2 className="text-lg font-medium text-slate-900 leading-relaxed dark:text-cream-primary">
           {question.questionText}
         </h2>
       </div>
@@ -262,17 +262,17 @@ export function QuestionCard({
           className={cn(
             'px-6 py-4 border-t',
             isCorrectAnswer
-              ? 'bg-emerald-50 border-emerald-200'
-              : 'bg-red-50 border-red-200'
+              ? 'bg-emerald-50 border-emerald-200 dark:bg-emerald-400/10 dark:border-emerald-400/20'
+              : 'bg-red-50 border-red-200 dark:bg-red-400/10 dark:border-red-400/20'
           )}
         >
           <div className="flex items-start gap-3">
             {isCorrectAnswer ? (
-              <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             ) : (
-              <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
               </svg>
             )}
@@ -280,18 +280,18 @@ export function QuestionCard({
               <p
                 className={cn(
                   'font-medium',
-                  isCorrectAnswer ? 'text-emerald-700' : 'text-red-700'
+                  isCorrectAnswer ? 'text-emerald-700 dark:text-emerald-300' : 'text-red-700 dark:text-red-300'
                 )}
               >
                 {isCorrectAnswer ? 'Correct!' : 'Incorrect'}
               </p>
               {!isCorrectAnswer && (
-                <p className="text-sm text-red-600 mt-1">
+                <p className="text-sm text-red-600 mt-1 dark:text-red-300">
                   The correct answer is: <strong>{correctAnswerDisplay}</strong>
                 </p>
               )}
               {question.explanation && (
-                <p className="text-sm text-slate-600 mt-2">
+                <p className="text-sm text-slate-600 mt-2 dark:text-cream-secondary">
                   {question.explanation}
                 </p>
               )}
@@ -302,12 +302,12 @@ export function QuestionCard({
 
       {/* Source link */}
       {question.sourceRef && (
-        <div className="px-6 py-3 bg-slate-50 border-t border-slate-100">
+        <div className="px-6 py-3 bg-slate-50 border-t border-slate-100 dark:bg-coffee-raised2 dark:border-coffee-border">
           <a
             href={question.sourceRef}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-crystal-700 hover:text-crystal-700 flex items-center gap-1"
+            className="text-sm text-crystal-700 hover:text-crystal-700 dark:text-crystal-400 dark:hover:text-crystal-300 flex items-center gap-1"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />

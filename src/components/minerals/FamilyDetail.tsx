@@ -3,6 +3,7 @@ import { Badge } from '../ui';
 import { cn } from '../ui/cn';
 import { ExpressionSelector } from './ExpressionSelector';
 import type { MineralFamily, MineralExpression } from '../../lib/db';
+import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 
 // Crystal system color mapping
 const SYSTEM_COLORS: Record<string, 'cubic' | 'hexagonal' | 'trigonal' | 'tetragonal' | 'orthorhombic' | 'monoclinic' | 'triclinic' | 'default'> = {
@@ -88,17 +89,17 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
 
           {/* Left: Crystal Viewer */}
           <div className="space-y-4">
-            {/* SVG Viewer */}
+            {/* SVG Viewer — permanent light "specimen plate", see docs/dark-mode.md */}
             <div className={cn(
               'aspect-square bg-white rounded-2xl shadow-lg overflow-hidden',
-              'border border-slate-200 flex items-center justify-center p-8'
+              'border border-slate-200 dark:border-coffee-border flex items-center justify-center p-8'
             )}>
               {selected?.model_svg ? (
                 <div
@@ -115,8 +116,8 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
 
             {/* Expression Selector */}
             {expressions.length > 1 && (
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-700 mb-3">
+              <div className="bg-white dark:bg-coffee-raised rounded-xl p-4 shadow-sm border border-slate-200 dark:border-coffee-border">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-cream-primary mb-3">
                   Crystal Forms ({expressions.length})
                 </h3>
                 <ExpressionSelector
@@ -158,16 +159,16 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
                   <Badge variant="outline">{family.category}</Badge>
                 )}
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">
+              <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-cream-primary mb-2">
                 {family.name}
               </h1>
               {selected && selected.name !== family.name && selected.slug !== 'default' && (
-                <p className="text-xl text-slate-600">
+                <p className="text-xl text-slate-600 dark:text-cream-secondary">
                   {selected.name} form
                 </p>
               )}
               {family.chemistry && (
-                <p className="text-lg text-slate-600 font-mono mt-2">
+                <p className="text-lg text-slate-600 dark:text-cream-secondary font-mono mt-2">
                   {family.chemistry}
                 </p>
               )}
@@ -197,13 +198,13 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
 
             {/* Expression-specific info */}
             {selected?.form_description && (
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-700 mb-2">
+              <div className="bg-slate-50 dark:bg-coffee-raised2 rounded-xl p-4 border border-slate-200 dark:border-coffee-border">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-cream-primary mb-2">
                   {selected.name} Form
                 </h3>
-                <p className="text-sm text-slate-600">{selected.form_description}</p>
+                <p className="text-sm text-slate-600 dark:text-cream-secondary">{selected.form_description}</p>
                 {selected.habit && (
-                  <p className="text-xs text-slate-600 mt-2">
+                  <p className="text-xs text-slate-600 dark:text-cream-secondary mt-2">
                     Habit: <span className="font-medium">{selected.habit}</span>
                   </p>
                 )}
@@ -229,31 +230,36 @@ export function FamilyDetail({ family, expressions, initialExpression }: FamilyD
 
             {/* Notes */}
             {(family.notes || family.description) && (
-              <div className="prose prose-slate prose-sm max-w-none">
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Notes</h3>
-                <p className="text-slate-600">{family.notes || family.description}</p>
+              <div className="prose prose-slate prose-sm max-w-none
+                              prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
+                              prose-p:text-slate-600 dark:prose-p:text-cream-secondary">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-cream-primary mb-2">Notes</h3>
+                <p className="text-slate-600 dark:text-cream-secondary">{family.notes || family.description}</p>
               </div>
             )}
 
             {/* Links */}
             <div className="flex gap-3">
-              <a
-                href={`/playground?preset=${selected?.id || family.id}`}
-                className={cn(
-                  'inline-flex items-center gap-2 px-4 py-2 rounded-lg',
-                  'bg-blue-600 text-white hover:bg-blue-700 transition-colors',
-                  'text-sm font-medium'
-                )}
-              >
-                <PlayIcon className="w-4 h-4" />
-                Open in Playground
-              </a>
+              {PLAYGROUND_ENABLED && (
+                <a
+                  href={`/playground?preset=${selected?.id || family.id}`}
+                  className={cn(
+                    'inline-flex items-center gap-2 px-4 py-2 rounded-lg',
+                    'bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors',
+                    'dark:border dark:border-blue-400/30',
+                    'text-sm font-medium'
+                  )}
+                >
+                  <PlayIcon className="w-4 h-4" />
+                  Open in Playground
+                </a>
+              )}
               {expressions.length > 1 && (
                 <a
                   href={`/minerals/${family.id}`}
                   className={cn(
                     'inline-flex items-center gap-2 px-4 py-2 rounded-lg',
-                    'border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors',
+                    'border border-slate-300 dark:border-coffee-border-strong text-slate-700 dark:text-cream-secondary hover:bg-slate-50 dark:hover:bg-coffee-raised2 transition-colors',
                     'text-sm font-medium'
                   )}
                 >
@@ -285,12 +291,12 @@ function QuickFact({
   if (!value) return null;
 
   return (
-    <div className="bg-white rounded-lg p-3 border border-slate-200">
+    <div className="bg-white dark:bg-coffee-raised rounded-lg p-3 border border-slate-200 dark:border-coffee-border">
       <div className="flex items-center gap-2 mb-1">
         <span className={cn('text-sm font-bold', iconColor)}>{icon}</span>
-        <span className="text-xs text-slate-600">{label}</span>
+        <span className="text-xs text-slate-600 dark:text-cream-secondary">{label}</span>
       </div>
-      <div className="text-lg font-semibold text-slate-900">{value}</div>
+      <div className="text-lg font-semibold text-slate-900 dark:text-cream-primary">{value}</div>
     </div>
   );
 }
@@ -303,11 +309,11 @@ function PropertyTable({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-      <h3 className="text-sm font-semibold text-slate-700 px-4 py-3 bg-slate-50 border-b border-slate-200">
+    <div className="bg-white dark:bg-coffee-raised rounded-xl border border-slate-200 dark:border-coffee-border overflow-hidden">
+      <h3 className="text-sm font-semibold text-slate-700 dark:text-cream-primary px-4 py-3 bg-slate-50 dark:bg-coffee-raised2 border-b border-slate-200 dark:border-coffee-border">
         {title}
       </h3>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-slate-100 dark:divide-coffee-border">
         {children}
       </div>
     </div>
@@ -325,8 +331,8 @@ function PropertyRow({
 
   return (
     <div className="flex justify-between items-center px-4 py-2.5">
-      <span className="text-sm text-slate-600">{label}</span>
-      <span className="text-sm font-medium text-slate-900">{value}</span>
+      <span className="text-sm text-slate-600 dark:text-cream-secondary">{label}</span>
+      <span className="text-sm font-medium text-slate-900 dark:text-cream-primary">{value}</span>
     </div>
   );
 }

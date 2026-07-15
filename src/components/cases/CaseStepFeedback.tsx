@@ -5,9 +5,10 @@
  * RationalePanel only has a binary `correct` prop, which would render an
  * `acceptable`-weight choice as "Not quite" even though partial credit was
  * awarded. To keep the tri-state tier legible, this wrapper adds its own
- * light-only tier badge line ("+N points · optimal/acceptable/poor") above
- * the panel rather than modifying RationalePanel (which contains `dark:`
- * classes that must not be touched or imitated here).
+ * tier badge line ("+N points · optimal/acceptable/poor") above the panel
+ * rather than modifying RationalePanel itself. The badge line uses the
+ * `Badge` UI primitive (already dark-ready) so no local `dark:` classes are
+ * needed here; RationalePanel handles its own dark styling internally.
  */
 
 import { RationalePanel } from '../quiz/study/RationalePanel';

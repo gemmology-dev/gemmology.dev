@@ -44,17 +44,17 @@ export function ConfirmDialog({
       role="presentation"
     >
       <div
-        className="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
+        className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 dark:bg-coffee-raised2 dark:border dark:border-coffee-border"
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 id="confirm-dialog-title" className="text-lg font-semibold text-slate-900">
+        <h3 id="confirm-dialog-title" className="text-lg font-semibold text-slate-900 dark:text-cream-primary">
           {title}
         </h3>
         {children && (
-          <div className="mt-4 space-y-2 text-sm text-slate-600">{children}</div>
+          <div className="mt-4 space-y-2 text-sm text-slate-600 dark:text-cream-secondary">{children}</div>
         )}
         <div className="mt-6 flex gap-3">
           <Button variant="secondary" onClick={onCancel} className="flex-1">

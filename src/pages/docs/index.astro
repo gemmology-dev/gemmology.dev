@@ -43,11 +43,11 @@ const sections = [
   title="Documentation"
   description="Complete documentation for gemmology.dev packages, CDL language, and CLI tools."
 >
-  <div class="bg-gradient-to-b from-slate-50 to-white">
+  <div class="bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
     <Container size="xl" padding="md">
       <div class="max-w-3xl">
-        <h1 class="text-4xl font-bold text-slate-900">Documentation</h1>
-        <p class="mt-4 text-lg text-slate-600">
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">Documentation</h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-cream-secondary">
           Everything you need to create crystal visualisations with gemmology.dev packages.
         </p>
       </div>
@@ -55,14 +55,14 @@ const sections = [
       <div class="mt-16 space-y-16">
         {sections.map((section) => (
           <section>
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">{section.title}</h2>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-6">{section.title}</h2>
             <div class="grid sm:grid-cols-2 gap-4">
               {section.items.map((item) => (
                 <Card as="a" href={item.href} hover padding="md" className="group block">
-                  <h3 class="font-semibold text-slate-900 group-hover:text-crystal-700 transition-colors">
+                  <h3 class="font-semibold text-slate-900 dark:text-cream-primary group-hover:text-crystal-700 dark:group-hover:text-crystal-400 transition-colors">
                     {item.label}
                   </h3>
-                  <p class="mt-1 text-sm text-slate-600">{item.description}</p>
+                  <p class="mt-1 text-sm text-slate-600 dark:text-cream-secondary">{item.description}</p>
                 </Card>
               ))}
             </div>
@@ -70,16 +70,18 @@ const sections = [
         ))}
       </div>
 
-      <!-- Quick Reference -->
-      <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800">
+      <!-- Quick Reference: an "always-dark" instrument panel by design in
+           both themes - in site dark mode its slate-900/800 tones are
+           realigned to the coffee ramp so it doesn't clash with the page. -->
+      <Card padding="lg" className="mt-16 bg-slate-900 text-white border-slate-800 dark:bg-coffee-raised2 dark:border-coffee-border-strong">
         <h2 class="text-xl font-bold mb-4">Quick Reference</h2>
         <div class="grid md:grid-cols-2 gap-8">
           <div>
-            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Installation</h3>
+            <h3 class="text-sm font-semibold text-slate-500 dark:text-cream-muted uppercase tracking-wider mb-3">Installation</h3>
             <CodeBlock lang="bash" code={`pip install cdl-parser crystal-geometry mineral-database crystal-renderer`} />
           </div>
           <div>
-            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Quick Start</h3>
+            <h3 class="text-sm font-semibold text-slate-500 dark:text-cream-muted uppercase tracking-wider mb-3">Quick Start</h3>
             <CodeBlock lang="python" code={`from cdl_parser import parse_cdl
 from crystal_geometry import cdl_to_geometry
 from crystal_renderer import generate_svg

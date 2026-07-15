@@ -69,16 +69,16 @@ function CategoryProgressBar({ category, percentage, bestScore }: CategoryProgre
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-600">{label}</span>
-        <span className="text-slate-600">
+        <span className="text-slate-600 dark:text-cream-secondary">{label}</span>
+        <span className="text-slate-600 dark:text-cream-secondary">
           Best: {bestScore > 0 ? `${bestScore}%` : '--'}
         </span>
       </div>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-coffee-raised2">
         <div
           className={cn(
             'h-full rounded-full transition-all duration-500',
-            percentage >= 70 ? 'bg-emerald-500' : percentage > 0 ? 'bg-amber-500' : 'bg-slate-200'
+            percentage >= 70 ? 'bg-emerald-500 dark:bg-emerald-400' : percentage > 0 ? 'bg-amber-500 dark:bg-amber-400' : 'bg-slate-200 dark:bg-coffee-border'
           )}
           style={{ width: `${percentage}%` }}
         />
@@ -109,10 +109,12 @@ function CategoryCard({
     <div
       className={cn(
         'p-4 rounded-lg border',
-        hasProgress ? 'border-slate-200 bg-white' : 'border-slate-100 bg-slate-50'
+        hasProgress
+          ? 'border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-raised'
+          : 'border-slate-100 bg-slate-50 dark:border-coffee-border dark:bg-coffee-raised2'
       )}
     >
-      <h4 className="font-medium text-slate-900 text-sm">{label}</h4>
+      <h4 className="font-medium text-slate-900 text-sm dark:text-cream-primary">{label}</h4>
 
       {/* Progress ring */}
       <div className="mt-3 flex items-center gap-3">
@@ -126,7 +128,7 @@ function CategoryCard({
               fill="none"
               stroke="currentColor"
               strokeWidth="4"
-              className="text-slate-100"
+              className="text-slate-100 dark:text-coffee-border"
             />
             {/* Progress circle */}
             <circle
@@ -138,21 +140,21 @@ function CategoryCard({
               strokeWidth="4"
               strokeDasharray={`${percentage * 1.256} 125.6`}
               className={cn(
-                percentage >= 70 ? 'text-emerald-500' : percentage > 0 ? 'text-amber-500' : 'text-slate-200'
+                percentage >= 70 ? 'text-emerald-500 dark:text-emerald-400' : percentage > 0 ? 'text-amber-500 dark:text-amber-400' : 'text-slate-200 dark:text-coffee-border-strong'
               )}
             />
           </svg>
-          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-700">
+          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-700 dark:text-cream-secondary">
             {percentage}%
           </span>
         </div>
 
         <div className="flex-1 text-sm">
-          <p className="text-slate-600">
+          <p className="text-slate-600 dark:text-cream-secondary">
             {completedTopics}/{totalTopics} topics
           </p>
           {bestScore > 0 && (
-            <p className="text-slate-600">
+            <p className="text-slate-600 dark:text-cream-secondary">
               Best: <span className="font-medium">{bestScore}%</span>
             </p>
           )}

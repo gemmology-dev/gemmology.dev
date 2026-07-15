@@ -54,10 +54,10 @@ export function ExamTimer({
       className={cn(
         // Responsive padding: smaller on mobile
         'flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg',
-        !isExpired && !isWarning && !isCritical && 'bg-slate-100 text-slate-700',
-        isWarning && 'bg-amber-100 text-amber-700',
-        isCritical && 'bg-red-100 text-red-700 animate-pulse',
-        isExpired && 'bg-red-500 text-white',
+        !isExpired && !isWarning && !isCritical && 'bg-slate-100 text-slate-700 dark:bg-coffee-raised2 dark:text-cream-secondary',
+        isWarning && 'bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300',
+        isCritical && 'bg-red-100 text-red-700 animate-pulse dark:bg-red-400/10 dark:text-red-300',
+        isExpired && 'bg-red-500 text-white dark:bg-red-600',
         className
       )}
     >
@@ -113,9 +113,9 @@ export function ExamTimer({
           className={cn(
             'p-1 rounded hover:bg-black/10 transition-colors',
             'focus:outline-none focus:ring-2 focus:ring-offset-2',
-            isWarning && 'focus:ring-amber-500',
-            isCritical && 'focus:ring-red-500',
-            !isWarning && !isCritical && 'focus:ring-slate-500'
+            isWarning && 'focus:ring-amber-500 dark:focus:ring-amber-400',
+            isCritical && 'focus:ring-red-500 dark:focus:ring-red-400',
+            !isWarning && !isCritical && 'focus:ring-slate-500 dark:focus:ring-crystal-400'
           )}
           title={isRunning ? 'Pause' : 'Resume'}
         >
@@ -163,7 +163,7 @@ export function ExamTimerCompact({ timeRemaining, className }: ExamTimerCompactP
       aria-label={spokenTime}
       className={cn(
         'font-mono text-sm font-medium',
-        isCritical ? 'text-red-600' : 'text-slate-600',
+        isCritical ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-cream-secondary',
         className
       )}
     >

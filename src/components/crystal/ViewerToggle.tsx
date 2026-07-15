@@ -18,7 +18,7 @@ export function ViewerToggle({
   className = '',
 }: ViewerToggleProps) {
   return (
-    <div className={clsx('flex gap-1 bg-slate-100 rounded-lg p-1', className)}>
+    <div className={clsx('flex gap-1 bg-slate-100 dark:bg-coffee-raised2 rounded-lg p-1', className)}>
       <button
         onClick={() => onModeChange('2d')}
         disabled={disabled}
@@ -26,8 +26,8 @@ export function ViewerToggle({
           'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150',
           'flex items-center gap-1.5',
           mode === '2d'
-            ? 'bg-white shadow-sm text-sky-600'
-            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
+            ? 'bg-white shadow-sm text-sky-600 dark:bg-coffee-raised dark:text-sky-400'
+            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 dark:text-cream-muted dark:hover:text-cream-primary dark:hover:bg-coffee-raised',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
@@ -46,8 +46,8 @@ export function ViewerToggle({
           'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150',
           'flex items-center gap-1.5',
           mode === '3d'
-            ? 'bg-white shadow-sm text-sky-600'
-            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
+            ? 'bg-white shadow-sm text-sky-600 dark:bg-coffee-raised dark:text-sky-400'
+            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 dark:text-cream-muted dark:hover:text-cream-primary dark:hover:bg-coffee-raised',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
