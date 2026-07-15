@@ -1,4 +1,4 @@
-export const KNOWLEDGE_VERSION = 'v1.4.2';
+export const KNOWLEDGE_VERSION = 'v1.4.3';
 
 export const KNOWLEDGE_REPO_URL = 'https://github.com/gemmology-dev/gemmology-knowledge';
 
