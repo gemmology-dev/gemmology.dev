@@ -119,6 +119,12 @@ export function clearQuizStorage(): void {
     // Migration version stamp (gemmology-study-version) so a fresh start
     // re-runs migrations cleanly.
     'gemmology-study-version',
+    // Study Challenge Tracks progress (must mirror CHALLENGE_STORAGE_KEY in
+    // src/lib/quiz/challenge-store.ts).
+    'gemmology-challenge-progress',
+    // Lab Simulation case progress (must mirror CASE_STORAGE_KEY in
+    // src/lib/cases/store.ts).
+    'gemmology-cases-v1',
   ];
 
   keysToRemove.forEach(key => {

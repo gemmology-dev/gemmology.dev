@@ -1,0 +1,68 @@
+id: chem-bench-chemistry-match
+
+stem: |
+  Match each bench-relevant material or phenomenon to the chemical process or composition that
+  explains it. These are the kinds of facts examiners expect you to connect treatment history,
+  simulant identity, and diamond type.
+
+type: matching
+
+pairs:
+  - left: "Beryllium-diffused corundum"
+    right: "Be2+ driven into the lattice at >1800°C"
+  - left: "Cubic zirconia (CZ)"
+    right: "Yttria- or calcia-stabilized ZrO2"
+  - left: "Moissanite"
+    right: "Silicon carbide (SiC)"
+  - left: "Type IIb diamond"
+    right: "Boron impurities, no measurable nitrogen"
+
+rationaleCorrect: |
+  Beryllium diffusion treatment works by driving the very small Be2+ ion into the corundum
+  lattice at temperatures above 1800°C, altering trace-element colour chemistry to create or
+  modify yellow, orange and brown components (and, since it was first recognised in 2002, a
+  wider range of corundum colours). Cubic zirconia is zirconium dioxide (ZrO2) that must be
+  chemically stabilized, typically with yttria or calcia, to keep its high-temperature cubic
+  form stable at room temperature — pure, unstabilized ZrO2 reverts to a monoclinic structure
+  on cooling. Moissanite is silicon carbide (SiC); although marketed as a lab-created diamond
+  simulant, SiC has also been confirmed, in at least one specimen, as a genuine (very rare)
+  rock-forming natural mineral. Type IIb diamonds contain no measurable nitrogen but do
+  contain boron impurities, which cause both their blue colour and their semiconducting
+  properties — the opposite impurity profile from the nitrogen-bearing Type Ia/Ib diamonds.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - treatments-chemistry
+  - diamond-types
+  - simulants
+  - corundum
+
+sourceArticle: identification/synthetics
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-be-diffusion-mechanism
+  - chem-cz-stabilization
+  - chem-moissanite-natural-occurrence
+  - chem-diamond-type-iib-boron
+
+unvetted: true
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84
+  - id: molodetsky-1998
+    citation: "Molodetsky, I., Navrotsky, A., Lajavardi, M. & Brune, A. (1998). The Energetics of Cubic Zirconia from Solution Calorimetry of Yttria- and Calcia-Stabilized Zirconia. Zeitschrift für Physikalische Chemie, 207(1), 59–65."
+    url: https://doi.org/10.1524/zpch.1998.207.part_1_2.059
+  - id: dipierro-2003
+    citation: "Di Pierro, S., Gnos, E., Grobety, B.H., Armbruster, T., Bernasconi, S.M. & Ulmer, P. (2003). Rock-forming moissanite (natural α-silicon carbide). American Mineralogist, 88(11-12), 1817–1821."
+    url: https://doi.org/10.2138/am-2003-11-1223
+  - id: breeding-shigley-2009
+    citation: "Breeding, C.M. & Shigley, J.E. (2009). The 'Type' Classification System of Diamonds and Its Importance in Gemology. Gems & Gemology, 45(2), 96–111."
+    url: https://doi.org/10.5741/gems.45.2.96

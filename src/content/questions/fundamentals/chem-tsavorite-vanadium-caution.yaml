@@ -1,0 +1,69 @@
+id: chem-tsavorite-vanadium-caution
+
+stem: |
+  Older gemmological references often state flatly that "tsavorite's colour and luminescence
+  are caused by vanadium." A 2025 XPS/fluorescence study revisited this claim specifically for
+  tsavorite's luminescence spectrum. What did it find, and what caution does this raise for
+  gemmologists?
+
+type: mcq
+
+options:
+  - text: "Tsavorite's luminescence bands are due to Mn2+ (~591 nm) and Cr3+ (~690–750 nm); the study explicitly states vanadium is 'not responsible for the red emissions of tsavorite.'"
+    isCorrect: true
+    rationale: |
+      The 2025 study's abstract explicitly contradicts the common vanadium attribution:
+      "Contrary to what is often reported in the literature... V2+... is not responsible for
+      the red emissions of tsavorite." This is a direct caution against assuming vanadium is
+      the operative ion without checking current evidence.
+  - text: "Tsavorite's colour and luminescence are caused exclusively by V3+."
+    isCorrect: false
+    rationale: |
+      This is precisely the older, over-attributed claim that the 2025 study set out to
+      re-examine, and it found the opposite: vanadium is not responsible for the luminescence
+      bands studied, which are instead due to manganese and chromium.
+  - text: "Tsavorite never contains chromium; its green is diagnostic for isolating vanadium as sole chromophore."
+    isCorrect: false
+    rationale: |
+      The 2025 study identifies chromium (alongside manganese) as contributing to tsavorite's
+      luminescence spectrum, so chromium is demonstrably present and relevant — the opposite
+      of a chromium-free, vanadium-only picture.
+
+rationaleCorrect: |
+  A 2025 XPS/fluorescence study of grossular garnet var. tsavorite found its luminescence
+  spectrum is explained by Mn2+ (yellow emission, around 591 nm) and Cr3+ (red emission, around
+  690–750 nm), and states directly that vanadium "is not responsible for the red emissions of
+  tsavorite" — contradicting older literature that often credits vanadium as the primary cause
+  of tsavorite's colour and glow. The caution for gemmologists is twofold: vanadium is a
+  recurring trace element across several unrelated gem species (corundum, tsavorite, emerald)
+  but its role as a genuine chromophore is frequently over-stated relative to more careful
+  modern analysis, and this particular study addresses tsavorite's luminescence specifically —
+  its bulk visible-absorption body colour is a related but distinct question that should not
+  be conflated with the luminescence findings here.
+
+difficulty: 5
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - garnet
+
+sourceArticle: species/garnet
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-garnet-general-formula
+  - chem-alexandrite-chromium-not-vanadium
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: idini-2025
+    citation: "Idini, A., Argazzi, R., Frau, F., Fantauzzi, M. & Angeli, C. (2025). Unravelling the luminescence spectrum of garnet grossular var. tsavorite: The role of chromium (III), manganese (II) and misattribution of vanadium (II). Journal of Luminescence, 277, 120936."
+    url: https://doi.org/10.1016/j.jlumin.2024.120936

@@ -1,0 +1,44 @@
+---
+/**
+ * Lab Simulation Cases — single-case run screen (Phase 3).
+ *
+ * getStaticPaths builds one static page per entry in the `cases` collection.
+ * Each case is mapped at build time (via mapCaseSource, mirroring how
+ * Phase 1's [track].astro resolves stages) into a plain-data CaseDefinition
+ * and passed into the client-side <CaseRunner/> island — no astro:content
+ * on the client.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { CaseRunner } from '../../../components/cases/CaseRunner';
+import { mapCaseSource } from '../../../lib/cases';
+import type { CaseSource } from '../../../lib/cases';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('cases');
+
+  return entries
+    .map((entry) => {
+      const source: CaseSource = entry.data;
+      const caseData = mapCaseSource(source);
+      if (!caseData) return null;
+      return {
+        params: { id: caseData.id },
+        props: { caseData },
+      };
+    })
+    .filter((p): p is NonNullable<typeof p> => p !== null);
+}
+
+const { caseData } = Astro.props;
+
+const pageDescription = caseData.specimenSummary;
+---
+
+<BaseLayout title={caseData.title} description={pageDescription} noindex={true}>
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <CaseRunner client:load caseData={caseData} />
+    </div>
+  </div>
+</BaseLayout>

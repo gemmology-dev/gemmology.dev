@@ -1,0 +1,45 @@
+id: chem-corundum-formula
+
+stem: |
+  A candidate's revision notes read: "Corundum, the mineral species behind both ruby and
+  sapphire, is an aluminosilicate related to andalusite." Their tutor asks them to write out
+  corundum's correct chemical formula to check the claim. What should the candidate write?
+
+type: fill-blank
+
+acceptedAnswers:
+  - "Al2O3"
+  - "Al₂O₃"
+  - "al2o3"
+
+rationaleCorrect: |
+  Corundum is aluminium oxide, Al2O3 — a simple oxide with no silicon at all, not an
+  aluminosilicate like andalusite (Al2SiO5). The revision note conflates corundum with the
+  Al2SiO5 polymorphs (andalusite, kyanite, sillimanite) purely because both groups contain
+  aluminium; corundum's structure has no SiO4 tetrahedra whatsoever. Every gem colour of
+  corundum (ruby, and the various sapphire colours) is built on this same colourless Al2O3
+  host, coloured only by trace transition-metal impurities substituting for Al3+.
+
+difficulty: 1
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - corundum
+  - oxide
+
+sourceArticle: species/corundum
+
+examRelevance: FGA-foundation
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: heuer-lagerlof-1999
+    citation: "Heuer, A.H. & Lagerlöf, K.P.D. (1999). Oxygen self-diffusion in corundum (alpha-Al2O3): A conundrum. Philosophical Magazine Letters, 79(8), 619–627."
+    url: https://doi.org/10.1080/095008399177002

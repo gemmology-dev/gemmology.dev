@@ -150,13 +150,17 @@ export function useQuiz({
   const score = useMemo(() => {
     let correct = 0;
     for (const [questionId, answer] of state.answers) {
+      // Only submitted answers count toward the running score — fill-blank
+      // and matching register a selection before "Check Answer", and counting
+      // those early produced impossible live fractions like 2/1 (200%).
+      if (!submittedQuestions.has(questionId)) continue;
       const question = state.questions.find(q => q.id === questionId);
       if (question && checkAnswer(question, answer)) {
         correct++;
       }
     }
     return correct;
-  }, [state.questions, state.answers]);
+  }, [state.questions, state.answers, submittedQuestions]);
 
   // Calculate results when quiz is complete
   const results = useMemo(() => {

@@ -1,0 +1,50 @@
+id: chem-beryl-formula
+
+stem: |
+  A student mixes up beryl and chrysoberyl on a formula-matching worksheet, writing "BeAl2O4"
+  next to "beryl (emerald, aquamarine, morganite)." Write the formula that actually belongs to
+  beryl.
+
+type: fill-blank
+
+acceptedAnswers:
+  - "Be3Al2Si6O18"
+  - "Be₃Al₂Si₆O₁₈"
+  - "be3al2si6o18"
+  - "Be3Al2(Si6O18)"
+  - "Be3Al2[Si6O18]"
+
+rationaleCorrect: |
+  Beryl's formula is Be3Al2Si6O18 — a cyclosilicate built around six-membered [Si6O18] rings.
+  BeAl2O4 is chrysoberyl's formula, an oxide with no silicon at all; the two species share the
+  "beryl/beryllium" wordstem and the element beryllium, which is exactly why they are
+  routinely confused, but chrysoberyl is chemically an oxide while true beryl is a
+  ring silicate. Emerald, aquamarine, heliodor and morganite are all colour varieties of this
+  same Be3Al2Si6O18 host.
+
+difficulty: 1
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - beryl
+  - cyclosilicate
+
+sourceArticle: species/beryl
+
+examRelevance: FGA-foundation
+
+confusionPairs:
+  - chem-chrysoberyl-oxide-not-silicate
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: dhz-beryl-2013
+    citation: "Deer, W.A., Howie, R.A. & Zussman, J. (2013). Beryl Be3Al2[Si6O18]. In An Introduction to the Rock-Forming Minerals (3rd ed.). Mineralogical Society of Great Britain and Ireland."
+    url: https://doi.org/10.1180/dhz.16

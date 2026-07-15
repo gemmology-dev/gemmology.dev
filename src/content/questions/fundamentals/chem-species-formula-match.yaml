@@ -1,0 +1,65 @@
+id: chem-species-formula-match
+
+stem: |
+  Match each gem species to its correct chemical formula. Two of these species are pure oxides
+  with no silicon at all, and the other two are silicates — sort carefully.
+
+type: matching
+
+pairs:
+  - left: "Diamond"
+    right: "C"
+  - left: "Corundum"
+    right: "Al2O3"
+  - left: "Beryl"
+    right: "Be3Al2Si6O18"
+  - left: "Spinel"
+    right: "MgAl2O4"
+
+rationaleCorrect: |
+  Diamond is pure carbon (C), crystallising in the isometric system. Corundum (Al2O3) and
+  spinel (MgAl2O4) are both oxides — neither contains silicon, despite both being common,
+  hard, gem-quality minerals often mentally grouped with "silicate" gems. Beryl (Be3Al2Si6O18)
+  is the odd one out chemically: a cyclosilicate built of six-membered [Si6O18] rings. The
+  most common matching error is pairing corundum or spinel with a silicate-style formula out
+  of habit, or crediting chrysoberyl's oxide formula (BeAl2O4) to beryl because both contain
+  beryllium.
+
+difficulty: 2
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - diamond
+  - corundum
+  - beryl
+  - spinel
+  - oxide
+
+sourceArticle: fundamentals/chemical-properties
+
+examRelevance: FGA-foundation
+
+confusionPairs:
+  - chem-chrysoberyl-oxide-not-silicate
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: breeding-shigley-2009
+    citation: "Breeding, C.M. & Shigley, J.E. (2009). The 'Type' Classification System of Diamonds and Its Importance in Gemology. Gems & Gemology, 45(2), 96–111."
+    url: https://doi.org/10.5741/gems.45.2.96
+  - id: heuer-lagerlof-1999
+    citation: "Heuer, A.H. & Lagerlöf, K.P.D. (1999). Oxygen self-diffusion in corundum (alpha-Al2O3): A conundrum. Philosophical Magazine Letters, 79(8), 619–627."
+    url: https://doi.org/10.1080/095008399177002
+  - id: dhz-beryl-2013
+    citation: "Deer, W.A., Howie, R.A. & Zussman, J. (2013). Beryl Be3Al2[Si6O18]. In An Introduction to the Rock-Forming Minerals (3rd ed.). Mineralogical Society of Great Britain and Ireland."
+    url: https://doi.org/10.1180/dhz.16
+  - id: stoll-1964
+    citation: "Stoll, E., Fischer, P., Hälg, W. & Maier, G. (1964). Redetermination of the cation distribution of spinel (MgAl2O4) by means of neutron diffraction. Journal de Physique, 25(5), 447–448."
+    url: https://doi.org/10.1051/jphys:01964002505044700

@@ -1,0 +1,67 @@
+id: chem-alexandrite-chromium-not-vanadium
+
+stem: |
+  A candidate confidently states that alexandrite's famous colour change is "caused by
+  vanadium, the same element behind some colour-change garnet material." Is this correct for
+  alexandrite specifically?
+
+type: mcq
+
+options:
+  - text: "No — alexandrite's colour change is caused by Cr3+ substituting for Al3+ in chrysoberyl (BeAl2O4), not vanadium."
+    isCorrect: true
+    rationale: |
+      Alexandrite is chromium-doped chrysoberyl (Cr:BeAl2O4). The chromium substitution for
+      aluminium is what produces the classic colour-change effect between daylight and
+      incandescent light, not vanadium.
+  - text: "Yes — alexandrite's colour change is caused by V3+, as in some tsavorite/emerald material."
+    isCorrect: false
+    rationale: |
+      Vanadium is a genuine trace element of gemmological interest in other species, but
+      alexandrite's colour change is documented as a chromium effect (Cr:BeAl2O4), not a
+      vanadium one. Assuming every colour-change gem shares one mechanism overlooks
+      species-specific chemistry.
+  - text: "Alexandrite's colour change is a physical (interference) phenomenon, not a chromophore effect."
+    isCorrect: false
+    rationale: |
+      Colour change in alexandrite is a genuine chromophore (absorption) effect from Cr3+,
+      not a physical interference or diffraction phenomenon; it should not be confused with
+      optical phenomena like adularescence or iridescence, which are structural rather than
+      chemical in origin.
+
+rationaleCorrect: |
+  Alexandrite's colour change is produced by Cr3+ substituting for Al3+ in chrysoberyl
+  (BeAl2O4) — the doped composition is explicitly written as Cr:BeAl2O4 in the crystal-field
+  literature on transition-metal-ion laser host materials. This is the same chromium ion
+  responsible for ruby and emerald colour, once again demonstrating the "same ion, different
+  host, different effect" principle, here producing colour change rather than a single fixed
+  hue. Vanadium is not the operative chromophore in alexandrite, even though it is a
+  recurring (and sometimes over-attributed) trace element in other species.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - chrysoberyl
+  - alexandrite
+
+sourceArticle: species/chrysoberyl
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-ruby-chromium
+  - chem-tsavorite-vanadium-caution
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: morrison-1992
+    citation: "Morrison, C.A. (1992). BeAl2O4 (Chrysoberyl, Cr:BeAl2O4 = Alexandrite). In Crystal Fields for Transition-Metal Ions in Laser Host Materials (pp. 72–76). Springer."
+    url: https://doi.org/10.1007/978-3-642-95686-7_15

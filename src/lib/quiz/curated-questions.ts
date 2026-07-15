@@ -40,6 +40,8 @@ export interface CuratedQuestionSource {
   imageRef?: string;
   unvetted?: boolean;
   deprecated?: boolean;
+  /** Concept tags used by Study Challenge Tracks to select tag-fallback stage questions. */
+  conceptTags?: string[];
 }
 
 const TYPE_MAP: Record<CuratedQuestionSource['type'], QuestionType> = {
@@ -109,6 +111,7 @@ export function mapCuratedQuestion(source: CuratedQuestionSource): Question | nu
     rationaleCorrect: source.rationaleCorrect,
     optionRationales,
     unvetted: source.unvetted ?? false,
+    conceptTags: source.conceptTags,
   };
 
   return isRenderable(question) ? question : null;

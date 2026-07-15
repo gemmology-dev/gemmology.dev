@@ -38,6 +38,7 @@ const curatedSources: CuratedQuestionSource[] = curatedEntries.map(entry => ({
   imageRef: entry.data.imageRef,
   unvetted: entry.data.unvetted,
   deprecated: entry.data.deprecated,
+  conceptTags: entry.data.conceptTags,
 }));
 const curatedQuestions = mapCuratedQuestions(curatedSources);
 

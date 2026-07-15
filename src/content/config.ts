@@ -225,6 +225,174 @@ const questionsCollection = defineCollection({
     ),
 });
 
+// ----------------------------------------------------------------------
+// Challenges collection (Study Challenge Tracks — Phase 1)
+// ----------------------------------------------------------------------
+// A "track" is a themed, ordered sequence of quiz "stages" with staged
+// mastery gating (stage N+1 unlocks only once stage N is passed). This
+// collection is quiz-tracks only — Phase 3 scenario-style "cases" content
+// is a separate `cases` collection built independently and is NOT modelled
+// here (deliberate deviation from the original design sketch, which
+// considered a shared `kind` discriminator on this collection).
+
+const challengeStageSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+    title: z.string(),
+    description: z.string().optional(),
+    // Explicit-ids path: an ordered set of curated question ids.
+    questionIds: z.array(z.string()).min(1).optional(),
+    // Tag-fallback path: pull `count` questions matching conceptTags.
+    conceptTags: z.array(z.string()).min(1).optional(),
+    tagMatch: z.enum(['all', 'any']).default('all'),
+    count: z.number().int().min(1).optional(),
+    passThreshold: z.number().min(0).max(1).default(0.7),
+  })
+  .refine(
+    (stage) => Boolean(stage.questionIds) || Boolean(stage.conceptTags && stage.count),
+    {
+      message:
+        'Stage must define either questionIds, or both conceptTags and count (tag-fallback selection)',
+    },
+  );
+
+const challengeTrackSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  title: z.string(),
+  description: z.string(),
+  icon: z.string().optional(),
+  categoryAffinity: z
+    .enum([
+      'fundamentals',
+      'equipment',
+      'species',
+      'identification',
+      'phenomena',
+      'origin',
+      'market',
+      'care',
+    ])
+    .optional(),
+  conceptTags: z.array(z.string()).optional(),
+  estimatedMinutes: z.number().int().optional(),
+  stages: z.array(challengeStageSchema).min(1),
+});
+
+const challengeCollection = defineCollection({
+  type: 'data',
+  schema: challengeTrackSchema,
+});
+
+// ----------------------------------------------------------------------
+// Cases collection (Lab Simulation case-based challenges — Phase 3)
+// ----------------------------------------------------------------------
+// A "case" is a single scenario-driven identification/decision exercise
+// (choose a test, interpret a reading, narrow candidates, call a treatment,
+// reach a final identification). Deliberately separate from `challenges`
+// (Phase 1's quiz-stage tracks) per the Phase 1 config.ts comment — cases
+// are decision trees with evidence reveal and tiered (optimal/acceptable/
+// poor) scoring, not right/wrong MCQ stages.
+
+const evidenceKindSchema = z.enum([
+  'visual',
+  'ri',
+  'sg',
+  'birefringence',
+  'optic-character',
+  'pleochroism',
+  'spectroscope',
+  'uv-fluorescence',
+  'chelsea-filter',
+  'inclusion',
+  'hardness',
+  'other',
+]);
+
+const evidenceItemSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  kind: evidenceKindSchema,
+  label: z.string(),
+  value: z.string(),
+  detail: z.string().optional(),
+  toolHref: z.string().optional(),
+});
+
+const caseOptionSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  text: z.string().min(1),
+  weight: z.enum(['optimal', 'acceptable', 'poor']),
+  score: z.number().int().min(0).max(10),
+  rationale: z.string(),
+  revealsEvidenceIds: z.array(z.string()).optional(),
+  candidatesAfter: z
+    .array(z.object({ familyId: z.string(), name: z.string() }))
+    .optional(),
+  timeCost: z.number().int().min(0).max(5).optional(),
+});
+
+const caseStepSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  type: z.enum([
+    'choose-next-test',
+    'reading-interpretation',
+    'candidate-narrowing',
+    'final-identification',
+    'treatment-call',
+  ]),
+  prompt: z.string().min(1),
+  evidenceRevealed: z.array(evidenceItemSchema).optional(),
+  options: z.array(caseOptionSchema).min(2).max(6),
+  pointsMultiplier: z.number().int().min(1).max(3).default(1),
+  learnLinks: z.array(z.string()).optional(),
+  toolLinks: z
+    .array(z.object({ href: z.string(), label: z.string() }))
+    .optional(),
+});
+
+const caseGroundTruthSchema = z.object({
+  speciesFamilyId: z.string(),
+  variety: z.string().optional(),
+  treatment: z.string().optional(),
+  originNote: z.string().optional(),
+});
+
+const caseDebriefSchema = z.object({
+  summary: z.string(),
+  expertPath: z.array(z.string()).min(1),
+  furtherReading: z.array(z.string()).optional(),
+});
+
+const casesCollection = defineCollection({
+  type: 'data',
+  schema: z
+    .object({
+      id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+      title: z.string(),
+      difficulty: z.enum(['foundation', 'intermediate', 'diploma']),
+      estimatedMinutes: z.number().int(),
+      backstory: z.string(),
+      specimenSummary: z.string(),
+      groundTruth: caseGroundTruthSchema,
+      steps: z.array(caseStepSchema).min(3),
+      debrief: caseDebriefSchema,
+      conceptTags: z.array(z.string()).optional(),
+      references: z
+        .array(
+          z.object({
+            id: z.string(),
+            citation: z.string(),
+            url: z.string().url().optional(),
+          }),
+        )
+        .optional(),
+      unvetted: z.boolean().default(false),
+    })
+    .refine(
+      (c) => c.steps.some((s) => s.type === 'final-identification'),
+      { message: 'Case must contain at least one final-identification step' },
+    ),
+});
+
 // Learn collection schema
 const learnCollection = defineCollection({
   type: 'data',
@@ -259,4 +427,6 @@ const learnCollection = defineCollection({
 export const collections = {
   learn: learnCollection,
   questions: questionsCollection,
+  challenges: challengeCollection,
+  cases: casesCollection,
 };

@@ -27,7 +27,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { Question, QuizConfig } from '../../lib/quiz';
+import type { Question, QuizConfig, QuizResult } from '../../lib/quiz';
 import { isRenderable } from '../../lib/quiz';
 import { useQuiz } from '../../hooks/useQuiz';
 import { useQuizKeyboard } from '../../hooks/useQuizKeyboard';
@@ -49,8 +49,8 @@ interface QuizProps {
   config: QuizConfig;
   /** Questions to display */
   questions: Question[];
-  /** Callback when quiz is completed */
-  onComplete?: () => void;
+  /** Callback fired exactly once, with the final results, when the quiz completes */
+  onComplete?: (results: QuizResult) => void;
   /** Callback to return to setup */
   onBack?: () => void;
 }
@@ -80,6 +80,22 @@ export function Quiz({
 
   // Restart confirmation dialog (A6).
   const [showRestartConfirm, setShowRestartConfirm] = useState(false);
+
+  // Fire onComplete exactly once per completion. Guarded with a ref (rather
+  // than relying solely on effect deps) so re-renders while isComplete stays
+  // true never invoke it twice; reset when the quiz is no longer complete
+  // (e.g. after Restart) so a subsequent completion fires again.
+  const onCompleteFiredRef = useRef(false);
+  useEffect(() => {
+    if (isComplete && results) {
+      if (!onCompleteFiredRef.current) {
+        onCompleteFiredRef.current = true;
+        onComplete?.(results);
+      }
+    } else {
+      onCompleteFiredRef.current = false;
+    }
+  }, [isComplete, results, onComplete]);
 
   // Study store singleton — stable reference.
   const store = useRef(getStudyStore()).current;

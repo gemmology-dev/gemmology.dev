@@ -1,0 +1,64 @@
+id: chem-ruby-chromium
+
+stem: |
+  A student is asked to name the chromophore ion responsible for ruby's red colour, and
+  suggests vanadium because "vanadium and chromium are often confused in gem chemistry."
+  Which ion actually produces ruby's colour, and over what range?
+
+type: mcq
+
+options:
+  - text: "Cr3+ substituting for Al3+, producing pale pink through deep red depending on concentration."
+    isCorrect: true
+    rationale: |
+      Cr3+ substituting for Al3+ in the corundum lattice is ruby's chromophore. As chromium
+      concentration rises, the colour deepens from pale pink through to deep red — the basis
+      for the traditional pink-sapphire/ruby boundary debate.
+  - text: "V3+ is the primary ruby chromophore."
+    isCorrect: false
+    rationale: |
+      Vanadium is a real trace element of interest in several gem species, but it is not the
+      chromophore responsible for ruby's characteristic red — that role belongs to chromium.
+      Vanadium's role in gem colour is frequently over-stated in informal literature.
+  - text: "Ruby red comes from Fe3+, the same ion that causes yellow sapphire."
+    isCorrect: false
+    rationale: |
+      Fe3+ at high concentration causes yellow sapphire, a different corundum colour entirely.
+      Ruby's red is produced by chromium, not iron; mixing up the two ignores that different
+      chromophores in the same host produce entirely different hues.
+
+rationaleCorrect: |
+  Cr3+ substituting for Al3+ in corundum produces red coloration, ranging from pale pink
+  through deep red depending on how much chromium is present, as documented in the Gems &
+  Gemology study of beryllium diffusion treatment (which had to characterise corundum's
+  native chromophores in detail to understand how treatment alters them). This is one of the
+  clearest single-ion chromophore relationships in gemmology and the starting point for
+  understanding how the same Cr3+ ion behaves differently in other host lattices, such as
+  beryl.
+
+difficulty: 2
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - corundum
+
+sourceArticle: species/corundum
+
+examRelevance: FGA-foundation
+
+confusionPairs:
+  - chem-same-ion-different-host
+  - chem-alexandrite-chromium-not-vanadium
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84

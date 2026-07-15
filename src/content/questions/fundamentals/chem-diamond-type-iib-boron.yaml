@@ -1,0 +1,66 @@
+id: chem-diamond-type-iib-boron
+
+stem: |
+  A rare natural blue diamond is submitted for type classification. A trainee guesses it must
+  be "Type Ia, since that's the most common natural diamond type, and common things get
+  submitted most often." What type and impurity chemistry actually explain a natural blue
+  diamond?
+
+type: mcq
+
+options:
+  - text: "Type IIb — no IR-measurable nitrogen, but boron impurities responsible for the blue colour and semiconducting properties."
+    isCorrect: true
+    rationale: |
+      Type IIb diamonds contain no easily measurable nitrogen; instead, isolated boron atoms
+      replace carbon in the lattice, producing both the blue colour and the characteristic
+      electrical conductivity of these rare stones.
+  - text: "Blue diamond colour (type IIb) is caused by nitrogen aggregates, the same defect as yellow type Ia."
+    isCorrect: false
+    rationale: |
+      Type IIb diamonds are specifically defined by an absence of measurable nitrogen; the
+      nitrogen-aggregate defects that cause yellowish body colour belong to type Ia, an
+      entirely different impurity profile from boron-bearing type IIb.
+  - text: "Type II diamonds are defined by high nitrogen content, the opposite of type I."
+    isCorrect: false
+    rationale: |
+      This reverses the definition: type I diamonds contain measurable nitrogen (detectable by
+      IR absorption spectroscopy), while type II diamonds do not contain enough nitrogen to be
+      detected at all — type II is defined by an absence of nitrogen, not a surplus.
+
+rationaleCorrect: |
+  Diamond colour is closely tied to type. Type I diamonds are defined as containing sufficient
+  nitrogen to be measurable by IR absorption spectroscopy (Ia = aggregated nitrogen, the
+  common form; Ib = isolated single nitrogen atoms, associated with rare "canary" yellow),
+  whereas type II diamonds do not contain enough nitrogen to be detected. Within type II, type
+  IIb diamonds contain no IR-measurable nitrogen but do contain boron impurities — thought to
+  be isolated single atoms replacing carbon in the lattice — and these boron impurities are
+  directly responsible for both the blue colour and the electrical conductivity that make type
+  IIb diamonds so distinctive and rare.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - diamond-types
+  - colour-origin
+  - diamond
+
+sourceArticle: species/diamond
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-diamond-purity
+  - chem-bench-chemistry-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: breeding-shigley-2009
+    citation: "Breeding, C.M. & Shigley, J.E. (2009). The 'Type' Classification System of Diamonds and Its Importance in Gemology. Gems & Gemology, 45(2), 96–111."
+    url: https://doi.org/10.5741/gems.45.2.96

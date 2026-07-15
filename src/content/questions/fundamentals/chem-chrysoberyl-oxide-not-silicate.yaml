@@ -1,0 +1,65 @@
+id: chem-chrysoberyl-oxide-not-silicate
+
+stem: |
+  A candidate reasons: "Chrysoberyl must be a silicate — its name literally contains 'beryl,'
+  and beryl is a silicate." Which statement correctly resolves this?
+
+type: mcq
+
+options:
+  - text: "Chrysoberyl is BeAl2O4, an oxide with no silicon; the name is a historical false friend, not a chemical relationship."
+    isCorrect: true
+    rationale: |
+      Chrysoberyl's formula, BeAl2O4, contains no SiO4 tetrahedra at all — it is an oxide, in
+      the same broad chemical class as corundum and spinel. Both chrysoberyl and true beryl
+      contain beryllium, which is the actual (and coincidental) source of the shared wordstem,
+      not a shared silicate structure.
+  - text: "Chrysoberyl is Be3Al2Si6O18, identical to beryl's cyclosilicate formula."
+    isCorrect: false
+    rationale: |
+      This formula belongs to true beryl, not chrysoberyl. Confusing the two is a classic
+      naming trap: chrysoberyl (BeAl2O4) and beryl (Be3Al2Si6O18) are chemically unrelated
+      beyond sharing the element beryllium.
+  - text: "Chrysoberyl is BeSiO4, related to phenakite."
+    isCorrect: false
+    rationale: |
+      BeSiO4 is not a real mineral formula in this fact set; phenakite is Be2SiO4, a genuine
+      beryllium silicate, but chrysoberyl itself is the oxide BeAl2O4. This distractor mixes up
+      chrysoberyl with its beryllium-silicate cousin phenakite.
+
+rationaleCorrect: |
+  Chrysoberyl's formula is BeAl2O4 — an oxide, structurally unrelated to beryl's cyclosilicate
+  Be3Al2Si6O18, despite the shared "beryl" wordstem and the shared element beryllium. Because
+  it has no SiO4 tetrahedra, chrysoberyl sits in the same broad "oxide" chemical class as
+  corundum (Al2O3) and spinel (MgAl2O4), not with the silicate gems. This is one of
+  gemmology's most persistent naming traps, precisely because the etymological link (both
+  contain beryllium, both have "beryl" in the name) has nothing to do with crystal chemistry.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - chrysoberyl
+  - oxide
+
+sourceArticle: species/chrysoberyl
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-beryl-formula
+  - chem-species-formula-match
+
+unvetted: true
+
+references:
+  - id: hazen-finger-1987
+    citation: "Hazen, R.M. & Finger, L.W. (1987). High-temperature crystal chemistry of phenakite (Be2SiO4) and chrysoberyl (BeAl2O4). Physics and Chemistry of Minerals, 14(5), 426–434."
+    url: https://doi.org/10.1007/bf00628819
+  - id: heuer-lagerlof-1999
+    citation: "Heuer, A.H. & Lagerlöf, K.P.D. (1999). Oxygen self-diffusion in corundum (alpha-Al2O3): A conundrum. Philosophical Magazine Letters, 79(8), 619–627."
+    url: https://doi.org/10.1080/095008399177002

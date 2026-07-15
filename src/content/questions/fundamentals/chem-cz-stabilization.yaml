@@ -1,0 +1,62 @@
+id: chem-cz-stabilization
+
+stem: |
+  A trainee assumes cubic zirconia is "just zirconium dioxide, no different chemically from
+  any other ZrO2," and is puzzled why manufacturers bother adding other oxides during
+  production. What is the chemical reason for this?
+
+type: mcq
+
+options:
+  - text: "Pure, unstabilized ZrO2 reverts to a monoclinic structure on cooling; yttria or calcia doping is needed to keep the cubic form stable at room temperature."
+    isCorrect: true
+    rationale: |
+      ZrO2's high-temperature cubic crystal form is not stable on its own at room temperature.
+      Manufacturers add stabilizing oxides — typically yttria or calcia — specifically to lock
+      in the cubic structure that gives cubic zirconia its name and its diamond-simulant
+      optical properties.
+  - text: "CZ requires no stabilizing dopant; its cubic form is intrinsically stable."
+    isCorrect: false
+    rationale: |
+      This is the misconception in the stem. Without a stabilizing dopant, ZrO2 does not
+      remain cubic at room temperature — it reverts to a different (monoclinic) crystal form,
+      which would defeat the purpose of the material as "cubic" zirconia.
+  - text: "CZ's stabilizer (yttria) is also its primary colour-causing chromophore in colourless material."
+    isCorrect: false
+    rationale: |
+      Yttria's role is structural (stabilizing the cubic crystal form), not chromophoric.
+      Colourless cubic zirconia is not coloured by its stabilizer; different trace dopants are
+      used separately when coloured CZ varieties are manufactured.
+
+rationaleCorrect: |
+  Cubic zirconia, a diamond simulant, is zirconium dioxide (ZrO2) that must be chemically
+  stabilized — typically with yttria or calcia — to keep its high-temperature cubic crystal
+  form stable at room temperature. Pure, unstabilized ZrO2 would revert to a different
+  (monoclinic) crystal structure on cooling, according to calorimetric studies of yttria- and
+  calcia-stabilized zirconia. This is why "cubic" zirconia is, chemically, always a doped
+  material rather than pure ZrO2 — the stabilizing dopant is what makes the cubic form (and
+  therefore the gemstone) possible at all.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - simulants
+  - classification
+
+sourceArticle: identification/synthetics
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-zircon-formula
+  - chem-moissanite-natural-occurrence
+
+unvetted: true
+
+references:
+  - id: molodetsky-1998
+    citation: "Molodetsky, I., Navrotsky, A., Lajavardi, M. & Brune, A. (1998). The Energetics of Cubic Zirconia from Solution Calorimetry of Yttria- and Calcia-Stabilized Zirconia. Zeitschrift für Physikalische Chemie, 207(1), 59–65."
+    url: https://doi.org/10.1524/zpch.1998.207.part_1_2.059

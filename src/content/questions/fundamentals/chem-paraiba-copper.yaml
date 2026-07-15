@@ -1,0 +1,63 @@
+id: chem-paraiba-copper
+
+stem: |
+  A dealer describes an intensely saturated neon-blue-to-green tourmaline as "Paraíba-type"
+  and is asked which trace element is chemically responsible for that saturation. What is the
+  correct answer?
+
+type: mcq
+
+options:
+  - text: "Copper (Cu2+), sometimes combined with manganese, at unusually high concentration."
+    isCorrect: true
+    rationale: |
+      Quantitative chemical analysis of the original São José da Batalha, Paraíba material
+      found surprisingly high copper concentrations, far above ordinary
+      tourmaline — this is the chromophore behind the intense, saturated blue-to-green colour.
+  - text: "Cobalt, like some synthetic spinel imitations."
+    isCorrect: false
+    rationale: |
+      Cobalt is a chromophore associated with certain synthetic blue spinel imitations of
+      sapphire, not with Paraíba-type tourmaline. Confusing the two mixes up an unrelated
+      simulant chemistry with a genuine trace-element gem colour.
+  - text: "Copper in tourmaline is always paired with chromium, as in emerald."
+    isCorrect: false
+    rationale: |
+      Paraíba tourmaline's chemistry does not require chromium; the analysed material's
+      distinguishing feature is exceptionally high copper (sometimes with manganese), not a
+      copper-chromium pairing analogous to emerald's chromium chemistry.
+
+rationaleCorrect: |
+  Cuprian ("Paraíba") elbaite tourmaline owes its intensely saturated blue-to-green colour to
+  copper (Cu2+), sometimes combined with manganese, at concentrations far higher than in
+  ordinary tourmaline. Quantitative analysis of the original São José da Batalha, Paraíba,
+  Brazil material found exceptionally high copper concentrations, a level that
+  explains why Paraíba-type material is prized for a saturation unmatched by ordinary
+  tourmaline colours (which are typically driven by iron or manganese alone at far lower
+  concentrations).
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - tourmaline
+
+sourceArticle: species/tourmaline
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-element-colour-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: fritsch-1990
+    citation: "Fritsch, E., Shigley, J.E., Rossman, G.R., Mercer, M.E., Muhlmeister, S.M. & Moon, M. (1990). Gem-Quality Cuprian-Elbaite Tourmalines From São José Da Batalha, Paraíba, Brazil. Gems & Gemology, 26(3), 189–205."
+    url: https://doi.org/10.5741/gems.26.3.189

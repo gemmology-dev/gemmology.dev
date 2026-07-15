@@ -1,0 +1,71 @@
+id: chem-idiochromatic-allochromatic-match
+
+stem: |
+  Match each species to its correct colour-mechanism classification: idiochromatic (the
+  colouring cation is an essential part of the mineral's own formula) or allochromatic (the
+  colour comes from a trace impurity in an otherwise colourless or differently coloured host).
+
+type: matching
+
+pairs:
+  - left: "Corundum (ruby/sapphire)"
+    right: "Allochromatic"
+  - left: "Beryl (emerald/aquamarine)"
+    right: "Allochromatic"
+  - left: "Quartz (amethyst)"
+    right: "Allochromatic"
+  - left: "Turquoise"
+    right: "Idiochromatic"
+
+rationaleCorrect: |
+  Corundum is colourless as pure Al2O3; every gem colour it shows (ruby's red, every sapphire
+  hue) is produced by trace Cr, Fe and Ti impurities, making it a classic allochromatic
+  mineral. Beryl is the same story: colourless goshenite is pure Be3Al2Si6O18, while emerald,
+  aquamarine and morganite owe their colours to different trace cations riding in the same
+  host. Quartz is likewise allochromatic — amethyst's purple comes from an iron-related colour
+  centre (a hole trapped on substitutional Fe3+, converting it to Fe4+), not from silicon or
+  oxygen. Turquoise is different in kind: its blue-forming Cu2+ is written directly into its
+  own formula, CuAl6(PO4)4(OH)8·4H2O, so it is idiochromatic. The classic trap is assuming
+  common trace elements (like chromium in both ruby and emerald) make a mineral idiochromatic
+  because the colour "feels" intrinsic — idiochromatic refers strictly to whether the ion is
+  part of the formula, not how vivid or characteristic the colour is.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - classification
+  - corundum
+  - beryl
+  - quartz
+  - turquoise
+
+sourceArticle: fundamentals/colour-theory
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-turquoise-formula
+  - chem-organic-hydrous-classification-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: emmett-2003
+    citation: "Emmett, J.L., Scarratt, K., McClure, S.F., Moses, T., Douthit, T.R., Hughes, R., Novak, S., Shigley, J.E., Wang, W., Bordelon, O. & Kane, R.E. (2003). Beryllium Diffusion of Ruby and Sapphire. Gems & Gemology, 39(2), 84–135."
+    url: https://doi.org/10.5741/gems.39.2.84
+  - id: fritsch-rossman-1988-pt1
+    citation: "Fritsch, E. & Rossman, G.R. (1987). An Update on Color in Gems. Part 1: Introduction and Colors Caused by Dispersed Metal Ions. Gems & Gemology, 23(3), 126–139."
+    url: https://doi.org/10.5741/gems.23.3.126
+  - id: lehmann-moore-1966
+    citation: "Lehmann, G. & Moore, M.E. (1966). Color Center in Amethyst Quartz. Science, 152(3725), 1061–1062."
+    url: https://doi.org/10.1126/science.152.3725.1061
+  - id: cid-dresdner-1965
+    citation: "Cid-Dresdner, H. (1965). Determination and refinement of the crystal structure of turquois, CuAl6(PO4)4(OH)8·4H2O. Zeitschrift für Kristallographie, 121(2–4), 87–113."
+    url: https://doi.org/10.1524/zkri.1965.121.2-4.87

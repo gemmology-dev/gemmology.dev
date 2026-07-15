@@ -1,0 +1,64 @@
+id: chem-moissanite-natural-occurrence
+
+stem: |
+  A candidate states that "moissanite is purely a laboratory-created diamond simulant and has
+  never been confirmed in terrestrial rock." Is this an accurate description of moissanite's
+  chemistry and occurrence?
+
+type: mcq
+
+options:
+  - text: "No — moissanite is silicon carbide (SiC), and although marketed as lab-created, it has been petrographically confirmed as a genuine, very rare rock-forming natural mineral in at least one terrestrial specimen."
+    isCorrect: true
+    rationale: |
+      A 2003 American Mineralogist study reports the first occurrence of moissanite (SiC) as a
+      rock-forming mineral (8.4 vol%) in a unique terrestrial rock specimen, directly
+      contradicting the idea that natural moissanite is unknown outside meteorites.
+  - text: "Moissanite is a pure carbon allotrope, like diamond."
+    isCorrect: false
+    rationale: |
+      Moissanite's formula is silicon carbide (SiC), not pure carbon. Confusing it with a
+      carbon allotrope like diamond ignores that its diamond-simulant status comes from similar
+      optical/physical properties, not a shared chemical formula.
+  - text: "Natural moissanite has never been confirmed in terrestrial rocks, only in meteorites."
+    isCorrect: false
+    rationale: |
+      This is the claim being tested, and it is incorrect: the 2003 study specifically reports
+      moissanite as a rock-forming mineral in a terrestrial (not meteoritic) specimen, expanding
+      its known natural occurrence beyond meteoritic contexts.
+
+rationaleCorrect: |
+  Moissanite is silicon carbide (SiC). Although marketed and mass-produced as a
+  laboratory-created diamond simulant, SiC has also been confirmed petrographically as a
+  genuine, very rare rock-forming natural mineral: a 2003 American Mineralogist study reports
+  its first occurrence as a rock-forming mineral (8.4 vol%) in one unique terrestrial rock
+  specimen. This nuance matters for gemmologists because it shows that "natural vs.
+  laboratory-created" and "common vs. rare" are independent axes — a material can be
+  overwhelmingly lab-produced for commercial purposes while still having a confirmed, if
+  vanishingly rare, natural occurrence.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - simulants
+  - classification
+
+sourceArticle: identification/synthetics
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-cz-stabilization
+  - chem-diamond-purity
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: dipierro-2003
+    citation: "Di Pierro, S., Gnos, E., Grobety, B.H., Armbruster, T., Bernasconi, S.M. & Ulmer, P. (2003). Rock-forming moissanite (natural α-silicon carbide). American Mineralogist, 88(11-12), 1817–1821."
+    url: https://doi.org/10.2138/am-2003-11-1223

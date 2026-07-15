@@ -19,6 +19,8 @@ import {
   DEFAULT_STUDY_SETTINGS,
 } from '../../lib/quiz';
 import { STORAGE_KEYS } from '../../hooks/useLocalStorage';
+import { Card, CardContent } from '../ui/Card';
+import { Button } from '../ui/Button';
 
 interface QuizPageProps {
   /** Learn content entries for generating questions */
@@ -117,11 +119,29 @@ export function QuizPage({ learnEntries, curatedQuestions = [] }: QuizPageProps)
             />
           )
         ) : (
-          <QuizSetup
-            availableQuestions={availableQuestions}
-            onStart={handleStart}
-            showExamMode={true}
-          />
+          <>
+            <Card className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <CardContent className="p-0">
+                <h3 className="text-base font-semibold text-slate-900">Challenge Tracks</h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  Themed challenge tracks — structured study with staged mastery.
+                </p>
+              </CardContent>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  window.location.href = '/study/challenges';
+                }}
+              >
+                Explore tracks
+              </Button>
+            </Card>
+            <QuizSetup
+              availableQuestions={availableQuestions}
+              onStart={handleStart}
+              showExamMode={true}
+            />
+          </>
         )}
       </div>
     </div>

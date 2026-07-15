@@ -1,0 +1,57 @@
+id: chem-organic-hydrous-classification-match
+
+stem: |
+  Match each material to the chemical/structural class that best describes it. Not everything
+  a jeweller sells is a single-phase crystalline mineral.
+
+type: matching
+
+pairs:
+  - left: "Amber"
+    right: "Organic (fossilized resin, not a true mineral)"
+  - left: "Common opal"
+    right: "Hydrous, largely non-crystalline silica"
+  - left: "Pearl / nacre"
+    right: "Biogenic composite (aragonite + conchiolin protein)"
+  - left: "Corundum"
+    right: "Crystalline oxide (contrast case)"
+
+rationaleCorrect: |
+  Amber is fossilized tree resin — an organic gem material, not a mineral in the strict
+  crystallographic sense. Common opal is SiO2·nH2O, hydrous and largely non-crystalline
+  (opal-A) or poorly ordered (opal-CT/opal-C), fundamentally different from crystalline
+  quartz despite sharing the same silica chemistry. Pearl and nacre are biogenic composites:
+  aragonite (a CaCO3 polymorph) platelets bound together by the organic protein conchiolin,
+  not a single-phase mineral at all. Corundum is included as a contrast case — a fully
+  crystalline oxide with none of the organic, hydrous or biogenic complications of the other
+  three, useful for testing whether a candidate can tell "gem material" apart from "mineral
+  species" in the strict sense.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - classification
+  - organic-gems
+  - amber
+  - opal
+  - pearl
+
+sourceArticle: fundamentals/chemical-properties
+
+examRelevance: FGA-diploma
+
+unvetted: true
+
+references:
+  - id: gough-mills-1972
+    citation: "Gough, L.J. & Mills, J.S. (1972). The Composition of Succinite (Baltic Amber). Nature, 239, 527–528."
+    url: https://doi.org/10.1038/239527a0
+  - id: jones-segnit-1971
+    citation: "Jones, J.B. & Segnit, E.R. (1971). The nature of opal I. Nomenclature and constituent phases. Journal of the Geological Society of Australia, 18(1), 57–68."
+    url: https://doi.org/10.1080/00167617108728743
+  - id: bowen-tang-1996
+    citation: "Bowen, C.E. & Tang, H. (1996). Conchiolin-protein in aragonite shells of mollusks. Comparative Biochemistry and Physiology Part A, 115(4), 269–275."
+    url: https://doi.org/10.1016/s0300-9629(96)00059-x

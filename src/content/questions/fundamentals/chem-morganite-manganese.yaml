@@ -1,0 +1,64 @@
+id: chem-morganite-manganese
+
+stem: |
+  A candidate assumes morganite's soft pink colour must come from the same chromophore as ruby
+  and emerald, since all three are pink-to-red gem colours in silicate hosts. Which chromophore
+  is actually responsible for morganite's colour?
+
+type: mcq
+
+options:
+  - text: "Manganese (Mn2+ and/or Mn3+), not chromium or iron."
+    isCorrect: true
+    rationale: |
+      Morganite, the pink/peach variety of beryl, is documented as manganese-activated beryl —
+      its colour centre involves manganese, not the chromium responsible for emerald or the
+      iron responsible for aquamarine and heliodor in the same beryl host.
+  - text: "Morganite's pink colour is caused by Cr3+, as in ruby/emerald."
+    isCorrect: false
+    rationale: |
+      Chromium colours emerald green in the same beryl host, not morganite pink. Assuming every
+      pink-to-red gem shares chromium as its chromophore overlooks manganese's distinct role in
+      morganite specifically.
+  - text: "Morganite and rhodochrosite share the same chromophore mechanism because both are pink-to-red."
+    isCorrect: false
+    rationale: |
+      Sharing a similar colour family does not imply a shared chromophore mechanism or even a
+      shared mineral class — rhodochrosite is a manganese carbonate, an entirely different
+      chemical class from beryl, and its specific colour mechanism is not established in this
+      question's source material.
+
+rationaleCorrect: |
+  Morganite, the pink-to-peach variety of beryl, owes its colour to manganese (Mn2+ and/or
+  Mn3+) rather than to the chromium responsible for emerald or the iron responsible for
+  aquamarine and heliodor in the same Be3Al2Si6O18 host. This is documented in EPR
+  spectroscopy research on manganese-activated beryl. It is a useful reminder that a single
+  host mineral (beryl) can carry several unrelated chromophores across its colour varieties,
+  and that superficially similar colours (pink-to-red) do not imply a shared chromophore
+  across different species.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - beryl
+  - morganite
+
+sourceArticle: species/beryl
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-ruby-chromium
+  - chem-same-ion-different-host
+
+unvetted: true
+
+references:
+  - id: solntsev-1981
+    citation: "Solntsev, V.P., Kharchenko, E.I., Lebedev, A.S., Klyakhin, V.A. & Il'in, A.G. (1981). Nature of color centers and EPR of a manganese-activated beryl. Journal of Applied Spectroscopy, 34(1), 111–115."
+    url: https://doi.org/10.1007/bf00613738

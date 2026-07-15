@@ -1,0 +1,66 @@
+id: chem-amethyst-colour-centre
+
+stem: |
+  A candidate explains amethyst's purple colour as "just dispersed Fe3+ ions sitting in the
+  quartz lattice, the same kind of mechanism as yellow sapphire's iron chromophore." Why is
+  this an incomplete explanation?
+
+type: mcq
+
+options:
+  - text: "Amethyst's colour is a hole-trapped Fe4+ colour centre, formed when irradiation converts substitutional Fe3+ via the transition Fe4+ + O2- → Fe3+ + O1-, not simple dispersed Fe3+."
+    isCorrect: true
+    rationale: |
+      EPR spectroscopy of amethyst quartz shows the colour centre is a positive hole trapped on
+      a substitutional Fe3+ ion, converting it to Fe4+; the visible colour comes from the
+      charge-transfer transition back to Fe3+, not from Fe3+ sitting passively in the lattice
+      the way iron does in yellow sapphire.
+  - text: "Amethyst's colour comes from Al3+ substitution alone, with no iron involved."
+    isCorrect: false
+    rationale: |
+      Aluminium substitution is associated with other quartz colour centres (such as smoky
+      quartz), but amethyst's specific EPR-confirmed colour centre involves iron, not
+      aluminium alone.
+  - text: "Amethyst and citrine have entirely unrelated colour mechanisms and cannot occur in the same crystal."
+    isCorrect: false
+    rationale: |
+      Amethyst and citrine are chemically linked through iron-based colour mechanisms in
+      quartz, and heat can convert amethyst to citrine-like colour — they are not unrelated,
+      isolated phenomena confined to separate crystals.
+
+rationaleCorrect: |
+  Amethyst's purple is a genuine colour centre, not a simple dispersed-ion chromophore like
+  Fe3+ in yellow sapphire. Natural irradiation converts substitutional Fe3+ in the quartz
+  lattice into a hole-trapped Fe4+ state; EPR spectroscopy confirms the colour centre
+  corresponds to "a positive hole trapped on a substitutional Fe(3+) ion," with the colour
+  ascribed to the charge-transfer transition Fe4+ + O2- → Fe3+ + O1-. This distinguishes
+  amethyst's mechanism from simpler single-ion chromophores and explains why amethyst can be
+  bleached or altered by heat treatment (which can disrupt the colour centre) in ways that
+  simple dispersed-ion colours like ruby's chromium cannot be.
+
+difficulty: 4
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - chromophores
+  - colour-origin
+  - quartz
+  - amethyst
+
+sourceArticle: species/quartz
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-idiochromatic-allochromatic-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: lehmann-moore-1966
+    citation: "Lehmann, G. & Moore, M.E. (1966). Color Center in Amethyst Quartz. Science, 152(3725), 1061–1062."
+    url: https://doi.org/10.1126/science.152.3725.1061

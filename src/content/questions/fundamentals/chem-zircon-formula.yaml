@@ -1,0 +1,51 @@
+id: chem-zircon-formula
+
+stem: |
+  Asked to write zircon's formula, a candidate answers "ZrO2, since zircon is basically a
+  zirconium oxide." Give the correct formula that shows why this answer is wrong.
+
+type: fill-blank
+
+acceptedAnswers:
+  - "ZrSiO4"
+  - "ZrSiO₄"
+  - "zrsio4"
+  - "Zr[SiO4]"
+  - "Zr(SiO4)"
+
+rationaleCorrect: |
+  Zircon is ZrSiO4, a nesosilicate built of isolated SiO4 tetrahedra bonded to zirconium — it
+  is not an oxide, and silicon is an essential part of the formula, not absent from it. ZrO2
+  (zirconia) is a completely different substance: the raw material behind the diamond simulant
+  cubic zirconia, which is never found as gem-quality natural zircon. Confusing the two is a
+  common trap because both contain zirconium and both can be near-colourless faceted stones.
+
+difficulty: 1
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - zircon
+  - nesosilicate
+
+sourceArticle: species/zircon
+
+examRelevance: FGA-foundation
+
+confusionPairs:
+  - chem-cz-stabilization
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: finch-hanchar-2003
+    citation: "Finch, R.J. & Hanchar, J.M. (2003). Structure and Chemistry of Zircon and Zircon-Group Minerals. Reviews in Mineralogy and Geochemistry, 53(1), 1–25."
+    url: https://doi.org/10.2113/0530001
+  - id: dhz-zircon-2013
+    citation: "Deer, W.A., Howie, R.A. & Zussman, J. (2013). Zircon Zr[SiO4]. In An Introduction to the Rock-Forming Minerals (3rd ed.). Mineralogical Society of Great Britain and Ireland."
+    url: https://doi.org/10.1180/dhz.2

@@ -1,0 +1,52 @@
+id: chem-turquoise-formula
+
+stem: |
+  A candidate is asked to justify why turquoise's blue colour is described as "idiochromatic"
+  rather than caused by a trace impurity. To answer, they first need turquoise's full chemical
+  formula, showing which cation is structurally essential. Write it.
+
+type: fill-blank
+
+acceptedAnswers:
+  - "CuAl6(PO4)4(OH)8·4H2O"
+  - "CuAl6(PO4)4(OH)8.4H2O"
+  - "CuAl6(PO4)4(OH)8*4H2O"
+  - "CuAl₆(PO₄)₄(OH)₈·4H₂O"
+  - "cual6(po4)4(oh)8.4h2o"
+  - "CuAl6(PO4)4(OH)8 4H2O"
+
+rationaleCorrect: |
+  Turquoise is CuAl6(PO4)4(OH)8·4H2O — a hydrated copper-aluminium phosphate. Because copper
+  is written directly into this formula (not added as a trace impurity to a colourless host),
+  turquoise's blue is idiochromatic: the colouring cation is inseparable from the mineral's own
+  chemical identity. This also confirms turquoise belongs to the phosphate class, not the
+  silicate or oxide classes that most other gem species in this fact set fall into, and that
+  its water content is structural, bound in the crystal lattice rather than merely absorbed.
+
+difficulty: 3
+
+category: fundamentals
+
+conceptTags:
+  - chemistry
+  - formulas
+  - classification
+  - colour-origin
+  - turquoise
+  - phosphate
+
+sourceArticle: fundamentals/chemical-properties
+
+examRelevance: FGA-diploma
+
+confusionPairs:
+  - chem-idiochromatic-allochromatic-match
+
+unvetted: false
+authorReviewed: "gem-chemistry-track-v1"
+lastReviewed: "2026-07-14T00:00:00Z"
+
+references:
+  - id: cid-dresdner-1965
+    citation: "Cid-Dresdner, H. (1965). Determination and refinement of the crystal structure of turquois, CuAl6(PO4)4(OH)8·4H2O. Zeitschrift für Kristallographie, 121(2–4), 87–113."
+    url: https://doi.org/10.1524/zkri.1965.121.2-4.87

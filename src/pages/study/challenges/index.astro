@@ -1,0 +1,112 @@
+---
+/**
+ * Study Challenge Tracks — hub page (Phase 1).
+ *
+ * Loads all challenge tracks plus the curated question bank, resolves each
+ * track's stages against the question pool at build time (server-side, via
+ * resolveTrackStages), and passes only plain summary data down to the
+ * client-side <ChallengesHub/> island — no astro:content on the client.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ChallengesHub } from '../../../components/quiz/challenges/ChallengesHub';
+import type { ChallengeTrackSummary } from '../../../components/quiz/challenges/ChallengesHub';
+import { mapCuratedQuestions, resolveTrackStages } from '../../../lib/quiz';
+import type { CuratedQuestionSource, ChallengeTrackSource } from '../../../lib/quiz';
+import { CaseCard } from '../../../components/cases/CaseCard';
+import type { CaseSummary } from '../../../components/cases/CaseCard';
+import { mapCaseSources } from '../../../lib/cases';
+import type { CaseSource } from '../../../lib/cases';
+
+const trackEntries = await getCollection('challenges');
+
+const curatedEntries = await getCollection('questions');
+const curatedSources: CuratedQuestionSource[] = curatedEntries.map(entry => ({
+  id: entry.data.id,
+  stem: entry.data.stem,
+  type: entry.data.type,
+  options: entry.data.options,
+  acceptedAnswers: entry.data.acceptedAnswers,
+  pairs: entry.data.pairs,
+  rationaleCorrect: entry.data.rationaleCorrect,
+  difficulty: entry.data.difficulty,
+  category: entry.data.category,
+  sourceArticle: entry.data.sourceArticle,
+  imageRef: entry.data.imageRef,
+  unvetted: entry.data.unvetted,
+  deprecated: entry.data.deprecated,
+  conceptTags: entry.data.conceptTags,
+}));
+// mapCuratedQuestions already drops deprecated / non-renderable entries.
+const pool = mapCuratedQuestions(curatedSources);
+
+const trackSummaries: ChallengeTrackSummary[] = trackEntries.map(entry => {
+  const track: ChallengeTrackSource = entry.data;
+  const resolvedStages = resolveTrackStages(track, pool);
+  const totalQuestions = resolvedStages.reduce((sum, stage) => sum + stage.questions.length, 0);
+
+  return {
+    id: track.id,
+    title: track.title,
+    description: track.description,
+    icon: track.icon,
+    estimatedMinutes: track.estimatedMinutes,
+    categoryAffinity: track.categoryAffinity,
+    stageCount: track.stages.length,
+    totalQuestions,
+  };
+});
+
+const pageDescription =
+  'Themed challenge tracks: structured, staged-mastery study paths through specific gemmology topics, with each stage unlocking once the previous one is passed.';
+
+// ── Lab Simulation cases (Phase 3) ─────────────────────────────────────────
+// Unified into this hub per the Phase 3 coordination decision (rather than a
+// standalone /study/cases hub) — see src/pages/study/cases/index.astro.
+const caseEntries = await getCollection('cases');
+const caseSources: CaseSource[] = caseEntries.map((entry) => entry.data);
+const caseDefinitions = mapCaseSources(caseSources);
+const caseSummaries: CaseSummary[] = caseDefinitions.map((c) => ({
+  id: c.id,
+  title: c.title,
+  difficulty: c.difficulty,
+  estimatedMinutes: c.estimatedMinutes,
+  specimenSummary: c.specimenSummary,
+}));
+---
+
+<BaseLayout title="Challenge Tracks" description={pageDescription} noindex={true}>
+  <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900">Challenge Tracks</h1>
+        <p class="text-slate-600 mt-2 text-lg max-w-prose">
+          Structured study with staged mastery: work through a themed sequence of quiz stages,
+          each one unlocking only once you pass the last. Progress is saved locally in your
+          browser.
+        </p>
+      </header>
+
+      <ChallengesHub client:load trackSummaries={trackSummaries} />
+
+      {caseSummaries.length > 0 && (
+        <section id="lab-cases" class="mt-16 scroll-mt-24">
+          <header class="mb-8">
+            <h2 class="text-2xl font-bold text-slate-900">Lab Cases</h2>
+            <p class="text-slate-600 mt-2 max-w-prose">
+              Scenario-driven identification exercises: work a case the way you would in the
+              lab &mdash; choose the next test, interpret readings, narrow candidates, and reach a
+              final identification. Scored by decision quality, not just the final answer.
+            </p>
+          </header>
+
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {caseSummaries.map((caseSummary) => (
+              <CaseCard client:visible caseSummary={caseSummary} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+</BaseLayout>
