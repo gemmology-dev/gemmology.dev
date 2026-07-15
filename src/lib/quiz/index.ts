@@ -8,6 +8,7 @@ export type {
   Difficulty,
   Category,
   Question,
+  OptionRationale,
   QuizConfig,
   QuizState,
   QuestionResult,
@@ -34,6 +35,20 @@ export {
   checkAnswer,
   getQuestionStats,
 } from './question-generator';
+
+// Question validity
+export { isRenderable } from './question-validity';
+
+// Answer normalization
+export { normalizeAnswer } from './answer-normalize';
+
+// Curated question-bank mapping
+export type { CuratedQuestionSource } from './curated-questions';
+export {
+  mapCuratedQuestion,
+  mapCuratedQuestions,
+  difficultyFromNumber,
+} from './curated-questions';
 
 // Scoring
 export {
@@ -97,3 +112,7 @@ export type { SelectionResult, ScheduleLookup } from './selector';
 export { interleaveNearMisses } from './interleaver';
 
 export { LocalStudyStore, getStudyStore } from './store';
+
+// Due-aware session selection (A4c)
+export { selectSessionQuestions } from './question-pool';
+export type { QuestionPoolStore } from './question-pool';

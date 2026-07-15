@@ -42,7 +42,7 @@ const icons = {
 <style>
   .callout {
     @apply relative flex gap-4 my-6 p-5 rounded-xl;
-    @apply border-l-4;
+    @apply border;
   }
 
   .callout-icon svg {
@@ -59,22 +59,22 @@ const icons = {
 
   /* Variants */
   .callout-info {
-    @apply bg-crystal-50/50 border-crystal-400 text-crystal-900;
+    @apply bg-crystal-50 border-crystal-400 text-crystal-900;
   }
   .callout-info .callout-icon { @apply text-crystal-500; }
 
   .callout-warning {
-    @apply bg-amber-50/50 border-amber-400 text-amber-900;
+    @apply bg-amber-50 border-amber-400 text-amber-900;
   }
   .callout-warning .callout-icon { @apply text-amber-500; }
 
   .callout-tip {
-    @apply bg-emerald-50/50 border-emerald-400 text-emerald-900;
+    @apply bg-emerald-50 border-emerald-400 text-emerald-900;
   }
   .callout-tip .callout-icon { @apply text-emerald-500; }
 
   .callout-error {
-    @apply bg-red-50/50 border-red-400 text-red-900;
+    @apply bg-red-50 border-red-400 text-red-900;
   }
   .callout-error .callout-icon { @apply text-red-500; }
 </style>

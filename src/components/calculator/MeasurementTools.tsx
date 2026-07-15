@@ -13,6 +13,17 @@ import { DensityEstimator } from './DensityEstimator';
 import { HannemanRI } from './HannemanRI';
 import { ToolSection } from '../ui/ToolSection';
 
+const JUMP_LINKS = [
+  { id: 'sg', label: 'SG' },
+  { id: 'ri-lookup', label: 'RI Lookup' },
+  { id: 'birefringence', label: 'Birefringence' },
+  { id: 'critical-angle', label: 'Critical Angle' },
+  { id: 'dispersion', label: 'Dispersion' },
+  { id: 'carat-estimate', label: 'Carat Estimator' },
+  { id: 'density', label: 'Density' },
+  { id: 'hanneman-ri', label: 'Hanneman RI' },
+];
+
 const ICON_PATHS = {
   scale: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3',
   search: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
@@ -26,6 +37,21 @@ const ICON_PATHS = {
 export function MeasurementTools() {
   return (
     <div className="space-y-6">
+      <nav
+        aria-label="Jump to calculator"
+        className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"
+      >
+        {JUMP_LINKS.map(({ id, label }) => (
+          <a
+            key={id}
+            href={`#tool-${id}`}
+            className="shrink-0 inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-crystal-300 hover:bg-slate-50 hover:text-crystal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
       <ToolSection
         id="sg"
         title="Specific Gravity"

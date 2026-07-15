@@ -161,20 +161,34 @@ export function QuizSetup({
                 type="button"
                 onClick={() => toggleCategory(category)}
                 disabled={count === 0}
+                aria-pressed={isSelected}
                 className={cn(
-                  'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                  'relative px-4 py-2 rounded-lg text-sm font-medium transition-all',
                   'border-2',
                   isSelected && 'border-crystal-500 bg-crystal-50 text-crystal-700',
                   !isSelected && count > 0 && 'border-slate-200 text-slate-600 hover:border-slate-300',
                   count === 0 && 'border-slate-100 text-slate-300 cursor-not-allowed'
                 )}
               >
+                {isSelected && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 rounded-full bg-crystal-500 text-white"
+                  >
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                )}
                 <span className="block">{CATEGORY_LABELS[category]}</span>
                 <span className="text-xs opacity-70">({count})</span>
               </button>
             );
           })}
         </div>
+        <p className="text-sm text-slate-600 mt-2">
+          {selectedCategories.length} of {CATEGORIES.length} categories selected
+        </p>
       </div>
       </div>
 

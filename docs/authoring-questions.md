@@ -143,6 +143,30 @@ At least one other FGA-qualified reviewer should approve the rationale content b
 
 ---
 
+## Fill-in-the-Blank Answer Matching
+
+`fill-blank` items are scored by comparing the student's typed input against every string in
+`acceptedAnswers`. Matching is **normalized** on both sides before comparison:
+
+1. Leading/trailing whitespace is trimmed.
+2. The string is Unicode-decomposed (NFKD) and combining diacritics are stripped (so `café`
+   and `cafe` are treated as equal).
+3. The string is lowercased.
+4. Runs of internal whitespace are collapsed to a single space.
+
+This means a student does not need to match case, accents, or exact spacing to be marked
+correct. It does **not** perform numeric-word equivalence — `"10"` and `"ten"` are treated as
+different answers. If a fill-blank item has a numeral form and a spelled-out form that should
+both be accepted, list both explicitly in `acceptedAnswers`:
+
+```yaml
+acceptedAnswers:
+  - "10"
+  - ten
+```
+
+---
+
 ## Quality Bar for Curated Items
 
 > This section restates V1-PLAN.md §10 with additional worked examples.

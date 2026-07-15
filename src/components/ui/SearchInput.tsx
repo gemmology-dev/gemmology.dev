@@ -27,7 +27,7 @@ export function SearchInput({ className, value, onClear, ...props }: SearchInput
         className={twMerge(
           clsx(
             'w-full rounded-lg border border-slate-300 bg-white py-2 pl-10 pr-10',
-            'text-slate-900 placeholder-slate-400',
+            'text-slate-900 placeholder-slate-500',
             'focus:border-crystal-500 focus:outline-none focus:ring-2 focus:ring-crystal-500/20',
             'transition-colors'
           ),

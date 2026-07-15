@@ -41,7 +41,10 @@ const { data } = entry;
 
 // Resolve dateModified for SEO + visible "Last updated" line.
 // Order of preference: explicit reviewedAt frontmatter → file mtime fallback.
-function resolveDateModified(): string {
+// No further fallback: when neither resolves, we return null rather than
+// fabricate a "last updated today" claim (the sync script stamps git commit
+// times via stampGitMtime, so mtime is normally available for synced content).
+function resolveDateModified(): string | null {
   if (data.reviewedAt) return data.reviewedAt;
   try {
     const filePath = (entry as unknown as { filePath?: string }).filePath;
@@ -52,18 +55,20 @@ function resolveDateModified(): string {
   } catch {
     // fall through
   }
-  return new Date().toISOString();
+  return null;
 }
 
 const dateModified = resolveDateModified();
 // datePublished: use explicit publishedAt frontmatter, fall back to dateModified.
-const datePublished = data.publishedAt ?? dateModified;
+const datePublished = data.publishedAt ?? dateModified ?? undefined;
 
-const dateModifiedDisplay = new Date(dateModified).toLocaleDateString('en-GB', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const dateModifiedDisplay = dateModified
+  ? new Date(dateModified).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
 
 // Helper to format category/subcategory names for display
 function formatCategoryName(name: string): string {
@@ -212,7 +217,7 @@ const orderedRefs = hasCitations
     difficulty={data.difficulty}
     slug={entry.id}
     datePublished={datePublished}
-    dateModified={dateModified}
+    dateModified={dateModified ?? undefined}
     pretestQuestionCount={pretestQuestions.length}
     pretestQuestions={pretestQuestions}
     articleAuthor={data.author}
@@ -230,11 +235,13 @@ const orderedRefs = hasCitations
 
         <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
           <span>By <a href="/about" class="text-crystal-700 underline underline-offset-2 decoration-crystal-300 hover:decoration-crystal-700">{data.author || 'Fabian Moor'}</a></span>
-          <span>
-            Last updated
-            <time datetime={dateModified}>{dateModifiedDisplay}</time>
-            {data.reviewedBy && <span> by {data.reviewedBy}</span>}
-          </span>
+          {dateModified && dateModifiedDisplay && (
+            <span>
+              Last updated
+              <time datetime={dateModified}>{dateModifiedDisplay}</time>
+              {data.reviewedBy && <span> by {data.reviewedBy}</span>}
+            </span>
+          )}
         </div>
 
         {data.tags && data.tags.length > 0 && (
@@ -259,7 +266,8 @@ const orderedRefs = hasCitations
 
       <div class="prose prose-slate prose-lg max-w-none
                   prose-headings:text-slate-900
-                  prose-p:text-slate-600 prose-p:leading-relaxed
+                  prose-p:text-slate-600 prose-p:leading-relaxed prose-p:max-w-[70ch]
+                  prose-li:max-w-[70ch]
                   prose-strong:text-slate-900 prose-strong:font-semibold
                   prose-a:text-crystal-700 prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-a:decoration-crystal-300 hover:prose-a:decoration-crystal-700">
         {data.sections.map(section => (
