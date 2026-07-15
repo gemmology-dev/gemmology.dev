@@ -108,7 +108,7 @@ export function SpectroscopeCalculator() {
             placeholder="e.g., 694"
           />
           {!isValid && wavelength && (
-            <p className="text-xs text-red-500 mt-1">Valid range: 380-780nm</p>
+            <p className="text-xs text-red-600 mt-1">Valid range: 380-780nm</p>
           )}
         </div>
 

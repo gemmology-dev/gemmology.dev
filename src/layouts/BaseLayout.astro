@@ -93,7 +93,7 @@ const fullTitle = isHome
   </head>
   <body class="min-h-screen flex flex-col">
     {!noHeader && <Header />}
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
     {!noFooter && <Footer />}
