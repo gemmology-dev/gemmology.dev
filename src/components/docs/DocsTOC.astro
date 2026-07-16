@@ -1,0 +1,365 @@
+---
+/**
+ * DocsTOC - "On this page" navigation for long, hand-authored docs pages.
+ *
+ * Unlike `learn/TableOfContents.astro` (which receives structured `sections`
+ * data as a prop), docs pages are plain `.astro` files with hand-written
+ * `<h2>`/`<h3>` headings and no shared content schema. So this component
+ * builds its list entirely client-side: a script scans `contentSelector`
+ * for headings, assigns a stable slug id to any heading missing one, and
+ * renders the list + scroll-spy from that scan. There is no server-rendered
+ * fallback list - see the "why no build-time list" note in the script below.
+ *
+ * Rendered only by `DocsLayout.astro` when `showToc` is true (the long
+ * reference pages: CDL spec, CLI options, Components, and the 4 API pages).
+ *
+ * Mirrors the two-variant responsive split used by `learn/TableOfContents.astro`:
+ *   - Desktop (lg+): sticky right rail with scroll-spy.
+ *   - Mobile (<lg): floating "On this page" trigger + native `<dialog>`
+ *     bottom sheet. This is deliberately the *same* mobile pattern as the
+ *     learn TOC (not the `<details>` pattern `DocsSidebar` uses for the docs
+ *     nav tree) — the two mobile controls serve different purposes (jump to
+ *     a heading vs. cross-page navigation) and don't overlap on screen, so
+ *     reusing the proven learn pattern here keeps mobile TOC behaviour
+ *     consistent across the whole site.
+ *
+ * Both variants are hidden (via a shared `.docs-toc-root` wrapper) until the
+ * scan finds at least 2 headings, so pages with too few headings to be worth
+ * a TOC render nothing.
+ *
+ * `#docs-toc-root` carries `xl:h-full` deliberately: unlike `DocsSidebar`
+ * (whose top-level elements are the `<details>`/`<aside>` themselves, with
+ * no wrapper div), this component needs one real wrapper element to toggle
+ * visibility on `.is-ready`. `DocsLayout` stretches *its* grid cell to the
+ * full row height via `xl:self-stretch`, but a plain block child does not
+ * inherit that height automatically - without `xl:h-full` here, this div
+ * would shrink-wrap the sticky `<aside>`'s own rendered height, leaving the
+ * sticky element no room to travel (the exact bug already fixed on
+ * `/learn`, reintroduced one level deeper). Confirmed by scroll-testing:
+ * without this class the TOC rail scrolled off-screen; with it, it stays
+ * pinned at `top: 80px` alongside `DocsSidebar`.
+ */
+interface Props {
+  /** CSS selector for the container to scan for h2/h3 headings. Must match the id `DocsLayout` gives its content column. */
+  contentSelector?: string;
+}
+
+const { contentSelector = '#docs-content' } = Astro.props;
+---
+
+<div id="docs-toc-root" class="docs-toc-root xl:h-full" data-content-selector={contentSelector}>
+  <!-- Desktop: sticky rail with scroll-spy. Populated by the script below. -->
+  <aside
+    class="docs-toc hidden lg:block lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto"
+    aria-label="Table of contents"
+  >
+    <h2 class="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted">
+      On this page
+    </h2>
+    <nav>
+      <ul id="docs-toc-list" class="docs-toc-list m-0 list-none space-y-1 border-l border-slate-200 pl-0 text-sm dark:border-coffee-border"></ul>
+    </nav>
+  </aside>
+
+  <!-- Mobile: floating trigger, thumb-reachable at any scroll position. -->
+  <button
+    type="button"
+    id="docs-toc-mobile-trigger"
+    class="docs-toc-mobile-trigger lg:hidden fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold shadow-lg transition-colors
+           bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:text-slate-900
+           dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border dark:hover:bg-coffee-raised dark:hover:text-cream-primary
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-crystal-400"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="docs-toc-mobile-sheet"
+  >
+    <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+    On this page
+  </button>
+
+  <!-- Mobile: bottom sheet, opened by the trigger above. -->
+  <dialog id="docs-toc-mobile-sheet" class="docs-toc-mobile-sheet lg:hidden" aria-label="Table of contents">
+    <div class="flex items-center justify-between px-5 pt-5 pb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted">
+        On this page
+      </h2>
+      <button
+        type="button"
+        class="docs-toc-mobile-close -m-2 rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-cream-muted dark:hover:bg-coffee-raised dark:hover:text-cream-primary
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-crystal-400"
+        aria-label="Close table of contents"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="px-5 pb-6" aria-label="Table of contents sections">
+      <ul id="docs-toc-mobile-list" class="m-0 list-none space-y-1 pl-0 text-sm"></ul>
+    </nav>
+  </dialog>
+</div>
+
+<script>
+  // Why no build-time list: docs pages are hand-authored .astro files with
+  // no structured heading data available to this component at build time
+  // (unlike learn's TableOfContents, which receives `sections` as a prop).
+  // So the whole list - ids, entries, scroll-spy targets - is built here,
+  // client-side, from whatever <h2>/<h3> elements actually rendered inside
+  // `contentSelector`. This runs as a page-load module script (deferred by
+  // default), so it executes once per page after the DOM is parsed and
+  // before the load event - there is no user-visible flash in practice.
+  (function initDocsToc() {
+    const root = document.getElementById('docs-toc-root');
+    if (!root) return;
+
+    const selector = root.dataset.contentSelector || '#docs-content';
+    const content = document.querySelector(selector);
+    if (!content) return;
+
+    const headings = Array.from(content.querySelectorAll<HTMLElement>('h2, h3'));
+    if (headings.length < 2) return; // too short to be worth a TOC
+
+    const usedSlugs = new Set<string>();
+    function slugify(text: string): string {
+      let base = text
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      if (!base) base = 'section';
+      let slug = base;
+      let n = 2;
+      // Guard against colliding with an unrelated existing id elsewhere on
+      // the page, not just other headings.
+      while (usedSlugs.has(slug) || document.getElementById(slug) !== null) {
+        slug = `${base}-${n++}`;
+      }
+      usedSlugs.add(slug);
+      return slug;
+    }
+
+    interface TocEntry {
+      id: string;
+      text: string;
+      level: number;
+    }
+
+    const entries: TocEntry[] = headings.map((heading) => {
+      if (!heading.id) {
+        heading.id = slugify(heading.textContent || '');
+      } else {
+        usedSlugs.add(heading.id);
+      }
+      return {
+        id: heading.id,
+        text: heading.textContent || '',
+        level: heading.tagName === 'H3' ? 3 : 2,
+      };
+    });
+
+    const desktopAside = root.querySelector<HTMLElement>('.docs-toc');
+    const desktopList = document.getElementById('docs-toc-list');
+    const mobileTrigger = document.getElementById('docs-toc-mobile-trigger');
+    const mobileSheet = document.getElementById('docs-toc-mobile-sheet');
+    const mobileList = document.getElementById('docs-toc-mobile-list');
+    if (!desktopAside || !desktopList || !mobileTrigger || !mobileSheet || !mobileList) return;
+
+    function buildLink(entry: TocEntry, mobile: boolean): HTMLLIElement {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = `#${entry.id}`;
+      a.textContent = entry.text;
+      a.dataset.tocTarget = entry.id;
+      a.className = mobile
+        ? 'docs-toc-link docs-toc-mobile-link block rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-crystal-700 dark:text-cream-secondary dark:hover:bg-coffee-raised dark:hover:text-crystal-400'
+        : 'docs-toc-link block -ml-px border-l-2 border-transparent pl-3 py-1 text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors';
+      if (entry.level === 3) {
+        // Sub-heading: extra indent + slightly smaller type to read as nested.
+        a.style.paddingLeft = mobile ? '1.5rem' : '1.5rem';
+        a.style.fontSize = '0.8125rem';
+      }
+      li.appendChild(a);
+      return li;
+    }
+
+    entries.forEach((entry) => {
+      desktopList.appendChild(buildLink(entry, false));
+      mobileList.appendChild(buildLink(entry, true));
+    });
+
+    // Reveal now that there's something to show.
+    root.classList.add('is-ready');
+
+    // --- Scroll-spy (mirrors learn/TableOfContents.astro) ---
+    const links = root.querySelectorAll<HTMLAnchorElement>('.docs-toc-link');
+    const targets = entries
+      .map((entry) => document.getElementById(entry.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setActive = (slug: string | null) => {
+      links.forEach((link) => {
+        const isActive = slug !== null && link.dataset.tocTarget === slug;
+        if (isActive) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    const visible = new Set<string>();
+    const observer = new IntersectionObserver(
+      (observerEntries) => {
+        for (const observerEntry of observerEntries) {
+          const slug = (observerEntry.target as HTMLElement).id;
+          if (observerEntry.isIntersecting) {
+            visible.add(slug);
+          } else {
+            visible.delete(slug);
+          }
+        }
+        if (visible.size > 0) {
+          const topMost = targets.find((t) => visible.has(t.id));
+          if (topMost) setActive(topMost.id);
+        }
+      },
+      {
+        rootMargin: '-100px 0px -70% 0px',
+        threshold: 0,
+      }
+    );
+    targets.forEach((target) => observer.observe(target));
+
+    // --- Mobile bottom sheet (mirrors learn/TableOfContents.astro) ---
+    if (!(mobileTrigger instanceof HTMLButtonElement) || !(mobileSheet instanceof HTMLDialogElement)) {
+      return;
+    }
+
+    const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function openSheet() {
+      mobileSheet.showModal();
+      mobileTrigger.setAttribute('aria-expanded', 'true');
+      if (prefersReducedMotion()) {
+        mobileSheet.classList.add('toc-sheet--visible');
+      } else {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            mobileSheet.classList.add('toc-sheet--visible');
+          });
+        });
+      }
+    }
+
+    function closeSheet() {
+      if (!mobileSheet.open) return;
+      if (prefersReducedMotion()) {
+        mobileSheet.close();
+        return;
+      }
+      const onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== mobileSheet) return;
+        mobileSheet.removeEventListener('transitionend', onTransitionEnd);
+        if (mobileSheet.open) mobileSheet.close();
+      };
+      mobileSheet.addEventListener('transitionend', onTransitionEnd);
+      mobileSheet.classList.remove('toc-sheet--visible');
+    }
+
+    mobileTrigger.addEventListener('click', openSheet);
+    mobileSheet.querySelector('.docs-toc-mobile-close')?.addEventListener('click', closeSheet);
+
+    mobileSheet.addEventListener('click', (event) => {
+      if (event.target === mobileSheet) closeSheet();
+    });
+
+    mobileSheet.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeSheet();
+    });
+
+    mobileSheet.querySelectorAll<HTMLAnchorElement>('.docs-toc-mobile-link').forEach((link) => {
+      link.addEventListener('click', () => closeSheet());
+    });
+
+    mobileSheet.addEventListener('close', () => {
+      mobileTrigger.setAttribute('aria-expanded', 'false');
+      mobileSheet.classList.remove('toc-sheet--visible');
+      mobileTrigger.focus();
+    });
+  })();
+</script>
+
+<style>
+  /* Hidden until the script confirms there's a list worth showing. */
+  .docs-toc-root:not(.is-ready) {
+    display: none;
+  }
+
+  .docs-toc-link[aria-current='location'] {
+    color: #0369a1; /* crystal-700 */
+    border-left-color: #0369a1;
+    font-weight: 600;
+  }
+  :global([data-theme='dark']) .docs-toc-link[aria-current='location'] {
+    color: #38bdf8; /* crystal-400 */
+    border-left-color: #38bdf8;
+  }
+
+  .docs-toc-mobile-link[aria-current='location'] {
+    background-color: rgb(3 105 161 / 0.08);
+  }
+  :global([data-theme='dark']) .docs-toc-mobile-link[aria-current='location'] {
+    background-color: rgb(56 189 248 / 0.12);
+  }
+
+  .docs-toc-mobile-sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    padding: 0;
+    border: none;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background: #ffffff;
+    color: inherit;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 220ms ease;
+  }
+  .docs-toc-mobile-sheet.toc-sheet--visible {
+    transform: translateY(0);
+  }
+  .docs-toc-mobile-sheet::backdrop {
+    background: rgb(15 23 42 / 0.5);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+  .docs-toc-mobile-sheet.toc-sheet--visible::backdrop {
+    opacity: 1;
+  }
+  :global([data-theme='dark']) .docs-toc-mobile-sheet {
+    background: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+    border: 1px solid #362b23; /* coffee-border */
+    border-bottom: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .docs-toc-mobile-sheet,
+    .docs-toc-mobile-sheet::backdrop {
+      transition: none;
+    }
+  }
+</style>

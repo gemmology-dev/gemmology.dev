@@ -1,11 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { DocsLayout } from '../../components/docs';
 import { Button } from '../../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { IconBox } from '../../components/ui/IconBox';
 import { SectionHeader } from '../../components/ui/SectionHeader';
-import { Container } from '../../components/ui/Container';
 import { Link } from '../../components/ui/Link';
 import { DifficultyBadge } from '../../components/ui/DifficultyBadge';
 import { Table, DataTable, PropertyTable } from '../../components/ui/Table';
@@ -14,12 +13,13 @@ import { Table, DataTable, PropertyTable } from '../../components/ui/Table';
 const exampleIcon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>`;
 ---
 
-<BaseLayout
+<DocsLayout
   title="UI Components"
   description="Complete reference for gemmology.dev UI component library."
+  wide
+  showToc
 >
   <div class="bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
-    <Container size="xl" padding="md">
       <div class="max-w-3xl">
         <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">UI Component Library</h1>
         <p class="mt-4 text-lg text-slate-600 dark:text-cream-secondary">
@@ -441,6 +441,5 @@ className={'{'}cn('base-class', conditional && 'conditional-class', className){'
           </Card>
         </section>
       </div>
-    </Container>
   </div>
-</BaseLayout>
+</DocsLayout>

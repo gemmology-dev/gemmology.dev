@@ -1,38 +1,34 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
-import { Container } from '../../../components/ui-astro';
+import { DocsLayout, CodeBlock, APISignature, PropsTable } from '../../../components/docs';
 
 const geometryAttrs = [
   { name: 'vertices', type: 'np.ndarray', description: 'Nx3 array of vertex coordinates' },
   { name: 'faces', type: 'list[list[int]]', description: 'List of faces (each face is a list of vertex indices)' },
   { name: 'face_normals', type: 'list[np.ndarray]', description: 'Normal vectors for each face' },
-  { name: 'face_millers', type: 'list[tuple]', description: 'Miller indices for each face' },
   { name: 'face_forms', type: 'list[int]', description: 'Form index for each face (for colour-by-form rendering)' },
-  { name: 'twin', type: 'TwinMetadata | None', description: 'Twin metadata if geometry is twinned' },
+  { name: 'face_millers', type: 'list[tuple[int, int, int]]', description: 'Miller indices for each face' },
+  { name: 'forms', type: 'list[CrystalForm]', description: 'Original form definitions from CDL' },
+  { name: 'component_ids', type: 'list[int] | None', description: 'Component ID for each face, for twins/aggregates' },
+  { name: 'twin_metadata', type: 'TwinMetadata | None', description: 'Twin metadata if geometry is twinned' },
+  { name: 'is_amorphous', type: 'bool', description: 'Whether this is an amorphous (non-crystalline) geometry (default False)' },
+  { name: 'aggregate_metadata', type: 'AggregateMetadata | None', description: 'Aggregate metadata if geometry was generated via generate_aggregate()' },
 ];
 
 const latticeAttrs = [
-  { name: 'a', type: 'float', description: 'Unit cell parameter a' },
-  { name: 'b', type: 'float', description: 'Unit cell parameter b' },
-  { name: 'c', type: 'float', description: 'Unit cell parameter c' },
-  { name: 'alpha', type: 'float', description: 'Angle alpha in degrees' },
-  { name: 'beta', type: 'float', description: 'Angle beta in degrees' },
-  { name: 'gamma', type: 'float', description: 'Angle gamma in degrees' },
+  { name: 'a', type: 'float', description: 'Unit cell parameter a (default 1.0)' },
+  { name: 'b', type: 'float', description: 'Unit cell parameter b (default 1.0)' },
+  { name: 'c', type: 'float', description: 'Unit cell parameter c (default 1.0)' },
+  { name: 'alpha', type: 'float', description: 'Angle alpha, in radians (default π/2)' },
+  { name: 'beta', type: 'float', description: 'Angle beta, in radians (default π/2)' },
+  { name: 'gamma', type: 'float', description: 'Angle gamma, in radians (default π/2)' },
 ];
 ---
 
-<BaseLayout
+<DocsLayout
   title="crystal-geometry API"
   description="API reference for the crystal-geometry package - 3D geometry generation using half-space intersection."
+  showToc
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'API Reference', href: '/docs' },
-      { label: 'crystal-geometry' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -43,7 +39,7 @@ const latticeAttrs = [
 
       <p class="lead">
         Generate 3D crystal geometry from CDL descriptions using half-space intersection
-        and crystallographic symmetry operations. Version 1.0.5.
+        and crystallographic symmetry operations. Version 2.0.0.
       </p>
 
       <CodeBlock code="pip install gemmology-crystal-geometry" lang="bash" />
@@ -95,11 +91,24 @@ print(len(geom.faces))     # 8`}
 
       <APISignature
         name="halfspace_intersection_3d"
-        signature="halfspace_intersection_3d(normals, distances) → tuple[ndarray, list[list[int]]]"
+        signature="halfspace_intersection_3d(normals, distances, interior_point=None) → ndarray | None"
       />
 
-      <p>Compute the convex polyhedron defined by half-space intersection.
-      Returns vertices and faces.</p>
+      <p>Compute the vertices of the convex polyhedron defined by half-space intersection
+      (each half-space <code>normal · x ≤ distance</code>). Returns an Nx3 vertex array,
+      or <code>None</code> if the intersection is empty/unbounded. Use
+      <code>compute_face_vertices()</code> to derive the ordered face index list for
+      each plane from the resulting vertices.</p>
+
+      <APISignature
+        name="compute_face_vertices"
+        signature="compute_face_vertices(vertices, normal, distance, tolerance=1e-6) → list[int]"
+      />
+
+      <p>Find the vertex indices lying on a single face plane, ordered counter-clockwise
+      when viewed from outside. Called once per face normal/distance pair to build up
+      a polyhedron's <code>faces</code> list from the vertices returned by
+      <code>halfspace_intersection_3d</code>.</p>
 
       <h2>Convenience Constructors</h2>
 
@@ -167,20 +176,65 @@ print(len(matrices))  # 12 operations`}
         signature="apply_modifications(vertices, modifications) → ndarray"
       />
 
-      <p>Apply morphological modifications (elongate, flatten, taper) to vertices.</p>
+      <p>Apply morphological modifications (elongate, flatten, taper, twist) to vertices.
+      Each modifier takes a <code>params</code> dict (matching the parsed CDL
+      <code>Modification.params</code>), not individual keyword arguments.</p>
 
       <CodeBlock
         lang="python"
-        code={`from crystal_geometry import apply_elongation, apply_flatten, apply_taper
+        code={`from crystal_geometry import apply_elongation, apply_flatten, apply_taper, apply_twist
 
 # Elongate along c-axis
-vertices = apply_elongation(vertices, axis='c', ratio=1.5)
+vertices = apply_elongation(vertices, {'axis': 'c', 'ratio': 1.5})
 
 # Flatten along c-axis
-vertices = apply_flatten(vertices, axis='c', ratio=0.5)
+vertices = apply_flatten(vertices, {'axis': 'c', 'ratio': 0.5})
 
 # Taper toward one end
-vertices = apply_taper(vertices, direction='c', factor=0.3)`}
+vertices = apply_taper(vertices, {'direction': '+c', 'factor': 0.3})
+
+# Twist around an axis
+vertices = apply_twist(vertices, {'axis': 'c', 'angle': 30})`}
+      />
+
+      <h2>Amorphous &amp; Aggregate Geometry</h2>
+
+      <APISignature
+        name="generate_amorphous_shape"
+        signature="generate_amorphous_shape(shape: str, radius: float = 1.0, seed: int = 42) → CrystalGeometry"
+      />
+
+      <p>Generate non-crystalline geometry (e.g. <code>massive</code>, <code>botryoidal</code>,
+      <code>reniform</code>, <code>stalactitic</code>, <code>mammillary</code>, <code>nodular</code>,
+      <code>conchoidal</code>) for CDL <code>amorphous[...]</code> descriptions. The returned
+      <code>CrystalGeometry</code> has <code>is_amorphous=True</code>. <code>seed</code> makes the
+      procedural mesh deterministic.</p>
+
+      <APISignature
+        name="generate_aggregate"
+        signature="generate_aggregate(base_geometry: CrystalGeometry, arrangement: str, count: int, spacing: float | None = None, orientation: str | None = None, seed: int = 42) → CrystalGeometry"
+      />
+
+      <p>Instance a base geometry into a crystal aggregate (<code>parallel</code>, <code>random</code>,
+      <code>radial</code>, <code>epitaxial</code>, <code>druse</code>, <code>cluster</code>
+      arrangements), matching CDL's <code>~</code> aggregate operator. The result's
+      <code>aggregate_metadata</code> records the arrangement, instance count, spacing, and
+      orientation; <code>component_ids</code> attributes each face back to its instance.
+      <code>count</code> is capped by <code>AGGREGATE_MAX_INSTANCES</code>.</p>
+
+      <CodeBlock
+        lang="python"
+        code={`from crystal_geometry import generate_amorphous_shape, generate_aggregate, create_octahedron
+
+# Botryoidal amorphous mass (e.g. precious opal)
+geom = generate_amorphous_shape("botryoidal", radius=1.0)
+print(geom.is_amorphous)  # True
+
+# Cluster of octahedra
+base = create_octahedron()
+cluster = generate_aggregate(base, arrangement="cluster", count=6)
+print(cluster.aggregate_metadata.arrangement)  # 'cluster'
+print(cluster.aggregate_metadata.n_instances)  # 6`}
       />
 
       <h2>Twin System</h2>
@@ -194,19 +248,19 @@ vertices = apply_taper(vertices, direction='c', factor=0.3)`}
     TwinLaw,
 )
 
-# List all available twin laws
+# List all available twin laws (14 total)
 laws = list_twin_laws()
-print(laws)  # ['spinel', 'iron_cross', 'brazil', ...]
+print(laws)  # ['albite', 'baveno', 'brazil', 'carlsbad', 'dauphine', ...]
 
-# Get a specific twin law
-law = get_twin_law("spinel")
-print(law.name)      # 'spinel'
-print(law.axis)      # Twin axis
-print(law.angle)     # Rotation angle
+# Get a specific twin law (note: 'spinel_law', not 'spinel')
+law = get_twin_law("spinel_law")
+print(law.name)      # 'Spinel Law (Macle)'
+print(law.axis)      # array([...]) - twin rotation/reflection axis
+print(law.angle)     # 180.0
 
 # Get all twin laws for a specific gemstone
 twins = get_gemstone_twins("quartz")
-print(twins)  # ['dauphine', 'brazil', 'japan']`}
+print(twins)  # ['brazil', 'dauphine', 'japan']`}
       />
 
       <h2>Habit System</h2>
@@ -220,17 +274,20 @@ print(twins)  # ['dauphine', 'brazil', 'japan']`}
     CrystalHabit,
 )
 
-# List all registered habits
+# List all registered habits (15 total)
 habits = list_habits()
-print(habits)  # ['octahedron', 'cube', 'hexagonal_prism', ...]
+print(habits)  # ['barrel', 'cube', 'dodecahedron', 'feldspar_tabular', ...]
 
-# Get a specific habit
-habit = get_habit("hexagonal_prism")
-geom = habit.generate()
+# Get a specific habit - CrystalHabit exposes vertices/faces directly
+# (there is no .generate() method)
+habit = get_habit("hexagonal_prism", scale=1.0)
+print(habit.name)            # 'Hexagonal Prism'
+print(habit.vertices.shape)  # (12, 3)
+print(len(habit.faces))      # 8
 
 # Get habits for a specific gemstone
 gem_habits = get_gemstone_habits("diamond")
-print(gem_habits)  # ['octahedron', 'cube', 'dodecahedron']`}
+print(gem_habits)  # ['octahedron', 'dodecahedron', 'cube']`}
       />
 
       <h2>Classes</h2>
@@ -272,13 +329,7 @@ print(get_backend())      # 'native' or 'python'
 print(get_backend_info()) # Detailed backend information`}
       />
     </article>
-
-    <PageNav
-      prev={{ label: 'cdl-parser API', href: '/docs/api/cdl-parser' }}
-      next={{ label: 'mineral-database API', href: '/docs/api/mineral-database' }}
-    />
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

@@ -1,7 +1,5 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
-import { Container } from '../../../components/ui-astro';
+import { DocsLayout, CodeBlock, APISignature, PropsTable } from '../../../components/docs';
 
 const cdlSvgParams = [
   { option: 'cdl_string', type: 'str', default: 'Required', description: 'CDL notation string' },
@@ -39,17 +37,11 @@ const geometrySvgParams = [
 ];
 ---
 
-<BaseLayout
+<DocsLayout
   title="crystal-renderer API"
   description="API reference for the crystal-renderer package - render crystals to SVG, STL, and glTF."
+  showToc
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'API Reference', href: '/docs' },
-      { label: 'crystal-renderer' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -60,7 +52,7 @@ const geometrySvgParams = [
 
       <p class="lead">
         Render crystal geometry to SVG for visualisation, STL for 3D printing,
-        and glTF for web/AR/VR applications. Version 1.0.1.
+        and glTF for web/AR/VR applications. Version 2.0.0.
       </p>
 
       <CodeBlock code="pip install gemmology-crystal-renderer" lang="bash" />
@@ -337,13 +329,7 @@ convert_svg_to_raster("crystal.svg", "crystal.jpg", output_format="jpg", quality
 )`}
       />
     </article>
-
-    <PageNav
-      prev={{ label: 'mineral-database API', href: '/docs/api/mineral-database' }}
-      next={{ label: 'CLI Reference', href: '/docs/cli' }}
-    />
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

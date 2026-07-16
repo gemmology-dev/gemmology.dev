@@ -1,0 +1,113 @@
+---
+/**
+ * DocsSidebar - persistent cross-page navigation for the /docs section.
+ *
+ * Renders the grouped nav tree from `src/lib/docs/nav.ts` (single source of
+ * truth, shared with the flat prev/next ordering and breadcrumb lookup).
+ *
+ * Two variants, each responsible for hiding itself at the "wrong" breakpoint
+ * (mirrors the pattern in `src/components/learn/TableOfContents.astro`):
+ *   - Mobile (<lg): a `<details>` "Documentation menu" disclosure sitting
+ *     inline at the top of the content column. A `<details>` (rather than
+ *     the floating-button+dialog pattern also used on this site for
+ *     `DocsTOC`) was chosen deliberately: this is a full page tree, not a
+ *     handful of in-page anchors, and long docs pages already get a floating
+ *     "On this page" button from `DocsTOC` — a second floating trigger on
+ *     the same screen would be redundant and visually competing. A simple
+ *     inline disclosure avoids that collision entirely.
+ *   - Desktop (lg+): a sticky aside rail. `DocsLayout.astro` places this
+ *     component's wrapper in a grid cell with `lg:self-stretch` so the cell
+ *     spans the full row height - without that, `position: sticky` has no
+ *     room to travel and the rail scrolls off with the page (the bug fixed
+ *     in `learn/TableOfContents.astro`; do not reintroduce it here).
+ */
+import { docsNav, isDocsNavActive } from '../../lib/docs/nav';
+
+const pathname = Astro.url.pathname;
+---
+
+<!-- Mobile: collapsible disclosure -->
+<details class="docs-nav-mobile lg:hidden mb-8 group rounded-xl border border-slate-200 bg-white dark:border-coffee-border dark:bg-coffee-raised">
+  <summary class="flex cursor-pointer select-none list-none items-center justify-between px-4 py-3 text-sm font-semibold text-slate-900 dark:text-cream-primary [&::-webkit-details-marker]:hidden">
+    <span class="flex items-center gap-2">
+      <svg class="h-4 w-4 shrink-0 text-slate-500 dark:text-cream-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      Documentation menu
+    </span>
+    <svg class="docs-nav-chevron h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180 dark:text-cream-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  </summary>
+  <nav class="border-t border-slate-200 px-4 py-4 dark:border-coffee-border" aria-label="Documentation sections">
+    {docsNav.map((group) => (
+      <div class="mt-5 first:mt-0">
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted">{group.title}</p>
+        <ul class="m-0 list-none space-y-1 pl-0">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isDocsNavActive(item.href, pathname) ? 'page' : undefined}
+                class="docs-nav-link block rounded-lg px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-crystal-700 dark:text-cream-secondary dark:hover:bg-coffee-raised2 dark:hover:text-crystal-400"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+</details>
+
+<!-- Desktop: sticky rail -->
+<aside class="docs-sidebar hidden lg:block lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto" aria-label="Documentation navigation">
+  <nav>
+    {docsNav.map((group) => (
+      <div class="mb-6 last:mb-0">
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted">{group.title}</p>
+        <ul class="m-0 list-none space-y-1 border-l border-slate-200 pl-0 dark:border-coffee-border">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isDocsNavActive(item.href, pathname) ? 'page' : undefined}
+                class="docs-nav-link -ml-px block border-l-2 border-transparent py-1.5 pl-3 text-sm text-slate-600 transition-colors hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+</aside>
+
+<style>
+  .docs-nav-link[aria-current='page'] {
+    color: #0369a1; /* crystal-700, matches the learn TOC active ramp */
+    border-left-color: #0369a1;
+    font-weight: 600;
+  }
+  :global([data-theme='dark']) .docs-nav-link[aria-current='page'] {
+    color: #38bdf8; /* crystal-400 */
+    border-left-color: #38bdf8;
+  }
+
+  /* Mobile disclosure rows are borderless pill rows (no left-rail), so the
+     active state there needs its own background tint instead - the
+     color/font-weight rule above still applies via the shared selector. */
+  .docs-nav-mobile .docs-nav-link[aria-current='page'] {
+    background-color: rgb(3 105 161 / 0.08); /* crystal-700 tint */
+  }
+  :global([data-theme='dark']) .docs-nav-mobile .docs-nav-link[aria-current='page'] {
+    background-color: rgb(56 189 248 / 0.12); /* crystal-400 tint */
+  }
+</style>

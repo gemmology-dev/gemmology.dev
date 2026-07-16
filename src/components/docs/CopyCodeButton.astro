@@ -1,0 +1,134 @@
+---
+/**
+ * CopyCodeButton - framework-free "copy to clipboard" affordance for inline
+ * CDL/code snippets.
+ *
+ * Renders a small icon button that copies its `code` prop to the clipboard
+ * and swaps to a checkmark + "Copied" state briefly on success. Follows the
+ * same pattern as ThemeToggle.astro: a single delegated click listener bound
+ * once per page (guarded by a `window` flag), so this can be rendered dozens
+ * of times on one page (e.g. one per example card) without adding dozens of
+ * listeners.
+ */
+interface Props {
+  code: string;
+  label?: string;
+  class?: string;
+}
+
+const { code, label = 'Copy CDL to clipboard', class: className = '' } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['copy-code-btn', className]}
+  data-copy-code={code}
+  data-copy-label={label}
+  aria-label={label}
+>
+  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3a2.25 2.25 0 00-2.166 1.638m7.332 0c.055.194.084.4.084.612v.75c0 .414-.336.75-.75.75h-5.25a.75.75 0 01-.75-.75v-.75c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185.639-.075 1.281-.135 1.927-.184"
+    ></path>
+  </svg>
+  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"></path>
+  </svg>
+  <span class="copy-code-btn-status" aria-live="polite"></span>
+</button>
+
+<style>
+  .copy-code-btn {
+    @apply inline-flex items-center justify-center rounded-md p-1.5;
+    @apply text-slate-400 hover:text-crystal-700 hover:bg-slate-100;
+    @apply dark:text-cream-muted dark:hover:text-crystal-300 dark:hover:bg-coffee-raised2;
+    @apply transition-colors;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-1 dark:focus-visible:ring-crystal-400;
+  }
+
+  .copy-code-btn .copy-icon,
+  .copy-code-btn .check-icon {
+    @apply w-4 h-4;
+  }
+
+  .copy-code-btn .check-icon {
+    display: none;
+  }
+
+  .copy-code-btn.copied {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+
+  .copy-code-btn.copied .copy-icon {
+    display: none;
+  }
+
+  .copy-code-btn.copied .check-icon {
+    display: inline-flex;
+  }
+
+  .copy-code-btn-status {
+    @apply sr-only;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      // Fallback for browsers/contexts without the async Clipboard API
+      // (e.g. insecure contexts).
+      return new Promise(function (resolve, reject) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }
+
+    function showCopied(btn) {
+      var status = btn.querySelector('.copy-code-btn-status');
+      window.clearTimeout(btn.__copyResetTimer);
+      btn.classList.add('copied');
+      btn.setAttribute('aria-label', 'Copied to clipboard');
+      if (status) status.textContent = 'Copied to clipboard';
+      btn.__copyResetTimer = window.setTimeout(function () {
+        btn.classList.remove('copied');
+        btn.setAttribute('aria-label', btn.getAttribute('data-copy-label') || 'Copy CDL to clipboard');
+        if (status) status.textContent = '';
+      }, 1600);
+    }
+
+    if (!window.__copyCodeButtonBound) {
+      window.__copyCodeButtonBound = true;
+
+      document.addEventListener('click', function (event) {
+        var btn = event.target.closest ? event.target.closest('.copy-code-btn') : null;
+        if (!btn) return;
+        var text = btn.getAttribute('data-copy-code') || '';
+        copyText(text)
+          .then(function () {
+            showCopied(btn);
+          })
+          .catch(function () {
+            /* Clipboard write failed silently - no destructive fallback needed. */
+          });
+      });
+    }
+  })();
+</script>

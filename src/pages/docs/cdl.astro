@@ -1,21 +1,15 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Button, Card } from '../../components/ui-astro';
+import { DocsLayout } from '../../components/docs';
+import { Button, Card } from '../../components/ui-astro';
 import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 ---
 
-<BaseLayout
+<DocsLayout
   title="CDL Specification"
   description="Complete Crystal Description Language (CDL) specification for defining crystal morphology."
+  showToc
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'CDL Specification' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -1041,8 +1035,7 @@ value       = NUMBER | IDENTIFIER`} />
         </Card>
       )}
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only

@@ -7,3 +7,6 @@ export { default as PropsTable } from './PropsTable.astro';
 export { default as Breadcrumb } from './Breadcrumb.astro';
 export { default as PageNav } from './PageNav.astro';
 export { default as Callout } from './Callout.astro';
+export { default as DocsLayout } from './DocsLayout.astro';
+export { default as DocsSidebar } from './DocsSidebar.astro';
+export { default as DocsTOC } from './DocsTOC.astro';

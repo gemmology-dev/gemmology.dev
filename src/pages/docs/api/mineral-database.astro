@@ -1,7 +1,6 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { Breadcrumb, CodeBlock, APISignature, PropsTable, PageNav } from '../../../components/docs';
-import { Container, Card } from '../../../components/ui-astro';
+import { DocsLayout, CodeBlock, APISignature, PropsTable } from '../../../components/docs';
+import { Card } from '../../../components/ui-astro';
 
 const mineralAttrs = [
   { name: 'id', type: 'str', description: 'Preset ID (e.g., "diamond-octahedron")' },
@@ -31,20 +30,17 @@ const familyAttrs = [
   { name: 'origin', type: 'str', description: 'Origin: natural, synthetic, simulant, composite' },
   { name: 'growth_method', type: 'str | None', description: 'Synthesis method (synthetics only)' },
   { name: 'natural_counterpart_id', type: 'str | None', description: 'ID of natural equivalent' },
+  { name: 'manufacturer', type: 'str | None', description: 'Manufacturer (synthetics only)' },
+  { name: 'year_first_produced', type: 'int | None', description: 'Year first produced (synthetics only)' },
+  { name: 'diagnostic_synthetic_features', type: 'str | None', description: 'Distinguishing features vs. the natural counterpart' },
 ];
 ---
 
-<BaseLayout
+<DocsLayout
   title="mineral-database API"
   description="API reference for the mineral-database package - query mineral presets with CDL definitions."
+  showToc
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'API Reference', href: '/docs' },
-      { label: 'mineral-database' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -55,7 +51,7 @@ const familyAttrs = [
 
       <p class="lead">
         SQLite database of 159 mineral families (116 natural + 19 synthetic + 20 simulant + 4 composite)
-        with 216 CDL expressions, crystal system data, and gemmological properties. Version 2.2.0.
+        with 216 CDL expressions, crystal system data, and gemmological properties. Version 2.3.0.
         Includes amorphous material support for opal, turquoise, pearl, and more.
       </p>
 
@@ -74,13 +70,13 @@ const familyAttrs = [
         lang="python"
         code={`from mineral_database import get_preset
 
-preset = get_preset("quartz")
+preset = get_preset("quartz-prism")
 if preset:
-    print(preset['name'])         # "Quartz"
+    print(preset['name'])         # "Quartz (Prismatic)"
     print(preset['cdl'])          # CDL expression string
     print(preset['system'])       # "trigonal"
-    print(preset['hardness'])     # "7"
-    print(preset['ri'])           # "1.544-1.553"`}
+    print(preset['hardness'])     # 7.0
+    print(preset['ri'])           # 1.544`}
       />
 
       <APISignature
@@ -96,8 +92,7 @@ if preset:
 
 mineral = get_mineral("diamond-octahedron")
 if mineral:
-    print(mineral.name)     # "Diamond"
-    print(mineral.cdl)      # "cubic[m3m]:{111}@1.0 + {110}@0.2"
+    print(mineral.name)     # "Diamond (Octahedron)"
     print(mineral.system)   # "cubic"
     print(mineral.origin)   # "natural"`}
       />
@@ -114,7 +109,7 @@ if mineral:
         code={`from mineral_database import list_presets
 
 names = list_presets()
-print(len(names))  # 140
+print(len(names))  # 216
 
 # Filter by crystal system
 cubic = list_presets("cubic")
@@ -133,10 +128,10 @@ print(len(cubic))  # All cubic presets`}
         code={`from mineral_database import search_presets
 
 results = search_presets("beryl")
-print(results)  # ['beryl-prismatic', 'emerald-prismatic', ...]
+print(results)  # ['alexandrite', 'beryl-prism', 'beryl-tabular', ...]
 
 results = search_presets("SiO2")
-print(results)  # Quartz, Amethyst, etc.`}
+print(results)  # ['amethyst', 'ametrine', 'chalcedony-botryoidal', ...] (quartz-group species)`}
       />
 
       <APISignature
@@ -197,7 +192,7 @@ for m in matches:
 
 # All synthetics
 synths = list_synthetics()
-print(synths)  # ['cvd-diamond', 'flame-fusion-ruby', ...]
+print(synths)  # ['synthetic-diamond-cvd', 'synthetic-sapphire-czochralski', ...]
 
 # Filter by method
 flux = list_synthetics(growth_method="flux")
@@ -217,11 +212,11 @@ print(flux)  # Flux-grown synthetics only`}
 
 # All simulants
 sims = list_simulants()
-print(sims)  # ['cubic-zirconia', 'moissanite', ...]
+print(sims)  # ['ambroid', 'bone', 'copal', 'cubic-zirconia', ...]
 
 # Diamond simulants specifically
 diamond_sims = list_simulants(target="diamond")
-print(diamond_sims)  # ['cubic-zirconia', 'moissanite', ...]`}
+print(diamond_sims)  # ['cubic-zirconia', 'ggg', 'luag', 'moissanite', 'strontium-titanate', 'synthetic-rutile', 'yag']`}
       />
 
       <APISignature
@@ -236,8 +231,8 @@ print(diamond_sims)  # ['cubic-zirconia', 'moissanite', ...]`}
         code={`from mineral_database import get_counterparts
 
 cp = get_counterparts("diamond")
-print(cp['synthetics'])  # ['cvd-diamond', 'hpht-diamond']
-print(cp['simulants'])   # ['cubic-zirconia', 'moissanite', ...]`}
+print(cp['synthetics'])  # ['synthetic-diamond-cvd', 'synthetic-diamond-hpht']
+print(cp['simulants'])   # ['cubic-zirconia', 'ggg', 'luag', 'moissanite', ...]`}
       />
 
       <APISignature
@@ -251,9 +246,9 @@ print(cp['simulants'])   # ['cubic-zirconia', 'moissanite', ...]`}
         lang="python"
         code={`from mineral_database import list_by_origin
 
-naturals = list_by_origin("natural")     # 68 families
-synthetics = list_by_origin("synthetic") # 15 families
-simulants = list_by_origin("simulant")   # 9 families
+naturals = list_by_origin("natural")     # 116 families
+synthetics = list_by_origin("synthetic") # 19 families
+simulants = list_by_origin("simulant")   # 20 families
 composites = list_by_origin("composite") # 4 families`}
       />
 
@@ -395,13 +390,7 @@ set_database_path(Path("/path/to/custom/minerals.db"))`}
         </p>
       </div>
     </article>
-
-    <PageNav
-      prev={{ label: 'crystal-geometry API', href: '/docs/api/crystal-geometry' }}
-      next={{ label: 'crystal-renderer API', href: '/docs/api/crystal-renderer' }}
-    />
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

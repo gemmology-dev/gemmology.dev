@@ -1,21 +1,14 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Button, Card } from '../../components/ui-astro';
+import { DocsLayout } from '../../components/docs';
+import { Button, Card } from '../../components/ui-astro';
 import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 ---
 
-<BaseLayout
+<DocsLayout
   title="Quick Start"
   description="Generate your first crystal visualisation in 5 lines of Python."
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'Quick Start' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -184,8 +177,7 @@ cdl --list-twins`} />
         </Button>
       </div>
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {
