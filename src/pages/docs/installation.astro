@@ -1,20 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Button } from '../../components/ui-astro';
+import { DocsLayout } from '../../components/docs';
+import { Button } from '../../components/ui-astro';
 ---
 
-<BaseLayout
+<DocsLayout
   title="Installation"
   description="Install gemmology.dev packages via pip for crystal visualisation."
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'Installation' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -167,8 +160,7 @@ pytest`} />
         </Button>
       </div>
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

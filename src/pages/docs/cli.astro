@@ -1,20 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Card } from '../../components/ui-astro';
+import { DocsLayout } from '../../components/docs';
+import { Card } from '../../components/ui-astro';
 ---
 
-<BaseLayout
+<DocsLayout
   title="CLI Reference"
   description="Command-line interface reference for CDL parsing, mineral database queries, and crystal visualisation."
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'CLI Reference' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -256,8 +249,7 @@ mineral-db --help
 gemmology --help`} />
       </Card>
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

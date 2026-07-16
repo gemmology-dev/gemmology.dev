@@ -1,50 +1,28 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { DocsLayout } from '../../components/docs';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
 import { Card } from '../../components/ui/Card';
-import { Container } from '../../components/ui/Container';
 import { SectionHeader } from '../../components/ui/SectionHeader';
+import { docsNav } from '../../lib/docs/nav';
 
-const sections = [
-  {
-    title: 'Getting Started',
-    items: [
-      { href: '/docs/installation', label: 'Installation', description: 'Install gemmology packages via pip' },
-      { href: '/docs/quickstart', label: 'Quick Start', description: 'Generate your first crystal visualisation' },
-    ],
-  },
-  {
-    title: 'CDL Language',
-    items: [
-      { href: '/docs/cdl', label: 'CDL Specification', description: 'Complete Crystal Description Language reference' },
-      { href: '/docs/cdl-examples', label: 'CDL Examples', description: 'Common patterns and recipes' },
-    ],
-  },
-  {
-    title: 'API Reference',
-    items: [
-      { href: '/docs/api/cdl-parser', label: 'cdl-parser', description: 'Parse and validate CDL expressions' },
-      { href: '/docs/api/crystal-geometry', label: 'crystal-geometry', description: '3D geometry generation' },
-      { href: '/docs/api/mineral-database', label: 'mineral-database', description: 'Query mineral presets' },
-      { href: '/docs/api/crystal-renderer', label: 'crystal-renderer', description: 'Render crystals to SVG, STL, glTF' },
-    ],
-  },
-  {
-    title: 'CLI Reference',
-    items: [
-      { href: '/docs/cli', label: 'Command Line', description: 'Generate crystals from the terminal' },
-      { href: '/docs/cli-options', label: 'CLI Options', description: 'Complete list of command-line flags' },
-    ],
-  },
-];
+// Hub cards for every docs page, sourced from the same nav tree that drives
+// DocsSidebar and PageNav (src/lib/docs/nav.ts) - this page no longer keeps
+// its own copy. `/docs` itself (the "Overview" entry) is excluded since a
+// self-referential card on the docs home page wouldn't make sense.
+const sections = docsNav
+  .map((group) => ({
+    title: group.title,
+    items: group.items.filter((item) => item.href !== '/docs'),
+  }))
+  .filter((group) => group.items.length > 0);
 ---
 
-<BaseLayout
+<DocsLayout
   title="Documentation"
   description="Complete documentation for gemmology.dev packages, CDL language, and CLI tools."
+  wide
 >
   <div class="bg-gradient-to-b from-slate-50 to-white dark:from-coffee-page dark:to-coffee-page">
-    <Container size="xl" padding="md">
       <div class="max-w-3xl">
         <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">Documentation</h1>
         <p class="mt-4 text-lg text-slate-600 dark:text-cream-secondary">
@@ -92,6 +70,5 @@ svg = generate_svg(geom)`} />
           </div>
         </div>
       </Card>
-    </Container>
   </div>
-</BaseLayout>
+</DocsLayout>

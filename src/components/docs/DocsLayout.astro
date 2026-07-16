@@ -1,0 +1,93 @@
+---
+/**
+ * DocsLayout - shared chrome for every page under `/docs`.
+ *
+ * Wraps `BaseLayout` and adds the persistent `DocsSidebar`, an automatic
+ * `Breadcrumb` + `PageNav` (both derived from the single nav tree in
+ * `src/lib/docs/nav.ts` for the current `Astro.url.pathname`), and
+ * optionally `DocsTOC` for long reference pages.
+ *
+ * Usage - replace a page's `<BaseLayout title=... description=...>` +
+ * its own `<Container>`/`<Breadcrumb>`/`<PageNav>` with:
+ *
+ *   <DocsLayout title="..." description="...">
+ *     <article>...page content, unchanged...</article>
+ *   </DocsLayout>
+ *
+ * Pass `showToc` for the long reference pages (CDL spec, CLI options,
+ * Components, the 4 API pages) to render `DocsTOC` in a third rail at xl+.
+ * Pass `wide` for pages whose content is a card grid / component gallery
+ * rather than a prose article (index, components) so the content column
+ * isn't capped to reading width.
+ *
+ * Layout/responsive approach:
+ *   - Mobile (<lg): single column. `DocsSidebar` renders its `<details>`
+ *     disclosure inline above the content; `DocsTOC` (if present) renders
+ *     its own floating button + bottom sheet, independent of scroll
+ *     position.
+ *   - lg+: two-column CSS grid, `[240px_minmax(0,1fr)]` - sidebar rail then
+ *     content. Both the sidebar's and (at xl+, see below) the TOC's grid
+ *     cells get `lg:self-stretch`/`xl:self-stretch` so the cell spans the
+ *     full row height. This is required for `position: sticky` to have any
+ *     travel room - a cell that shrink-wraps its sticky child's own height
+ *     gives the sticky rule nothing to do, which was the exact bug just
+ *     fixed on `/learn`. Verified by measuring the sidebar's
+ *     `getBoundingClientRect()` after a ~1500px scroll (see verification
+ *     notes in the PR/commit for this change).
+ *   - xl+ (only when `showToc`): a third `240px` column is added for
+ *     `DocsTOC`, so long pages become sidebar | content | TOC.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocsSidebar from './DocsSidebar.astro';
+import DocsTOC from './DocsTOC.astro';
+import Breadcrumb from './Breadcrumb.astro';
+import PageNav from './PageNav.astro';
+import { Container } from '../ui-astro';
+import { getDocsBreadcrumb, getDocsPageNav } from '../../lib/docs/nav';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Render the in-page "On this page" TOC rail (long reference pages only). */
+  showToc?: boolean;
+  /** Card-grid/gallery pages that want the full content-column width instead of a reading-width cap. */
+  wide?: boolean;
+}
+
+const { title, description, showToc = false, wide = false } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const breadcrumbItems = getDocsBreadcrumb(pathname);
+const { prev, next } = getDocsPageNav(pathname);
+---
+
+<BaseLayout title={title} description={description}>
+  <Container size="xl" padding="lg">
+    <div
+      class:list={[
+        'lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 lg:items-start',
+        showToc && 'xl:grid-cols-[240px_minmax(0,1fr)_240px]',
+      ]}
+    >
+      <div class="lg:col-start-1 lg:row-start-1 lg:self-stretch">
+        <DocsSidebar />
+      </div>
+
+      <div class:list={['min-w-0 lg:col-start-2 lg:row-start-1', !wide && 'max-w-4xl']}>
+        {breadcrumbItems && <Breadcrumb items={breadcrumbItems} />}
+
+        <div id="docs-content">
+          <slot />
+        </div>
+
+        <PageNav prev={prev} next={next} />
+      </div>
+
+      {showToc && (
+        <div class="hidden xl:block xl:col-start-3 xl:row-start-1 xl:self-stretch">
+          <DocsTOC />
+        </div>
+      )}
+    </div>
+  </Container>
+</BaseLayout>

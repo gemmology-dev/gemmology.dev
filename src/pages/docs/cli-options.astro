@@ -1,20 +1,14 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Button } from '../../components/ui-astro';
+import { DocsLayout } from '../../components/docs';
+import { Button } from '../../components/ui-astro';
 ---
 
-<BaseLayout
+<DocsLayout
   title="CLI Options"
   description="Complete command-line options reference for cdl and mineral-db CLI tools."
+  showToc
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'CLI Options' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -299,8 +293,7 @@ mineral-db --json diamond-octahedron | python -c "import sys,json; d=json.load(s
         </Button>
       </div>
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   :global([data-theme='dark'] .prose code) {

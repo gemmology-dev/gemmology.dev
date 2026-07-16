@@ -1,13 +1,18 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import CodeBlock from '../../components/docs/CodeBlock.astro';
-import { Breadcrumb } from '../../components/docs';
-import { Container, Button, Card } from '../../components/ui-astro';
+import CopyCodeButton from '../../components/docs/CopyCodeButton.astro';
+import Callout from '../../components/docs/Callout.astro';
+import { DocsLayout } from '../../components/docs';
+import { Button, Card } from '../../components/ui-astro';
 import { PLAYGROUND_ENABLED } from '../../lib/feature-flags';
 
+// `specAnchor` points at the matching heading id in /docs/cdl - used for the
+// "Syntax reference" link on each section, and doubles as the graceful
+// degradation path while the Playground is disabled (see feature-flags.ts).
 const examples = [
   {
     category: 'Basic Crystals',
+    specAnchor: 'miller-indices',
     description: 'Single-form crystal habits using Miller indices or named forms.',
     items: [
       { name: 'Diamond Octahedron', cdl: 'cubic[m3m]:{111}', description: 'Classic octahedral habit' },
@@ -22,6 +27,7 @@ const examples = [
   },
   {
     category: 'Multi-form Combinations',
+    specAnchor: 'combining-forms',
     description: 'Crystals with multiple forms combined using the + operator.',
     items: [
       { name: 'Diamond (Octahedron + Dodecahedron)', cdl: 'cubic[m3m]:{111}@1.0 + {110}@0.2', description: 'Octahedron with minor dodecahedron truncation' },
@@ -39,6 +45,7 @@ const examples = [
   },
   {
     category: 'Modifications',
+    specAnchor: 'modifications',
     description: 'Crystal shapes modified by elongation, flattening, or tapering.',
     items: [
       { name: 'Quartz (Elongated Prism)', cdl: 'trigonal[32]:{10-10}@0.5 + {10-11}@1.2 + {01-11}@1.0 | elongate(c:2.0)', description: 'Classic elongated quartz crystal' },
@@ -49,6 +56,7 @@ const examples = [
   },
   {
     category: 'Twin Laws',
+    specAnchor: 'twins',
     description: 'Crystal twinning using the | twin(law) syntax.',
     items: [
       { name: 'Diamond Macle', cdl: 'cubic[m3m]:{111}@1.0 + {100}@0.3 | twin(spinel_law)', description: 'Flattened triangular spinel-law contact twin' },
@@ -66,6 +74,7 @@ const examples = [
   {
     category: 'Features',
     version: 'v1.2',
+    specAnchor: 'features',
     description: 'Surface markings, growth patterns, and inclusions annotated on forms.',
     items: [
       { name: 'Diamond with Trigons', cdl: 'cubic[m3m]:{111}@1.0[trigon:dense] + {110}@0.2', description: 'Octahedron with dense triangular etch pits' },
@@ -80,6 +89,7 @@ const examples = [
   {
     category: 'Phenomena',
     version: 'v1.2',
+    specAnchor: 'phenomena',
     description: 'Optical phenomena like asterism, chatoyancy, and adularescence.',
     items: [
       { name: 'Star Sapphire (6-Ray)', cdl: 'trigonal[-3m]:{10-11}@1.0 | phenomenon[asterism:6]', description: 'Six-rayed star from oriented rutile silk' },
@@ -91,6 +101,7 @@ const examples = [
   {
     category: 'Grouping and Labels',
     version: 'v1.3',
+    specAnchor: 'grouping',
     description: 'Parenthesized groups for shared features and labeled forms.',
     items: [
       { name: 'Grouped with Shared Feature', cdl: 'cubic[m3m]:({111}@1.0 + {100}@1.3)[phantom:3]', description: 'Both forms share phantom feature' },
@@ -103,6 +114,7 @@ const examples = [
   {
     category: 'Definitions',
     version: 'v1.3',
+    specAnchor: 'definitions',
     description: 'Named form definitions for reuse with @name and $reference syntax.',
     items: [
       { name: 'Simple Definition', cdl: '@oct = {111}@1.0\ncubic[m3m]:$oct + {100}@1.3', description: 'Define octahedron form, reference with $oct' },
@@ -114,6 +126,7 @@ const examples = [
   {
     category: 'Amorphous Materials',
     version: 'v2.0',
+    specAnchor: 'amorphous',
     description: 'Non-crystalline materials using shape descriptors instead of Miller indices.',
     items: [
       { name: 'Precious Opal', cdl: 'amorphous[opalescent]:{nodular, botryoidal} | phenomenon[play_of_color:spectral]', description: 'Opal with play of colour from silica sphere diffraction' },
@@ -126,6 +139,7 @@ const examples = [
   {
     category: 'Nested Growth',
     version: 'v2.0',
+    specAnchor: 'nested-growth',
     description: 'Overgrowth relationships using the > operator for scepter and phantom crystals.',
     items: [
       { name: 'Scepter Quartz', cdl: 'trigonal[32]:({10-10}@0.5 + {10-11}@1.2) > ({10-10}@0.8 + {10-11}@0.6) | elongate(c:2.0)', description: 'Prismatic base with overgrown cap crystal' },
@@ -136,6 +150,7 @@ const examples = [
   {
     category: 'Aggregates',
     version: 'v2.0',
+    specAnchor: 'aggregates',
     description: 'Multi-crystal arrangements using the ~ operator for clusters, druses, and radiating forms.',
     items: [
       { name: 'Quartz Cluster', cdl: 'trigonal[32]:({10-10}@0.5 + {10-11}@1.2 | elongate(c:2.0)) ~ cluster[12]', description: 'Cluster of 12 quartz crystals' },
@@ -147,6 +162,7 @@ const examples = [
   {
     category: 'Group-Level Twins',
     version: 'v2.0',
+    specAnchor: 'group-twins',
     description: 'Twin laws applied to individual groups rather than the whole crystal.',
     items: [
       { name: 'Spinel Twin Group', cdl: 'cubic[m3m]:(({111}@1.0 + {100}@0.3) | twin(spinel)) + {110}@0.8', description: 'Spinel twin on one group, untwinned dodecahedron alongside' },
@@ -156,16 +172,10 @@ const examples = [
 ];
 ---
 
-<BaseLayout
+<DocsLayout
   title="CDL Examples"
   description="Common CDL patterns for gemstones, minerals, and crystal habits."
 >
-  <Container size="md" padding="lg">
-    <Breadcrumb items={[
-      { label: 'Docs', href: '/docs' },
-      { label: 'CDL Examples' }
-    ]} />
-
     <article class="prose prose-slate max-w-none
                     dark:prose-headings:text-cream-primary
                     dark:prose-p:text-cream-secondary
@@ -175,9 +185,23 @@ const examples = [
       <h1>CDL Examples</h1>
 
       <p class="lead text-xl text-slate-600 dark:text-cream-secondary">
-        Ready-to-use CDL expressions for common gemstones, minerals, and crystal habits.
-        {PLAYGROUND_ENABLED && ' Click any example to open it in the Playground.'}
+        Ready-to-use CDL expressions for common gemstones, minerals, and crystal habits —
+        copy any snippet below straight into the CDL CLI or your own integration.
+        {PLAYGROUND_ENABLED && ' Open any example in the Playground to experiment with it live.'}
       </p>
+
+      {!PLAYGROUND_ENABLED && (
+        <div class="not-prose">
+          <Callout variant="tip" title="Playground coming back soon">
+            The interactive CDL Playground is temporarily offline while it's rebuilt. These
+            examples still work fully as reference — use the copy button on any snippet to try
+            it with <code class="rounded bg-black/5 px-1 py-0.5 text-[0.85em] dark:bg-white/10">cdl parse "..."</code> from
+            the <a href="/docs/quickstart" class="underline hover:no-underline">CLI</a>, or
+            browse the <a href="/docs/cdl" class="underline hover:no-underline">full syntax reference</a> to
+            see how the operators combine.
+          </Callout>
+        </div>
+      )}
 
       <div class="not-prose my-8 flex flex-wrap gap-2">
         {examples.map((section) => (
@@ -193,31 +217,54 @@ const examples = [
 
       {examples.map((section) => (
         <section class="mt-12" id={section.category.toLowerCase().replace(/[\s&]+/g, '-')}>
-          <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary mb-2">
-            {section.category}
-            {section.version && <span class="text-sm font-normal text-slate-500 dark:text-cream-muted ml-2">{section.version}</span>}
-          </h2>
+          <div class="not-prose flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-2">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-cream-primary">
+              {section.category}
+              {section.version && <span class="text-sm font-normal text-slate-500 dark:text-cream-muted ml-2">{section.version}</span>}
+            </h2>
+            <a
+              href={`/docs/cdl#${section.specAnchor}`}
+              class="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-crystal-700 hover:text-crystal-800 dark:text-crystal-400 dark:hover:text-crystal-300 mt-1"
+            >
+              Syntax reference
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
           {section.description && <p class="text-slate-600 dark:text-cream-secondary mb-6">{section.description}</p>}
 
           <div class="not-prose grid gap-4">
             {section.items.map((item) => (
-              <Card href={PLAYGROUND_ENABLED ? `/playground?cdl=${encodeURIComponent(item.cdl)}` : undefined} padding="md" class="group hover:border-crystal-300 hover:shadow-md transition-all dark:border-coffee-border dark:bg-coffee-raised dark:hover:border-crystal-400/40 dark:hover:shadow-none">
+              <Card padding="md" class="border-slate-200 transition-colors dark:border-coffee-border dark:bg-coffee-raised dark:hover:border-coffee-border-strong">
                 <div class="flex items-start justify-between gap-4">
                   <div>
-                    <h3 class="font-semibold text-slate-900 dark:text-cream-primary group-hover:text-crystal-700 dark:group-hover:text-crystal-400 transition-colors">
+                    <h3 class="font-semibold text-slate-900 dark:text-cream-primary">
                       {item.name}
                     </h3>
                     <p class="mt-1 text-sm text-slate-600 dark:text-cream-secondary">{item.description}</p>
                   </div>
-                  {PLAYGROUND_ENABLED && (
-                    <svg class="w-5 h-5 text-slate-500 group-hover:text-crystal-500 transition-colors shrink-0 dark:text-cream-muted dark:group-hover:text-crystal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  )}
                 </div>
-                <code class="mt-3 block text-xs font-mono text-slate-600 bg-slate-50 px-3 py-2 rounded-lg overflow-x-auto whitespace-pre-wrap dark:text-cream-secondary dark:bg-coffee-sunk">
-                  {item.cdl}
-                </code>
+                <div class="relative mt-3">
+                  <code class="block text-xs font-mono text-slate-600 bg-slate-50 pl-3 pr-10 py-2 rounded-lg overflow-x-auto whitespace-pre-wrap dark:text-cream-secondary dark:bg-coffee-sunk">
+                    {item.cdl}
+                  </code>
+                  <CopyCodeButton
+                    code={item.cdl}
+                    label={`Copy "${item.name}" CDL`}
+                    class="absolute top-1.5 right-1.5 bg-slate-50/80 dark:bg-coffee-sunk/80"
+                  />
+                </div>
+                {PLAYGROUND_ENABLED && (
+                  <div class="mt-3 flex justify-end">
+                    <Button href={`/playground?cdl=${encodeURIComponent(item.cdl)}`} variant="ghost" size="sm">
+                      Open in Playground
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </Button>
+                  </div>
+                )}
               </Card>
             ))}
           </div>
@@ -272,8 +319,7 @@ cubic[m3m]:$oct + {100}@0.3 | twin(spinel_law)`} />
         </Card>
       )}
     </article>
-  </Container>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   /* Dark-mode overrides for @tailwindcss/typography's hardcoded light-only
