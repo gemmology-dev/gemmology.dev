@@ -120,11 +120,30 @@ const imageSchema = z.object({
 });
 
 // Schema for subsections (nested H3 content)
+// NOTE: comparison/callout/crystal reuse the exact section-level schemas
+// (comparisonSchema/calloutSchema/crystalSchema, defined above) because
+// authored content nests these blocks under `subsections:` using the same
+// shape as their section-level counterparts (verified against
+// fundamentals/crystallography-advanced.yaml "Open vs Closed Forms" /
+// "Cubic Examples" and equipment/other-tools.yaml callout subsections).
+//
+// `system`/`cdl` are a second, older, flatter shape for the same
+// "render a crystal demo" intent — authored directly (not nested under
+// `crystal:`) by fundamentals/crystal-systems.yaml, e.g.:
+//   subsections: [{ title: ..., system: cubic, cdl: "cubic[m3m]:..." }]
+// Both shapes were previously stripped by zod (unknown keys are dropped by
+// default) before ever reaching SectionRenderer.astro, even though the
+// Subsection TS interface there already declared them.
 const subsectionSchema = z.object({
   title: z.string(),
   content: z.string().optional(),
   items: z.array(itemSchema).optional(),
   table: tableSchema.optional(),
+  comparison: comparisonSchema.optional(),
+  callout: calloutSchema.optional(),
+  crystal: crystalSchema.optional(),
+  system: z.enum(['cubic', 'hexagonal', 'trigonal', 'tetragonal', 'orthorhombic', 'monoclinic', 'triclinic']).optional(),
+  cdl: z.string().optional(),
 });
 
 // Main section schema

@@ -48,7 +48,28 @@ interface Subsection {
   table?: Table;
   system?: CrystalSystem;
   cdl?: string;
+  comparison?: Comparison;
+  callout?: CalloutData;
+  crystal?: Crystal;
 }
+
+// Keys of Subsection that the renderer below actually knows how to draw.
+// Used only for the DEV-mode "unhandled subsection key" warning so a future
+// authored field silently vanishing (like comparison/callout/crystal did
+// before this fix) gets caught immediately instead of shipping unnoticed.
+const KNOWN_SUBSECTION_KEYS = new Set([
+  'title',
+  'content',
+  'items',
+  'table',
+  'system',
+  'cdl',
+  'comparison',
+  'callout',
+  'crystal',
+  // Added by the pre-render step below, not authored content.
+  'renderedContent',
+]);
 
 interface Section {
   title: string;
@@ -105,15 +126,34 @@ const renderMarkdown = async (text: string) => {
 const sectionContent = section.content ? await renderMarkdown(section.content) : null;
 const calloutContent = section.callout?.text ? await renderMarkdown(section.callout.text) : null;
 
-// Pre-render subsection content
+// Pre-render subsection content (including subsection-level callout text,
+// which needs the same markdown + mineral-linking treatment as section
+// callouts).
 const subsectionContent = section.subsections
   ? await Promise.all(
       section.subsections.map(async (sub) => ({
         ...sub,
         renderedContent: sub.content ? await renderMarkdown(sub.content) : null,
+        renderedCalloutContent: sub.callout?.text ? await renderMarkdown(sub.callout.text) : null,
       }))
     )
   : null;
+
+// DEV-only guard: warn when an authored subsection carries a key this
+// renderer doesn't know how to draw, so a future silent content-drop (like
+// comparison/callout/crystal being stripped before this fix) surfaces
+// immediately in the console instead of shipping unnoticed.
+if (import.meta.env.DEV && section.subsections) {
+  for (const sub of section.subsections) {
+    const unknownKeys = Object.keys(sub).filter((key) => !KNOWN_SUBSECTION_KEYS.has(key));
+    if (unknownKeys.length > 0) {
+      console.warn(
+        `[SectionRenderer] Subsection "${sub.title}" in section "${section.title}" has ` +
+          `unhandled key(s): ${unknownKeys.join(', ')}. This content will not render.`
+      );
+    }
+  }
+}
 
 // Build section-level citation cluster HTML when section.citations is present.
 function buildCitationCluster(ids: string[]): string {
@@ -196,8 +236,14 @@ const sectionCitationCluster =
   )}
 
   {subsectionContent && subsectionContent.map(sub => {
-    // Check if this subsection is a crystal system
-    const detectedSystem = sub.system || detectCrystalSystem(sub.title);
+    // Check if this subsection is a crystal-system SUMMARY card. Subsections
+    // that author an explicit `crystal:` block (a CDL demo + caption, e.g.
+    // "Cubic Examples" in crystallography-advanced.yaml's "CDL Crystal
+    // Examples" section) must NOT be diverted here even though
+    // detectCrystalSystem() pattern-matches a system name in their title —
+    // they render via CrystalDemo in the regular-subsection branch below,
+    // same as section-level `section.crystal`.
+    const detectedSystem = sub.crystal ? null : (sub.system || detectCrystalSystem(sub.title));
 
     if (detectedSystem) {
       // Render as a crystal system card
@@ -218,6 +264,11 @@ const sectionCitationCluster =
             <h3 class="text-lg font-semibold text-slate-800 dark:text-cream-primary">{sub.title}</h3>
           </div>
           <div class="p-4">
+            {sub.callout && sub.renderedCalloutContent && (
+              <Callout variant={sub.callout.type} title={sub.callout.title}>
+                <Fragment set:html={sub.renderedCalloutContent} />
+              </Callout>
+            )}
             {sub.renderedContent && (
               <div class="prose prose-slate prose-lg max-w-none mb-4
                           prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
@@ -227,11 +278,21 @@ const sectionCitationCluster =
                           prose-a:text-crystal-700 dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:hover:prose-a:decoration-gold"
                    set:html={sub.renderedContent} />
             )}
+            {sub.crystal && (
+              <CrystalDemo
+                cdl={sub.crystal.cdl}
+                caption={sub.crystal.caption}
+                interactive={sub.crystal.interactive ?? true}
+              />
+            )}
             {sub.items && <PropertyList items={sub.items} headingLevel={4} citationIndex={citationIndex} />}
             {sub.table && (
               <div class="table-scroll-hint relative">
                 <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} citationIndex={citationIndex} />
               </div>
+            )}
+            {sub.comparison && (
+              <ComparisonBlock items={sub.comparison.items} headingLevel={4} />
             )}
           </div>
         </div>
