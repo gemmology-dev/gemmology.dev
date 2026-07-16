@@ -1,12 +1,25 @@
 ---
 /**
- * PropertyList - Displays a grid of property items with icons.
+ * PropertyList - Displays simple name/value/description facts as a definition
+ * list (dl/dt/dd), one row per item with a divider between rows.
+ *
+ * Rendering-convergence note (learn-rendering P2): this used to render each
+ * item as a bordered, gradient-backed "card" in a 2-column grid, which read
+ * as a visually distinct UI from the same kind of fact authored as plain
+ * markdown `- **Name**: value` bullets (rendered via the shared `.prose ul`
+ * divider-list styling in global.css) or as a `table:` (DataTable.astro).
+ * Both PropertyList and plain markdown bullets exist to show simple
+ * name/value facts, so they're now visually aligned: single column, a
+ * divider between rows, no card border/background. DataTable stays
+ * visually distinct on purpose - it's for genuinely multi-column/tabular
+ * data, not name/value pairs. See docs/authoring-learn.md for the authoring
+ * guidance this convergence is meant to reinforce.
+ *
  * Accepts an optional citationIndex prop to resolve {cite:id} markers in
  * item description strings and render item-level citation clusters.
  */
-import Card from '../ui-astro/Card.astro';
 import Badge from '../ui-astro/Badge.astro';
-import { getIconForProperty, iconPaths } from './icons';
+import { getIconForProperty } from './icons';
 import { resolveCiteMarkers, formatCiteLabel, type CitationIndex } from '../../lib/citations/index';
 
 interface Item {
@@ -20,13 +33,21 @@ interface Item {
 
 interface Props {
   items: Item[];
+  /** 'compact' tightens row padding; both variants render a single-column
+   * definition list now (no more multi-column card grid — see the P2 note
+   * above). */
   variant?: 'default' | 'compact';
+  /** Accepted for backwards compatibility with existing call sites. No
+   * longer used: item names render as `<dt>` (a definition-list term, not a
+   * document heading) rather than an `<h3>`/`<h4>`, since a property name
+   * like "Axes" or "Angles" isn't a section heading and was polluting the
+   * page's heading outline. */
   headingLevel?: 3 | 4;
   citationIndex?: CitationIndex;
 }
 
-const { items, variant = 'default', headingLevel = 3, citationIndex } = Astro.props;
-const HeadingTag = `h${headingLevel}` as 'h3' | 'h4';
+const { items, variant = 'default', citationIndex } = Astro.props;
+const rowPadding = variant === 'compact' ? 'py-2' : 'py-3';
 
 // Detect if value looks like CDL notation
 const isCDL = (value: string) => /^\w+\[\w+\]:\{/.test(value);
@@ -81,71 +102,77 @@ const processedItems = items.map((item) => {
 });
 ---
 
-<div class={`grid gap-4 ${variant === 'compact' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'} my-6`}>
+{/*
+  One `dl` group per item below: a flex-wrap row so `dt` + the inline value
+  `dd` share the first line (value pushed right via `ml-auto`), while any
+  longer `dd`s (description/citations/CDL/examples) carry `w-full` so they
+  wrap onto their own line. `dt`/`dd` stay direct children of the group
+  `div` (valid dl content model) rather than nesting another layout `div`
+  between them.
+*/}
+<dl class="my-6 border-t border-b border-slate-200 dark:border-coffee-border divide-y divide-slate-200 dark:divide-coffee-border">
   {processedItems.map(item => (
-    <div class="group bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-coffee-raised dark:to-coffee-raised rounded-xl border border-slate-200 dark:border-coffee-border p-4 hover:border-slate-300 dark:hover:border-coffee-border-strong hover:shadow-sm dark:hover:shadow-none transition-all">
-      <div class="flex items-start gap-3">
-        <!-- Icon -->
-        <div class="w-9 h-9 rounded-lg bg-slate-200/70 dark:bg-coffee-raised2 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-300/70 dark:group-hover:bg-coffee-border transition-colors">
-          <svg class="w-5 h-5 text-slate-600 dark:text-cream-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d={getIconPath(item.name)} />
-          </svg>
-        </div>
+    <div class={`flex flex-wrap items-baseline gap-x-4 gap-y-1 ${rowPadding} first:pt-0 last:pb-0`}>
+      <dt class="flex items-center gap-2 font-semibold text-slate-900 dark:text-cream-primary">
+        <svg class="w-4 h-4 text-slate-400 dark:text-cream-muted flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d={getIconPath(item.name)} />
+        </svg>
+        {item.name}
+      </dt>
 
-        <div class="flex-1 min-w-0">
-          <!-- Header row -->
-          <div class="flex items-start justify-between gap-2">
-            <HeadingTag class="font-semibold text-slate-900 dark:text-cream-primary">{item.name}</HeadingTag>
-            {item.value && !isCDL(item.value) && (
-              <span class="text-sm font-mono bg-white dark:bg-coffee-sunk text-slate-700 dark:text-cream-secondary px-2 py-0.5 rounded border border-slate-200 dark:border-coffee-border whitespace-nowrap">
-                {item.value}
-              </span>
-            )}
-          </div>
+      {item.value && !isCDL(item.value) && (
+        <dd class="ml-auto text-sm font-mono bg-white dark:bg-coffee-sunk text-slate-700 dark:text-cream-secondary px-2 py-0.5 rounded border border-slate-200 dark:border-coffee-border whitespace-nowrap">
+          {item.value}
+        </dd>
+      )}
 
-          {/* Description — rendered as HTML when cite markers are present */}
-          {item.resolvedDesc && (
-            item.descIsHtml
-              ? <p class="text-sm text-slate-600 dark:text-cream-secondary mt-1" set:html={item.resolvedDesc} />
-              : <p class="text-sm text-slate-600 dark:text-cream-secondary mt-1">{item.resolvedDesc}</p>
-          )}
+      {/* Description — rendered as HTML when cite markers are present */}
+      {item.resolvedDesc && (
+        item.descIsHtml
+          ? <dd class="w-full text-sm text-slate-600 dark:text-cream-secondary mt-1" set:html={item.resolvedDesc} />
+          : <dd class="w-full text-sm text-slate-600 dark:text-cream-secondary mt-1">{item.resolvedDesc}</dd>
+      )}
 
-          {/* Item-level citation cluster */}
-          {item.citeCluster && (
-            <span class="item-citation-cluster" aria-label="Item citations">
-              <Fragment set:html={item.citeCluster} />
-            </span>
-          )}
+      {/* Item-level citation cluster */}
+      {item.citeCluster && (
+        <dd class="w-full item-citation-cluster" aria-label="Item citations">
+          <Fragment set:html={item.citeCluster} />
+        </dd>
+      )}
 
-          {/* CDL value block — already dark ("terminal" style); add a border so it
-              doesn't float unbounded against the coffee-raised card in dark mode. */}
-          {item.value && isCDL(item.value) && (
-            <code class="block text-xs bg-slate-900 text-green-400 p-2 rounded mt-2 font-mono overflow-x-auto dark:border dark:border-coffee-border-strong">
-              {item.value}
-            </code>
-          )}
+      {/* CDL value block — already dark ("terminal" style); add a border so it
+          doesn't float unbounded against the page background in dark mode. */}
+      {item.value && isCDL(item.value) && (
+        <dd class="w-full">
+          <code class="block text-xs bg-slate-900 text-green-400 p-2 rounded mt-2 font-mono overflow-x-auto dark:border dark:border-coffee-border-strong">
+            {item.value}
+          </code>
+        </dd>
+      )}
 
-          {/* Example badges */}
-          {item.examples && item.examples.length > 0 && (
-            <div class="flex flex-wrap gap-1.5 mt-2">
-              {item.examples.map(ex => (
-                <Badge variant="crystal" size="sm">{ex}</Badge>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+      {/* Example badges */}
+      {item.examples && item.examples.length > 0 && (
+        <dd class="w-full flex flex-wrap gap-1.5 mt-2">
+          {item.examples.map(ex => (
+            <Badge variant="crystal" size="sm">{ex}</Badge>
+          ))}
+        </dd>
+      )}
     </div>
   ))}
-</div>
+</dl>
 
 <style>
-  /* `.citation-ref` (item-level citation cluster, e.g. [1]) has no CSS
-     definition anywhere in the codebase - it renders with the browser's
-     default anchor color, which we leave untouched in light mode to stay
-     pixel-identical. Only add the dark-mode color called for in the sweep
-     brief (crystal-400). Superscripts embedded inside `.prose` bodies get
-     this via `prose-a:` inheritance instead - see SectionRenderer.astro. */
+  /* `.citation-ref` (item-level citation cluster, e.g. [1]) previously had
+     no light-mode color and fell back to the browser's default anchor blue,
+     which read as a generic link rather than a citation marker. Give it an
+     explicit crystal-700 to match the prose link ramp everywhere else
+     `.citation-ref` is styled (SectionRenderer.astro), keeping the existing
+     dark-mode crystal-400 override. Superscripts embedded inside `.prose`
+     bodies also get this via `prose-a:` inheritance. */
+  :global(.citation-ref) {
+    color: #0369a1; /* crystal-700, matches prose-a:text-crystal-700 */
+  }
   :global([data-theme='dark'] .citation-ref) {
     color: #38bdf8; /* crystal-400 */
   }

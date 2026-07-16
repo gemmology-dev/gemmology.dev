@@ -9,6 +9,7 @@ import CrystalSystemCard from './CrystalSystemCard.astro';
 import { detectCrystalSystem, type CrystalSystem } from './icons';
 import { addMineralLinks } from '../../lib/mineral-linker';
 import { resolveCiteMarkers, formatCiteLabel, type CitationIndex } from '../../lib/citations/index';
+import { sectionSlug } from '../../lib/learn/section-id';
 
 interface Item {
   name: string;
@@ -69,7 +70,7 @@ interface Props {
 }
 
 const { section, citationIndex } = Astro.props;
-const sectionId = section.id || section.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+const sectionId = sectionSlug(section);
 
 // Configure marked for safe rendering
 marked.setOptions({
@@ -158,9 +159,9 @@ const sectionCitationCluster =
   )}
 
   {sectionContent && (
-    <div class="prose prose-slate max-w-none mb-6
+    <div class="prose prose-slate prose-lg max-w-none mb-6
                 prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
-                prose-p:text-slate-600 dark:prose-p:text-cream-secondary
+                prose-p:text-slate-600 dark:prose-p:text-cream-secondary prose-p:max-w-[70ch] prose-p:leading-relaxed
                 prose-li:dark:text-cream-secondary
                 prose-strong:dark:text-cream-primary
                 prose-a:text-crystal-700 dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:hover:prose-a:decoration-gold"
@@ -180,12 +181,14 @@ const sectionCitationCluster =
   )}
 
   {section.table && (
-    <DataTable
-      headers={section.table.headers}
-      rows={section.table.rows}
-      caption={section.table.caption}
-      citationIndex={citationIndex}
-    />
+    <div class="table-scroll-hint relative">
+      <DataTable
+        headers={section.table.headers}
+        rows={section.table.rows}
+        caption={section.table.caption}
+        citationIndex={citationIndex}
+      />
+    </div>
   )}
 
   {section.comparison && (
@@ -216,16 +219,20 @@ const sectionCitationCluster =
           </div>
           <div class="p-4">
             {sub.renderedContent && (
-              <div class="prose prose-slate max-w-none mb-4
+              <div class="prose prose-slate prose-lg max-w-none mb-4
                           prose-headings:text-slate-900 dark:prose-headings:text-cream-primary
-                          prose-p:text-slate-600 dark:prose-p:text-cream-secondary
+                          prose-p:text-slate-600 dark:prose-p:text-cream-secondary prose-p:max-w-[70ch] prose-p:leading-relaxed
                           prose-li:dark:text-cream-secondary
                           prose-strong:dark:text-cream-primary
                           prose-a:text-crystal-700 dark:prose-a:text-crystal-400 dark:hover:prose-a:text-crystal-300 dark:hover:prose-a:decoration-gold"
                    set:html={sub.renderedContent} />
             )}
             {sub.items && <PropertyList items={sub.items} headingLevel={4} citationIndex={citationIndex} />}
-            {sub.table && <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} citationIndex={citationIndex} />}
+            {sub.table && (
+              <div class="table-scroll-hint relative">
+                <DataTable headers={sub.table.headers} rows={sub.table.rows} caption={sub.table.caption} citationIndex={citationIndex} />
+              </div>
+            )}
           </div>
         </div>
       );
@@ -254,10 +261,68 @@ const sectionCitationCluster =
     background-color: rgba(56, 189, 248, 0.1); /* crystal-400/10 */
   }
 
-  /* `.citation-ref` (section-heading citation cluster) has no CSS definition
-     anywhere - relies on the browser's default anchor color in light mode
-     (left untouched for pixel parity). Add only the dark-mode color. */
+  /* `.citation-ref` (section-heading citation cluster) previously had no
+     light-mode color and relied on the browser's default anchor blue, which
+     read as a generic link rather than a citation marker. Give it an
+     explicit crystal-700 to match the prose link ramp, keeping the existing
+     dark-mode crystal-400 override. */
+  :global(.citation-ref) {
+    color: #0369a1; /* crystal-700, matches prose-a:text-crystal-700 */
+  }
   :global([data-theme='dark'] .citation-ref) {
     color: #38bdf8; /* crystal-400 */
   }
+
+  /* Mobile overflow affordance for DataTable (P3). DataTable.astro owns its
+     own `overflow-x-auto` scroll container internally, so this wrapper adds
+     a right-edge fade purely at the CSS level without touching DataTable's
+     markup: `.has-overflow` is toggled by the script below only when the
+     table inside actually overflows its container, so short tables get no
+     visual clutter. The gradient is a translucent tint rather than a
+     solid-color match, since the underlying background varies between the
+     table header (gradient) and body (white/dark) — this reads correctly
+     over either. */
+  .table-scroll-hint.has-overflow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2rem;
+    pointer-events: none;
+    border-radius: 0 0.75rem 0.75rem 0;
+    background: linear-gradient(to left, rgba(15, 23, 42, 0.14), transparent);
+  }
+  :global([data-theme='dark']) .table-scroll-hint.has-overflow::after {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.45), transparent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* No animation involved here, but keep the hint fully static either way. */
+    .table-scroll-hint.has-overflow::after {
+      transition: none;
+    }
+  }
 </style>
+
+<script>
+  // Toggle `.has-overflow` on each `.table-scroll-hint` wrapper only when its
+  // DataTable child is actually horizontally scrollable, so the fade hint
+  // never shows on tables that already fit. Re-checks on resize since a
+  // table can move in/out of overflow as the viewport (and TOC rail) resize.
+  (function initTableScrollHints() {
+    const wrappers = Array.from(document.querySelectorAll<HTMLElement>('.table-scroll-hint'));
+    if (wrappers.length === 0) return;
+
+    const check = () => {
+      for (const wrapper of wrappers) {
+        const scrollContainer = wrapper.querySelector<HTMLElement>('.overflow-x-auto');
+        if (!scrollContainer) continue;
+        const overflowing = scrollContainer.scrollWidth > scrollContainer.clientWidth + 1;
+        wrapper.classList.toggle('has-overflow', overflowing);
+      }
+    };
+
+    check();
+    window.addEventListener('resize', check);
+  })();
+</script>

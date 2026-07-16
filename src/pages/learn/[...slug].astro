@@ -5,7 +5,7 @@ import path from 'node:path';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Breadcrumb, PageNav } from '../../components/docs';
-import { SectionRenderer } from '../../components/learn';
+import { SectionRenderer, TableOfContents } from '../../components/learn';
 import { Container, Card, Badge } from '../../components/ui-astro';
 import LearnSchema from '../../components/seo/LearnSchema.astro';
 import References from '../../components/learn/References.astro';
@@ -205,6 +205,10 @@ const hasCitations = citationIndex.size > 0;
 const orderedRefs = hasCitations
   ? [...citationIndex.values()].sort((a, b) => a.n - b.n).map((e) => e.ref)
   : [];
+
+// Table of contents rail (mirrors TableOfContents.astro's own >= 4 threshold
+// so the layout only switches to two columns when a TOC actually renders).
+const showToc = data.sections.length >= 4;
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -223,9 +227,16 @@ const orderedRefs = hasCitations
     articleAuthor={data.author}
     references={orderedRefs}
   />
-  <Container size="md" padding="md">
+  <Container size={showToc ? 'lg' : 'md'} padding="md">
     <Breadcrumb items={breadcrumbItems} />
 
+    <div class={showToc ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-12 lg:items-start' : ''}>
+    {showToc && (
+      <div class="lg:col-start-2 lg:row-start-1">
+        <TableOfContents sections={data.sections} />
+      </div>
+    )}
+    <div class={showToc ? 'min-w-0 lg:col-start-1 lg:row-start-1' : ''}>
     <article>
       <header class="mb-10">
         <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">{data.title}</h1>
@@ -308,6 +319,8 @@ const orderedRefs = hasCitations
       prev={prev ? { label: prev.data.title, href: `/learn/${prev.id}` } : currentIndex === 0 ? { label: 'Back to Learn', href: '/learn' } : undefined}
       next={next ? { label: next.data.title, href: `/learn/${next.id}` } : undefined}
     />
+    </div>
+    </div>
   </Container>
 </BaseLayout>
 

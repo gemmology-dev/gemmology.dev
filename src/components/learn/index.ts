@@ -3,3 +3,4 @@ export { default as PropertyList } from './PropertyList.astro';
 export { default as ComparisonBlock } from './ComparisonBlock.astro';
 export { default as CrystalDemo } from './CrystalDemo.astro';
 export { default as SectionRenderer } from './SectionRenderer.astro';
+export { default as TableOfContents } from './TableOfContents.astro';

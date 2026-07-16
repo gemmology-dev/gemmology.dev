@@ -67,4 +67,52 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
   :global([data-theme='dark'] .references a:hover) {
     color: #7dd3fc; /* crystal-300 */
   }
+
+  /* Citation-landing feedback (P3): when a reader clicks a superscript
+     citation marker and lands on its list item via the URL fragment, flash
+     the row so it's obvious which reference was jumped to. `:target` only
+     matches the element whose id equals the URL fragment (the `<li
+     id="cite-{id}">` rendered above), so this only ever highlights one row
+     at a time. */
+  :global(.references li:target) {
+    animation: cite-target-flash 1.2s ease-out;
+    border-radius: 0.375rem;
+  }
+  @keyframes cite-target-flash {
+    0% {
+      background-color: rgba(3, 105, 161, 0.16); /* crystal-700/16 */
+      box-shadow: -3px 0 0 0 #0369a1; /* crystal-700 left accent */
+    }
+    100% {
+      background-color: transparent;
+      box-shadow: -3px 0 0 0 transparent;
+    }
+  }
+  :global([data-theme='dark'] .references li:target) {
+    animation-name: cite-target-flash-dark;
+  }
+  @keyframes cite-target-flash-dark {
+    0% {
+      background-color: rgba(56, 189, 248, 0.14); /* crystal-400/14 */
+      box-shadow: -3px 0 0 0 #38bdf8; /* crystal-400 left accent */
+    }
+    100% {
+      background-color: transparent;
+      box-shadow: -3px 0 0 0 transparent;
+    }
+  }
+
+  /* Reduced-motion fallback: no animation, just a static highlight so the
+     landing target is still visually distinguishable. */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.references li:target) {
+      animation: none;
+      background-color: rgba(3, 105, 161, 0.16);
+      box-shadow: -3px 0 0 0 #0369a1;
+    }
+    :global([data-theme='dark'] .references li:target) {
+      background-color: rgba(56, 189, 248, 0.14);
+      box-shadow: -3px 0 0 0 #38bdf8;
+    }
+  }
 </style>

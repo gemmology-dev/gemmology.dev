@@ -144,7 +144,10 @@ const startHereSlugs = [
   'fundamentals/crystal-systems',
   'fundamentals/physical-properties',
   'fundamentals/optical-properties',
-  'identification/inclusions',
+  // "identification/inclusions" is a subcategory directory, not a content
+  // entry — the actual collection id for its overview page is nested one
+  // level deeper (see src/content/learn/identification/inclusions/overview.yaml).
+  'identification/inclusions/overview',
   'identification/treatments',
 ];
 const startHereTopics = startHereSlugs
@@ -295,7 +298,7 @@ const iconPaths: Record<string, string> = {
             <input
               id="learn-filter"
               type="search"
-              placeholder="Filter topics… (e.g. quartz, refractometer, inclusions)"
+              placeholder="Filter topics…"
               class="w-full max-w-xl pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-crystal-700 focus:border-crystal-700 dark:border-coffee-border dark:bg-coffee-raised dark:text-cream-primary dark:placeholder:text-cream-muted dark:focus:ring-crystal-400 dark:focus:border-crystal-400"
               aria-controls="learn-results"
             />
