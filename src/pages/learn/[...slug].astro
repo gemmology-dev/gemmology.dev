@@ -232,7 +232,7 @@ const showToc = data.sections.length >= 4;
 
     <div class={showToc ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-12 lg:items-start' : ''}>
     {showToc && (
-      <div class="lg:col-start-2 lg:row-start-1">
+      <div class="lg:col-start-2 lg:row-start-1 lg:self-stretch">
         <TableOfContents sections={data.sections} />
       </div>
     )}
