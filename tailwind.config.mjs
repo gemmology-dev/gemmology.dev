@@ -183,6 +183,28 @@ export default {
             p: {
               maxWidth: 'none',
             },
+            // NOTE: the DEFAULT block above defines custom `ol`, `ol > li`,
+            // `ol > li::before` (counter badge) and `ul > li::before` rules,
+            // but @tailwindcss/typography generates `.prose-lg` as a fully
+            // separate ruleset from its own built-in `lg` size config — it
+            // does NOT inherit DEFAULT's custom overrides. That built-in `lg`
+            // config sets its own `padding-inline-start` on `ol`, `ul`,
+            // `ol > li` and `ul > li` (~0.44em), and because `.prose-lg`'s
+            // rules are emitted after `.prose`'s in the stylesheet, its
+            // logical `padding-inline-start` wins the cascade over our
+            // physical `padding-left` from DEFAULT (per the CSS Logical
+            // Properties spec, a logical/physical pair for the same edge is
+            // resolved by cascade order, not by property name) — even though
+            // both were set with equal selector specificity. That silently
+            // shrank the reserved space for the absolute-positioned counter
+            // badge under `prose-lg`, so the badge (1.5em wide) overlapped
+            // the first ~19px of ordered-list text (regression from PR #55
+            // switching body copy to `prose-lg`). Fix: replicate the same
+            // rules here with BOTH the physical and logical property set,
+            // so this override always wins regardless of which one the
+            // browser resolves the box edge from. `ul > li` needed the same
+            // treatment (residual ~8px indent creeping back in), which is
+            // why it already carried `paddingInlineStart: '0'` below.
             'ul': {
               paddingLeft: '0',
               paddingInlineStart: '0',
@@ -191,7 +213,40 @@ export default {
             },
             'ul > li': {
               paddingLeft: '0',
+              paddingInlineStart: '0',
               marginLeft: '0',
+              marginInlineStart: '0',
+            },
+            'ul > li::before': {
+              content: 'none',
+            },
+            'ol': {
+              listStyle: 'none',
+              paddingLeft: '0',
+              paddingInlineStart: '0',
+              counterReset: 'item',
+            },
+            'ol > li': {
+              position: 'relative',
+              paddingLeft: '2em',
+              paddingInlineStart: '2em',
+              counterIncrement: 'item',
+            },
+            'ol > li::before': {
+              content: 'counter(item)',
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '1.5em',
+              height: '1.5em',
+              fontSize: '0.75em',
+              fontWeight: '600',
+              color: '#0369a1',
+              backgroundColor: '#e0f2fe',
+              borderRadius: '0.25em',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             },
           },
         },

@@ -57,10 +57,25 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
 )}
 
 <style>
-  /* Links inside `formatReference()` output (DOI/ISBN/URL anchors) carry no
-     color class - they rely on the browser's default anchor color, left
-     untouched in light mode for pixel parity. Dark mode gets the standard
-     crystal-400 / gold-hover treatment used everywhere else in prose links. */
+  /* Links inside `formatReference()` output (DOI/ISBN/URL anchors) previously
+     carried no color class, so with the site's Tailwind preflight reset
+     (`a { color: inherit }`) they rendered in the same slate-600 body-text
+     color as the surrounding <span> with no underline — visually
+     indistinguishable from plain text in light mode. Scope the fix to
+     `a[href^="http"]`: every DOI/ISBN/URL anchor produced by formatReference()
+     is an absolute http(s) link, while the backlink (`href="#citeref-..."`)
+     uses a fragment href and already has its own explicit slate/crystal
+     styling above, so this selector cannot touch it. */
+  :global(.references a[href^="http"]) {
+    color: #0369a1; /* crystal-700, matches prose-a:text-crystal-700 */
+    text-decoration: underline;
+    text-decoration-color: rgba(3, 105, 161, 0.4);
+    text-underline-offset: 2px;
+  }
+  :global(.references a[href^="http"]:hover) {
+    color: #075985; /* crystal-800 */
+    text-decoration-color: currentColor;
+  }
   :global([data-theme='dark'] .references a) {
     color: #38bdf8; /* crystal-400 */
   }
@@ -73,13 +88,18 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
      the row so it's obvious which reference was jumped to. `:target` only
      matches the element whose id equals the URL fragment (the `<li
      id="cite-{id}">` rendered above), so this only ever highlights one row
-     at a time. */
+     at a time.
+
+     Duration is 2.6s total: the first 35% (~0.9s) holds at near-full
+     intensity so the flash is reliably noticed even if the reader glances
+     away briefly, then eases out over the remaining ~1.7s. (Originally a
+     flat 1.2s ease-out, which read as too brief to reliably catch.) */
   :global(.references li:target) {
-    animation: cite-target-flash 1.2s ease-out;
+    animation: cite-target-flash 2.6s ease-out;
     border-radius: 0.375rem;
   }
   @keyframes cite-target-flash {
-    0% {
+    0%, 35% {
       background-color: rgba(3, 105, 161, 0.16); /* crystal-700/16 */
       box-shadow: -3px 0 0 0 #0369a1; /* crystal-700 left accent */
     }
@@ -92,7 +112,7 @@ const citations = [...citationIndex.values()].sort((a, b) => a.n - b.n);
     animation-name: cite-target-flash-dark;
   }
   @keyframes cite-target-flash-dark {
-    0% {
+    0%, 35% {
       background-color: rgba(56, 189, 248, 0.14); /* crystal-400/14 */
       box-shadow: -3px 0 0 0 #38bdf8; /* crystal-400 left accent */
     }

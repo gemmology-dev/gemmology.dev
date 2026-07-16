@@ -272,18 +272,28 @@ const iconPaths: Record<string, string> = {
       <div class="max-w-3xl pb-8 border-b border-slate-200 dark:border-coffee-border">
         <h1 class="text-4xl font-bold text-slate-900 dark:text-cream-primary">Learn Gemmology</h1>
         <p class="mt-1 text-lg font-medium text-crystal-700 dark:text-crystal-300">Free FGA exam preparation and structured study guide</p>
-        <p class="mt-4 text-base text-slate-600 dark:text-cream-secondary">
+        <p class="mt-4 text-base text-slate-600 dark:text-cream-secondary max-w-2xl">
           A structured, free study path for the Gem-A FGA Foundation and Diploma curriculum:
-          {totalTopicCount} articles across eight categories: crystal systems, physical and optical
+          {totalTopicCount} articles across eight categories — crystal systems, physical and optical
           properties, equipment, gem species, identification, phenomena, geographic origin, market
-          and grading, and gem care. Each article is paired with browser-based tools (refractometer
-          simulator, spectroscope band-matcher, treatment wizard, proportion analyzer) and an
-          SM-2-scheduled practice quiz so that theory and applied identification reinforce each
-          other in one place. Articles include pretest questions that count toward spaced-repetition
-          scheduling and link out to the canonical mineral database, so the same hardness, refractive
-          index, and birefringence values support reading, testing, and recall. Use the category grid
-          below to browse by topic, or start the daily review queue if you have an active study
-          schedule.
+          and grading, and gem care.
+        </p>
+        <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-3 text-sm text-slate-600 dark:text-cream-secondary">
+          <li class="flex items-start gap-2">
+            <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-crystal-700 dark:bg-crystal-300"></span>
+            <span>Paired with browser-based tools — refractometer simulator, spectroscope band-matcher, treatment wizard, proportion analyzer</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-crystal-700 dark:bg-crystal-300"></span>
+            <span>Pretest questions in every article feed an SM-2-scheduled spaced-repetition quiz</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-crystal-700 dark:bg-crystal-300"></span>
+            <span>Linked to the canonical mineral database, so hardness, RI, and birefringence values stay consistent everywhere</span>
+          </li>
+        </ul>
+        <p class="mt-4 text-sm text-slate-600 dark:text-cream-secondary">
+          Use the category grid below to browse by topic, or start the daily review queue if you have an active study schedule.
         </p>
       </div>
 
