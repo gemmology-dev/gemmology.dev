@@ -1,0 +1,160 @@
+---
+/**
+ * TableOfContents - "On this page" navigation for long learn articles.
+ *
+ * Renders nothing when there are fewer than 4 top-level sections (short
+ * articles don't need a TOC). Ids are derived via the shared `sectionSlug()`
+ * helper so anchors always match the ids SectionRenderer.astro renders for
+ * the same sections - do not recompute slugs independently here.
+ *
+ * Renders two variants, each responsible for hiding itself at the "wrong"
+ * breakpoint via Tailwind's `lg:` variant, so the page only needs to
+ * include this component once:
+ *   - Mobile (<lg): a closed-by-default <details> above the article body.
+ *   - Desktop (lg+): a sticky aside rail with scroll-spy highlighting.
+ *
+ * The page decides layout/grid placement; this component only owns its own
+ * content and internal responsive visibility.
+ */
+import { sectionSlug, type SectionLike } from '../../lib/learn/section-id';
+
+interface Props {
+  sections: SectionLike[];
+}
+
+const { sections } = Astro.props;
+const items = sections.map((section) => ({
+  title: section.title,
+  slug: sectionSlug(section),
+}));
+const show = items.length >= 4;
+---
+
+{show && (
+  <>
+    {/* Mobile: collapsible, closed by default, rendered above the article body */}
+    <details class="toc-mobile lg:hidden mb-8 rounded-xl border border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised">
+      <summary class="cursor-pointer select-none px-4 py-3 font-semibold text-sm text-slate-900 dark:text-cream-primary">
+        On this page
+      </summary>
+      <nav class="px-4 pb-4" aria-label="Table of contents">
+        <ul class="space-y-1.5 text-sm list-none pl-0 m-0">
+          {items.map((item) => (
+            <li>
+              <a
+                href={`#${item.slug}`}
+                class="block py-1 text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+
+    {/* Desktop: sticky rail with scroll-spy */}
+    <aside
+      class="toc-desktop hidden lg:block lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto"
+      aria-label="Table of contents"
+    >
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted mb-3">
+        On this page
+      </h2>
+      <nav>
+        <ul class="toc-list space-y-1 text-sm list-none pl-0 m-0 border-l border-slate-200 dark:border-coffee-border">
+          {items.map((item) => (
+            <li>
+              <a
+                href={`#${item.slug}`}
+                class="toc-link block -ml-px border-l-2 border-transparent pl-3 py-1 text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
+                data-toc-target={item.slug}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <script>
+      // Scroll-spy: highlight the TOC link for whichever section is
+      // currently in view. Scoped per-instance (querySelectorAll within
+      // this specific article render) so multiple TOCs on a page (there's
+      // only ever one per article, but this keeps it safe) don't collide.
+      // Honors prefers-reduced-motion by not forcing smooth-scroll - anchor
+      // navigation uses the browser default, which already respects the OS
+      // setting for scroll behavior.
+      (function initTocScrollSpy() {
+        const asides = document.querySelectorAll<HTMLElement>('.toc-desktop');
+        asides.forEach((aside) => {
+          const links = aside.querySelectorAll<HTMLAnchorElement>('.toc-link');
+          if (links.length === 0) return;
+
+          const targets: HTMLElement[] = [];
+          const linkByTarget = new Map<string, HTMLAnchorElement>();
+          links.forEach((link) => {
+            const slug = link.dataset.tocTarget;
+            if (!slug) return;
+            const target = document.getElementById(slug);
+            if (target) {
+              targets.push(target);
+              linkByTarget.set(slug, link);
+            }
+          });
+          if (targets.length === 0) return;
+
+          const setActive = (slug: string | null) => {
+            links.forEach((link) => {
+              const isActive = slug !== null && link.dataset.tocTarget === slug;
+              if (isActive) {
+                link.setAttribute('aria-current', 'location');
+              } else {
+                link.removeAttribute('aria-current');
+              }
+            });
+          };
+
+          const visible = new Set<string>();
+          const observer = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                const slug = (entry.target as HTMLElement).id;
+                if (entry.isIntersecting) {
+                  visible.add(slug);
+                } else {
+                  visible.delete(slug);
+                }
+              }
+              if (visible.size > 0) {
+                // Prefer the topmost visible section for the active state.
+                const topMost = targets.find((t) => visible.has(t.id));
+                if (topMost) setActive(topMost.id);
+              }
+            },
+            {
+              // Treat a section as "current" once its heading crosses just
+              // below the sticky header, and until the next one does.
+              rootMargin: '-100px 0px -70% 0px',
+              threshold: 0,
+            }
+          );
+          targets.forEach((target) => observer.observe(target));
+        });
+      })();
+    </script>
+  </>
+)}
+
+<style>
+  .toc-link[aria-current='location'] {
+    color: #0369a1; /* crystal-700, matches the prose link ramp */
+    border-left-color: #0369a1;
+    font-weight: 600;
+  }
+  :global([data-theme='dark']) .toc-link[aria-current='location'] {
+    color: #38bdf8; /* crystal-400 */
+    border-left-color: #38bdf8;
+  }
+</style>
