@@ -10,8 +10,16 @@
  * Renders two variants, each responsible for hiding itself at the "wrong"
  * breakpoint via Tailwind's `lg:` variant, so the page only needs to
  * include this component once:
- *   - Mobile (<lg): a closed-by-default <details> above the article body.
+ *   - Mobile (<lg): a floating "On this page" button pinned to the thumb
+ *     zone (bottom-right) that opens a native <dialog> bottom sheet listing
+ *     the same sections. A top-of-article control would scroll out of
+ *     reach on a long article, so this replaces that pattern entirely
+ *     rather than running both (avoids two redundant mobile TOCs).
  *   - Desktop (lg+): a sticky aside rail with scroll-spy highlighting.
+ *
+ * Both variants share the `.toc-link` class + `data-toc-target` attribute,
+ * so the single scroll-spy observer below keeps the active-section
+ * indication in sync in both places at once.
  *
  * The page decides layout/grid placement; this component only owns its own
  * content and internal responsive visibility.
@@ -32,18 +40,56 @@ const show = items.length >= 4;
 
 {show && (
   <>
-    {/* Mobile: collapsible, closed by default, rendered above the article body */}
-    <details class="toc-mobile lg:hidden mb-8 rounded-xl border border-slate-200 dark:border-coffee-border bg-white dark:bg-coffee-raised">
-      <summary class="cursor-pointer select-none px-4 py-3 font-semibold text-sm text-slate-900 dark:text-cream-primary">
-        On this page
-      </summary>
-      <nav class="px-4 pb-4" aria-label="Table of contents">
-        <ul class="space-y-1.5 text-sm list-none pl-0 m-0">
+    {/* Mobile: floating trigger, thumb-reachable at any scroll position. */}
+    <button
+      type="button"
+      id="toc-mobile-trigger"
+      class="toc-mobile-trigger lg:hidden fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold shadow-lg transition-colors
+             bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:text-slate-900
+             dark:bg-coffee-raised2 dark:text-cream-secondary dark:border-coffee-border dark:hover:bg-coffee-raised dark:hover:text-cream-primary
+             focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-crystal-400"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="toc-mobile-sheet"
+    >
+      <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      On this page
+    </button>
+
+    {/* Mobile: bottom sheet, opened by the trigger above. Native <dialog>
+        (via showModal()) gives us a top-layer modal with an automatic
+        focus trap and Escape-to-close for free - no dependency needed. */}
+    <dialog id="toc-mobile-sheet" class="toc-mobile-sheet lg:hidden" aria-label="Table of contents">
+      <div class="flex items-center justify-between px-5 pt-5 pb-3">
+        <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-cream-muted">
+          On this page
+        </h2>
+        <button
+          type="button"
+          class="toc-mobile-close -m-2 rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-cream-muted dark:hover:bg-coffee-raised dark:hover:text-cream-primary
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-crystal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-crystal-400"
+          aria-label="Close table of contents"
+        >
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="px-5 pb-6" aria-label="Table of contents sections">
+        <ul class="m-0 list-none space-y-1 pl-0 text-sm">
           {items.map((item) => (
             <li>
               <a
                 href={`#${item.slug}`}
-                class="block py-1 text-slate-600 hover:text-crystal-700 dark:text-cream-secondary dark:hover:text-crystal-400 transition-colors"
+                class="toc-link toc-mobile-link block rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-crystal-700 dark:text-cream-secondary dark:hover:bg-coffee-raised dark:hover:text-crystal-400"
+                data-toc-target={item.slug}
               >
                 {item.title}
               </a>
@@ -51,7 +97,7 @@ const show = items.length >= 4;
           ))}
         </ul>
       </nav>
-    </details>
+    </dialog>
 
     {/* Desktop: sticky rail with scroll-spy */}
     <aside
@@ -80,67 +126,150 @@ const show = items.length >= 4;
 
     <script>
       // Scroll-spy: highlight the TOC link for whichever section is
-      // currently in view. Scoped per-instance (querySelectorAll within
-      // this specific article render) so multiple TOCs on a page (there's
-      // only ever one per article, but this keeps it safe) don't collide.
+      // currently in view. Queries every `.toc-link` on the page (desktop
+      // rail + mobile sheet share the class and `data-toc-target`), so both
+      // variants' active state stay in sync from one observer. There's only
+      // ever one TableOfContents instance per article (see component docs),
+      // so this document-wide query is safe.
       // Honors prefers-reduced-motion by not forcing smooth-scroll - anchor
       // navigation uses the browser default, which already respects the OS
       // setting for scroll behavior.
       (function initTocScrollSpy() {
-        const asides = document.querySelectorAll<HTMLElement>('.toc-desktop');
-        asides.forEach((aside) => {
-          const links = aside.querySelectorAll<HTMLAnchorElement>('.toc-link');
-          if (links.length === 0) return;
+        const links = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+        if (links.length === 0) return;
 
-          const targets: HTMLElement[] = [];
-          const linkByTarget = new Map<string, HTMLAnchorElement>();
+        const targets: HTMLElement[] = [];
+        const seen = new Set<string>();
+        links.forEach((link) => {
+          const slug = link.dataset.tocTarget;
+          if (!slug || seen.has(slug)) return;
+          const target = document.getElementById(slug);
+          if (target) {
+            targets.push(target);
+            seen.add(slug);
+          }
+        });
+        if (targets.length === 0) return;
+
+        const setActive = (slug: string | null) => {
           links.forEach((link) => {
-            const slug = link.dataset.tocTarget;
-            if (!slug) return;
-            const target = document.getElementById(slug);
-            if (target) {
-              targets.push(target);
-              linkByTarget.set(slug, link);
+            const isActive = slug !== null && link.dataset.tocTarget === slug;
+            if (isActive) {
+              link.setAttribute('aria-current', 'location');
+            } else {
+              link.removeAttribute('aria-current');
             }
           });
-          if (targets.length === 0) return;
+        };
 
-          const setActive = (slug: string | null) => {
-            links.forEach((link) => {
-              const isActive = slug !== null && link.dataset.tocTarget === slug;
-              if (isActive) {
-                link.setAttribute('aria-current', 'location');
+        const visible = new Set<string>();
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              const slug = (entry.target as HTMLElement).id;
+              if (entry.isIntersecting) {
+                visible.add(slug);
               } else {
-                link.removeAttribute('aria-current');
+                visible.delete(slug);
               }
-            });
-          };
-
-          const visible = new Set<string>();
-          const observer = new IntersectionObserver(
-            (entries) => {
-              for (const entry of entries) {
-                const slug = (entry.target as HTMLElement).id;
-                if (entry.isIntersecting) {
-                  visible.add(slug);
-                } else {
-                  visible.delete(slug);
-                }
-              }
-              if (visible.size > 0) {
-                // Prefer the topmost visible section for the active state.
-                const topMost = targets.find((t) => visible.has(t.id));
-                if (topMost) setActive(topMost.id);
-              }
-            },
-            {
-              // Treat a section as "current" once its heading crosses just
-              // below the sticky header, and until the next one does.
-              rootMargin: '-100px 0px -70% 0px',
-              threshold: 0,
             }
-          );
-          targets.forEach((target) => observer.observe(target));
+            if (visible.size > 0) {
+              // Prefer the topmost visible section for the active state.
+              const topMost = targets.find((t) => visible.has(t.id));
+              if (topMost) setActive(topMost.id);
+            }
+          },
+          {
+            // Treat a section as "current" once its heading crosses just
+            // below the sticky header, and until the next one does.
+            rootMargin: '-100px 0px -70% 0px',
+            threshold: 0,
+          }
+        );
+        targets.forEach((target) => observer.observe(target));
+      })();
+
+      // Mobile bottom sheet: floating trigger opens a native <dialog> as a
+      // modal, which gives an automatic focus trap and top-layer stacking
+      // for free. We only need to handle: slide-up/backdrop transition
+      // (respecting prefers-reduced-motion), backdrop-tap dismissal,
+      // Escape dismissal with the same transition as every other close
+      // path, closing after a section link is tapped, and restoring focus
+      // to the trigger button when the sheet closes.
+      (function initMobileTocSheet() {
+        const trigger = document.getElementById('toc-mobile-trigger');
+        const dialog = document.getElementById('toc-mobile-sheet');
+        if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement)) {
+          return;
+        }
+
+        const prefersReducedMotion = () =>
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function openSheet() {
+          dialog.showModal();
+          trigger.setAttribute('aria-expanded', 'true');
+          if (prefersReducedMotion()) {
+            dialog.classList.add('toc-sheet--visible');
+          } else {
+            // Double rAF: let the browser paint the closed (translated-off-
+            // screen) state first, then flip to the visible state on the
+            // next frame so the transition actually plays.
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                dialog.classList.add('toc-sheet--visible');
+              });
+            });
+          }
+        }
+
+        function closeSheet() {
+          if (!dialog.open) return;
+          if (prefersReducedMotion()) {
+            dialog.close();
+            return;
+          }
+          const onTransitionEnd = (event: TransitionEvent) => {
+            if (event.target !== dialog) return;
+            dialog.removeEventListener('transitionend', onTransitionEnd);
+            if (dialog.open) dialog.close();
+          };
+          dialog.addEventListener('transitionend', onTransitionEnd);
+          dialog.classList.remove('toc-sheet--visible');
+        }
+
+        trigger.addEventListener('click', openSheet);
+        dialog.querySelector('.toc-mobile-close')?.addEventListener('click', closeSheet);
+
+        // Backdrop tap: a click landing on the <dialog> element itself
+        // (rather than any of its child content) means it hit the backdrop,
+        // not the sheet panel.
+        dialog.addEventListener('click', (event) => {
+          if (event.target === dialog) closeSheet();
+        });
+
+        // Escape fires 'cancel' before the browser's own instant close -
+        // intercept it so Escape gets the same slide-down transition as
+        // every other close path.
+        dialog.addEventListener('cancel', (event) => {
+          event.preventDefault();
+          closeSheet();
+        });
+
+        // Tapping a section link should dismiss the sheet so the user lands
+        // on the section instead of reading it through a half-open sheet.
+        dialog.querySelectorAll<HTMLAnchorElement>('.toc-mobile-link').forEach((link) => {
+          link.addEventListener('click', () => closeSheet());
+        });
+
+        // Single source of truth for "sheet just closed" cleanup, whichever
+        // path triggered dialog.close() (close button, backdrop, Escape, or
+        // a section link) - restores focus to the trigger for keyboard/AT
+        // users per the dialog pattern.
+        dialog.addEventListener('close', () => {
+          trigger.setAttribute('aria-expanded', 'false');
+          dialog.classList.remove('toc-sheet--visible');
+          trigger.focus();
         });
       })();
     </script>
@@ -156,5 +285,60 @@ const show = items.length >= 4;
   :global([data-theme='dark']) .toc-link[aria-current='location'] {
     color: #38bdf8; /* crystal-400 */
     border-left-color: #38bdf8;
+  }
+
+  /* The desktop rail's active indicator uses a left border rail; the mobile
+     sheet's rows are borderless pill rows, so the active state there needs
+     its own background tint instead (the color/font-weight rule above still
+     applies to both via the shared `.toc-link[aria-current]` selector). */
+  .toc-mobile-link[aria-current='location'] {
+    background-color: rgb(3 105 161 / 0.08); /* crystal-700 tint */
+  }
+  :global([data-theme='dark']) .toc-mobile-link[aria-current='location'] {
+    background-color: rgb(56 189 248 / 0.12); /* crystal-400 tint */
+  }
+
+  /* Bottom sheet: reset the UA <dialog> box model and turn it into a
+     full-width panel pinned to the bottom of the viewport. */
+  .toc-mobile-sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    padding: 0;
+    border: none;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background: #ffffff;
+    color: inherit;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 220ms ease;
+  }
+  .toc-mobile-sheet.toc-sheet--visible {
+    transform: translateY(0);
+  }
+  .toc-mobile-sheet::backdrop {
+    background: rgb(15 23 42 / 0.5); /* slate-900/50 */
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+  .toc-mobile-sheet.toc-sheet--visible::backdrop {
+    opacity: 1;
+  }
+  :global([data-theme='dark']) .toc-mobile-sheet {
+    background: #332619; /* coffee-raised2 */
+    color: #ede3d5; /* cream-primary */
+    border: 1px solid #362b23; /* coffee-border */
+    border-bottom: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc-mobile-sheet,
+    .toc-mobile-sheet::backdrop {
+      transition: none;
+    }
   }
 </style>
