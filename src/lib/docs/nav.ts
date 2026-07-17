@@ -64,12 +64,6 @@ export const docsNav: DocsNavGroup[] = [
       { href: '/docs/cli-options', label: 'CLI Options', description: 'Complete list of command-line flags' },
     ],
   },
-  {
-    title: 'Components',
-    items: [
-      { href: '/docs/components', label: 'UI Components', description: 'Reference for the gemmology.dev UI component library' },
-    ],
-  },
 ];
 
 export interface FlatDocsPage extends DocsNavItem {
