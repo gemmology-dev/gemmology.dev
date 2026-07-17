@@ -71,6 +71,13 @@ function parseGLTFToGeometry(gltfData: any): THREE.BufferGeometry | null {
     geometry.setAttribute('normal', new THREE.BufferAttribute(normData, 3));
     geometry.setIndex(new THREE.BufferAttribute(idxData, 1));
 
+    // Center the geometry on its own centroid so it spins in place. Without
+    // this the crystal's centre is offset from the group origin, so it orbits
+    // the origin as it auto-rotates and drifts off-centre (matches the working
+    // Crystal3DViewer, which centres the same way).
+    geometry.center();
+    geometry.computeBoundingSphere();
+
     return geometry;
   } catch (error) {
     console.error('Error parsing glTF:', error);
@@ -230,7 +237,7 @@ export function HeroCrystal3D({
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
           <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
-          <Center position={[0, 0.15, 0]}>
+          <Center>
             {geometry ? (
               <RotatingCrystal geometry={geometry} rotationSpeed={effectiveRotation} scale={scale} />
             ) : (
