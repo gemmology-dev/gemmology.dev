@@ -7,7 +7,7 @@
  */
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Center, Edges } from '@react-three/drei';
+import { Edges } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -231,19 +231,22 @@ export function HeroCrystal3D({
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
+        // R3F treats `camera` as construction-only and never orients it, so a
+        // custom position leaves the camera facing world -Z instead of the
+        // crystal. Aim it at the origin (where geometry.center() puts the
+        // crystal's centroid) so it renders centred in the canvas.
+        onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
       >
         <Suspense fallback={<LoadingFallback rotationSpeed={effectiveRotation} />}>
           <ambientLight intensity={0.4} />
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
           <directionalLight position={[-3, 3, -3]} intensity={0.3} />
 
-          <Center>
-            {geometry ? (
-              <RotatingCrystal geometry={geometry} rotationSpeed={effectiveRotation} scale={scale} />
-            ) : (
-              <LoadingFallback rotationSpeed={effectiveRotation} />
-            )}
-          </Center>
+          {geometry ? (
+            <RotatingCrystal geometry={geometry} rotationSpeed={effectiveRotation} scale={scale} />
+          ) : (
+            <LoadingFallback rotationSpeed={effectiveRotation} />
+          )}
         </Suspense>
       </Canvas>
     </div>
