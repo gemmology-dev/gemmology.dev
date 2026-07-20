@@ -6,6 +6,7 @@
 import type { Mineral } from '../../lib/db';
 import { Badge } from '../ui/Badge';
 import { cleanCrystalSvg, isValidSvg } from '../../lib/svg-utils';
+import { MineralCrystalViewer } from './MineralCrystalViewer';
 
 interface Props {
   mineral: Mineral;
@@ -64,24 +65,15 @@ function formatLabel(value: string | null | undefined): string {
   </div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16 pt-6 lg:pt-8">
     <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-      <!-- Crystal SVG Preview — permanent light "specimen plate", see docs/dark-mode.md -->
+      <!-- Crystal SVG/3D Preview — permanent light "specimen plate", see docs/dark-mode.md -->
       <div class="w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
-        <div class="w-full h-full bg-white rounded-2xl shadow-lg p-4 flex items-center justify-center dark:border dark:border-coffee-border">
-          {hasSvgContent ? (
-            <div
-              class="w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
-              set:html={cleanedSvg}
-            />
-          ) : (
-            <img
-              src={svgPath}
-              alt={`${mineral.name} crystal structure`}
-              class="max-w-full max-h-full object-contain"
-              loading="eager"
-              onerror="this.src='/crystals/placeholder.svg'"
-            />
-          )}
-        </div>
+        <MineralCrystalViewer
+          client:visible
+          svgHtml={cleanedSvg}
+          svgPath={svgPath}
+          gltfJson={mineral.model_gltf ?? null}
+          name={mineral.name}
+        />
       </div>
 
       <!-- Mineral Info -->
@@ -112,8 +104,9 @@ function formatLabel(value: string | null | undefined): string {
         </h1>
 
         {mineral.chemistry && (
-          <p class="text-xl text-slate-600 font-mono mb-4 dark:text-cream-secondary">
-            {mineral.chemistry}
+          <p class="text-xl text-slate-600 mb-4 dark:text-cream-secondary">
+            <span class="text-sm text-slate-500 dark:text-cream-muted mr-2 font-sans">Formula</span>
+            <span class="font-mono">{mineral.chemistry}</span>
           </p>
         )}
       </div>

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * Verify that every mineral_families row has a corresponding SVG in public/crystals/.
+ * Verify that every mineral_families row AND every mineral_expressions row
+ * has a corresponding SVG — either a pre-generated `model_svg` in the
+ * database (expressions only) or a file in public/crystals/.
  * Exits non-zero if any are missing.
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -20,16 +22,38 @@ if (!existsSync(DB_PATH)) {
 
 const SQL = await initSqlJs();
 const db = new SQL.Database(readFileSync(DB_PATH));
-const result = db.exec('SELECT id FROM mineral_families ORDER BY id');
-const ids = result[0].values.map((row) => row[0]);
 
-const missing = ids.filter((id) => !existsSync(join(CRYSTALS_DIR, `${id}.svg`)));
+// 1. Family-level check (existing behaviour).
+const familyResult = db.exec('SELECT id FROM mineral_families ORDER BY id');
+const familyIds = familyResult.length ? familyResult[0].values.map((row) => row[0]) : [];
+const missingFamilies = familyIds.filter((id) => !existsSync(join(CRYSTALS_DIR, `${id}.svg`)));
 
-if (missing.length === 0) {
-  console.log(`OK: all ${ids.length} mineral families have SVGs in public/crystals/`);
+// 2. Expression-level check: a gap only counts if there is NEITHER an inline
+// `model_svg` in the database NOR a file in public/crystals/.
+const expressionResult = db.exec('SELECT id, model_svg FROM mineral_expressions ORDER BY id');
+const expressionRows = expressionResult.length ? expressionResult[0].values : [];
+const missingExpressions = expressionRows
+  .filter(([, modelSvg]) => !(typeof modelSvg === 'string' && modelSvg.trim().length > 0))
+  .map(([id]) => id)
+  .filter((id) => !existsSync(join(CRYSTALS_DIR, `${id}.svg`)));
+
+if (missingFamilies.length === 0 && missingExpressions.length === 0) {
+  console.log(
+    `OK: all ${familyIds.length} mineral families and ${expressionRows.length} mineral expressions have SVGs (file or model_svg) available`
+  );
   process.exit(0);
 }
 
-console.error(`MISSING ${missing.length}/${ids.length} SVGs:`);
-for (const id of missing) console.error(`  - ${id}`);
+if (missingFamilies.length > 0) {
+  console.error(`MISSING ${missingFamilies.length}/${familyIds.length} family SVGs:`);
+  for (const id of missingFamilies) console.error(`  - ${id}`);
+}
+
+if (missingExpressions.length > 0) {
+  console.error(
+    `MISSING ${missingExpressions.length}/${expressionRows.length} expression SVGs (no model_svg and no file):`
+  );
+  for (const id of missingExpressions) console.error(`  - ${id}`);
+}
+
 process.exit(1);

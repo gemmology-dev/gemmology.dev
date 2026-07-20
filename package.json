@@ -9,7 +9,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "copy-db": "node scripts/copy-database.js",
-    "prerender": "node scripts/prerender-crystals.js",
     "check-svgs": "node scripts/audit-crystal-svgs.mjs",
     "prebuild": "npm run sync && npm run copy-db && npm run check-svgs",
     "generate-og": "npm run build && node scripts/generate-og-image.js",
