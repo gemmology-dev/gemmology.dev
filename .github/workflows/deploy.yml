@@ -75,10 +75,20 @@ jobs:
 
       - name: Purge Cloudflare Cache
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          set -euo pipefail
+          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
+            --data '{"purge_everything":true}')
+          echo "Cloudflare purge response: $response"
+          # The purge API returns HTTP 200 even on auth failure, so check the
+          # JSON `success` field explicitly — otherwise a broken token silently
+          # leaves the edge cache serving stale content on every deploy.
+          if [ "$(echo "$response" | jq -r '.success')" != "true" ]; then
+            echo "::error::Cloudflare cache purge FAILED (edge cache not invalidated — visitors may see stale content). Check CLOUDFLARE_API_TOKEN has Zone.Cache Purge:Edit for CLOUDFLARE_ZONE_ID."
+            exit 1
+          fi
+          echo "Cloudflare cache purged successfully."
 
   preview:
     runs-on: ubuntu-latest
