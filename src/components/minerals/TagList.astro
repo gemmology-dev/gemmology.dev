@@ -1,26 +1,39 @@
 ---
 /**
  * TagList - Renders a JSON string array as coloured tag pills
+ *
+ * By default renders as a standalone card (title + pill row). Pass `bare`
+ * to render only the pill row with no outer card chrome or heading — used
+ * when embedding inside another card shell (see MineralTagsCard.astro).
  */
 interface Props {
   title: string;
   json?: string | null;
   colorClass?: string;
+  bare?: boolean;
 }
 
-const { title, json, colorClass = 'bg-slate-100 text-slate-700 dark:bg-coffee-raised2 dark:text-cream-secondary' } = Astro.props;
+const { title, json, colorClass = 'bg-slate-100 text-slate-700 dark:bg-coffee-raised2 dark:text-cream-secondary', bare = false } = Astro.props;
 const items: string[] = json ? JSON.parse(json) : [];
 ---
 
 {items.length > 0 && (
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
-    <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
-      <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
-    </div>
-    <div class="px-6 py-4 flex flex-wrap gap-2">
+  bare ? (
+    <div class="flex flex-wrap gap-2">
       {items.map((item) => (
         <span class={`px-3 py-1 rounded-full text-sm font-medium ${colorClass}`}>{item}</span>
       ))}
     </div>
-  </div>
+  ) : (
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden dark:bg-coffee-raised dark:border-coffee-border">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
+      </div>
+      <div class="px-6 py-4 flex flex-wrap gap-2">
+        {items.map((item) => (
+          <span class={`px-3 py-1 rounded-full text-sm font-medium ${colorClass}`}>{item}</span>
+        ))}
+      </div>
+    </div>
+  )
 )}

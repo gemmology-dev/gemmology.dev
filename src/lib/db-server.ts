@@ -150,14 +150,21 @@ export async function getMineralWithModels(name: string): Promise<Mineral | null
     mineral[col] = row[i];
   });
 
-  // Resolve family_id via mineral_expressions (expression id -> family_id)
+  // Resolve family_id AND the 3D model from mineral_expressions. The base
+  // `minerals` table's model_gltf/model_svg columns are empty — the populated
+  // model data lives per-expression in mineral_expressions, so pull model_gltf
+  // from there (otherwise the detail page's 3D viewer never receives a model).
   const exprResult = database.exec(
-    `SELECT family_id FROM mineral_expressions WHERE id = ? LIMIT 1`,
+    `SELECT family_id, model_gltf FROM mineral_expressions WHERE id = ? LIMIT 1`,
     [mineral.id as string]
   );
-  const familyId = exprResult.length > 0 && exprResult[0].values.length > 0
-    ? exprResult[0].values[0][0] as string
-    : mineral.id as string;
+  let familyId = mineral.id as string;
+  if (exprResult.length > 0 && exprResult[0].values.length > 0) {
+    const exprRow = exprResult[0].values[0];
+    familyId = (exprRow[0] as string) ?? (mineral.id as string);
+    const exprGltf = exprRow[1] as string | null;
+    if (exprGltf) mineral.model_gltf = exprGltf;
+  }
   mineral.family_id = familyId;
 
   // Fetch family-level fields (fluorescence, category, diagnostic_features, common_inclusions)

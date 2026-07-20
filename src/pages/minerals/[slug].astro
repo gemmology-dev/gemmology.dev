@@ -6,13 +6,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MineralHero from '../../components/minerals/MineralHero.astro';
 import QuickFacts from '../../components/minerals/QuickFacts.astro';
-import PropertyTable from '../../components/minerals/PropertyTable.astro';
+import { PropertyTable } from '../../components/ui/Table';
 import CrystalStructureCard from '../../components/minerals/CrystalStructureCard.astro';
 import RelatedMinerals from '../../components/minerals/RelatedMinerals.astro';
 import CounterpartsSection from '../../components/minerals/CounterpartsSection.astro';
 import PlaygroundLink from '../../components/minerals/PlaygroundLink.astro';
 import LearnMoreSection from '../../components/minerals/LearnMoreSection.astro';
-import TagList from '../../components/minerals/TagList.astro';
+import MineralTagsCard from '../../components/minerals/MineralTagsCard.astro';
 import MineralSchema from '../../components/seo/MineralSchema.astro';
 import { getAllMinerals, getAllFamilies, getPrimaryExpressionId, getMineralWithModels, getMineralsBySystemWithSvg, getCounterpartMinerals, getNaturalCounterpart, type Mineral } from '../../lib/db-server';
 import { formatLabel } from '../../lib/format-label';
@@ -148,12 +148,8 @@ const canonicalUrl = `https://gemmology.dev/minerals/${mineral.id}`;
             />
           )}
 
-          {/* JSON array sections */}
-          <TagList title="Colours" json={mineral.colors_json} colorClass="bg-sky-50 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300" />
-          <TagList title="Localities" json={mineral.localities_json} colorClass="bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300" />
-          <TagList title="Common Inclusions" json={mineral.inclusions_json} colorClass="bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300" />
-          <TagList title="Known Treatments" json={mineral.treatments_json} colorClass="bg-rose-50 text-rose-700 dark:bg-rose-400/10 dark:text-rose-300" />
-          <TagList title="Crystal Forms" json={mineral.forms_json} colorClass="bg-violet-50 text-violet-700 dark:bg-violet-400/10 dark:text-violet-300" />
+          {/* Consolidated tag lists (colours, localities, inclusions, treatments, forms) */}
+          <MineralTagsCard mineral={mineral} />
 
           {/* Diagnostic Features (family-level) */}
           {mineral.diagnostic_features && (

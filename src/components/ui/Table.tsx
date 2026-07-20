@@ -174,14 +174,14 @@ export function PropertyTable({
       <div className="px-6 py-4 border-b border-slate-100 dark:border-coffee-border">
         <h2 className="text-lg font-semibold text-slate-900 dark:text-cream-primary">{title}</h2>
       </div>
-      <div className="divide-y divide-slate-100 dark:divide-coffee-border">
+      <dl className="divide-y divide-slate-100 dark:divide-coffee-border">
         {validProperties.map((property, index) => (
-          <div key={index} className="px-6 py-3 flex justify-between items-center">
-            <span className="text-slate-600 dark:text-cream-secondary">{property.label}</span>
-            <span className="font-medium text-slate-900 dark:text-cream-primary">{property.value}</span>
+          <div key={index} className="px-6 py-3 flex justify-between gap-4 items-center">
+            <dt className="text-slate-600 shrink-0 dark:text-cream-secondary">{property.label}</dt>
+            <dd className="font-medium text-slate-900 text-right dark:text-cream-primary">{property.value}</dd>
           </div>
         ))}
-      </div>
+      </dl>
     </div>
   );
 }

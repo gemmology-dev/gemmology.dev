@@ -24,7 +24,7 @@ const hasNaturalCounterpart = !!naturalCounterpart;
 
 // Strip the parenthetical expression label (e.g. "Diamond (Octahedron)" → "Diamond")
 // — synthetics list is family-scoped, so the expression name is misleading.
-const familyName = mineral.name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+const familyName = mineral.name.replace(/\s*\(.*\)\s*$/, '').trim();
 
 // Don't render if nothing to show
 if (!hasCounterparts && !hasNaturalCounterpart) return;
@@ -60,7 +60,7 @@ const originStyles: Record<string, string> = {
       return (
         <a
           href={`/minerals/${cp.id}`}
-          class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors dark:hover:bg-coffee-raised2"
+          class="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors dark:hover:bg-coffee-raised2"
         >
           <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden dark:border dark:border-coffee-border">
             {hasSvg ? (
@@ -78,13 +78,13 @@ const originStyles: Record<string, string> = {
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <span class="font-medium text-slate-900 truncate dark:text-cream-primary">{cp.name}</span>
+              <span class="font-medium text-slate-900 line-clamp-2 dark:text-cream-primary">{cp.name}</span>
               <span class={`px-1.5 py-0.5 text-[10px] font-medium rounded-full capitalize ${originStyle}`}>
                 {cp.origin}
               </span>
             </div>
             {cp.growth_method && (
-              <div class="text-sm text-slate-600 dark:text-cream-secondary">{formatLabel(cp.growth_method)}</div>
+              <div class="text-sm text-slate-600 line-clamp-2 dark:text-cream-secondary">{formatLabel(cp.growth_method)}</div>
             )}
           </div>
           <svg class="w-5 h-5 text-slate-500 flex-shrink-0 dark:text-cream-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,7 +102,7 @@ const originStyles: Record<string, string> = {
       return (
         <a
           href={`/minerals/${naturalCounterpart.id}`}
-          class="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors dark:hover:bg-coffee-raised2"
+          class="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors dark:hover:bg-coffee-raised2"
         >
           <div class="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 overflow-hidden dark:border dark:border-coffee-border">
             {hasSvg ? (
@@ -116,13 +116,13 @@ const originStyles: Record<string, string> = {
                 alt={naturalCounterpart.name}
                 class="w-full h-full object-contain"
                 loading="lazy"
-                onerror="this.src='/crystals/placeholder.svg'"
+                onerror="this.onerror=null; this.src='/crystals/placeholder.svg'"
               />
             )}
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <span class="font-medium text-slate-900 truncate dark:text-cream-primary">{naturalCounterpart.name}</span>
+              <span class="font-medium text-slate-900 line-clamp-2 dark:text-cream-primary">{naturalCounterpart.name}</span>
               <span class="px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
                 natural
               </span>

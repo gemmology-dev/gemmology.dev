@@ -22,6 +22,8 @@ export function ViewerToggle({
       <button
         onClick={() => onModeChange('2d')}
         disabled={disabled}
+        aria-pressed={mode === '2d'}
+        aria-label="Show 2D crystal drawing"
         className={clsx(
           'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150',
           'flex items-center gap-1.5',
@@ -42,6 +44,8 @@ export function ViewerToggle({
       <button
         onClick={() => onModeChange('3d')}
         disabled={disabled}
+        aria-pressed={mode === '3d'}
+        aria-label="Show interactive 3D crystal model"
         className={clsx(
           'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150',
           'flex items-center gap-1.5',
